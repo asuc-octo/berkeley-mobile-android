@@ -112,7 +112,7 @@ public class DiningController implements Controller {
     @Override
     public void refreshInBackground(Callback callback) {
         this.callback = callback;
-        JSONUtilities.readJSONFromUrl("http://asuc-mobile.herokuapp.com/api/dining_halls", "dining_halls", GymController.getInstance(context));
+        JSONUtilities.readJSONFromUrl("http://asuc-mobile.herokuapp.com/api/dining_halls", "dining_halls", DiningController.getInstance(context));
     }
 
 }
