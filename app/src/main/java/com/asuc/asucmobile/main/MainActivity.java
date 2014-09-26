@@ -6,8 +6,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.asuc.asucmobile.R;
-import com.asuc.asucmobile.controllers.DiningController;
-import com.asuc.asucmobile.utilities.JSONUtilities;
 
 
 public class MainActivity extends Activity {
