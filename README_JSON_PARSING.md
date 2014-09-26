@@ -1,6 +1,5 @@
-<<<<<<< HEAD
-ASUC-Android JSON Parsing
-=========================
+JSON Parsing
+============
 
 What this includes:
   - Data Controllers
@@ -41,7 +40,3 @@ DiningController.getInstance(this).refreshInBackground(new Callback() {
 ```
 
 IMPORTANT TO NOTE: Data Controllers here are singletons. So we get an instance of them with the static getInstance() method which takes in a parameter, Context (aka, your Activity).
-=======
-ASUC-Android
-============
->>>>>>> 6d53150b32012c7d553e0198360be817aa35556a
