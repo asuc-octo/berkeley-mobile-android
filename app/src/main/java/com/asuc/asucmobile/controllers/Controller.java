@@ -1,5 +1,7 @@
 package com.asuc.asucmobile.controllers;
 
+import com.asuc.asucmobile.utilities.Callback;
+
 import org.json.JSONArray;
 
 public interface Controller {
@@ -10,5 +12,13 @@ public interface Controller {
      *  was retrieved. It most likely consists of parsing the data into models for use with the UI.
      */
     public void setResources(final JSONArray array);
+
+    /**
+     * refreshInBackground() retrieves info from the web and calls the callback function once it's
+     * finished in order to update the UI.
+     *
+     * @param callback The method to be called after information has been retrieved from JSON.
+     */
+    public void refreshInBackground(Callback callback);
 
 }
