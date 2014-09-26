@@ -5,6 +5,8 @@ import android.content.Context;
 
 import com.asuc.asucmobile.models.DiningHall;
 import com.asuc.asucmobile.models.FoodItem;
+import com.asuc.asucmobile.utilities.Callback;
+import com.asuc.asucmobile.utilities.JSONUtilities;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -17,6 +19,7 @@ public class DiningController implements Controller {
 
     private Context context;
     private ArrayList<DiningHall> diningHalls;
+    private Callback callback;
 
     public static Controller getInstance(Context context) {
         if (instance == null) {
@@ -34,6 +37,11 @@ public class DiningController implements Controller {
 
     @Override
     public void setResources(final JSONArray array) {
+        if (array == null) {
+            callback.onRetrievalFailed();
+            return;
+        }
+
         diningHalls.clear();
 
         /*
@@ -90,18 +98,21 @@ public class DiningController implements Controller {
                     ((Activity) context).runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            updateUI();
+                            callback.onDataRetrieved(diningHalls);
                         }
                     });
                 } catch (Exception e) {
                     e.printStackTrace();
+                    callback.onRetrievalFailed();
                 }
             }
         }).start();
     }
 
-    public void updateUI() {
-        // TODO: Update necessary UI components with Dining Hall info.
+    @Override
+    public void refreshInBackground(Callback callback) {
+        this.callback = callback;
+        JSONUtilities.readJSONFromUrl("http://asuc-mobile.herokuapp.com/api/dining_halls", "dining_halls", GymController.getInstance(context));
     }
 
 }
