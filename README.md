@@ -1,19 +1,18 @@
-JSON Parsing
-============
+#ASUC-Android
+
+##JSON Parsing
 
 What this includes:
   - Data Controllers
   - Models
   - Parsing Utilities
   
-Available Controllers
----------------------
+###Available Controllers
   - DiningController
   - GymController
   - LibraryController
 
-How to Use
-----------
+###How to Use
 To retrieve data, call the refreshInBackground() method of a controller: 
 ```
 Controller.getInstance(activity).refreshInBackground(callback);
