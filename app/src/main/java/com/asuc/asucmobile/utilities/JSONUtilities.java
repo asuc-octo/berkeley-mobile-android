@@ -72,6 +72,7 @@ public class JSONUtilities {
                 controller.setResources(jsonArray);
             } catch (Exception e) {
                 e.printStackTrace();
+                controller.setResources(null);
             }
 
             return null;
