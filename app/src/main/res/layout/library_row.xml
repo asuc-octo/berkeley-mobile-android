@@ -20,6 +20,7 @@
             android:layout_height="wrap_content"
             android:singleLine="true"
             android:ellipsize="marquee"
+            android:textColor="@color/OP_navy"
             android:textSize="18sp" />
 
         <TextView
