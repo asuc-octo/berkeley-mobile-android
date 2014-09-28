@@ -9,6 +9,13 @@ startActivity(intent);
 ```
 in your Activity.
 
+###Testing
+To test the isOpen() function on the Library or Gym, run
+```
+Library.testIsOpen();
+```
+in your first Activity. Results will be displayed on your logcat.
+
 ##JSON Parsing
   
 ###Available Controllers
