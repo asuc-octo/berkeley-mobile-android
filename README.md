@@ -1,5 +1,12 @@
 #ASUC-Android
 
+##Testing
+To run unit tests, run
+```
+Test.runTests();
+```
+in your first Activity. Results will be displayed on your logcat.
+
 ##Library
 ###How to Use
 To start the Library activity and get a list of libraries, simply call
@@ -9,15 +16,7 @@ startActivity(intent);
 ```
 in your Activity.
 
-###Testing
-To test the isOpen() function on the Library or Gym, run
-```
-Library.testIsOpen();
-```
-in your first Activity. Results will be displayed on your logcat.
-
 ##JSON Parsing
-  
 ###Available Controllers
   - DiningController
   - GymController
