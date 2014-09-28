@@ -46,7 +46,7 @@
             android:layout_marginEnd="32dp"
             android:layout_marginRight="32dp"
             android:textSize="14sp"
-            android:textColor="@color/ASUC_blue"
+            android:textColor="@color/OP_navy"
             android:text="@string/todays_hours"/>
 
         <TextView
@@ -77,7 +77,7 @@
             android:layout_marginEnd="32dp"
             android:layout_marginRight="32dp"
             android:textSize="14sp"
-            android:textColor="@color/ASUC_blue"
+            android:textColor="@color/OP_navy"
             android:text="@string/location"/>
 
         <TextView
@@ -108,7 +108,7 @@
             android:layout_marginEnd="32dp"
             android:layout_marginRight="32dp"
             android:textSize="14sp"
-            android:textColor="@color/ASUC_blue"
+            android:textColor="@color/OP_navy"
             android:text="@string/phone_number"/>
 
         <TextView
