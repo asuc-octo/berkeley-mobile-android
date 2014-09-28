@@ -20,8 +20,7 @@
             android:layout_height="wrap_content"
             android:singleLine="true"
             android:ellipsize="marquee"
-            android:textSize="18sp"
-            android:textColor="@color/ASUC_blue" />
+            android:textSize="18sp" />
 
         <TextView
             android:id="@+id/library_availability"
