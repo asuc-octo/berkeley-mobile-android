@@ -64,40 +64,4 @@ public class Library {
         return currentTime.after(opening) && currentTime.before(closing);
     }
 
-    public static void testIsOpen() {
-        Date currentTime = new Date();
-
-        Date opening1 = new Date();
-        opening1.setTime(currentTime.getTime() - 1000000);
-        Date closing1 = new Date();
-        closing1.setTime(currentTime.getTime() + 1000000);
-        Library testLibrary1 =
-                new Library("0", "Library", "Location", "000-000-0000", opening1, closing1, false);
-        if (testLibrary1.isOpen()) {
-            System.out.println("Test Case 1 passed.");
-        } else {
-            System.out.println("Test Case 1 failed: Library that should have been open is not.");
-        }
-
-        Date opening2 = new Date();
-        opening2.setTime(currentTime.getTime() + 1000000);
-        Date closing2 = new Date();
-        closing2.setTime(currentTime.getTime() - 1000000);
-        Library testLibrary2 =
-                new Library("0", "Library", "Location", "000-000-0000", opening2, closing2, false);
-        if (!testLibrary2.isOpen()) {
-            System.out.println("Test Case 2 passed.");
-        } else {
-            System.out.println("Test Case 2 failed: Library that should have been closed is not.");
-        }
-
-        Library testLibrary3 =
-                new Library("0", "Library", "Location", "000-000-0000", null, null, false);
-        if (!testLibrary3.isOpen()) {
-            System.out.println("Test Case 3 passed.");
-        } else {
-            System.out.println("Test Case 3 failed: Library that's closed all day is displaying open.");
-        }
-    }
-
 }
