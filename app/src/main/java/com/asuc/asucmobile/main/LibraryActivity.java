@@ -3,17 +3,17 @@ package com.asuc.asucmobile.main;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.EditText;
 import android.widget.Filter;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ProgressBar;
+import android.widget.SearchView;
 import android.widget.Toast;
 
 import com.asuc.asucmobile.R;
@@ -40,7 +40,6 @@ public class LibraryActivity extends Activity {
             getActionBar().setDisplayHomeAsUpEnabled(true);
         }
 
-        EditText librarySearch = (EditText) findViewById(R.id.search_libraries);
         ImageButton refreshButton = (ImageButton) findViewById(R.id.refresh_button);
 
         mLibraryList = (ListView) findViewById(R.id.library_list);
@@ -49,20 +48,6 @@ public class LibraryActivity extends Activity {
 
         mAdapter = new LibraryAdapter(this);
         mLibraryList.setAdapter(mAdapter);
-
-        final Filter filter = mAdapter.getFilter();
-        librarySearch.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i2, int i3) {}
-
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i2, int i3) {
-                filter.filter(charSequence);
-            }
-
-            @Override
-            public void afterTextChanged(Editable editable) {}
-        });
 
         mLibraryList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -86,6 +71,31 @@ public class LibraryActivity extends Activity {
         super.onResume();
 
         refresh();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.library, menu);
+
+        final SearchView search = (SearchView) menu.findItem(R.id.search).getActionView();
+        search.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String s) {
+                // Close the keyboard
+                search.clearFocus();
+                return true;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String s) {
+                final Filter filter = mAdapter.getFilter();
+                filter.filter(s);
+                return true;
+            }
+        });
+
+        return true;
     }
 
     @Override
