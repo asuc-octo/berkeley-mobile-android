@@ -1,7 +1,6 @@
 package com.asuc.asucmobile.main;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
 
 import com.asuc.asucmobile.R;
