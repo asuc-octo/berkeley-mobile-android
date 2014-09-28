@@ -1,11 +1,15 @@
 #ASUC-Android
 
-##JSON Parsing
+##Library
+###How to Use
+To start the Library activity and get a list of libraries, simply call
+```
+Intent intent = new Intent(this, LibraryActivity.class);
+startActivity(intent);
+```
+in your Activity.
 
-What this includes:
-  - Data Controllers
-  - Models
-  - Parsing Utilities
+##JSON Parsing
   
 ###Available Controllers
   - DiningController

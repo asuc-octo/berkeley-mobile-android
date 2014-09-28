@@ -50,4 +50,18 @@ public class Library {
         return byAppointment;
     }
 
+    /**
+     * isOpen() returns whether or not the facility is open.
+     *
+     * @return Boolean indicating if the library is open or not.
+     */
+    public boolean isOpen() {
+        if (opening == null || closing == null) {
+            return false;
+        }
+
+        Date currentTime = new Date();
+        return currentTime.after(opening) && currentTime.before(closing);
+    }
+
 }

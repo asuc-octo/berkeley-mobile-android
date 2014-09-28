@@ -2,5 +2,13 @@
 <resources>
 
     <string name="app_name">ASUC Mobile</string>
+    <string name="title_activity_library">Cal Libraries</string>
+    <string name="search_hint">Search Libraries</string>
+    <string name="content_desc">image</string>
+    <string name="title_activity_open_library">Library</string>
+    <string name="todays_hours">Today\'s Hours</string>
+    <string name="location">Location</string>
+    <string name="phone_number">Phone Number</string>
+    <string name="address">Address</string>
 
 </resources>
