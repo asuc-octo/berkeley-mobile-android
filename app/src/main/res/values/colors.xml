@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <color name="OP_navy">#005581</color>
     <color name="ASUC_blue">#1295D8</color>
     <color name="by_appointment">#00DCFF</color>
     <color name="open">#10A100</color>
