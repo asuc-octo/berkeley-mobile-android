@@ -10,6 +10,8 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.Filter;
+import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.Toast;
@@ -26,6 +28,7 @@ public class LibraryActivity extends Activity {
 
     private ListView mLibraryList;
     private ProgressBar mProgressBar;
+    private LinearLayout mRefreshWrapper;
 
     private LibraryAdapter mAdapter;
 
@@ -38,9 +41,11 @@ public class LibraryActivity extends Activity {
         }
 
         EditText librarySearch = (EditText) findViewById(R.id.search_libraries);
+        ImageButton refreshButton = (ImageButton) findViewById(R.id.refresh_button);
 
         mLibraryList = (ListView) findViewById(R.id.library_list);
         mProgressBar = (ProgressBar) findViewById(R.id.progress_bar);
+        mRefreshWrapper = (LinearLayout) findViewById(R.id.refresh);
 
         mAdapter = new LibraryAdapter(this);
         mLibraryList.setAdapter(mAdapter);
@@ -67,30 +72,20 @@ public class LibraryActivity extends Activity {
                 startActivity(intent);
             }
         });
+
+        refreshButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                refresh();
+            }
+        });
     }
 
     @Override
     protected void onResume() {
         super.onResume();
 
-        mLibraryList.setVisibility(View.GONE);
-        mProgressBar.setVisibility(View.VISIBLE);
-
-        LibraryController.getInstance(this).refreshInBackground(new Callback() {
-            @Override
-            @SuppressWarnings("unchecked")
-            public void onDataRetrieved(Object data) {
-                mLibraryList.setVisibility(View.VISIBLE);
-                mProgressBar.setVisibility(View.GONE);
-
-                mAdapter.setList((ArrayList<Library>) data);
-            }
-
-            @Override
-            public void onRetrievalFailed() {
-                Toast.makeText(getBaseContext(), "Unable to retrieve data, please try again", Toast.LENGTH_SHORT).show();
-            }
-        });
+        refresh();
     }
 
     @Override
@@ -105,4 +100,33 @@ public class LibraryActivity extends Activity {
         }
         return super.onOptionsItemSelected(item);
     }
+
+    /**
+     * refresh() updates the visibility of necessary UI elements and refreshes the library list
+     * from the web.
+     */
+    private void refresh() {
+        mLibraryList.setVisibility(View.GONE);
+        mRefreshWrapper.setVisibility(View.GONE);
+        mProgressBar.setVisibility(View.VISIBLE);
+
+        LibraryController.getInstance(this).refreshInBackground(new Callback() {
+            @Override
+            @SuppressWarnings("unchecked")
+            public void onDataRetrieved(Object data) {
+                mLibraryList.setVisibility(View.VISIBLE);
+                mProgressBar.setVisibility(View.GONE);
+
+                mAdapter.setList((ArrayList<Library>) data);
+            }
+
+            @Override
+            public void onRetrievalFailed() {
+                mProgressBar.setVisibility(View.GONE);
+                mRefreshWrapper.setVisibility(View.VISIBLE);
+                Toast.makeText(getBaseContext(), "Unable to retrieve data, please try again", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
 }
