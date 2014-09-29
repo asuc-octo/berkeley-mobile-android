@@ -46,23 +46,23 @@ public class LibraryAdapter extends BaseAdapter {
         Library library = getItem(i);
 
         if (convertView == null) {
-            convertView = LayoutInflater.from(context).inflate(R.layout.library_row, parent, false);
+            convertView = LayoutInflater.from(context).inflate(R.layout.facility_row, parent, false);
         }
 
-        TextView libraryName = (TextView) convertView.findViewById(R.id.library_name);
-        TextView libraryAvailability = (TextView) convertView.findViewById(R.id.library_availability);
+        TextView libraryName = (TextView) convertView.findViewById(R.id.name);
+        TextView libraryAvailability = (TextView) convertView.findViewById(R.id.availability);
 
         libraryName.setText(library.getName());
 
         if (library.isByAppointment()) {
-            libraryAvailability.setTextColor(context.getResources().getColor(R.color.by_appointment));
-            libraryAvailability.setText("By Appointment");
+            libraryAvailability.setTextColor(context.getResources().getColor(R.color.pavan_light));
+            libraryAvailability.setText("BY APPOINTMENT");
         } else if (library.isOpen()) {
             libraryAvailability.setTextColor(context.getResources().getColor(R.color.open));
-            libraryAvailability.setText("Open");
+            libraryAvailability.setText("OPEN");
         } else {
             libraryAvailability.setTextColor(context.getResources().getColor(android.R.color.holo_red_light));
-            libraryAvailability.setText("Closed");
+            libraryAvailability.setText("CLOSED");
         }
 
         return convertView;
