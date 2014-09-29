@@ -30,6 +30,18 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.asuc.asucmobile.main.LibraryActivity" />
         </activity>
+        <activity
+            android:name=".main.GymActivity"
+            android:label="@string/title_activity_gym" >
+        </activity>
+        <activity
+            android:name=".main.OpenGymActivity"
+            android:label="@string/title_activity_open_gym"
+            android:parentActivityName=".main.GymActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.asuc.asucmobile.main.GymActivity" />
+        </activity>
     </application>
 
 </manifest>

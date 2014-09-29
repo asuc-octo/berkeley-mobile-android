@@ -10,5 +10,7 @@
     <string name="location">Location</string>
     <string name="phone_number">Phone Number</string>
     <string name="address">Address</string>
+    <string name="title_activity_gym">Gyms</string>
+    <string name="title_activity_open_gym">Gym</string>
 
 </resources>

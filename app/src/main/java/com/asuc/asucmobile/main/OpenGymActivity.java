@@ -6,40 +6,39 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.asuc.asucmobile.R;
-import com.asuc.asucmobile.models.Library;
+import com.asuc.asucmobile.models.Gym;
 
 import java.text.SimpleDateFormat;
 
-public class OpenLibraryActivity extends Activity {
+public class OpenGymActivity extends Activity {
 
     private static final SimpleDateFormat HOURS_FORMAT =
             new SimpleDateFormat("h:mm a");
 
-    public static Library staticLibrary;
+    public static Gym staticGym;
 
-    private Library library;
+    private Gym gym;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_open_library);
+        setContentView(R.layout.activity_open_gym);
 
-        library = staticLibrary;
+        gym = staticGym;
 
         if (getActionBar() != null) {
-            getActionBar().setTitle(library.getName());
+            getActionBar().setTitle(gym.getName());
         }
 
         ImageView availabilityIcon = (ImageView) findViewById(R.id.availability_icon);
         TextView availabilityText = (TextView) findViewById(R.id.availability);
         TextView hours = (TextView) findViewById(R.id.hours);
-        TextView address = (TextView) findViewById(R.id.location);
-        TextView phone = (TextView) findViewById(R.id.phone);
+        TextView address = (TextView) findViewById(R.id.address);
 
-        if (library.isByAppointment()) {
+        if (gym.getOpening() == null || gym.getClosing() == null) {
             availabilityIcon.setImageDrawable(getResources().getDrawable(R.drawable.question_mark_blue));
-            availabilityText.setText("By Appointment");
-        } else if (library.isOpen()) {
+            availabilityText.setText("Unknown Hours");
+        } else if (gym.isOpen()) {
             availabilityIcon.setImageDrawable(getResources().getDrawable(R.drawable.check_mark_blue));
             availabilityText.setText("Open");
         } else {
@@ -48,19 +47,18 @@ public class OpenLibraryActivity extends Activity {
         }
 
         String hoursString;
-        if (library.getOpening() != null && library.getClosing() != null) {
+        if (gym.getOpening() != null && gym.getClosing() != null) {
             hoursString =
-                    HOURS_FORMAT.format(library.getOpening()) +
-                    " to " +
-                    HOURS_FORMAT.format(library.getClosing()
-            );
+                    HOURS_FORMAT.format(gym.getOpening()) +
+                            " to " +
+                            HOURS_FORMAT.format(gym.getClosing()
+                            );
         } else {
-            hoursString = "Closed All Day";
+            hoursString = "Unknown";
         }
 
         hours.setText(hoursString);
-        address.setText(library.getLocation());
-        phone.setText(library.getPhone());
+        address.setText(gym.getAddress());
     }
 
 }
