@@ -7,9 +7,18 @@ Test.runTests();
 ```
 in your first Activity. Results will be displayed on your logcat.
 
+##Gym
+###How to Use
+To start the Gym Activity and get a list of gyms, simply call
+```
+Intent intent = new Intent(this, GymActivity.class);
+startActivity(intent);
+```
+in your Activity.
+
 ##Library
 ###How to Use
-To start the Library activity and get a list of libraries, simply call
+To start the Library Activity and get a list of libraries, simply call
 ```
 Intent intent = new Intent(this, LibraryActivity.class);
 startActivity(intent);
