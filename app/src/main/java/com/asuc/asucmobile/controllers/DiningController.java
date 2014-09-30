@@ -38,7 +38,12 @@ public class DiningController implements Controller {
     @Override
     public void setResources(final JSONArray array) {
         if (array == null) {
-            callback.onRetrievalFailed();
+            ((Activity) context).runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    callback.onRetrievalFailed();
+                }
+            });
             return;
         }
 
@@ -103,7 +108,12 @@ public class DiningController implements Controller {
                     });
                 } catch (Exception e) {
                     e.printStackTrace();
-                    callback.onRetrievalFailed();
+                    ((Activity) context).runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            callback.onRetrievalFailed();
+                        }
+                    });
                 }
             }
         }).start();
