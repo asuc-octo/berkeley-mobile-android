@@ -48,7 +48,9 @@ public class OpenLibraryActivity extends Activity {
         }
 
         String hoursString;
-        if (library.getOpening() != null && library.getClosing() != null) {
+        if (library.isByAppointment()) {
+            hoursString = "By Appointment";
+        } else if (library.getOpening() != null && library.getClosing() != null) {
             hoursString =
                     HOURS_FORMAT.format(library.getOpening()) +
                     " to " +
