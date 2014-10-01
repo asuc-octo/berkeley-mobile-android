@@ -1,6 +1,7 @@
 package com.asuc.asucmobile.adapters;
 
 import android.content.Context;
+import android.graphics.Typeface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -49,6 +50,7 @@ public class DiningHallAdapter extends BaseAdapter {
         TextView name = (TextView) convertView.findViewById(R.id.name);
 
         name.setText(diningHall.getName());
+        name.setTypeface(Typeface.createFromAsset(context.getAssets(), "young.ttf"));
 
         return convertView;
     }
