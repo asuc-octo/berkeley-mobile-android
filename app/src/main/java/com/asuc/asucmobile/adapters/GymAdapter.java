@@ -1,6 +1,7 @@
 package com.asuc.asucmobile.adapters;
 
 import android.content.Context;
+import android.graphics.Typeface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -50,6 +51,8 @@ public class GymAdapter extends BaseAdapter {
         TextView gymAvailability = (TextView) convertView.findViewById(R.id.availability);
 
         gymName.setText(gym.getName());
+        gymName.setTypeface(Typeface.createFromAsset(context.getAssets(), "young.ttf"));
+        gymAvailability.setTypeface(Typeface.createFromAsset(context.getAssets(), "young.ttf"));
 
         if (gym.getOpening() == null || gym.getClosing() == null) {
             gymAvailability.setTextColor(context.getResources().getColor(R.color.pavan_light));
