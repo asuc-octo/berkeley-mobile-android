@@ -15,13 +15,11 @@ import java.util.ArrayList;
 public class GymAdapter extends BaseAdapter {
 
     private Context context;
-    private ArrayList<Gym> allGyms;
     private ArrayList<Gym> gyms;
 
     public GymAdapter(Context context) {
         this.context = context;
 
-        allGyms = new ArrayList<Gym>();
         gyms = new ArrayList<Gym>();
     }
 
@@ -73,7 +71,6 @@ public class GymAdapter extends BaseAdapter {
      * @param list The updated list of gyms.
      */
     public void setList(ArrayList<Gym> list) {
-        allGyms = list;
         gyms = list;
 
         notifyDataSetChanged();

@@ -3,7 +3,6 @@ package com.asuc.asucmobile.main;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ImageButton;
@@ -32,9 +31,6 @@ public class GymActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_gym);
-        if (getActionBar() != null) {
-            getActionBar().setDisplayHomeAsUpEnabled(true);
-        }
 
         ImageButton refreshButton = (ImageButton) findViewById(R.id.refresh_button);
 
@@ -67,19 +63,6 @@ public class GymActivity extends Activity {
         super.onResume();
 
         refresh();
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-        if (id == android.R.id.home) {
-            // TODO: Go back to previous activity.
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
     }
 
     /**
