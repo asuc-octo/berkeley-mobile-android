@@ -2,6 +2,7 @@ package com.asuc.asucmobile.main;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -13,6 +14,7 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.SearchView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.asuc.asucmobile.R;
@@ -34,6 +36,11 @@ public class LibraryActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if (getActionBar() != null) {
+            int titleId = getResources().getIdentifier("action_bar_title", "id", "android");
+            TextView titleText = (TextView) findViewById(titleId);
+            titleText.setTypeface(Typeface.createFromAsset(getAssets(), "young.ttf"));
+        }
         setContentView(R.layout.activity_library);
 
         ImageButton refreshButton = (ImageButton) findViewById(R.id.refresh_button);

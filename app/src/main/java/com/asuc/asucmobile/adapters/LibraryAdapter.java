@@ -1,6 +1,7 @@
 package com.asuc.asucmobile.adapters;
 
 import android.content.Context;
+import android.graphics.Typeface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -53,6 +54,8 @@ public class LibraryAdapter extends BaseAdapter {
         TextView libraryAvailability = (TextView) convertView.findViewById(R.id.availability);
 
         libraryName.setText(library.getName());
+        libraryName.setTypeface(Typeface.createFromAsset(context.getAssets(), "young.ttf"));
+        libraryAvailability.setTypeface(Typeface.createFromAsset(context.getAssets(), "young.ttf"));
 
         if (library.isByAppointment()) {
             libraryAvailability.setTextColor(context.getResources().getColor(R.color.pavan_light));
