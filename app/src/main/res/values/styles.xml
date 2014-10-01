@@ -3,10 +3,13 @@
     <!-- Base application theme. -->
     <style name="AppTheme" parent="android:Theme.Holo.Light.DarkActionBar">
         <item name="android:actionBarStyle">@style/ActionBar</item>
+        <item name="android:actionBarTabStyle">@style/ActionBarTabs</item>
+        <item name="android:actionBarTabTextStyle">@style/ActionBarTabTitles</item>
     </style>
 
     <style name="ActionBar" parent="android:Widget.Holo.ActionBar">
         <item name="android:background">@color/OP_navy</item>
+        <item name="android:backgroundStacked">@color/OP_navy</item>
         <item name="android:titleTextStyle">@style/ActionBarText</item>
         <item name="android:height">56dp</item>
         <item name="android:icon">@android:color/transparent</item>
@@ -15,6 +18,14 @@
     <style name="ActionBarText" parent="android:style/TextAppearance.Holo.Widget.ActionBar.Title">
         <item name="android:textColor">@android:color/white</item>
         <item name="android:textSize">20sp</item>
+    </style>
+
+    <style name="ActionBarTabTitles" parent="android:style/Widget.Holo.ActionBar.TabText">
+        <item name="android:textColor">@android:color/white</item>
+    </style>
+
+    <style name="ActionBarTabs" parent="android:style/Widget.Holo.Light.ActionBar.TabView">
+        <item name="android:background">@drawable/tab_indicator</item>
     </style>
 
 </resources>

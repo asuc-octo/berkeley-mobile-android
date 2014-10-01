@@ -1,6 +1,7 @@
 package com.asuc.asucmobile.main;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.View;
@@ -50,6 +51,9 @@ public class DiningHallActivity extends Activity {
         mDiningList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                OpenDiningHallActivity.staticDiningHall = mAdapter.getItem(i);
+                Intent intent = new Intent(getBaseContext(), OpenDiningHallActivity.class);
+                startActivity(intent);
             }
         });
 

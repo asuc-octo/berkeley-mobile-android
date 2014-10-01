@@ -65,7 +65,7 @@ public class DiningController implements Controller {
                         JSONArray breakfastJSON = diningHall.getJSONArray("breakfast_menu");
                         ArrayList<FoodItem> breakfastMenu = new ArrayList<FoodItem>();
                         for (int j = 0; j < breakfastJSON.length(); j++) {
-                            JSONObject foodJSON = breakfastJSON.getJSONObject(i);
+                            JSONObject foodJSON = breakfastJSON.getJSONObject(j);
                             breakfastMenu.add(new FoodItem(
                                     foodJSON.getString("id"),
                                     foodJSON.getString("name"),
@@ -76,7 +76,7 @@ public class DiningController implements Controller {
                         JSONArray lunchJSON = diningHall.getJSONArray("lunch_menu");
                         ArrayList<FoodItem> lunchMenu = new ArrayList<FoodItem>();
                         for (int j = 0; j < lunchJSON.length(); j++) {
-                            JSONObject foodJSON = lunchJSON.getJSONObject(i);
+                            JSONObject foodJSON = lunchJSON.getJSONObject(j);
                             lunchMenu.add(new FoodItem(
                                     foodJSON.getString("id"),
                                     foodJSON.getString("name"),
@@ -87,7 +87,7 @@ public class DiningController implements Controller {
                         JSONArray dinnerJSON = diningHall.getJSONArray("dinner_menu");
                         ArrayList<FoodItem> dinnerMenu = new ArrayList<FoodItem>();
                         for (int j = 0; j < dinnerJSON.length(); j++) {
-                            JSONObject foodJSON = dinnerJSON.getJSONObject(i);
+                            JSONObject foodJSON = dinnerJSON.getJSONObject(j);
                             dinnerMenu.add(new FoodItem(
                                     foodJSON.getString("id"),
                                     foodJSON.getString("name"),
