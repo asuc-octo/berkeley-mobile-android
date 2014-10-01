@@ -2,10 +2,15 @@ package com.asuc.asucmobile.main;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
+import android.text.Spannable;
+import android.text.SpannableString;
+import android.text.style.TypefaceSpan;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.asuc.asucmobile.R;
 import com.asuc.asucmobile.adapters.MainMenuAdapter;
@@ -17,6 +22,11 @@ public class MainActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if (getActionBar() != null) {
+            int titleId = getResources().getIdentifier("action_bar_title", "id", "android");
+            TextView titleText = (TextView) findViewById(titleId);
+            titleText.setTypeface(Typeface.createFromAsset(getAssets(), "young.ttf"));
+        }
         setContentView(R.layout.activity_main);
 
         Category[] menuItems = new Category[] {
