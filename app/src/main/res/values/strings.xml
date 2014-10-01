@@ -2,6 +2,7 @@
 <resources>
 
     <string name="app_name">ASUC Mobile</string>
+    <string name="title_activity_main">Campus Resources</string>
     <string name="title_activity_library">Cal Libraries</string>
     <string name="search">Search</string>
     <string name="content_desc">image</string>
@@ -12,5 +13,6 @@
     <string name="address">Address</string>
     <string name="title_activity_gym">Gyms</string>
     <string name="title_activity_open_gym">Gym</string>
+    <string name="title_activity_dining_hall">Dining Halls</string>
 
 </resources>
