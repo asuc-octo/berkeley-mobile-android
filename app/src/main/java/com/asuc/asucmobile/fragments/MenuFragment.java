@@ -1,5 +1,6 @@
 package com.asuc.asucmobile.fragments;
 
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.app.Fragment;
 import android.view.LayoutInflater;
@@ -26,6 +27,8 @@ public class MenuFragment extends Fragment {
 
         ListView foodMenu = (ListView) v.findViewById(R.id.food_menu);
         TextView emptyListView = (TextView) v.findViewById(R.id.empty_list);
+
+        emptyListView.setTypeface(Typeface.createFromAsset(getActivity().getAssets(), "young.ttf"));
 
         DiningHall diningHall = ((OpenDiningHallActivity) getActivity()).getDiningHall();
         ArrayList<FoodItem> foodItems;
