@@ -27,51 +27,27 @@
         </activity>
         <activity
             android:name=".main.LibraryActivity"
-            android:label="@string/title_activity_library"
-            android:parentActivityName=".main.MainActivity" >
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.asuc.asucmobile.main.MainActivity" />
+            android:label="@string/title_activity_library">
         </activity>
         <activity
             android:name=".main.OpenLibraryActivity"
-            android:label="@string/title_activity_open_library"
-            android:parentActivityName=".main.LibraryActivity" >
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.asuc.asucmobile.main.LibraryActivity" />
+            android:label="@string/title_activity_open_library">
         </activity>
         <activity
             android:name=".main.GymActivity"
-            android:label="@string/title_activity_gym"
-            android:parentActivityName=".main.MainActivity" >
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.asuc.asucmobile.main.MainActivity" />
+            android:label="@string/title_activity_gym">
         </activity>
         <activity
             android:name=".main.OpenGymActivity"
-            android:label="@string/title_activity_open_gym"
-            android:parentActivityName=".main.GymActivity" >
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.asuc.asucmobile.main.GymActivity" />
+            android:label="@string/title_activity_open_gym">
         </activity>
         <activity
             android:name=".main.DiningHallActivity"
-            android:label="@string/title_activity_dining_hall"
-            android:parentActivityName=".main.MainActivity" >
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.asuc.asucmobile.main.MainActivity" />
+            android:label="@string/title_activity_dining_hall">
         </activity>
         <activity
             android:name=".main.OpenDiningHallActivity"
-            android:label="@string/title_activity_open_dining_hall"
-            android:parentActivityName=".main.DiningHallActivity" >
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.asuc.asucmobile.main.DiningHallActivity" />
+            android:label="@string/title_activity_open_dining_hall">
         </activity>
     </application>
 

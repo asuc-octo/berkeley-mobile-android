@@ -9,6 +9,7 @@ import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v13.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.view.MenuItem;
 import android.widget.TextView;
 
 import com.asuc.asucmobile.R;
@@ -36,6 +37,8 @@ public class OpenDiningHallActivity extends Activity implements ActionBar.TabLis
         TextView titleText = (TextView) findViewById(titleId);
         titleText.setTypeface(Typeface.createFromAsset(getAssets(), "young.ttf"));
         actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
+
+        getActionBar().setDisplayHomeAsUpEnabled(true);
 
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
@@ -81,6 +84,16 @@ public class OpenDiningHallActivity extends Activity implements ActionBar.TabLis
 
     @Override
     public void onTabReselected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {}
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if (id == android.R.id.home) {
+            finish();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
 
     /**
      * A {@link FragmentPagerAdapter} that returns a fragment corresponding to

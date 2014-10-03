@@ -1,8 +1,8 @@
 package com.asuc.asucmobile.fragments;
 
+import android.app.Fragment;
 import android.graphics.Typeface;
 import android.os.Bundle;
-import android.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
