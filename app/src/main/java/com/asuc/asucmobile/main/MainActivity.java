@@ -44,6 +44,7 @@ public class MainActivity extends Activity {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 startActivity(adapter.getItem(i).getIntent());
+
             }
         });
     }

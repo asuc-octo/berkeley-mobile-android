@@ -3,6 +3,7 @@ package com.asuc.asucmobile.main;
 import android.app.Activity;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -27,6 +28,8 @@ public class OpenLibraryActivity extends Activity {
             int titleId = getResources().getIdentifier("action_bar_title", "id", "android");
             TextView titleText = (TextView) findViewById(titleId);
             titleText.setTypeface(Typeface.createFromAsset(getAssets(), "young.ttf"));
+
+            getActionBar().setDisplayHomeAsUpEnabled(true);
         }
         setContentView(R.layout.activity_open_library);
 
@@ -80,6 +83,16 @@ public class OpenLibraryActivity extends Activity {
         hours.setText(hoursString);
         address.setText(library.getLocation());
         phone.setText(library.getPhone());
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if (id == android.R.id.home) {
+            finish();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
 }
