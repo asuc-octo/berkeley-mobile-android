@@ -6,6 +6,7 @@ import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Filter;
@@ -40,6 +41,8 @@ public class LibraryActivity extends Activity {
             int titleId = getResources().getIdentifier("action_bar_title", "id", "android");
             TextView titleText = (TextView) findViewById(titleId);
             titleText.setTypeface(Typeface.createFromAsset(getAssets(), "young.ttf"));
+
+            getActionBar().setDisplayHomeAsUpEnabled(true);
         }
         setContentView(R.layout.activity_library);
 
@@ -99,6 +102,16 @@ public class LibraryActivity extends Activity {
         });
 
         return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if (id == android.R.id.home) {
+            finish();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     /**
