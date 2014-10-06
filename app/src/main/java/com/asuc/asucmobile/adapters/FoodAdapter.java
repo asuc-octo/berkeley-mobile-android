@@ -53,6 +53,8 @@ public class FoodAdapter extends BaseAdapter {
         foodName.setText(foodItem.getName());
         if (!foodItem.getFoodType().equals("None")) {
             foodType.setText(foodItem.getFoodType().toUpperCase());
+        } else {
+            foodType.setText("");
         }
 
         foodName.setTypeface(Typeface.createFromAsset(context.getAssets(), "young.ttf"));
