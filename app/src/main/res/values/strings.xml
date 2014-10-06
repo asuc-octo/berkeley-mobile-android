@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">ASUC Mobile</string>
+    <string name="title_activity_main">Campus Resources</string>
+    <string name="title_activity_library">Cal Libraries</string>
+    <string name="search">Search</string>
+    <string name="content_desc">image</string>
+    <string name="title_activity_open_library">Library</string>
+    <string name="todays_hours">Today\'s Hours</string>
+    <string name="location">Location</string>
+    <string name="phone_number">Phone Number</string>
+    <string name="address">Address</string>
+    <string name="title_activity_gym">Gyms</string>
+    <string name="title_activity_open_gym">Gym</string>
+    <string name="title_activity_dining_hall">Dining Halls</string>
+    <string name="title_activity_open_dining_hall">Dining Hall</string>
+    <string name="empty_list">Nothing to see here!</string>
+
+</resources>
