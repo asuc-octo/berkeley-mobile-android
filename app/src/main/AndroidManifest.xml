@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.asuc.asucmobile" >
+
+    <uses-permission android:name="android.permission.INTERNET" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@drawable/app_icon"
+        android:label="@string/app_name"
+        android:theme="@style/AppTheme" >
+        <activity
+            android:name=".main.SplashActivity"
+            android:label="@string/app_name"
+            android:theme="@android:style/Theme.Holo.Light.NoActionBar.Fullscreen" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".main.MainActivity"
+            android:label="@string/title_activity_main">
+        </activity>
+        <activity
+            android:name=".main.LibraryActivity"
+            android:label="@string/title_activity_library">
+        </activity>
+        <activity
+            android:name=".main.OpenLibraryActivity"
+            android:label="@string/title_activity_open_library">
+        </activity>
+        <activity
+            android:name=".main.GymActivity"
+            android:label="@string/title_activity_gym">
+        </activity>
+        <activity
+            android:name=".main.OpenGymActivity"
+            android:label="@string/title_activity_open_gym">
+        </activity>
+        <activity
+            android:name=".main.DiningHallActivity"
+            android:label="@string/title_activity_dining_hall">
+        </activity>
+        <activity
+            android:name=".main.OpenDiningHallActivity"
+            android:label="@string/title_activity_open_dining_hall">
+        </activity>
+    </application>
+
+</manifest>
