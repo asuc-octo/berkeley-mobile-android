@@ -1,19 +1,26 @@
 package com.asuc.asucmobile.main;
 
 import android.app.Activity;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.Typeface;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.style.ForegroundColorSpan;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.asuc.asucmobile.R;
 import com.asuc.asucmobile.models.Library;
@@ -22,10 +29,12 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptor;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
+import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.io.InputStream;
 import java.text.SimpleDateFormat;
+import java.util.Locale;
 
 public class OpenLibraryActivity extends Activity {
 
@@ -63,6 +72,7 @@ public class OpenLibraryActivity extends Activity {
         TextView hours = (TextView) findViewById(R.id.hours);
         TextView address = (TextView) findViewById(R.id.location);
         TextView phone = (TextView) findViewById(R.id.phone);
+        LinearLayout phoneLayout = (LinearLayout) findViewById(R.id.phone_layout);
         mapFragment = (MapFragment) getFragmentManager().findFragmentById(R.id.map);
 
         name.setTypeface(typeface);
@@ -99,6 +109,22 @@ public class OpenLibraryActivity extends Activity {
         address.setText(library.getLocation());
         phone.setText(library.getPhone());
 
+        phoneLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(Intent.ACTION_DIAL);
+                i.setData(Uri.parse("tel:" + library.getPhone()));
+                startActivity(i);
+            }
+        });
+
+        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
+        boolean firstTime = sharedPref.getBoolean("first_time", true);
+        if (firstTime) {
+            Toast.makeText(this, "Click on the map for directions,\nor the phone to dial!", Toast.LENGTH_LONG).show();
+            sharedPref.edit().putBoolean("first_time", false).apply();
+        }
+
         setUpMap();
         new DownloadImageTask(image).execute(library.getImageUrl());
     }
@@ -132,6 +158,22 @@ public class OpenLibraryActivity extends Activity {
                 );
                 map.getUiSettings().setZoomControlsEnabled(false);
                 map.moveCamera(CameraUpdateFactory.newLatLngZoom(library.getCoordinates(), 17));
+
+                map.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
+                    @Override
+                    public void onMapClick(LatLng latLng) {
+                        double lat = library.getCoordinates().latitude;
+                        double lng = library.getCoordinates().longitude;
+
+                        String uri = String.format(
+                                Locale.ENGLISH,
+                                "http://maps.google.com/maps?saddr=Current+Location&daddr=%f,%f", lat, lng
+                        );
+
+                        Intent i = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
+                        startActivity(i);
+                    }
+                });
             }
         }
     }

@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Filter;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ProgressBar;
@@ -77,6 +78,17 @@ public class LibraryActivity extends Activity {
         super.onResume();
 
         refresh();
+    }
+
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        MenuItem searchViewMenuItem = menu.findItem(R.id.search);
+        SearchView search = (SearchView) searchViewMenuItem.getActionView();
+        int searchImgId = getResources().getIdentifier("android:id/search_button", null, null);
+        ImageView v = (ImageView) search.findViewById(searchImgId);
+        v.setImageResource(R.drawable.ic_action_search);
+
+        return super.onPrepareOptionsMenu(menu);
     }
 
     @Override
