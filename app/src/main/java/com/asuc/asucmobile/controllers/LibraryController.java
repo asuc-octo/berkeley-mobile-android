@@ -82,9 +82,14 @@ public class LibraryController implements Controller {
                             closing = DATE_FORMAT.parse(closingString);
                         }
 
+                        String imageUrl = libraryJSON.getString("image_link");
+                        double lat = libraryJSON.getDouble("latitude");
+                        double lng = libraryJSON.getDouble("longitude");
+
                         boolean byAppointment = libraryJSON.getBoolean("by_appointment");
 
-                        libraries.add(new Library(id, name, location, phone, opening, closing, byAppointment));
+                        libraries.add(
+                                new Library(id, name, location, phone, opening, closing, imageUrl, lat, lng, byAppointment));
                     }
 
                     ((Activity) context).runOnUiThread(new Runnable() {
