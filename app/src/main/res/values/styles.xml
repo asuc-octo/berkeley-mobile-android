@@ -8,8 +8,8 @@
     </style>
 
     <style name="ActionBar" parent="android:Widget.Holo.ActionBar">
-        <item name="android:background">@color/OP_navy</item>
-        <item name="android:backgroundStacked">@color/OP_navy</item>
+        <item name="android:background">@color/ASUC_blue</item>
+        <item name="android:backgroundStacked">@color/ASUC_blue</item>
         <item name="android:titleTextStyle">@style/ActionBarText</item>
         <item name="android:height">56dp</item>
         <item name="android:icon">@android:color/transparent</item>
