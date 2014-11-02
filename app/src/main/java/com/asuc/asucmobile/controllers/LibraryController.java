@@ -26,6 +26,8 @@ public class LibraryController implements Controller {
     private ArrayList<Library> libraries;
     private Callback callback;
 
+    private Library currentLibrary;
+
     public static Controller getInstance(Context context) {
         if (instance == null) {
             instance = new LibraryController();
@@ -115,6 +117,14 @@ public class LibraryController implements Controller {
     public void refreshInBackground(Callback callback) {
         this.callback = callback;
         JSONUtilities.readJSONFromUrl("http://asuc-mobile.herokuapp.com/api/libraries", "libraries", LibraryController.getInstance(context));
+    }
+
+    public void setCurrentLibrary(Library library) {
+        currentLibrary = library;
+    }
+
+    public Library getCurrentLibrary() {
+        return currentLibrary;
     }
 
 }
