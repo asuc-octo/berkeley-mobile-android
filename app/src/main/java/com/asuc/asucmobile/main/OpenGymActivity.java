@@ -102,8 +102,8 @@ public class OpenGymActivity extends Activity {
             hoursString = new SpannableString("Today  " + isOpen + "\n" + opening + " to " + closing);
             hoursString.setSpan(new ForegroundColorSpan(color), 7, 7 + isOpen.length(), Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
         } else {
-            hoursString = new SpannableString("Today  UNKNOWN HOURS");
-            hoursString.setSpan(new ForegroundColorSpan(Color.rgb(114, 205, 244)), 7, 20, Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
+            hoursString = new SpannableString("Today  UNKNOWN");
+            hoursString.setSpan(new ForegroundColorSpan(Color.rgb(114, 205, 244)), 7, 14, Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
         }
 
         name.setText(gym.getName());

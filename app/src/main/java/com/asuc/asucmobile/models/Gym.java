@@ -47,7 +47,7 @@ public class Gym {
     /**
      * isOpen() returns whether or not the facility is open.
      *
-     * @return Boolean indicating if the library is open or not.
+     * @return Boolean indicating if the gym is open or not.
      */
     public boolean isOpen() {
         if (opening == null || closing == null) {

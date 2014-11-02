@@ -13,7 +13,7 @@
         android:padding="8dp"
         android:singleLine="true"
         android:ellipsize="marquee"
-        android:textColor="@color/OP_navy"
+        android:textColor="@color/charcoal"
         android:textSize="18sp" />
 
     <ImageView
