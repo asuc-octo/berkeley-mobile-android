@@ -81,7 +81,9 @@ public class GymController implements Controller {
                             closing = DATE_FORMAT.parse(closingString);
                         }
 
-                        gyms.add(new Gym(id, name, address, opening, closing));
+                        String imageUrl = gymJSON.getString("image_link");
+
+                        gyms.add(new Gym(id, name, address, opening, closing, imageUrl));
                     }
 
                     ((Activity) context).runOnUiThread(new Runnable() {

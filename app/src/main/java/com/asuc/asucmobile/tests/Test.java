@@ -31,7 +31,7 @@ public class Test {
         Date closing2 = new Date();
         closing2.setTime(currentTime.getTime() - 1000000);
         Gym testGym2 =
-                new Gym("0", "Library", "Location", opening2, closing2);
+                new Gym("0", "Library", "Location", opening2, closing2, "");
 
         System.out.print("Testing Gym that should be closed: ");
         if (!testGym2.isOpen()) {

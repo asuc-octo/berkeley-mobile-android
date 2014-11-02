@@ -59,7 +59,7 @@ public class OpenLibraryActivity extends Activity {
 
             getActionBar().setDisplayHomeAsUpEnabled(true);
         }
-        setContentView(R.layout.activity_open_library);
+        setContentView(R.layout.activity_open_facility);
 
         library = staticLibrary;
 
@@ -119,10 +119,10 @@ public class OpenLibraryActivity extends Activity {
         });
 
         SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
-        boolean firstTime = sharedPref.getBoolean("first_time", true);
+        boolean firstTime = sharedPref.getBoolean("library_first_open", true);
         if (firstTime) {
             Toast.makeText(this, "Click on the map for directions,\nor the phone to dial!", Toast.LENGTH_LONG).show();
-            sharedPref.edit().putBoolean("first_time", false).apply();
+            sharedPref.edit().putBoolean("library_first_open", false).apply();
         }
 
         setUpMap();
