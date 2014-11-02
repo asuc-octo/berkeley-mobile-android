@@ -54,7 +54,8 @@ public class GymActivity extends Activity {
         mGymList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                OpenGymActivity.staticGym = mAdapter.getItem(i);
+                GymController controller = ((GymController) GymController.getInstance(getBaseContext()));
+                controller.setCurrentGym(mAdapter.getItem(i));
                 Intent intent = new Intent(getBaseContext(), OpenGymActivity.class);
                 startActivity(intent);
             }

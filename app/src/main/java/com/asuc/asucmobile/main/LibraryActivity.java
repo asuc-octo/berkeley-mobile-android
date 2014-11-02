@@ -59,7 +59,8 @@ public class LibraryActivity extends Activity {
         mLibraryList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                OpenLibraryActivity.staticLibrary = mAdapter.getItem(i);
+                LibraryController controller = ((LibraryController) LibraryController.getInstance(getBaseContext()));
+                controller.setCurrentLibrary(mAdapter.getItem(i));
                 Intent intent = new Intent(getBaseContext(), OpenLibraryActivity.class);
                 startActivity(intent);
             }

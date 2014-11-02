@@ -25,6 +25,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.asuc.asucmobile.R;
+import com.asuc.asucmobile.controllers.GymController;
 import com.asuc.asucmobile.models.Gym;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -44,8 +45,6 @@ public class OpenGymActivity extends Activity {
     private static final SimpleDateFormat HOURS_FORMAT =
             new SimpleDateFormat("h:mm a");
 
-    public static Gym staticGym;
-
     private MapFragment mapFragment;
     private GoogleMap map;
     private Gym gym;
@@ -64,7 +63,7 @@ public class OpenGymActivity extends Activity {
         }
         setContentView(R.layout.activity_open_facility);
 
-        gym = staticGym;
+        gym = ((GymController) GymController.getInstance(this)).getCurrentGym();
 
         if (getActionBar() != null) {
             getActionBar().setTitle(gym.getName());
