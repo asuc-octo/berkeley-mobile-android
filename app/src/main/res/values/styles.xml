@@ -5,6 +5,7 @@
         <item name="android:actionBarStyle">@style/ActionBar</item>
         <item name="android:actionBarTabStyle">@style/ActionBarTabs</item>
         <item name="android:actionBarTabTextStyle">@style/ActionBarTabTitles</item>
+        <item name="android:windowBackground">@color/holo_white</item>
     </style>
 
     <style name="ActionBar" parent="android:Widget.Holo.ActionBar">

@@ -49,16 +49,26 @@ public class FoodAdapter extends BaseAdapter {
 
         TextView foodName = (TextView) convertView.findViewById(R.id.food_name);
         TextView foodType = (TextView) convertView.findViewById(R.id.food_type);
+        TextView foodCalories = (TextView) convertView.findViewById(R.id.calories);
 
         foodName.setText(foodItem.getName());
+
         if (!foodItem.getFoodType().equals("None")) {
             foodType.setText(foodItem.getFoodType().toUpperCase());
         } else {
             foodType.setText("");
         }
 
-        foodName.setTypeface(Typeface.createFromAsset(context.getAssets(), "young.ttf"));
-        foodType.setTypeface(Typeface.createFromAsset(context.getAssets(), "young.ttf"));
+        if (foodItem.getCalories().equals("null")) {
+            foodCalories.setText("");
+        } else {
+            foodCalories.setText(foodItem.getCalories() + " cal");
+        }
+
+        Typeface typeface = Typeface.createFromAsset(context.getAssets(), "young.ttf");
+        foodName.setTypeface(typeface);
+        foodType.setTypeface(typeface);
+        foodCalories.setTypeface(typeface);
 
         return convertView;
     }
