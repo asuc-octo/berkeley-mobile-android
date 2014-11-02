@@ -14,8 +14,8 @@
         android:contentDescription="@string/content_desc" />
 
     <ImageView
-        android:layout_width="30dp"
-        android:layout_height="30dp"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
         android:layout_marginTop="-30dp"
         android:layout_marginStart="45dp"
         android:layout_marginLeft="45dp"
@@ -104,6 +104,7 @@
             </LinearLayout>
 
             <View
+                android:id="@+id/bottom_divider"
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:background="@android:color/darker_gray" />
