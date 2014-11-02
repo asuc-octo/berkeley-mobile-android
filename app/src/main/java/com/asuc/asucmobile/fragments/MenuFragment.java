@@ -47,11 +47,12 @@ public class MenuFragment extends Fragment {
         HeaderView header = new HeaderView(getActivity());
         new DownloadImageTask(header).execute(diningHall.getImageUrl());
 
+        String whichMenu = getArguments().getString("whichMenu");
+
         try {
             ArrayList<FoodItem> foodItems;
             String headerString;
             boolean isOpen;
-            String whichMenu = getArguments().getString("whichMenu");
             if (whichMenu.equals("Breakfast")) {
                 foodItems = diningHall.getBreakfastMenu();
                 String opening = HOURS_FORMAT.format(diningHall.getBreakfastOpening());
@@ -97,6 +98,8 @@ public class MenuFragment extends Fragment {
             foodMenu.setAdapter(adapter);
             foodMenu.addParallaxedHeaderView(header);
         } catch (Exception e) { // Catch a null exception, meaning that there is no menu for this time slot.
+            emptyListView.setText("No " + whichMenu + " Today!");
+
             foodMenu.setVisibility(View.GONE);
             emptyListView.setVisibility(View.VISIBLE);
         }
