@@ -9,13 +9,15 @@ public class Gym {
     private String address;
     private Date opening;
     private Date closing;
+    private String imageUrl;
 
-    public Gym(String id, String name, String address, Date opening, Date closing) {
+    public Gym(String id, String name, String address, Date opening, Date closing, String imageUrl) {
         this.id = id;
         this.name = name;
         this.address = address;
         this.opening = opening;
         this.closing = closing;
+        this.imageUrl = imageUrl;
     }
 
     public String getId() {
@@ -36,6 +38,10 @@ public class Gym {
 
     public Date getClosing() {
         return closing;
+    }
+
+    public String getImageUrl() {
+        return imageUrl;
     }
 
     /**
