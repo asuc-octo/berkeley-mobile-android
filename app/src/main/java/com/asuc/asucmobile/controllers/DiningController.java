@@ -27,6 +27,8 @@ public class DiningController implements Controller {
     private ArrayList<DiningHall> diningHalls;
     private Callback callback;
 
+    private DiningHall currentDiningHall;
+
     public static Controller getInstance(Context context) {
         if (instance == null) {
             instance = new DiningController();
@@ -184,6 +186,14 @@ public class DiningController implements Controller {
     public void refreshInBackground(Callback callback) {
         this.callback = callback;
         JSONUtilities.readJSONFromUrl("http://asuc-mobile.herokuapp.com/api/dining_halls", "dining_halls", DiningController.getInstance(context));
+    }
+
+    public void setCurrentDiningHall(DiningHall diningHall) {
+        currentDiningHall = diningHall;
+    }
+
+    public DiningHall getCurrentDiningHall() {
+        return currentDiningHall;
     }
 
 }

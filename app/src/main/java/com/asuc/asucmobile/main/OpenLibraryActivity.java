@@ -23,6 +23,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.asuc.asucmobile.R;
+import com.asuc.asucmobile.controllers.LibraryController;
 import com.asuc.asucmobile.models.Library;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -40,8 +41,6 @@ public class OpenLibraryActivity extends Activity {
 
     private static final SimpleDateFormat HOURS_FORMAT =
             new SimpleDateFormat("h:mm a");
-
-    public static Library staticLibrary;
 
     private MapFragment mapFragment;
     private GoogleMap map;
@@ -61,7 +60,7 @@ public class OpenLibraryActivity extends Activity {
         }
         setContentView(R.layout.activity_open_facility);
 
-        library = staticLibrary;
+        library = ((LibraryController) LibraryController.getInstance(this)).getCurrentLibrary();
 
         if (getActionBar() != null) {
             getActionBar().setTitle(library.getName());
