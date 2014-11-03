@@ -48,6 +48,11 @@ public class OpenLibraryActivity extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        library = ((LibraryController) LibraryController.getInstance(this)).getCurrentLibrary();
+        if (library == null) {
+            finish();
+        }
+
         super.onCreate(savedInstanceState);
         Typeface typeface = Typeface.createFromAsset(getAssets(), "young.ttf");
 
@@ -56,15 +61,10 @@ public class OpenLibraryActivity extends Activity {
             TextView titleText = (TextView) findViewById(titleId);
             titleText.setTypeface(typeface);
 
+            getActionBar().setTitle(library.getName());
             getActionBar().setDisplayHomeAsUpEnabled(true);
         }
         setContentView(R.layout.activity_open_facility);
-
-        library = ((LibraryController) LibraryController.getInstance(this)).getCurrentLibrary();
-
-        if (getActionBar() != null) {
-            getActionBar().setTitle(library.getName());
-        }
 
         ImageView image = (ImageView) findViewById(R.id.image);
         TextView name = (TextView) findViewById(R.id.name);
@@ -88,10 +88,10 @@ public class OpenLibraryActivity extends Activity {
             int color;
             if (library.isOpen()) {
                 isOpen = "OPEN";
-                color = Color.rgb(75, 220, 98);
+                color = Color.rgb(16, 161, 0);
             } else {
                 isOpen = "CLOSED";
-                color = Color.RED;
+                color = Color.rgb(186, 52, 52);
             }
 
             String opening = HOURS_FORMAT.format(library.getOpening());
@@ -100,7 +100,7 @@ public class OpenLibraryActivity extends Activity {
             hoursString.setSpan(new ForegroundColorSpan(color), 7, 7 + isOpen.length(), Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
         } else {
             hoursString = new SpannableString("Today  CLOSED ALL DAY");
-            hoursString.setSpan(new ForegroundColorSpan(Color.RED), 7, 21, Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
+            hoursString.setSpan(new ForegroundColorSpan(Color.rgb(186, 52, 52)), 7, 21, Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
         }
 
         name.setText(library.getName());
