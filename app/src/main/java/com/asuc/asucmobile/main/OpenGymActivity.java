@@ -51,6 +51,11 @@ public class OpenGymActivity extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        gym = ((GymController) GymController.getInstance(this)).getCurrentGym();
+        if (gym == null) {
+            finish();
+        }
+
         super.onCreate(savedInstanceState);
         Typeface typeface = Typeface.createFromAsset(getAssets(), "young.ttf");
 
@@ -59,15 +64,10 @@ public class OpenGymActivity extends Activity {
             TextView titleText = (TextView) findViewById(titleId);
             titleText.setTypeface(typeface);
 
+            getActionBar().setTitle(gym.getName());
             getActionBar().setDisplayHomeAsUpEnabled(true);
         }
         setContentView(R.layout.activity_open_facility);
-
-        gym = ((GymController) GymController.getInstance(this)).getCurrentGym();
-
-        if (getActionBar() != null) {
-            getActionBar().setTitle(gym.getName());
-        }
 
         ImageView image = (ImageView) findViewById(R.id.image);
         TextView name = (TextView) findViewById(R.id.name);
@@ -90,10 +90,10 @@ public class OpenGymActivity extends Activity {
             int color;
             if (gym.isOpen()) {
                 isOpen = "OPEN";
-                color = Color.rgb(75, 220, 98);
+                color = Color.rgb(16, 161, 0);
             } else {
                 isOpen = "CLOSED";
-                color = Color.RED;
+                color = Color.rgb(186, 52, 52);
             }
 
             String opening = HOURS_FORMAT.format(gym.getOpening());

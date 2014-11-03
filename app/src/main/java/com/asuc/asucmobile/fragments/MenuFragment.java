@@ -77,7 +77,7 @@ public class MenuFragment extends Fragment {
             if (isOpen) {
                 spannableHeader = new SpannableString(headerString + "OPEN");
                 spannableHeader.setSpan(
-                        new ForegroundColorSpan(Color.rgb(75, 220, 98)),
+                        new ForegroundColorSpan(Color.rgb(16, 161, 0)),
                         headerString.length(),
                         headerString.length() + 4,
                         SpannableString.SPAN_INCLUSIVE_EXCLUSIVE
@@ -85,7 +85,7 @@ public class MenuFragment extends Fragment {
             } else {
                 spannableHeader = new SpannableString(headerString + "CLOSED");
                 spannableHeader.setSpan(
-                        new ForegroundColorSpan(Color.RED),
+                        new ForegroundColorSpan(Color.rgb(186, 52, 52)),
                         headerString.length(),
                         headerString.length() + 6,
                         SpannableString.SPAN_INCLUSIVE_EXCLUSIVE

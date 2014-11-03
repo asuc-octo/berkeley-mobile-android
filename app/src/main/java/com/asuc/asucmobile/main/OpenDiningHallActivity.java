@@ -25,6 +25,9 @@ public class OpenDiningHallActivity extends Activity implements ActionBar.TabLis
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         diningHall = ((DiningController) DiningController.getInstance(this)).getCurrentDiningHall();
+        if (diningHall == null) {
+            finish();
+        }
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_open_dining_hall);
