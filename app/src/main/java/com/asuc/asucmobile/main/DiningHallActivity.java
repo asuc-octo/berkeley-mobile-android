@@ -54,7 +54,8 @@ public class DiningHallActivity extends Activity {
         mDiningList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                OpenDiningHallActivity.staticDiningHall = mAdapter.getItem(i);
+                DiningController controller = ((DiningController) DiningController.getInstance(getBaseContext()));
+                controller.setCurrentDiningHall(mAdapter.getItem(i));
                 Intent intent = new Intent(getBaseContext(), OpenDiningHallActivity.class);
                 startActivity(intent);
             }

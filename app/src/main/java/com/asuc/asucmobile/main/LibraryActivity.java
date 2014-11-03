@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Filter;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ProgressBar;
@@ -58,7 +59,8 @@ public class LibraryActivity extends Activity {
         mLibraryList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                OpenLibraryActivity.staticLibrary = mAdapter.getItem(i);
+                LibraryController controller = ((LibraryController) LibraryController.getInstance(getBaseContext()));
+                controller.setCurrentLibrary(mAdapter.getItem(i));
                 Intent intent = new Intent(getBaseContext(), OpenLibraryActivity.class);
                 startActivity(intent);
             }
@@ -77,6 +79,17 @@ public class LibraryActivity extends Activity {
         super.onResume();
 
         refresh();
+    }
+
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        MenuItem searchViewMenuItem = menu.findItem(R.id.search);
+        SearchView search = (SearchView) searchViewMenuItem.getActionView();
+        int searchImgId = getResources().getIdentifier("android:id/search_button", null, null);
+        ImageView v = (ImageView) search.findViewById(searchImgId);
+        v.setImageResource(R.drawable.ic_action_search);
+
+        return super.onPrepareOptionsMenu(menu);
     }
 
     @Override

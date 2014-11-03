@@ -3,7 +3,11 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/ASUCMobile.iml" filepath="$PROJECT_DIR$/ASUCMobile.iml" />
+      <module fileurl="file://$PROJECT_DIR$/ParallaxScroll/ParallaxScroll.iml" filepath="$PROJECT_DIR$/ParallaxScroll/ParallaxScroll.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/extras-actionbarcompat/extras-actionbarcompat.iml" filepath="$PROJECT_DIR$/extras-actionbarcompat/extras-actionbarcompat.iml" />
+      <module fileurl="file://$PROJECT_DIR$/extras-actionbarsherlock/extras-actionbarsherlock.iml" filepath="$PROJECT_DIR$/extras-actionbarsherlock/extras-actionbarsherlock.iml" />
+      <module fileurl="file://$PROJECT_DIR$/library/library.iml" filepath="$PROJECT_DIR$/library/library.iml" />
     </modules>
   </component>
 </project>

@@ -13,19 +13,21 @@ import android.view.MenuItem;
 import android.widget.TextView;
 
 import com.asuc.asucmobile.R;
+import com.asuc.asucmobile.controllers.DiningController;
 import com.asuc.asucmobile.fragments.MenuFragment;
 import com.asuc.asucmobile.models.DiningHall;
 
 public class OpenDiningHallActivity extends Activity implements ActionBar.TabListener {
-
-    public static DiningHall staticDiningHall;
 
     private DiningHall diningHall;
     private ViewPager mViewPager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        diningHall = staticDiningHall;
+        diningHall = ((DiningController) DiningController.getInstance(this)).getCurrentDiningHall();
+        if (diningHall == null) {
+            finish();
+        }
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_open_dining_hall);
