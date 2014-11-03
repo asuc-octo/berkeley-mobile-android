@@ -11,15 +11,23 @@ import com.asuc.asucmobile.utilities.JSONUtilities;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.Locale;
 
 public class DiningController implements Controller {
+
+    private static final SimpleDateFormat DATE_FORMAT =
+            new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.ENGLISH);
 
     private static DiningController instance;
 
     private Context context;
     private ArrayList<DiningHall> diningHalls;
     private Callback callback;
+
+    private DiningHall currentDiningHall;
 
     public static Controller getInstance(Context context) {
         if (instance == null) {
@@ -69,7 +77,8 @@ public class DiningController implements Controller {
                             breakfastMenu.add(new FoodItem(
                                     foodJSON.getString("id"),
                                     foodJSON.getString("name"),
-                                    foodJSON.getString("food_type")
+                                    foodJSON.getString("food_type"),
+                                    foodJSON.getString("calories")
                             ));
                         }
 
@@ -80,7 +89,8 @@ public class DiningController implements Controller {
                             lunchMenu.add(new FoodItem(
                                     foodJSON.getString("id"),
                                     foodJSON.getString("name"),
-                                    foodJSON.getString("food_type")
+                                    foodJSON.getString("food_type"),
+                                    foodJSON.getString("calories")
                             ));
                         }
 
@@ -91,12 +101,65 @@ public class DiningController implements Controller {
                             dinnerMenu.add(new FoodItem(
                                     foodJSON.getString("id"),
                                     foodJSON.getString("name"),
-                                    foodJSON.getString("food_type")
+                                    foodJSON.getString("food_type"),
+                                    foodJSON.getString("calories")
                             ));
                         }
 
+                        String openingString = diningHall.getString("breakfast_open");
+                        String closingString = diningHall.getString("breakfast_close");
+
+                        Date breakfastOpening = null;
+                        Date breakfastClosing = null;
+                        if (!openingString.equals("null")) {
+                            breakfastOpening = DATE_FORMAT.parse(openingString);
+                        }
+                        if (!closingString.equals("null")) {
+                            breakfastClosing = DATE_FORMAT.parse(closingString);
+                        }
+                        
+                        openingString = diningHall.getString("lunch_open");
+                        closingString = diningHall.getString("lunch_close");
+                        
+                        Date lunchOpening = null;
+                        Date lunchClosing = null;
+                        if (!openingString.equals("null")) {
+                            lunchOpening = DATE_FORMAT.parse(openingString);
+                        }
+                        if (!closingString.equals("null")) {
+                            lunchClosing = DATE_FORMAT.parse(closingString);
+                        }
+
+                        openingString = diningHall.getString("dinner_open");
+                        closingString = diningHall.getString("dinner_close");
+
+                        Date dinnerOpening = null;
+                        Date dinnerClosing = null;
+                        if (!openingString.equals("null")) {
+                            dinnerOpening = DATE_FORMAT.parse(openingString);
+                        }
+                        if (!closingString.equals("null")) {
+                            dinnerClosing = DATE_FORMAT.parse(closingString);
+                        }
+
+                        openingString = diningHall.getString("late_night_open");
+                        closingString = diningHall.getString("late_night_close");
+
+                        Date lateNightOpening = null;
+                        Date lateNightClosing = null;
+                        if (!openingString.equals("null")) {
+                            lateNightOpening = DATE_FORMAT.parse(openingString);
+                        }
+                        if (!closingString.equals("null")) {
+                            lateNightClosing = DATE_FORMAT.parse(closingString);
+                        }
+
+                        String imageUrl = diningHall.getString("image_link");
+
                         diningHalls.add(new DiningHall(
-                                id, name, breakfastMenu, lunchMenu, dinnerMenu
+                                id, name, breakfastMenu, lunchMenu, dinnerMenu, breakfastOpening,
+                                breakfastClosing, lunchOpening, lunchClosing, dinnerOpening,
+                                dinnerClosing, lateNightOpening, lateNightClosing, imageUrl
                         ));
                     }
 
@@ -123,6 +186,14 @@ public class DiningController implements Controller {
     public void refreshInBackground(Callback callback) {
         this.callback = callback;
         JSONUtilities.readJSONFromUrl("http://asuc-mobile.herokuapp.com/api/dining_halls", "dining_halls", DiningController.getInstance(context));
+    }
+
+    public void setCurrentDiningHall(DiningHall diningHall) {
+        currentDiningHall = diningHall;
+    }
+
+    public DiningHall getCurrentDiningHall() {
+        return currentDiningHall;
     }
 
 }

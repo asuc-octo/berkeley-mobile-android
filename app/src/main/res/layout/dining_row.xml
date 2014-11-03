@@ -1,10 +1,9 @@
-<?xml version="1.0" encoding="utf-8"?>
-
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="horizontal"
     android:layout_width="match_parent"
     android:layout_height="80dp"
-    android:gravity="center_vertical">
+    android:gravity="center_vertical"
+    android:background="@drawable/white_selector">
 
     <TextView
         android:id="@+id/name"
@@ -14,7 +13,7 @@
         android:padding="8dp"
         android:singleLine="true"
         android:ellipsize="marquee"
-        android:textColor="@color/OP_navy"
+        android:textColor="@color/charcoal"
         android:textSize="18sp" />
 
     <ImageView
