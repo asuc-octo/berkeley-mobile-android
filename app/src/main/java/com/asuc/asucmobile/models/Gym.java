@@ -9,13 +9,15 @@ public class Gym {
     private String address;
     private Date opening;
     private Date closing;
+    private String imageUrl;
 
-    public Gym(String id, String name, String address, Date opening, Date closing) {
+    public Gym(String id, String name, String address, Date opening, Date closing, String imageUrl) {
         this.id = id;
         this.name = name;
         this.address = address;
         this.opening = opening;
         this.closing = closing;
+        this.imageUrl = imageUrl;
     }
 
     public String getId() {
@@ -38,10 +40,14 @@ public class Gym {
         return closing;
     }
 
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
     /**
      * isOpen() returns whether or not the facility is open.
      *
-     * @return Boolean indicating if the library is open or not.
+     * @return Boolean indicating if the gym is open or not.
      */
     public boolean isOpen() {
         if (opening == null || closing == null) {

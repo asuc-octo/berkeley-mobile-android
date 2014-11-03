@@ -1,22 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="horizontal"
+    android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="80dp"
+    android:layout_height="96dp"
+    android:gravity="center_vertical"
     android:paddingLeft="16dp"
-    android:paddingRight="16dp">
+    android:paddingRight="16dp"
+    android:background="@drawable/white_selector">
 
-    <TextView
-        android:id="@+id/food_name"
-        android:layout_width="0dp"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:layout_gravity="center_vertical"
-        android:padding="8dp"
-        android:maxLines="3"
-        android:textSize="16sp"
-        android:textColor="@color/OP_navy" />
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/food_name"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_gravity="center_vertical"
+            android:maxLines="3"
+            android:textSize="16sp"
+            android:textColor="@color/charcoal" />
+
+        <TextView
+            android:id="@+id/calories"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:layout_marginLeft="8dp"
+            android:layout_marginStart="8dp"
+            android:textSize="16sp"
+            android:textColor="@color/charcoal" />
+
+    </LinearLayout>
 
     <TextView
         android:id="@+id/food_type"
@@ -24,7 +42,6 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
         android:gravity="end"
-        android:padding="8dp"
         android:singleLine="true"
         android:textSize="16sp"
         android:textColor="@color/open" />

@@ -26,6 +26,8 @@ public class GymController implements Controller {
     private ArrayList<Gym> gyms;
     private Callback callback;
 
+    private Gym currentGym;
+
     public static Controller getInstance(Context context) {
         if (instance == null) {
             instance = new GymController();
@@ -81,7 +83,9 @@ public class GymController implements Controller {
                             closing = DATE_FORMAT.parse(closingString);
                         }
 
-                        gyms.add(new Gym(id, name, address, opening, closing));
+                        String imageUrl = gymJSON.getString("image_link");
+
+                        gyms.add(new Gym(id, name, address, opening, closing, imageUrl));
                     }
 
                     ((Activity) context).runOnUiThread(new Runnable() {
@@ -107,6 +111,14 @@ public class GymController implements Controller {
     public void refreshInBackground(Callback callback) {
         this.callback = callback;
         JSONUtilities.readJSONFromUrl("http://asuc-mobile.herokuapp.com/api/gyms", "gyms", GymController.getInstance(context));
+    }
+
+    public void setCurrentGym(Gym gym) {
+        currentGym = gym;
+    }
+
+    public Gym getCurrentGym() {
+        return currentGym;
     }
 
 }
