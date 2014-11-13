@@ -8,7 +8,6 @@ import android.graphics.Typeface;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.SpannableString;
-import android.text.Spanned;
 import android.text.style.ForegroundColorSpan;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -48,36 +47,36 @@ public class MenuFragment extends Fragment {
         new DownloadImageTask(header).execute(diningHall.getImageUrl());
 
         String whichMenu = getArguments().getString("whichMenu");
+        String opening;
+        String closing;
 
         try {
             ArrayList<FoodItem> foodItems;
-            String headerString;
             boolean isOpen;
             if (whichMenu.equals("Breakfast")) {
                 foodItems = diningHall.getBreakfastMenu();
-                String opening = HOURS_FORMAT.format(diningHall.getBreakfastOpening());
-                String closing = HOURS_FORMAT.format(diningHall.getBreakfastClosing());
-                headerString = "Breakfast Hours:  " + opening + " to " + closing + "  ";
+                opening = HOURS_FORMAT.format(diningHall.getBreakfastOpening());
+                closing = HOURS_FORMAT.format(diningHall.getBreakfastClosing());
                 isOpen = diningHall.isBreakfastOpen();
             } else if (whichMenu.equals("Lunch")) {
                 foodItems = diningHall.getLunchMenu();
-                String opening = HOURS_FORMAT.format(diningHall.getLunchOpening());
-                String closing = HOURS_FORMAT.format(diningHall.getLunchClosing());
-                headerString = "Lunch Hours:  " + opening + " to " + closing + "  ";
+                opening = HOURS_FORMAT.format(diningHall.getLunchOpening());
+                closing = HOURS_FORMAT.format(diningHall.getLunchClosing());
                 isOpen = diningHall.isLunchOpen();
             } else {
                 foodItems = diningHall.getDinnerMenu();
-                String opening = HOURS_FORMAT.format(diningHall.getDinnerOpening());
-                String closing = HOURS_FORMAT.format(diningHall.getDinnerClosing());
-                headerString = "Dinner Hours:  " + opening + " to " + closing + "  ";
+                opening = HOURS_FORMAT.format(diningHall.getDinnerOpening());
+                closing = HOURS_FORMAT.format(diningHall.getDinnerClosing());
                 isOpen = diningHall.isDinnerOpen();
             }
+
+            String headerString = "Hours:  " + opening + " to " + closing + "  ";
 
             SpannableString spannableHeader;
             if (isOpen) {
                 spannableHeader = new SpannableString(headerString + "OPEN");
                 spannableHeader.setSpan(
-                        new ForegroundColorSpan(Color.rgb(16, 161, 0)),
+                        new ForegroundColorSpan(Color.rgb(153, 204, 0)),
                         headerString.length(),
                         headerString.length() + 4,
                         SpannableString.SPAN_INCLUSIVE_EXCLUSIVE
@@ -85,7 +84,7 @@ public class MenuFragment extends Fragment {
             } else {
                 spannableHeader = new SpannableString(headerString + "CLOSED");
                 spannableHeader.setSpan(
-                        new ForegroundColorSpan(Color.rgb(186, 52, 52)),
+                        new ForegroundColorSpan(Color.rgb(255, 68, 68)),
                         headerString.length(),
                         headerString.length() + 6,
                         SpannableString.SPAN_INCLUSIVE_EXCLUSIVE

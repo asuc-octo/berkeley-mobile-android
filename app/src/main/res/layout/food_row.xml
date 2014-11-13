@@ -22,7 +22,7 @@
             android:layout_gravity="center_vertical"
             android:maxLines="3"
             android:textSize="16sp"
-            android:textColor="@color/charcoal" />
+            android:textColor="@color/grizzly_gray" />
 
         <TextView
             android:id="@+id/calories"
@@ -32,7 +32,7 @@
             android:layout_marginLeft="8dp"
             android:layout_marginStart="8dp"
             android:textSize="16sp"
-            android:textColor="@color/charcoal" />
+            android:textColor="@color/grizzly_gray" />
 
     </LinearLayout>
 
@@ -44,6 +44,6 @@
         android:gravity="end"
         android:singleLine="true"
         android:textSize="16sp"
-        android:textColor="@color/open" />
+        android:textColor="@color/green" />
 
 </LinearLayout>

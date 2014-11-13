@@ -9,40 +9,14 @@
         android:id="@+id/image"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="4"
+        android:layout_weight="1"
         android:scaleType="fitXY"
         android:contentDescription="@string/content_desc" />
-
-    <ImageView
-        android:layout_width="24dp"
-        android:layout_height="24dp"
-        android:layout_marginTop="-30dp"
-        android:layout_marginStart="45dp"
-        android:layout_marginLeft="45dp"
-        android:contentDescription="@string/content_desc"
-        android:src="@drawable/pointer_triangle"/>
-
-    <TextView
-        android:id="@+id/name"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:paddingLeft="32dp"
-        android:paddingRight="32dp"
-        android:layout_weight="1"
-        android:gravity="center_vertical"
-        android:textSize="24sp"
-        android:textColor="@android:color/white"
-        android:singleLine="true"
-        android:ellipsize="marquee"
-        android:scrollHorizontally="true"
-        android:focusable="true"
-        android:focusableInTouchMode="true"
-        android:background="@color/pavan_light" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="5"
+        android:layout_weight="1"
         android:orientation="horizontal">
 
         <LinearLayout
@@ -73,7 +47,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="36dp"
                     android:layout_marginLeft="36dp"
-                    android:textColor="@color/charcoal" />
+                    android:textColor="@color/grizzly_gray" />
 
             </LinearLayout>
 
@@ -101,7 +75,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="36dp"
                     android:layout_marginLeft="36dp"
-                    android:textColor="@color/charcoal" />
+                    android:textColor="@color/grizzly_gray" />
 
             </LinearLayout>
 
@@ -132,7 +106,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="36dp"
                     android:layout_marginLeft="36dp"
-                    android:textColor="@color/charcoal" />
+                    android:textColor="@color/grizzly_gray" />
 
             </LinearLayout>
 
