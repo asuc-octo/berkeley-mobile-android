@@ -24,12 +24,14 @@ public class OpenDiningHallActivity extends Activity implements ActionBar.TabLis
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
         diningHall = ((DiningController) DiningController.getInstance(this)).getCurrentDiningHall();
         if (diningHall == null) {
             finish();
+            return;
         }
 
-        super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_open_dining_hall);
 
         // Set up the action bar.
@@ -71,6 +73,16 @@ public class OpenDiningHallActivity extends Activity implements ActionBar.TabLis
                     actionBar.newTab()
                             .setText(pagerAdapter.getPageTitle(i))
                             .setTabListener(this));
+        }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        diningHall = ((DiningController) DiningController.getInstance(this)).getCurrentDiningHall();
+        if (diningHall == null) {
+            finish();
         }
     }
 

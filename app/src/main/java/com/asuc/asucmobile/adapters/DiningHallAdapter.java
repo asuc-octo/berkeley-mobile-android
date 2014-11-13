@@ -47,7 +47,14 @@ public class DiningHallAdapter extends BaseAdapter {
             convertView = LayoutInflater.from(context).inflate(R.layout.dining_row, parent, false);
         }
 
+        View highlights = convertView.findViewById(R.id.highlights);
         TextView name = (TextView) convertView.findViewById(R.id.name);
+
+        if (i % 2 == 0) {
+            highlights.setBackgroundColor(context.getResources().getColor(R.color.two_chainz_gold));
+        } else {
+            highlights.setBackgroundColor(context.getResources().getColor(R.color.ASUC_blue));
+        }
 
         name.setText(diningHall.getName());
         name.setTypeface(Typeface.createFromAsset(context.getAssets(), "young.ttf"));
