@@ -61,7 +61,7 @@ public class LibraryAdapter extends BaseAdapter {
             libraryAvailability.setTextColor(context.getResources().getColor(R.color.pavan_light));
             libraryAvailability.setText("BY APPOINTMENT");
         } else if (library.isOpen()) {
-            libraryAvailability.setTextColor(context.getResources().getColor(R.color.open));
+            libraryAvailability.setTextColor(context.getResources().getColor(R.color.green));
             libraryAvailability.setText("OPEN");
         } else {
             libraryAvailability.setTextColor(context.getResources().getColor(android.R.color.holo_red_light));

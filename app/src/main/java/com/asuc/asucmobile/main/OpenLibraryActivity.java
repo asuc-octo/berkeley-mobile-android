@@ -48,12 +48,14 @@ public class OpenLibraryActivity extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
         library = ((LibraryController) LibraryController.getInstance(this)).getCurrentLibrary();
         if (library == null) {
             finish();
+            return;
         }
 
-        super.onCreate(savedInstanceState);
         Typeface typeface = Typeface.createFromAsset(getAssets(), "young.ttf");
 
         if (getActionBar() != null) {
@@ -67,14 +69,12 @@ public class OpenLibraryActivity extends Activity {
         setContentView(R.layout.activity_open_facility);
 
         ImageView image = (ImageView) findViewById(R.id.image);
-        TextView name = (TextView) findViewById(R.id.name);
         TextView hours = (TextView) findViewById(R.id.hours);
         TextView address = (TextView) findViewById(R.id.location);
         TextView phone = (TextView) findViewById(R.id.phone);
         LinearLayout phoneLayout = (LinearLayout) findViewById(R.id.phone_layout);
         mapFragment = (MapFragment) getFragmentManager().findFragmentById(R.id.map);
 
-        name.setTypeface(typeface);
         hours.setTypeface(typeface);
         address.setTypeface(typeface);
         phone.setTypeface(typeface);
@@ -88,10 +88,10 @@ public class OpenLibraryActivity extends Activity {
             int color;
             if (library.isOpen()) {
                 isOpen = "OPEN";
-                color = Color.rgb(16, 161, 0);
+                color = Color.rgb(153, 204, 0);
             } else {
                 isOpen = "CLOSED";
-                color = Color.rgb(186, 52, 52);
+                color = Color.rgb(255, 68, 68);
             }
 
             String opening = HOURS_FORMAT.format(library.getOpening());
@@ -103,7 +103,6 @@ public class OpenLibraryActivity extends Activity {
             hoursString.setSpan(new ForegroundColorSpan(Color.rgb(186, 52, 52)), 7, 21, Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
         }
 
-        name.setText(library.getName());
         hours.setText(hoursString);
         address.setText(library.getLocation());
         phone.setText(library.getPhone());
@@ -131,6 +130,11 @@ public class OpenLibraryActivity extends Activity {
     @Override
     public void onResume() {
         super.onResume();
+
+        library = ((LibraryController) LibraryController.getInstance(this)).getCurrentLibrary();
+        if (library == null) {
+            finish();
+        }
 
         setUpMap();
     }
@@ -166,7 +170,7 @@ public class OpenLibraryActivity extends Activity {
 
                         String uri = String.format(
                                 Locale.ENGLISH,
-                                "http://maps.google.com/maps?saddr=Current+Location&daddr=%f,%f", lat, lng
+                                "http://maps.google.com/maps?dirflg=w&saddr=Current+Location&daddr=%f,%f", lat, lng
                         );
 
                         Intent i = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));

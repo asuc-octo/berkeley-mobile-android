@@ -51,12 +51,14 @@ public class OpenGymActivity extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
         gym = ((GymController) GymController.getInstance(this)).getCurrentGym();
         if (gym == null) {
             finish();
+            return;
         }
 
-        super.onCreate(savedInstanceState);
         Typeface typeface = Typeface.createFromAsset(getAssets(), "young.ttf");
 
         if (getActionBar() != null) {
@@ -70,14 +72,12 @@ public class OpenGymActivity extends Activity {
         setContentView(R.layout.activity_open_facility);
 
         ImageView image = (ImageView) findViewById(R.id.image);
-        TextView name = (TextView) findViewById(R.id.name);
         TextView hours = (TextView) findViewById(R.id.hours);
         TextView address = (TextView) findViewById(R.id.location);
         LinearLayout phoneLayout = (LinearLayout) findViewById(R.id.phone_layout);
         View bottomDivider = findViewById(R.id.bottom_divider);
         mapFragment = (MapFragment) getFragmentManager().findFragmentById(R.id.map);
 
-        name.setTypeface(typeface);
         hours.setTypeface(typeface);
         address.setTypeface(typeface);
 
@@ -90,10 +90,10 @@ public class OpenGymActivity extends Activity {
             int color;
             if (gym.isOpen()) {
                 isOpen = "OPEN";
-                color = Color.rgb(16, 161, 0);
+                color = Color.rgb(153, 204, 0);
             } else {
                 isOpen = "CLOSED";
-                color = Color.rgb(186, 52, 52);
+                color = Color.rgb(255, 68, 68);
             }
 
             String opening = HOURS_FORMAT.format(gym.getOpening());
@@ -105,7 +105,6 @@ public class OpenGymActivity extends Activity {
             hoursString.setSpan(new ForegroundColorSpan(Color.rgb(114, 205, 244)), 7, 14, Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
         }
 
-        name.setText(gym.getName());
         hours.setText(hoursString);
         address.setText(gym.getAddress());
 
@@ -123,6 +122,11 @@ public class OpenGymActivity extends Activity {
     @Override
     public void onResume() {
         super.onResume();
+
+        gym = ((GymController) GymController.getInstance(this)).getCurrentGym();
+        if (gym == null) {
+            finish();
+        }
 
         setUpMap();
     }
@@ -180,7 +184,7 @@ public class OpenGymActivity extends Activity {
 
                         String uri = String.format(
                                 Locale.ENGLISH,
-                                "http://maps.google.com/maps?saddr=Current+Location&daddr=%f,%f", lat, lng
+                                "http://maps.google.com/maps?dirflg=w&saddr=Current+Location&daddr=%f,%f", lat, lng
                         );
 
                         Intent i = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
