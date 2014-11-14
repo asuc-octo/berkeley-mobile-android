@@ -25,6 +25,9 @@ import android.widget.Toast;
 import com.asuc.asucmobile.R;
 import com.asuc.asucmobile.controllers.LibraryController;
 import com.asuc.asucmobile.models.Library;
+import com.flurry.android.FlurryAgent;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
@@ -39,6 +42,7 @@ import java.util.Locale;
 
 public class OpenLibraryActivity extends Activity {
 
+    private static final int REQUEST_CODE_PLAY_SERVICES = 1;
     private static final SimpleDateFormat HOURS_FORMAT =
             new SimpleDateFormat("h:mm a");
 
@@ -49,6 +53,7 @@ public class OpenLibraryActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        FlurryAgent.onStartSession(this, "4VPTT49FCCKH7Z2NVQ26");
 
         library = ((LibraryController) LibraryController.getInstance(this)).getCurrentLibrary();
         if (library == null) {
@@ -140,6 +145,29 @@ public class OpenLibraryActivity extends Activity {
     }
 
     @Override
+    protected void onStop() {
+        super.onStop();
+
+        FlurryAgent.onEndSession(this);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == REQUEST_CODE_PLAY_SERVICES) {
+            if (resultCode == RESULT_CANCELED) {
+                Toast.makeText(
+                        this,
+                        "Google Play Services must be installed to display map.",
+                        Toast.LENGTH_LONG
+                ).show();
+                finish();
+            }
+        } else {
+            super.onActivityResult(requestCode, resultCode, data);
+        }
+    }
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         if (id == android.R.id.home) {
@@ -150,6 +178,23 @@ public class OpenLibraryActivity extends Activity {
     }
 
     private void setUpMap() {
+        // Checking if Google Play Services are available to set up the map.
+        int status = GooglePlayServicesUtil.isGooglePlayServicesAvailable(this);
+        if (status != ConnectionResult.SUCCESS) {
+            if (GooglePlayServicesUtil.isUserRecoverableError(status)) {
+                GooglePlayServicesUtil
+                        .getErrorDialog(status, this, REQUEST_CODE_PLAY_SERVICES).show();
+            } else {
+                Toast.makeText(
+                        this,
+                        "Unable to display map. Make sure you have Google Play Services.",
+                        Toast.LENGTH_LONG
+                ).show();
+            }
+
+            return;
+        }
+
         if (map == null) {
             map = mapFragment.getMap();
             if (map != null) {

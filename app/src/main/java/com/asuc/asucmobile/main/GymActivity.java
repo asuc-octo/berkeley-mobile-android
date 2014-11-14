@@ -19,8 +19,11 @@ import com.asuc.asucmobile.adapters.GymAdapter;
 import com.asuc.asucmobile.controllers.GymController;
 import com.asuc.asucmobile.models.Gym;
 import com.asuc.asucmobile.utilities.Callback;
+import com.flurry.android.FlurryAgent;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class GymActivity extends Activity {
 
@@ -33,6 +36,8 @@ public class GymActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        FlurryAgent.onStartSession(this, "4VPTT49FCCKH7Z2NVQ26");
+
         if (getActionBar() != null) {
             int titleId = getResources().getIdentifier("action_bar_title", "id", "android");
             TextView titleText = (TextView) findViewById(titleId);
@@ -57,6 +62,12 @@ public class GymActivity extends Activity {
                 GymController controller = ((GymController) GymController.getInstance(getBaseContext()));
                 controller.setCurrentGym(mAdapter.getItem(i));
                 Intent intent = new Intent(getBaseContext(), OpenGymActivity.class);
+
+                //Flurry log for tapping Gyms.
+                Map<String, String> gymParams = new HashMap<String, String>();
+                gymParams.put("Hall", mAdapter.getItem(i).getName());
+                FlurryAgent.logEvent("Taps Gym Hours", gymParams);
+
                 startActivity(intent);
             }
         });
@@ -77,6 +88,13 @@ public class GymActivity extends Activity {
     }
 
     @Override
+    protected void onStop() {
+        super.onStop();
+
+        FlurryAgent.onEndSession(this);
+    }
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         if (id == android.R.id.home) {
@@ -84,6 +102,14 @@ public class GymActivity extends Activity {
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+
+        //Flurry logging for pressing the Back Button
+        FlurryAgent.logEvent("Tapped on the Back Button (Gyms)");
     }
 
     /**
