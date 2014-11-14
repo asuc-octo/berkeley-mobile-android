@@ -19,8 +19,11 @@ import com.asuc.asucmobile.adapters.DiningHallAdapter;
 import com.asuc.asucmobile.controllers.DiningController;
 import com.asuc.asucmobile.models.DiningHall;
 import com.asuc.asucmobile.utilities.Callback;
+import com.flurry.android.FlurryAgent;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class DiningHallActivity extends Activity {
 
@@ -33,6 +36,8 @@ public class DiningHallActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        FlurryAgent.onStartSession(this, "4VPTT49FCCKH7Z2NVQ26");
+
         if (getActionBar() != null) {
             int titleId = getResources().getIdentifier("action_bar_title", "id", "android");
             TextView titleText = (TextView) findViewById(titleId);
@@ -57,6 +62,12 @@ public class DiningHallActivity extends Activity {
                 DiningController controller = ((DiningController) DiningController.getInstance(getBaseContext()));
                 controller.setCurrentDiningHall(mAdapter.getItem(i));
                 Intent intent = new Intent(getBaseContext(), OpenDiningHallActivity.class);
+
+                //Flurry log for tapping Dining Hall Menus.
+                Map<String, String> diningParams = new HashMap<String, String>();
+                diningParams.put("Hall", mAdapter.getItem(i).getName());
+                FlurryAgent.logEvent("Taps Dining Hall Menus", diningParams);
+
                 startActivity(intent);
             }
         });
@@ -77,6 +88,13 @@ public class DiningHallActivity extends Activity {
     }
 
     @Override
+    protected void onStop() {
+        super.onStop();
+
+        FlurryAgent.onEndSession(this);
+    }
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         if (id == android.R.id.home) {
@@ -84,6 +102,14 @@ public class DiningHallActivity extends Activity {
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+
+        //Flurry logging for pressing the Back Button
+        FlurryAgent.logEvent("Tapped on the Back Button (Dining Halls)");
     }
 
     /**

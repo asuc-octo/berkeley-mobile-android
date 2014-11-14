@@ -16,6 +16,7 @@ import com.asuc.asucmobile.R;
 import com.asuc.asucmobile.controllers.DiningController;
 import com.asuc.asucmobile.fragments.MenuFragment;
 import com.asuc.asucmobile.models.DiningHall;
+import com.flurry.android.FlurryAgent;
 
 public class OpenDiningHallActivity extends Activity implements ActionBar.TabListener {
 
@@ -25,6 +26,7 @@ public class OpenDiningHallActivity extends Activity implements ActionBar.TabLis
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        FlurryAgent.onStartSession(this, "4VPTT49FCCKH7Z2NVQ26");
 
         diningHall = ((DiningController) DiningController.getInstance(this)).getCurrentDiningHall();
         if (diningHall == null) {
@@ -85,6 +87,14 @@ public class OpenDiningHallActivity extends Activity implements ActionBar.TabLis
             finish();
         }
     }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+
+        FlurryAgent.onEndSession(this);
+    }
+
 
     @Override
     public void onTabSelected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
