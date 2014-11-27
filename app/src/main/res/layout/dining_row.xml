@@ -1,10 +1,16 @@
-<?xml version="1.0" encoding="utf-8"?>
-
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="horizontal"
     android:layout_width="match_parent"
     android:layout_height="80dp"
-    android:gravity="center_vertical">
+    android:gravity="center_vertical"
+    android:background="@drawable/white_selector">
+
+    <View
+        android:id="@+id/highlights"
+        android:layout_width="4dp"
+        android:layout_height="match_parent"
+        android:layout_marginEnd="12dp"
+        android:layout_marginRight="12dp" />
 
     <TextView
         android:id="@+id/name"
@@ -14,12 +20,14 @@
         android:padding="8dp"
         android:singleLine="true"
         android:ellipsize="marquee"
-        android:textColor="@color/OP_navy"
+        android:textColor="@color/grizzly_gray"
         android:textSize="18sp" />
 
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="28dp"
+        android:layout_marginRight="4dp"
+        android:layout_marginEnd="4dp"
         android:contentDescription="@string/content_desc"
         android:src="@drawable/ic_menu_chevron_right" />
 

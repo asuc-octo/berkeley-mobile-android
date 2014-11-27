@@ -1,5 +1,8 @@
 #ASUC-Android
 
+##Release APK
+The most updated .apk file for the Play Store will be located in the "app" folder as "app-release.apk".
+
 ##Testing
 To run unit tests, run
 ```

@@ -4,9 +4,6 @@ import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
-import android.text.Spannable;
-import android.text.SpannableString;
-import android.text.style.TypefaceSpan;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -15,6 +12,7 @@ import android.widget.TextView;
 import com.asuc.asucmobile.R;
 import com.asuc.asucmobile.adapters.MainMenuAdapter;
 import com.asuc.asucmobile.models.Category;
+import com.flurry.android.FlurryAgent;
 
 
 public class MainActivity extends Activity {
@@ -22,6 +20,8 @@ public class MainActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        FlurryAgent.onStartSession(this, "4VPTT49FCCKH7Z2NVQ26");
+
         if (getActionBar() != null) {
             int titleId = getResources().getIdentifier("action_bar_title", "id", "android");
             TextView titleText = (TextView) findViewById(titleId);
@@ -47,6 +47,13 @@ public class MainActivity extends Activity {
 
             }
         });
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+
+        FlurryAgent.onEndSession(this);
     }
 
 }

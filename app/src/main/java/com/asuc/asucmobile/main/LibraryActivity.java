@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Filter;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ProgressBar;
@@ -23,8 +24,11 @@ import com.asuc.asucmobile.adapters.LibraryAdapter;
 import com.asuc.asucmobile.controllers.LibraryController;
 import com.asuc.asucmobile.models.Library;
 import com.asuc.asucmobile.utilities.Callback;
+import com.flurry.android.FlurryAgent;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class LibraryActivity extends Activity {
 
@@ -37,6 +41,8 @@ public class LibraryActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        FlurryAgent.onStartSession(this, "4VPTT49FCCKH7Z2NVQ26");
+
         if (getActionBar() != null) {
             int titleId = getResources().getIdentifier("action_bar_title", "id", "android");
             TextView titleText = (TextView) findViewById(titleId);
@@ -58,8 +64,15 @@ public class LibraryActivity extends Activity {
         mLibraryList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                OpenLibraryActivity.staticLibrary = mAdapter.getItem(i);
+                LibraryController controller = ((LibraryController) LibraryController.getInstance(getBaseContext()));
+                controller.setCurrentLibrary(mAdapter.getItem(i));
                 Intent intent = new Intent(getBaseContext(), OpenLibraryActivity.class);
+
+                //Flurry log for tapping Library hours.
+                Map<String, String> libParams = new HashMap<String, String>();
+                libParams.put("Hall", mAdapter.getItem(i).getName());
+                FlurryAgent.logEvent("Taps Library Hours", libParams);
+
                 startActivity(intent);
             }
         });
@@ -80,11 +93,36 @@ public class LibraryActivity extends Activity {
     }
 
     @Override
+    protected void onStop() {
+        super.onStop();
+
+        FlurryAgent.onEndSession(this);
+    }
+
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        MenuItem searchViewMenuItem = menu.findItem(R.id.search);
+        SearchView search = (SearchView) searchViewMenuItem.getActionView();
+        int searchImgId = getResources().getIdentifier("android:id/search_button", null, null);
+        ImageView v = (ImageView) search.findViewById(searchImgId);
+        v.setImageResource(R.drawable.ic_action_search);
+
+        return super.onPrepareOptionsMenu(menu);
+    }
+
+    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.library, menu);
 
         final SearchView search = (SearchView) menu.findItem(R.id.search).getActionView();
+        search.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //Flurry log for searching for something!
+                FlurryAgent.logEvent("Tapped on the Search Button (Libraries)");
+            }
+        });
         search.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String s) {
@@ -112,6 +150,14 @@ public class LibraryActivity extends Activity {
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+
+        //Flurry logging for pressing the Back Button
+        FlurryAgent.logEvent("Tapped on the Back Button (Libraries)");
     }
 
     /**

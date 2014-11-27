@@ -45,12 +45,6 @@ public class MainMenuAdapter extends BaseAdapter {
             convertView = LayoutInflater.from(context).inflate(R.layout.main_menu_row, parent, false);
         }
 
-        if (i % 2 == 0) {
-            convertView.setBackgroundResource(R.drawable.gray_selector);
-        } else {
-            convertView.setBackgroundResource(R.drawable.white_selector);
-        }
-
         ImageView icon = (ImageView) convertView.findViewById(R.id.menu_icon);
         TextView name = (TextView) convertView.findViewById(R.id.menu_name);
 

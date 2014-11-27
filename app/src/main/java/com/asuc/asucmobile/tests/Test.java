@@ -17,7 +17,7 @@ public class Test {
         Date closing1 = new Date();
         closing1.setTime(currentTime.getTime() + 1000000);
         Library testLibrary1 =
-                new Library("0", "Library", "Location", "000-000-0000", opening1, closing1, false);
+                new Library("0", "Library", "Location", "000-000-0000", opening1, closing1, "", 0, 0, false);
 
         System.out.print("Testing Library that should be open: ");
         if (testLibrary1.isOpen()) {
@@ -31,7 +31,7 @@ public class Test {
         Date closing2 = new Date();
         closing2.setTime(currentTime.getTime() - 1000000);
         Gym testGym2 =
-                new Gym("0", "Library", "Location", opening2, closing2);
+                new Gym("0", "Library", "Location", opening2, closing2, "");
 
         System.out.print("Testing Gym that should be closed: ");
         if (!testGym2.isOpen()) {
@@ -41,7 +41,7 @@ public class Test {
         }
 
         Library testLibrary3 =
-                new Library("0", "Library", "Location", "000-000-0000", null, null, false);
+                new Library("0", "Library", "Location", "000-000-0000", null, null, "", 0, 0, false);
 
         System.out.print("Testing Library that should be closed when given null Dates: ");
         if (!testLibrary3.isOpen()) {
