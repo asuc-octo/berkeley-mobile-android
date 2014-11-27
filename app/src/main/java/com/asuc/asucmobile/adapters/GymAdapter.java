@@ -58,7 +58,7 @@ public class GymAdapter extends BaseAdapter {
             gymAvailability.setTextColor(context.getResources().getColor(R.color.pavan_light));
             gymAvailability.setText("UNKNOWN HOURS");
         } else if (gym.isOpen()) {
-            gymAvailability.setTextColor(context.getResources().getColor(R.color.open));
+            gymAvailability.setTextColor(context.getResources().getColor(R.color.green));
             gymAvailability.setText("OPEN");
         } else {
             gymAvailability.setTextColor(context.getResources().getColor(android.R.color.holo_red_light));
