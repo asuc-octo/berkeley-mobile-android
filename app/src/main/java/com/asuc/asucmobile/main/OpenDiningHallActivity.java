@@ -13,21 +13,27 @@ import android.view.MenuItem;
 import android.widget.TextView;
 
 import com.asuc.asucmobile.R;
+import com.asuc.asucmobile.controllers.DiningController;
 import com.asuc.asucmobile.fragments.MenuFragment;
 import com.asuc.asucmobile.models.DiningHall;
+import com.flurry.android.FlurryAgent;
 
 public class OpenDiningHallActivity extends Activity implements ActionBar.TabListener {
-
-    public static DiningHall staticDiningHall;
 
     private DiningHall diningHall;
     private ViewPager mViewPager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        diningHall = staticDiningHall;
-
         super.onCreate(savedInstanceState);
+        FlurryAgent.onStartSession(this, "4VPTT49FCCKH7Z2NVQ26");
+
+        diningHall = ((DiningController) DiningController.getInstance(this)).getCurrentDiningHall();
+        if (diningHall == null) {
+            finish();
+            return;
+        }
+
         setContentView(R.layout.activity_open_dining_hall);
 
         // Set up the action bar.
@@ -71,6 +77,24 @@ public class OpenDiningHallActivity extends Activity implements ActionBar.TabLis
                             .setTabListener(this));
         }
     }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        diningHall = ((DiningController) DiningController.getInstance(this)).getCurrentDiningHall();
+        if (diningHall == null) {
+            finish();
+        }
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+
+        FlurryAgent.onEndSession(this);
+    }
+
 
     @Override
     public void onTabSelected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
