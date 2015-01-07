@@ -41,6 +41,7 @@ public class LibraryActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         FlurryAgent.onStartSession(this, "4VPTT49FCCKH7Z2NVQ26");
 
         if (getActionBar() != null) {
@@ -50,6 +51,7 @@ public class LibraryActivity extends Activity {
 
             getActionBar().setDisplayHomeAsUpEnabled(true);
         }
+
         setContentView(R.layout.activity_library);
 
         ImageButton refreshButton = (ImageButton) findViewById(R.id.refresh_button);
@@ -62,40 +64,42 @@ public class LibraryActivity extends Activity {
         mLibraryList.setAdapter(mAdapter);
 
         mLibraryList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 LibraryController controller = ((LibraryController) LibraryController.getInstance(getBaseContext()));
                 controller.setCurrentLibrary(mAdapter.getItem(i));
                 Intent intent = new Intent(getBaseContext(), OpenLibraryActivity.class);
 
-                //Flurry log for tapping Library hours.
+                // Flurry log for tapping "Library Hours".
                 Map<String, String> libParams = new HashMap<String, String>();
                 libParams.put("Hall", mAdapter.getItem(i).getName());
                 FlurryAgent.logEvent("Taps Library Hours", libParams);
 
                 startActivity(intent);
             }
+
         });
 
         refreshButton.setOnClickListener(new View.OnClickListener() {
+
             @Override
             public void onClick(View view) {
                 refresh();
             }
+
         });
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-
         refresh();
     }
 
     @Override
     protected void onStop() {
         super.onStop();
-
         FlurryAgent.onEndSession(this);
     }
 
@@ -103,7 +107,9 @@ public class LibraryActivity extends Activity {
     public boolean onPrepareOptionsMenu(Menu menu) {
         MenuItem searchViewMenuItem = menu.findItem(R.id.search);
         SearchView search = (SearchView) searchViewMenuItem.getActionView();
+
         int searchImgId = getResources().getIdentifier("android:id/search_button", null, null);
+
         ImageView v = (ImageView) search.findViewById(searchImgId);
         v.setImageResource(R.drawable.ic_action_search);
 
@@ -117,16 +123,20 @@ public class LibraryActivity extends Activity {
 
         final SearchView search = (SearchView) menu.findItem(R.id.search).getActionView();
         search.setOnClickListener(new View.OnClickListener() {
+
             @Override
             public void onClick(View v) {
-                //Flurry log for searching for something!
+                // Flurry log for searching in the search bar
                 FlurryAgent.logEvent("Tapped on the Search Button (Libraries)");
             }
+
         });
+
         search.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+
             @Override
             public boolean onQueryTextSubmit(String s) {
-                // Close the keyboard
+                // Closes the keyboard
                 search.clearFocus();
                 return true;
             }
@@ -137,6 +147,7 @@ public class LibraryActivity extends Activity {
                 filter.filter(s);
                 return true;
             }
+
         });
 
         return true;
@@ -145,10 +156,12 @@ public class LibraryActivity extends Activity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
+
         if (id == android.R.id.home) {
             finish();
             return true;
         }
+
         return super.onOptionsItemSelected(item);
     }
 
@@ -156,26 +169,24 @@ public class LibraryActivity extends Activity {
     public void onBackPressed() {
         super.onBackPressed();
 
-        //Flurry logging for pressing the Back Button
+        // Flurry log for pressing the back button
         FlurryAgent.logEvent("Tapped on the Back Button (Libraries)");
     }
 
-    /**
-     * refresh() updates the visibility of necessary UI elements and refreshes the library list
-     * from the web.
-     */
+    /** Updates the visibility of necessary UI elements; refreshes the dining hall list
+     *  from the web. */
     private void refresh() {
         mLibraryList.setVisibility(View.GONE);
         mRefreshWrapper.setVisibility(View.GONE);
         mProgressBar.setVisibility(View.VISIBLE);
 
         LibraryController.getInstance(this).refreshInBackground(new Callback() {
+
             @Override
             @SuppressWarnings("unchecked")
             public void onDataRetrieved(Object data) {
                 mLibraryList.setVisibility(View.VISIBLE);
                 mProgressBar.setVisibility(View.GONE);
-
                 mAdapter.setList((ArrayList<Library>) data);
             }
 
@@ -183,8 +194,10 @@ public class LibraryActivity extends Activity {
             public void onRetrievalFailed() {
                 mProgressBar.setVisibility(View.GONE);
                 mRefreshWrapper.setVisibility(View.VISIBLE);
-                Toast.makeText(getBaseContext(), "Unable to retrieve data, please try again", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getBaseContext(),
+                        "Unable to retrieve data", Toast.LENGTH_SHORT).show();
             }
+
         });
     }
 
