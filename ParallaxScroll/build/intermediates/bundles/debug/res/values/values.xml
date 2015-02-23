@@ -1,20 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
-    <!-- From: file:/Users/alex/Documents/Development/ASUCMobile/ParallaxScroll/res/values/attrs.xml -->
-    <eat-comment />
-
-    <declare-styleable name="ParallaxScroll">
-        <attr name="parallax_factor" format="float" />
-        <attr name="alpha_factor" format="float" />
-        <attr name="inner_parallax_factor" format="float" />
-        <attr name="parallax_views_num" format="integer" />
-        <attr name="circular_parallax" format="boolean" />
-    </declare-styleable>
+    <declare-styleable name="ParallaxScroll"><attr format="float" name="parallax_factor"/><attr format="float" name="alpha_factor"/><attr format="float" name="inner_parallax_factor"/><attr format="integer" name="parallax_views_num"/><attr format="boolean" name="circular_parallax"/></declare-styleable>
     <!-- From: file:/Users/alex/Documents/Development/ASUCMobile/ParallaxScroll/res/values/about_libraries_def.xml -->
-    <eat-comment />
-
-    <string name="define_parallaxscroll"></string>
+    <eat-comment/>
+    <string name="define_parallaxscroll"/>
     <string name="library_parallaxscroll_author">Nir Hartmann</string>
     <string name="library_parallaxscroll_authorWebsite">https://github.com/nirhart</string>
     <string name="library_parallaxscroll_isOpenSource">true</string>
@@ -24,5 +13,4 @@
     <string name="library_parallaxscroll_libraryWebsite">https://github.com/nirhart/ParallaxScroll</string>
     <string name="library_parallaxscroll_licenseId">mit</string>
     <string name="library_parallaxscroll_repositoryLink">https://github.com/nirhart/ParallaxScroll.git</string>
-
 </resources>
