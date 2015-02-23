@@ -15,5 +15,6 @@
     <string name="title_activity_open_gym">Gym</string>
     <string name="title_activity_dining_hall">Dining Halls</string>
     <string name="title_activity_open_dining_hall">Dining Hall</string>
+    <string name="title_activity_activity_open_map">activity_open_map</string>
 
 </resources>

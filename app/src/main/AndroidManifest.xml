@@ -3,19 +3,19 @@
     package="com.asuc.asucmobile" >
 
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
         android:allowBackup="true"
         android:icon="@drawable/app_icon"
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
-
-        <meta-data android:name="com.google.android.gms.version"
+        <meta-data
+            android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
-
-        <meta-data android:name="com.google.android.maps.v2.API_KEY"
+        <meta-data
+            android:name="com.google.android.maps.v2.API_KEY"
             android:value="AIzaSyDNePR1dpHnITWKLTpq_q0F3WFO0ZmiORk" />
 
         <activity
@@ -30,31 +30,35 @@
         </activity>
         <activity
             android:name=".main.MainActivity"
-            android:label="@string/title_activity_main">
+            android:label="@string/title_activity_main" >
         </activity>
         <activity
             android:name=".main.LibraryActivity"
-            android:label="@string/title_activity_library">
+            android:label="@string/title_activity_library" >
         </activity>
         <activity
             android:name=".main.OpenLibraryActivity"
-            android:label="@string/title_activity_open_library">
+            android:label="@string/title_activity_open_library" >
         </activity>
         <activity
             android:name=".main.GymActivity"
-            android:label="@string/title_activity_gym">
+            android:label="@string/title_activity_gym" >
         </activity>
         <activity
             android:name=".main.OpenGymActivity"
-            android:label="@string/title_activity_open_gym">
+            android:label="@string/title_activity_open_gym" >
         </activity>
         <activity
             android:name=".main.DiningHallActivity"
-            android:label="@string/title_activity_dining_hall">
+            android:label="@string/title_activity_dining_hall" >
         </activity>
         <activity
             android:name=".main.OpenDiningHallActivity"
-            android:label="@string/title_activity_open_dining_hall">
+            android:label="@string/title_activity_open_dining_hall" >
+        </activity>
+        <activity
+            android:name=".main.OpenRouteActivity"
+            android:label="@string/title_activity_activity_open_map" >
         </activity>
     </application>
 

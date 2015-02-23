@@ -1,12 +1,2 @@
 <?xml version="1.0" encoding="utf-8"?>
-<merger version="2" >
-
-    <dataSet config="main" >
-        <source path="/Users/alex/Documents/Development/ASUCMobile/ParallaxScroll/src/main/assets" />
-        <source path="/Users/alex/Documents/Development/ASUCMobile/ParallaxScroll/assets" />
-    </dataSet>
-    <dataSet config="debug" >
-        <source path="/Users/alex/Documents/Development/ASUCMobile/ParallaxScroll/src/debug/assets" />
-    </dataSet>
-
-</merger>
+<merger version="3"><dataSet config="main"><source path="/Users/alex/Documents/Development/ASUCMobile/ParallaxScroll/src/main/assets"/><source path="/Users/alex/Documents/Development/ASUCMobile/ParallaxScroll/assets"/></dataSet><dataSet config="debug"><source path="/Users/alex/Documents/Development/ASUCMobile/ParallaxScroll/src/debug/assets"/></dataSet></merger>
