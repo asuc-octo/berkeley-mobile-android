@@ -12,8 +12,8 @@
     <item
         android:top="0dp"
         android:bottom="48dp"
-        android:left="14.5dp"
-        android:right="14.5dp" >
+        android:left="14dp"
+        android:right="14dp" >
         <shape android:shape="rectangle">
             <solid
                 android:color="@color/ASUC_blue" />
@@ -21,10 +21,10 @@
     </item>
 
     <item
-        android:top="36dp"
-        android:right="4dp"
-        android:left="4dp"
-        android:bottom="36dp" >
+        android:top="38dp"
+        android:right="6dp"
+        android:left="6dp"
+        android:bottom="38dp" >
         <shape android:shape="oval">
             <solid
                 android:color="@color/holo_white" />

@@ -1,9 +1,10 @@
 package com.asuc.asucmobile.main;
 
 import android.app.Activity;
-import android.content.Intent;
-import android.net.Uri;
+import android.graphics.Typeface;
 import android.os.Bundle;
+import android.view.MenuItem;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.asuc.asucmobile.R;
@@ -15,16 +16,14 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptor;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
-import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.text.SimpleDateFormat;
-import java.util.Locale;
 
 public class OpenRouteActivity extends Activity {
 
     private static final int REQUEST_CODE_PLAY_SERVICES = 1;
-    private static final SimpleDateFormat HOURS_FORMAT =
+    private static final SimpleDateFormat TIME_FORMAT =
             new SimpleDateFormat("h:mm a");
 
     private MapFragment mapFragment;
@@ -34,7 +33,43 @@ public class OpenRouteActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        Typeface typeface = Typeface.createFromAsset(getAssets(), "young.ttf");
+
+        if (getActionBar() != null) {
+            int titleId = getResources().getIdentifier("action_bar_title", "id", "android");
+            TextView titleText = (TextView) findViewById(titleId);
+            titleText.setTypeface(typeface);
+
+            getActionBar().setDisplayHomeAsUpEnabled(true);
+        }
+
         setContentView(R.layout.activity_open_route);
+
+        mapFragment = (MapFragment) getFragmentManager().findFragmentById(R.id.map);
+
+        // TODO: Check for and retrieve Route object from a data controller.
+
+        setUpMap();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        // TODO: Check for and retrieve Route object from a data controller.
+
+        setUpMap();
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if (id == android.R.id.home) {
+            finish();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     private void setUpMap() {
@@ -64,23 +99,8 @@ public class OpenRouteActivity extends Activity {
                                 .icon(bitmap)
                 );
                 map.getUiSettings().setZoomControlsEnabled(false);
-                map.moveCamera(CameraUpdateFactory.newLatLngZoom(route.getDestination(), 17));
-
-                map.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
-                    @Override
-                    public void onMapClick(LatLng latLng) {
-                        double lat = latLng.latitude;
-                        double lng = latLng.longitude;
-
-                        String uri = String.format(
-                                Locale.ENGLISH,
-                                "http://maps.google.com/maps?dirflg=w&saddr=Current+Location&daddr=%f,%f", lat, lng
-                        );
-
-                        Intent i = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
-                        startActivity(i);
-                    }
-                });
+                map.setMyLocationEnabled(true);
+                map.moveCamera(CameraUpdateFactory.newLatLngZoom(route.getDestination(), 15));
             }
         }
     }

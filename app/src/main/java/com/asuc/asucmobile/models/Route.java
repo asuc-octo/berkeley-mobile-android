@@ -11,6 +11,13 @@ public class Route {
     private Date endTime;
     private LatLng destination;
 
+    public Route (String[] stops, Date startTime, Date endTime, LatLng destination) {
+        this.stops = stops;
+        this.startTime = startTime;
+        this.endTime = endTime;
+        this.destination = destination;
+    }
+
     public String[] getStops() {
         return stops;
     }
