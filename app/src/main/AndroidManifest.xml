@@ -5,6 +5,7 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
     <application
         android:allowBackup="true"
@@ -16,7 +17,7 @@
             android:value="@integer/google_play_services_version" />
         <meta-data
             android:name="com.google.android.maps.v2.API_KEY"
-            android:value="AIzaSyDNePR1dpHnITWKLTpq_q0F3WFO0ZmiORk" />
+            android:value="AIzaSyCujfRVQzh0YviRfLFF19z7lAnMvrMwWvQ" />
 
         <activity
             android:name=".main.SplashActivity"
@@ -58,7 +59,7 @@
         </activity>
         <activity
             android:name=".main.OpenRouteActivity"
-            android:label="@string/title_activity_activity_open_map" >
+            android:label="@string/title_activity_open_route" >
         </activity>
     </application>
 
