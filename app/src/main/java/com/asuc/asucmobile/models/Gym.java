@@ -4,14 +4,14 @@ import java.util.Date;
 
 public class Gym {
 
-    private String id;
+    private int id;
     private String name;
     private String address;
     private Date opening;
     private Date closing;
     private String imageUrl;
 
-    public Gym(String id, String name, String address, Date opening, Date closing, String imageUrl) {
+    public Gym(int id, String name, String address, Date opening, Date closing, String imageUrl) {
         this.id = id;
         this.name = name;
         this.address = address;
@@ -20,7 +20,7 @@ public class Gym {
         this.imageUrl = imageUrl;
     }
 
-    public String getId() {
+    public int getId() {
         return id;
     }
 

@@ -14,11 +14,13 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
+import java.util.TimeZone;
 
 public class GymController implements Controller {
 
     private static final SimpleDateFormat DATE_FORMAT =
             new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.ENGLISH);
+    private static final TimeZone PST = TimeZone.getTimeZone("America/Los_Angeles");
 
     private static GymController instance;
 
@@ -67,9 +69,11 @@ public class GymController implements Controller {
                     for (int i = 0; i < array.length(); i++) {
                         JSONObject gymJSON = array.getJSONObject(i);
 
-                        String id = gymJSON.getString("id");
+                        int id = gymJSON.getInt("id");
                         String name = gymJSON.getString("name");
                         String address = gymJSON.getString("address");
+
+                        long tmpDate;
 
                         Date opening = null;
                         Date closing = null;
@@ -77,10 +81,12 @@ public class GymController implements Controller {
                         String closingString = gymJSON.getString("closing_time_today");
 
                         if (!openingString.equals("null")) {
-                            opening = DATE_FORMAT.parse(openingString);
+                            tmpDate = DATE_FORMAT.parse(openingString).getTime();
+                            opening = new Date(tmpDate + PST.getOffset(tmpDate));
                         }
                         if (!closingString.equals("null")) {
-                            closing = DATE_FORMAT.parse(closingString);
+                            tmpDate = DATE_FORMAT.parse(closingString).getTime();
+                            closing = new Date(tmpDate + PST.getOffset(tmpDate));
                         }
 
                         String imageUrl = gymJSON.getString("image_link");

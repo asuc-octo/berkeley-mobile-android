@@ -14,11 +14,13 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
+import java.util.TimeZone;
 
 public class LibraryController implements Controller {
 
     private static final SimpleDateFormat DATE_FORMAT =
             new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.ENGLISH);
+    private static final TimeZone PST = TimeZone.getTimeZone("America/Los_Angeles");
 
     private static LibraryController instance;
 
@@ -67,10 +69,12 @@ public class LibraryController implements Controller {
                     for (int i = 0; i < array.length(); i++) {
                         JSONObject libraryJSON = array.getJSONObject(i);
 
-                        String id = libraryJSON.getString("id");
+                        int id = libraryJSON.getInt("id");
                         String name = libraryJSON.getString("name");
                         String location = libraryJSON.getString("campus_location");
                         String phone = libraryJSON.getString("phone_number");
+
+                        long tmpDate;
 
                         Date opening = null;
                         Date closing = null;
@@ -78,10 +82,12 @@ public class LibraryController implements Controller {
                         String closingString = libraryJSON.getString("closing_time_today");
 
                         if (!openingString.equals("null")) {
-                            opening = DATE_FORMAT.parse(openingString);
+                            tmpDate = DATE_FORMAT.parse(openingString).getTime();
+                            opening = new Date(tmpDate + PST.getOffset(tmpDate));
                         }
                         if (!closingString.equals("null")) {
-                            closing = DATE_FORMAT.parse(closingString);
+                            tmpDate = DATE_FORMAT.parse(closingString).getTime();
+                            closing = new Date(tmpDate + PST.getOffset(tmpDate));
                         }
 
                         String imageUrl = libraryJSON.getString("image_link");

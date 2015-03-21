@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.Window;
 import android.view.WindowManager;
 import com.asuc.asucmobile.R;
+import com.asuc.asucmobile.tests.Test;
 
 public class SplashActivity extends Activity {
 

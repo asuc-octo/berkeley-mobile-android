@@ -78,11 +78,6 @@ public class GymActivity extends Activity {
                 refresh();
             }
         });
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
 
         refresh();
     }
@@ -113,7 +108,7 @@ public class GymActivity extends Activity {
     }
 
     /**
-     * refresh() updates the visibility of necessary UI elements and refreshes the library list
+     * refresh() updates the visibility of necessary UI elements and refreshes the gym list
      * from the web.
      */
     private void refresh() {

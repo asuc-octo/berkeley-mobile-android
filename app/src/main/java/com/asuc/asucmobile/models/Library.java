@@ -6,7 +6,7 @@ import java.util.Date;
 
 public class Library {
 
-    private String id;
+    private int id;
     private String name;
     private String location;
     private String phone;
@@ -16,7 +16,7 @@ public class Library {
     private LatLng latLng;
     private boolean byAppointment;
 
-    public Library(String id, String name, String location, String phone, Date opening,
+    public Library(int id, String name, String location, String phone, Date opening,
                    Date closing, String imageUrl, double lat, double lng,
                    boolean byAppointment) {
         this.id = id;
@@ -30,7 +30,7 @@ public class Library {
         this.byAppointment = byAppointment;
     }
 
-    public String getId() {
+    public int getId() {
         return id;
     }
 

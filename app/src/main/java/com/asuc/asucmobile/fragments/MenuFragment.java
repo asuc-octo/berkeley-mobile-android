@@ -19,17 +19,18 @@ import com.asuc.asucmobile.adapters.FoodAdapter;
 import com.asuc.asucmobile.main.OpenDiningHallActivity;
 import com.asuc.asucmobile.models.DiningHall;
 import com.asuc.asucmobile.models.FoodItem;
-import com.asuc.asucmobile.views.HeaderView;
+import com.asuc.asucmobile.views.ImageHeaderView;
 import com.nirhart.parallaxscroll.views.ParallaxListView;
 
 import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Locale;
 
 public class MenuFragment extends Fragment {
 
     private static final SimpleDateFormat HOURS_FORMAT =
-            new SimpleDateFormat("h:mm a");
+            new SimpleDateFormat("h:mm a", Locale.ENGLISH);
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -43,7 +44,13 @@ public class MenuFragment extends Fragment {
         emptyListView.setTypeface(Typeface.createFromAsset(getActivity().getAssets(), "young.ttf"));
 
         DiningHall diningHall = ((OpenDiningHallActivity) getActivity()).getDiningHall();
-        HeaderView header = new HeaderView(getActivity());
+
+        if (diningHall == null) {
+            getActivity().finish();
+            return v;
+        }
+
+        ImageHeaderView header = new ImageHeaderView(getActivity());
         new DownloadImageTask(header).execute(diningHall.getImageUrl());
 
         String whichMenu = getArguments().getString("whichMenu");
@@ -108,9 +115,9 @@ public class MenuFragment extends Fragment {
 
     private class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
 
-        HeaderView headerView;
+        ImageHeaderView headerView;
 
-        public DownloadImageTask(HeaderView headerView) {
+        public DownloadImageTask(ImageHeaderView headerView) {
             this.headerView = headerView;
         }
 
