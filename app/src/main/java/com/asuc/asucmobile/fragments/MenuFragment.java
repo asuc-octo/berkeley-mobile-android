@@ -77,32 +77,39 @@ public class MenuFragment extends Fragment {
                 isOpen = diningHall.isDinnerOpen();
             }
 
-            String headerString = "Hours:  " + opening + " to " + closing + "  ";
-
-            SpannableString spannableHeader;
-            if (isOpen) {
-                spannableHeader = new SpannableString(headerString + "OPEN");
-                spannableHeader.setSpan(
-                        new ForegroundColorSpan(Color.rgb(153, 204, 0)),
-                        headerString.length(),
-                        headerString.length() + 4,
-                        SpannableString.SPAN_INCLUSIVE_EXCLUSIVE
-                );
+            if (foodItems.size() == 0) {
+                emptyListView.setText("No " + whichMenu + " Today!");
+                
+                foodMenu.setVisibility(View.GONE);
+                emptyListView.setVisibility(View.VISIBLE);
             } else {
-                spannableHeader = new SpannableString(headerString + "CLOSED");
-                spannableHeader.setSpan(
-                        new ForegroundColorSpan(Color.rgb(255, 68, 68)),
-                        headerString.length(),
-                        headerString.length() + 6,
-                        SpannableString.SPAN_INCLUSIVE_EXCLUSIVE
-                );
+                String headerString = "Hours:  " + opening + " to " + closing + "  ";
+
+                SpannableString spannableHeader;
+                if (isOpen) {
+                    spannableHeader = new SpannableString(headerString + "OPEN");
+                    spannableHeader.setSpan(
+                            new ForegroundColorSpan(Color.rgb(153, 204, 0)),
+                            headerString.length(),
+                            headerString.length() + 4,
+                            SpannableString.SPAN_INCLUSIVE_EXCLUSIVE
+                    );
+                } else {
+                    spannableHeader = new SpannableString(headerString + "CLOSED");
+                    spannableHeader.setSpan(
+                            new ForegroundColorSpan(Color.rgb(255, 68, 68)),
+                            headerString.length(),
+                            headerString.length() + 6,
+                            SpannableString.SPAN_INCLUSIVE_EXCLUSIVE
+                    );
+                }
+
+                header.setText(spannableHeader);
+
+                FoodAdapter adapter = new FoodAdapter(getActivity(), foodItems);
+                foodMenu.setAdapter(adapter);
+                foodMenu.addParallaxedHeaderView(header);
             }
-
-            header.setText(spannableHeader);
-
-            FoodAdapter adapter = new FoodAdapter(getActivity(), foodItems);
-            foodMenu.setAdapter(adapter);
-            foodMenu.addParallaxedHeaderView(header);
         } catch (Exception e) { // Catch a null exception, meaning that there is no menu for this time slot.
             emptyListView.setText("No " + whichMenu + " Today!");
 
