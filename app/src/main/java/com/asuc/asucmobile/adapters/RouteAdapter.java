@@ -90,7 +90,7 @@ public class RouteAdapter extends BaseAdapter {
 
             // Set the left-hand route icons and endpoints
             if (getItem(i - 1).isTransfer()) {
-                endpoint.setText("Start\n" + TIME_FORMAT.format(getItem(i - 1).getStartTime()));
+                endpoint.setText("Depart\n" + TIME_FORMAT.format(getItem(i - 1).getStartTime()));
 
                 if (i > route.getTrips().get(0).getStops().size()) {
                     stopIcon.setImageDrawable(context.getResources().getDrawable(R.drawable.route_start_yellow));
