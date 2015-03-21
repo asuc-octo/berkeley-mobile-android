@@ -5,6 +5,15 @@
     android:orientation="vertical"
     tools:context="com.asuc.asucmobile.main.LibraryActivity">
 
+    <ListView
+        android:id="@+id/dining_hall_list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scrollbarStyle="outsideInset"
+        android:visibility="gone"
+        android:divider="@color/transparent"
+        android:listSelector="@android:color/transparent" />
+
     <ProgressBar
         android:id="@+id/progress_bar"
         style="?android:attr/progressBarStyleLarge"
@@ -26,12 +35,5 @@
             android:contentDescription="@string/content_desc"
             android:background="@drawable/ic_action_refresh" />
     </LinearLayout>
-
-    <ListView
-        android:id="@+id/dining_hall_list"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:scrollbarStyle="outsideInset"
-        android:visibility="gone" />
 
 </LinearLayout>

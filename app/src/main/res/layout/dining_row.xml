@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="80dp"
     android:gravity="center_vertical"
-    android:background="@drawable/white_selector">
+    android:background="@drawable/card_selector">
 
     <View
         android:id="@+id/highlights"

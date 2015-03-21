@@ -15,11 +15,13 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
+import java.util.TimeZone;
 
 public class DiningController implements Controller {
 
     private static final SimpleDateFormat DATE_FORMAT =
             new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.ENGLISH);
+    private static final TimeZone PST = TimeZone.getTimeZone("America/Los_Angeles");
 
     private static DiningController instance;
 
@@ -106,16 +108,20 @@ public class DiningController implements Controller {
                             ));
                         }
 
+                        long tmpDate;
+
                         String openingString = diningHall.getString("breakfast_open");
                         String closingString = diningHall.getString("breakfast_close");
 
                         Date breakfastOpening = null;
                         Date breakfastClosing = null;
                         if (!openingString.equals("null")) {
-                            breakfastOpening = DATE_FORMAT.parse(openingString);
+                            tmpDate = DATE_FORMAT.parse(openingString).getTime();
+                            breakfastOpening = new Date(tmpDate + PST.getOffset(tmpDate));
                         }
                         if (!closingString.equals("null")) {
-                            breakfastClosing = DATE_FORMAT.parse(closingString);
+                            tmpDate = DATE_FORMAT.parse(closingString).getTime();
+                            breakfastClosing = new Date(tmpDate + PST.getOffset(tmpDate));
                         }
                         
                         openingString = diningHall.getString("lunch_open");
@@ -124,10 +130,12 @@ public class DiningController implements Controller {
                         Date lunchOpening = null;
                         Date lunchClosing = null;
                         if (!openingString.equals("null")) {
-                            lunchOpening = DATE_FORMAT.parse(openingString);
+                            tmpDate = DATE_FORMAT.parse(openingString).getTime();
+                            lunchOpening = new Date(tmpDate + PST.getOffset(tmpDate));
                         }
                         if (!closingString.equals("null")) {
-                            lunchClosing = DATE_FORMAT.parse(closingString);
+                            tmpDate = DATE_FORMAT.parse(closingString).getTime();
+                            lunchClosing = new Date(tmpDate + PST.getOffset(tmpDate));
                         }
 
                         openingString = diningHall.getString("dinner_open");
@@ -136,10 +144,12 @@ public class DiningController implements Controller {
                         Date dinnerOpening = null;
                         Date dinnerClosing = null;
                         if (!openingString.equals("null")) {
-                            dinnerOpening = DATE_FORMAT.parse(openingString);
+                            tmpDate = DATE_FORMAT.parse(openingString).getTime();
+                            dinnerOpening = new Date(tmpDate + PST.getOffset(tmpDate));
                         }
                         if (!closingString.equals("null")) {
-                            dinnerClosing = DATE_FORMAT.parse(closingString);
+                            tmpDate = DATE_FORMAT.parse(closingString).getTime();
+                            dinnerClosing = new Date(tmpDate + PST.getOffset(tmpDate));
                         }
 
                         openingString = diningHall.getString("late_night_open");
@@ -148,10 +158,12 @@ public class DiningController implements Controller {
                         Date lateNightOpening = null;
                         Date lateNightClosing = null;
                         if (!openingString.equals("null")) {
-                            lateNightOpening = DATE_FORMAT.parse(openingString);
+                            tmpDate = DATE_FORMAT.parse(openingString).getTime();
+                            lateNightOpening = new Date(tmpDate + PST.getOffset(tmpDate));
                         }
                         if (!closingString.equals("null")) {
-                            lateNightClosing = DATE_FORMAT.parse(closingString);
+                            tmpDate = DATE_FORMAT.parse(closingString).getTime();
+                            lateNightClosing = new Date(tmpDate + PST.getOffset(tmpDate));
                         }
 
                         String imageUrl = diningHall.getString("image_link");

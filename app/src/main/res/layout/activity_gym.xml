@@ -3,9 +3,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
     tools:context="com.asuc.asucmobile.main.LibraryActivity">
+
+    <ListView
+        android:id="@+id/gym_list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone" />
 
     <ProgressBar
         android:id="@+id/progress_bar"
@@ -28,12 +32,5 @@
             android:contentDescription="@string/content_desc"
             android:background="@drawable/ic_action_refresh" />
     </LinearLayout>
-
-    <ListView
-        android:id="@+id/gym_list"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:scrollbarStyle="outsideInset"
-        android:visibility="gone" />
 
 </LinearLayout>
