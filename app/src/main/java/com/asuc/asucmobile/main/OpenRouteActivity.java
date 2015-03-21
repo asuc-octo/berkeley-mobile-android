@@ -114,6 +114,8 @@ public class OpenRouteActivity extends Activity {
         if (map == null) {
             map = mapFragment.getMap();
             if (map != null) {
+                Trip firstTrip = route.getTrips().get(0);
+                Stop firstStop = firstTrip.getStops().get(0);
                 Trip lastTrip = route.getTrips().get(route.getTrips().size() - 1);
                 Stop lastStop = lastTrip.getStops().get(lastTrip.getStops().size() - 1);
 
@@ -126,17 +128,24 @@ public class OpenRouteActivity extends Activity {
                                 .position(lastStop.getLocation())
                                 .icon(bitmap)
                 );
+                map.addMarker(new MarkerOptions()
+                        .position(firstStop.getLocation())
+                        .icon(bitmap)
+                );
+                map.getUiSettings().setAllGesturesEnabled(false);
                 map.getUiSettings().setZoomControlsEnabled(false);
+                map.getUiSettings().setMyLocationButtonEnabled(false);
                 map.setMyLocationEnabled(true);
 
                 final LatLngBounds.Builder builder = LatLngBounds.builder();
+                builder.include(firstStop.getLocation());
                 builder.include(lastStop.getLocation());
                 builder.include(new LatLng(myLocation.getLatitude(), myLocation.getLongitude()));
 
                 map.setOnCameraChangeListener(new GoogleMap.OnCameraChangeListener() {
                     @Override
                     public void onCameraChange(CameraPosition cameraPosition) {
-                        map.moveCamera(CameraUpdateFactory.newLatLngBounds(builder.build(), 200));
+                        map.moveCamera(CameraUpdateFactory.newLatLngBounds(builder.build(), 155));
                     }
                 });
             }
