@@ -11,16 +11,16 @@ import android.widget.TextView;
 
 import com.asuc.asucmobile.R;
 
-public class HeaderView extends LinearLayout {
+public class ImageHeaderView extends LinearLayout {
 
     private ImageView imageView;
     private TextView textView;
 
-    public HeaderView(Context context) {
+    public ImageHeaderView(Context context) {
         super(context);
 
         LayoutInflater inflater = LayoutInflater.from(context);
-        inflater.inflate(R.layout.header_view, this);
+        inflater.inflate(R.layout.image_header_view, this);
 
         imageView = (ImageView) findViewById(R.id.image);
         textView = (TextView) findViewById(R.id.header_text);

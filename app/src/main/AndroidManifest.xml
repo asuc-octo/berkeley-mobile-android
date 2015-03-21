@@ -61,6 +61,10 @@
             android:name=".main.OpenRouteActivity"
             android:label="@string/title_activity_open_route" >
         </activity>
+        <activity
+            android:name=".main.OpenRouteSelectionActivity"
+            android:label="@string/title_activity_open_trip_selection" >
+        </activity>
     </application>
 
 </manifest>

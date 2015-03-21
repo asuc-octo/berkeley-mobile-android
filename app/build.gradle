@@ -8,8 +8,8 @@ android {
         applicationId "com.asuc.asucmobile"
         minSdkVersion 15
         targetSdkVersion 21
-        versionCode 2
-        versionName "2.0"
+        versionCode 4
+        versionName "3.0"
     }
     buildTypes {
         release {

@@ -78,11 +78,6 @@ public class DiningHallActivity extends Activity {
                 refresh();
             }
         });
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
 
         refresh();
     }

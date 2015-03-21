@@ -1,37 +1,47 @@
 package com.asuc.asucmobile.models;
 
-import com.google.android.gms.maps.model.LatLng;
-
+import java.util.ArrayList;
 import java.util.Date;
 
 public class Route {
 
-    private String[] stops;
-    private Date startTime;
-    private Date endTime;
-    private LatLng destination;
+    private String name;
+    private ArrayList<Trip> trips;
 
-    public Route (String[] stops, Date startTime, Date endTime, LatLng destination) {
-        this.stops = stops;
-        this.startTime = startTime;
-        this.endTime = endTime;
-        this.destination = destination;
+    public Route (ArrayList<Trip> trips) {
+        name = "";
+        for (Trip trip : trips) {
+            name += trip.getLineName() + "\n\n";
+        }
+        name = name.substring(0, name.length() - 2);
+
+        this.trips = trips;
     }
 
-    public String[] getStops() {
+    public String getName() {
+        return name;
+    }
+
+    public ArrayList<Trip> getTrips() {
+        return trips;
+    }
+
+    public ArrayList<Stop> getStopsAndTransfers() {
+        ArrayList<Stop> stops = new ArrayList<Stop>();
+
+        Date previousArrival = null;
+        for (Trip trip : trips) {
+            stops.add(new Stop(trip.getLineName(), trip.getStartTime(), previousArrival));
+            previousArrival = trip.getEndTime();
+
+            for (Stop stop : trip.getStops()) {
+                stops.add(stop);
+            }
+        }
+
+        stops.add(new Stop("", null, previousArrival));
+
         return stops;
-    }
-
-    public Date getStartTime() {
-        return startTime;
-    }
-
-    public Date getEndTime() {
-        return endTime;
-    }
-
-    public LatLng getDestination() {
-        return destination;
     }
 
 }

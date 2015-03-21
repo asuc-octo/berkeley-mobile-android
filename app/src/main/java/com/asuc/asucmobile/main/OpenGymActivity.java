@@ -47,9 +47,10 @@ public class OpenGymActivity extends Activity {
 
     private static final int REQUEST_CODE_PLAY_SERVICES = 1;
     private static final SimpleDateFormat HOURS_FORMAT =
-            new SimpleDateFormat("h:mm a");
+            new SimpleDateFormat("h:mm a", Locale.ENGLISH);
 
     private MapFragment mapFragment;
+    private LinearLayout locationLayout;
     private GoogleMap map;
     private Gym gym;
 
@@ -81,6 +82,7 @@ public class OpenGymActivity extends Activity {
         TextView address = (TextView) findViewById(R.id.location);
         LinearLayout phoneLayout = (LinearLayout) findViewById(R.id.phone_layout);
         View bottomDivider = findViewById(R.id.bottom_divider);
+        locationLayout = (LinearLayout) findViewById(R.id.location_layout);
         mapFragment = (MapFragment) getFragmentManager().findFragmentById(R.id.map);
 
         hours.setTypeface(typeface);
@@ -114,10 +116,10 @@ public class OpenGymActivity extends Activity {
         address.setText(gym.getAddress());
 
         SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
-        boolean firstTime = sharedPref.getBoolean("gym_first_open", true);
+        boolean firstTime = sharedPref.getBoolean("gym_initial", true);
         if (firstTime) {
-            Toast.makeText(this, "Click on the map for directions!", Toast.LENGTH_LONG).show();
-            sharedPref.edit().putBoolean("gym_first_open", false).apply();
+            Toast.makeText(this, "Tap on the address for directions!", Toast.LENGTH_LONG).show();
+            sharedPref.edit().putBoolean("gym_initial", false).apply();
         }
 
         setUpMap();
@@ -203,7 +205,7 @@ public class OpenGymActivity extends Activity {
                     return;
                 }
 
-                LatLng latLng;
+                final LatLng latLng;
 
                 if (addresses == null) {
                     return;
@@ -224,20 +226,31 @@ public class OpenGymActivity extends Activity {
                 map.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
                     @Override
                     public void onMapClick(LatLng latLng) {
-                        double lat = latLng.latitude;
-                        double lng = latLng.longitude;
+                        openMap(latLng);
+                    }
+                });
 
-                        String uri = String.format(
-                                Locale.ENGLISH,
-                                "http://maps.google.com/maps?dirflg=w&saddr=Current+Location&daddr=%f,%f", lat, lng
-                        );
-
-                        Intent i = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
-                        startActivity(i);
+                locationLayout.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        openMap(latLng);
                     }
                 });
             }
         }
+    }
+
+    private void openMap(LatLng latLng) {
+        double lat = latLng.latitude;
+        double lng = latLng.longitude;
+
+        String uri = String.format(
+                Locale.ENGLISH,
+                "http://maps.google.com/maps?dirflg=w&saddr=Current+Location&daddr=%f,%f", lat, lng
+        );
+
+        Intent i = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
+        startActivity(i);
     }
 
     private class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
@@ -267,6 +280,8 @@ public class OpenGymActivity extends Activity {
         protected void onPostExecute(Bitmap result) {
             if (result != null) {
                 image.setImageBitmap(result);
+            } else {
+                image.setImageDrawable(getResources().getDrawable(R.drawable.default_gym));
             }
         }
 

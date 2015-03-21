@@ -44,7 +44,7 @@ public class OpenLibraryActivity extends Activity {
 
     private static final int REQUEST_CODE_PLAY_SERVICES = 1;
     private static final SimpleDateFormat HOURS_FORMAT =
-            new SimpleDateFormat("h:mm a");
+            new SimpleDateFormat("h:mm a", Locale.ENGLISH);
 
     private MapFragment mapFragment;
     private GoogleMap map;
@@ -77,6 +77,7 @@ public class OpenLibraryActivity extends Activity {
         TextView hours = (TextView) findViewById(R.id.hours);
         TextView address = (TextView) findViewById(R.id.location);
         TextView phone = (TextView) findViewById(R.id.phone);
+        LinearLayout locationLayout = (LinearLayout) findViewById(R.id.location_layout);
         LinearLayout phoneLayout = (LinearLayout) findViewById(R.id.phone_layout);
         mapFragment = (MapFragment) getFragmentManager().findFragmentById(R.id.map);
 
@@ -112,6 +113,13 @@ public class OpenLibraryActivity extends Activity {
         address.setText(library.getLocation());
         phone.setText(library.getPhone());
 
+        locationLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openMap();
+            }
+        });
+
         phoneLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -122,10 +130,10 @@ public class OpenLibraryActivity extends Activity {
         });
 
         SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
-        boolean firstTime = sharedPref.getBoolean("library_first_open", true);
+        boolean firstTime = sharedPref.getBoolean("library_initial", true);
         if (firstTime) {
-            Toast.makeText(this, "Click on the map for directions,\nor the phone to dial!", Toast.LENGTH_LONG).show();
-            sharedPref.edit().putBoolean("library_first_open", false).apply();
+            Toast.makeText(this, "Tap on the location for directions,\nor the phone to dial!", Toast.LENGTH_LONG).show();
+            sharedPref.edit().putBoolean("library_initial", false).apply();
         }
 
         setUpMap();
@@ -210,20 +218,24 @@ public class OpenLibraryActivity extends Activity {
                 map.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
                     @Override
                     public void onMapClick(LatLng latLng) {
-                        double lat = library.getCoordinates().latitude;
-                        double lng = library.getCoordinates().longitude;
-
-                        String uri = String.format(
-                                Locale.ENGLISH,
-                                "http://maps.google.com/maps?dirflg=w&saddr=Current+Location&daddr=%f,%f", lat, lng
-                        );
-
-                        Intent i = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
-                        startActivity(i);
+                        openMap();
                     }
                 });
             }
         }
+    }
+
+    private void openMap() {
+        double lat = library.getCoordinates().latitude;
+        double lng = library.getCoordinates().longitude;
+
+        String uri = String.format(
+                Locale.ENGLISH,
+                "http://maps.google.com/maps?dirflg=w&saddr=Current+Location&daddr=%f,%f", lat, lng
+        );
+
+        Intent i = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
+        startActivity(i);
     }
 
     private class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
@@ -253,6 +265,8 @@ public class OpenLibraryActivity extends Activity {
         protected void onPostExecute(Bitmap result) {
             if (result != null) {
                 image.setImageBitmap(result);
+            } else {
+                image.setImageDrawable(getResources().getDrawable(R.drawable.default_library));
             }
         }
 

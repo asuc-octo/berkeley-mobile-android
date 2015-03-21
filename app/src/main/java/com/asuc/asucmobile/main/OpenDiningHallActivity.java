@@ -18,6 +18,8 @@ import com.asuc.asucmobile.fragments.MenuFragment;
 import com.asuc.asucmobile.models.DiningHall;
 import com.flurry.android.FlurryAgent;
 
+import java.util.Date;
+
 public class OpenDiningHallActivity extends Activity implements ActionBar.TabListener {
 
     private DiningHall diningHall;
@@ -75,6 +77,18 @@ public class OpenDiningHallActivity extends Activity implements ActionBar.TabLis
                     actionBar.newTab()
                             .setText(pagerAdapter.getPageTitle(i))
                             .setTabListener(this));
+        }
+
+        Date currentTime = new Date();
+        if (diningHall.isDinnerOpen() ||
+                (diningHall.getLunchClosing() != null && currentTime.after(diningHall.getLunchClosing())) ||
+                (diningHall.getDinnerClosing() != null && currentTime.after(diningHall.getDinnerClosing()))) {
+            mViewPager.setCurrentItem(2);
+        } else if (diningHall.getBreakfastClosing() != null &&
+                (diningHall.isLunchOpen() || currentTime.after(diningHall.getBreakfastClosing()))) {
+            mViewPager.setCurrentItem(1);
+        } else {
+            mViewPager.setCurrentItem(0);
         }
     }
 
