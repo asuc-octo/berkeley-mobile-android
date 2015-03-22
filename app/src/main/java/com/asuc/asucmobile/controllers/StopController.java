@@ -101,8 +101,4 @@ public class StopController implements Controller {
         return stops.get(id);
     }
 
-    public int getId(Stop stop) {
-        return stops.keyAt(stops.indexOfValue(stop));
-    }
-
 }
