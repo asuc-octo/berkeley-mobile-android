@@ -66,6 +66,7 @@ public class LineController implements Controller {
                         JSONObject lineJSON = array.getJSONObject(i);
 
                         int id = lineJSON.getInt("id");
+                        String name = lineJSON.getString("name");
                         JSONArray stopsJSON = lineJSON.getJSONArray("stop_list");
 
                         ArrayList<Stop> lineStops = new ArrayList<>();
@@ -89,7 +90,7 @@ public class LineController implements Controller {
                             }
                         }
 
-                        lines.put(id, new Line(id, lineStops));
+                        lines.put(id, new Line(id, name, lineStops));
                     }
 
                     ((Activity) context).runOnUiThread(new Runnable() {
@@ -124,12 +125,32 @@ public class LineController implements Controller {
         return stops;
     }
 
-    public Stop getStop(int id) {
-        return stops.get(id);
+    public Stop getStop(int id, String name) {
+        Stop stop = stops.get(id);
+
+        if (stop == null) {
+            for (int i = 0; i < stops.size(); i++) {
+                if (stops.valueAt(i).getName().equals(name)) {
+                    return stops.valueAt(i);
+                }
+            }
+        }
+
+        return stop;
     }
 
-    public Line getLine(int id) {
-        return lines.get(id);
+    public Line getLine(int id, String name) {
+        Line line = lines.get(id);
+
+        if (line == null) {
+            for (int i = 0; i < lines.size(); i++) {
+                if (lines.valueAt(i).getName().equals(name)) {
+                    return lines.valueAt(i);
+                }
+            }
+        }
+
+        return line;
     }
 
 }

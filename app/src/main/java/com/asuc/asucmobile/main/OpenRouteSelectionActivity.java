@@ -48,6 +48,7 @@ public class OpenRouteSelectionActivity extends Activity {
         setContentView(R.layout.activity_open_route_selection);
 
         int stopId = getIntent().getIntExtra("stop_id", -1);
+        String stopName = getIntent().getStringExtra("stop_name");
         double lat = getIntent().getDoubleExtra("lat", -1.0);
         double lng = getIntent().getDoubleExtra("long", -1.0);
         if (stopId == -1 || lat == -1.0 || lng == -1.0) {
@@ -66,7 +67,7 @@ public class OpenRouteSelectionActivity extends Activity {
         mRefreshWrapper = (LinearLayout) findViewById(R.id.refresh);
         mTripList = (ListView) findViewById(R.id.tripList);
 
-        Stop dest = ((LineController) (LineController.getInstance(this))).getStop(stopId);
+        Stop dest = ((LineController) (LineController.getInstance(this))).getStop(stopId, stopName);
         mController = (RouteController) RouteController.createInstance(this, new LatLng(lat, lng), dest.getLocation());
 
         mRefreshButton.setOnClickListener(new View.OnClickListener() {
