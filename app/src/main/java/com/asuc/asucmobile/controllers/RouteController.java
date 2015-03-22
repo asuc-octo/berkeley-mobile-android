@@ -123,6 +123,9 @@ public class RouteController implements Controller {
 
                                 if (stop == endStop) {
                                     isPastEnd = true;
+                                } else if (stops.size() > lineStops.size()) {
+                                    // We have a problem!
+                                    throw new Exception();
                                 }
 
                                 index = (index + 1) % lineStops.size();
