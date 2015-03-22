@@ -8,6 +8,7 @@ import com.asuc.asucmobile.models.Line;
 import com.asuc.asucmobile.models.Stop;
 import com.asuc.asucmobile.utilities.Callback;
 import com.asuc.asucmobile.utilities.JSONUtilities;
+import com.google.android.gms.maps.model.LatLng;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -20,7 +21,8 @@ public class LineController implements Controller {
 
     // SparseArray is an Android HashMap that accepts primitive integers as keys.
     private Context context;
-    private SparseArray<Line> linesMap;
+    private SparseArray<Stop> stops;
+    private SparseArray<Line> lines;
     private Callback callback;
 
     public static Controller getInstance(Context context) {
@@ -34,7 +36,8 @@ public class LineController implements Controller {
     }
 
     public LineController() {
-        linesMap = new SparseArray<Line>();
+        stops = new SparseArray<>();
+        lines = new SparseArray<>();
     }
 
     @Override
@@ -49,7 +52,7 @@ public class LineController implements Controller {
             return;
         }
 
-        linesMap.clear();
+        lines.clear();
 
         /*
          *  Parsing JSON data into models is put into a background thread so that the UI thread
@@ -59,27 +62,40 @@ public class LineController implements Controller {
             @Override
             public void run() {
                 try {
-                    StopController stopController = (StopController) StopController.getInstance(context);
-
                     for (int i = 0; i < array.length(); i++) {
                         JSONObject lineJSON = array.getJSONObject(i);
 
                         int id = lineJSON.getInt("id");
                         JSONArray stopsJSON = lineJSON.getJSONArray("stop_list");
 
-                        ArrayList<Stop> stops = new ArrayList<Stop>();
+                        ArrayList<Stop> lineStops = new ArrayList<>();
 
+                        // Add all the stops if needed.
                         for (int j = 0; j < stopsJSON.length(); j++) {
-                            stops.add(stopController.getStop(stopsJSON.getJSONObject(j).getInt("id")));
+                            JSONObject stopJSON = stopsJSON.getJSONObject(j);
+                            int stopId = stopJSON.getInt("id");
+
+                            if (stops.get(stopId) == null) {
+                                String stopName = stopJSON.getString("name");
+                                Double latitude = stopJSON.getDouble("latitude");
+                                Double longitude = stopJSON.getDouble("longitude");
+
+                                Stop stop = new Stop(stopId, stopName, new LatLng(latitude, longitude));
+
+                                stops.put(stopId, stop);
+                                lineStops.add(stop);
+                            } else {
+                                lineStops.add(stops.get(stopId));
+                            }
                         }
 
-                        linesMap.put(id, new Line(id, stops));
+                        lines.put(id, new Line(id, lineStops));
                     }
 
                     ((Activity) context).runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            callback.onDataRetrieved(linesMap);
+                            callback.onDataRetrieved(stops);
                         }
                     });
                 } catch (Exception e) {
@@ -104,8 +120,16 @@ public class LineController implements Controller {
                 LineController.getInstance(context));
     }
 
+    public SparseArray<Stop> getStops() {
+        return stops;
+    }
+
+    public Stop getStop(int id) {
+        return stops.get(id);
+    }
+
     public Line getLine(int id) {
-        return linesMap.get(id);
+        return lines.get(id);
     }
 
 }
