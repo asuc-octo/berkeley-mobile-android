@@ -15,11 +15,12 @@ import com.asuc.asucmobile.models.Stop;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Locale;
 
 public class RouteAdapter extends BaseAdapter {
 
     private static final SimpleDateFormat TIME_FORMAT =
-            new SimpleDateFormat("h:mm a");
+            new SimpleDateFormat("h:mm a", Locale.ENGLISH);
 
     private Context context;
     private Route route;

@@ -96,6 +96,7 @@ public class OpenRouteSelectionActivity extends Activity {
 
         mController.refreshInBackground(new Callback() {
             @Override
+            @SuppressWarnings("unchecked")
             public void onDataRetrieved(Object data) {
                 mProgressBar.setVisibility(View.INVISIBLE);
                 mTripList.setVisibility(View.VISIBLE);
