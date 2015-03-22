@@ -16,8 +16,8 @@ import android.widget.Toast;
 
 import com.asuc.asucmobile.R;
 import com.asuc.asucmobile.adapters.RouteSelectionAdapter;
+import com.asuc.asucmobile.controllers.LineController;
 import com.asuc.asucmobile.controllers.RouteController;
-import com.asuc.asucmobile.controllers.StopController;
 import com.asuc.asucmobile.models.Route;
 import com.asuc.asucmobile.models.Stop;
 import com.asuc.asucmobile.utilities.Callback;
@@ -55,7 +55,7 @@ public class OpenRouteSelectionActivity extends Activity {
             return;
         }
 
-        if (((StopController) (StopController.getInstance(this))).getStops().size() == 0) {
+        if (((LineController) (LineController.getInstance(this))).getStops().size() == 0) {
             finish();
             return;
         }
@@ -66,7 +66,7 @@ public class OpenRouteSelectionActivity extends Activity {
         mRefreshWrapper = (LinearLayout) findViewById(R.id.refresh);
         mTripList = (ListView) findViewById(R.id.tripList);
 
-        Stop dest = ((StopController) (StopController.getInstance(this))).getStop(stopId);
+        Stop dest = ((LineController) (LineController.getInstance(this))).getStop(stopId);
         mController = (RouteController) RouteController.createInstance(this, new LatLng(lat, lng), dest.getLocation());
 
         mRefreshButton.setOnClickListener(new View.OnClickListener() {
