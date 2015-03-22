@@ -16,15 +16,12 @@ public class DiningHall {
     private Date lunchClose;
     private Date dinnerOpen;
     private Date dinnerClose;
-    private Date lateOpen;
-    private Date lateClose;
     private String imageUrl;
 
     public DiningHall(String id, String name, ArrayList<FoodItem> breakfastMenu,
                       ArrayList<FoodItem> lunchMenu, ArrayList<FoodItem> dinnerMenu,
                       Date breakfastOpen, Date breakfastClose, Date lunchOpen, Date lunchClose,
-                      Date dinnerOpen, Date dinnerClose, Date lateOpen, Date lateClose,
-                      String imageUrl) {
+                      Date dinnerOpen, Date dinnerClose, String imageUrl) {
         this.id = id;
         this.name = name;
         this.breakfastMenu = breakfastMenu;
@@ -36,8 +33,6 @@ public class DiningHall {
         this.lunchClose = lunchClose;
         this.dinnerOpen = dinnerOpen;
         this.dinnerClose = dinnerClose;
-        this.lateOpen = lateOpen;
-        this.lateClose = lateClose;
         this.imageUrl = imageUrl;
     }
 
@@ -120,15 +115,6 @@ public class DiningHall {
 
         Date currentTime = new Date();
         return currentTime.after(dinnerOpen) && currentTime.before(dinnerClose);
-    }
-
-    public boolean isLateNightOpen() {
-        if (lateOpen == null || lateClose == null) {
-            return false;
-        }
-
-        Date currentTime = new Date();
-        return currentTime.after(lateOpen) && currentTime.before(lateClose);
     }
 
 }

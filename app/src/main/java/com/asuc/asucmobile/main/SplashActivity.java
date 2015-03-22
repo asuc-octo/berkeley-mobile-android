@@ -6,8 +6,8 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Window;
 import android.view.WindowManager;
+
 import com.asuc.asucmobile.R;
-import com.asuc.asucmobile.tests.Test;
 
 public class SplashActivity extends Activity {
 
@@ -36,7 +36,7 @@ public class SplashActivity extends Activity {
          public void run() {
             try {
                 // Sleeping (in milliseconds)
-                Thread.sleep(1501);
+                Thread.sleep(1500);
                 } catch (Exception e) {
                     Log.e(TAG, e.getMessage());
                 }
@@ -45,7 +45,6 @@ public class SplashActivity extends Activity {
             Intent intent = new Intent(SplashActivity.this, MainActivity.class);
             startActivity(intent);
             finish();
-            overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
          }
 
     }

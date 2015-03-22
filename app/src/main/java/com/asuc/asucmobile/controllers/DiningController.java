@@ -152,26 +152,12 @@ public class DiningController implements Controller {
                             dinnerClosing = new Date(tmpDate + PST.getOffset(tmpDate));
                         }
 
-                        openingString = diningHall.getString("late_night_open");
-                        closingString = diningHall.getString("late_night_close");
-
-                        Date lateNightOpening = null;
-                        Date lateNightClosing = null;
-                        if (!openingString.equals("null")) {
-                            tmpDate = DATE_FORMAT.parse(openingString).getTime();
-                            lateNightOpening = new Date(tmpDate + PST.getOffset(tmpDate));
-                        }
-                        if (!closingString.equals("null")) {
-                            tmpDate = DATE_FORMAT.parse(closingString).getTime();
-                            lateNightClosing = new Date(tmpDate + PST.getOffset(tmpDate));
-                        }
-
                         String imageUrl = diningHall.getString("image_link");
 
                         diningHalls.add(new DiningHall(
                                 id, name, breakfastMenu, lunchMenu, dinnerMenu, breakfastOpening,
                                 breakfastClosing, lunchOpening, lunchClosing, dinnerOpening,
-                                dinnerClosing, lateNightOpening, lateNightClosing, imageUrl
+                                dinnerClosing, imageUrl
                         ));
                     }
 

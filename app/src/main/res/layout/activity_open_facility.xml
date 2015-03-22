@@ -19,9 +19,8 @@
         android:orientation="horizontal">
 
         <LinearLayout
-            android:layout_width="0dp"
+            android:layout_width="225dp"
             android:layout_height="match_parent"
-            android:layout_weight="2"
             android:paddingLeft="24dp"
             android:paddingRight="24dp"
             android:divider="@color/ASUC_blue"
@@ -44,8 +43,8 @@
                     android:id="@+id/hours"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="36dp"
-                    android:layout_marginLeft="36dp"
+                    android:layout_marginStart="24dp"
+                    android:layout_marginLeft="24dp"
                     android:textColor="@color/grizzly_gray" />
 
             </LinearLayout>
@@ -74,8 +73,8 @@
                     android:id="@+id/location"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="36dp"
-                    android:layout_marginLeft="36dp"
+                    android:layout_marginStart="24dp"
+                    android:layout_marginLeft="24dp"
                     android:textColor="@color/grizzly_gray" />
 
             </LinearLayout>
@@ -105,8 +104,8 @@
                     android:id="@+id/phone"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="36dp"
-                    android:layout_marginLeft="36dp"
+                    android:layout_marginStart="24dp"
+                    android:layout_marginLeft="24dp"
                     android:textColor="@color/grizzly_gray" />
 
             </LinearLayout>
@@ -115,9 +114,8 @@
 
         <fragment
             android:id="@+id/map"
-            android:layout_width="0dp"
+            android:layout_width="fill_parent"
             android:layout_height="match_parent"
-            android:layout_weight="1"
             android:name="com.google.android.gms.maps.MapFragment"
             tools:layout="@android:layout/list_content" />
 

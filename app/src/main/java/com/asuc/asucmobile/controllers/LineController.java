@@ -65,7 +65,6 @@ public class LineController implements Controller {
                         JSONObject lineJSON = array.getJSONObject(i);
 
                         int id = lineJSON.getInt("id");
-                        String name = lineJSON.getString("name");
                         JSONArray stopsJSON = lineJSON.getJSONArray("stop_list");
 
                         ArrayList<Stop> stops = new ArrayList<Stop>();
@@ -74,7 +73,7 @@ public class LineController implements Controller {
                             stops.add(stopController.getStop(stopsJSON.getJSONObject(j).getInt("id")));
                         }
 
-                        linesMap.put(id, new Line(id, name, stops));
+                        linesMap.put(id, new Line(id, stops));
                     }
 
                     ((Activity) context).runOnUiThread(new Runnable() {
@@ -105,16 +104,8 @@ public class LineController implements Controller {
                 LineController.getInstance(context));
     }
 
-    public SparseArray<Line> getLines() {
-        return linesMap;
-    }
-
     public Line getLine(int id) {
         return linesMap.get(id);
-    }
-
-    public int getId(Line line) {
-        return linesMap.keyAt(linesMap.indexOfValue(line));
     }
 
 }
