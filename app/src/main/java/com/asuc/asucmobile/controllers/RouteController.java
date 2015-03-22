@@ -102,31 +102,30 @@ public class RouteController implements Controller {
                             Date endTime = new Date(tmpTime + PST.getOffset(tmpTime));
                             String lineName = tripJSON.getString("line_name");
 
-                            int startStopId = tripJSON.getJSONObject("starting_stop").getInt("id");
-                            int endStopId = tripJSON.getJSONObject("destination_stop").getInt("id");
+                            int startId = tripJSON.getJSONObject("starting_stop").getInt("id");
+                            String startName = tripJSON.getJSONObject("starting_stop").getString("name");
+                            int endId = tripJSON.getJSONObject("destination_stop").getInt("id");
+                            String endName = tripJSON.getJSONObject("destination_stop").getString("name");
+
+                            Stop startStop = lineController.getStop(startId, startName);
+                            Stop endStop = lineController.getStop(endId, endName);
+
                             int lineId = tripJSON.getInt("line_id");
-                            ArrayList<Stop> lineStops = lineController.getLine(lineId).getStops();
+                            ArrayList<Stop> lineStops = lineController.getLine(lineId, lineName).getStops();
 
                             // Getting a sub-sequence of Stops in a Trip.
                             ArrayList<Stop> stops = new ArrayList<>();
-                            boolean isPastStartStop = false;
-                            boolean isPastEndStop = false;
-                            for (Stop stop : lineStops) {
-                                if (isPastEndStop) {
-                                    break;
+                            boolean isPastEnd = false;
+                            int index = lineStops.indexOf(startStop);
+                            while (!isPastEnd) {
+                                Stop stop = lineStops.get(index);
+                                stops.add(stop);
+
+                                if (stop == endStop) {
+                                    isPastEnd = true;
                                 }
 
-                                if (isPastStartStop) {
-                                    stops.add(stop);
-                                    if (endStopId == stop.getId()) {
-                                        isPastEndStop = true;
-                                    }
-                                } else {
-                                    if (startStopId == stop.getId()) {
-                                        isPastStartStop = true;
-                                        stops.add(stop);
-                                    }
-                                }
+                                index = (index + 1) % lineStops.size();
                             }
 
                             trips.add(new Trip(startTime, endTime, stops, lineName));
