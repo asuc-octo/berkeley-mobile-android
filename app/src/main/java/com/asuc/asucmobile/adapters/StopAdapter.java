@@ -60,7 +60,7 @@ public class StopAdapter extends BaseAdapter {
 
         destinationName.setText(destination.getAbbreviatedName());
         destinationName.setTypeface(Typeface.createFromAsset(context.getAssets(), "young.ttf"));
-        distance.setText(destination.getDistance(lat, lng) + " mi");
+        distance.setText(destination.getDistance() + " mi");
         distance.setTypeface(Typeface.createFromAsset(context.getAssets(), "young.ttf"));
 
         return convertView;
@@ -74,6 +74,10 @@ public class StopAdapter extends BaseAdapter {
     public void setList(ArrayList<Stop> list) {
         allDestinations = list;
         destinations = list;
+
+        for (Stop stop : list) {
+            stop.setDistance(lat, lng);
+        }
 
         notifyDataSetChanged();
     }
