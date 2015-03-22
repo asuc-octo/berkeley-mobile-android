@@ -17,6 +17,7 @@ public class Stop {
 
     private int id;
     private String name;
+    private String abbreviatedName;
     private LatLng location;
 
     private Date startTime;
@@ -27,6 +28,7 @@ public class Stop {
     public Stop(int id, String name, LatLng location) {
         this.id = id;
         this.name = name;
+        this.abbreviatedName = name.split(":|;")[0];
         this.location = location;
     }
 
@@ -45,7 +47,7 @@ public class Stop {
     }
 
     public String getAbbreviatedName() {
-        return name.split(":|;")[0];
+        return abbreviatedName;
     }
 
     public LatLng getLocation() {
