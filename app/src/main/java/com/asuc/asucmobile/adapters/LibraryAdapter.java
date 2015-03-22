@@ -23,8 +23,8 @@ public class LibraryAdapter extends BaseAdapter {
     public LibraryAdapter(Context context) {
         this.context = context;
 
-        allLibraries = new ArrayList<Library>();
-        libraries = new ArrayList<Library>();
+        allLibraries = new ArrayList<>();
+        libraries = new ArrayList<>();
     }
 
     @Override
@@ -95,7 +95,7 @@ public class LibraryAdapter extends BaseAdapter {
             @Override
             protected FilterResults performFiltering(CharSequence query) {
                 FilterResults results = new FilterResults();
-                ArrayList<Library> filteredLibraries = new ArrayList<Library>();
+                ArrayList<Library> filteredLibraries = new ArrayList<>();
 
                 if (query == null || query.length() == 0) {
                     filteredLibraries = allLibraries;

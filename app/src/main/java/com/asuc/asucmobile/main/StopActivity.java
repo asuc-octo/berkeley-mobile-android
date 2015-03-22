@@ -3,7 +3,11 @@ package com.asuc.asucmobile.main;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Typeface;
+import android.location.Criteria;
+import android.location.Location;
+import android.location.LocationManager;
 import android.os.Bundle;
+import android.util.SparseArray;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -20,28 +24,53 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.asuc.asucmobile.R;
-import com.asuc.asucmobile.adapters.LibraryAdapter;
-import com.asuc.asucmobile.controllers.LibraryController;
-import com.asuc.asucmobile.models.Library;
+import com.asuc.asucmobile.adapters.StopAdapter;
+import com.asuc.asucmobile.controllers.LineController;
+import com.asuc.asucmobile.controllers.StopController;
+import com.asuc.asucmobile.models.Stop;
 import com.asuc.asucmobile.utilities.Callback;
 import com.flurry.android.FlurryAgent;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.Collections;
+import java.util.Comparator;
 
-public class LibraryActivity extends Activity {
+public class StopActivity extends Activity {
 
-    private ListView mLibraryList;
+    private static final Comparator<Stop> ALPHABETICAL_ORDER = new Comparator<Stop>() {
+        public int compare(Stop stop1, Stop stop2) {
+            int res = String.CASE_INSENSITIVE_ORDER.compare(stop1.getAbbreviatedName(), stop2.getAbbreviatedName());
+            if (res == 0) {
+                res = stop1.getAbbreviatedName().compareTo(stop2.getAbbreviatedName());
+            }
+            return res;
+        }
+    };
+
+    private ListView mDestList;
     private ProgressBar mProgressBar;
     private LinearLayout mRefreshWrapper;
 
-    private LibraryAdapter mAdapter;
+    private StopAdapter mAdapter;
+
+    private double mlatitude = 0;
+    private double mlongitude = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         FlurryAgent.onStartSession(this, "4VPTT49FCCKH7Z2NVQ26");
+
+        // Get current location.
+        LocationManager locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
+        String bestProvider = locationManager.getBestProvider(new Criteria(), false);
+        Location location = locationManager.getLastKnownLocation(bestProvider);
+        try {
+            mlatitude = location.getLatitude();
+            mlongitude = location.getLongitude();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         if (getActionBar() != null) {
             int titleId = getResources().getIdentifier("action_bar_title", "id", "android");
@@ -50,28 +79,25 @@ public class LibraryActivity extends Activity {
 
             getActionBar().setDisplayHomeAsUpEnabled(true);
         }
-        setContentView(R.layout.activity_library);
+        setContentView(R.layout.activity_stop);
 
         ImageButton refreshButton = (ImageButton) findViewById(R.id.refresh_button);
 
-        mLibraryList = (ListView) findViewById(R.id.library_list);
+        mDestList = (ListView) findViewById(R.id.stop_list);
         mProgressBar = (ProgressBar) findViewById(R.id.progress_bar);
         mRefreshWrapper = (LinearLayout) findViewById(R.id.refresh);
 
-        mAdapter = new LibraryAdapter(this);
-        mLibraryList.setAdapter(mAdapter);
+        mAdapter = new StopAdapter(this, mlatitude, mlongitude);
+        mDestList.setAdapter(mAdapter);
 
-        mLibraryList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        mDestList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                LibraryController controller = ((LibraryController) LibraryController.getInstance(getBaseContext()));
-                controller.setCurrentLibrary(mAdapter.getItem(i));
-                Intent intent = new Intent(getBaseContext(), OpenLibraryActivity.class);
+                Intent intent = new Intent(getBaseContext(), OpenRouteSelectionActivity.class);
 
-                //Flurry log for tapping Library hours.
-                Map<String, String> libParams = new HashMap<>();
-                libParams.put("Hall", mAdapter.getItem(i).getName());
-                FlurryAgent.logEvent("Taps Library Hours", libParams);
+                intent.putExtra("stop_id", mAdapter.getItem(i).getId());
+                intent.putExtra("lat", mlatitude);
+                intent.putExtra("long", mlongitude);
 
                 startActivity(intent);
             }
@@ -108,14 +134,14 @@ public class LibraryActivity extends Activity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.library, menu);
+        inflater.inflate(R.menu.destination, menu);
 
         final SearchView search = (SearchView) menu.findItem(R.id.search).getActionView();
         search.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //Flurry log for searching for something!
-                FlurryAgent.logEvent("Tapped on the Search Button (Libraries)");
+                FlurryAgent.logEvent("Tapped on the Search Button (Destinations)");
             }
         });
         search.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
@@ -152,26 +178,46 @@ public class LibraryActivity extends Activity {
         super.onBackPressed();
 
         //Flurry logging for pressing the Back Button
-        FlurryAgent.logEvent("Tapped on the Back Button (Libraries)");
+        FlurryAgent.logEvent("Tapped on the Back Button (Gyms)");
     }
 
     /**
-     * refresh() updates the visibility of necessary UI elements and refreshes the library list
-     * from the web.
-     */
+    * refresh() updates the visibility of necessary UI elements and refreshes the library list
+    * from the web.
+    */
     private void refresh() {
-        mLibraryList.setVisibility(View.GONE);
+        mDestList.setVisibility(View.GONE);
         mRefreshWrapper.setVisibility(View.GONE);
         mProgressBar.setVisibility(View.VISIBLE);
 
-        LibraryController.getInstance(this).refreshInBackground(new Callback() {
+        StopController.getInstance(this).refreshInBackground(new Callback() {
             @Override
             @SuppressWarnings("unchecked")
             public void onDataRetrieved(Object data) {
-                mLibraryList.setVisibility(View.VISIBLE);
-                mProgressBar.setVisibility(View.GONE);
+                SparseArray<Stop> stopsMap = (SparseArray<Stop>) data;
+                final ArrayList<Stop> stops = new ArrayList();
+                for (int i = 0; i < stopsMap.size(); i++) {
+                    stops.add(stopsMap.valueAt(i));
+                }
 
-                mAdapter.setList((ArrayList<Library>) data);
+                Collections.sort(stops, ALPHABETICAL_ORDER);
+
+                LineController.getInstance(StopActivity.this).refreshInBackground(new Callback() {
+                    @Override
+                    public void onDataRetrieved(Object data) {
+                        mDestList.setVisibility(View.VISIBLE);
+                        mProgressBar.setVisibility(View.GONE);
+
+                        mAdapter.setList(stops);
+                    }
+
+                    @Override
+                    public void onRetrievalFailed() {
+                        mProgressBar.setVisibility(View.GONE);
+                        mRefreshWrapper.setVisibility(View.VISIBLE);
+                        Toast.makeText(getBaseContext(), "Unable to retrieve data, please try again", Toast.LENGTH_SHORT).show();
+                    }
+                });
             }
 
             @Override
