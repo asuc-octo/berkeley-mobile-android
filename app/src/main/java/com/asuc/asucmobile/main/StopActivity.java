@@ -53,8 +53,8 @@ public class StopActivity extends Activity {
 
     private StopAdapter mAdapter;
 
-    private double mlatitude = 0;
-    private double mlongitude = 0;
+    private double mlatitude = -1;
+    private double mlongitude = -1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -93,13 +93,18 @@ public class StopActivity extends Activity {
         mDestList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Intent intent = new Intent(getBaseContext(), OpenRouteSelectionActivity.class);
+                if (mlatitude == -1 || mlongitude == -1) {
+                    Toast.makeText(getBaseContext(), "Please turn on location to get directions.", Toast.LENGTH_SHORT).show();
+                    finish();
+                } else {
+                    Intent intent = new Intent(getBaseContext(), OpenRouteSelectionActivity.class);
 
-                intent.putExtra("stop_id", mAdapter.getItem(i).getId());
-                intent.putExtra("lat", mlatitude);
-                intent.putExtra("long", mlongitude);
+                    intent.putExtra("stop_id", mAdapter.getItem(i).getId());
+                    intent.putExtra("lat", mlatitude);
+                    intent.putExtra("long", mlongitude);
 
-                startActivity(intent);
+                    startActivity(intent);
+                }
             }
         });
 

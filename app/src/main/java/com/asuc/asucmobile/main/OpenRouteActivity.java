@@ -140,7 +140,12 @@ public class OpenRouteActivity extends Activity {
                 final LatLngBounds.Builder builder = LatLngBounds.builder();
                 builder.include(firstStop.getLocation());
                 builder.include(lastStop.getLocation());
-                builder.include(new LatLng(myLocation.getLatitude(), myLocation.getLongitude()));
+
+                try {
+                    builder.include(new LatLng(myLocation.getLatitude(), myLocation.getLongitude()));
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
 
                 map.setOnCameraChangeListener(new GoogleMap.OnCameraChangeListener() {
                     @Override
