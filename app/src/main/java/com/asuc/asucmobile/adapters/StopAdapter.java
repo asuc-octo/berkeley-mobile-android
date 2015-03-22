@@ -23,6 +23,8 @@ public class StopAdapter extends BaseAdapter {
     private double lat;
     private double lng;
 
+    private boolean locationDisabled = false;
+
     public StopAdapter(Context context, double lat, double lng) {
         this.context = context;
         this.lat = lat;
@@ -60,9 +62,14 @@ public class StopAdapter extends BaseAdapter {
 
         destinationName.setText(destination.getAbbreviatedName());
         destinationName.setTypeface(Typeface.createFromAsset(context.getAssets(), "young.ttf"));
-        distance.setText(destination.getDistance() + " mi");
         distance.setTypeface(Typeface.createFromAsset(context.getAssets(), "young.ttf"));
 
+        if (!locationDisabled) {
+            distance.setText(destination.getDistance() + " mi");
+        } else {
+            distance.setText("N/A");
+        }
+        
         return convertView;
     }
 
@@ -75,8 +82,12 @@ public class StopAdapter extends BaseAdapter {
         allDestinations = list;
         destinations = list;
 
-        for (Stop stop : list) {
-            stop.setDistance(lat, lng);
+        if (lat == -1 || lng == -1) {
+            locationDisabled = true;
+        } else {
+            for (Stop stop : list) {
+                stop.setDistance(lat, lng);
+            }
         }
 
         notifyDataSetChanged();
