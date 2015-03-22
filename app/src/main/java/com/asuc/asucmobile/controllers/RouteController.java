@@ -57,7 +57,7 @@ public class RouteController implements Controller {
         this.start = start;
         this.dest = dest;
 
-        routes = new ArrayList<Route>();
+        routes = new ArrayList<>();
     }
 
     @Override
@@ -89,7 +89,7 @@ public class RouteController implements Controller {
                         JSONObject routeJSON = array.getJSONObject(i);
                         JSONArray tripListJSON = routeJSON.getJSONArray("trip_list");
 
-                        ArrayList<Trip> trips = new ArrayList<Trip>();
+                        ArrayList<Trip> trips = new ArrayList<>();
 
                         // Iterate through all Trips in a route.
                         for (int j = 0; j < tripListJSON.length(); j++) {
@@ -108,7 +108,7 @@ public class RouteController implements Controller {
                             ArrayList<Stop> lineStops = lineController.getLine(lineId).getStops();
 
                             // Getting a sub-sequence of Stops in a Trip.
-                            ArrayList<Stop> stops = new ArrayList<Stop>();
+                            ArrayList<Stop> stops = new ArrayList<>();
                             boolean isPastStartStop = false;
                             boolean isPastEndStop = false;
                             for (Stop stop : lineStops) {

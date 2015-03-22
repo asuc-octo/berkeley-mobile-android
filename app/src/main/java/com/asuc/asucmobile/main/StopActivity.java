@@ -26,7 +26,6 @@ import android.widget.Toast;
 import com.asuc.asucmobile.R;
 import com.asuc.asucmobile.adapters.StopAdapter;
 import com.asuc.asucmobile.controllers.LineController;
-import com.asuc.asucmobile.controllers.StopController;
 import com.asuc.asucmobile.models.Stop;
 import com.asuc.asucmobile.utilities.Callback;
 import com.flurry.android.FlurryAgent;
@@ -195,10 +194,13 @@ public class StopActivity extends Activity {
         mRefreshWrapper.setVisibility(View.GONE);
         mProgressBar.setVisibility(View.VISIBLE);
 
-        StopController.getInstance(this).refreshInBackground(new Callback() {
+        LineController.getInstance(this).refreshInBackground(new Callback() {
             @Override
             @SuppressWarnings("unchecked")
             public void onDataRetrieved(Object data) {
+                mDestList.setVisibility(View.VISIBLE);
+                mProgressBar.setVisibility(View.GONE);
+
                 SparseArray<Stop> stopsMap = (SparseArray<Stop>) data;
                 final ArrayList<Stop> stops = new ArrayList();
                 for (int i = 0; i < stopsMap.size(); i++) {
@@ -207,22 +209,7 @@ public class StopActivity extends Activity {
 
                 Collections.sort(stops, ALPHABETICAL_ORDER);
 
-                LineController.getInstance(StopActivity.this).refreshInBackground(new Callback() {
-                    @Override
-                    public void onDataRetrieved(Object data) {
-                        mDestList.setVisibility(View.VISIBLE);
-                        mProgressBar.setVisibility(View.GONE);
-
-                        mAdapter.setList(stops);
-                    }
-
-                    @Override
-                    public void onRetrievalFailed() {
-                        mProgressBar.setVisibility(View.GONE);
-                        mRefreshWrapper.setVisibility(View.VISIBLE);
-                        Toast.makeText(getBaseContext(), "Unable to retrieve data, please try again", Toast.LENGTH_SHORT).show();
-                    }
-                });
+                mAdapter.setList(stops);
             }
 
             @Override
