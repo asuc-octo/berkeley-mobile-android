@@ -1,7 +1,10 @@
 package com.asuc.asucmobile.models;
 
+import android.location.Location;
+
 import com.google.android.gms.maps.model.LatLng;
 
+import java.text.DecimalFormat;
 import java.util.Date;
 
 /*
@@ -9,6 +12,8 @@ import java.util.Date;
  * and have an extra field for their previous and next stop times.
  */
 public class Stop {
+
+    private final static DecimalFormat DECIMAL_FORMAT = new DecimalFormat("#.##");
 
     private int id;
     private String name;
@@ -55,6 +60,13 @@ public class Stop {
 
     public Date getPreviousArrival() {
         return endTime;
+    }
+
+    public String getDistance(double lat, double lng) {
+        float[] results = new float[1];
+        Location.distanceBetween(lat, lng, location.latitude, location.longitude, results);
+
+        return DECIMAL_FORMAT.format(results[0] * 0.000621371192);
     }
 
 }
