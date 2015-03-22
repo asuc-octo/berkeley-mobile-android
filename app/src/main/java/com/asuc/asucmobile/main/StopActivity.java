@@ -99,6 +99,7 @@ public class StopActivity extends Activity {
                     Intent intent = new Intent(getBaseContext(), OpenRouteSelectionActivity.class);
 
                     intent.putExtra("stop_id", mAdapter.getItem(i).getId());
+                    intent.putExtra("stop_name", mAdapter.getItem(i).getName());
                     intent.putExtra("lat", mlatitude);
                     intent.putExtra("long", mlongitude);
 
