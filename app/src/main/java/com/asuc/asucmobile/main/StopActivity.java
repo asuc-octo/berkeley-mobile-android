@@ -116,6 +116,8 @@ public class StopActivity extends Activity {
         LocationListener locationListener = new LocationListener() {
             public void onLocationChanged(Location location) {
                 // Called when a new location is found by the network location provider.
+                mLatitude = location.getLatitude();
+                mLongitude = location.getLongitude();
                 mAdapter.setNewLocation(location);
                 locationManager.removeUpdates(this);
             }
