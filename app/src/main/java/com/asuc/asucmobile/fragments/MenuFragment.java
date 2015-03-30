@@ -147,6 +147,8 @@ public class MenuFragment extends Fragment {
         protected void onPostExecute(Bitmap result) {
             if (result != null) {
                 headerView.setImage(result);
+            } else {
+                headerView.setImage(getResources().getDrawable(R.drawable.default_dining));
             }
         }
 

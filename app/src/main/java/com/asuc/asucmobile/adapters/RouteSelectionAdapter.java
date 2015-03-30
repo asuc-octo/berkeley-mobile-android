@@ -46,9 +46,9 @@ public class RouteSelectionAdapter extends BaseAdapter {
 
     public View getView(int i, View convertView, ViewGroup parent) {
         Route route = getItem(i);
-        Date currentTime = new Date();
+        Date startTime = route.getTrips().get(0).getStartTime();
         Date endTime = route.getTrips().get(route.getTrips().size() - 1).getEndTime();
-        long timeDiff = endTime.getTime() - currentTime.getTime();
+        long timeDiff = endTime.getTime() - startTime.getTime();
         int duration = (int) timeDiff / (60 * 1000);
 
         if (convertView == null) {
@@ -59,7 +59,7 @@ public class RouteSelectionAdapter extends BaseAdapter {
         TextView tripDuration = (TextView) convertView.findViewById(R.id.duration);
         View tripLine2 = convertView.findViewById(R.id.line2);
 
-        tripBusTime.setText(TIME_FORMAT.format(endTime));
+        tripBusTime.setText(TIME_FORMAT.format(startTime));
         tripDuration.setText(duration + " min");
 
         if(route.getTrips().size() > 1) {
