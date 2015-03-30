@@ -3,6 +3,7 @@ package com.asuc.asucmobile.views;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Typeface;
+import android.graphics.drawable.Drawable;
 import android.text.SpannableString;
 import android.view.LayoutInflater;
 import android.widget.ImageView;
@@ -30,6 +31,10 @@ public class ImageHeaderView extends LinearLayout {
 
     public void setImage(Bitmap image) {
         imageView.setImageBitmap(image);
+    }
+
+    public void setImage(Drawable image) {
+        imageView.setImageDrawable(image);
     }
 
     public void setText(SpannableString string) {
