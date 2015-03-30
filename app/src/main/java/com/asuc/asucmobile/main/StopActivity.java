@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.graphics.Typeface;
 import android.location.Criteria;
 import android.location.Location;
+import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.util.SparseArray;
@@ -52,24 +53,13 @@ public class StopActivity extends Activity {
 
     private StopAdapter mAdapter;
 
-    private double mlatitude = -1;
-    private double mlongitude = -1;
+    private double mLatitude = -1;
+    private double mLongitude = -1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         FlurryAgent.onStartSession(this, "4VPTT49FCCKH7Z2NVQ26");
-
-        // Get current location.
-        LocationManager locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
-        String bestProvider = locationManager.getBestProvider(new Criteria(), false);
-        Location location = locationManager.getLastKnownLocation(bestProvider);
-        try {
-            mlatitude = location.getLatitude();
-            mlongitude = location.getLongitude();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
 
         if (getActionBar() != null) {
             int titleId = getResources().getIdentifier("action_bar_title", "id", "android");
@@ -86,27 +76,59 @@ public class StopActivity extends Activity {
         mProgressBar = (ProgressBar) findViewById(R.id.progress_bar);
         mRefreshWrapper = (LinearLayout) findViewById(R.id.refresh);
 
-        mAdapter = new StopAdapter(this, mlatitude, mlongitude);
+        // Get location manager
+        final LocationManager locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
+        String bestProvider = locationManager.getBestProvider(new Criteria(), false);
+
+        // For quick access, retrieve the last location update
+        Location location = locationManager.getLastKnownLocation(bestProvider);
+        if (location != null) {
+            mLatitude = location.getLatitude();
+            mLongitude = location.getLongitude();
+        } else {
+            mLatitude = -1;
+            mLongitude = -1;
+        }
+
+        // Set up list
+        mAdapter = new StopAdapter(this, mLatitude, mLongitude);
         mDestList.setAdapter(mAdapter);
 
         mDestList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                if (mlatitude == -1 || mlongitude == -1) {
-                    Toast.makeText(getBaseContext(), "Please turn on location to get directions.", Toast.LENGTH_SHORT).show();
-                    finish();
+                if (mLatitude == -1 || mLongitude == -1) {
+                    Toast.makeText(getBaseContext(), "Retrieving location, make sure your location is enabled!", Toast.LENGTH_SHORT).show();
                 } else {
                     Intent intent = new Intent(getBaseContext(), OpenRouteSelectionActivity.class);
 
                     intent.putExtra("stop_id", mAdapter.getItem(i).getId());
                     intent.putExtra("stop_name", mAdapter.getItem(i).getName());
-                    intent.putExtra("lat", mlatitude);
-                    intent.putExtra("long", mlongitude);
+                    intent.putExtra("lat", mLatitude);
+                    intent.putExtra("long", mLongitude);
 
                     startActivity(intent);
                 }
             }
         });
+
+        // Define a listener that responds to location updates
+        LocationListener locationListener = new LocationListener() {
+            public void onLocationChanged(Location location) {
+                // Called when a new location is found by the network location provider.
+                mAdapter.setNewLocation(location);
+                locationManager.removeUpdates(this);
+            }
+
+            public void onStatusChanged(String provider, int status, Bundle extras) {}
+
+            public void onProviderEnabled(String provider) {}
+
+            public void onProviderDisabled(String provider) {}
+        };
+
+        // Register the listener with the Location Manager to receive location updates
+        locationManager.requestLocationUpdates(bestProvider, 0, 0, locationListener);
 
         refreshButton.setOnClickListener(new View.OnClickListener() {
             @Override

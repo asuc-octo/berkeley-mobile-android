@@ -2,6 +2,7 @@ package com.asuc.asucmobile.adapters;
 
 import android.content.Context;
 import android.graphics.Typeface;
+import android.location.Location;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -67,16 +68,16 @@ public class StopAdapter extends BaseAdapter {
         if (!locationDisabled) {
             distance.setText(destination.getDistance() + " mi");
         } else {
-            distance.setText("N/A");
+            distance.setText("...");
         }
         
         return convertView;
     }
 
     /**
-     * setList() updates the list of gyms (typically after calling for a refresh).
+     * setList() updates the list of stops (typically after calling for a refresh).
      *
-     * @param list The updated list of gyms.
+     * @param list The updated list of stops.
      */
     public void setList(ArrayList<Stop> list) {
         allDestinations = list;
@@ -91,6 +92,14 @@ public class StopAdapter extends BaseAdapter {
         }
 
         notifyDataSetChanged();
+    }
+
+    public void setNewLocation(Location location) {
+        lat = location.getLatitude();
+        lng = location.getLongitude();
+        locationDisabled = false;
+
+        setList(allDestinations);
     }
 
     /**
