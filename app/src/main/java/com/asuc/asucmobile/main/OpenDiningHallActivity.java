@@ -84,8 +84,8 @@ public class OpenDiningHallActivity extends Activity implements ActionBar.TabLis
                 (diningHall.getLunchClosing() != null && currentTime.after(diningHall.getLunchClosing())) ||
                 (diningHall.getDinnerClosing() != null && currentTime.after(diningHall.getDinnerClosing()))) {
             mViewPager.setCurrentItem(2);
-        } else if (diningHall.getBreakfastClosing() != null &&
-                (diningHall.isLunchOpen() || currentTime.after(diningHall.getBreakfastClosing()))) {
+        } else if (diningHall.isLunchOpen() ||
+                (diningHall.getBreakfastClosing() != null && currentTime.after(diningHall.getBreakfastClosing()))) {
             mViewPager.setCurrentItem(1);
         } else {
             mViewPager.setCurrentItem(0);
