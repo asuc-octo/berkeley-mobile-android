@@ -207,11 +207,11 @@ public class OpenGymActivity extends Activity {
 
                 final LatLng latLng;
 
-                if (addresses == null) {
-                    return;
-                } else {
+                if (addresses != null && addresses.size() > 0) {
                     Address address = addresses.get(0);
                     latLng = new LatLng(address.getLatitude(), address.getLongitude());
+                } else {
+                    latLng = new LatLng(37.8700, -122.2590); // Default UC Berkeley coordinates
                 }
 
                 BitmapDescriptor bitmap = BitmapDescriptorFactory.fromResource(R.drawable.icon_map_pin);
