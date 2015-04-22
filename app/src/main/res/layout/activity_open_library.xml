@@ -10,6 +10,7 @@
         android:layout_height="0dp"
         android:layout_weight="1"
         android:scaleType="fitXY"
+        android:src="@drawable/default_library"
         android:contentDescription="@string/content_desc" />
 
     <LinearLayout
