@@ -5,7 +5,6 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.Typeface;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.SpannableString;
 import android.text.style.ForegroundColorSpan;
@@ -51,7 +50,7 @@ public class MenuFragment extends Fragment {
         }
 
         ImageHeaderView header = new ImageHeaderView(getActivity());
-        new DownloadImageTask(header).execute(diningHall.getImageUrl());
+        new DownloadImageThread(header, diningHall.getImageUrl()).start();
 
         String whichMenu = getArguments().getString("whichMenu");
         String opening;
@@ -120,35 +119,32 @@ public class MenuFragment extends Fragment {
         return v;
     }
 
-    private class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
+    private class DownloadImageThread extends Thread {
 
         ImageHeaderView headerView;
+        String url;
 
-        public DownloadImageTask(ImageHeaderView headerView) {
+        public DownloadImageThread(ImageHeaderView headerView, String url) {
             this.headerView = headerView;
+            this.url = url;
         }
 
         @Override
-        protected Bitmap doInBackground(String... urls) {
-            String url = urls[0];
-            Bitmap bitmap = null;
-
+        public void run() {
             try {
                 InputStream input = new java.net.URL(url).openStream();
-                bitmap = BitmapFactory.decodeStream(input);
+                final Bitmap bitmap = BitmapFactory.decodeStream(input);
+
+                getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (bitmap != null) {
+                            headerView.setImage(bitmap);
+                        }
+                    }
+                });
             } catch (Exception e) {
                 e.printStackTrace();
-            }
-
-            return bitmap;
-        }
-
-        @Override
-        protected void onPostExecute(Bitmap result) {
-            if (result != null) {
-                headerView.setImage(result);
-            } else {
-                headerView.setImage(getResources().getDrawable(R.drawable.default_dining));
             }
         }
 
