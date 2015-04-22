@@ -8,7 +8,6 @@ import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.text.Spannable;
@@ -71,7 +70,7 @@ public class OpenLibraryActivity extends Activity {
             getActionBar().setTitle(library.getName());
             getActionBar().setDisplayHomeAsUpEnabled(true);
         }
-        setContentView(R.layout.activity_open_facility);
+        setContentView(R.layout.activity_open_library);
 
         ImageView image = (ImageView) findViewById(R.id.image);
         TextView hours = (TextView) findViewById(R.id.hours);
@@ -137,7 +136,7 @@ public class OpenLibraryActivity extends Activity {
         }
 
         setUpMap();
-        new DownloadImageTask(image).execute(library.getImageUrl());
+        new DownloadImageThread(image, library.getImageUrl()).start();
     }
 
     @Override
@@ -238,35 +237,32 @@ public class OpenLibraryActivity extends Activity {
         startActivity(i);
     }
 
-    private class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
+    private class DownloadImageThread extends Thread {
 
         ImageView image;
+        String url;
 
-        public DownloadImageTask(ImageView image) {
+        public DownloadImageThread(ImageView image, String url) {
             this.image = image;
+            this.url = url;
         }
 
         @Override
-        protected Bitmap doInBackground(String... urls) {
-            String url = urls[0];
-            Bitmap bitmap = null;
-
+        public void run() {
             try {
                 InputStream input = new java.net.URL(url).openStream();
-                bitmap = BitmapFactory.decodeStream(input);
+                final Bitmap bitmap = BitmapFactory.decodeStream(input);
+
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (bitmap != null) {
+                            image.setImageBitmap(bitmap);
+                        }
+                    }
+                });
             } catch (Exception e) {
                 e.printStackTrace();
-            }
-
-            return bitmap;
-        }
-
-        @Override
-        protected void onPostExecute(Bitmap result) {
-            if (result != null) {
-                image.setImageBitmap(result);
-            } else {
-                image.setImageDrawable(getResources().getDrawable(R.drawable.default_library));
             }
         }
 
