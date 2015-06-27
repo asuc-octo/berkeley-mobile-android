@@ -1,7 +1,6 @@
 package com.asuc.asucmobile.adapters;
 
 import android.content.Context;
-import android.graphics.Typeface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -54,18 +53,16 @@ public class LibraryAdapter extends BaseAdapter {
         TextView libraryAvailability = (TextView) convertView.findViewById(R.id.availability);
 
         libraryName.setText(library.getName());
-        libraryName.setTypeface(Typeface.createFromAsset(context.getAssets(), "young.ttf"));
-        libraryAvailability.setTypeface(Typeface.createFromAsset(context.getAssets(), "young.ttf"));
 
         if (library.isByAppointment()) {
             libraryAvailability.setTextColor(context.getResources().getColor(R.color.pavan_light));
-            libraryAvailability.setText("BY APPOINTMENT");
+            libraryAvailability.setText("By appointment");
         } else if (library.isOpen()) {
             libraryAvailability.setTextColor(context.getResources().getColor(R.color.green));
-            libraryAvailability.setText("OPEN");
+            libraryAvailability.setText("Open");
         } else {
             libraryAvailability.setTextColor(context.getResources().getColor(android.R.color.holo_red_light));
-            libraryAvailability.setText("CLOSED");
+            libraryAvailability.setText("Closed");
         }
 
         return convertView;

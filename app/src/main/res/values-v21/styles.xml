@@ -1,0 +1,21 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.NoActionBar">
+        <item name="android:colorPrimary">@color/ASUC_blue</item>
+        <item name="android:colorPrimaryDark">@color/OP_navy</item>
+        <item name="android:colorControlHighlight">@android:color/darker_gray</item>
+        <item name="android:actionBarTabStyle">@style/ActionBarTabs</item>
+        <item name="android:actionBarTabTextStyle">@style/ActionBarTabTitles</item>
+        <item name="android:windowBackground">@android:color/white</item>
+    </style>
+
+    <style name="ActionBarTabTitles" parent="android:style/Widget.Holo.ActionBar.TabText">
+        <item name="android:textColor">@android:color/white</item>
+    </style>
+
+    <style name="ActionBarTabs" parent="android:style/Widget.Holo.Light.ActionBar.TabView">
+        <item name="android:background">@drawable/tab_indicator</item>
+    </style>
+
+</resources>

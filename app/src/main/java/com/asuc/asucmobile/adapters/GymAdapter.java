@@ -1,7 +1,6 @@
 package com.asuc.asucmobile.adapters;
 
 import android.content.Context;
-import android.graphics.Typeface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,7 +20,7 @@ public class GymAdapter extends BaseAdapter {
     public GymAdapter(Context context) {
         this.context = context;
 
-        gyms = new ArrayList<Gym>();
+        gyms = new ArrayList<>();
     }
 
     @Override
@@ -51,18 +50,16 @@ public class GymAdapter extends BaseAdapter {
         TextView gymAvailability = (TextView) convertView.findViewById(R.id.availability);
 
         gymName.setText(gym.getName());
-        gymName.setTypeface(Typeface.createFromAsset(context.getAssets(), "young.ttf"));
-        gymAvailability.setTypeface(Typeface.createFromAsset(context.getAssets(), "young.ttf"));
 
         if (gym.getOpening() == null || gym.getClosing() == null) {
             gymAvailability.setTextColor(context.getResources().getColor(R.color.pavan_light));
-            gymAvailability.setText("UNKNOWN HOURS");
+            gymAvailability.setText("Unknown hours");
         } else if (gym.isOpen()) {
             gymAvailability.setTextColor(context.getResources().getColor(R.color.green));
-            gymAvailability.setText("OPEN");
+            gymAvailability.setText("Open");
         } else {
             gymAvailability.setTextColor(context.getResources().getColor(android.R.color.holo_red_light));
-            gymAvailability.setText("CLOSED");
+            gymAvailability.setText("Closed");
         }
 
         return convertView;

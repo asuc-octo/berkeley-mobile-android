@@ -1,24 +1,10 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="android:Theme.Holo.Light.DarkActionBar">
-        <item name="android:actionBarStyle">@style/ActionBar</item>
+    <style name="AppTheme" parent="Theme.AppCompat.NoActionBar">
         <item name="android:actionBarTabStyle">@style/ActionBarTabs</item>
         <item name="android:actionBarTabTextStyle">@style/ActionBarTabTitles</item>
-        <item name="android:windowBackground">@color/holo_white</item>
-    </style>
-
-    <style name="ActionBar" parent="android:Widget.Holo.ActionBar">
-        <item name="android:background">@color/ASUC_blue</item>
-        <item name="android:backgroundStacked">@color/ASUC_blue</item>
-        <item name="android:titleTextStyle">@style/ActionBarText</item>
-        <item name="android:height">56dp</item>
-        <item name="android:icon">@android:color/transparent</item>
-    </style>
-
-    <style name="ActionBarText" parent="android:style/TextAppearance.Holo.Widget.ActionBar.Title">
-        <item name="android:textColor">@android:color/white</item>
-        <item name="android:textSize">20sp</item>
+        <item name="android:windowBackground">@android:color/white</item>
     </style>
 
     <style name="ActionBarTabTitles" parent="android:style/Widget.Holo.ActionBar.TabText">

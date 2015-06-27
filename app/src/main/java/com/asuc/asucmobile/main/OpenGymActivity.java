@@ -1,17 +1,17 @@
 package com.asuc.asucmobile.main;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
-import android.graphics.Typeface;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.style.ForegroundColorSpan;
-import android.view.MenuItem;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -25,7 +25,7 @@ import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.Locale;
 
-public class OpenGymActivity extends Activity {
+public class OpenGymActivity extends AppCompatActivity {
 
     private static final int REQUEST_CODE_PLAY_SERVICES = 1;
     private static final SimpleDateFormat HOURS_FORMAT =
@@ -34,6 +34,7 @@ public class OpenGymActivity extends Activity {
     private Gym gym;
 
     @Override
+    @SuppressWarnings("deprecation")
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         FlurryAgent.onStartSession(this, "4VPTT49FCCKH7Z2NVQ26");
@@ -44,24 +45,20 @@ public class OpenGymActivity extends Activity {
             return;
         }
 
-        Typeface typeface = Typeface.createFromAsset(getAssets(), "young.ttf");
-
-        if (getActionBar() != null) {
-            int titleId = getResources().getIdentifier("action_bar_title", "id", "android");
-            TextView titleText = (TextView) findViewById(titleId);
-            titleText.setTypeface(typeface);
-
-            getActionBar().setTitle(gym.getName());
-            getActionBar().setDisplayHomeAsUpEnabled(true);
-        }
         setContentView(R.layout.activity_open_gym);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        toolbar.setNavigationIcon(getResources().getDrawable(R.drawable.ic_action_back));
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
 
         ImageView image = (ImageView) findViewById(R.id.image);
         TextView hours = (TextView) findViewById(R.id.hours);
         TextView address = (TextView) findViewById(R.id.location);
-
-        hours.setTypeface(typeface);
-        address.setTypeface(typeface);
 
         Spannable hoursString;
         if (gym.getOpening() != null && gym.getClosing() != null) {
@@ -121,16 +118,6 @@ public class OpenGymActivity extends Activity {
         } else {
             super.onActivityResult(requestCode, resultCode, data);
         }
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-        if (id == android.R.id.home) {
-            finish();
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
     }
 
     private class DownloadImageThread extends Thread {

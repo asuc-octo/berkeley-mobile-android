@@ -5,6 +5,7 @@
     <string name="title_activity_main">Campus Resources</string>
     <string name="title_activity_library">Cal Libraries</string>
     <string name="search">Search</string>
+    <string name="library_search_hint">Search libraries</string>
     <string name="content_desc">image</string>
     <string name="title_activity_open_library">Library</string>
     <string name="todays_hours">Today\'s Hours</string>
