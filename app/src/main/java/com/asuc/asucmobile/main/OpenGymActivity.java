@@ -47,6 +47,7 @@ public class OpenGymActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_open_gym);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar.setTitle(gym.getName());
         setSupportActionBar(toolbar);
         toolbar.setNavigationIcon(getResources().getDrawable(R.drawable.ic_action_back));
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {

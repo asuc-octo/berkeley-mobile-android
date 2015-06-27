@@ -62,6 +62,7 @@ public class OpenLibraryActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_open_library);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar.setTitle(library.getName());
         setSupportActionBar(toolbar);
         toolbar.setNavigationIcon(getResources().getDrawable(R.drawable.ic_action_back));
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
