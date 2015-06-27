@@ -1,9 +1,9 @@
 package com.asuc.asucmobile.main;
 
-import android.app.Activity;
 import android.content.Intent;
-import android.graphics.Typeface;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -11,7 +11,6 @@ import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ProgressBar;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.asuc.asucmobile.R;
@@ -25,7 +24,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-public class DiningHallActivity extends Activity {
+public class DiningHallActivity extends AppCompatActivity {
 
     private ListView mDiningList;
     private ProgressBar mProgressBar;
@@ -38,14 +37,16 @@ public class DiningHallActivity extends Activity {
         super.onCreate(savedInstanceState);
         FlurryAgent.onStartSession(this, "4VPTT49FCCKH7Z2NVQ26");
 
-        if (getActionBar() != null) {
-            int titleId = getResources().getIdentifier("action_bar_title", "id", "android");
-            TextView titleText = (TextView) findViewById(titleId);
-            titleText.setTypeface(Typeface.createFromAsset(getAssets(), "young.ttf"));
-
-            getActionBar().setDisplayHomeAsUpEnabled(true);
-        }
         setContentView(R.layout.activity_dining_hall);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        toolbar.setNavigationIcon(getResources().getDrawable(R.drawable.ic_action_back));
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
 
         ImageButton refreshButton = (ImageButton) findViewById(R.id.refresh_button);
 

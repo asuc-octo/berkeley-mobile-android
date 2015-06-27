@@ -1,7 +1,6 @@
 package com.asuc.asucmobile.adapters;
 
 import android.content.Context;
-import android.graphics.Typeface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -62,22 +61,16 @@ public class RouteSelectionAdapter extends BaseAdapter {
         tripBusTime.setText(TIME_FORMAT.format(startTime));
         tripDuration.setText(duration + " min");
 
-        if(route.getTrips().size() > 1) {
+        if (route.getTrips().size() > 1) {
             tripLine2.setBackgroundResource(R.color.two_chainz_gold);
             TextView tripLineName1 = (TextView) convertView.findViewById(R.id.lineName1);
             TextView tripLineName2 = (TextView) convertView.findViewById(R.id.lineName2);
             tripLineName1.setText(route.getTrips().get(0).getLineName());
             tripLineName2.setText(route.getTrips().get(route.getTrips().size() - 1).getLineName());
-            tripLineName1.setTypeface(Typeface.createFromAsset(context.getAssets(), "young.ttf"));
-            tripLineName2.setTypeface(Typeface.createFromAsset(context.getAssets(), "young.ttf"));
         } else {
             TextView tripLineName = (TextView) convertView.findViewById(R.id.lineName);
             tripLineName.setText(route.getTrips().get(0).getLineName());
-            tripLineName.setTypeface(Typeface.createFromAsset(context.getAssets(), "young.ttf"));
         }
-
-        tripBusTime.setTypeface(Typeface.createFromAsset(context.getAssets(), "young.ttf"));
-        tripDuration.setTypeface(Typeface.createFromAsset(context.getAssets(), "young.ttf"));
 
         return convertView;
     }

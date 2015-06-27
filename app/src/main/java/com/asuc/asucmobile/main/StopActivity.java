@@ -1,14 +1,14 @@
 package com.asuc.asucmobile.main;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.content.IntentSender;
-import android.graphics.Typeface;
 import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.SparseArray;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -17,12 +17,9 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Filter;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ProgressBar;
-import android.widget.SearchView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.asuc.asucmobile.R;
@@ -41,7 +38,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 
-public class StopActivity extends Activity implements ConnectionCallbacks, OnConnectionFailedListener{
+public class StopActivity extends AppCompatActivity implements ConnectionCallbacks, OnConnectionFailedListener{
 
     private static final Comparator<Stop> ALPHABETICAL_ORDER = new Comparator<Stop>() {
         public int compare(Stop stop1, Stop stop2) {
@@ -69,18 +66,22 @@ public class StopActivity extends Activity implements ConnectionCallbacks, OnCon
     private boolean mResolvingError = false;
 
     @Override
+    @SuppressWarnings("deprecation")
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         FlurryAgent.onStartSession(this, "4VPTT49FCCKH7Z2NVQ26");
         buildGoogleApiClient();
-        if (getActionBar() != null) {
-            int titleId = getResources().getIdentifier("action_bar_title", "id", "android");
-            TextView titleText = (TextView) findViewById(titleId);
-            titleText.setTypeface(Typeface.createFromAsset(getAssets(), "young.ttf"));
 
-            getActionBar().setDisplayHomeAsUpEnabled(true);
-        }
         setContentView(R.layout.activity_stop);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        toolbar.setNavigationIcon(getResources().getDrawable(R.drawable.ic_action_back));
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
 
         ImageButton refreshButton = (ImageButton) findViewById(R.id.refresh_button);
 
@@ -221,56 +222,33 @@ public class StopActivity extends Activity implements ConnectionCallbacks, OnCon
     }
 
     @Override
-    public boolean onPrepareOptionsMenu(Menu menu) {
-        MenuItem searchViewMenuItem = menu.findItem(R.id.search);
-        SearchView search = (SearchView) searchViewMenuItem.getActionView();
-        int searchImgId = getResources().getIdentifier("android:id/search_button", null, null);
-        ImageView v = (ImageView) search.findViewById(searchImgId);
-        v.setImageResource(R.drawable.ic_action_search);
-
-        return super.onPrepareOptionsMenu(menu);
-    }
-
-    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.destination, menu);
 
-        final SearchView search = (SearchView) menu.findItem(R.id.search).getActionView();
-        search.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //Flurry log for searching for something!
-                FlurryAgent.logEvent("Tapped on the Search Button (Destinations)");
-            }
-        });
-        search.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String s) {
-                // Close the keyboard
-                search.clearFocus();
-                return true;
-            }
+        final MenuItem searchMenuItem = menu.findItem(R.id.search);
+        if (searchMenuItem != null) {
+            final android.support.v7.widget.SearchView searchView = (android.support.v7.widget.SearchView) searchMenuItem.getActionView();
+            if (searchView != null) {
+                searchView.setOnQueryTextListener(new android.support.v7.widget.SearchView.OnQueryTextListener() {
+                    @Override
+                    public boolean onQueryTextSubmit(String s) {
+                        // Close the keyboard
+                        searchView.clearFocus();
+                        return true;
+                    }
 
-            @Override
-            public boolean onQueryTextChange(String s) {
-                final Filter filter = mAdapter.getFilter();
-                filter.filter(s);
-                return true;
+                    @Override
+                    public boolean onQueryTextChange(String s) {
+                        final Filter filter = mAdapter.getFilter();
+                        filter.filter(s);
+                        return true;
+                    }
+                });
             }
-        });
+        }
 
         return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-        if (id == android.R.id.home) {
-            finish();
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
     }
 
     @Override

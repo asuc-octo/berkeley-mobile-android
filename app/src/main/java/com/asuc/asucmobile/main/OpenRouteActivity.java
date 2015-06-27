@@ -1,13 +1,12 @@
 package com.asuc.asucmobile.main;
 
-import android.app.Activity;
-import android.graphics.Typeface;
 import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
-import android.view.MenuItem;
-import android.widget.TextView;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
+import android.view.View;
 import android.widget.Toast;
 
 import com.asuc.asucmobile.R;
@@ -30,7 +29,7 @@ import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.nirhart.parallaxscroll.views.ParallaxListView;
 
-public class OpenRouteActivity extends Activity {
+public class OpenRouteActivity extends AppCompatActivity {
 
     private static final int REQUEST_CODE_PLAY_SERVICES = 1;
 
@@ -39,6 +38,7 @@ public class OpenRouteActivity extends Activity {
     private Route route;
 
     @Override
+    @SuppressWarnings("deprecation")
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
@@ -48,17 +48,16 @@ public class OpenRouteActivity extends Activity {
             return;
         }
 
-        Typeface typeface = Typeface.createFromAsset(getAssets(), "young.ttf");
-
-        if (getActionBar() != null) {
-            int titleId = getResources().getIdentifier("action_bar_title", "id", "android");
-            TextView titleText = (TextView) findViewById(titleId);
-            titleText.setTypeface(typeface);
-
-            getActionBar().setDisplayHomeAsUpEnabled(true);
-        }
-
         setContentView(R.layout.activity_open_route);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        toolbar.setNavigationIcon(getResources().getDrawable(R.drawable.ic_action_back));
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
 
         ParallaxListView routeList = (ParallaxListView) findViewById(R.id.stop_list);
 
@@ -81,16 +80,6 @@ public class OpenRouteActivity extends Activity {
         }
 
         setUpMap();
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-        if (id == android.R.id.home) {
-            finish();
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
     }
 
     private void setUpMap() {
