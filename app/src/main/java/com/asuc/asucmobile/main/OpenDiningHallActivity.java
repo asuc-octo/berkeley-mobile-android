@@ -37,6 +37,7 @@ public class OpenDiningHallActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_open_dining_hall);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar.setTitle(diningHall.getName());
         setSupportActionBar(toolbar);
         toolbar.setNavigationIcon(getResources().getDrawable(R.drawable.ic_action_back));
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
@@ -58,6 +59,7 @@ public class OpenDiningHallActivity extends AppCompatActivity {
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setTabsFromPagerAdapter(pagerAdapter);
         viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
+        tabLayout.setOnTabSelectedListener(new TabLayout.ViewPagerOnTabSelectedListener(viewPager));
 
         Date currentTime = new Date();
         if (diningHall.isDinnerOpen() ||
