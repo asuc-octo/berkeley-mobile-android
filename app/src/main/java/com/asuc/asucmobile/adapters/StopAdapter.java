@@ -1,7 +1,6 @@
 package com.asuc.asucmobile.adapters;
 
 import android.content.Context;
-import android.graphics.Typeface;
 import android.location.Location;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -62,8 +61,6 @@ public class StopAdapter extends BaseAdapter {
         TextView distance = (TextView) convertView.findViewById(R.id.distance);
 
         destinationName.setText(destination.getAbbreviatedName());
-        destinationName.setTypeface(Typeface.createFromAsset(context.getAssets(), "young.ttf"));
-        distance.setTypeface(Typeface.createFromAsset(context.getAssets(), "young.ttf"));
 
         if (!locationDisabled) {
             distance.setText(destination.getDistance() + " mi");

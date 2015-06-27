@@ -1,9 +1,10 @@
 package com.asuc.asucmobile.main;
 
-import android.app.Activity;
 import android.content.Intent;
-import android.graphics.Typeface;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.SearchView;
+import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -11,12 +12,9 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Filter;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ProgressBar;
-import android.widget.SearchView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.asuc.asucmobile.R;
@@ -30,7 +28,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-public class LibraryActivity extends Activity {
+public class LibraryActivity extends AppCompatActivity {
 
     private ListView mLibraryList;
     private ProgressBar mProgressBar;
@@ -43,14 +41,16 @@ public class LibraryActivity extends Activity {
         super.onCreate(savedInstanceState);
         FlurryAgent.onStartSession(this, "4VPTT49FCCKH7Z2NVQ26");
 
-        if (getActionBar() != null) {
-            int titleId = getResources().getIdentifier("action_bar_title", "id", "android");
-            TextView titleText = (TextView) findViewById(titleId);
-            titleText.setTypeface(Typeface.createFromAsset(getAssets(), "young.ttf"));
-
-            getActionBar().setDisplayHomeAsUpEnabled(true);
-        }
         setContentView(R.layout.activity_library);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        toolbar.setNavigationIcon(getResources().getDrawable(R.drawable.ic_action_back));
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
 
         ImageButton refreshButton = (ImageButton) findViewById(R.id.refresh_button);
 
@@ -95,56 +95,40 @@ public class LibraryActivity extends Activity {
     }
 
     @Override
-    public boolean onPrepareOptionsMenu(Menu menu) {
-        MenuItem searchViewMenuItem = menu.findItem(R.id.search);
-        SearchView search = (SearchView) searchViewMenuItem.getActionView();
-        int searchImgId = getResources().getIdentifier("android:id/search_button", null, null);
-        ImageView v = (ImageView) search.findViewById(searchImgId);
-        v.setImageResource(R.drawable.ic_action_search);
-
-        return super.onPrepareOptionsMenu(menu);
-    }
-
-    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.library, menu);
 
-        final SearchView search = (SearchView) menu.findItem(R.id.search).getActionView();
-        search.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //Flurry log for searching for something!
-                FlurryAgent.logEvent("Tapped on the Search Button (Libraries)");
-            }
-        });
-        search.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String s) {
-                // Close the keyboard
-                search.clearFocus();
-                return true;
-            }
+        final MenuItem searchMenuItem = menu.findItem(R.id.search);
+        if (searchMenuItem != null) {
+            final SearchView searchView = (SearchView) searchMenuItem.getActionView();
+            if (searchView != null) {
+                searchView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        //Flurry log for searching for something!
+                        FlurryAgent.logEvent("Tapped on the Search Button (Libraries)");
+                    }
+                });
+                searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+                    @Override
+                    public boolean onQueryTextSubmit(String s) {
+                        // Close the keyboard
+                        searchView.clearFocus();
+                        return true;
+                    }
 
-            @Override
-            public boolean onQueryTextChange(String s) {
-                final Filter filter = mAdapter.getFilter();
-                filter.filter(s);
-                return true;
+                    @Override
+                    public boolean onQueryTextChange(String s) {
+                        final Filter filter = mAdapter.getFilter();
+                        filter.filter(s);
+                        return true;
+                    }
+                });
             }
-        });
+        }
 
         return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-        if (id == android.R.id.home) {
-            finish();
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
     }
 
     @Override

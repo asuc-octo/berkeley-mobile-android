@@ -2,7 +2,6 @@ package com.asuc.asucmobile.views;
 
 import android.content.Context;
 import android.graphics.Bitmap;
-import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.text.SpannableString;
 import android.view.LayoutInflater;
@@ -25,8 +24,6 @@ public class ImageHeaderView extends LinearLayout {
 
         imageView = (ImageView) findViewById(R.id.image);
         textView = (TextView) findViewById(R.id.header_text);
-
-        textView.setTypeface(Typeface.createFromAsset(context.getAssets(), "young.ttf"));
     }
 
     public void setImage(Bitmap image) {

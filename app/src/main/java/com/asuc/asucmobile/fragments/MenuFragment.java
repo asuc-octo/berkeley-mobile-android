@@ -4,7 +4,6 @@ import android.app.Fragment;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
-import android.graphics.Typeface;
 import android.os.Bundle;
 import android.text.SpannableString;
 import android.text.style.ForegroundColorSpan;
@@ -40,8 +39,6 @@ public class MenuFragment extends Fragment {
         ParallaxListView foodMenu = (ParallaxListView) v.findViewById(R.id.food_menu);
         TextView emptyListView = (TextView) v.findViewById(R.id.empty_list);
 
-        emptyListView.setTypeface(Typeface.createFromAsset(getActivity().getAssets(), "young.ttf"));
-
         DiningHall diningHall = ((OpenDiningHallActivity) getActivity()).getDiningHall();
 
         if (diningHall == null) {
@@ -59,55 +56,60 @@ public class MenuFragment extends Fragment {
         try {
             ArrayList<FoodItem> foodItems;
             boolean isOpen;
-            if (whichMenu.equals("Breakfast")) {
-                foodItems = diningHall.getBreakfastMenu();
-                opening = HOURS_FORMAT.format(diningHall.getBreakfastOpening());
-                closing = HOURS_FORMAT.format(diningHall.getBreakfastClosing());
-                isOpen = diningHall.isBreakfastOpen();
-            } else if (whichMenu.equals("Lunch")) {
-                foodItems = diningHall.getLunchMenu();
-                opening = HOURS_FORMAT.format(diningHall.getLunchOpening());
-                closing = HOURS_FORMAT.format(diningHall.getLunchClosing());
-                isOpen = diningHall.isLunchOpen();
-            } else {
-                foodItems = diningHall.getDinnerMenu();
-                opening = HOURS_FORMAT.format(diningHall.getDinnerOpening());
-                closing = HOURS_FORMAT.format(diningHall.getDinnerClosing());
-                isOpen = diningHall.isDinnerOpen();
-            }
-
-            if (foodItems.size() == 0) {
-                emptyListView.setText("No " + whichMenu + " Today!");
-                
-                foodMenu.setVisibility(View.GONE);
-                emptyListView.setVisibility(View.VISIBLE);
-            } else {
-                String headerString = "Hours:  " + opening + " to " + closing + "  ";
-
-                SpannableString spannableHeader;
-                if (isOpen) {
-                    spannableHeader = new SpannableString(headerString + "OPEN");
-                    spannableHeader.setSpan(
-                            new ForegroundColorSpan(Color.rgb(153, 204, 0)),
-                            headerString.length(),
-                            headerString.length() + 4,
-                            SpannableString.SPAN_INCLUSIVE_EXCLUSIVE
-                    );
-                } else {
-                    spannableHeader = new SpannableString(headerString + "CLOSED");
-                    spannableHeader.setSpan(
-                            new ForegroundColorSpan(Color.rgb(255, 68, 68)),
-                            headerString.length(),
-                            headerString.length() + 6,
-                            SpannableString.SPAN_INCLUSIVE_EXCLUSIVE
-                    );
+            if (whichMenu != null) {
+                switch (whichMenu) {
+                    case "Breakfast":
+                        foodItems = diningHall.getBreakfastMenu();
+                        opening = HOURS_FORMAT.format(diningHall.getBreakfastOpening());
+                        closing = HOURS_FORMAT.format(diningHall.getBreakfastClosing());
+                        isOpen = diningHall.isBreakfastOpen();
+                        break;
+                    case "Lunch":
+                        foodItems = diningHall.getLunchMenu();
+                        opening = HOURS_FORMAT.format(diningHall.getLunchOpening());
+                        closing = HOURS_FORMAT.format(diningHall.getLunchClosing());
+                        isOpen = diningHall.isLunchOpen();
+                        break;
+                    default:
+                        foodItems = diningHall.getDinnerMenu();
+                        opening = HOURS_FORMAT.format(diningHall.getDinnerOpening());
+                        closing = HOURS_FORMAT.format(diningHall.getDinnerClosing());
+                        isOpen = diningHall.isDinnerOpen();
                 }
 
-                header.setText(spannableHeader);
+                if (foodItems.size() == 0) {
+                    emptyListView.setText("No " + whichMenu + " Today!");
 
-                FoodAdapter adapter = new FoodAdapter(getActivity(), foodItems);
-                foodMenu.setAdapter(adapter);
-                foodMenu.addParallaxedHeaderView(header);
+                    foodMenu.setVisibility(View.GONE);
+                    emptyListView.setVisibility(View.VISIBLE);
+                } else {
+                    String headerString = "Hours:  " + opening + " to " + closing + "  ";
+
+                    SpannableString spannableHeader;
+                    if (isOpen) {
+                        spannableHeader = new SpannableString(headerString + "OPEN");
+                        spannableHeader.setSpan(
+                                new ForegroundColorSpan(Color.rgb(153, 204, 0)),
+                                headerString.length(),
+                                headerString.length() + 4,
+                                SpannableString.SPAN_INCLUSIVE_EXCLUSIVE
+                        );
+                    } else {
+                        spannableHeader = new SpannableString(headerString + "CLOSED");
+                        spannableHeader.setSpan(
+                                new ForegroundColorSpan(Color.rgb(255, 68, 68)),
+                                headerString.length(),
+                                headerString.length() + 6,
+                                SpannableString.SPAN_INCLUSIVE_EXCLUSIVE
+                        );
+                    }
+
+                    header.setText(spannableHeader);
+
+                    FoodAdapter adapter = new FoodAdapter(getActivity(), foodItems);
+                    foodMenu.setAdapter(adapter);
+                    foodMenu.addParallaxedHeaderView(header);
+                }
             }
         } catch (Exception e) { // Catch a null exception, meaning that there is no menu for this time slot.
             emptyListView.setText("No " + whichMenu + " Today!");

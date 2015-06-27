@@ -1,16 +1,15 @@
 package com.asuc.asucmobile.main;
 
-import android.app.ActionBar;
-import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
-import android.app.FragmentTransaction;
-import android.graphics.Typeface;
 import android.os.Bundle;
+import android.support.design.widget.TabLayout;
 import android.support.v13.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
-import android.widget.TextView;
+import android.view.View;
 
 import com.asuc.asucmobile.R;
 import com.asuc.asucmobile.controllers.DiningController;
@@ -20,12 +19,12 @@ import com.flurry.android.FlurryAgent;
 
 import java.util.Date;
 
-public class OpenDiningHallActivity extends Activity implements ActionBar.TabListener {
+public class OpenDiningHallActivity extends AppCompatActivity {
 
     private DiningHall diningHall;
-    private ViewPager mViewPager;
 
     @Override
+    @SuppressWarnings("deprecation")
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         FlurryAgent.onStartSession(this, "4VPTT49FCCKH7Z2NVQ26");
@@ -37,58 +36,39 @@ public class OpenDiningHallActivity extends Activity implements ActionBar.TabLis
         }
 
         setContentView(R.layout.activity_open_dining_hall);
-
-        // Set up the action bar.
-        final ActionBar actionBar = getActionBar();
-        actionBar.setTitle(diningHall.getName());
-        int titleId = getResources().getIdentifier("action_bar_title", "id", "android");
-        TextView titleText = (TextView) findViewById(titleId);
-        titleText.setTypeface(Typeface.createFromAsset(getAssets(), "young.ttf"));
-        actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
-
-        getActionBar().setDisplayHomeAsUpEnabled(true);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        toolbar.setNavigationIcon(getResources().getDrawable(R.drawable.ic_action_back));
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
 
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
         SectionsPagerAdapter pagerAdapter = new SectionsPagerAdapter(getFragmentManager());
 
         // Set up the ViewPager with the sections adapter.
-        mViewPager = (ViewPager) findViewById(R.id.pager);
-        mViewPager.setOffscreenPageLimit(3);
-        mViewPager.setAdapter(pagerAdapter);
+        ViewPager viewPager = (ViewPager) findViewById(R.id.pager);
+        viewPager.setOffscreenPageLimit(3);
+        viewPager.setAdapter(pagerAdapter);
 
-        // When swiping between different sections, select the corresponding
-        // tab. We can also use ActionBar.Tab#select() to do this if we have
-        // a reference to the Tab.
-        mViewPager.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
-            @Override
-            public void onPageSelected(int position) {
-                actionBar.setSelectedNavigationItem(position);
-            }
-        });
-
-        // For each of the sections in the app, add a tab to the action bar.
-        for (int i = 0; i < pagerAdapter.getCount(); i++) {
-            // Create a tab with text corresponding to the page title defined by
-            // the adapter. Also specify this Activity object, which implements
-            // the TabListener interface, as the callback (listener) for when
-            // this tab is selected.
-            actionBar.addTab(
-                    actionBar.newTab()
-                            .setText(pagerAdapter.getPageTitle(i))
-                            .setTabListener(this));
-        }
+        TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
+        tabLayout.setTabsFromPagerAdapter(pagerAdapter);
+        viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
 
         Date currentTime = new Date();
         if (diningHall.isDinnerOpen() ||
                 (diningHall.getLunchClosing() != null && currentTime.after(diningHall.getLunchClosing())) ||
                 (diningHall.getDinnerClosing() != null && currentTime.after(diningHall.getDinnerClosing()))) {
-            mViewPager.setCurrentItem(2);
+            viewPager.setCurrentItem(2);
         } else if (diningHall.isLunchOpen() ||
                 (diningHall.getBreakfastClosing() != null && currentTime.after(diningHall.getBreakfastClosing()))) {
-            mViewPager.setCurrentItem(1);
+            viewPager.setCurrentItem(1);
         } else {
-            mViewPager.setCurrentItem(0);
+            viewPager.setCurrentItem(0);
         }
     }
 
@@ -108,20 +88,6 @@ public class OpenDiningHallActivity extends Activity implements ActionBar.TabLis
 
         FlurryAgent.onEndSession(this);
     }
-
-
-    @Override
-    public void onTabSelected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
-        // When the given tab is selected, switch to the corresponding page in
-        // the ViewPager.
-        mViewPager.setCurrentItem(tab.getPosition());
-    }
-
-    @Override
-    public void onTabUnselected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {}
-
-    @Override
-    public void onTabReselected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {}
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {

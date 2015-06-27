@@ -1,20 +1,19 @@
 package com.asuc.asucmobile.main;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
-import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.style.ForegroundColorSpan;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -39,7 +38,7 @@ import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.Locale;
 
-public class OpenLibraryActivity extends Activity {
+public class OpenLibraryActivity extends AppCompatActivity {
 
     private static final int REQUEST_CODE_PLAY_SERVICES = 1;
     private static final SimpleDateFormat HOURS_FORMAT =
@@ -50,6 +49,7 @@ public class OpenLibraryActivity extends Activity {
     private Library library;
 
     @Override
+    @SuppressWarnings("deprecation")
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         FlurryAgent.onStartSession(this, "4VPTT49FCCKH7Z2NVQ26");
@@ -60,17 +60,16 @@ public class OpenLibraryActivity extends Activity {
             return;
         }
 
-        Typeface typeface = Typeface.createFromAsset(getAssets(), "young.ttf");
-
-        if (getActionBar() != null) {
-            int titleId = getResources().getIdentifier("action_bar_title", "id", "android");
-            TextView titleText = (TextView) findViewById(titleId);
-            titleText.setTypeface(typeface);
-
-            getActionBar().setTitle(library.getName());
-            getActionBar().setDisplayHomeAsUpEnabled(true);
-        }
         setContentView(R.layout.activity_open_library);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        toolbar.setNavigationIcon(getResources().getDrawable(R.drawable.ic_action_back));
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
 
         ImageView image = (ImageView) findViewById(R.id.image);
         TextView hours = (TextView) findViewById(R.id.hours);
@@ -79,10 +78,6 @@ public class OpenLibraryActivity extends Activity {
         LinearLayout locationLayout = (LinearLayout) findViewById(R.id.location_layout);
         LinearLayout phoneLayout = (LinearLayout) findViewById(R.id.phone_layout);
         mapFragment = (MapFragment) getFragmentManager().findFragmentById(R.id.map);
-
-        hours.setTypeface(typeface);
-        address.setTypeface(typeface);
-        phone.setTypeface(typeface);
 
         Spannable hoursString;
         if (library.isByAppointment()) {
@@ -172,16 +167,6 @@ public class OpenLibraryActivity extends Activity {
         } else {
             super.onActivityResult(requestCode, resultCode, data);
         }
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-        if (id == android.R.id.home) {
-            finish();
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
     }
 
     private void setUpMap() {

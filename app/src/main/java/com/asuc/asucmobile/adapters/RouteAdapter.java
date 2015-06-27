@@ -1,7 +1,6 @@
 package com.asuc.asucmobile.adapters;
 
 import android.content.Context;
-import android.graphics.Typeface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,13 +24,11 @@ public class RouteAdapter extends BaseAdapter {
     private Context context;
     private Route route;
     private ArrayList<Stop> stops;
-    private Typeface typeface;
 
     public RouteAdapter(Context context, Route route) {
         this.context = context;
         this.route = route;
         this.stops = route.getStopsAndTransfers();
-        this.typeface = Typeface.createFromAsset(context.getAssets(), "young.ttf");
     }
 
     @Override
@@ -50,6 +47,7 @@ public class RouteAdapter extends BaseAdapter {
     }
 
     @Override
+    @SuppressWarnings("deprecation")
     public View getView(int i, View convertView, ViewGroup parent) {
         Stop stop = getItem(i);
 
@@ -61,10 +59,6 @@ public class RouteAdapter extends BaseAdapter {
         TextView endpoint = (TextView) convertView.findViewById(R.id.endpoint);
         ImageView stopIcon = (ImageView) convertView.findViewById(R.id.lollipop);
         TextView stopName = (TextView) convertView.findViewById(R.id.stop_name);
-
-        line.setTypeface(typeface);
-        endpoint.setTypeface(typeface);
-        stopName.setTypeface(typeface);
 
         if (stop.isTransfer()) {
             line.setVisibility(View.VISIBLE);

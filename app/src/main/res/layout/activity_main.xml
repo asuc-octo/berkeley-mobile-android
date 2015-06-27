@@ -5,11 +5,20 @@
     android:orientation="vertical"
     tools:context=".MainActivity">
 
+    <android.support.v7.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/toolbar"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:background="@color/ASUC_blue"
+        android:elevation="8dp" />
+
     <ListView
         android:id="@+id/main_menu"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:divider="@color/transparent"
-        android:listSelector="@android:color/transparent" />
+        android:dividerHeight="0dp"
+        android:listSelector="@android:color/transparent"
+        android:background="@color/off_white" />
 
 </LinearLayout>

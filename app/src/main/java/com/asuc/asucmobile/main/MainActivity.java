@@ -1,13 +1,12 @@
 package com.asuc.asucmobile.main;
 
-import android.app.Activity;
 import android.content.Intent;
-import android.graphics.Typeface;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.TextView;
 
 import com.asuc.asucmobile.R;
 import com.asuc.asucmobile.adapters.MainMenuAdapter;
@@ -15,19 +14,17 @@ import com.asuc.asucmobile.models.Category;
 import com.flurry.android.FlurryAgent;
 
 
-public class MainActivity extends Activity {
+public class MainActivity extends AppCompatActivity {
 
     @Override
+    @SuppressWarnings("deprecation")
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         FlurryAgent.onStartSession(this, "4VPTT49FCCKH7Z2NVQ26");
 
-        if (getActionBar() != null) {
-            int titleId = getResources().getIdentifier("action_bar_title", "id", "android");
-            TextView titleText = (TextView) findViewById(titleId);
-            titleText.setTypeface(Typeface.createFromAsset(getAssets(), "young.ttf"));
-        }
         setContentView(R.layout.activity_main);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
 
         Category[] menuItems = new Category[] {
                 new Category(getResources().getDrawable(R.drawable.dining_hall_blue), "DINING HALL MENUS", new Intent(this, DiningHallActivity.class)),
