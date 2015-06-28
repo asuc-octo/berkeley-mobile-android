@@ -3,13 +3,28 @@
     android:layout_height="wrap_content"
     android:orientation="vertical">
 
-    <ImageView xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/image"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:scaleType="fitXY"
-        android:src="@drawable/default_dining"
-        android:contentDescription="@string/content_desc" />
+        android:layout_height="200dp">
+
+        <ProgressBar
+            android:id="@+id/progress_bar"
+            style="?android:attr/progressBarStyleSmall"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="112dp"
+            android:layout_gravity="center" />
+
+        <ImageView xmlns:android="http://schemas.android.com/apk/res/android"
+            android:id="@+id/image"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="fitXY"
+            android:src="@drawable/default_dining"
+            android:contentDescription="@string/content_desc"
+            android:visibility="gone" />
+
+    </RelativeLayout>
 
     <ImageView
         android:layout_width="24dp"
