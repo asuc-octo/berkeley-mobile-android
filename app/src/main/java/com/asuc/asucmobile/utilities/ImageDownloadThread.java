@@ -6,7 +6,6 @@ import android.graphics.BitmapFactory;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
-import android.widget.Toast;
 
 import com.asuc.asucmobile.R;
 
@@ -47,7 +46,13 @@ public class ImageDownloadThread extends Thread {
                 }
             });
         } catch (Exception e) {
-            // Don't worry about it!
+            activity.runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    image.setVisibility(View.VISIBLE);
+                    progressBar.setVisibility(View.GONE);
+                }
+            });
         }
     }
 
