@@ -19,7 +19,8 @@
         <activity
             android:name=".main.SplashActivity"
             android:label="@string/app_name"
-            android:theme="@android:style/Theme.Holo.Light.NoActionBar.Fullscreen" >
+            android:theme="@android:style/Theme.Holo.Light.NoActionBar.Fullscreen"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -28,43 +29,53 @@
         </activity>
         <activity
             android:name=".main.MainActivity"
-            android:label="@string/title_activity_main" >
+            android:label="@string/title_activity_main"
+            android:screenOrientation="portrait">
         </activity>
         <activity
             android:name=".main.LibraryActivity"
-            android:label="@string/title_activity_library" >
+            android:label="@string/title_activity_library"
+            android:screenOrientation="portrait">
         </activity>
         <activity
             android:name=".main.OpenLibraryActivity"
-            android:label="@string/title_activity_open_library" >
+            android:label="@string/title_activity_open_library"
+            android:screenOrientation="portrait">
         </activity>
         <activity
             android:name=".main.GymActivity"
-            android:label="@string/title_activity_gym" >
+            android:label="@string/title_activity_gym"
+            android:screenOrientation="portrait">
         </activity>
         <activity
             android:name=".main.OpenGymActivity"
-            android:label="@string/title_activity_open_gym" >
+            android:label="@string/title_activity_open_gym"
+            android:screenOrientation="portrait">
         </activity>
         <activity
             android:name=".main.DiningHallActivity"
-            android:label="@string/title_activity_dining_hall" >
+            android:label="@string/title_activity_dining_hall"
+            android:screenOrientation="portrait">
         </activity>
         <activity
             android:name=".main.OpenDiningHallActivity"
-            android:label="@string/title_activity_open_dining_hall" >
+            android:label="@string/title_activity_open_dining_hall"
+            android:screenOrientation="portrait">
         </activity>
         <activity
             android:name=".main.OpenRouteActivity"
-            android:label="@string/title_activity_open_route" >
+            android:label="@string/title_activity_open_route"
+            android:screenOrientation="portrait">
         </activity>
         <activity
             android:name=".main.OpenRouteSelectionActivity"
-            android:label="@string/title_activity_open_trip_selection" >
+            android:label="@string/title_activity_open_trip_selection"
+            android:screenOrientation="portrait">
         </activity>
         <activity
             android:name=".main.StopActivity"
-            android:label="@string/title_activity_stop">
+            android:label="@string/title_activity_stop"
+            android:screenOrientation="portrait">
         </activity>
     </application>
 

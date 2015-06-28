@@ -10,7 +10,6 @@ import android.text.style.ForegroundColorSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.asuc.asucmobile.R;
@@ -48,8 +47,7 @@ public class MenuFragment extends Fragment {
         }
 
         ImageHeaderView header = new ImageHeaderView(getActivity());
-        ProgressBar progressBar = (ProgressBar) getActivity().findViewById(R.id.progress_bar);
-        new DownloadImageThread(progressBar, header, diningHall.getImageUrl()).start();
+        new DownloadImageThread(header, diningHall.getImageUrl()).start();
 
         String whichMenu = getArguments().getString("whichMenu");
         String opening;
@@ -125,12 +123,10 @@ public class MenuFragment extends Fragment {
 
     private class DownloadImageThread extends Thread {
 
-        ProgressBar progressBar;
         ImageHeaderView headerView;
         String url;
 
-        public DownloadImageThread(ProgressBar progressBar, ImageHeaderView headerView, String url) {
-            this.progressBar = progressBar;
+        public DownloadImageThread(ImageHeaderView headerView, String url) {
             this.headerView = headerView;
             this.url = url;
         }
@@ -144,19 +140,16 @@ public class MenuFragment extends Fragment {
                 getActivity().runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        progressBar.setVisibility(View.GONE);
-
-                        if (bitmap != null) {
-                            headerView.setImage(bitmap);
-                            headerView.setVisibility(View.VISIBLE);
-                        } else {
-                            headerView.setVisibility(View.VISIBLE);
-                            progressBar.setVisibility(View.GONE);
-                        }
+                        headerView.setImage(bitmap);
                     }
                 });
             } catch (Exception e) {
-                // Don't worry about it!
+                getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        headerView.showImage();
+                    }
+                });
             }
         }
 
