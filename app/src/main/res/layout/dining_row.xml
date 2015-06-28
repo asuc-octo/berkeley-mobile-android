@@ -20,7 +20,7 @@
         android:padding="8dp"
         android:singleLine="true"
         android:ellipsize="marquee"
-        android:textColor="@color/grizzly_gray"
+        android:textColor="@android:color/black"
         android:textSize="18sp" />
 
     <ImageView
