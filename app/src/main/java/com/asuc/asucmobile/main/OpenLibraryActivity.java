@@ -2,8 +2,6 @@ package com.asuc.asucmobile.main;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
@@ -15,7 +13,6 @@ import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.style.ForegroundColorSpan;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -23,6 +20,7 @@ import android.widget.Toast;
 import com.asuc.asucmobile.R;
 import com.asuc.asucmobile.controllers.LibraryController;
 import com.asuc.asucmobile.models.Library;
+import com.asuc.asucmobile.utilities.ImageDownloadThread;
 import com.flurry.android.FlurryAgent;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
@@ -34,7 +32,6 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
-import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.Locale;
 
@@ -72,7 +69,6 @@ public class OpenLibraryActivity extends AppCompatActivity {
             }
         });
 
-        ImageView image = (ImageView) findViewById(R.id.image);
         TextView hours = (TextView) findViewById(R.id.hours);
         TextView address = (TextView) findViewById(R.id.location);
         TextView phone = (TextView) findViewById(R.id.phone);
@@ -132,7 +128,7 @@ public class OpenLibraryActivity extends AppCompatActivity {
         }
 
         setUpMap();
-        new DownloadImageThread(image, library.getImageUrl()).start();
+        new ImageDownloadThread(this, library.getImageUrl()).start();
     }
 
     @Override
@@ -221,37 +217,6 @@ public class OpenLibraryActivity extends AppCompatActivity {
 
         Intent i = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
         startActivity(i);
-    }
-
-    private class DownloadImageThread extends Thread {
-
-        ImageView image;
-        String url;
-
-        public DownloadImageThread(ImageView image, String url) {
-            this.image = image;
-            this.url = url;
-        }
-
-        @Override
-        public void run() {
-            try {
-                InputStream input = new java.net.URL(url).openStream();
-                final Bitmap bitmap = BitmapFactory.decodeStream(input);
-
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        if (bitmap != null) {
-                            image.setImageBitmap(bitmap);
-                        }
-                    }
-                });
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-
     }
 
 }
