@@ -10,14 +10,29 @@
         android:background="@color/ASUC_blue"
         android:elevation="8dp" />
 
-    <ImageView
-        android:id="@+id/image"
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="2"
-        android:scaleType="fitXY"
-        android:src="@drawable/default_gym"
-        android:contentDescription="@string/content_desc" />
+        android:layout_weight="2">
+
+        <ProgressBar
+            android:id="@+id/progress_bar"
+            style="?android:attr/progressBarStyleSmall"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="96dp"
+            android:layout_gravity="center" />
+
+        <ImageView
+            android:id="@+id/image"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="fitXY"
+            android:contentDescription="@string/content_desc"
+            android:src="@drawable/default_gym"
+            android:visibility="gone" />
+
+    </RelativeLayout>
 
 
     <LinearLayout
@@ -42,7 +57,7 @@
             android:layout_marginStart="24dp"
             android:layout_marginLeft="24dp"
             android:textSize="14sp"
-            android:textColor="@color/grizzly_gray" />
+            android:textColor="@android:color/black" />
 
     </LinearLayout>
 
@@ -75,7 +90,7 @@
             android:layout_marginStart="24dp"
             android:layout_marginLeft="24dp"
             android:textSize="14sp"
-            android:textColor="@color/grizzly_gray" />
+            android:textColor="@android:color/black" />
 
     </LinearLayout>
 
