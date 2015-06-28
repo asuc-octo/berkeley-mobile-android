@@ -141,26 +141,22 @@ public class MenuFragment extends Fragment {
                 InputStream input = new java.net.URL(url).openStream();
                 final Bitmap bitmap = BitmapFactory.decodeStream(input);
 
-                if (progressBar != null) {
-                    getActivity().runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            progressBar.setVisibility(View.GONE);
+                getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        progressBar.setVisibility(View.GONE);
 
-                            if (bitmap != null) {
-                                headerView.setImage(bitmap);
-                                headerView.setVisibility(View.VISIBLE);
-                            } else {
-                                headerView.setVisibility(View.VISIBLE);
-                                progressBar.setVisibility(View.GONE);
-                            }
+                        if (bitmap != null) {
+                            headerView.setImage(bitmap);
+                            headerView.setVisibility(View.VISIBLE);
+                        } else {
+                            headerView.setVisibility(View.VISIBLE);
+                            progressBar.setVisibility(View.GONE);
                         }
-                    });
-                }
+                    }
+                });
             } catch (Exception e) {
-                e.printStackTrace();
-                headerView.setVisibility(View.VISIBLE);
-                progressBar.setVisibility(View.GONE);
+                // Don't worry about it!
             }
         }
 
