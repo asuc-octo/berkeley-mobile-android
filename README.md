@@ -15,6 +15,8 @@ in your first Activity. Results will be displayed on your logcat.
   - DiningController
   - GymController
   - LibraryController
+  - LineController
+  - RouteController
 
 ###How to Use
 To retrieve data, call the refreshInBackground() method of a controller: 
