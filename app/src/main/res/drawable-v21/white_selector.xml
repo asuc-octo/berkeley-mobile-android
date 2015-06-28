@@ -1,4 +1,6 @@
 <ripple xmlns:android="http://schemas.android.com/apk/res/android"
-    android:color="@color/off_white"> <!-- ripple color -->
-    <item android:drawable="@android:color/white"/> <!-- normal color -->
+    android:color="@color/selector_pressed"> <!-- ripple color -->
+
+    <item android:drawable="@android:color/white" /> <!-- normal color -->
+
 </ripple>
