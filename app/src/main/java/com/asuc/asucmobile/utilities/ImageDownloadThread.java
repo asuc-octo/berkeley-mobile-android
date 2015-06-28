@@ -47,9 +47,7 @@ public class ImageDownloadThread extends Thread {
                 }
             });
         } catch (Exception e) {
-            e.printStackTrace();
-            image.setVisibility(View.VISIBLE);
-            progressBar.setVisibility(View.GONE);
+            // Don't worry about it!
         }
     }
 
