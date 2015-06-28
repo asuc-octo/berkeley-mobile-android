@@ -9,6 +9,7 @@
     <color name="green">#99CC00</color>
     <color name="off_white">#F0F0F0</color>
     <color name="holo_white">#FFF3F3F3</color>
+    <color name="selector_pressed">#FFDEDEDE</color>
 
     <color name="transparent">#00000000</color>
     <color name="card_background">#ffffff</color>
