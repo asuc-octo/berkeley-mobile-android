@@ -92,17 +92,17 @@ public class GymController implements Controller {
                         String imageUrl = gymJSON.getString("image_link");
                         String capacityString = gymJSON.getString("capacity");
                         String countString = gymJSON.getString("count");
-                        Integer capacity;
-                        Integer count;
+                        Double capacity;
+                        Double count;
                         if(capacityString.equals("null")) {
                             capacity = null;
                         } else {
-                            capacity = Integer.parseInt(capacityString);
+                            capacity = Double.parseDouble(capacityString);
                         }
                         if(countString.equals("null")) {
                             count = null;
                         } else {
-                            count = Integer.parseInt(countString);
+                            count = Double.parseDouble(countString);
                         }
                         gyms.add(new Gym(id, name, address, opening, closing, imageUrl, capacity, count));
                     }
@@ -115,7 +115,7 @@ public class GymController implements Controller {
                     });
                 } catch (Exception e) {
                     e.printStackTrace();
-                    ((Activity) context).runOnUiThread(new Runnable() {
+                    ((Activity) context)        .runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
                             callback.onRetrievalFailed();
