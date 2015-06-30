@@ -10,7 +10,7 @@
         android:background="@color/ASUC_blue"
         android:gravity="center"
         android:textStyle="bold"
-        android:textColor="@color/holo_white"
+        android:textColor="@android:color/white"
         android:textSize="20sp" />
 
     <LinearLayout
