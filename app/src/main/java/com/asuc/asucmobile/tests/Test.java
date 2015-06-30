@@ -28,7 +28,7 @@ public class Test {
         Date closing2 = new Date();
         closing2.setTime(currentTime.getTime() - 1000000);
         Gym testGym1 =
-                new Gym(0, "Library", "Location", opening2, closing2, "");
+                new Gym(0, "Library", "Location", opening2, closing2, "", 0, 0);
 
         Library testLibrary2 =
                 new Library(1, "Library", "Location", "000-000-0000", null, null, "", 0, 0, false);
