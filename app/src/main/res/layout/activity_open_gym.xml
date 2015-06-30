@@ -16,6 +16,19 @@
         android:layout_weight="2">
 
         <ProgressBar
+            android:id="@+id/yourId"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_centerHorizontal="true"
+            android:layout_marginLeft="-1dp"
+            android:max="500"
+            android:progress="100"
+            android:progressDrawable="@drawable/circular_progress"
+            android:layout_alignParentBottom="true"
+            android:background="@color/pavan_light"/>
+
+        <ProgressBar
             android:id="@+id/progress_bar"
             style="?android:attr/progressBarStyleSmall"
             android:layout_width="match_parent"
