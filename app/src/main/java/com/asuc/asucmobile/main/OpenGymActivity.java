@@ -1,5 +1,6 @@
 package com.asuc.asucmobile.main;
 
+import android.animation.ObjectAnimator;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -10,6 +11,8 @@ import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.style.ForegroundColorSpan;
 import android.view.View;
+import android.view.animation.AccelerateDecelerateInterpolator;
+import android.view.animation.DecelerateInterpolator;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -73,6 +76,11 @@ public class OpenGymActivity extends AppCompatActivity {
             String closing = HOURS_FORMAT.format(gym.getClosing());
             hoursString = new SpannableString("Today  " + isOpen + "\n" + opening + " to " + closing);
             hoursString.setSpan(new ForegroundColorSpan(color), 7, 7 + isOpen.length(), Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
+
+            ObjectAnimator animation = ObjectAnimator.ofInt(findViewById(R.id.yourId), "progress", 100, 500);
+            animation.setDuration (5000); //in milliseconds
+            animation.setInterpolator (new AccelerateDecelerateInterpolator());
+            animation.start();
         } else {
             hoursString = new SpannableString("Today  UNKNOWN");
             hoursString.setSpan(new ForegroundColorSpan(Color.rgb(114, 205, 244)), 7, 14, Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
