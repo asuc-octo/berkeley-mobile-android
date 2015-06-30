@@ -10,11 +10,11 @@ public class Gym {
     private Date opening;
     private Date closing;
     private String imageUrl;
-    private int capacity;
-    private int count;
+    private Double capacity;
+    private Double count;
 
     public Gym(int id, String name, String address, Date opening, Date closing, String imageUrl,
-               Integer capacity, Integer count) {
+               Double capacity, Double count) {
         this.id = id;
         this.name = name;
         this.address = address;
@@ -49,11 +49,11 @@ public class Gym {
         return imageUrl;
     }
 
-    public int getCapacity() {
+    public Double getCapacity() {
         return capacity;
     }
 
-    public int getCount() {
+    public Double getCount() {
         return count;
     }
 
