@@ -90,8 +90,21 @@ public class GymController implements Controller {
                         }
 
                         String imageUrl = gymJSON.getString("image_link");
-
-                        gyms.add(new Gym(id, name, address, opening, closing, imageUrl));
+                        String capacityString = gymJSON.getString("capacity");
+                        String countString = gymJSON.getString("count");
+                        Integer capacity;
+                        Integer count;
+                        if(capacityString.equals("null")) {
+                            capacity = null;
+                        } else {
+                            capacity = Integer.parseInt(capacityString);
+                        }
+                        if(countString.equals("null")) {
+                            count = null;
+                        } else {
+                            count = Integer.parseInt(countString);
+                        }
+                        gyms.add(new Gym(id, name, address, opening, closing, imageUrl, capacity, count));
                     }
 
                     ((Activity) context).runOnUiThread(new Runnable() {
