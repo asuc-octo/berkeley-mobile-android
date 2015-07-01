@@ -17,12 +17,14 @@ public class ImageDownloadThread extends Thread {
     ProgressBar progressBar;
     ImageView image;
     String url;
+    ProgressBar percentFull;
 
     public ImageDownloadThread(Activity activity, String url) {
         this.activity = activity;
         this.progressBar = (ProgressBar) activity.findViewById(R.id.progress_bar);
         this.image = (ImageView) activity.findViewById(R.id.image);
         this.url = url;
+        this.percentFull = (ProgressBar) activity.findViewById(R.id.percentFull);
     }
 
     @Override
@@ -39,6 +41,7 @@ public class ImageDownloadThread extends Thread {
                     if (bitmap != null) {
                         image.setImageBitmap(bitmap);
                         image.setVisibility(View.VISIBLE);
+                        percentFull.bringToFront();
                     } else {
                         image.setVisibility(View.VISIBLE);
                         progressBar.setVisibility(View.GONE);
