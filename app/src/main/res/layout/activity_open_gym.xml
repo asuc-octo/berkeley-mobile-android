@@ -15,27 +15,6 @@
         android:layout_height="0dp"
         android:layout_weight="2">
 
-        <ProgressBar
-            android:id="@+id/yourId"
-            style="?android:attr/progressBarStyleHorizontal"
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:layout_centerHorizontal="true"
-            android:layout_marginLeft="-1dp"
-            android:max="500"
-            android:progress="100"
-            android:progressDrawable="@drawable/circular_progress"
-            android:layout_alignParentBottom="true"
-            android:background="@color/pavan_light"/>
-
-        <ProgressBar
-            android:id="@+id/progress_bar"
-            style="?android:attr/progressBarStyleSmall"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:padding="96dp"
-            android:layout_gravity="center" />
-
         <ImageView
             android:id="@+id/image"
             android:layout_width="match_parent"
@@ -44,6 +23,29 @@
             android:contentDescription="@string/content_desc"
             android:src="@drawable/default_gym"
             android:visibility="gone" />
+
+        <ProgressBar
+            android:id="@+id/progress_bar"
+            style="?android:attr/progressBarStyleSmall"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:padding="96dp"
+            android:layout_gravity="center"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"/>
+
+        <ProgressBar
+            android:id="@+id/percentFull"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:max="500"
+            android:progress="100"
+            android:progressDrawable="@drawable/circular_progress"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/image"/>
 
     </RelativeLayout>
 
