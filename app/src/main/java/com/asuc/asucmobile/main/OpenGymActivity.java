@@ -12,7 +12,6 @@ import android.text.Spanned;
 import android.text.style.ForegroundColorSpan;
 import android.view.View;
 import android.view.animation.AccelerateDecelerateInterpolator;
-import android.view.animation.DecelerateInterpolator;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -33,6 +32,7 @@ public class OpenGymActivity extends AppCompatActivity {
             new SimpleDateFormat("h:mm a", Locale.ENGLISH);
 
     private Gym gym;
+
 
     @Override
     @SuppressWarnings("deprecation")
@@ -78,7 +78,6 @@ public class OpenGymActivity extends AppCompatActivity {
             hoursString = new SpannableString("Today  " + isOpen + "\n" + opening + " to " + closing);
             hoursString.setSpan(new ForegroundColorSpan(color), 7, 7 + isOpen.length(), Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
 
-
         } else {
             hoursString = new SpannableString("Today  UNKNOWN");
             hoursString.setSpan(new ForegroundColorSpan(Color.rgb(114, 205, 244)), 7, 14, Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
@@ -88,14 +87,6 @@ public class OpenGymActivity extends AppCompatActivity {
         address.setText(gym.getAddress());
 
         new ImageDownloadThread(this, gym.getImageUrl()).start();
-        ProgressBar percentFull = (ProgressBar) findViewById(R.id.percentFull);
-        percentFull.bringToFront();
-        ObjectAnimator animation = ObjectAnimator.ofInt(percentFull, "progress", 100, 500);
-        animation.setDuration (1000); //in milliseconds
-        animation.setInterpolator (new AccelerateDecelerateInterpolator());
-        animation.start();
-
-
     }
 
     @Override
@@ -131,4 +122,7 @@ public class OpenGymActivity extends AppCompatActivity {
         }
     }
 
+    public Gym getGym() {
+        return gym;
+    }
 }
