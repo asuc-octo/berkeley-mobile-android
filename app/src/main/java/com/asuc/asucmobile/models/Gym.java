@@ -12,6 +12,7 @@ public class Gym {
     private String imageUrl;
     private Double capacity;
     private Double count;
+    private Integer percentFull;
 
     public Gym(int id, String name, String address, Date opening, Date closing, String imageUrl,
                Double capacity, Double count) {
@@ -23,6 +24,10 @@ public class Gym {
         this.imageUrl = imageUrl;
         this.capacity = capacity;
         this.count = count;
+        if(capacity != null && count != null) {
+            Double temp = ((count/capacity)*100);
+            this.percentFull = temp.intValue();
+        }
     }
 
     public int getId() {
@@ -55,6 +60,10 @@ public class Gym {
 
     public Double getCount() {
         return count;
+    }
+
+    public Integer getPercentFull() {
+        return percentFull;
     }
 
     /**
