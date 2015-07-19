@@ -15,15 +15,6 @@
         android:layout_height="0dp"
         android:layout_weight="2">
 
-        <ImageView
-            android:id="@+id/image"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:scaleType="fitXY"
-            android:contentDescription="@string/content_desc"
-            android:src="@drawable/default_gym"
-            android:visibility="gone" />
-
         <ProgressBar
             android:id="@+id/progress_bar"
             style="?android:attr/progressBarStyleSmall"
@@ -36,16 +27,29 @@
             android:layout_alignParentStart="true"/>
 
         <ProgressBar
-            android:id="@+id/percentFull"
+            android:id="@+id/backing_ring"
             style="?android:attr/progressBarStyleHorizontal"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
-            android:max="500"
+            android:max="100"
             android:progress="100"
+            android:progressDrawable="@drawable/circular_progress_background"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            />
+
+        <ProgressBar
+            android:id="@+id/percent_full_bar"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:max="100"
+            android:progress="0"
             android:progressDrawable="@drawable/circular_progress"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
-            android:layout_below="@+id/image"/>
+            android:rotation="-90"
+            />
 
     </RelativeLayout>
 
