@@ -5,5 +5,5 @@
     android:shape="ring"
     android:thickness="10dp"
     xmlns:android="http://schemas.android.com/apk/res/android">
-    <solid android:color="@color/primary_material_light" />
+    <solid android:color="@color/transparent" />
 </shape>

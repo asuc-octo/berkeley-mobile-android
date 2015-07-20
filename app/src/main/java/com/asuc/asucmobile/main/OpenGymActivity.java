@@ -2,7 +2,13 @@ package com.asuc.asucmobile.main;
 
 import android.animation.ObjectAnimator;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.GradientDrawable;
+import android.graphics.drawable.ShapeDrawable;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -19,6 +25,7 @@ import android.widget.Toast;
 import com.asuc.asucmobile.R;
 import com.asuc.asucmobile.controllers.GymController;
 import com.asuc.asucmobile.models.Gym;
+import com.asuc.asucmobile.utilities.Callback;
 import com.asuc.asucmobile.utilities.ImageDownloadThread;
 import com.flurry.android.FlurryAgent;
 
@@ -86,7 +93,51 @@ public class OpenGymActivity extends AppCompatActivity {
         hours.setText(hoursString);
         address.setText(gym.getAddress());
 
-        new ImageDownloadThread(this, gym.getImageUrl()).start();
+
+        //density stuff
+        final ProgressBar loadingBar = (ProgressBar) findViewById(R.id.progress_bar);
+        final ProgressBar backgroundBar = (ProgressBar) findViewById(R.id.backing_ring);
+        final ProgressBar  percentFullBar = (ProgressBar) findViewById(R.id.percent_full_bar);
+        final Integer percentFull = gym.getPercentFull();
+        loadingBar.bringToFront();
+        new ImageDownloadThread(this, gym.getImageUrl(), new Callback() {
+            @Override
+            public void onDataRetrieved(Object data) {
+                loadingBar.setVisibility(View.GONE);
+                Bitmap bitmap = (Bitmap) data;
+                Drawable bitmapDrawable = new BitmapDrawable(getResources(), bitmap);
+                if (percentFull != null) {
+                    //gym with density + pic
+                    ((GradientDrawable) backgroundBar.getProgressDrawable()).setColor(getResources().getColor(R.color.primary_material_light));
+                    backgroundBar.setBackgroundDrawable(bitmapDrawable);
+                    ObjectAnimator animation = ObjectAnimator.ofInt(percentFullBar,
+                            "progress", 0, gym.getPercentFull());
+                    animation.setDuration(1000); //in milliseconds
+                    animation.setInterpolator(new AccelerateDecelerateInterpolator());
+                    animation.start();
+                } else {
+                    //gym with pic
+                    backgroundBar.setBackgroundDrawable(bitmapDrawable);
+                    backgroundBar.setProgressDrawable(new ColorDrawable(Color.TRANSPARENT));
+                }
+            }
+
+            @Override
+            public void onRetrievalFailed() {
+                loadingBar.setVisibility(View.GONE);
+                if (percentFull != null) {
+                    //gym with density
+                    ObjectAnimator animation = ObjectAnimator.ofInt(percentFullBar,
+                            "progress", 0, gym.getPercentFull());
+                    animation.setDuration(1000); //in milliseconds
+                    animation.setInterpolator(new AccelerateDecelerateInterpolator());
+                    animation.start();
+                } else {
+                    //gym with nothing
+                    backgroundBar.setVisibility(View.GONE);
+                }
+            }
+        }).start();
     }
 
     @Override
