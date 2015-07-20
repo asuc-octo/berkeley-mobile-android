@@ -128,7 +128,7 @@ public class OpenLibraryActivity extends AppCompatActivity {
         }
 
         setUpMap();
-        new ImageDownloadThread(this, library.getImageUrl()).start();
+//        new ImageDownloadThread(this, library.getImageUrl()).start();
     }
 
     @Override
