@@ -110,6 +110,8 @@ public class OpenGymActivity extends AppCompatActivity {
                     //gym with density + pic
                     ((GradientDrawable) backgroundBar.getProgressDrawable()).setColor(getResources().getColor(R.color.primary_material_light));
                     backgroundBar.setBackgroundDrawable(bitmapDrawable);
+                    backgroundBar.setVisibility(View.VISIBLE);
+                    percentFullBar.setVisibility(View.VISIBLE);
                     ObjectAnimator animation = ObjectAnimator.ofInt(percentFullBar,
                             "progress", 0, gym.getPercentFull());
                     animation.setDuration(1000); //in milliseconds
@@ -119,6 +121,7 @@ public class OpenGymActivity extends AppCompatActivity {
                     //gym with pic
                     backgroundBar.setBackgroundDrawable(bitmapDrawable);
                     backgroundBar.setProgressDrawable(new ColorDrawable(Color.TRANSPARENT));
+                    backgroundBar.setVisibility(View.VISIBLE);
                 }
             }
 
