@@ -2,6 +2,7 @@ package com.asuc.asucmobile.main;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
@@ -13,13 +14,16 @@ import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.style.ForegroundColorSpan;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.asuc.asucmobile.R;
 import com.asuc.asucmobile.controllers.LibraryController;
 import com.asuc.asucmobile.models.Library;
+import com.asuc.asucmobile.utilities.Callback;
 import com.asuc.asucmobile.utilities.ImageDownloadThread;
 import com.flurry.android.FlurryAgent;
 import com.google.android.gms.common.ConnectionResult;
@@ -69,12 +73,14 @@ public class OpenLibraryActivity extends AppCompatActivity {
             }
         });
 
+        final ImageView image = (ImageView) findViewById(R.id.image);
         TextView hours = (TextView) findViewById(R.id.hours);
         TextView address = (TextView) findViewById(R.id.location);
         TextView phone = (TextView) findViewById(R.id.phone);
         LinearLayout locationLayout = (LinearLayout) findViewById(R.id.location_layout);
         LinearLayout phoneLayout = (LinearLayout) findViewById(R.id.phone_layout);
         mapFragment = (MapFragment) getFragmentManager().findFragmentById(R.id.map);
+        final ProgressBar progressBar= (ProgressBar) findViewById(R.id.progress_bar);
 
         Spannable hoursString;
         if (library.isByAppointment()) {
@@ -128,7 +134,21 @@ public class OpenLibraryActivity extends AppCompatActivity {
         }
 
         setUpMap();
-//        new ImageDownloadThread(this, library.getImageUrl()).start();
+        new ImageDownloadThread(this, library.getImageUrl(), new Callback() {
+            @Override
+            public void onDataRetrieved(Object data) {
+                progressBar.setVisibility(View.GONE);
+                Bitmap bitmap = (Bitmap) data;
+                image.setImageBitmap(bitmap);
+                image.setVisibility(View.VISIBLE);
+            }
+
+            @Override
+            public void onRetrievalFailed() {
+                progressBar.setVisibility(View.GONE);
+                image.setVisibility(View.VISIBLE);
+            }
+        }).start();
     }
 
     @Override
