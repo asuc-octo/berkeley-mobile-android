@@ -1,19 +1,8 @@
 package com.asuc.asucmobile.utilities;
 
-import android.animation.ObjectAnimator;
 import android.app.Activity;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Color;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.ColorDrawable;
-import android.view.View;
-import android.view.animation.AccelerateDecelerateInterpolator;
-import android.widget.ImageView;
-import android.widget.ProgressBar;
-
-import com.asuc.asucmobile.R;
-import com.asuc.asucmobile.main.OpenGymActivity;
 
 import java.io.InputStream;
 
