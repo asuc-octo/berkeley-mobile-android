@@ -27,7 +27,7 @@
         android:bottom="38dp" >
         <shape android:shape="oval">
             <solid
-                android:color="@color/holo_white" />
+                android:color="@android:color/white" />
             <stroke
                 android:width="3dp"
                 android:color="@color/ASUC_blue" />
