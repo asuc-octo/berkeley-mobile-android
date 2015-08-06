@@ -1,14 +1,12 @@
 package com.asuc.asucmobile.main;
 
 import android.animation.ObjectAnimator;
-import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
-import android.graphics.drawable.ShapeDrawable;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -20,7 +18,6 @@ import android.view.View;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.asuc.asucmobile.R;
 import com.asuc.asucmobile.controllers.GymController;
@@ -34,7 +31,6 @@ import java.util.Locale;
 
 public class OpenGymActivity extends AppCompatActivity {
 
-    private static final int REQUEST_CODE_PLAY_SERVICES = 1;
     private static final SimpleDateFormat HOURS_FORMAT =
             new SimpleDateFormat("h:mm a", Locale.ENGLISH);
 
@@ -98,25 +94,36 @@ public class OpenGymActivity extends AppCompatActivity {
         final ProgressBar loadingBar = (ProgressBar) findViewById(R.id.progress_bar);
         final ProgressBar backgroundBar = (ProgressBar) findViewById(R.id.backing_ring);
         final ProgressBar  percentFullBar = (ProgressBar) findViewById(R.id.percent_full_bar);
+        final View image = findViewById(R.id.image);
+        final View tintOverlay = findViewById(R.id.tint);
+        final TextView percentageText = (TextView) findViewById(R.id.percentage);
         final Integer percentFull = gym.getPercentFull();
         loadingBar.bringToFront();
         new ImageDownloadThread(this, gym.getImageUrl(), new Callback() {
             @Override
             public void onDataRetrieved(Object data) {
                 loadingBar.setVisibility(View.GONE);
+
                 Bitmap bitmap = (Bitmap) data;
                 Drawable bitmapDrawable = new BitmapDrawable(getResources(), bitmap);
+                image.setBackgroundDrawable(bitmapDrawable);
+                image.setVisibility(View.VISIBLE);
+
                 if (percentFull != null) {
                     //gym with density + pic
                     ((GradientDrawable) backgroundBar.getProgressDrawable()).setColor(getResources().getColor(R.color.primary_material_light));
-                    backgroundBar.setBackgroundDrawable(bitmapDrawable);
                     backgroundBar.setVisibility(View.VISIBLE);
+                    tintOverlay.setVisibility(View.VISIBLE);
                     percentFullBar.setVisibility(View.VISIBLE);
+                    percentageText.setVisibility(View.VISIBLE);
+
                     ObjectAnimator animation = ObjectAnimator.ofInt(percentFullBar,
                             "progress", 0, gym.getPercentFull());
                     animation.setDuration(1000); //in milliseconds
                     animation.setInterpolator(new AccelerateDecelerateInterpolator());
                     animation.start();
+
+                    percentageText.setText(gym.getPercentFull() + "%");
                 } else {
                     //gym with pic
                     backgroundBar.setBackgroundDrawable(bitmapDrawable);
@@ -160,23 +167,4 @@ public class OpenGymActivity extends AppCompatActivity {
         FlurryAgent.onEndSession(this);
     }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == REQUEST_CODE_PLAY_SERVICES) {
-            if (resultCode == RESULT_CANCELED) {
-                Toast.makeText(
-                        this,
-                        "Google Play Services must be installed to display map.",
-                        Toast.LENGTH_LONG
-                ).show();
-                finish();
-            }
-        } else {
-            super.onActivityResult(requestCode, resultCode, data);
-        }
-    }
-
-    public Gym getGym() {
-        return gym;
-    }
 }
