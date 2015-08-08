@@ -16,6 +16,7 @@ import android.text.Spanned;
 import android.text.style.ForegroundColorSpan;
 import android.view.View;
 import android.view.animation.AccelerateDecelerateInterpolator;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -98,6 +99,7 @@ public class OpenGymActivity extends AppCompatActivity {
         final View tintOverlay = findViewById(R.id.tint);
         final TextView percentageText = (TextView) findViewById(R.id.percentage);
         final Integer percentFull = gym.getPercentFull();
+        final ImageView densityLogo = (ImageView) findViewById(R.id.density_logo);
         loadingBar.bringToFront();
         new ImageDownloadThread(this, gym.getImageUrl(), new Callback() {
             @Override
@@ -116,6 +118,7 @@ public class OpenGymActivity extends AppCompatActivity {
                     tintOverlay.setVisibility(View.VISIBLE);
                     percentFullBar.setVisibility(View.VISIBLE);
                     percentageText.setVisibility(View.VISIBLE);
+                    densityLogo.setVisibility(View.VISIBLE);
 
                     ObjectAnimator animation = ObjectAnimator.ofInt(percentFullBar,
                             "progress", 0, gym.getPercentFull());
