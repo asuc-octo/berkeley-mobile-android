@@ -18,6 +18,7 @@ import java.util.TimeZone;
 
 public class GymController implements Controller {
 
+    private static final String URL = "http://asuc-mobile.herokuapp.com/api/gyms";
     private static final SimpleDateFormat DATE_FORMAT =
             new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.ENGLISH);
     private static final TimeZone PST = TimeZone.getTimeZone("America/Los_Angeles");
@@ -129,7 +130,7 @@ public class GymController implements Controller {
     @Override
     public void refreshInBackground(Callback callback) {
         this.callback = callback;
-        JSONUtilities.readJSONFromUrl("http://asuc-mobile.herokuapp.com/api/gyms", "gyms", GymController.getInstance(context));
+        JSONUtilities.readJSONFromUrl(URL, "gyms", GymController.getInstance(context));
     }
 
     public void setCurrentGym(Gym gym) {

@@ -17,6 +17,8 @@ import java.util.ArrayList;
 
 public class LineController implements Controller {
 
+    private static final String URL = "http://asuc-mobile.herokuapp.com/api/bt_lines";
+
     private static LineController instance;
 
     // SparseArray is an Android HashMap that accepts primitive integers as keys.
@@ -115,10 +117,7 @@ public class LineController implements Controller {
     @Override
     public void refreshInBackground(Callback callback) {
         this.callback = callback;
-        JSONUtilities.readJSONFromUrl(
-                "http://asuc-mobile.herokuapp.com/api/bt_lines",
-                "lines",
-                LineController.getInstance(context));
+        JSONUtilities.readJSONFromUrl(URL, "lines", LineController.getInstance(context));
     }
 
     public SparseArray<Stop> getStops() {
