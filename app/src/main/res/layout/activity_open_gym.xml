@@ -79,12 +79,13 @@
             android:visibility="invisible" />
 
         <ImageView
-            android:layout_width="wrap_content"
+            android:layout_width="112dp"
             android:layout_height="wrap_content"
             android:id="@+id/density_logo"
             android:layout_alignParentBottom="true"
             android:layout_alignParentRight="true"
             android:layout_alignParentEnd="true"
+            android:layout_marginBottom="8dp"
             android:src="@drawable/density_logo"
             android:visibility="invisible"/>
 
