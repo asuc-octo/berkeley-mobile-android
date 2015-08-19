@@ -137,9 +137,12 @@ public class OpenLibraryActivity extends AppCompatActivity {
         new ImageDownloadThread(this, library.getImageUrl(), new Callback() {
             @Override
             public void onDataRetrieved(Object data) {
+                if (data != null) {
+                    Bitmap bitmap = (Bitmap) data;
+                    image.setImageBitmap(bitmap);
+                }
+
                 progressBar.setVisibility(View.GONE);
-                Bitmap bitmap = (Bitmap) data;
-                image.setImageBitmap(bitmap);
                 image.setVisibility(View.VISIBLE);
             }
 
