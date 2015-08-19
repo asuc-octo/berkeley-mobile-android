@@ -28,11 +28,4 @@
         android:textSize="18sp"
         android:textColor="@android:color/black" />
 
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="28dp"
-        android:layout_gravity="center_vertical"
-        android:contentDescription="@string/content_desc"
-        android:src="@drawable/ic_menu_chevron_right" />
-
 </LinearLayout>
