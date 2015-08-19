@@ -23,12 +23,4 @@
         android:textColor="@android:color/black"
         android:textSize="18sp" />
 
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="28dp"
-        android:layout_marginRight="4dp"
-        android:layout_marginEnd="4dp"
-        android:contentDescription="@string/content_desc"
-        android:src="@drawable/ic_menu_chevron_right" />
-
 </LinearLayout>
