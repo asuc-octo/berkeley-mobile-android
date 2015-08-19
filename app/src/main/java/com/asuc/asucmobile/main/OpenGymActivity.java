@@ -104,11 +104,13 @@ public class OpenGymActivity extends AppCompatActivity {
         new ImageDownloadThread(this, gym.getImageUrl(), new Callback() {
             @Override
             public void onDataRetrieved(Object data) {
-                loadingBar.setVisibility(View.GONE);
+                if (data != null) {
+                    Bitmap bitmap = (Bitmap) data;
+                    Drawable bitmapDrawable = new BitmapDrawable(getResources(), bitmap);
+                    image.setBackgroundDrawable(bitmapDrawable);
+                }
 
-                Bitmap bitmap = (Bitmap) data;
-                Drawable bitmapDrawable = new BitmapDrawable(getResources(), bitmap);
-                image.setBackgroundDrawable(bitmapDrawable);
+                loadingBar.setVisibility(View.GONE);
                 image.setVisibility(View.VISIBLE);
 
                 if (percentFull != null) {
@@ -127,11 +129,6 @@ public class OpenGymActivity extends AppCompatActivity {
                     animation.start();
 
                     percentageText.setText(gym.getPercentFull() + "%");
-                } else {
-                    //gym with pic
-                    backgroundBar.setBackgroundDrawable(bitmapDrawable);
-                    backgroundBar.setProgressDrawable(new ColorDrawable(Color.TRANSPARENT));
-                    backgroundBar.setVisibility(View.VISIBLE);
                 }
             }
 

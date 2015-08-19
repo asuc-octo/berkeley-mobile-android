@@ -19,6 +19,7 @@ import java.util.TimeZone;
 
 public class DiningController implements Controller {
 
+    private static final String URL = "http://asuc-mobile.herokuapp.com/api/dining_halls";
     private static final SimpleDateFormat DATE_FORMAT =
             new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.ENGLISH);
     private static final TimeZone PST = TimeZone.getTimeZone("America/Los_Angeles");
@@ -183,7 +184,7 @@ public class DiningController implements Controller {
     @Override
     public void refreshInBackground(Callback callback) {
         this.callback = callback;
-        JSONUtilities.readJSONFromUrl("http://asuc-mobile.herokuapp.com/api/dining_halls", "dining_halls", DiningController.getInstance(context));
+        JSONUtilities.readJSONFromUrl(URL, "dining_halls", DiningController.getInstance(context));
     }
 
     public void setCurrentDiningHall(DiningHall diningHall) {
