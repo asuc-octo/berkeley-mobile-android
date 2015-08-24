@@ -1,10 +1,14 @@
 package com.asuc.asucmobile.adapters;
 
+import android.animation.ObjectAnimator;
 import android.content.Context;
+import android.graphics.drawable.GradientDrawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AccelerateDecelerateInterpolator;
 import android.widget.BaseAdapter;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.asuc.asucmobile.R;
@@ -62,6 +66,24 @@ public class GymAdapter extends BaseAdapter {
             gymAvailability.setText("Closed");
         }
 
+        ProgressBar backgroundBar = (ProgressBar) convertView.findViewById(R.id.backing_ring);
+        ProgressBar  percentFullBar = (ProgressBar) convertView.findViewById(R.id.percent_full_bar);
+        TextView fullText = (TextView) convertView.findViewById(R.id.full_text);
+        TextView percentage = (TextView) convertView.findViewById(R.id.percentage);
+        if (gym.getPercentFull() != null) {
+            //gym with density + pic
+            ((GradientDrawable) backgroundBar.getProgressDrawable()).setColor(convertView.getResources().getColor(R.color.primary_material_light));
+            percentage.setText(gym.getPercentFull().toString() + "%");
+            backgroundBar.setVisibility(View.VISIBLE);
+            percentFullBar.setVisibility(View.VISIBLE);
+            fullText.setVisibility(View.VISIBLE);
+            percentage.setVisibility(View.VISIBLE);
+            ObjectAnimator animation = ObjectAnimator.ofInt(percentFullBar,
+                    "progress", 0, gym.getPercentFull());
+            animation.setDuration(1000); //in milliseconds
+            animation.setInterpolator(new AccelerateDecelerateInterpolator());
+            animation.start();
+        }
         return convertView;
     }
 
