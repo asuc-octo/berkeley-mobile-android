@@ -1,86 +1,71 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
     android:layout_width="match_parent"
-    android:layout_height="100dp"
+    android:layout_height="wrap_content"
     android:paddingLeft="16dp"
-    android:paddingRight="16dp"
-    android:gravity="center_vertical">
+    android:paddingRight="16dp">
 
-    <TextView
-        android:id="@+id/name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:singleLine="true"
-        android:ellipsize="marquee"
-        android:textColor="@android:color/black"
-        android:textSize="16sp"
-        android:layout_marginLeft="31dp"
-        android:layout_marginTop="27dp"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"/>
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="fill_parent"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:paddingTop="16dp"
+        android:paddingBottom="16dp"
+        android:gravity="center_vertical">
 
-    <TextView
-        android:id="@+id/availability"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="14sp"
-        android:layout_below="@+id/name"
-        android:layout_alignLeft="@+id/name"
-        android:layout_alignStart="@+id/name"/>
-    <ProgressBar
-        android:id="@+id/backing_ring"
-        style="?android:attr/progressBarStyleHorizontal"
+        <TextView
+            android:id="@+id/name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:singleLine="true"
+            android:ellipsize="marquee"
+            android:textColor="@android:color/black"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/availability"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="14sp" />
+
+    </LinearLayout>
+
+    <RelativeLayout
+        android:id="@+id/density_ring"
         android:layout_width="100dp"
         android:layout_height="100dp"
-        android:max="100"
-        android:progress="100"
-        android:progressDrawable="@drawable/circular_progress_background"
-        android:visibility="invisible"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="false"
-        android:layout_alignTop="@+id/percent_full_bar"
-        android:layout_alignBottom="@+id/percent_full_bar"
-        />
+        android:visibility="gone"
+        android:padding="0dp">
 
-    <ProgressBar
-        android:id="@+id/percent_full_bar"
-        style="?android:attr/progressBarStyleHorizontal"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:max="100"
-        android:progress="0"
-        android:progressDrawable="@drawable/circular_progress"
-        android:rotation="-90"
-        android:visibility="invisible"
-        android:layout_centerVertical="true"
-        android:layout_alignStart="@+id/backing_ring"
-        android:layout_marginBottom="5dp"
-        android:layout_alignLeft="@+id/backing_ring"/>
+        <ProgressBar
+            android:id="@+id/backing_ring"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:max="100"
+            android:progress="100"
+            android:progressDrawable="@drawable/circular_progress_background" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/percentage"
-        android:textAlignment="center"
-        android:visibility="invisible"
-        android:textColor="@android:color/black"
-        android:layout_above="@+id/full_text"
-        android:layout_alignLeft="@+id/full_text"
-        android:layout_alignStart="@+id/full_text"/>
+        <ProgressBar
+            android:id="@+id/percent_full_bar"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:max="100"
+            android:progress="99"
+            android:progressDrawable="@drawable/circular_progress"
+            android:rotation="-90" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="FULL"
-        android:id="@+id/full_text"
-        android:textAlignment="center"
-        android:visibility="invisible"
-        android:textColor="@android:color/black"
-        android:layout_marginLeft="34dp"
-        android:layout_marginStart="34dp"
-        android:layout_alignTop="@+id/availability"
-        android:layout_alignLeft="@+id/backing_ring"
-        android:layout_alignStart="@+id/backing_ring"/>
+        <TextView
+            android:id="@+id/percentage"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:textSize="12sp"
+            android:textColor="@android:color/black" />
 
-</RelativeLayout>
+    </RelativeLayout>
+
+</LinearLayout>

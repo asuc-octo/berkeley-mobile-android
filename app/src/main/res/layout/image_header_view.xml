@@ -5,14 +5,14 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="200dp">
+        android:layout_height="200dp"
+        android:gravity="center">
 
         <ProgressBar
             android:id="@+id/progress_bar"
             style="?android:attr/progressBarStyleSmall"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:padding="136dp"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
             android:layout_gravity="center" />
 
         <ImageView xmlns:android="http://schemas.android.com/apk/res/android"
