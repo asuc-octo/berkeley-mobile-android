@@ -19,7 +19,7 @@ import java.util.TimeZone;
 
 public class DiningController implements Controller {
 
-    private static final String URL = "http://asuc-mobile.herokuapp.com/api/dining_halls";
+    private static final String URL = BASE_URL + "/dining_halls";
     private static final SimpleDateFormat DATE_FORMAT =
             new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.ENGLISH);
     private static final TimeZone PST = TimeZone.getTimeZone("America/Los_Angeles");
