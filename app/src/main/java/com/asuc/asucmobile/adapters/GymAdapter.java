@@ -70,6 +70,10 @@ public class GymAdapter extends BaseAdapter {
         ProgressBar  percentFullBar = (ProgressBar) convertView.findViewById(R.id.percent_full_bar);
         TextView fullText = (TextView) convertView.findViewById(R.id.full_text);
         TextView percentage = (TextView) convertView.findViewById(R.id.percentage);
+        backgroundBar.setVisibility(View.GONE);
+        percentFullBar.setVisibility(View.GONE);
+        fullText.setVisibility(View.GONE);
+        percentage.setVisibility(View.GONE);
         if (gym.getPercentFull() != null) {
             //gym with density + pic
             ((GradientDrawable) backgroundBar.getProgressDrawable()).setColor(convertView.getResources().getColor(R.color.primary_material_light));
