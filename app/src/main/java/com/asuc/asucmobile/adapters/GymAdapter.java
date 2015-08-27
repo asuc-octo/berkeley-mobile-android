@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.widget.BaseAdapter;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.asuc.asucmobile.R;
@@ -66,28 +67,25 @@ public class GymAdapter extends BaseAdapter {
             gymAvailability.setText("Closed");
         }
 
+        View densityRing = convertView.findViewById(R.id.density_ring);
         ProgressBar backgroundBar = (ProgressBar) convertView.findViewById(R.id.backing_ring);
         ProgressBar  percentFullBar = (ProgressBar) convertView.findViewById(R.id.percent_full_bar);
-        TextView fullText = (TextView) convertView.findViewById(R.id.full_text);
         TextView percentage = (TextView) convertView.findViewById(R.id.percentage);
-        backgroundBar.setVisibility(View.GONE);
-        percentFullBar.setVisibility(View.GONE);
-        fullText.setVisibility(View.GONE);
-        percentage.setVisibility(View.GONE);
+
+        densityRing.setVisibility(View.GONE);
+
         if (gym.getPercentFull() != null) {
             //gym with density + pic
+            densityRing.setVisibility(View.VISIBLE);
             ((GradientDrawable) backgroundBar.getProgressDrawable()).setColor(convertView.getResources().getColor(R.color.primary_material_light));
-            percentage.setText(gym.getPercentFull().toString() + "%");
-            backgroundBar.setVisibility(View.VISIBLE);
-            percentFullBar.setVisibility(View.VISIBLE);
-            fullText.setVisibility(View.VISIBLE);
-            percentage.setVisibility(View.VISIBLE);
+            percentage.setText(gym.getPercentFull().toString() + "%\nFULL");
             ObjectAnimator animation = ObjectAnimator.ofInt(percentFullBar,
                     "progress", 0, gym.getPercentFull());
             animation.setDuration(1000); //in milliseconds
             animation.setInterpolator(new AccelerateDecelerateInterpolator());
             animation.start();
         }
+
         return convertView;
     }
 
