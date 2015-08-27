@@ -17,7 +17,7 @@ import java.util.ArrayList;
 
 public class LineController implements Controller {
 
-    private static final String URL = "http://asuc-mobile.herokuapp.com/api/bt_lines";
+    private static final String URL = BASE_URL + "/bt_lines";
 
     private static LineController instance;
 

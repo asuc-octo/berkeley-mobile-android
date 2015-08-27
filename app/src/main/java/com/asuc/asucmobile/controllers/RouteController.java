@@ -21,6 +21,7 @@ import java.util.TimeZone;
 
 public class RouteController implements Controller {
 
+    private static final String URL = BASE_URL + "/bt_trips";
     private static final SimpleDateFormat DATE_FORMAT =
             new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.ENGLISH);
     private static final TimeZone PST = TimeZone.getTimeZone("America/Los_Angeles");
@@ -161,7 +162,7 @@ public class RouteController implements Controller {
         this.callback = callback;
 
         JSONUtilities.readJSONFromUrl(
-                "http://asuc-mobile.herokuapp.com/api/bt_trips/new?" +
+                URL + "/new?" +
                         "startlat=" + start.latitude + "&startlon=" + start.longitude +
                         "&destlat=" + dest.latitude + "&destlon=" + dest.longitude,
                 "journeys",
