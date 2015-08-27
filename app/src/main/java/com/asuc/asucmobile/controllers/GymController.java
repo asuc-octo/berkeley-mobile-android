@@ -116,7 +116,7 @@ public class GymController implements Controller {
                     });
                 } catch (Exception e) {
                     e.printStackTrace();
-                    ((Activity) context)        .runOnUiThread(new Runnable() {
+                    ((Activity) context).runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
                             callback.onRetrievalFailed();
