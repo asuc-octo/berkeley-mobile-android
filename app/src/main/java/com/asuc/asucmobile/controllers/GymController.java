@@ -42,7 +42,7 @@ public class GymController implements Controller {
     }
 
     public GymController() {
-        gyms = new ArrayList<Gym>();
+        gyms = new ArrayList<>();
     }
     
     @Override
