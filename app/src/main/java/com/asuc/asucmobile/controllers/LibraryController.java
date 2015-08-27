@@ -18,7 +18,7 @@ import java.util.TimeZone;
 
 public class LibraryController implements Controller {
 
-    private static final String URL = "http://asuc-mobile.herokuapp.com/api/libraries";
+    private static final String URL = BASE_URL + "/libraries";
     private static final SimpleDateFormat DATE_FORMAT =
             new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.ENGLISH);
     private static final TimeZone PST = TimeZone.getTimeZone("America/Los_Angeles");
