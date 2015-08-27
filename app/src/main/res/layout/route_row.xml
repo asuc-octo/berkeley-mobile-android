@@ -21,7 +21,8 @@
             android:id="@+id/endpoint"
             android:layout_width="96dp"
             android:layout_height="match_parent"
-            android:gravity="center" />
+            android:gravity="center"
+            android:textColor="@android:color/black" />
 
         <ImageView
             android:id="@+id/lollipop"
