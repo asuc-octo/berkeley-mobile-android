@@ -19,6 +19,7 @@ import com.asuc.asucmobile.controllers.RouteController;
 import com.asuc.asucmobile.models.Route;
 import com.asuc.asucmobile.models.Stop;
 import com.asuc.asucmobile.utilities.Callback;
+import com.flurry.android.FlurryAgent;
 import com.google.android.gms.maps.model.LatLng;
 
 import java.util.ArrayList;
@@ -36,6 +37,7 @@ public class OpenRouteSelectionActivity extends AppCompatActivity {
     @SuppressWarnings("deprecation")
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        FlurryAgent.onStartSession(this, "4VPTT49FCCKH7Z2NVQ26");
         setContentView(R.layout.activity_open_route_selection);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -79,6 +81,13 @@ public class OpenRouteSelectionActivity extends AppCompatActivity {
         });
 
         refresh();
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+
+        FlurryAgent.onEndSession(this);
     }
 
     private void refresh() {

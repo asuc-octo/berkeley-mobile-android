@@ -57,14 +57,30 @@
             android:progressDrawable="@drawable/circular_progress"
             android:rotation="-90" />
 
-        <TextView
-            android:id="@+id/percentage"
+        <LinearLayout
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
-            android:textStyle="bold"
-            android:gravity="center"
-            android:textSize="12sp"
-            android:textColor="@android:color/black" />
+            android:orientation="vertical"
+            android:gravity="center">
+
+            <TextView
+                android:id="@+id/percentage"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:textStyle="bold"
+                android:gravity="center"
+                android:textSize="12sp"
+                android:textColor="@android:color/black" />
+
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:textSize="12sp"
+                android:text="@string/full"
+                android:textColor="@android:color/black" />
+
+        </LinearLayout>
 
     </RelativeLayout>
 
