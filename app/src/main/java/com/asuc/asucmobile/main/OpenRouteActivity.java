@@ -16,6 +16,7 @@ import com.asuc.asucmobile.models.Route;
 import com.asuc.asucmobile.models.Stop;
 import com.asuc.asucmobile.models.Trip;
 import com.asuc.asucmobile.views.MapHeaderView;
+import com.flurry.android.FlurryAgent;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -41,6 +42,7 @@ public class OpenRouteActivity extends AppCompatActivity {
     @SuppressWarnings("deprecation")
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        FlurryAgent.onStartSession(this, "4VPTT49FCCKH7Z2NVQ26");
 
         route = ((RouteController) RouteController.getInstance(this)).getCurrentRoute();
         if (route == null) {
@@ -80,6 +82,13 @@ public class OpenRouteActivity extends AppCompatActivity {
         }
 
         setUpMap();
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+
+        FlurryAgent.onEndSession(this);
     }
 
     private void setUpMap() {

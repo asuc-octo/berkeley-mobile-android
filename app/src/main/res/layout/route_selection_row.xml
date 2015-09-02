@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="horizontal"
     android:layout_width="match_parent"
-    android:layout_height="96dp"
+    android:layout_height="72dp"
     android:id="@+id/tripLayout">
 
     <LinearLayout
@@ -10,7 +10,7 @@
         android:layout_height="match_parent"
         android:layout_weight="2"
         android:orientation="vertical"
-        android:gravity="center_vertical">
+        android:gravity="center">
 
         <TextView
             android:id="@+id/busTime"
@@ -59,36 +59,26 @@
         android:paddingLeft="16dp"
         android:paddingRight="16dp"
         android:orientation="vertical"
-        android:gravity="center_vertical">
+        android:gravity="center">
 
         <TextView
             android:id="@+id/lineName1"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="18sp"
             android:textColor="@android:color/black" />
 
         <TextView
             android:id="@+id/lineName"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="18sp"
             android:textColor="@android:color/black" />
 
         <TextView
             android:id="@+id/lineName2"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="18sp"
             android:textColor="@android:color/black" />
 
     </LinearLayout>
-
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="28dp"
-        android:layout_gravity="center_vertical"
-        android:contentDescription="@string/content_desc"
-        android:src="@drawable/ic_menu_chevron_right" />
 
 </LinearLayout>

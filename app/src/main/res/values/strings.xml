@@ -2,17 +2,10 @@
 <resources>
 
     <string name="app_name">ASUC Mobile</string>
+
     <string name="title_activity_main">Campus Resources</string>
-    <string name="title_activity_library">Cal Libraries</string>
-    <string name="search">Search</string>
-    <string name="library_search_hint">Search libraries</string>
-    <string name="content_desc">image</string>
+    <string name="title_activity_library">Libraries</string>
     <string name="title_activity_open_library">Library</string>
-    <string name="todays_hours">Today\'s Hours</string>
-    <string name="location">Location</string>
-    <string name="phone_number">Phone Number</string>
-    <string name="address">Address</string>
-    <string name="no_routes">No routes available</string>
     <string name="title_activity_gym">Gyms</string>
     <string name="title_activity_open_gym">Gym</string>
     <string name="title_activity_dining_hall">Dining Halls</string>
@@ -20,5 +13,15 @@
     <string name="title_activity_open_route">Route</string>
     <string name="title_activity_open_trip_selection">Select Route</string>
     <string name="title_activity_stop">Select Destination</string>
+
+    <string name="search">Search</string>
+    <string name="library_search_hint">Search libraries</string>
+    <string name="content_desc">image</string>
+    <string name="todays_hours">Today\'s Hours</string>
+    <string name="location">Location</string>
+    <string name="phone_number">Phone Number</string>
+    <string name="address">Address</string>
+    <string name="no_routes">No routes available</string>
+    <string name="full">FULL</string>
 
 </resources>
