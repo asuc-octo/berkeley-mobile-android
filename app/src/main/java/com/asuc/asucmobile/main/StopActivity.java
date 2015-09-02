@@ -256,7 +256,7 @@ public class StopActivity extends AppCompatActivity implements ConnectionCallbac
         super.onBackPressed();
 
         //Flurry logging for pressing the Back Button
-        FlurryAgent.logEvent("Tapped on the Back Button (Gyms)");
+        FlurryAgent.logEvent("Tapped on the Back Button (Stops)");
     }
 
     /**

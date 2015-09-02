@@ -77,7 +77,7 @@ public class GymAdapter extends BaseAdapter {
             //gym with density + pic
             densityRing.setVisibility(View.VISIBLE);
             ((GradientDrawable) backgroundBar.getProgressDrawable()).setColor(convertView.getResources().getColor(R.color.primary_material_light));
-            percentage.setText(gym.getPercentFull().toString() + "%\nFULL");
+            percentage.setText(gym.getPercentFull().toString() + "%");
             ObjectAnimator animation = ObjectAnimator.ofInt(percentFullBar,
                     "progress", 0, gym.getPercentFull());
             animation.setDuration(1000); //in milliseconds
