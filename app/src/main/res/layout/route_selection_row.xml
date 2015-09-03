@@ -3,6 +3,7 @@
     android:orientation="horizontal"
     android:layout_width="match_parent"
     android:layout_height="72dp"
+    android:baselineAligned="false"
     android:id="@+id/tripLayout">
 
     <LinearLayout
@@ -59,7 +60,7 @@
         android:paddingLeft="16dp"
         android:paddingRight="16dp"
         android:orientation="vertical"
-        android:gravity="center">
+        android:gravity="center_vertical">
 
         <TextView
             android:id="@+id/lineName1"

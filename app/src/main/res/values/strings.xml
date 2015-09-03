@@ -22,6 +22,6 @@
     <string name="phone_number">Phone Number</string>
     <string name="address">Address</string>
     <string name="no_routes">No routes available</string>
-    <string name="full">FULL</string>
+    <string name="full">Full</string>
 
 </resources>
