@@ -1,6 +1,7 @@
 package com.asuc.asucmobile.adapters;
 
 import android.content.Context;
+import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -50,9 +51,9 @@ public class DiningHallAdapter extends BaseAdapter {
         TextView name = (TextView) convertView.findViewById(R.id.name);
 
         if (i % 2 == 0) {
-            highlights.setBackgroundColor(context.getResources().getColor(R.color.two_chainz_gold));
+            highlights.setBackgroundColor(ContextCompat.getColor(context, R.color.two_chainz_gold));
         } else {
-            highlights.setBackgroundColor(context.getResources().getColor(R.color.ASUC_blue));
+            highlights.setBackgroundColor(ContextCompat.getColor(context, R.color.ASUC_blue));
         }
 
         name.setText(diningHall.getName());

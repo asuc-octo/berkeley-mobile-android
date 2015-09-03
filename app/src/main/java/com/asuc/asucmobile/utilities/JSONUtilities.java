@@ -1,6 +1,7 @@
 package com.asuc.asucmobile.utilities;
 
 import android.os.AsyncTask;
+import android.util.Log;
 
 import com.asuc.asucmobile.controllers.Controller;
 
@@ -15,6 +16,8 @@ import java.io.Reader;
 import java.net.URL;
 
 public class JSONUtilities {
+
+    private static final String TAG = "JSONUtilities";
 
     /**
      *  getUrlBody() takes a website and puts all its contents into a String format. Used for JSON
@@ -71,7 +74,7 @@ public class JSONUtilities {
 
                 controller.setResources(jsonArray);
             } catch (Exception e) {
-                e.printStackTrace();
+                Log.e(TAG, e.getMessage());
                 controller.setResources(null);
             }
 

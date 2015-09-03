@@ -2,6 +2,7 @@ package com.asuc.asucmobile.controllers;
 
 import android.app.Activity;
 import android.content.Context;
+import android.util.Log;
 
 import com.asuc.asucmobile.models.DiningHall;
 import com.asuc.asucmobile.models.FoodItem;
@@ -18,6 +19,8 @@ import java.util.Locale;
 import java.util.TimeZone;
 
 public class DiningController implements Controller {
+
+    private static final String TAG = "DiningController";
 
     private static final String URL = BASE_URL + "/dining_halls";
     private static final SimpleDateFormat DATE_FORMAT =
@@ -43,7 +46,7 @@ public class DiningController implements Controller {
     }
 
     public DiningController() {
-        diningHalls = new ArrayList<DiningHall>();
+        diningHalls = new ArrayList<>();
     }
 
     @Override
@@ -74,7 +77,7 @@ public class DiningController implements Controller {
                         String name = diningHall.getString("name");
 
                         JSONArray breakfastJSON = diningHall.getJSONArray("breakfast_menu");
-                        ArrayList<FoodItem> breakfastMenu = new ArrayList<FoodItem>();
+                        ArrayList<FoodItem> breakfastMenu = new ArrayList<>();
                         for (int j = 0; j < breakfastJSON.length(); j++) {
                             JSONObject foodJSON = breakfastJSON.getJSONObject(j);
                             breakfastMenu.add(new FoodItem(
@@ -86,7 +89,7 @@ public class DiningController implements Controller {
                         }
 
                         JSONArray lunchJSON = diningHall.getJSONArray("lunch_menu");
-                        ArrayList<FoodItem> lunchMenu = new ArrayList<FoodItem>();
+                        ArrayList<FoodItem> lunchMenu = new ArrayList<>();
                         for (int j = 0; j < lunchJSON.length(); j++) {
                             JSONObject foodJSON = lunchJSON.getJSONObject(j);
                             lunchMenu.add(new FoodItem(
@@ -98,7 +101,7 @@ public class DiningController implements Controller {
                         }
 
                         JSONArray dinnerJSON = diningHall.getJSONArray("dinner_menu");
-                        ArrayList<FoodItem> dinnerMenu = new ArrayList<FoodItem>();
+                        ArrayList<FoodItem> dinnerMenu = new ArrayList<>();
                         for (int j = 0; j < dinnerJSON.length(); j++) {
                             JSONObject foodJSON = dinnerJSON.getJSONObject(j);
                             dinnerMenu.add(new FoodItem(
@@ -169,7 +172,7 @@ public class DiningController implements Controller {
                         }
                     });
                 } catch (Exception e) {
-                    e.printStackTrace();
+                    Log.e(TAG, e.getMessage());
                     ((Activity) context).runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
