@@ -75,6 +75,8 @@ public class OpenRouteActivity extends AppCompatActivity {
     public void onResume() {
         super.onResume();
 
+        FlurryAgent.logEvent("Opened BearTransit Route");
+
         route = ((RouteController) RouteController.getInstance(this)).getCurrentRoute();
         if (route == null) {
             finish();
