@@ -52,13 +52,15 @@ public class FoodAdapter extends BaseAdapter {
 
         foodName.setText(foodItem.getName());
 
-        if (!foodItem.getFoodType().equals("None")) {
+        if (!foodItem.getFoodType().equals("None") && !foodItem.getFoodType().equals(null) && !foodItem.getFoodType().equals("null")) {
             foodType.setText(foodItem.getFoodType().toUpperCase());
         } else {
             foodType.setText("");
         }
 
-        if (foodItem.getCalories().equals("null")) {
+        if (!foodItem.getCost().equals("$NaN")) {
+            foodCalories.setText(foodItem.getCost());
+        } else if (foodItem.getCalories().equals("null")) {
             foodCalories.setText("");
         } else {
             foodCalories.setText(foodItem.getCalories() + " cal");

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <declare-styleable name="ParallaxScroll"><attr format="float" name="parallax_factor"/><attr format="float" name="alpha_factor"/><attr format="float" name="inner_parallax_factor"/><attr format="integer" name="parallax_views_num"/><attr format="boolean" name="circular_parallax"/></declare-styleable>
-    <!-- From: file:/Users/alex/Development/ASUC-Android/ParallaxScroll/res/values/about_libraries_def.xml -->
+    <!-- From: file:/E:/Eclipse%20workspace/ASUC-Android/ParallaxScroll/res/values/about_libraries_def.xml -->
     <eat-comment/>
     <string name="define_parallaxscroll"/>
     <string name="library_parallaxscroll_author">Nir Hartmann</string>
