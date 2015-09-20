@@ -23,12 +23,16 @@ import com.nirhart.parallaxscroll.views.ParallaxListView;
 import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Calendar;
 import java.util.Locale;
 
 public class MenuFragment extends Fragment {
 
     private static final SimpleDateFormat HOURS_FORMAT =
             new SimpleDateFormat("h:mm a", Locale.ENGLISH);
+    private static final String LATE_NIGHT_OPEN = "10:00 PM";
+    private static final String LATE_NIGHT_CLOSE = "2:00 AM";
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -70,6 +74,30 @@ public class MenuFragment extends Fragment {
                         closing = HOURS_FORMAT.format(diningHall.getLunchClosing());
                         isOpen = diningHall.isLunchOpen();
                         break;
+                    case "Late Night":
+                        /*
+                            A solution to get around the lack of late night hours--is it the right day of
+                            the week for late night?
+                         */
+                        Calendar calendar = Calendar.getInstance();
+                        int[] daysWithLateNight = {1, 2, 3, 4, 5};
+                        if (Arrays.asList(daysWithLateNight).contains((calendar.get(Calendar.DAY_OF_WEEK)))) {
+                            foodItems = diningHall.getLateNightMenu();
+                        } else {
+                            foodItems = null;
+                        }
+                        if (diningHall.getLateNightOpening() != null) {
+                            opening = HOURS_FORMAT.format(diningHall.getLateNightOpening());
+                        } else {
+                            opening = LATE_NIGHT_OPEN;
+                        }
+                        if (diningHall.getLateNightClosing() != null) {
+                            closing = HOURS_FORMAT.format(diningHall.getLateNightClosing());
+                        } else {
+                            closing = LATE_NIGHT_CLOSE;
+                        }
+                        isOpen = diningHall.isLateNightOpen();
+                        break;
                     default:
                         foodItems = diningHall.getDinnerMenu();
                         opening = HOURS_FORMAT.format(diningHall.getDinnerOpening());
@@ -77,7 +105,7 @@ public class MenuFragment extends Fragment {
                         isOpen = diningHall.isDinnerOpen();
                 }
 
-                if (foodItems.size() == 0) {
+                if (foodItems == null || foodItems.size() == 0) {
                     emptyListView.setText("No " + whichMenu + " Today!");
 
                     foodMenu.setVisibility(View.GONE);
@@ -103,17 +131,15 @@ public class MenuFragment extends Fragment {
                                 SpannableString.SPAN_INCLUSIVE_EXCLUSIVE
                         );
                     }
-
                     header.setText(spannableHeader);
-
                     FoodAdapter adapter = new FoodAdapter(getActivity(), foodItems);
                     foodMenu.setAdapter(adapter);
+
                     foodMenu.addParallaxedHeaderView(header);
                 }
             }
         } catch (Exception e) { // Catch a null exception, meaning that there is no menu for this time slot.
             emptyListView.setText("No " + whichMenu + " Today!");
-
             foodMenu.setVisibility(View.GONE);
             emptyListView.setVisibility(View.VISIBLE);
         }

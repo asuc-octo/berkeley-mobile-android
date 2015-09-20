@@ -1,6 +1,8 @@
 package com.asuc.asucmobile.models;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Calendar;
 import java.util.Date;
 
 public class DiningHall {
@@ -10,29 +12,35 @@ public class DiningHall {
     private ArrayList<FoodItem> breakfastMenu;
     private ArrayList<FoodItem> lunchMenu;
     private ArrayList<FoodItem> dinnerMenu;
+    private ArrayList<FoodItem> lateNightMenu;
     private Date breakfastOpen;
     private Date breakfastClose;
     private Date lunchOpen;
     private Date lunchClose;
     private Date dinnerOpen;
     private Date dinnerClose;
+    private Date lateNightOpen;
+    private Date lateNightClose;
     private String imageUrl;
 
     public DiningHall(String id, String name, ArrayList<FoodItem> breakfastMenu,
-                      ArrayList<FoodItem> lunchMenu, ArrayList<FoodItem> dinnerMenu,
+                      ArrayList<FoodItem> lunchMenu, ArrayList<FoodItem> dinnerMenu, ArrayList<FoodItem> lateNightMenu,
                       Date breakfastOpen, Date breakfastClose, Date lunchOpen, Date lunchClose,
-                      Date dinnerOpen, Date dinnerClose, String imageUrl) {
+                      Date dinnerOpen, Date dinnerClose, Date lateNightOpen, Date lateNightClose, String imageUrl) {
         this.id = id;
         this.name = name;
         this.breakfastMenu = breakfastMenu;
         this.lunchMenu = lunchMenu;
         this.dinnerMenu = dinnerMenu;
+        this.lateNightMenu = lateNightMenu;
         this.breakfastOpen = breakfastOpen;
         this.breakfastClose = breakfastClose;
         this.lunchOpen = lunchOpen;
         this.lunchClose = lunchClose;
         this.dinnerOpen = dinnerOpen;
         this.dinnerClose = dinnerClose;
+        this.lateNightOpen = lateNightOpen;
+        this.lateNightClose = lateNightClose;
         this.imageUrl = imageUrl;
     }
 
@@ -54,6 +62,10 @@ public class DiningHall {
 
     public ArrayList<FoodItem> getDinnerMenu() {
         return dinnerMenu;
+    }
+
+    public ArrayList<FoodItem> getLateNightMenu() {
+        return lateNightMenu;
     }
 
     public String getImageUrl() {
@@ -82,6 +94,14 @@ public class DiningHall {
 
     public Date getDinnerClosing() {
         return dinnerClose;
+    }
+
+    public Date getLateNightOpening() {
+        return lateNightOpen;
+    }
+
+    public Date getLateNightClosing() {
+        return lateNightClose;
     }
 
     /**
@@ -115,6 +135,26 @@ public class DiningHall {
 
         Date currentTime = new Date();
         return currentTime.after(dinnerOpen) && currentTime.before(dinnerClose);
+    }
+
+    public boolean isLateNightOpen() {
+        if (lateNightOpen == null || lateNightClose == null) {
+            return false;
+        }
+
+        Date currentTime = new Date();
+
+        /*
+            A solution to get around the lack of late night hours--is it the right day of
+            the week for late night?
+         */
+        Calendar calendar = Calendar.getInstance();
+        int[] daysWithLateNight = {1, 2, 3, 4, 5};
+        if (!Arrays.asList(daysWithLateNight).contains((calendar.get(Calendar.DAY_OF_WEEK)))) {
+            return false;
+        }
+
+        return currentTime.after(lateNightOpen) || currentTime.before(lateNightClose);
     }
 
 }
