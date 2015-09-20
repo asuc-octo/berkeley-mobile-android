@@ -14,6 +14,7 @@ import org.json.JSONObject;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.Locale;
 import java.util.TimeZone;
@@ -26,6 +27,10 @@ public class DiningController implements Controller {
     private static final SimpleDateFormat DATE_FORMAT =
             new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.ENGLISH);
     private static final TimeZone PST = TimeZone.getTimeZone("America/Los_Angeles");
+
+    private static final String[] HAS_LATE_NIGHT = {"Crossroads","Foothill"};
+    private static final String LATE_NIGHT_OPEN = "2100-01-01T06:00:00.000Z";
+    private static final String LATE_NIGHT_CLOSE = "2100-01-01T10:00:00.000Z";
 
     private static DiningController instance;
 
@@ -84,7 +89,8 @@ public class DiningController implements Controller {
                                     foodJSON.getString("id"),
                                     foodJSON.getString("name"),
                                     foodJSON.getString("food_type"),
-                                    foodJSON.getString("calories")
+                                    foodJSON.getString("calories"),
+                                    foodJSON.optDouble("cost")
                             ));
                         }
 
@@ -96,7 +102,8 @@ public class DiningController implements Controller {
                                     foodJSON.getString("id"),
                                     foodJSON.getString("name"),
                                     foodJSON.getString("food_type"),
-                                    foodJSON.getString("calories")
+                                    foodJSON.getString("calories"),
+                                    foodJSON.optDouble("cost")
                             ));
                         }
 
@@ -108,8 +115,31 @@ public class DiningController implements Controller {
                                     foodJSON.getString("id"),
                                     foodJSON.getString("name"),
                                     foodJSON.getString("food_type"),
-                                    foodJSON.getString("calories")
+                                    foodJSON.getString("calories"),
+                                    foodJSON.optDouble("cost")
                             ));
+                        }
+
+                        /*
+                          Late night is treated specially. Because dining halls without Late Night
+                          have its menu as "null" rather than an empty list, we first ask if the
+                          dining hall has late night, and then apply the appropriate actions.
+                         */
+                        ArrayList<FoodItem> lateNightMenu = new ArrayList<>();
+                        if (Arrays.asList(HAS_LATE_NIGHT).contains(name)) {
+                            JSONArray lateNightJSON = diningHall.getJSONArray("late_night_menu");
+                            for (int j = 0; j < lateNightJSON.length(); j++) {
+                                JSONObject foodJSON = lateNightJSON.getJSONObject(j);
+                                lateNightMenu.add(new FoodItem(
+                                        foodJSON.getString("id"),
+                                        foodJSON.getString("name"),
+                                        foodJSON.getString("food_type"),
+                                        foodJSON.getString("calories"),
+                                        foodJSON.optDouble("cost")
+                                ));
+                            }
+                        } else {
+
                         }
 
                         long tmpDate;
@@ -156,12 +186,35 @@ public class DiningController implements Controller {
                             dinnerClosing = new Date(tmpDate + PST.getOffset(tmpDate));
                         }
 
+                        /*
+                            Right now, late night hours are simply set to null, so we determine
+                            whether Late Night is open by whether or not it has a menu.
+                         */
+                        if (lateNightMenu != null && lateNightMenu.size() > 0) {
+                            openingString = LATE_NIGHT_OPEN;
+                            closingString = LATE_NIGHT_CLOSE;
+                        } else {
+                            openingString = diningHall.getString("late_night_open");
+                            closingString = diningHall.getString("late_night_close");
+                        }
+
+                        Date lateNightOpening = null;
+                        Date lateNightClosing = null;
+                        if (!openingString.equals("null")) {
+                            tmpDate = DATE_FORMAT.parse(openingString).getTime();
+                            lateNightOpening = new Date(tmpDate + PST.getOffset(tmpDate));
+                        }
+                        if (!closingString.equals("null")) {
+                            tmpDate = DATE_FORMAT.parse(closingString).getTime();
+                            lateNightClosing = new Date(tmpDate + PST.getOffset(tmpDate));
+                        }
+
                         String imageUrl = diningHall.getString("image_link");
 
                         diningHalls.add(new DiningHall(
-                                id, name, breakfastMenu, lunchMenu, dinnerMenu, breakfastOpening,
+                                id, name, breakfastMenu, lunchMenu, dinnerMenu, lateNightMenu, breakfastOpening,
                                 breakfastClosing, lunchOpening, lunchClosing, dinnerOpening,
-                                dinnerClosing, imageUrl
+                                dinnerClosing, lateNightOpening, lateNightClosing, imageUrl
                         ));
                     }
 
