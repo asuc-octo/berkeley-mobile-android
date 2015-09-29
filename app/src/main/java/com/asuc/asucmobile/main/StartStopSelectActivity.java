@@ -1,25 +1,23 @@
 package com.asuc.asucmobile.main;
 
+import android.content.Context;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
-import android.widget.ArrayAdapter;
-import android.widget.AutoCompleteTextView;
-import android.widget.Toast;
 
 import com.asuc.asucmobile.R;
 import com.asuc.asucmobile.adapters.StopAdapter;
-import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.OnMapReadyCallback;
 
 public class StartStopSelectActivity extends AppCompatActivity
     implements OnMapReadyCallback {
+
+    private static final int START_INT = 1;
+    private static final int END_INT = 2;
 
     private MapFragment mapFragment;
     private StopAdapter mAdapter;
@@ -39,42 +37,25 @@ public class StartStopSelectActivity extends AppCompatActivity
         });
         mapFragment = (MapFragment) getFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
-        AutoCompleteTextView startLoc = (AutoCompleteTextView)
-                findViewById(R.id.startLoc);
-        AutoCompleteTextView endLoc = (AutoCompleteTextView)
-                findViewById(R.id.endLoc);
-//        mAdapter = new StopAdapter(this, 0, 0);
-//        startLoc.setAdapter(mAdapter);
-//        endLoc.setAdapter(mAdapter);
-
-        final String[] COUNTRIES = new String[] {
-                "Belgium", "France", "Italy", "Germany", "Spain"
-        };
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
-                android.R.layout.simple_dropdown_item_1line, COUNTRIES);
-        startLoc.setAdapter(adapter);
+        View startButton = findViewById(R.id.select_start);
+        View endButton =  findViewById(R.id.select_end);
+        final Context context = getApplicationContext();
+        startButton.setOnClickListener(new StartStopListener(START_INT, context));
+        endButton.setOnClickListener(new StartStopListener(END_INT, context));
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_start_stop_select, menu);
-        return true;
-    }
+    private class StartStopListener implements View.OnClickListener {
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
+        private int typeRequest;
+        private Context context;
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+        public StartStopListener(int typeRequest, Context context) {
+            this.typeRequest = typeRequest;
         }
-
-        return super.onOptionsItemSelected(item);
+        @Override
+        public void onClick(View view) {
+            startActivityForResult(new Intent(context, ListStartStopActivity.class), typeRequest);
+        }
     }
 
     @Override
