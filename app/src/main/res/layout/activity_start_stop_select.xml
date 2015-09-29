@@ -80,7 +80,7 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
-        app:backgroundTint="@color/ASUC_blue" />
+        app:backgroundTint="@color/two_chainz_gold" />
 
     <fragment
         android:name="com.google.android.gms.maps.MapFragment"

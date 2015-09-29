@@ -2,9 +2,8 @@ package com.asuc.asucmobile.main;
 
 import android.content.Context;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.Toolbar;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
 import com.asuc.asucmobile.R;
@@ -26,19 +25,11 @@ public class StartStopSelectActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_start_stop_select);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        toolbar.setNavigationIcon(getResources().getDrawable(R.drawable.ic_action_back));
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                finish();
-            }
-        });
+
         mapFragment = (MapFragment) getFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
         View startButton = findViewById(R.id.select_start);
-        View endButton =  findViewById(R.id.select_end);
+        View endButton =  findViewById(R.id.select_dest);
         final Context context = getApplicationContext();
         startButton.setOnClickListener(new StartStopListener(START_INT, context));
         endButton.setOnClickListener(new StartStopListener(END_INT, context));
