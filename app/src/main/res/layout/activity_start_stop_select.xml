@@ -24,7 +24,7 @@
                 android:layout_width="64dp"
                 android:layout_height="64dp"
                 android:layout_gravity="center"
-                android:background="@android:color/transparent"
+                android:background="?android:attr/selectableItemBackground"
                 android:src="@drawable/ic_action_back"
                 android:contentDescription="@string/content_desc" />
 
@@ -42,31 +42,35 @@
                 android:layout_height="wrap_content"
                 android:text="@string/from" />
 
-            <Button
+            <ImageButton
                 android:id="@+id/select_start"
                 android:layout_width="match_parent"
-                android:layout_height="40dp"
+                android:layout_height="36dp"
                 android:layout_marginBottom="16dp"
                 android:paddingLeft="8dp"
                 android:paddingRight="8dp"
                 android:gravity="start|center"
+                android:textColor="@color/grizzly_gray"
+                android:src="?android:attr/selectableItemBackground"
                 android:background="@color/pavan_light"
-                android:elevation="8dp" />
+                android:contentDescription="@string/content_desc" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/to" />
 
-            <Button
+            <ImageButton
                 android:id="@+id/select_dest"
                 android:layout_width="match_parent"
-                android:layout_height="40dp"
+                android:layout_height="36dp"
                 android:paddingLeft="8dp"
                 android:paddingRight="8dp"
                 android:gravity="start|center"
+                android:textColor="@color/grizzly_gray"
+                android:src="?android:attr/selectableItemBackground"
                 android:background="@color/pavan_light"
-                android:elevation="8dp" />
+                android:contentDescription="@string/content_desc" />
 
         </LinearLayout>
 
