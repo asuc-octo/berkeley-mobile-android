@@ -14,7 +14,7 @@
 
     <uses-feature
         android:glEsVersion="0x00020000"
-        android:required="true"/>
+        android:required="true" />
 
     <application
         android:allowBackup="true"
@@ -89,6 +89,10 @@
         <activity
             android:name=".main.StartStopSelectActivity"
             android:label="@string/title_activity_start_stop_select" >
+        </activity>
+        <activity
+            android:name=".main.ListStartStopActivity"
+            android:label="@string/title_activity_list_start_stop" >
         </activity>
     </application>
 
