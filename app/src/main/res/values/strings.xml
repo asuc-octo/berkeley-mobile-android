@@ -24,8 +24,7 @@
     <string name="no_routes">No routes available</string>
     <string name="full">Full</string>
     <string name="title_activity_start_stop_select">StartStopSelectActivity</string>
-
-    <string name="hello_world">Hello world!</string>
-    <string name="action_settings">Settings</string>
+    <string name="from">From</string>
+    <string name="to">To</string>
 
 </resources>
