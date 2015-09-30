@@ -42,7 +42,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/from" />
 
-            <ImageButton
+            <Button
                 android:id="@+id/select_start"
                 android:layout_width="match_parent"
                 android:layout_height="36dp"
@@ -51,16 +51,14 @@
                 android:paddingRight="8dp"
                 android:gravity="start|center"
                 android:textColor="@color/grizzly_gray"
-                android:src="?android:attr/selectableItemBackground"
-                android:background="@color/pavan_light"
-                android:contentDescription="@string/content_desc" />
+                android:background="@color/pavan_light" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/to" />
 
-            <ImageButton
+            <Button
                 android:id="@+id/select_dest"
                 android:layout_width="match_parent"
                 android:layout_height="36dp"
@@ -68,9 +66,7 @@
                 android:paddingRight="8dp"
                 android:gravity="start|center"
                 android:textColor="@color/grizzly_gray"
-                android:src="?android:attr/selectableItemBackground"
-                android:background="@color/pavan_light"
-                android:contentDescription="@string/content_desc" />
+                android:background="@color/pavan_light" />
 
         </LinearLayout>
 
