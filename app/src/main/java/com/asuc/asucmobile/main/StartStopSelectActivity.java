@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageButton;
 
 import com.asuc.asucmobile.R;
@@ -25,8 +26,8 @@ public class StartStopSelectActivity extends AppCompatActivity
     private static final int END_INT = 2;
 
     private MapFragment mapFragment;
-    private ImageButton startButton;
-    private ImageButton endButton;
+    private Button startButton;
+    private Button endButton;
 
     private Stop startStop;
     private Stop endStop;
@@ -38,8 +39,8 @@ public class StartStopSelectActivity extends AppCompatActivity
 
         mapFragment = (MapFragment) getFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
-        startButton = (ImageButton) findViewById(R.id.select_start);
-        endButton =  (ImageButton) findViewById(R.id.select_dest);
+        startButton = (Button) findViewById(R.id.select_start);
+        endButton =  (Button) findViewById(R.id.select_dest);
         final Context context = getApplicationContext();
         startButton.setOnClickListener(new StartStopListener(START_INT, context));
         endButton.setOnClickListener(new StartStopListener(END_INT, context));
