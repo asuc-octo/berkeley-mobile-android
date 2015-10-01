@@ -41,10 +41,14 @@ public class StartStopSelectActivity extends AppCompatActivity
         mapFragment.getMapAsync(this);
         startButton = (Button) findViewById(R.id.select_start);
         endButton =  (Button) findViewById(R.id.select_dest);
+        FloatingActionButton navigateButton = (FloatingActionButton) findViewById(R.id.navigate_button);
+
+        navigateButton.setImageDrawable(getResources().getDrawable(R.drawable.ic_navigation, null));
+
         final Context context = getApplicationContext();
         startButton.setOnClickListener(new StartStopListener(START_INT, context));
         endButton.setOnClickListener(new StartStopListener(END_INT, context));
-        FloatingActionButton navigateButton = (FloatingActionButton) findViewById(R.id.navigate_button);
+
         navigateButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
