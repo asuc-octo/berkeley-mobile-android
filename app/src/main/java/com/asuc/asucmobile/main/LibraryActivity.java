@@ -1,10 +1,16 @@
 package com.asuc.asucmobile.main;
 
+import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
+import android.util.AttributeSet;
+import android.view.InflateException;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -15,6 +21,7 @@ import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.asuc.asucmobile.R;
@@ -24,7 +31,11 @@ import com.asuc.asucmobile.models.Library;
 import com.asuc.asucmobile.utilities.Callback;
 import com.flurry.android.FlurryAgent;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -95,11 +106,59 @@ public class LibraryActivity extends AppCompatActivity {
     }
 
     @Override
+    public boolean onOptionsItemSelected(MenuItem menuItem) {
+        Comparator<Library> sortByAZ = new Comparator<Library>() {
+            public int compare(Library arg0, Library arg1) {
+                return arg0.getName().compareTo(arg1.getName());
+            }
+        };
+        Comparator<Library> sortByZA = new Comparator<Library>() {
+            public int compare(Library arg0, Library arg1) {
+                return -1 * arg0.getName().compareTo(arg1.getName());
+            }
+        };
+        Comparator<Library> sortByOpenness = new Comparator<Library>() {
+            public int compare(Library arg0, Library arg1) {
+                if (arg0.isOpen() && arg1.isOpen()) return 0;
+                if (arg0.isOpen()) return -1;
+                if (arg1.isOpen()) return 1;
+                return 0;
+            }
+        };
+
+        switch (menuItem.getItemId()){
+            case R.id.sortAZ:
+                Collections.sort(mAdapter.getLibraries(), sortByAZ);
+                mAdapter.notifyDataSetChanged();
+                break;
+            case R.id.sortZA:
+                Collections.sort(mAdapter.getLibraries(), sortByZA);
+                mAdapter.notifyDataSetChanged();
+                break;
+            case R.id.sortOpen:
+                Collections.sort(mAdapter.getLibraries(), sortByOpenness);
+                mAdapter.notifyDataSetChanged();
+                break;
+        }
+        return true;
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+
+        //Flurry logging for pressing the Back Button
+        FlurryAgent.logEvent("Tapped on the Back Button (Libraries)");
+    }
+
+    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
+
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.library, menu);
 
         final MenuItem searchMenuItem = menu.findItem(R.id.search);
+
         if (searchMenuItem != null) {
             final SearchView searchView = (SearchView) searchMenuItem.getActionView();
             if (searchView != null) {
@@ -129,14 +188,6 @@ public class LibraryActivity extends AppCompatActivity {
         }
 
         return true;
-    }
-
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-
-        //Flurry logging for pressing the Back Button
-        FlurryAgent.logEvent("Tapped on the Back Button (Libraries)");
     }
 
     /**
