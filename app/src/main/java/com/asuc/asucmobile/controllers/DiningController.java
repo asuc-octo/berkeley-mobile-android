@@ -186,17 +186,8 @@ public class DiningController implements Controller {
                             dinnerClosing = new Date(tmpDate + PST.getOffset(tmpDate));
                         }
 
-                        /*
-                            Right now, late night hours are simply set to null, so we determine
-                            whether Late Night is open by whether or not it has a menu.
-                         */
-                        if (lateNightMenu != null && lateNightMenu.size() > 0) {
-                            openingString = LATE_NIGHT_OPEN;
-                            closingString = LATE_NIGHT_CLOSE;
-                        } else {
-                            openingString = diningHall.getString("late_night_open");
-                            closingString = diningHall.getString("late_night_close");
-                        }
+                        openingString = diningHall.getString("late_night_open");
+                        closingString = diningHall.getString("late_night_close");
 
                         Date lateNightOpening = null;
                         Date lateNightClosing = null;
