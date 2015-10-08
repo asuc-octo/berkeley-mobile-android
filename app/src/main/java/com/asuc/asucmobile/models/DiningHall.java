@@ -1,8 +1,6 @@
 package com.asuc.asucmobile.models;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Calendar;
 import java.util.Date;
 
 public class DiningHall {
@@ -143,17 +141,6 @@ public class DiningHall {
         }
 
         Date currentTime = new Date();
-
-        /*
-            A solution to get around the lack of late night hours--is it the right day of
-            the week for late night?
-         */
-        Calendar calendar = Calendar.getInstance();
-        int[] daysWithLateNight = {1, 2, 3, 4, 5};
-        if (!Arrays.asList(daysWithLateNight).contains((calendar.get(Calendar.DAY_OF_WEEK)))) {
-            return false;
-        }
-
         return currentTime.after(lateNightOpen) || currentTime.before(lateNightClose);
     }
 
