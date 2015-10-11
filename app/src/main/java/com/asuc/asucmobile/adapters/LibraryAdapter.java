@@ -41,6 +41,11 @@ public class LibraryAdapter extends BaseAdapter {
         return i;
     }
 
+    public ArrayList<Library> getLibraries() {
+        return libraries;
+    }
+
+
     @Override
     public View getView(int i, View convertView, ViewGroup parent) {
         Library library = getItem(i);
