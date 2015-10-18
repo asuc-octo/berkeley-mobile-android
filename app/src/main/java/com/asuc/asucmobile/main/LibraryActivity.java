@@ -8,6 +8,7 @@ import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
+import android.text.Html;
 import android.util.AttributeSet;
 import android.view.InflateException;
 import android.view.LayoutInflater;
@@ -53,7 +54,9 @@ public class LibraryActivity extends AppCompatActivity {
         FlurryAgent.onStartSession(this, "4VPTT49FCCKH7Z2NVQ26");
 
         setContentView(R.layout.activity_library);
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar.setTitleTextColor(getResources().getColor(R.color.off_white));
         setSupportActionBar(toolbar);
         toolbar.setNavigationIcon(getResources().getDrawable(R.drawable.ic_action_back));
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
@@ -62,6 +65,8 @@ public class LibraryActivity extends AppCompatActivity {
                 finish();
             }
         });
+
+
 
         ImageButton refreshButton = (ImageButton) findViewById(R.id.refresh_button);
 

@@ -1,10 +1,11 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.NoActionBar">
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="android:colorPrimary">@color/ASUC_blue</item>
         <item name="android:colorPrimaryDark">@color/OP_navy</item>
         <item name="android:windowBackground">@android:color/white</item>
+        <item name="android:listDivider">@null</item>
     </style>
 
 </resources>
