@@ -23,7 +23,6 @@ import com.nirhart.parallaxscroll.views.ParallaxListView;
 import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Locale;
 
@@ -81,7 +80,7 @@ public class MenuFragment extends Fragment {
                          */
                         Calendar calendar = Calendar.getInstance();
                         int[] daysWithLateNight = {1, 2, 3, 4, 5};
-                        if (Arrays.asList(daysWithLateNight).contains((calendar.get(Calendar.DAY_OF_WEEK)))) {
+                        if (diningHall.lateNightToday()) {
                             foodItems = diningHall.getLateNightMenu();
                         } else {
                             foodItems = null;

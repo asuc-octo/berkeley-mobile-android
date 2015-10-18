@@ -144,4 +144,10 @@ public class DiningHall {
         return currentTime.after(lateNightOpen) || currentTime.before(lateNightClose);
     }
 
+    public boolean lateNightToday() {
+        return lateNightOpen != null && lateNightClose != null;
+
+        //Arrays.asList(daysWithLateNight).contains((calendar.get(Calendar.DAY_OF_WEEK)))
+    }
+
 }
