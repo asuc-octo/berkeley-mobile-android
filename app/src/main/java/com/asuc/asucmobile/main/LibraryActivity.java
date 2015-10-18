@@ -30,6 +30,7 @@ import com.asuc.asucmobile.adapters.LibraryAdapter;
 import com.asuc.asucmobile.controllers.LibraryController;
 import com.asuc.asucmobile.models.Library;
 import com.asuc.asucmobile.utilities.Callback;
+import com.asuc.asucmobile.utilities.CustomComparators;
 import com.flurry.android.FlurryAgent;
 
 import java.lang.reflect.Constructor;
@@ -112,36 +113,18 @@ public class LibraryActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem menuItem) {
-        Comparator<Library> sortByAZ = new Comparator<Library>() {
-            public int compare(Library arg0, Library arg1) {
-                return arg0.getName().compareTo(arg1.getName());
-            }
-        };
-        Comparator<Library> sortByZA = new Comparator<Library>() {
-            public int compare(Library arg0, Library arg1) {
-                return -1 * arg0.getName().compareTo(arg1.getName());
-            }
-        };
-        Comparator<Library> sortByOpenness = new Comparator<Library>() {
-            public int compare(Library arg0, Library arg1) {
-                if (arg0.isOpen() && arg1.isOpen()) return 0;
-                if (arg0.isOpen()) return -1;
-                if (arg1.isOpen()) return 1;
-                return 0;
-            }
-        };
 
         switch (menuItem.getItemId()){
             case R.id.sortAZ:
-                Collections.sort(mAdapter.getLibraries(), sortByAZ);
+                Collections.sort(mAdapter.getLibraries(), CustomComparators.FacilityComparators.getSortByAZ());
                 mAdapter.notifyDataSetChanged();
                 break;
             case R.id.sortZA:
-                Collections.sort(mAdapter.getLibraries(), sortByZA);
+                Collections.sort(mAdapter.getLibraries(), CustomComparators.FacilityComparators.getSortByZA());
                 mAdapter.notifyDataSetChanged();
                 break;
             case R.id.sortOpen:
-                Collections.sort(mAdapter.getLibraries(), sortByOpenness);
+                Collections.sort(mAdapter.getLibraries(), CustomComparators.FacilityComparators.getSortByOpenness());
                 mAdapter.notifyDataSetChanged();
                 break;
         }
