@@ -10,6 +10,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.HorizontalScrollView;
+import android.widget.ScrollView;
 
 import com.asuc.asucmobile.R;
 import com.asuc.asucmobile.controllers.DiningController;
@@ -24,12 +26,25 @@ public class OpenDiningHallActivity extends AppCompatActivity {
 
     private DiningHall diningHall;
     private static final String[] HAS_LATE_NIGHT = {"Crossroads","Foothill"};
+    //final HorizontalScrollView scrollview = (HorizontalScrollView) this.findViewById(R.id.hsv);
+    HorizontalScrollView scrollview;
+    //private SectionsPagerAdapter mSPA;
+    //ViewPager mViewPager;
 
     @Override
     @SuppressWarnings("deprecation")
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         FlurryAgent.onStartSession(this, "4VPTT49FCCKH7Z2NVQ26");
+        //scrollview = ((HorizontalScrollView) findViewById(R.id.hsv));
+//        //FragmentActivity FA = new FragmentActivity;
+//        mSPA = new SectionsPagerAdapter(this.getFragmentManager());
+//
+//        // Set up the ViewPager with the sections adapter.
+//        mViewPager = (ViewPager) findViewById(R.id.pager);
+//        mViewPager.setAdapter(mSPA);
+
+
 
         diningHall = ((DiningController) DiningController.getInstance(this)).getCurrentDiningHall();
         if (diningHall == null) {
@@ -48,6 +63,7 @@ public class OpenDiningHallActivity extends AppCompatActivity {
                 finish();
             }
         });
+        scrollview = (HorizontalScrollView) this.findViewById(R.id.hsv);
 
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
@@ -64,13 +80,61 @@ public class OpenDiningHallActivity extends AppCompatActivity {
 
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setTabsFromPagerAdapter(pagerAdapter);
-        viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
+        viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout) {
+            public void onPageSelected(int position) {
+                // Check if this is the page you want.
+                System.out.println(position);
+                switch (position) {
+                    case 0:
+                        scrollview.post(new Runnable() {
+                            @Override
+                            public void run() {
+                                scrollview.fullScroll(ScrollView.FOCUS_LEFT);
+                                //scrollview.scrollTo(2,0);
+                            }
+                        });
+                    case 1:
+                        scrollview.post(new Runnable() {
+                            @Override
+                            public void run() {
+                                scrollview.fullScroll(ScrollView.FOCUS_LEFT);
+                                //scrollview.scrollTo(2,0);
+                            }
+                        });
+                    case 2:
+                        scrollview.post(new Runnable() {
+                            @Override
+                            public void run() {
+                                scrollview.fullScroll(ScrollView.FOCUS_RIGHT);
+                                //scrollview.scrollTo(2,0);
+                            }
+                        });
+                    case 3:
+                        scrollview.post(new Runnable() {
+                            @Override
+                            public void run() {
+                                scrollview.fullScroll(ScrollView.FOCUS_RIGHT);
+                                //scrollview.scrollTo(2,0);
+                            }
+                        });
+                    default:
+
+                }
+            }
+        });
         tabLayout.setOnTabSelectedListener(new TabLayout.ViewPagerOnTabSelectedListener(viewPager));
+
 
         Date currentTime = new Date();
         if (diningHall.isLateNightOpen() ||
                 (diningHall.getDinnerClosing() != null && currentTime.after(diningHall.getDinnerClosing()))) {
             viewPager.setCurrentItem(3);
+            scrollview.post(new Runnable() {
+                @Override
+                public void run() {
+                    scrollview.fullScroll(ScrollView.FOCUS_RIGHT);
+                }
+            });
         } else if (diningHall.isDinnerOpen() ||
                 (diningHall.getLunchClosing() != null && currentTime.after(diningHall.getLunchClosing())) ||
                 (diningHall.getDinnerClosing() != null && currentTime.after(diningHall.getDinnerClosing()))) {
@@ -132,15 +196,43 @@ public class OpenDiningHallActivity extends AppCompatActivity {
                 switch (position) {
                     case 0:
                         bundle.putString("whichMenu", "Breakfast");
+                        scrollview.post(new Runnable() {
+                            @Override
+                            public void run() {
+                                scrollview.fullScroll(ScrollView.FOCUS_LEFT);
+                                //scrollview.scrollTo(1,0);
+                            }
+                        });
                         break;
                     case 1:
                         bundle.putString("whichMenu", "Lunch");
+                        scrollview.post(new Runnable() {
+                            @Override
+                            public void run() {
+                                scrollview.fullScroll(ScrollView.FOCUS_LEFT);
+                                //scrollview.scrollTo(2,0);
+                            }
+                        });
                         break;
                     case 2:
                         bundle.putString("whichMenu", "Dinner");
+                        scrollview.post(new Runnable() {
+                            @Override
+                            public void run() {
+                                scrollview.fullScroll(ScrollView.FOCUS_RIGHT);
+                                //scrollview.scrollTo(3,0);
+                            }
+                        });
                         break;
                     case 3:
                         bundle.putString("whichMenu", "Late Night");
+                        scrollview.post(new Runnable() {
+                            @Override
+                            public void run() {
+                                scrollview.fullScroll(ScrollView.FOCUS_RIGHT);
+                                //scrollview.scrollTo(4,0);
+                            }
+                        });
                         break;
                     default:
                         return null;
@@ -177,28 +269,29 @@ public class OpenDiningHallActivity extends AppCompatActivity {
 
         @Override
         public CharSequence getPageTitle(int position) {
+            //Locale l = Locale.getDefault();
             /*
                 Only set up a Late Night option if it exists.
              */
             if (Arrays.asList(HAS_LATE_NIGHT).contains(diningHall.getName())) {
                 switch (position) {
                     case 0:
-                        return "Breakfast";
+                        return "     Breakfast     ";
                     case 1:
-                        return "Lunch";
+                        return "     Lunch     ";
                     case 2:
-                        return "Dinner";
+                        return "     Dinner     ";
                     case 3:
-                        return "Late Night";
+                        return "     Late Night     ";
                 }
             } else {
                 switch (position) {
                     case 0:
-                        return "Breakfast";
+                        return "     Breakfast     ";
                     case 1:
-                        return "Lunch";
+                        return "     Lunch     ";
                     case 2:
-                        return "Dinner";
+                        return "     Dinner     ";
                 }
             }
             return null;
