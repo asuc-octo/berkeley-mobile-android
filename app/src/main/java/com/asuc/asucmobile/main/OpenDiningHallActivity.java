@@ -5,6 +5,7 @@ import android.app.FragmentManager;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v13.app.FragmentPagerAdapter;
+import android.support.v4.view.PagerTabStrip;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -26,8 +27,6 @@ public class OpenDiningHallActivity extends AppCompatActivity {
 
     private DiningHall diningHall;
     private static final String[] HAS_LATE_NIGHT = {"Crossroads","Foothill"};
-    //final HorizontalScrollView scrollview = (HorizontalScrollView) this.findViewById(R.id.hsv);
-    HorizontalScrollView scrollview;
     //private SectionsPagerAdapter mSPA;
     //ViewPager mViewPager;
 
@@ -63,7 +62,6 @@ public class OpenDiningHallActivity extends AppCompatActivity {
                 finish();
             }
         });
-        scrollview = (HorizontalScrollView) this.findViewById(R.id.hsv);
 
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
@@ -78,63 +76,17 @@ public class OpenDiningHallActivity extends AppCompatActivity {
         }
         viewPager.setAdapter(pagerAdapter);
 
-        TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
-        tabLayout.setTabsFromPagerAdapter(pagerAdapter);
-        viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout) {
-            public void onPageSelected(int position) {
-                // Check if this is the page you want.
-                System.out.println(position);
-                switch (position) {
-                    case 0:
-                        scrollview.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                scrollview.fullScroll(ScrollView.FOCUS_LEFT);
-                                //scrollview.scrollTo(2,0);
-                            }
-                        });
-                    case 1:
-                        scrollview.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                scrollview.fullScroll(ScrollView.FOCUS_LEFT);
-                                //scrollview.scrollTo(2,0);
-                            }
-                        });
-                    case 2:
-                        scrollview.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                scrollview.fullScroll(ScrollView.FOCUS_RIGHT);
-                                //scrollview.scrollTo(2,0);
-                            }
-                        });
-                    case 3:
-                        scrollview.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                scrollview.fullScroll(ScrollView.FOCUS_RIGHT);
-                                //scrollview.scrollTo(2,0);
-                            }
-                        });
-                    default:
-
-                }
-            }
-        });
-        tabLayout.setOnTabSelectedListener(new TabLayout.ViewPagerOnTabSelectedListener(viewPager));
-
 
         Date currentTime = new Date();
         if (diningHall.isLateNightOpen() ||
                 (diningHall.getDinnerClosing() != null && currentTime.after(diningHall.getDinnerClosing()))) {
             viewPager.setCurrentItem(3);
-            scrollview.post(new Runnable() {
-                @Override
-                public void run() {
-                    scrollview.fullScroll(ScrollView.FOCUS_RIGHT);
-                }
-            });
+//            scrollview.post(new Runnable() {
+//                @Override
+//                public void run() {
+//                    scrollview.fullScroll(ScrollView.FOCUS_RIGHT);
+//                }
+//            });
         } else if (diningHall.isDinnerOpen() ||
                 (diningHall.getLunchClosing() != null && currentTime.after(diningHall.getLunchClosing())) ||
                 (diningHall.getDinnerClosing() != null && currentTime.after(diningHall.getDinnerClosing()))) {
@@ -145,6 +97,9 @@ public class OpenDiningHallActivity extends AppCompatActivity {
         } else {
             viewPager.setCurrentItem(0);
         }
+
+        PagerTabStrip tabStrip = (PagerTabStrip) findViewById(R.id.pager_tab_strip);
+        tabStrip.setTextColor(getResources().getColor(R.color.two_chainz_gold));
     }
 
     @Override
@@ -196,43 +151,15 @@ public class OpenDiningHallActivity extends AppCompatActivity {
                 switch (position) {
                     case 0:
                         bundle.putString("whichMenu", "Breakfast");
-                        scrollview.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                scrollview.fullScroll(ScrollView.FOCUS_LEFT);
-                                //scrollview.scrollTo(1,0);
-                            }
-                        });
                         break;
                     case 1:
                         bundle.putString("whichMenu", "Lunch");
-                        scrollview.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                scrollview.fullScroll(ScrollView.FOCUS_LEFT);
-                                //scrollview.scrollTo(2,0);
-                            }
-                        });
                         break;
                     case 2:
                         bundle.putString("whichMenu", "Dinner");
-                        scrollview.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                scrollview.fullScroll(ScrollView.FOCUS_RIGHT);
-                                //scrollview.scrollTo(3,0);
-                            }
-                        });
                         break;
                     case 3:
                         bundle.putString("whichMenu", "Late Night");
-                        scrollview.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                scrollview.fullScroll(ScrollView.FOCUS_RIGHT);
-                                //scrollview.scrollTo(4,0);
-                            }
-                        });
                         break;
                     default:
                         return null;
