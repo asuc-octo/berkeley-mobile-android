@@ -10,7 +10,8 @@
         android:layout_height="wrap_content"
         android:layout_width="match_parent"
         android:background="@color/ASUC_blue"
-        android:elevation="8dp" />
+        app:titleTextColor="@android:color/white"
+        app:elevation="8dp" />
 
     <android.support.design.widget.TabLayout
         android:id="@+id/tabs"
