@@ -75,7 +75,6 @@ public class StopActivity extends AppCompatActivity implements ConnectionCallbac
         setContentView(R.layout.activity_stop);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        toolbar.setTitleTextColor(getResources().getColor(R.color.off_white));
         toolbar.setNavigationIcon(getResources().getDrawable(R.drawable.ic_action_back));
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
@@ -95,13 +94,17 @@ public class StopActivity extends AppCompatActivity implements ConnectionCallbac
         String bestProvider = locationManager.getBestProvider(new Criteria(), false);
 
         // For quick access, retrieve the last location update
-        Location location = locationManager.getLastKnownLocation(bestProvider);
-        if (location != null) {
-            mLatitude = location.getLatitude();
-            mLongitude = location.getLongitude();
-        } else {
-            mLatitude = -1;
-            mLongitude = -1;
+        try {
+            Location location = locationManager.getLastKnownLocation(bestProvider);
+            if (location != null) {
+                mLatitude = location.getLatitude();
+                mLongitude = location.getLongitude();
+            } else {
+                mLatitude = -1;
+                mLongitude = -1;
+            }
+        } catch (SecurityException e) {
+            // Do nothing
         }
 
         // Set up list
@@ -133,7 +136,12 @@ public class StopActivity extends AppCompatActivity implements ConnectionCallbac
                 mLatitude = location.getLatitude();
                 mLongitude = location.getLongitude();
                 mAdapter.setNewLocation(location);
-                locationManager.removeUpdates(this);
+
+                try {
+                    locationManager.removeUpdates(this);
+                } catch (SecurityException e) {
+                    // Do nothing
+                }
             }
 
             public void onStatusChanged(String provider, int status, Bundle extras) {}
@@ -144,7 +152,11 @@ public class StopActivity extends AppCompatActivity implements ConnectionCallbac
         };
 
         // Register the listener with the Location Manager to receive location updates
-        locationManager.requestLocationUpdates(bestProvider, 0, 0, locationListener);
+        try {
+            locationManager.requestLocationUpdates(bestProvider, 0, 0, locationListener);
+        } catch (SecurityException e) {
+            // Do nothing
+        }
 
         refreshButton.setOnClickListener(new View.OnClickListener() {
             @Override

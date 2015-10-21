@@ -1,6 +1,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
 
     <android.support.v7.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
@@ -8,7 +9,8 @@
         android:layout_height="wrap_content"
         android:layout_width="match_parent"
         android:background="@color/ASUC_blue"
-        android:elevation="8dp" />
+        app:titleTextColor="@android:color/white"
+        app:elevation="8dp" />
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -87,7 +89,8 @@
             android:layout_alignParentEnd="true"
             android:layout_marginBottom="8dp"
             android:src="@drawable/density_logo"
-            android:visibility="invisible"/>
+            android:visibility="invisible"
+            android:contentDescription="@string/content_desc" />
 
     </RelativeLayout>
 
