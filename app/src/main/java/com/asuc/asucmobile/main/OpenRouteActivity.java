@@ -53,7 +53,6 @@ public class OpenRouteActivity extends AppCompatActivity {
         setContentView(R.layout.activity_open_route);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        toolbar.setTitleTextColor(getResources().getColor(R.color.off_white));
         toolbar.setNavigationIcon(getResources().getDrawable(R.drawable.ic_action_back));
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
@@ -122,7 +121,6 @@ public class OpenRouteActivity extends AppCompatActivity {
 
                 LocationManager locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
                 String bestProvider = locationManager.getBestProvider(new Criteria(), false);
-                Location myLocation = locationManager.getLastKnownLocation(bestProvider);
 
                 BitmapDescriptor bitmap = BitmapDescriptorFactory.fromResource(R.drawable.icon_map_pin);
                 map.addMarker(new MarkerOptions()
@@ -143,9 +141,10 @@ public class OpenRouteActivity extends AppCompatActivity {
                 builder.include(lastStop.getLocation());
 
                 try {
+                    Location myLocation = locationManager.getLastKnownLocation(bestProvider);
                     builder.include(new LatLng(myLocation.getLatitude(), myLocation.getLongitude()));
-                } catch (Exception e) {
-                    e.printStackTrace();
+                } catch (SecurityException e) {
+                    // Don't do anything
                 }
 
                 map.setOnCameraChangeListener(new GoogleMap.OnCameraChangeListener() {
