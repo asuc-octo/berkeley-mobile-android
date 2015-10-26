@@ -11,9 +11,8 @@
         android:id="@+id/toolbar"
         android:layout_height="wrap_content"
         android:layout_width="match_parent"
-        android:background="@color/ASUC_blue"
-        app:titleTextColor="@android:color/white"
-        app:elevation="8dp" />
+        android:elevation="8dp"
+        app:theme="@style/ToolbarTheme" />
 
     <com.nirhart.parallaxscroll.views.ParallaxListView
         android:id="@+id/stop_list"
