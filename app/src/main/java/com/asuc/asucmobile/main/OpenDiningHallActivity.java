@@ -26,6 +26,7 @@ import java.util.Date;
 public class OpenDiningHallActivity extends AppCompatActivity {
 
     private DiningHall diningHall;
+    +
     private static final String[] HAS_LATE_NIGHT = {"Crossroads","Foothill"};
     //private SectionsPagerAdapter mSPA;
     //ViewPager mViewPager;
@@ -77,6 +78,7 @@ public class OpenDiningHallActivity extends AppCompatActivity {
         viewPager.setAdapter(pagerAdapter);
 
 
+
         Date currentTime = new Date();
         if (diningHall.isLateNightOpen() ||
                 (diningHall.getDinnerClosing() != null && currentTime.after(diningHall.getDinnerClosing()))) {
@@ -99,7 +101,7 @@ public class OpenDiningHallActivity extends AppCompatActivity {
         }
 
         PagerTabStrip tabStrip = (PagerTabStrip) findViewById(R.id.pager_tab_strip);
-        tabStrip.setTextColor(getResources().getColor(R.color.two_chainz_gold));
+        tabStrip.setTextColor(getResources().getColor(R.color.off_white));
     }
 
     @Override

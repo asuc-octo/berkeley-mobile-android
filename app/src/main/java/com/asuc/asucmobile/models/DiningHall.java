@@ -141,7 +141,7 @@ public class DiningHall {
         }
 
         Date currentTime = new Date();
-        return currentTime.after(lateNightOpen) || currentTime.before(lateNightClose);
+        return currentTime.after(lateNightOpen) && currentTime.before(lateNightClose);
     }
 
     public boolean lateNightToday() {
