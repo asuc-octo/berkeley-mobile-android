@@ -12,7 +12,7 @@
         android:layout_height="wrap_content"
         android:layout_width="match_parent"
         android:elevation="8dp"
-        app:theme="@style/ToolbarTheme" />
+        style="@style/ToolbarTheme" />
 
     <com.nirhart.parallaxscroll.views.ParallaxListView
         android:id="@+id/stop_list"
