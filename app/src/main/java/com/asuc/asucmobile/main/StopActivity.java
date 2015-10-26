@@ -15,6 +15,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.EditText;
 import android.widget.Filter;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
@@ -243,6 +244,11 @@ public class StopActivity extends AppCompatActivity implements ConnectionCallbac
         if (searchMenuItem != null) {
             final android.support.v7.widget.SearchView searchView = (android.support.v7.widget.SearchView) searchMenuItem.getActionView();
             if (searchView != null) {
+                // Setting up aesthetics
+                EditText searchEditText = (EditText) searchView.findViewById(android.support.v7.appcompat.R.id.search_src_text);
+                searchEditText.setTextColor(getResources().getColor(android.R.color.white));
+                searchEditText.setHintTextColor(getResources().getColor(android.R.color.white));
+
                 searchView.setOnQueryTextListener(new android.support.v7.widget.SearchView.OnQueryTextListener() {
                     @Override
                     public boolean onQueryTextSubmit(String s) {

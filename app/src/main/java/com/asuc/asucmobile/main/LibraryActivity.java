@@ -10,6 +10,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.EditText;
 import android.widget.Filter;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
@@ -137,6 +138,11 @@ public class LibraryActivity extends AppCompatActivity {
         if (searchMenuItem != null) {
             final SearchView searchView = (SearchView) searchMenuItem.getActionView();
             if (searchView != null) {
+                // Setting up aesthetics
+                EditText searchEditText = (EditText) searchView.findViewById(android.support.v7.appcompat.R.id.search_src_text);
+                searchEditText.setTextColor(getResources().getColor(android.R.color.white));
+                searchEditText.setHintTextColor(getResources().getColor(android.R.color.white));
+
                 searchView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
