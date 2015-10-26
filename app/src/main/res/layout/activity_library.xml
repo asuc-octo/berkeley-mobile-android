@@ -6,13 +6,12 @@
     android:orientation="vertical"
     tools:context="com.asuc.asucmobile.main.LibraryActivity">
 
-    <android.support.v7.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
+    <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_height="wrap_content"
         android:layout_width="match_parent"
-        android:background="@color/ASUC_blue"
-        app:titleTextColor="@android:color/white"
-        app:elevation="8dp" />
+        android:elevation="8dp"
+        app:theme="@style/ToolbarTheme" />
 
     <ListView
         android:id="@+id/library_list"
