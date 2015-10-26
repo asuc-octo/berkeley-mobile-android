@@ -6,8 +6,9 @@
         <item name="android:listDivider">@null</item>
     </style>
 
-    <style name="ToolbarTheme" parent="ThemeOverlay.AppCompat.Dark.ActionBar">
+    <style name="ToolbarTheme" parent="@style/Widget.AppCompat.Toolbar">
         <item name="android:background">@color/ASUC_blue</item>
+        <item name="titleTextColor">@android:color/white</item>
     </style>
 
 </resources>
