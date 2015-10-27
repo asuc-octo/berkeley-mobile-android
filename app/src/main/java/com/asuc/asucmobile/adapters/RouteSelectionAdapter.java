@@ -59,7 +59,7 @@ public class RouteSelectionAdapter extends BaseAdapter {
         View tripLine2 = convertView.findViewById(R.id.line2);
 
         tripBusTime.setText(TIME_FORMAT.format(startTime));
-        tripDuration.setText(duration + " min");
+        tripDuration.setText(String.format("%d min", duration));
 
         if (route.getTrips().size() > 1) {
             tripLine2.setBackgroundResource(R.color.two_chainz_gold);
