@@ -81,6 +81,7 @@ public class OpenDiningHallActivity extends AppCompatActivity {
 
         PagerTabStrip tabStrip = (PagerTabStrip) findViewById(R.id.pager_tab_strip);
         tabStrip.setTextColor(getResources().getColor(R.color.off_white));
+        tabStrip.setTabIndicatorColor(getResources().getColor(R.color.off_white));
     }
 
     @Override
