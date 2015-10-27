@@ -222,7 +222,7 @@ public class StopActivity extends AppCompatActivity implements ConnectionCallbac
     @Override
     public void onConnected(Bundle connectionHint) {
         // Get Google's reported location ONLY if the location hasn't already been retreived
-        if (mLatitude != -1 && mLongitude != -1) {
+        if (mLatitude == -1 && mLongitude == -1) {
             Location mLastLocation = LocationServices.FusedLocationApi.getLastLocation(
                     mGoogleApiClient);
             if (mLastLocation != null) {
