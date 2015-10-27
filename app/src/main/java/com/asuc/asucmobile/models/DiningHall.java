@@ -146,8 +146,6 @@ public class DiningHall {
 
     public boolean lateNightToday() {
         return lateNightOpen != null && lateNightClose != null;
-
-        //Arrays.asList(daysWithLateNight).contains((calendar.get(Calendar.DAY_OF_WEEK)))
     }
 
 }

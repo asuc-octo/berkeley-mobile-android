@@ -3,7 +3,6 @@ package com.asuc.asucmobile.main;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.os.Bundle;
-import android.support.design.widget.TabLayout;
 import android.support.v13.app.FragmentPagerAdapter;
 import android.support.v4.view.PagerTabStrip;
 import android.support.v4.view.ViewPager;
@@ -11,9 +10,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.HorizontalScrollView;
-import android.widget.ScrollView;
-
 import com.asuc.asucmobile.R;
 import com.asuc.asucmobile.controllers.DiningController;
 import com.asuc.asucmobile.fragments.MenuFragment;
@@ -26,25 +22,14 @@ import java.util.Date;
 public class OpenDiningHallActivity extends AppCompatActivity {
 
     private DiningHall diningHall;
-    +
+
     private static final String[] HAS_LATE_NIGHT = {"Crossroads","Foothill"};
-    //private SectionsPagerAdapter mSPA;
-    //ViewPager mViewPager;
 
     @Override
     @SuppressWarnings("deprecation")
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         FlurryAgent.onStartSession(this, "4VPTT49FCCKH7Z2NVQ26");
-        //scrollview = ((HorizontalScrollView) findViewById(R.id.hsv));
-//        //FragmentActivity FA = new FragmentActivity;
-//        mSPA = new SectionsPagerAdapter(this.getFragmentManager());
-//
-//        // Set up the ViewPager with the sections adapter.
-//        mViewPager = (ViewPager) findViewById(R.id.pager);
-//        mViewPager.setAdapter(mSPA);
-
-
 
         diningHall = ((DiningController) DiningController.getInstance(this)).getCurrentDiningHall();
         if (diningHall == null) {
@@ -83,12 +68,6 @@ public class OpenDiningHallActivity extends AppCompatActivity {
         if (diningHall.isLateNightOpen() ||
                 (diningHall.getDinnerClosing() != null && currentTime.after(diningHall.getDinnerClosing()))) {
             viewPager.setCurrentItem(3);
-//            scrollview.post(new Runnable() {
-//                @Override
-//                public void run() {
-//                    scrollview.fullScroll(ScrollView.FOCUS_RIGHT);
-//                }
-//            });
         } else if (diningHall.isDinnerOpen() ||
                 (diningHall.getLunchClosing() != null && currentTime.after(diningHall.getLunchClosing())) ||
                 (diningHall.getDinnerClosing() != null && currentTime.after(diningHall.getDinnerClosing()))) {
@@ -198,7 +177,6 @@ public class OpenDiningHallActivity extends AppCompatActivity {
 
         @Override
         public CharSequence getPageTitle(int position) {
-            //Locale l = Locale.getDefault();
             /*
                 Only set up a Late Night option if it exists.
              */

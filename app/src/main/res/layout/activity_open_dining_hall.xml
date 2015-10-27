@@ -12,26 +12,6 @@
         android:background="@color/ASUC_blue"
         android:elevation="8dp" />
 
-
-    <!--<HorizontalScrollView-->
-        <!--android:id="@+id/hsv"-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:layout_alignParentTop="true"-->
-        <!--android:fillViewport="true"-->
-        <!--android:measureAllChildren="false"-->
-        <!--android:scrollbars="none" >-->
-
-        <!--<android.support.design.widget.TabLayout-->
-            <!--android:id="@+id/tabs"-->
-            <!--android:layout_width="fill_parent"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--app:tabTextColor="@android:color/darker_gray"-->
-            <!--app:tabSelectedTextColor="@color/grizzly_gray"-->
-            <!--app:tabIndicatorColor="@color/ASUC_blue" />-->
-
-    <!--</HorizontalScrollView>-->
-
     <android.support.v4.view.ViewPager
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
@@ -39,7 +19,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context="com.asuc.asucmobile.main.OpenDiningHallActivity">
-
 
         <android.support.v4.view.PagerTabStrip
             android:id="@+id/pager_tab_strip"
