@@ -3,12 +3,12 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <android.support.v7.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
+    <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_height="wrap_content"
         android:layout_width="match_parent"
-        android:background="@color/ASUC_blue"
-        android:elevation="8dp" />
+        android:elevation="8dp"
+        style="@style/ToolbarTheme" />
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -87,7 +87,8 @@
             android:layout_alignParentEnd="true"
             android:layout_marginBottom="8dp"
             android:src="@drawable/density_logo"
-            android:visibility="invisible"/>
+            android:visibility="invisible"
+            android:contentDescription="@string/content_desc" />
 
     </RelativeLayout>
 
