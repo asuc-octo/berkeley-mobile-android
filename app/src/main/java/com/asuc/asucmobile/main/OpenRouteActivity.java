@@ -128,8 +128,8 @@ public class OpenRouteActivity extends AppCompatActivity {
                                 .icon(bitmap)
                 );
                 map.addMarker(new MarkerOptions()
-                        .position(firstStop.getLocation())
-                        .icon(bitmap)
+                                .position(firstStop.getLocation())
+                                .icon(bitmap)
                 );
                 map.getUiSettings().setAllGesturesEnabled(false);
                 map.getUiSettings().setZoomControlsEnabled(false);
@@ -142,7 +142,9 @@ public class OpenRouteActivity extends AppCompatActivity {
 
                 try {
                     Location myLocation = locationManager.getLastKnownLocation(bestProvider);
-                    builder.include(new LatLng(myLocation.getLatitude(), myLocation.getLongitude()));
+                    if (myLocation != null) {
+                        builder.include(new LatLng(myLocation.getLatitude(), myLocation.getLongitude()));
+                    }
                 } catch (SecurityException e) {
                     // Don't do anything
                 }
