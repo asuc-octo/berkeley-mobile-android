@@ -1,2 +1,2 @@
 <?xml version="1.0" encoding="utf-8"?>
-<merger version="3"><dataSet config="main"><source path="E:\Eclipse workspace\ASUC-Android\ParallaxScroll\src\main\assets"/><source path="E:\Eclipse workspace\ASUC-Android\ParallaxScroll\assets"/></dataSet><dataSet config="release"><source path="E:\Eclipse workspace\ASUC-Android\ParallaxScroll\src\release\assets"/></dataSet></merger>
+<merger version="3"><dataSet config="main"><source path="/Users/alex/Development/ASUC-Android/ParallaxScroll/src/main/assets"/><source path="/Users/alex/Development/ASUC-Android/ParallaxScroll/assets"/></dataSet><dataSet config="release"><source path="/Users/alex/Development/ASUC-Android/ParallaxScroll/src/release/assets"/></dataSet></merger>
