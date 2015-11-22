@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/ASUC-Android.iml" filepath="$PROJECT_DIR$/ASUC-Android.iml" />
+      <module fileurl="file://$PROJECT_DIR$/ParallaxScroll/ParallaxScroll.iml" filepath="$PROJECT_DIR$/ParallaxScroll/ParallaxScroll.iml" />
+      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/extras-actionbarcompat/extras-actionbarcompat.iml" filepath="$PROJECT_DIR$/extras-actionbarcompat/extras-actionbarcompat.iml" />
+      <module fileurl="file://$PROJECT_DIR$/extras-actionbarsherlock/extras-actionbarsherlock.iml" filepath="$PROJECT_DIR$/extras-actionbarsherlock/extras-actionbarsherlock.iml" />
+      <module fileurl="file://$PROJECT_DIR$/library/library.iml" filepath="$PROJECT_DIR$/library/library.iml" />
+    </modules>
+  </component>
+</project>
