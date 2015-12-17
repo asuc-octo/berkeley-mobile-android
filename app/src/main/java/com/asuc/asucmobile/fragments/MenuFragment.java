@@ -27,6 +27,10 @@ import java.util.Locale;
 
 public class MenuFragment extends Fragment {
 
+    private FoodAdapter mAdapter;
+    private DiningHall mDiningHall;
+    private int mWhichMenu = 0;
+
     private static final SimpleDateFormat HOURS_FORMAT =
             new SimpleDateFormat("h:mm a", Locale.ENGLISH);
 
@@ -56,6 +60,7 @@ public class MenuFragment extends Fragment {
         try {
             ArrayList<FoodItem> foodItems;
             boolean isOpen;
+            mDiningHall = diningHall;
             if (whichMenu != null) {
                 switch (whichMenu) {
                     case "Breakfast":
@@ -105,8 +110,8 @@ public class MenuFragment extends Fragment {
                     }
 
                     header.setText(spannableHeader);
-
                     FoodAdapter adapter = new FoodAdapter(getActivity(), foodItems);
+                    mAdapter = adapter;
                     foodMenu.setAdapter(adapter);
                     foodMenu.addParallaxedHeaderView(header);
                 }
@@ -155,4 +160,15 @@ public class MenuFragment extends Fragment {
 
     }
 
+    public FoodAdapter getmAdapter() {
+        return mAdapter;
+    }
+
+    public DiningHall getmDiningHall() {
+        return mDiningHall;
+    }
+
+    public int getmWhichMenu() {
+        return mWhichMenu;
+    }
 }
