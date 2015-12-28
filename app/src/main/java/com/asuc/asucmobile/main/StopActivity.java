@@ -24,7 +24,7 @@ import android.widget.Toast;
 
 import com.asuc.asucmobile.R;
 import com.asuc.asucmobile.adapters.StopAdapter;
-import com.asuc.asucmobile.controllers.LineController;
+import com.asuc.asucmobile.controllers.StopController;
 import com.asuc.asucmobile.models.Stop;
 import com.asuc.asucmobile.utilities.Callback;
 import com.flurry.android.FlurryAgent;
@@ -268,19 +268,14 @@ public class StopActivity extends AppCompatActivity implements ConnectionCallbac
         mRefreshWrapper.setVisibility(View.GONE);
         mProgressBar.setVisibility(View.VISIBLE);
 
-        LineController.getInstance(this).refreshInBackground(new Callback() {
+        StopController.getInstance(this).refreshInBackground(new Callback() {
             @Override
             @SuppressWarnings("unchecked")
             public void onDataRetrieved(Object data) {
                 mDestList.setVisibility(View.VISIBLE);
                 mProgressBar.setVisibility(View.GONE);
 
-                SparseArray<Stop> stopsMap = (SparseArray<Stop>) data;
-                final ArrayList<Stop> stops = new ArrayList();
-                for (int i = 0; i < stopsMap.size(); i++) {
-                    stops.add(stopsMap.valueAt(i));
-                }
-
+                final ArrayList<Stop> stops = (ArrayList<Stop>) data;
                 Collections.sort(stops, ALPHABETICAL_ORDER);
 
                 mAdapter.setList(stops);
