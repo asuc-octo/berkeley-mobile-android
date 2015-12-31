@@ -2,6 +2,7 @@ package com.asuc.asucmobile.main;
 
 import android.content.Intent;
 import android.content.IntentSender;
+import android.content.SharedPreferences;
 import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationListener;
@@ -37,7 +38,10 @@ import com.google.android.gms.location.LocationServices;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Set;
+import java.util.TreeSet;
 
+//TODO: remove location finding, check for existing location, change title from select destination
 public class StopActivity extends AppCompatActivity implements ConnectionCallbacks, OnConnectionFailedListener{
 
     private static final Comparator<Stop> ALPHABETICAL_ORDER = new Comparator<Stop>() {
@@ -59,6 +63,8 @@ public class StopActivity extends AppCompatActivity implements ConnectionCallbac
 
     private double mLatitude = -1;
     private double mLongitude = -1;
+
+    private int requestType;
 
     // Request code to use when launching the resolution activity
     private static final int REQUEST_RESOLVE_ERROR = 1001;
@@ -113,14 +119,17 @@ public class StopActivity extends AppCompatActivity implements ConnectionCallbac
                 if (mLatitude == -1 || mLongitude == -1) {
                     Toast.makeText(getBaseContext(), "Retrieving location, make sure your location is enabled!", Toast.LENGTH_SHORT).show();
                 } else {
-                    Intent intent = new Intent(getBaseContext(), OpenRouteSelectionActivity.class);
-
-                    intent.putExtra("stop_id", mAdapter.getItem(i).getId());
-                    intent.putExtra("stop_name", mAdapter.getItem(i).getName());
-                    intent.putExtra("lat", mLatitude);
-                    intent.putExtra("long", mLongitude);
-
-                    startActivity(intent);
+                    Stop stop = mAdapter.getItem(i);
+                    Intent intent = new Intent();
+                    if(requestType == 1) {
+                        intent.putExtra("startName", stop.getName());
+                        intent.putExtra("startLatLng", stop.getLocation());
+                    } else {
+                        intent.putExtra("endName", stop.getName());
+                        intent.putExtra("endLatLng", stop.getLocation());
+                    }
+                    setResult(requestType, intent);
+                    finish();
                 }
             }
         });
@@ -145,6 +154,7 @@ public class StopActivity extends AppCompatActivity implements ConnectionCallbac
         // Register the listener with the Location Manager to receive location updates
         locationManager.requestLocationUpdates(bestProvider, 0, 0, locationListener);
 
+        requestType = getIntent().getIntExtra("requestCode", 1);
         refreshButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
