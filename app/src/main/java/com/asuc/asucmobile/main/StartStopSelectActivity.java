@@ -2,21 +2,17 @@ package com.asuc.asucmobile.main;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
-import android.widget.Button;
-import android.widget.ImageButton;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.asuc.asucmobile.R;
-import com.asuc.asucmobile.adapters.StopAdapter;
-import com.asuc.asucmobile.controllers.LineController;
-import com.asuc.asucmobile.models.Stop;
 import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.LatLng;
 
@@ -30,9 +26,9 @@ public class StartStopSelectActivity extends AppCompatActivity
 
     private Context context;
 
-    private MapFragment mapFragment;
-    private Button startButton;
-    private Button endButton;
+    private TextView startButtonLabel;
+    private TextView destButtonLabel;
+    private TextView timeButtonLabel;
 
     private String startName;
     private String endName;
@@ -41,21 +37,33 @@ public class StartStopSelectActivity extends AppCompatActivity
     private LatLng endLatLng;
 
     @Override
+    @SuppressWarnings("deprecation")
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_start_stop_select);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        toolbar.setNavigationIcon(getResources().getDrawable(R.drawable.ic_action_back));
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
 
-        mapFragment = (MapFragment) getFragmentManager().findFragmentById(R.id.map);
-        mapFragment.getMapAsync(this);
-        startButton = (Button) findViewById(R.id.select_start);
-        endButton =  (Button) findViewById(R.id.select_dest);
+        LinearLayout startButton = (LinearLayout) findViewById(R.id.select_start);
+        LinearLayout destButton = (LinearLayout) findViewById(R.id.select_dest);
+        LinearLayout timeButton = (LinearLayout) findViewById(R.id.select_time);
+        startButtonLabel = (TextView) findViewById(R.id.start_stop);
+        destButtonLabel = (TextView) findViewById(R.id.dest_stop);
+        timeButtonLabel = (TextView) findViewById(R.id.departure_time);
         FloatingActionButton navigateButton = (FloatingActionButton) findViewById(R.id.navigate_button);
 
-        navigateButton.setImageDrawable(getResources().getDrawable(R.drawable.ic_navigation, null));
+        navigateButton.setImageDrawable(getResources().getDrawable(R.drawable.ic_navigation));
 
         context = getBaseContext();
         startButton.setOnClickListener(new StartStopListener(START_INT));
-        endButton.setOnClickListener(new StartStopListener(END_INT));
+        destButton.setOnClickListener(new StartStopListener(END_INT));
 
         navigateButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -67,10 +75,6 @@ public class StartStopSelectActivity extends AppCompatActivity
                 }
                 intent.putExtra("startLngLat", startLatLng);
                 intent.putExtra("endLngLat", endLatLng);
-//                intent.putExtra("stop_id", mAdapter.getItem(i).getId());
-//                intent.putExtra("stop_name", mAdapter.getItem(i).getName());
-//                intent.putExtra("lat", mLatitude);
-//                intent.putExtra("long", mLongitude);
 
                 startActivity(intent);
             }
@@ -84,30 +88,23 @@ public class StartStopSelectActivity extends AppCompatActivity
         }
         if (requestCode == START_INT) {
             getStartFromPref(data);
-//            startButton.setText(startStop.getName());
-            startButton.setText(startName);
+            startButtonLabel.setText(startName);
         } else if (requestCode == END_INT) {
             getEndFromPref(data);
-//            endButton.setText(endStop.getName());
-            endButton.setText(endName);
+            destButtonLabel.setText(endName);
         }
-//        int[] latLong = data.getIntArrayExtra("latLong");
-//        String locName = data.getStringExtra("name");
-
     }
 
     private void getStartFromPref(Intent data) {
         startName = data.getStringExtra("startName");
         startLatLng = data.getParcelableExtra("startLatLng");
         //TODO: error checking
-//        startStop = ((LineController) (LineController.getInstance(this))).getStop(startId, startName);
     }
 
     private void getEndFromPref(Intent data) {
         endName = data.getStringExtra("endName");
         endLatLng = data.getParcelableExtra("endLatLng");
         //TODO: error checking
-//        endStop = ((LineController) (LineController.getInstance(this))).getStop(endId, endName);
     }
 
     private class StartStopListener implements View.OnClickListener {
