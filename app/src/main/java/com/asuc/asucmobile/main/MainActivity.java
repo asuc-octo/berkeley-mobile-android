@@ -27,10 +27,10 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         Category[] menuItems = new Category[] {
-                new Category(getResources().getDrawable(R.drawable.dining_hall_blue), "DINING HALL MENUS", new Intent(this, DiningHallActivity.class)),
-                new Category(getResources().getDrawable(R.drawable.library_blue), "LIBRARY HOURS", new Intent(this, LibraryActivity.class)),
-                new Category(getResources().getDrawable(R.drawable.gym_blue), "GYM HOURS", new Intent(this, GymActivity.class)),
-                new Category(getResources().getDrawable(R.drawable.transit_blue), "BEARTRANSIT", new Intent(this, StartStopSelectActivity.class))
+                new Category(getResources().getDrawable(R.drawable.dining_hall_blue), "Dining Halls", new Intent(this, DiningHallActivity.class)),
+                new Category(getResources().getDrawable(R.drawable.library_blue), "Libraries", new Intent(this, LibraryActivity.class)),
+                new Category(getResources().getDrawable(R.drawable.gym_blue), "Gyms", new Intent(this, GymActivity.class)),
+                new Category(getResources().getDrawable(R.drawable.transit_blue), "BearTransit", new Intent(this, StartStopSelectActivity.class))
         };
 
         ListView menuList = (ListView) findViewById(R.id.main_menu);
