@@ -27,14 +27,20 @@ public class LiveBusActivity extends AppCompatActivity implements OnMapReadyCall
     private Timer timer;
     private ArrayList<Bus> buses;
     private LiveBusActivity activity;
+    private MapFragment mapFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         this.activity = this;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_live_bus);
-        MapFragment mapFragment = (MapFragment) getFragmentManager()
+        mapFragment = (MapFragment) getFragmentManager()
                 .findFragmentById(R.id.map);
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
         mapFragment.getMapAsync(this);
         timer = new Timer("liveBus", true);
     }
@@ -47,6 +53,12 @@ public class LiveBusActivity extends AppCompatActivity implements OnMapReadyCall
         CameraUpdate update = CameraUpdateFactory.newLatLngZoom(new LatLng(37.872508, -122.260783), 14.5f);
         map.moveCamera(update);
         liveTrack();
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        timer.cancel();
     }
 
     private void liveTrack() {
@@ -69,6 +81,8 @@ public class LiveBusActivity extends AppCompatActivity implements OnMapReadyCall
                     }
                 });
             }
-        }, 0l, 3000l);
+        }, 0L, 3000L);
     }
+
+
 }
