@@ -44,14 +44,29 @@
             android:textColor="@android:color/white"
             android:text="@string/start" />
 
-        <TextView
-            android:id="@+id/start_stop"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="8dp"
             android:background="@drawable/bordered_background"
-            android:textSize="18sp"
-            android:textColor="@color/grizzly_gray" />
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/start_stop"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textSize="18sp"
+                android:textColor="@color/grizzly_gray" />
+
+            <ImageButton
+                android:id="@+id/my_location"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:background="@android:color/transparent"
+                android:src="@drawable/ic_my_location_black_24dp" />
+
+        </LinearLayout>
 
     </LinearLayout>
 
