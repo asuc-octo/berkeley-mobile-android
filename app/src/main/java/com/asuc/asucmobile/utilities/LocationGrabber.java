@@ -17,6 +17,8 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.model.LatLng;
 
+import java.util.concurrent.TimeUnit;
+
 public class LocationGrabber {
 
     private static final int LOCATION_PERMISSION = 0;
@@ -72,7 +74,7 @@ public class LocationGrabber {
                     .build();
 
             // Connect to GoogleApiClient
-            ConnectionResult result = googleApiClient.blockingConnect();
+            ConnectionResult result = googleApiClient.blockingConnect(3000, TimeUnit.MILLISECONDS);
 
             // Check if GoogleApiClient has a location for us
             if (result.isSuccess()) {
@@ -82,6 +84,7 @@ public class LocationGrabber {
                     googleApiClient.disconnect();
                     return;
                 }
+                googleApiClient.disconnect();
             }
 
             // If GoogleApiClient failed, try to get the last known location from Android's API
@@ -103,7 +106,9 @@ public class LocationGrabber {
 
                 public void onProviderEnabled(String provider) {}
 
-                public void onProviderDisabled(String provider) {}
+                public void onProviderDisabled(String provider) {
+                    callback.onRetrievalFailed();
+                }
 
             };
 

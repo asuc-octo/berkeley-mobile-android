@@ -28,6 +28,7 @@
     <string name="start">Start</string>
     <string name="dest">Destination</string>
     <string name="departure_time">Departure Time</string>
+    <string name="my_location">My Location</string>
     <string name="find_route">Find Route</string>
     <string name="no_routes">No routes available</string>
 
