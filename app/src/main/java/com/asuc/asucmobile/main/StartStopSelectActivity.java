@@ -2,16 +2,21 @@ package com.asuc.asucmobile.main;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.asuc.asucmobile.R;
+import com.asuc.asucmobile.utilities.Callback;
+import com.asuc.asucmobile.utilities.LocationGrabber;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.LatLng;
@@ -21,6 +26,7 @@ import com.google.android.gms.maps.model.LatLng;
 public class StartStopSelectActivity extends AppCompatActivity
     implements OnMapReadyCallback {
 
+    private static final int LOCATION_PERMISSION = 0;
     private static final int START_INT = 1;
     private static final int END_INT = 2;
 
@@ -54,6 +60,7 @@ public class StartStopSelectActivity extends AppCompatActivity
         LinearLayout startButton = (LinearLayout) findViewById(R.id.select_start);
         LinearLayout destButton = (LinearLayout) findViewById(R.id.select_dest);
         LinearLayout timeButton = (LinearLayout) findViewById(R.id.select_time);
+        ImageButton myLocationButton = (ImageButton) findViewById(R.id.my_location);
         startButtonLabel = (TextView) findViewById(R.id.start_stop);
         destButtonLabel = (TextView) findViewById(R.id.dest_stop);
         timeButtonLabel = (TextView) findViewById(R.id.departure_time);
@@ -64,6 +71,13 @@ public class StartStopSelectActivity extends AppCompatActivity
         context = getBaseContext();
         startButton.setOnClickListener(new StartStopListener(START_INT));
         destButton.setOnClickListener(new StartStopListener(END_INT));
+
+        myLocationButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                LocationGrabber.getLocation(StartStopSelectActivity.this,  new LocationCallback());
+            }
+        });
 
         navigateButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -126,4 +140,34 @@ public class StartStopSelectActivity extends AppCompatActivity
     public void onMapReady(GoogleMap map) {
         map.setMapType(GoogleMap.MAP_TYPE_HYBRID);
     }
+
+    /**
+     * onRequestPermissionsResult() is called from LocationManager when it requests location permissions.
+     */
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        if (requestCode == LOCATION_PERMISSION && grantResults.length > 0 &&
+                (grantResults[0] == PackageManager.PERMISSION_GRANTED || grantResults[1] == PackageManager.PERMISSION_GRANTED)) {
+            LocationGrabber.getLocation(this, new LocationCallback());
+        } else {
+            Toast.makeText(this, "Please allow location permissions and try again", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private class LocationCallback implements Callback {
+
+        @Override
+        public void onDataRetrieved(Object data) {
+            startButtonLabel.setText(R.string.my_location);
+            startName = getResources().getString(R.string.my_location);
+            startLatLng = (LatLng) data;
+        }
+
+        @Override
+        public void onRetrievalFailed() {
+            Toast.makeText(StartStopSelectActivity.this, "Unable to find your location", Toast.LENGTH_SHORT).show();
+        }
+
+    }
+
 }
