@@ -1,18 +1,9 @@
 package com.asuc.asucmobile.main;
 
-import android.Manifest;
 import android.content.Intent;
-import android.content.IntentSender;
 import android.content.pm.PackageManager;
-import android.location.Criteria;
-import android.location.Location;
-import android.location.LocationListener;
-import android.location.LocationManager;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.SparseArray;
@@ -34,18 +25,15 @@ import com.asuc.asucmobile.adapters.StopAdapter;
 import com.asuc.asucmobile.controllers.LineController;
 import com.asuc.asucmobile.models.Stop;
 import com.asuc.asucmobile.utilities.Callback;
+import com.asuc.asucmobile.utilities.LocationGrabber;
 import com.flurry.android.FlurryAgent;
-import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.common.api.GoogleApiClient.ConnectionCallbacks;
-import com.google.android.gms.common.api.GoogleApiClient.OnConnectionFailedListener;
-import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.maps.model.LatLng;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 
-public class StopActivity extends AppCompatActivity implements ConnectionCallbacks, OnConnectionFailedListener{
+public class StopActivity extends AppCompatActivity {
 
     private static final Comparator<Stop> ALPHABETICAL_ORDER = new Comparator<Stop>() {
         public int compare(Stop stop1, Stop stop2) {
@@ -57,34 +45,22 @@ public class StopActivity extends AppCompatActivity implements ConnectionCallbac
         }
     };
     private static final int LOCATION_PERMISSION = 0;
-    private static final int REQUEST_RESOLVE_ERROR = 1001;
-
-    protected synchronized void buildGoogleApiClient() {
-        mGoogleApiClient = new GoogleApiClient.Builder(this)
-                .addConnectionCallbacks(this)
-                .addOnConnectionFailedListener(this)
-                .addApi(LocationServices.API)
-                .build();
-    }
 
     private ListView mDestList;
     private ProgressBar mProgressBar;
     private LinearLayout mRefreshWrapper;
-    private GoogleApiClient mGoogleApiClient;
     private StopAdapter mAdapter;
-    private double mLatitude = -1;
-    private double mLongitude = -1;
     private int mRequestType;
-    private boolean mResolvingError = false;
 
-    // App lifecycle methods
+    ///////////////////////////////////////
+    //////// App lifecycle methods ////////
+    ///////////////////////////////////////
 
     @Override
     @SuppressWarnings("deprecation")
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         FlurryAgent.onStartSession(this, "4VPTT49FCCKH7Z2NVQ26");
-        buildGoogleApiClient();
 
         // Set up layout and toolbar
         setContentView(R.layout.activity_stop);
@@ -105,28 +81,24 @@ public class StopActivity extends AppCompatActivity implements ConnectionCallbac
         mRefreshWrapper = (LinearLayout) findViewById(R.id.refresh);
 
         // Set up list
-        mAdapter = new StopAdapter(this, mLatitude, mLongitude);
+        mAdapter = new StopAdapter(this);
         mDestList.setAdapter(mAdapter);
 
         // Set up on click listeners for the stop list
         mDestList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                if (mLatitude == -1 || mLongitude == -1) {
-                    Toast.makeText(getBaseContext(), "Retrieving location, make sure your location is enabled!", Toast.LENGTH_SHORT).show();
+                Stop stop = mAdapter.getItem(i);
+                Intent intent = new Intent();
+                if(mRequestType == 1) {
+                    intent.putExtra("startName", stop.getName());
+                    intent.putExtra("startLatLng", stop.getLocation());
                 } else {
-                    Stop stop = mAdapter.getItem(i);
-                    Intent intent = new Intent();
-                    if(mRequestType == 1) {
-                        intent.putExtra("startName", stop.getName());
-                        intent.putExtra("startLatLng", stop.getLocation());
-                    } else {
-                        intent.putExtra("endName", stop.getName());
-                        intent.putExtra("endLatLng", stop.getLocation());
-                    }
-                    setResult(mRequestType, intent);
-                    finish();
+                    intent.putExtra("endName", stop.getName());
+                    intent.putExtra("endLatLng", stop.getLocation());
                 }
+                setResult(mRequestType, intent);
+                finish();
             }
         });
 
@@ -181,35 +153,12 @@ public class StopActivity extends AppCompatActivity implements ConnectionCallbac
     public void onStart() {
         super.onStart();
 
-        // Check if we're on Android 6.0
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            int hasCoarsePermission = ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION);
-            int hasFinePermission = ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION);
-
-            if (hasFinePermission != PackageManager.PERMISSION_GRANTED && hasCoarsePermission != PackageManager.PERMISSION_GRANTED) {
-                // Ask for location permission
-                String[] permissions = new String[]{
-                        Manifest.permission.ACCESS_COARSE_LOCATION,
-                        Manifest.permission.ACCESS_FINE_LOCATION
-                };
-                ActivityCompat.requestPermissions(this, permissions, LOCATION_PERMISSION);
-            } else {
-                updateLocation();
-            }
-        } else {
-            updateLocation();
-        }
-
-        if (!mResolvingError) {
-            mGoogleApiClient.connect();
-        }
-
+        LocationGrabber.getLocation(this, new LocationCallback());
         refresh();
     }
 
     @Override
     protected void onStop() {
-        mGoogleApiClient.disconnect();
         super.onStop();
 
         FlurryAgent.onEndSession(this);
@@ -223,107 +172,27 @@ public class StopActivity extends AppCompatActivity implements ConnectionCallbac
         FlurryAgent.logEvent("Tapped on the Back Button (Stops)");
     }
 
-    // Google Play Service callback methods
+    //////////////////////////////////////
+    //////// App callback methods ////////
+    //////////////////////////////////////
 
-    @Override
-    public void onConnected(Bundle connectionHint) {
-        // Get Google's reported location ONLY if the location hasn't already been retreived
-        if (mLatitude == -1 && mLongitude == -1) {
-            Location mLastLocation = LocationServices.FusedLocationApi.getLastLocation(
-                    mGoogleApiClient);
-            if (mLastLocation != null) {
-                mLatitude = mLastLocation.getLatitude();
-                mLongitude = mLastLocation.getLongitude();
-                mAdapter.setNewLocation(mLastLocation);
-            }
-        }
-    }
-
-    @Override
-    public void onConnectionFailed(ConnectionResult result) {
-        if (result.hasResolution()) {
-            try {
-                mResolvingError = true;
-                result.startResolutionForResult(this, REQUEST_RESOLVE_ERROR);
-            } catch (IntentSender.SendIntentException e) {
-                // There was an error with the resolution intent. Try again.
-                mGoogleApiClient.connect();
-            }
-        }
-    }
-
-    @Override
-    public void onConnectionSuspended(int cause) {}
-
-    // App event methods
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == REQUEST_RESOLVE_ERROR) {
-            mResolvingError = false;
-            if (resultCode == RESULT_OK) {
-                // Make sure the app is not already connected or attempting to connect
-                if (!mGoogleApiClient.isConnecting() &&
-                        !mGoogleApiClient.isConnected()) {
-                    mGoogleApiClient.connect();
-                }
-            }
-        }
-    }
-
+    /**
+     * onRequestPermissionsResult() is called from LocationManager when it requests location permissions.
+     */
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         if (requestCode == LOCATION_PERMISSION && grantResults.length > 0 &&
                 (grantResults[0] == PackageManager.PERMISSION_GRANTED || grantResults[1] == PackageManager.PERMISSION_GRANTED)) {
-            updateLocation();
+            LocationGrabber.getLocation(this, new LocationCallback());
         } else {
             Toast.makeText(this, "Please allow location permissions and try again", Toast.LENGTH_SHORT).show();
             finish();
         }
     }
 
-    // Other methods
-
-    private void updateLocation() {
-        // Get location manager
-        final LocationManager locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
-        String bestProvider = locationManager.getBestProvider(new Criteria(), false);
-
-        try {
-            // First try to get the last known location
-            Location location = locationManager.getLastKnownLocation(bestProvider);
-            if (location != null) {
-                mLatitude = location.getLatitude();
-                mLongitude = location.getLongitude();
-                mAdapter.setNewLocation(location);
-            } else {
-                // Define a listener that responds to location updates
-                LocationListener locationListener = new LocationListener() {
-                    public void onLocationChanged(Location location) {
-                        // Called when a new location is found by the network location provider.
-                        mLatitude = location.getLatitude();
-                        mLongitude = location.getLongitude();
-                        mAdapter.setNewLocation(location);
-                    }
-
-                    public void onStatusChanged(String provider, int status, Bundle extras) {}
-
-                    public void onProviderEnabled(String provider) {}
-
-                    public void onProviderDisabled(String provider) {}
-                };
-
-                // Register the listener with the Location Manager to receive location updates
-                try {
-                    locationManager.requestSingleUpdate(bestProvider, locationListener, null);
-                } catch (SecurityException e) {
-                    // Do nothing
-                }
-            }
-        } catch (SecurityException e) {
-            finish();
-        }
-    }
+    ///////////////////////////////
+    //////// Miscellaneous ////////
+    ///////////////////////////////
 
     /*
      * refresh() updates the visibility of necessary UI elements and refreshes the library list
@@ -359,6 +228,19 @@ public class StopActivity extends AppCompatActivity implements ConnectionCallbac
                 Toast.makeText(getBaseContext(), "Unable to retrieve data, please try again", Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    private class LocationCallback implements Callback {
+
+        @Override
+        public void onDataRetrieved(Object data) {
+            LatLng latLng = (LatLng) data;
+            mAdapter.setNewLocation(latLng);
+        }
+
+        @Override
+        public void onRetrievalFailed() {}
+
     }
 
 }
