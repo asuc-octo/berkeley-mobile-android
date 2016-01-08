@@ -22,6 +22,7 @@ import com.flurry.android.FlurryAgent;
 import com.google.android.gms.maps.model.LatLng;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 public class OpenRouteSelectionActivity extends AppCompatActivity {
 
@@ -52,6 +53,7 @@ public class OpenRouteSelectionActivity extends AppCompatActivity {
 
         LatLng startLatLng = getIntent().getParcelableExtra("startLngLat");
         LatLng endLatLng = getIntent().getParcelableExtra("endLngLat");
+        Date departureTime = (Date) getIntent().getSerializableExtra("departureTime");
 
         ImageButton mRefreshButton = (ImageButton) findViewById(R.id.refresh_button);
 
@@ -59,7 +61,8 @@ public class OpenRouteSelectionActivity extends AppCompatActivity {
         mRefreshWrapper = (LinearLayout) findViewById(R.id.refresh);
         mTripList = (ListView) findViewById(R.id.tripList);
 
-        routeController = (RouteController) RouteController.createInstance(this, startLatLng, endLatLng);
+        routeController = (RouteController) RouteController.createInstance(this, startLatLng,
+                endLatLng, departureTime);
         lineController = (LineController) LineController.getInstance(this);
         mRefreshButton.setOnClickListener(new View.OnClickListener() {
             @Override
