@@ -1,17 +1,22 @@
 package com.asuc.asucmobile.main;
 
+import android.app.Dialog;
+import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.format.DateFormat;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.asuc.asucmobile.R;
@@ -20,6 +25,9 @@ import com.asuc.asucmobile.utilities.LocationGrabber;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.LatLng;
+
+import java.util.Calendar;
+import java.util.Date;
 
 //TODO: flurry
 //TODO: check for existing location through sharedPreferences
@@ -34,13 +42,15 @@ public class StartStopSelectActivity extends AppCompatActivity
 
     private TextView startButtonLabel;
     private TextView destButtonLabel;
-    private TextView timeButtonLabel;
+    private static TextView timeButtonLabel;
 
     private String startName;
     private String endName;
 
     private LatLng startLatLng;
     private LatLng endLatLng;
+
+    private static Calendar departureTime = Calendar.getInstance();
 
     @Override
     @SuppressWarnings("deprecation")
@@ -60,6 +70,13 @@ public class StartStopSelectActivity extends AppCompatActivity
         LinearLayout startButton = (LinearLayout) findViewById(R.id.select_start);
         LinearLayout destButton = (LinearLayout) findViewById(R.id.select_dest);
         LinearLayout timeButton = (LinearLayout) findViewById(R.id.select_time);
+        timeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DialogFragment newFragment = new TimePickerFragment();
+                newFragment.show(getSupportFragmentManager(), "timePicker");
+            }
+        });
         ImageButton myLocationButton = (ImageButton) findViewById(R.id.my_location);
         startButtonLabel = (TextView) findViewById(R.id.start_stop);
         destButtonLabel = (TextView) findViewById(R.id.dest_stop);
@@ -83,13 +100,22 @@ public class StartStopSelectActivity extends AppCompatActivity
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getBaseContext(), OpenRouteSelectionActivity.class);
-                if(startLatLng == null || endLatLng == null) {
-                    Toast.makeText(getBaseContext(), "Please select a start and an end location", Toast.LENGTH_SHORT).show();
+                if (startLatLng == null) {
+                    Toast.makeText(getBaseContext(), "Please select a start location", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                if (endLatLng == null) {
+                    Toast.makeText(getBaseContext(), "Please select an end location", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                //should be impossible
+                if (departureTime == null) {
+                    Toast.makeText(getBaseContext(), "Please select a departure Time", Toast.LENGTH_SHORT).show();
                     return;
                 }
                 intent.putExtra("startLngLat", startLatLng);
                 intent.putExtra("endLngLat", endLatLng);
-
+                intent.putExtra("departureTime", departureTime.getTime());
                 startActivity(intent);
             }
         });
@@ -151,6 +177,27 @@ public class StartStopSelectActivity extends AppCompatActivity
             LocationGrabber.getLocation(this, new LocationCallback());
         } else {
             Toast.makeText(this, "Please allow location permissions and try again", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    public static class TimePickerFragment extends DialogFragment
+            implements TimePickerDialog.OnTimeSetListener {
+
+        @Override
+        public Dialog onCreateDialog(Bundle savedInstanceState) {
+            // Use the current time as the default values for the picker
+            int hour = departureTime.get(Calendar.HOUR_OF_DAY);
+            int minute = departureTime.get(Calendar.MINUTE);
+
+            // Create a new instance of TimePickerDialog and return it
+            return new TimePickerDialog(getActivity(), this, hour, minute,
+                    DateFormat.is24HourFormat(getActivity()));
+        }
+
+        public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+            departureTime.set(Calendar.HOUR_OF_DAY, hourOfDay);
+            departureTime.set(Calendar.MINUTE, minute);
+            timeButtonLabel.setText(departureTime.getTime().toString());
         }
     }
 
