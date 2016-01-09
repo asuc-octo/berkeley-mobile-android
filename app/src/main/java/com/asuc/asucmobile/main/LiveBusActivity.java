@@ -67,7 +67,7 @@ public class LiveBusActivity extends AppCompatActivity implements OnMapReadyCall
             public void run() {
                 BusController.getInstance(activity).refreshInBackground(new Callback() {
                     @Override
-                    public void onDataRetrieved(Object data) {
+                    public synchronized void onDataRetrieved(Object data) {
                         buses = (ArrayList<Bus>) data;
                         map.clear();
                         for(Bus bus : buses) {

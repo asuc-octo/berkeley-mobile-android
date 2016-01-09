@@ -2,6 +2,7 @@ package com.asuc.asucmobile.controllers;
 
 import android.app.Activity;
 import android.content.Context;
+import android.util.Log;
 
 import com.asuc.asucmobile.models.Bus;
 import com.asuc.asucmobile.utilities.Callback;
@@ -18,7 +19,7 @@ import java.util.TimeZone;
 
 public class BusController implements Controller{
 
-    private static final String URL = BASE_URL + "/bt_trips";
+    private static final String URL = BASE_URL + "/bt_buses";
     private static final SimpleDateFormat DATE_FORMAT =
             new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.ENGLISH);
     private static final TimeZone PST = TimeZone.getTimeZone("America/Los_Angeles");
@@ -39,6 +40,10 @@ public class BusController implements Controller{
         return instance;
     }
 
+    public BusController() {
+        buses = new ArrayList<>();
+    }
+
     @Override
     public void setResources(final JSONArray array) {
         if (array == null) {
@@ -50,7 +55,6 @@ public class BusController implements Controller{
             });
             return;
         }
-
         buses.clear();
 
         /*
@@ -61,8 +65,6 @@ public class BusController implements Controller{
             @Override
             public void run() {
                 try {
-                    LineController lineController = (LineController) LineController.getInstance(context);
-
                     // Iterate through buses
                     for (int i = 0; i < array.length(); i++) {
                         JSONObject bus = array.getJSONObject(i);
@@ -72,11 +74,13 @@ public class BusController implements Controller{
                         }
                         int id = bus.getInt("id");
                         LatLng location = new LatLng(bus.getDouble("latitude"), bus.getDouble("longitude"));
-                        int lineId = bus.getInt("line_id");
-                        double speed = bus.getDouble("speed");
-                        double bearing = bus.getDouble("bearing");
-                        int vehicleId = bus.getInt("vehicle_id");
-                        Bus newBus = new Bus(id, location, lineId, speed, bearing, vehicleId, inService);
+                        Log.d("buses", id + location.toString());
+                        // FIXME: 1/8/2016
+//                        int lineId = bus.getInt("line_id");
+//                        double speed = bus.getDouble("speed");
+//                        double bearing = bus.getDouble("bearing");
+//                        int vehicleId = bus.getInt("vehicle_id");
+                        Bus newBus = new Bus(id, location, 0, 0, 0, 0, inService);
                         buses.add(newBus);
                         ((Activity) context).runOnUiThread(new Runnable() {
                             @Override
