@@ -27,6 +27,9 @@ import java.util.Locale;
 
 public class MenuFragment extends Fragment {
 
+    private static FoodAdapter adapter;
+    private static DiningHall diningHall;
+
     private static final SimpleDateFormat HOURS_FORMAT =
             new SimpleDateFormat("h:mm a", Locale.ENGLISH);
 
@@ -56,6 +59,7 @@ public class MenuFragment extends Fragment {
         try {
             ArrayList<FoodItem> foodItems;
             boolean isOpen;
+            MenuFragment.diningHall = diningHall;
             if (whichMenu != null) {
                 switch (whichMenu) {
                     case "Breakfast":
@@ -78,7 +82,7 @@ public class MenuFragment extends Fragment {
                 }
 
                 if (foodItems.size() == 0) {
-                    emptyListView.setText("No " + whichMenu + " Today!");
+                    emptyListView.setText(String.format("No %s Today!", whichMenu));
 
                     foodMenu.setVisibility(View.GONE);
                     emptyListView.setVisibility(View.VISIBLE);
@@ -105,14 +109,14 @@ public class MenuFragment extends Fragment {
                     }
 
                     header.setText(spannableHeader);
-
                     FoodAdapter adapter = new FoodAdapter(getActivity(), foodItems);
+                    MenuFragment.adapter = adapter;
                     foodMenu.setAdapter(adapter);
                     foodMenu.addParallaxedHeaderView(header);
                 }
             }
         } catch (Exception e) { // Catch a null exception, meaning that there is no menu for this time slot.
-            emptyListView.setText("No " + whichMenu + " Today!");
+            emptyListView.setText(String.format("No %s Today!", whichMenu));
 
             foodMenu.setVisibility(View.GONE);
             emptyListView.setVisibility(View.VISIBLE);
@@ -133,6 +137,7 @@ public class MenuFragment extends Fragment {
 
         @Override
         public void run() {
+
             try {
                 InputStream input = new java.net.URL(url).openStream();
                 final Bitmap bitmap = BitmapFactory.decodeStream(input);
@@ -144,6 +149,10 @@ public class MenuFragment extends Fragment {
                     }
                 });
             } catch (Exception e) {
+                if (getActivity() == null) {
+                    return;
+                }
+
                 getActivity().runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
@@ -153,6 +162,14 @@ public class MenuFragment extends Fragment {
             }
         }
 
+    }
+
+    public static FoodAdapter getAdapter() {
+        return adapter;
+    }
+
+    public static DiningHall getDiningHall() {
+        return diningHall;
     }
 
 }
