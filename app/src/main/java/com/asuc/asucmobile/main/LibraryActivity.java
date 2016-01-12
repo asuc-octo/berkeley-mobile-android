@@ -23,6 +23,7 @@ import com.asuc.asucmobile.controllers.LibraryController;
 import com.asuc.asucmobile.models.Library;
 import com.asuc.asucmobile.utilities.Callback;
 import com.asuc.asucmobile.utilities.CustomComparators;
+import com.asuc.asucmobile.utilities.SerializableUtilities;
 import com.flurry.android.FlurryAgent;
 
 import java.util.ArrayList;
@@ -45,6 +46,12 @@ public class LibraryActivity extends AppCompatActivity {
         FlurryAgent.onStartSession(this, "4VPTT49FCCKH7Z2NVQ26");
 
         setContentView(R.layout.activity_library);
+
+        ListOfFavorites listOfFavorites = (ListOfFavorites) SerializableUtilities.loadSerializedObject();
+        if (listOfFavorites == null) {
+            listOfFavorites = new ListOfFavorites();
+            SerializableUtilities.saveObject(listOfFavorites);
+        }
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -98,6 +105,8 @@ public class LibraryActivity extends AppCompatActivity {
         FlurryAgent.onEndSession(this);
     }
 
+    //start off lv sorted by favorites
+
     @Override
     public boolean onOptionsItemSelected(MenuItem menuItem) {
 
@@ -106,12 +115,16 @@ public class LibraryActivity extends AppCompatActivity {
                 Collections.sort(mAdapter.getLibraries(), CustomComparators.FacilityComparators.getSortByAZ());
                 mAdapter.notifyDataSetChanged();
                 break;
-            case R.id.sortZA:
-                Collections.sort(mAdapter.getLibraries(), CustomComparators.FacilityComparators.getSortByZA());
-                mAdapter.notifyDataSetChanged();
-                break;
+//            case R.id.sortZA:
+//                Collections.sort(mAdapter.getLibraries(), CustomComparators.FacilityComparators.getSortByZA());
+//                mAdapter.notifyDataSetChanged();
+//                break;
             case R.id.sortOpen:
                 Collections.sort(mAdapter.getLibraries(), CustomComparators.FacilityComparators.getSortByOpenness());
+                mAdapter.notifyDataSetChanged();
+                break;
+            case R.id.sortFavorites:
+                Collections.sort(mAdapter.getLibraries(), CustomComparators.FacilityComparators.getSortByFavoriteLibrary());
                 mAdapter.notifyDataSetChanged();
                 break;
         }
