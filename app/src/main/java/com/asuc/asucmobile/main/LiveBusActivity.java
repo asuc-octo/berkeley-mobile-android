@@ -2,6 +2,7 @@ package com.asuc.asucmobile.main;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.media.MediaRouteProvider;
 
 import com.asuc.asucmobile.R;
 import com.asuc.asucmobile.controllers.BusController;
@@ -28,6 +29,7 @@ public class LiveBusActivity extends AppCompatActivity implements OnMapReadyCall
     private ArrayList<Bus> buses;
     private LiveBusActivity activity;
     private MapFragment mapFragment;
+    private Callback busCallback;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +38,8 @@ public class LiveBusActivity extends AppCompatActivity implements OnMapReadyCall
         setContentView(R.layout.activity_live_bus);
         mapFragment = (MapFragment) getFragmentManager()
                 .findFragmentById(R.id.map);
+        busCallback = new BusCallback();
+
     }
 
     @Override
@@ -65,23 +69,25 @@ public class LiveBusActivity extends AppCompatActivity implements OnMapReadyCall
         timer.schedule(new TimerTask() {
             @Override
             public void run() {
-                BusController.getInstance(activity).refreshInBackground(new Callback() {
-                    @Override
-                    public synchronized void onDataRetrieved(Object data) {
-                        buses = (ArrayList<Bus>) data;
-                        map.clear();
-                        for(Bus bus : buses) {
-                            map.addMarker(new MarkerOptions().position(bus.getLocation()));
-                        }
-                    }
-
-                    @Override
-                    public void onRetrievalFailed() {
-
-                    }
-                });
+                BusController.getInstance(activity).refreshInBackground(busCallback);
             }
         }, 0L, 3000L);
+    }
+
+    private class BusCallback implements Callback {
+        @Override
+        public void onDataRetrieved(Object data) {
+            buses = (ArrayList<Bus>) data;
+            map.clear();
+            for(Bus bus : buses) {
+                map.addMarker(new MarkerOptions().position(bus.getLocation()));
+            }
+        }
+
+        @Override
+        public void onRetrievalFailed() {
+
+        }
     }
 
 
