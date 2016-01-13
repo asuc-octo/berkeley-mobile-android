@@ -69,9 +69,9 @@ public class BusController implements Controller{
                     for (int i = 0; i < array.length(); i++) {
                         JSONObject bus = array.getJSONObject(i);
                         boolean inService = bus.getBoolean("in_service");
-                        if (!inService) {
-                            continue;
-                        }
+//                        if (!inService) {
+//                            continue;
+//                        }
                         int id = bus.getInt("id");
                         LatLng location = new LatLng(bus.getDouble("latitude"), bus.getDouble("longitude"));
                         Log.d("buses", id + location.toString());
@@ -82,13 +82,13 @@ public class BusController implements Controller{
 //                        int vehicleId = bus.getInt("vehicle_id");
                         Bus newBus = new Bus(id, location, 0, 0, 0, 0, inService);
                         buses.add(newBus);
-                        ((Activity) context).runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                callback.onDataRetrieved(buses);
-                            }
-                        });
                     }
+                    ((Activity) context).runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            callback.onDataRetrieved(buses);
+                        }
+                    });
                 } catch (Exception e) {
                     e.printStackTrace();
                     ((Activity) context).runOnUiThread(new Runnable() {
