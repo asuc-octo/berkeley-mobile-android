@@ -2,11 +2,13 @@ package com.asuc.asucmobile.main;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.media.MediaRouteProvider;
+import android.view.View;
+import android.widget.ImageButton;
+import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import com.asuc.asucmobile.R;
 import com.asuc.asucmobile.controllers.BusController;
-import com.asuc.asucmobile.controllers.LineController;
 import com.asuc.asucmobile.models.Bus;
 import com.asuc.asucmobile.utilities.Callback;
 import com.google.android.gms.maps.CameraUpdate;
@@ -15,7 +17,6 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.util.ArrayList;
@@ -30,6 +31,8 @@ public class LiveBusActivity extends AppCompatActivity implements OnMapReadyCall
     private LiveBusActivity activity;
     private MapFragment mapFragment;
     private Callback busCallback;
+    private LinearLayout mRefreshWrapper;
+    private int failCount;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,7 +42,14 @@ public class LiveBusActivity extends AppCompatActivity implements OnMapReadyCall
         mapFragment = (MapFragment) getFragmentManager()
                 .findFragmentById(R.id.map);
         busCallback = new BusCallback();
-
+        mRefreshWrapper = (LinearLayout) findViewById(R.id.refresh);
+        ImageButton refreshButton = (ImageButton) findViewById(R.id.refresh_button);
+        refreshButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                liveTrack();
+            }
+        });
     }
 
     @Override
@@ -47,6 +57,7 @@ public class LiveBusActivity extends AppCompatActivity implements OnMapReadyCall
         super.onStart();
         mapFragment.getMapAsync(this);
         timer = new Timer("liveBus", true);
+        failCount = 0;
     }
 
     @Override
@@ -62,7 +73,7 @@ public class LiveBusActivity extends AppCompatActivity implements OnMapReadyCall
     @Override
     public void onStop() {
         super.onStop();
-        timer.cancel();
+        timer.purge();
     }
 
     private void liveTrack() {
@@ -77,6 +88,10 @@ public class LiveBusActivity extends AppCompatActivity implements OnMapReadyCall
     private class BusCallback implements Callback {
         @Override
         public synchronized void onDataRetrieved(Object data) {
+            mRefreshWrapper.setVisibility(View.GONE);
+            if (failCount != 0) {
+                failCount = 0;
+            }
             buses = (ArrayList<Bus>) data;
             map.clear();
             for(Bus bus : buses) {
@@ -86,9 +101,13 @@ public class LiveBusActivity extends AppCompatActivity implements OnMapReadyCall
 
         @Override
         public synchronized void onRetrievalFailed() {
-
+            failCount++;
+            if (failCount > 1) {
+                timer.purge();
+                map.clear();
+                mRefreshWrapper.setVisibility(View.VISIBLE);
+                Toast.makeText(getBaseContext(), "Unable to retrieve data, please try again", Toast.LENGTH_SHORT).show();
+            }
         }
     }
-
-
 }
