@@ -2,7 +2,6 @@ package com.asuc.asucmobile.controllers;
 
 import android.app.Activity;
 import android.content.Context;
-import android.util.Log;
 
 import com.asuc.asucmobile.models.Bus;
 import com.asuc.asucmobile.utilities.Callback;
@@ -74,7 +73,6 @@ public class BusController implements Controller{
 //                        }
                         int id = bus.getInt("id");
                         LatLng location = new LatLng(bus.getDouble("latitude"), bus.getDouble("longitude"));
-                        Log.d("buses", id + location.toString());
                         // FIXME: 1/8/2016
 //                        int lineId = bus.getInt("line_id");
 //                        double speed = bus.getDouble("speed");
