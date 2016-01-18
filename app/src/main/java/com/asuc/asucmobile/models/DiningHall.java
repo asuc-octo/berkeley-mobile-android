@@ -94,7 +94,6 @@ public class DiningHall {
         if (breakfastOpen == null || breakfastClose == null) {
             return false;
         }
-
         Date currentTime = new Date();
         return currentTime.after(breakfastOpen) && currentTime.before(breakfastClose);
     }
@@ -103,7 +102,6 @@ public class DiningHall {
         if (lunchOpen == null || lunchClose == null) {
             return false;
         }
-
         Date currentTime = new Date();
         return currentTime.after(lunchOpen) && currentTime.before(lunchClose);
     }
@@ -112,7 +110,6 @@ public class DiningHall {
         if (dinnerOpen == null || dinnerClose == null) {
             return false;
         }
-
         Date currentTime = new Date();
         return currentTime.after(dinnerOpen) && currentTime.before(dinnerClose);
     }

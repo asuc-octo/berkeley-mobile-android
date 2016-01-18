@@ -18,6 +18,7 @@ import com.asuc.asucmobile.adapters.DiningHallAdapter;
 import com.asuc.asucmobile.controllers.DiningController;
 import com.asuc.asucmobile.models.DiningHall;
 import com.asuc.asucmobile.utilities.Callback;
+import com.asuc.asucmobile.utilities.SerializableUtilities;
 import com.flurry.android.FlurryAgent;
 
 import java.util.ArrayList;
@@ -39,6 +40,11 @@ public class DiningHallActivity extends AppCompatActivity {
         FlurryAgent.onStartSession(this, "4VPTT49FCCKH7Z2NVQ26");
 
         setContentView(R.layout.activity_dining_hall);
+        ListOfFavorites listOfFavorites = (ListOfFavorites) SerializableUtilities.loadSerializedObject("dining_halls");
+        if (listOfFavorites == null) {
+            listOfFavorites = new ListOfFavorites();
+            SerializableUtilities.saveObject(listOfFavorites,"dining_halls");
+        }
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         toolbar.setNavigationIcon(getResources().getDrawable(R.drawable.ic_action_back));

@@ -47,10 +47,10 @@ public class LibraryActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_library);
 
-        ListOfFavorites listOfFavorites = (ListOfFavorites) SerializableUtilities.loadSerializedObject();
+        ListOfFavorites listOfFavorites = (ListOfFavorites) SerializableUtilities.loadSerializedObject("libraries");
         if (listOfFavorites == null) {
             listOfFavorites = new ListOfFavorites();
-            SerializableUtilities.saveObject(listOfFavorites);
+            SerializableUtilities.saveObject(listOfFavorites, "libraries");
         }
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -115,10 +115,6 @@ public class LibraryActivity extends AppCompatActivity {
                 Collections.sort(mAdapter.getLibraries(), CustomComparators.FacilityComparators.getSortByAZ());
                 mAdapter.notifyDataSetChanged();
                 break;
-//            case R.id.sortZA:
-//                Collections.sort(mAdapter.getLibraries(), CustomComparators.FacilityComparators.getSortByZA());
-//                mAdapter.notifyDataSetChanged();
-//                break;
             case R.id.sortOpen:
                 Collections.sort(mAdapter.getLibraries(), CustomComparators.FacilityComparators.getSortByOpenness());
                 mAdapter.notifyDataSetChanged();

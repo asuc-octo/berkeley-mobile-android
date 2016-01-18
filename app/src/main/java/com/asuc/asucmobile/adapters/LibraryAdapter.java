@@ -73,7 +73,7 @@ public class LibraryAdapter extends BaseAdapter {
             libraryAvailability.setText("Closed");
         }
 
-        final ListOfFavorites listOfFavorites = (ListOfFavorites) SerializableUtilities.loadSerializedObject();
+        final ListOfFavorites listOfFavorites = (ListOfFavorites) SerializableUtilities.loadSerializedObject("libraries");
 
         final ImageView imageView = (ImageView) convertView.findViewById(R.id.pre_favorite);
         if (listOfFavorites != null && listOfFavorites.contains(library.getName())) {
@@ -87,11 +87,11 @@ public class LibraryAdapter extends BaseAdapter {
             public void onClick(View v) {
                 if (listOfFavorites != null && listOfFavorites.contains(library.getName())) {
                     listOfFavorites.remove(library.getName());
-                    SerializableUtilities.saveObject(listOfFavorites);
+                    SerializableUtilities.saveObject(listOfFavorites, "libraries");
                     imageView.setImageResource(R.drawable.pre_favorite);
                 } else {
                     listOfFavorites.add(library.getName());
-                    SerializableUtilities.saveObject(listOfFavorites);
+                    SerializableUtilities.saveObject(listOfFavorites, "libraries");
                     imageView.setImageResource(R.drawable.post_favorite);
                 }
 

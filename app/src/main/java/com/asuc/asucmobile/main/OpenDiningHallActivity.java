@@ -24,6 +24,7 @@ import com.flurry.android.FlurryAgent;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 
 public class OpenDiningHallActivity extends AppCompatActivity {
@@ -112,56 +113,35 @@ public class OpenDiningHallActivity extends AppCompatActivity {
         if (id == android.R.id.home) {
             finish();
             return true;
+        } else {
+            Comparator<FoodItem> comparator = null;
+            if (id == R.id.sortAZ) {
+                comparator = CustomComparators.FacilityComparators.getFoodSortByAZ();
+            }
+            if (id == R.id.sortVegetarian) {
+                comparator = CustomComparators.FacilityComparators.getFoodSortByVegetarian();
+            }
+            if (id ==R.id.sortVegan) {
+                comparator = CustomComparators.FacilityComparators.getFoodSortByVegan();
+            }
+            if (id == R.id.sortFavorites) {
+                comparator = CustomComparators.FacilityComparators.getFoodSortByFavorite();
+            }
+            if (comparator != null) {
+                FoodAdapter foodAdapter = MenuFragment.getAdapter();
+                DiningHall diningHall = MenuFragment.getDiningHall();
+                ArrayList<FoodItem> arrayListBreakfast = diningHall.getBreakfastMenu();
+                ArrayList<FoodItem> arrayListLunch = diningHall.getLunchMenu();
+                ArrayList<FoodItem> arrayListDinner = diningHall.getDinnerMenu();
+                if (arrayListBreakfast.size() != 0) Collections.sort(arrayListBreakfast, comparator);
+                if (arrayListLunch.size() != 0) Collections.sort(arrayListLunch, comparator);
+                if (arrayListDinner.size() != 0) Collections.sort(arrayListDinner, comparator);
+                if (foodAdapter != null) foodAdapter.notifyDataSetChanged();
+                return true;
+            }
+            return super.onOptionsItemSelected(item);
         }
-        if (id == R.id.sortAZ) {
-            FoodAdapter foodAdapter = MenuFragment.getAdapter();
-            DiningHall diningHall = MenuFragment.getDiningHall();
-            ArrayList<FoodItem> arrayListBreakfast = diningHall.getBreakfastMenu();
-            if (arrayListBreakfast.size() != 0) Collections.sort(arrayListBreakfast, CustomComparators.FacilityComparators.getFoodSortByAZ());
-            ArrayList<FoodItem> arrayListLunch = diningHall.getLunchMenu();
-            if (arrayListLunch.size() != 0) Collections.sort(arrayListLunch, CustomComparators.FacilityComparators.getFoodSortByAZ());
-            ArrayList<FoodItem> arrayListDinner = diningHall.getDinnerMenu();
-            if (arrayListDinner.size() != 0) Collections.sort(arrayListDinner, CustomComparators.FacilityComparators.getFoodSortByAZ());
-            if (foodAdapter != null) foodAdapter.notifyDataSetChanged();
-            return true;
-        }
-        if (id == R.id.sortVegetarian) {
-            FoodAdapter foodAdapter = MenuFragment.getAdapter();
-            DiningHall diningHall = MenuFragment.getDiningHall();
-            ArrayList<FoodItem> arrayListBreakfast = diningHall.getBreakfastMenu();
-            if (arrayListBreakfast.size() != 0) Collections.sort(arrayListBreakfast, CustomComparators.FacilityComparators.getFoodSortByVegetarian());
-            ArrayList<FoodItem> arrayListLunch = diningHall.getLunchMenu();
-            if (arrayListLunch.size() != 0) Collections.sort(arrayListLunch, CustomComparators.FacilityComparators.getFoodSortByVegetarian());
-            ArrayList<FoodItem> arrayListDinner = diningHall.getDinnerMenu();
-            if (arrayListDinner.size() != 0) Collections.sort(arrayListDinner, CustomComparators.FacilityComparators.getFoodSortByVegetarian());
-            if (foodAdapter != null) foodAdapter.notifyDataSetChanged();
-            return true;
-        }
-        if (id == R.id.sortVegan) {
-            FoodAdapter foodAdapter = MenuFragment.getAdapter();
-            DiningHall diningHall = MenuFragment.getDiningHall();
-            ArrayList<FoodItem> arrayListBreakfast = diningHall.getBreakfastMenu();
-            if (arrayListBreakfast.size() != 0) Collections.sort(arrayListBreakfast, CustomComparators.FacilityComparators.getFoodSortByVegan());
-            ArrayList<FoodItem> arrayListLunch = diningHall.getLunchMenu();
-            if (arrayListLunch.size() != 0) Collections.sort(arrayListLunch, CustomComparators.FacilityComparators.getFoodSortByVegan());
-            ArrayList<FoodItem> arrayListDinner = diningHall.getDinnerMenu();
-            if (arrayListDinner.size() != 0) Collections.sort(arrayListDinner, CustomComparators.FacilityComparators.getFoodSortByVegan());
-            if (foodAdapter != null) foodAdapter.notifyDataSetChanged();
-            return true;
-        }
-        if (id == R.id.sortFavorites) {
-            FoodAdapter foodAdapter = MenuFragment.getAdapter();
-            DiningHall diningHall = MenuFragment.getDiningHall();
-            ArrayList<FoodItem> arrayListBreakfast = diningHall.getBreakfastMenu();
-            if (arrayListBreakfast.size() != 0) Collections.sort(arrayListBreakfast, CustomComparators.FacilityComparators.getFoodSortByFavorite());
-            ArrayList<FoodItem> arrayListLunch = diningHall.getLunchMenu();
-            if (arrayListLunch.size() != 0) Collections.sort(arrayListLunch, CustomComparators.FacilityComparators.getFoodSortByFavorite());
-            ArrayList<FoodItem> arrayListDinner = diningHall.getDinnerMenu();
-            if (arrayListDinner.size() != 0) Collections.sort(arrayListDinner, CustomComparators.FacilityComparators.getFoodSortByFavorite());
-            if (foodAdapter != null) foodAdapter.notifyDataSetChanged();
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
+
     }
 
     /**

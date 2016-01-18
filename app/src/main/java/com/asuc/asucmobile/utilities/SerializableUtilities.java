@@ -1,8 +1,6 @@
 package com.asuc.asucmobile.utilities;
 
-
 import com.asuc.asucmobile.main.ListOfFavorites;
-
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -14,11 +12,11 @@ import java.io.ObjectOutputStream;
  */
 public class SerializableUtilities {
 
-    public static Object loadSerializedObject()
+    public static Object loadSerializedObject(String path)
     {
         try
         {
-            ObjectInputStream ois = new ObjectInputStream(new FileInputStream("/sdcard/save_object.bin"));
+            ObjectInputStream ois = new ObjectInputStream(new FileInputStream("/sdcard/" + path + ".bin"));
             Object o = ois.readObject();
             return o;
         }
@@ -29,13 +27,13 @@ public class SerializableUtilities {
         return null;
     }
 
-    public static void saveObject(ListOfFavorites lof){
+    public static void saveObject(ListOfFavorites lof, String path){
         try
         {
-            ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(new File("/sdcard/save_object.bin"))); //Select where you wish to save <span id="IL_AD6" class="IL_AD">the file</span>...
-            oos.writeObject(lof); // write the class as an 'object'
-            oos.flush(); // flush the stream to insure all of the information was written to 'save_object.bin'
-            oos.close();// close the stream
+            ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(new File("/sdcard/" + path + ".bin"))); //Select where you wish to save <span id="IL_AD6" class="IL_AD">the file</span>...
+            oos.writeObject(lof);
+            oos.flush();
+            oos.close();
         }
         catch(Exception ex)
         {

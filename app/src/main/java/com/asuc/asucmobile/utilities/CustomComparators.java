@@ -18,10 +18,6 @@ public class CustomComparators {
             return sortByAZ;
         }
 
-//        public static Comparator<Library> getSortByZA() {
-//            return sortByZA;
-//        }
-
         public static Comparator<Library> getSortByOpenness() {
             return sortByOpenness;
         }
@@ -51,11 +47,6 @@ public class CustomComparators {
                 return arg0.getName().compareTo(arg1.getName());
             }
         };
-//        private static Comparator<Library> sortByZA = new Comparator<Library>() {
-//            public int compare(Library arg0, Library arg1) {
-//                return -1 * arg0.getName().compareTo(arg1.getName());
-//            }
-//        };
         private static Comparator<Library> sortByOpenness = new Comparator<Library>() {
             public int compare(Library arg0, Library arg1) {
                 if (arg0.isOpen() && arg1.isOpen()) return 0;
@@ -67,7 +58,7 @@ public class CustomComparators {
         private static Comparator<Library> sortByFavoriteLibrary = new Comparator<Library>() {
             @Override
             public int compare(Library lhs, Library rhs) {
-                ListOfFavorites listOfFavorites = (ListOfFavorites) SerializableUtilities.loadSerializedObject();
+                ListOfFavorites listOfFavorites = (ListOfFavorites) SerializableUtilities.loadSerializedObject("libraries");
                 if (listOfFavorites.contains(lhs.getName()) && listOfFavorites.contains(rhs.getName())) return 0;
                 if (listOfFavorites.contains(lhs.getName())) return -1;
                 if (listOfFavorites.contains(rhs.getName())) return 1;
@@ -99,7 +90,7 @@ public class CustomComparators {
         private static Comparator<FoodItem> foodSortByFavorite = new Comparator<FoodItem>() {
             @Override
             public int compare(FoodItem arg0, FoodItem arg1) {
-                ListOfFavorites listOfFavorites = (ListOfFavorites) SerializableUtilities.loadSerializedObject();
+                ListOfFavorites listOfFavorites = (ListOfFavorites) SerializableUtilities.loadSerializedObject("dining_halls");
                 if (listOfFavorites.contains(arg0.getName()) && listOfFavorites.contains(arg1.getName())) return 0;
                 if (listOfFavorites.contains(arg0.getName())) return -1;
                 if (listOfFavorites.contains(arg1.getName())) return 1;
