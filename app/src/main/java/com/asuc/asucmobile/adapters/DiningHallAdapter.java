@@ -62,9 +62,9 @@ public class DiningHallAdapter extends BaseAdapter {
     }
 
     /**
-     * setList() updates the list of libraries (typically after calling for a refresh).
+     * setList() updates the list of dining halls (typically after calling for a refresh).
      *
-     * @param list The updated list of libraries.
+     * @param list The updated list of dining halls.
      */
     public void setList(ArrayList<DiningHall> list) {
         diningHalls = list;

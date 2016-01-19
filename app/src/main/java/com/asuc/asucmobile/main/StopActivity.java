@@ -103,7 +103,6 @@ public class StopActivity extends AppCompatActivity {
         });
 
         mRequestType = getIntent().getIntExtra("requestCode", 1);
-
         // Set up on click listeners for the refresh button
         refreshButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -149,6 +148,7 @@ public class StopActivity extends AppCompatActivity {
         return true;
     }
 
+
     @Override
     public void onStart() {
         super.onStart();
@@ -193,7 +193,6 @@ public class StopActivity extends AppCompatActivity {
     ///////////////////////////////
     //////// Miscellaneous ////////
     ///////////////////////////////
-
     /*
      * refresh() updates the visibility of necessary UI elements and refreshes the library list
      * from the web.
