@@ -33,6 +33,7 @@ public class DiningHallActivity extends AppCompatActivity {
     private DiningHallAdapter mAdapter;
 
     @Override
+    @SuppressWarnings("deprecation")
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         FlurryAgent.onStartSession(this, "4VPTT49FCCKH7Z2NVQ26");
@@ -65,7 +66,7 @@ public class DiningHallActivity extends AppCompatActivity {
                 Intent intent = new Intent(getBaseContext(), OpenDiningHallActivity.class);
 
                 //Flurry log for tapping Dining Hall Menus.
-                Map<String, String> diningParams = new HashMap<String, String>();
+                Map<String, String> diningParams = new HashMap<>();
                 diningParams.put("Hall", mAdapter.getItem(i).getName());
                 FlurryAgent.logEvent("Taps Dining Hall Menus", diningParams);
 

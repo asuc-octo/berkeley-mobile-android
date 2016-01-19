@@ -121,7 +121,6 @@ public class OpenRouteActivity extends AppCompatActivity {
 
                 LocationManager locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
                 String bestProvider = locationManager.getBestProvider(new Criteria(), false);
-                Location myLocation = locationManager.getLastKnownLocation(bestProvider);
 
                 BitmapDescriptor bitmap = BitmapDescriptorFactory.fromResource(R.drawable.icon_map_pin);
                 map.addMarker(new MarkerOptions()
@@ -129,8 +128,8 @@ public class OpenRouteActivity extends AppCompatActivity {
                                 .icon(bitmap)
                 );
                 map.addMarker(new MarkerOptions()
-                        .position(firstStop.getLocation())
-                        .icon(bitmap)
+                                .position(firstStop.getLocation())
+                                .icon(bitmap)
                 );
                 map.getUiSettings().setAllGesturesEnabled(false);
                 map.getUiSettings().setZoomControlsEnabled(false);
@@ -142,9 +141,12 @@ public class OpenRouteActivity extends AppCompatActivity {
                 builder.include(lastStop.getLocation());
 
                 try {
-                    builder.include(new LatLng(myLocation.getLatitude(), myLocation.getLongitude()));
-                } catch (Exception e) {
-                    e.printStackTrace();
+                    Location myLocation = locationManager.getLastKnownLocation(bestProvider);
+                    if (myLocation != null) {
+                        builder.include(new LatLng(myLocation.getLatitude(), myLocation.getLongitude()));
+                    }
+                } catch (SecurityException e) {
+                    // Don't do anything
                 }
 
                 map.setOnCameraChangeListener(new GoogleMap.OnCameraChangeListener() {
