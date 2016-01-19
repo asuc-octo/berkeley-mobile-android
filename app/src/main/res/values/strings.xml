@@ -25,9 +25,9 @@
     <string name="full">Full</string>
 
     <string name="beartransit_info">Plan your trip with BearTransit:</string>
-    <string name="start">Start</string>
-    <string name="dest">Destination</string>
-    <string name="departure_time">Departure Time</string>
+    <string name="from">From</string>
+    <string name="to">To</string>
+    <string name="depart_at">Depart At</string>
     <string name="my_location">My Location</string>
     <string name="find_route">Find Route</string>
     <string name="no_routes">No routes available</string>
