@@ -25,7 +25,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
         Category[] menuItems = new Category[] {
                 new Category(getResources().getDrawable(R.drawable.dining_hall_blue), "Dining Halls", new Intent(this, DiningHallActivity.class)),
                 new Category(getResources().getDrawable(R.drawable.library_blue), "Libraries", new Intent(this, LibraryActivity.class)),

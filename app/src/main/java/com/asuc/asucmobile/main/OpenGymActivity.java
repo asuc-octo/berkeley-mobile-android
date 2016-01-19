@@ -4,7 +4,6 @@ import android.animation.ObjectAnimator;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
@@ -128,7 +127,7 @@ public class OpenGymActivity extends AppCompatActivity {
                     animation.setInterpolator(new AccelerateDecelerateInterpolator());
                     animation.start();
 
-                    percentageText.setText(gym.getPercentFull() + "%");
+                    percentageText.setText(String.format("%d'%'", gym.getPercentFull()));
                 }
             }
 

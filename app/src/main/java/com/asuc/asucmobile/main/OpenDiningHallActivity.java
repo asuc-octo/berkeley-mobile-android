@@ -3,25 +3,27 @@ package com.asuc.asucmobile.main;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.os.Bundle;
-import android.support.design.widget.TabLayout;
 import android.support.v13.app.FragmentPagerAdapter;
+import android.support.v4.view.PagerTabStrip;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
-
 import com.asuc.asucmobile.R;
 import com.asuc.asucmobile.controllers.DiningController;
 import com.asuc.asucmobile.fragments.MenuFragment;
 import com.asuc.asucmobile.models.DiningHall;
 import com.flurry.android.FlurryAgent;
 
+import java.util.Arrays;
 import java.util.Date;
 
 public class OpenDiningHallActivity extends AppCompatActivity {
 
     private DiningHall diningHall;
+
+    private static final String[] HAS_LATE_NIGHT = {"Crossroads","Foothill"};
 
     @Override
     @SuppressWarnings("deprecation")
@@ -53,16 +55,20 @@ public class OpenDiningHallActivity extends AppCompatActivity {
 
         // Set up the ViewPager with the sections adapter.
         ViewPager viewPager = (ViewPager) findViewById(R.id.pager);
-        viewPager.setOffscreenPageLimit(3);
+        if (Arrays.asList(HAS_LATE_NIGHT).contains(diningHall.getName())) {
+            viewPager.setOffscreenPageLimit(4);
+        } else {
+            viewPager.setOffscreenPageLimit(3);
+        }
         viewPager.setAdapter(pagerAdapter);
 
-        TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
-        tabLayout.setTabsFromPagerAdapter(pagerAdapter);
-        viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
-        tabLayout.setOnTabSelectedListener(new TabLayout.ViewPagerOnTabSelectedListener(viewPager));
+
 
         Date currentTime = new Date();
-        if (diningHall.isDinnerOpen() ||
+        if (diningHall.isLateNightOpen() ||
+                (diningHall.getDinnerClosing() != null && currentTime.after(diningHall.getDinnerClosing()))) {
+            viewPager.setCurrentItem(3);
+        } else if (diningHall.isDinnerOpen() ||
                 (diningHall.getLunchClosing() != null && currentTime.after(diningHall.getLunchClosing())) ||
                 (diningHall.getDinnerClosing() != null && currentTime.after(diningHall.getDinnerClosing()))) {
             viewPager.setCurrentItem(2);
@@ -72,6 +78,10 @@ public class OpenDiningHallActivity extends AppCompatActivity {
         } else {
             viewPager.setCurrentItem(0);
         }
+
+        PagerTabStrip tabStrip = (PagerTabStrip) findViewById(R.id.pager_tab_strip);
+        tabStrip.setTextColor(getResources().getColor(R.color.off_white));
+        tabStrip.setTabIndicatorColor(getResources().getColor(R.color.off_white));
     }
 
     @Override
@@ -116,18 +126,40 @@ public class OpenDiningHallActivity extends AppCompatActivity {
             MenuFragment menuFragment = new MenuFragment();
             Bundle bundle = new Bundle(1);
 
-            switch (position) {
-                case 0:
-                    bundle.putString("whichMenu", "Breakfast");
-                    break;
-                case 1:
-                    bundle.putString("whichMenu", "Lunch");
-                    break;
-                case 2:
-                    bundle.putString("whichMenu", "Dinner");
-                    break;
-                default:
-                    return null;
+            /*
+                If late night exists in this dining hall, add it; otherwise, leave it out.
+             */
+            if (Arrays.asList(HAS_LATE_NIGHT).contains(diningHall.getName())) {
+                switch (position) {
+                    case 0:
+                        bundle.putString("whichMenu", "Breakfast");
+                        break;
+                    case 1:
+                        bundle.putString("whichMenu", "Lunch");
+                        break;
+                    case 2:
+                        bundle.putString("whichMenu", "Dinner");
+                        break;
+                    case 3:
+                        bundle.putString("whichMenu", "Late Night");
+                        break;
+                    default:
+                        return null;
+                }
+            } else {
+                switch (position) {
+                    case 0:
+                        bundle.putString("whichMenu", "Breakfast");
+                        break;
+                    case 1:
+                        bundle.putString("whichMenu", "Lunch");
+                        break;
+                    case 2:
+                        bundle.putString("whichMenu", "Dinner");
+                        break;
+                    default:
+                        return null;
+                }
             }
 
             menuFragment.setArguments(bundle);
@@ -137,18 +169,38 @@ public class OpenDiningHallActivity extends AppCompatActivity {
 
         @Override
         public int getCount() {
-            return 3;
+            if (Arrays.asList(HAS_LATE_NIGHT).contains(diningHall.getName())) {
+                return 4;
+            } else {
+                return 3;
+            }
         }
 
         @Override
         public CharSequence getPageTitle(int position) {
-            switch (position) {
-                case 0:
-                    return "Breakfast";
-                case 1:
-                    return "Lunch";
-                case 2:
-                    return "Dinner";
+            /*
+                Only set up a Late Night option if it exists.
+             */
+            if (Arrays.asList(HAS_LATE_NIGHT).contains(diningHall.getName())) {
+                switch (position) {
+                    case 0:
+                        return "     Breakfast     ";
+                    case 1:
+                        return "     Lunch     ";
+                    case 2:
+                        return "     Dinner     ";
+                    case 3:
+                        return "     Late Night     ";
+                }
+            } else {
+                switch (position) {
+                    case 0:
+                        return "     Breakfast     ";
+                    case 1:
+                        return "     Lunch     ";
+                    case 2:
+                        return "     Dinner     ";
+                }
             }
             return null;
         }

@@ -10,6 +10,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.EditText;
 import android.widget.Filter;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
@@ -22,9 +23,11 @@ import com.asuc.asucmobile.adapters.LibraryAdapter;
 import com.asuc.asucmobile.controllers.LibraryController;
 import com.asuc.asucmobile.models.Library;
 import com.asuc.asucmobile.utilities.Callback;
+import com.asuc.asucmobile.utilities.CustomComparators;
 import com.flurry.android.FlurryAgent;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -37,11 +40,13 @@ public class LibraryActivity extends AppCompatActivity {
     private LibraryAdapter mAdapter;
 
     @Override
+    @SuppressWarnings("deprecation")
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         FlurryAgent.onStartSession(this, "4VPTT49FCCKH7Z2NVQ26");
 
         setContentView(R.layout.activity_library);
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         toolbar.setNavigationIcon(getResources().getDrawable(R.drawable.ic_action_back));
@@ -95,14 +100,49 @@ public class LibraryActivity extends AppCompatActivity {
     }
 
     @Override
+    public boolean onOptionsItemSelected(MenuItem menuItem) {
+
+        switch (menuItem.getItemId()){
+            case R.id.sortAZ:
+                Collections.sort(mAdapter.getLibraries(), CustomComparators.FacilityComparators.getSortByAZ());
+                mAdapter.notifyDataSetChanged();
+                break;
+            case R.id.sortZA:
+                Collections.sort(mAdapter.getLibraries(), CustomComparators.FacilityComparators.getSortByZA());
+                mAdapter.notifyDataSetChanged();
+                break;
+            case R.id.sortOpen:
+                Collections.sort(mAdapter.getLibraries(), CustomComparators.FacilityComparators.getSortByOpenness());
+                mAdapter.notifyDataSetChanged();
+                break;
+        }
+        return true;
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+
+        //Flurry logging for pressing the Back Button
+        FlurryAgent.logEvent("Tapped on the Back Button (Libraries)");
+    }
+
+    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
+
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.library, menu);
 
         final MenuItem searchMenuItem = menu.findItem(R.id.search);
+
         if (searchMenuItem != null) {
             final SearchView searchView = (SearchView) searchMenuItem.getActionView();
             if (searchView != null) {
+                // Setting up aesthetics
+                EditText searchEditText = (EditText) searchView.findViewById(android.support.v7.appcompat.R.id.search_src_text);
+                searchEditText.setTextColor(getResources().getColor(android.R.color.white));
+                searchEditText.setHintTextColor(getResources().getColor(android.R.color.white));
+
                 searchView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -129,14 +169,6 @@ public class LibraryActivity extends AppCompatActivity {
         }
 
         return true;
-    }
-
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-
-        //Flurry logging for pressing the Back Button
-        FlurryAgent.logEvent("Tapped on the Back Button (Libraries)");
     }
 
     /**
