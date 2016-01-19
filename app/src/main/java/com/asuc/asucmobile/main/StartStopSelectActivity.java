@@ -13,6 +13,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.format.DateFormat;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -22,7 +23,10 @@ import android.widget.Toast;
 import com.asuc.asucmobile.R;
 import com.asuc.asucmobile.utilities.Callback;
 import com.asuc.asucmobile.utilities.LocationGrabber;
+import com.google.android.gms.maps.CameraUpdate;
+import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.LatLng;
 
@@ -40,15 +44,17 @@ public class StartStopSelectActivity extends AppCompatActivity
 
     private Context context;
 
-    private TextView startButtonLabel;
-    private TextView destButtonLabel;
-    private static TextView timeButtonLabel;
+    private Button startButton;
+    private Button destButton;
+    private static Button timeButton;
 
     private String startName;
     private String endName;
 
     private LatLng startLatLng;
     private LatLng endLatLng;
+
+    private MapFragment mapFragment;
 
     private static Calendar departureTime = Calendar.getInstance();
 
@@ -57,19 +63,17 @@ public class StartStopSelectActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_start_stop_select);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        toolbar.setNavigationIcon(getResources().getDrawable(R.drawable.ic_action_back));
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+        ImageButton backButton = (ImageButton) findViewById(R.id.back_button);
+        backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 finish();
             }
         });
 
-        LinearLayout startButton = (LinearLayout) findViewById(R.id.select_start);
-        LinearLayout destButton = (LinearLayout) findViewById(R.id.select_dest);
-        LinearLayout timeButton = (LinearLayout) findViewById(R.id.select_time);
+        startButton = (Button) findViewById(R.id.start_stop);
+        destButton = (Button) findViewById(R.id.dest_stop);
+        timeButton = (Button) findViewById(R.id.departure_time);
         timeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -78,9 +82,6 @@ public class StartStopSelectActivity extends AppCompatActivity
             }
         });
         ImageButton myLocationButton = (ImageButton) findViewById(R.id.my_location);
-        startButtonLabel = (TextView) findViewById(R.id.start_stop);
-        destButtonLabel = (TextView) findViewById(R.id.dest_stop);
-        timeButtonLabel = (TextView) findViewById(R.id.departure_time);
         FloatingActionButton navigateButton = (FloatingActionButton) findViewById(R.id.navigate_button);
 
         navigateButton.setImageDrawable(getResources().getDrawable(R.drawable.ic_navigation));
@@ -88,6 +89,10 @@ public class StartStopSelectActivity extends AppCompatActivity
         context = getBaseContext();
         startButton.setOnClickListener(new StartStopListener(START_INT));
         destButton.setOnClickListener(new StartStopListener(END_INT));
+
+        mapFragment = (MapFragment) getFragmentManager()
+                .findFragmentById(R.id.map);
+        mapFragment.getMapAsync(this);
 
         myLocationButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -128,10 +133,10 @@ public class StartStopSelectActivity extends AppCompatActivity
         }
         if (requestCode == START_INT) {
             getStartFromPref(data);
-            startButtonLabel.setText(startName);
+            startButton.setText(startName);
         } else if (requestCode == END_INT) {
             getEndFromPref(data);
-            destButtonLabel.setText(endName);
+            destButton.setText(endName);
         }
     }
 
@@ -165,6 +170,9 @@ public class StartStopSelectActivity extends AppCompatActivity
     @Override
     public void onMapReady(GoogleMap map) {
         map.setMapType(GoogleMap.MAP_TYPE_HYBRID);
+        map.setMyLocationEnabled(true);
+        CameraUpdate update = CameraUpdateFactory.newLatLngZoom(new LatLng(37.872508, -122.260783), 14.5f);
+        map.moveCamera(update);
     }
 
     /**
@@ -197,7 +205,7 @@ public class StartStopSelectActivity extends AppCompatActivity
         public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
             departureTime.set(Calendar.HOUR_OF_DAY, hourOfDay);
             departureTime.set(Calendar.MINUTE, minute);
-            timeButtonLabel.setText(departureTime.getTime().toString());
+            timeButton.setText(departureTime.getTime().toString());
         }
     }
 
@@ -205,7 +213,7 @@ public class StartStopSelectActivity extends AppCompatActivity
 
         @Override
         public void onDataRetrieved(Object data) {
-            startButtonLabel.setText(R.string.my_location);
+            startButton.setText(R.string.my_location);
             startName = getResources().getString(R.string.my_location);
             startLatLng = (LatLng) data;
         }
