@@ -20,7 +20,8 @@
     <string name="todays_hours">Today\'s Hours</string>
     <string name="location">Location</string>
     <string name="phone_number">Phone Number</string>
-    <string name="address">Address</string>
+    <string name="address">Address</string
+        >
     <string name="no_routes">No routes available</string>
     <string name="full">Full</string>
 
