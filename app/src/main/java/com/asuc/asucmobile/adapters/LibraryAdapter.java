@@ -6,10 +6,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Filter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.asuc.asucmobile.R;
+import com.asuc.asucmobile.main.ListOfFavorites;
 import com.asuc.asucmobile.models.Library;
+import com.asuc.asucmobile.utilities.SerializableUtilities;
 
 import java.util.ArrayList;
 
@@ -48,10 +51,10 @@ public class LibraryAdapter extends BaseAdapter {
 
     @Override
     public View getView(int i, View convertView, ViewGroup parent) {
-        Library library = getItem(i);
+        final Library library = getItem(i);
 
         if (convertView == null) {
-            convertView = LayoutInflater.from(context).inflate(R.layout.facility_row, parent, false);
+            convertView = LayoutInflater.from(context).inflate(R.layout.library_row, parent, false);
         }
 
         TextView libraryName = (TextView) convertView.findViewById(R.id.name);
@@ -69,6 +72,32 @@ public class LibraryAdapter extends BaseAdapter {
             libraryAvailability.setTextColor(context.getResources().getColor(android.R.color.holo_red_light));
             libraryAvailability.setText("Closed");
         }
+
+        final ListOfFavorites listOfFavorites = (ListOfFavorites) SerializableUtilities.loadSerializedObject();
+
+        final ImageView imageView = (ImageView) convertView.findViewById(R.id.pre_favorite);
+        if (listOfFavorites != null && listOfFavorites.contains(library.getName())) {
+            imageView.setImageResource(R.drawable.post_favorite);
+        } else {
+            imageView.setImageResource(R.drawable.pre_favorite);
+        }
+
+        imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (listOfFavorites != null && listOfFavorites.contains(library.getName())) {
+                    listOfFavorites.remove(library.getName());
+                    SerializableUtilities.saveObject(listOfFavorites);
+                    imageView.setImageResource(R.drawable.pre_favorite);
+                } else {
+                    listOfFavorites.add(library.getName());
+                    SerializableUtilities.saveObject(listOfFavorites);
+                    imageView.setImageResource(R.drawable.post_favorite);
+                }
+
+
+            }
+        });
 
         return convertView;
     }

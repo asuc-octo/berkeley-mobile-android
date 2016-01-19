@@ -5,10 +5,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.asuc.asucmobile.R;
+import com.asuc.asucmobile.main.ListOfFavorites;
 import com.asuc.asucmobile.models.FoodItem;
+import com.asuc.asucmobile.utilities.SerializableUtilities;
 
 import java.util.ArrayList;
 
@@ -40,31 +43,55 @@ public class FoodAdapter extends BaseAdapter {
 
     @Override
     public View getView(int i, View convertView, ViewGroup parent) {
-        FoodItem foodItem = foodItems.get(i);
+        final FoodItem foodItem = foodItems.get(i);
 
         if (convertView == null) {
             convertView = LayoutInflater.from(context).inflate(R.layout.food_row, parent, false);
         }
 
-        TextView foodName = (TextView) convertView.findViewById(R.id.food_name);
+        final TextView foodName = (TextView) convertView.findViewById(R.id.food_name);
         TextView foodType = (TextView) convertView.findViewById(R.id.food_type);
         TextView foodCalories = (TextView) convertView.findViewById(R.id.calories);
 
         foodName.setText(foodItem.getName());
 
-        if (!foodItem.getFoodType().equals("None") && !foodItem.getFoodType().equals(null) && !foodItem.getFoodType().equals("null")) {
+        if (!foodItem.getFoodType().equals("None") && foodItem.getFoodType() != null && !foodItem.getFoodType().equals("null")) {
+            foodType.setVisibility(View.VISIBLE);
             foodType.setText(foodItem.getFoodType().toUpperCase());
         } else {
-            foodType.setText("");
+            foodType.setVisibility(View.GONE);
         }
 
         if (!foodItem.getCost().equals("$NaN")) {
             foodCalories.setText(foodItem.getCost());
         } else if (foodItem.getCalories().equals("null")) {
-            foodCalories.setText("");
+            foodCalories.setVisibility(View.GONE);
         } else {
-            foodCalories.setText(foodItem.getCalories() + " cal");
+            foodCalories.setVisibility(View.VISIBLE);
+            foodCalories.setText(String.format("%s cal", foodItem.getCalories()));
         }
+        final ListOfFavorites listOfFavorites = (ListOfFavorites) SerializableUtilities.loadSerializedObject();
+        final ImageView imageView = (ImageView) convertView.findViewById(R.id.favorite);
+
+        if (listOfFavorites != null && listOfFavorites.contains(foodItem.getName())) {
+            imageView.setImageResource(R.drawable.post_favorite);
+        } else {
+            imageView.setImageResource(R.drawable.pre_favorite);
+        }
+        imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (listOfFavorites != null && listOfFavorites.contains(foodItem.getName())) {
+                    listOfFavorites.remove(foodItem.getName());
+                    SerializableUtilities.saveObject(listOfFavorites);
+                    imageView.setImageResource(R.drawable.pre_favorite);
+                } else if (listOfFavorites != null) {
+                    listOfFavorites.add(foodItem.getName());
+                    SerializableUtilities.saveObject(listOfFavorites);
+                    imageView.setImageResource(R.drawable.post_favorite);
+                }
+            }
+        });
 
         return convertView;
     }
