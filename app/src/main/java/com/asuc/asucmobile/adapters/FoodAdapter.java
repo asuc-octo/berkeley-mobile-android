@@ -70,7 +70,7 @@ public class FoodAdapter extends BaseAdapter {
             foodCalories.setVisibility(View.VISIBLE);
             foodCalories.setText(String.format("%s cal", foodItem.getCalories()));
         }
-        final ListOfFavorites listOfFavorites = (ListOfFavorites) SerializableUtilities.loadSerializedObject();
+        final ListOfFavorites listOfFavorites = (ListOfFavorites) SerializableUtilities.loadSerializedObject(context);
         final ImageView imageView = (ImageView) convertView.findViewById(R.id.favorite);
 
         if (listOfFavorites != null && listOfFavorites.contains(foodItem.getName())) {
@@ -83,11 +83,11 @@ public class FoodAdapter extends BaseAdapter {
             public void onClick(View v) {
                 if (listOfFavorites != null && listOfFavorites.contains(foodItem.getName())) {
                     listOfFavorites.remove(foodItem.getName());
-                    SerializableUtilities.saveObject(listOfFavorites);
+                    SerializableUtilities.saveObject(context, listOfFavorites);
                     imageView.setImageResource(R.drawable.pre_favorite);
                 } else if (listOfFavorites != null) {
                     listOfFavorites.add(foodItem.getName());
-                    SerializableUtilities.saveObject(listOfFavorites);
+                    SerializableUtilities.saveObject(context, listOfFavorites);
                     imageView.setImageResource(R.drawable.post_favorite);
                 }
             }

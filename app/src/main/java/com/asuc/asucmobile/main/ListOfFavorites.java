@@ -3,16 +3,13 @@ package com.asuc.asucmobile.main;
 import java.io.Serializable;
 import java.util.ArrayList;
 
-/**
- * Created by Victor on 12/4/15.
- */
 public class ListOfFavorites implements Serializable {
 
     private ArrayList<String> favorited;
 
     public void add(String x) {
         if (favorited == null) {
-            favorited = new ArrayList<String>();
+            favorited = new ArrayList<>();
         }
         favorited.add(x);
     }

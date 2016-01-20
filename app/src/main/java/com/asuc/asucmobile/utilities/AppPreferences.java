@@ -1,4 +1,4 @@
-package com.asuc.asucmobile.main;
+package com.asuc.asucmobile.utilities;
 
 import android.app.Activity;
 import android.content.Context;
