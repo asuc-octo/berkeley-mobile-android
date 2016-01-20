@@ -27,7 +27,7 @@ import java.util.Locale;
 
 public class MenuFragment extends Fragment {
 
-    private static FoodAdapter adapter;
+    private static ArrayList<FoodAdapter> adapters = new ArrayList<>();
     private static DiningHall diningHall;
 
     private static final SimpleDateFormat HOURS_FORMAT =
@@ -132,7 +132,7 @@ public class MenuFragment extends Fragment {
                     }
                     header.setText(spannableHeader);
                     FoodAdapter adapter = new FoodAdapter(getActivity(), foodItems);
-                    MenuFragment.adapter = adapter;
+                    MenuFragment.adapters.add(adapter);
                     foodMenu.setAdapter(adapter);
 
                     foodMenu.addParallaxedHeaderView(header);
@@ -186,8 +186,10 @@ public class MenuFragment extends Fragment {
 
     }
 
-    public static FoodAdapter getAdapter() {
-        return adapter;
+    public static void refreshLists() {
+        for (FoodAdapter adapter : MenuFragment.adapters) {
+            adapter.notifyDataSetChanged();
+        }
     }
 
     public static DiningHall getDiningHall() {

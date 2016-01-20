@@ -12,14 +12,15 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+
 import com.asuc.asucmobile.R;
-import com.asuc.asucmobile.adapters.FoodAdapter;
 import com.asuc.asucmobile.controllers.DiningController;
 import com.asuc.asucmobile.fragments.MenuFragment;
 import com.asuc.asucmobile.models.DiningHall;
 import com.asuc.asucmobile.models.FoodItem;
 import com.asuc.asucmobile.utilities.CustomComparators;
 import com.flurry.android.FlurryAgent;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -121,7 +122,6 @@ public class OpenDiningHallActivity extends AppCompatActivity {
             return true;
         }
         if (id == R.id.sortAZ) {
-            FoodAdapter foodAdapter = MenuFragment.getAdapter();
             DiningHall diningHall = MenuFragment.getDiningHall();
             ArrayList<FoodItem> arrayListBreakfast = diningHall.getBreakfastMenu();
             if (arrayListBreakfast.size() != 0) Collections.sort(arrayListBreakfast, CustomComparators.FacilityComparators.getFoodSortByAZ());
@@ -129,11 +129,11 @@ public class OpenDiningHallActivity extends AppCompatActivity {
             if (arrayListLunch.size() != 0) Collections.sort(arrayListLunch, CustomComparators.FacilityComparators.getFoodSortByAZ());
             ArrayList<FoodItem> arrayListDinner = diningHall.getDinnerMenu();
             if (arrayListDinner.size() != 0) Collections.sort(arrayListDinner, CustomComparators.FacilityComparators.getFoodSortByAZ());
-            if (foodAdapter != null) foodAdapter.notifyDataSetChanged();
+            MenuFragment.refreshLists();
+
             return true;
         }
         if (id == R.id.sortVegetarian) {
-            FoodAdapter foodAdapter = MenuFragment.getAdapter();
             DiningHall diningHall = MenuFragment.getDiningHall();
             ArrayList<FoodItem> arrayListBreakfast = diningHall.getBreakfastMenu();
             if (arrayListBreakfast.size() != 0) Collections.sort(arrayListBreakfast, CustomComparators.FacilityComparators.getFoodSortByVegetarian());
@@ -141,11 +141,11 @@ public class OpenDiningHallActivity extends AppCompatActivity {
             if (arrayListLunch.size() != 0) Collections.sort(arrayListLunch, CustomComparators.FacilityComparators.getFoodSortByVegetarian());
             ArrayList<FoodItem> arrayListDinner = diningHall.getDinnerMenu();
             if (arrayListDinner.size() != 0) Collections.sort(arrayListDinner, CustomComparators.FacilityComparators.getFoodSortByVegetarian());
-            if (foodAdapter != null) foodAdapter.notifyDataSetChanged();
+            MenuFragment.refreshLists();
+
             return true;
         }
         if (id == R.id.sortVegan) {
-            FoodAdapter foodAdapter = MenuFragment.getAdapter();
             DiningHall diningHall = MenuFragment.getDiningHall();
             ArrayList<FoodItem> arrayListBreakfast = diningHall.getBreakfastMenu();
             if (arrayListBreakfast.size() != 0) Collections.sort(arrayListBreakfast, CustomComparators.FacilityComparators.getFoodSortByVegan());
@@ -153,21 +153,20 @@ public class OpenDiningHallActivity extends AppCompatActivity {
             if (arrayListLunch.size() != 0) Collections.sort(arrayListLunch, CustomComparators.FacilityComparators.getFoodSortByVegan());
             ArrayList<FoodItem> arrayListDinner = diningHall.getDinnerMenu();
             if (arrayListDinner.size() != 0) Collections.sort(arrayListDinner, CustomComparators.FacilityComparators.getFoodSortByVegan());
-            if (foodAdapter != null) foodAdapter.notifyDataSetChanged();
+            MenuFragment.refreshLists();
+
             return true;
         }
         if (id == R.id.sortFavorites) {
-            FoodAdapter foodAdapter = MenuFragment.getAdapter();
             DiningHall diningHall = MenuFragment.getDiningHall();
             ArrayList<FoodItem> arrayListBreakfast = diningHall.getBreakfastMenu();
-            if (arrayListBreakfast.size() != 0) Collections.sort(arrayListBreakfast, CustomComparators.FacilityComparators.getFoodSortByFavorite());
+            if (arrayListBreakfast.size() != 0) Collections.sort(arrayListBreakfast, CustomComparators.FacilityComparators.getFoodSortByFavorite(this));
             ArrayList<FoodItem> arrayListLunch = diningHall.getLunchMenu();
-            if (arrayListLunch.size() != 0) Collections.sort(arrayListLunch, CustomComparators.FacilityComparators.getFoodSortByFavorite());
+            if (arrayListLunch.size() != 0) Collections.sort(arrayListLunch, CustomComparators.FacilityComparators.getFoodSortByFavorite(this));
             ArrayList<FoodItem> arrayListDinner = diningHall.getDinnerMenu();
-            if (arrayListDinner.size() != 0) Collections.sort(arrayListDinner, CustomComparators.FacilityComparators.getFoodSortByFavorite());
-            if (foodAdapter != null) {
-                foodAdapter.notifyDataSetChanged();
-            }
+            if (arrayListDinner.size() != 0) Collections.sort(arrayListDinner, CustomComparators.FacilityComparators.getFoodSortByFavorite(this));
+            MenuFragment.refreshLists();
+
             return true;
         }
 
