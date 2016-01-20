@@ -129,4 +129,12 @@
         android:layout_height="match_parent"
         android:layout_below="@+id/start_dest_control" />
 
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentTop="false"
+        android:layout_alignTop="@+id/map"
+        android:id="@+id/refresh"></LinearLayout>
+
 </RelativeLayout>
