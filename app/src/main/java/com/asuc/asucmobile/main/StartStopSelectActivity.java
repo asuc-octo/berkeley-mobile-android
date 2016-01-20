@@ -21,8 +21,10 @@ import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.asuc.asucmobile.R;
+import com.asuc.asucmobile.controllers.BusController;
 import com.asuc.asucmobile.utilities.Callback;
 import com.asuc.asucmobile.utilities.LocationGrabber;
+import com.asuc.asucmobile.main.LiveBusActivity.BusCallback;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -32,6 +34,8 @@ import com.google.android.gms.maps.model.LatLng;
 
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Timer;
+import java.util.TimerTask;
 
 //TODO: flurry
 //TODO: check for existing location through sharedPreferences
@@ -47,6 +51,7 @@ public class StartStopSelectActivity extends AppCompatActivity
     private Button startButton;
     private Button destButton;
     private static Button timeButton;
+    private LinearLayout refreshWrapper;
 
     private String startName;
     private String endName;
@@ -55,6 +60,10 @@ public class StartStopSelectActivity extends AppCompatActivity
     private LatLng endLatLng;
 
     private MapFragment mapFragment;
+
+    private BusCallback busCallback;
+    private Timer timer;
+    private StartStopSelectActivity activity;
 
     private static Calendar departureTime = Calendar.getInstance();
 
@@ -85,6 +94,7 @@ public class StartStopSelectActivity extends AppCompatActivity
         FloatingActionButton navigateButton = (FloatingActionButton) findViewById(R.id.navigate_button);
 
         navigateButton.setImageDrawable(getResources().getDrawable(R.drawable.ic_navigation));
+        refreshWrapper = (LinearLayout) findViewById(R.id.refresh);
 
         context = getBaseContext();
         startButton.setOnClickListener(new StartStopListener(START_INT));
@@ -106,16 +116,16 @@ public class StartStopSelectActivity extends AppCompatActivity
             public void onClick(View view) {
                 Intent intent = new Intent(getBaseContext(), OpenRouteSelectionActivity.class);
                 if (startLatLng == null) {
-                    Toast.makeText(getBaseContext(), "Please select a start location", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context, "Please select a start location", Toast.LENGTH_SHORT).show();
                     return;
                 }
                 if (endLatLng == null) {
-                    Toast.makeText(getBaseContext(), "Please select an end location", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context, "Please select an end location", Toast.LENGTH_SHORT).show();
                     return;
                 }
                 //should be impossible
                 if (departureTime == null) {
-                    Toast.makeText(getBaseContext(), "Please select a departure Time", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context, "Please select a departure Time", Toast.LENGTH_SHORT).show();
                     return;
                 }
                 intent.putExtra("startLngLat", startLatLng);
@@ -124,6 +134,13 @@ public class StartStopSelectActivity extends AppCompatActivity
                 startActivity(intent);
             }
         });
+        this.activity = this;
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        timer = new Timer("liveBus", true);
     }
 
     @Override
@@ -173,6 +190,17 @@ public class StartStopSelectActivity extends AppCompatActivity
         map.setMyLocationEnabled(true);
         CameraUpdate update = CameraUpdateFactory.newLatLngZoom(new LatLng(37.871899, -122.25854), 14.5f);
         map.moveCamera(update);
+        busCallback = new BusCallback(map, refreshWrapper, timer, context);
+        liveTrack();
+    }
+
+    private void liveTrack() {
+        timer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                BusController.getInstance(activity).refreshInBackground(busCallback);
+            }
+        }, 0L, 3000L);
     }
 
     /**
