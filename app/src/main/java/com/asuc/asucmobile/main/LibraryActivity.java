@@ -48,10 +48,10 @@ public class LibraryActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_library);
 
-        ListOfFavorites listOfFavorites = (ListOfFavorites) SerializableUtilities.loadSerializedObject();
+        ListOfFavorites listOfFavorites = (ListOfFavorites) SerializableUtilities.loadSerializedObject(this);
         if (listOfFavorites == null) {
             listOfFavorites = new ListOfFavorites();
-            SerializableUtilities.saveObject(listOfFavorites);
+            SerializableUtilities.saveObject(this, listOfFavorites);
         }
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -116,16 +116,12 @@ public class LibraryActivity extends AppCompatActivity {
                 Collections.sort(mAdapter.getLibraries(), CustomComparators.FacilityComparators.getSortByAZ());
                 mAdapter.notifyDataSetChanged();
                 break;
-//            case R.id.sortZA:
-//                Collections.sort(mAdapter.getLibraries(), CustomComparators.FacilityComparators.getSortByZA());
-//                mAdapter.notifyDataSetChanged();
-//                break;
             case R.id.sortOpen:
                 Collections.sort(mAdapter.getLibraries(), CustomComparators.FacilityComparators.getSortByOpenness());
                 mAdapter.notifyDataSetChanged();
                 break;
             case R.id.sortFavorites:
-                Collections.sort(mAdapter.getLibraries(), CustomComparators.FacilityComparators.getSortByFavoriteLibrary());
+                Collections.sort(mAdapter.getLibraries(), CustomComparators.FacilityComparators.getSortByFavoriteLibrary(this));
                 mAdapter.notifyDataSetChanged();
                 break;
         }
@@ -141,6 +137,7 @@ public class LibraryActivity extends AppCompatActivity {
     }
 
     @Override
+    @SuppressWarnings("deprecation")
     public boolean onCreateOptionsMenu(Menu menu) {
 
         MenuInflater inflater = getMenuInflater();

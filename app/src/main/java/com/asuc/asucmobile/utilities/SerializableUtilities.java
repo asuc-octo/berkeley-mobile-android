@@ -1,26 +1,38 @@
 package com.asuc.asucmobile.utilities;
 
 
+import android.content.Context;
+
 import com.asuc.asucmobile.main.ListOfFavorites;
 
-import java.io.File;
+import java.io.BufferedInputStream;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.InputStream;
+import java.io.ObjectInput;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 
-/**
- * Created by Victor on 12/4/15.
- */
 public class SerializableUtilities {
 
-    public static Object loadSerializedObject()
+    private static final String SAVE_FILE_NAME = "save_object.bin";
+
+    private static ListOfFavorites favorites;
+
+    public static Object loadSerializedObject(Context context)
     {
+        if (favorites != null) {
+            return favorites;
+        }
+
         try
         {
-            ObjectInputStream ois = new ObjectInputStream(new FileInputStream("/sdcard/save_object.bin"));
-            Object o = ois.readObject();
-            return o;
+            FileInputStream inputStream = context.openFileInput(SAVE_FILE_NAME);
+            InputStream buffer = new BufferedInputStream(inputStream);
+            ObjectInput input = new ObjectInputStream(buffer);
+
+            favorites = (ListOfFavorites) input.readObject();
+            return favorites;
         }
         catch(Exception ex)
         {
@@ -29,13 +41,16 @@ public class SerializableUtilities {
         return null;
     }
 
-    public static void saveObject(ListOfFavorites lof){
+    public static void saveObject(Context context, ListOfFavorites lof){
+        favorites = lof;
+
         try
         {
-            ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(new File("/sdcard/save_object.bin"))); //Select where you wish to save <span id="IL_AD6" class="IL_AD">the file</span>...
-            oos.writeObject(lof); // write the class as an 'object'
-            oos.flush(); // flush the stream to insure all of the information was written to 'save_object.bin'
-            oos.close();// close the stream
+            FileOutputStream outputStream = context.openFileOutput(SAVE_FILE_NAME, Context.MODE_PRIVATE);
+            ObjectOutputStream objectStream = new ObjectOutputStream(outputStream);
+            objectStream.writeObject(lof); // write the class as an 'object'
+            objectStream.flush(); // flush the stream to insure all of the information was written to 'save_object.bin'
+            objectStream.close(); // close the stream
         }
         catch(Exception ex)
         {

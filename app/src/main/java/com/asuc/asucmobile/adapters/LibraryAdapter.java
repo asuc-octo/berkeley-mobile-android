@@ -50,6 +50,7 @@ public class LibraryAdapter extends BaseAdapter {
 
 
     @Override
+    @SuppressWarnings("deprecation")
     public View getView(int i, View convertView, ViewGroup parent) {
         final Library library = getItem(i);
 
@@ -64,16 +65,16 @@ public class LibraryAdapter extends BaseAdapter {
 
         if (library.isByAppointment()) {
             libraryAvailability.setTextColor(context.getResources().getColor(R.color.pavan_light));
-            libraryAvailability.setText("By appointment");
+            libraryAvailability.setText(context.getText(R.string.by_appointment));
         } else if (library.isOpen()) {
             libraryAvailability.setTextColor(context.getResources().getColor(R.color.green));
-            libraryAvailability.setText("Open");
+            libraryAvailability.setText(context.getText(R.string.open));
         } else {
             libraryAvailability.setTextColor(context.getResources().getColor(android.R.color.holo_red_light));
-            libraryAvailability.setText("Closed");
+            libraryAvailability.setText(context.getText(R.string.closed));
         }
 
-        final ListOfFavorites listOfFavorites = (ListOfFavorites) SerializableUtilities.loadSerializedObject();
+        final ListOfFavorites listOfFavorites = (ListOfFavorites) SerializableUtilities.loadSerializedObject(context);
 
         final ImageView imageView = (ImageView) convertView.findViewById(R.id.pre_favorite);
         if (listOfFavorites != null && listOfFavorites.contains(library.getName())) {
@@ -87,11 +88,11 @@ public class LibraryAdapter extends BaseAdapter {
             public void onClick(View v) {
                 if (listOfFavorites != null && listOfFavorites.contains(library.getName())) {
                     listOfFavorites.remove(library.getName());
-                    SerializableUtilities.saveObject(listOfFavorites);
+                    SerializableUtilities.saveObject(context, listOfFavorites);
                     imageView.setImageResource(R.drawable.pre_favorite);
-                } else {
+                } else if (listOfFavorites != null){
                     listOfFavorites.add(library.getName());
-                    SerializableUtilities.saveObject(listOfFavorites);
+                    SerializableUtilities.saveObject(context, listOfFavorites);
                     imageView.setImageResource(R.drawable.post_favorite);
                 }
 
