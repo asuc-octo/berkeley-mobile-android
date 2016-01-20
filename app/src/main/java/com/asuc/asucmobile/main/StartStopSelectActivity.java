@@ -169,9 +169,9 @@ public class StartStopSelectActivity extends AppCompatActivity
 
     @Override
     public void onMapReady(GoogleMap map) {
-        map.setMapType(GoogleMap.MAP_TYPE_HYBRID);
+        map.setMapType(GoogleMap.MAP_TYPE_NORMAL);
         map.setMyLocationEnabled(true);
-        CameraUpdate update = CameraUpdateFactory.newLatLngZoom(new LatLng(37.872508, -122.260783), 14.5f);
+        CameraUpdate update = CameraUpdateFactory.newLatLngZoom(new LatLng(37.871899, -122.25854), 14.5f);
         map.moveCamera(update);
     }
 
