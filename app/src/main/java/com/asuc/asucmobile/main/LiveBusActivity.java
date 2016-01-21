@@ -57,8 +57,8 @@ public class LiveBusActivity extends AppCompatActivity implements OnMapReadyCall
     }
 
     @Override
-    public void onStart() {
-        super.onStart();
+    public void onResume() {
+        super.onResume();
         mapFragment.getMapAsync(this);
         timer = new Timer("liveBus", true);
     }
@@ -77,8 +77,8 @@ public class LiveBusActivity extends AppCompatActivity implements OnMapReadyCall
     }
 
     @Override
-    public void onStop() {
-        super.onStop();
+    public void onPause() {
+        super.onPause();
         timer.purge();
     }
 

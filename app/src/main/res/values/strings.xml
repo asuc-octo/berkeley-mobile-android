@@ -32,5 +32,6 @@
     <string name="find_route">Find Route</string>
     <string name="no_routes">No routes available</string>
     <string name="now">Now</string>
+    <string name="live_bus_map">Live Bus Map</string>
 
 </resources>
