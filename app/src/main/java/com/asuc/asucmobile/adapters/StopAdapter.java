@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.asuc.asucmobile.R;
 import com.asuc.asucmobile.models.Stop;
+import com.google.android.gms.maps.model.LatLng;
 
 import java.util.ArrayList;
 
@@ -23,12 +24,10 @@ public class StopAdapter extends BaseAdapter {
     private double lat;
     private double lng;
 
-    private boolean locationDisabled = false;
+    private boolean locationDisabled = true;
 
-    public StopAdapter(Context context, double lat, double lng) {
+    public StopAdapter(Context context) {
         this.context = context;
-        this.lat = lat;
-        this.lng = lng;
 
         allDestinations = new ArrayList<>();
         destinations = new ArrayList<>();
@@ -63,7 +62,7 @@ public class StopAdapter extends BaseAdapter {
         destinationName.setText(destination.getAbbreviatedName());
 
         if (!locationDisabled) {
-            distance.setText(destination.getDistance() + " mi");
+            distance.setText(String.format("%s mi", destination.getDistance()));
         } else {
             distance.setText("...");
         }
@@ -94,6 +93,14 @@ public class StopAdapter extends BaseAdapter {
     public void setNewLocation(Location location) {
         lat = location.getLatitude();
         lng = location.getLongitude();
+        locationDisabled = false;
+
+        setList(allDestinations);
+    }
+
+    public void setNewLocation(LatLng location) {
+        lat = location.latitude;
+        lng = location.longitude;
         locationDisabled = false;
 
         setList(allDestinations);

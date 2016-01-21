@@ -95,8 +95,6 @@ public class LibraryAdapter extends BaseAdapter {
                     SerializableUtilities.saveObject(context, listOfFavorites);
                     imageView.setImageResource(R.drawable.post_favorite);
                 }
-
-
             }
         });
 

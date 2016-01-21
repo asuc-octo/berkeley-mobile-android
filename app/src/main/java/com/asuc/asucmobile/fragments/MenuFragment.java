@@ -187,6 +187,10 @@ public class MenuFragment extends Fragment {
     }
 
     public static void refreshLists() {
+        if (MenuFragment.adapters == null) {
+            return;
+        }
+
         for (FoodAdapter adapter : MenuFragment.adapters) {
             adapter.notifyDataSetChanged();
         }

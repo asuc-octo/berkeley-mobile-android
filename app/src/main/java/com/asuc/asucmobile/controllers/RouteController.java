@@ -22,14 +22,19 @@ import java.util.TimeZone;
 public class RouteController implements Controller {
 
     private static final String URL = BASE_URL + "/bt_trips";
+    //TODO: make use sdf.setTimeZone for UTC
     private static final SimpleDateFormat DATE_FORMAT =
             new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.ENGLISH);
     private static final TimeZone PST = TimeZone.getTimeZone("America/Los_Angeles");
+
+    private static final SimpleDateFormat RECEIVE_DATE_FORMAT =
+            new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.ENGLISH);
 
     private static RouteController instance;
 
     private LatLng start;
     private LatLng dest;
+    private Date departure;
 
     private Context context;
     private ArrayList<Route> routes;
@@ -39,7 +44,7 @@ public class RouteController implements Controller {
 
     public static Controller getInstance(Context context) {
         if (instance == null) {
-            instance = new RouteController(new LatLng(0, 0), new LatLng(0, 0));
+            instance = new RouteController(new LatLng(0, 0), new LatLng(0, 0), new Date());
         }
 
         instance.context = context;
@@ -47,18 +52,19 @@ public class RouteController implements Controller {
         return instance;
     }
 
-    public static Controller createInstance(Context context, LatLng start, LatLng dest) {
-        instance = new RouteController(start, dest);
+    public static Controller createInstance(Context context, LatLng start, LatLng dest, Date departure) {
+        instance = new RouteController(start, dest, departure);
         instance.context = context;
 
         return instance;
     }
 
-    public RouteController(LatLng start, LatLng dest) {
+    public RouteController(LatLng start, LatLng dest, Date departure) {
         this.start = start;
         this.dest = dest;
-
+        this.departure = departure;
         routes = new ArrayList<>();
+        RECEIVE_DATE_FORMAT.setTimeZone((TimeZone.getTimeZone("UTC")));
     }
 
     @Override
@@ -164,7 +170,7 @@ public class RouteController implements Controller {
         JSONUtilities.readJSONFromUrl(
                 URL + "/new?" +
                         "startlat=" + start.latitude + "&startlon=" + start.longitude +
-                        "&destlat=" + dest.latitude + "&destlon=" + dest.longitude,
+                        "&destlat=" + dest.latitude + "&destlon=" + dest.longitude + "&departuretime=" + RECEIVE_DATE_FORMAT.format(departure),
                 "journeys",
                 RouteController.getInstance(context));
     }
