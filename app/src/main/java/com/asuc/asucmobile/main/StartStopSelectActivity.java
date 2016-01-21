@@ -1,5 +1,6 @@
 package com.asuc.asucmobile.main;
 
+import android.Manifest;
 import android.app.Dialog;
 import android.app.TimePickerDialog;
 import android.content.Context;
@@ -9,12 +10,12 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.DialogFragment;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.text.format.DateFormat;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.TimePicker;
@@ -22,9 +23,9 @@ import android.widget.Toast;
 
 import com.asuc.asucmobile.R;
 import com.asuc.asucmobile.controllers.BusController;
+import com.asuc.asucmobile.main.LiveBusActivity.BusCallback;
 import com.asuc.asucmobile.utilities.Callback;
 import com.asuc.asucmobile.utilities.LocationGrabber;
-import com.asuc.asucmobile.main.LiveBusActivity.BusCallback;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -32,8 +33,9 @@ import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.LatLng;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
+import java.util.Locale;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -45,12 +47,14 @@ public class StartStopSelectActivity extends AppCompatActivity
     private static final int LOCATION_PERMISSION = 0;
     private static final int START_INT = 1;
     private static final int END_INT = 2;
+    private static final SimpleDateFormat TIME_FORMAT =
+            new SimpleDateFormat("MMM d @ h:mm a", Locale.ENGLISH);
 
     private Context context;
 
-    private Button startButton;
-    private Button destButton;
-    private static Button timeButton;
+    private TextView startButton;
+    private TextView destButton;
+    private static TextView timeButton;
     private LinearLayout refreshWrapper;
 
     private String startName;
@@ -58,8 +62,6 @@ public class StartStopSelectActivity extends AppCompatActivity
 
     private LatLng startLatLng;
     private LatLng endLatLng;
-
-    private MapFragment mapFragment;
 
     private BusCallback busCallback;
     private Timer timer;
@@ -80,9 +82,9 @@ public class StartStopSelectActivity extends AppCompatActivity
             }
         });
 
-        startButton = (Button) findViewById(R.id.start_stop);
-        destButton = (Button) findViewById(R.id.dest_stop);
-        timeButton = (Button) findViewById(R.id.departure_time);
+        startButton = (TextView) findViewById(R.id.start_stop);
+        destButton = (TextView) findViewById(R.id.dest_stop);
+        timeButton = (TextView) findViewById(R.id.departure_time);
         timeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -90,7 +92,7 @@ public class StartStopSelectActivity extends AppCompatActivity
                 newFragment.show(getSupportFragmentManager(), "timePicker");
             }
         });
-        ImageButton myLocationButton = (ImageButton) findViewById(R.id.my_location);
+        ImageView myLocationButton = (ImageView) findViewById(R.id.my_location);
         FloatingActionButton navigateButton = (FloatingActionButton) findViewById(R.id.navigate_button);
 
         navigateButton.setImageDrawable(getResources().getDrawable(R.drawable.ic_navigation));
@@ -100,7 +102,7 @@ public class StartStopSelectActivity extends AppCompatActivity
         startButton.setOnClickListener(new StartStopListener(START_INT));
         destButton.setOnClickListener(new StartStopListener(END_INT));
 
-        mapFragment = (MapFragment) getFragmentManager()
+        MapFragment mapFragment = (MapFragment) getFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
 
@@ -125,7 +127,7 @@ public class StartStopSelectActivity extends AppCompatActivity
                 }
                 //should be impossible
                 if (departureTime == null) {
-                    Toast.makeText(context, "Please select a departure Time", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context, "Please select a departure time", Toast.LENGTH_SHORT).show();
                     return;
                 }
                 intent.putExtra("startLngLat", startLatLng);
@@ -187,7 +189,10 @@ public class StartStopSelectActivity extends AppCompatActivity
     @Override
     public void onMapReady(GoogleMap map) {
         map.setMapType(GoogleMap.MAP_TYPE_NORMAL);
-        map.setMyLocationEnabled(true);
+        if (ContextCompat.checkSelfPermission(activity, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED ||
+                ContextCompat.checkSelfPermission(activity, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+            map.setMyLocationEnabled(true);
+        }
         CameraUpdate update = CameraUpdateFactory.newLatLngZoom(new LatLng(37.871899, -122.25854), 14.5f);
         map.moveCamera(update);
         busCallback = new BusCallback(map, refreshWrapper, timer, context);
@@ -220,6 +225,7 @@ public class StartStopSelectActivity extends AppCompatActivity
             implements TimePickerDialog.OnTimeSetListener {
 
         @Override
+        @NonNull
         public Dialog onCreateDialog(Bundle savedInstanceState) {
             // Use the current time as the default values for the picker
             int hour = departureTime.get(Calendar.HOUR_OF_DAY);
@@ -233,7 +239,7 @@ public class StartStopSelectActivity extends AppCompatActivity
         public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
             departureTime.set(Calendar.HOUR_OF_DAY, hourOfDay);
             departureTime.set(Calendar.MINUTE, minute);
-            timeButton.setText(departureTime.getTime().toString());
+            timeButton.setText(TIME_FORMAT.format(departureTime.getTime()));
         }
     }
 
