@@ -27,9 +27,10 @@
     <string name="beartransit_info">Plan your trip with BearTransit:</string>
     <string name="from">From</string>
     <string name="to">To</string>
-    <string name="depart_at">Depart At</string>
+    <string name="depart_at">Time</string>
     <string name="my_location">My Location</string>
     <string name="find_route">Find Route</string>
     <string name="no_routes">No routes available</string>
+    <string name="now">Now</string>
 
 </resources>
