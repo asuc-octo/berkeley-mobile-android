@@ -5,6 +5,7 @@ import android.content.Context;
 
 import com.asuc.asucmobile.models.Library;
 import com.asuc.asucmobile.utilities.Callback;
+import com.asuc.asucmobile.utilities.CustomComparators;
 import com.asuc.asucmobile.utilities.JSONUtilities;
 
 import org.json.JSONArray;
@@ -12,13 +13,13 @@ import org.json.JSONObject;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.Locale;
 import java.util.TimeZone;
 
 public class LibraryController implements Controller {
 
-    private static final String URL = BASE_URL + "/libraries";
     private static final SimpleDateFormat DATE_FORMAT =
             new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.ENGLISH);
     private static final TimeZone PST = TimeZone.getTimeZone("America/Los_Angeles");
@@ -42,7 +43,7 @@ public class LibraryController implements Controller {
     }
 
     public LibraryController() {
-        libraries = new ArrayList<Library>();
+        libraries = new ArrayList<>();
     }
 
     @Override
@@ -100,6 +101,9 @@ public class LibraryController implements Controller {
                         libraries.add(
                                 new Library(id, name, location, phone, opening, closing, imageUrl, lat, lng, byAppointment));
                     }
+
+                    // Sort the libraries alphabetically, putting favorites at top
+                    Collections.sort(libraries, CustomComparators.FacilityComparators.getSortByFavoriteLibrary(context));
 
                     ((Activity) context).runOnUiThread(new Runnable() {
                         @Override

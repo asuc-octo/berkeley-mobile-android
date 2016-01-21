@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.asuc.asucmobile.R;
+import com.asuc.asucmobile.fragments.MenuFragment;
 import com.asuc.asucmobile.main.ListOfFavorites;
 import com.asuc.asucmobile.models.FoodItem;
 import com.asuc.asucmobile.utilities.SerializableUtilities;
@@ -90,6 +91,8 @@ public class FoodAdapter extends BaseAdapter {
                     SerializableUtilities.saveObject(context, listOfFavorites);
                     imageView.setImageResource(R.drawable.post_favorite);
                 }
+
+                MenuFragment.refreshLists();
             }
         });
 

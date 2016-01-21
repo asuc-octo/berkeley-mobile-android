@@ -7,6 +7,7 @@ import android.util.Log;
 import com.asuc.asucmobile.models.DiningHall;
 import com.asuc.asucmobile.models.FoodItem;
 import com.asuc.asucmobile.utilities.Callback;
+import com.asuc.asucmobile.utilities.CustomComparators;
 import com.asuc.asucmobile.utilities.JSONUtilities;
 
 import org.json.JSONArray;
@@ -15,6 +16,7 @@ import org.json.JSONObject;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Date;
 import java.util.Locale;
 import java.util.TimeZone;
@@ -29,8 +31,6 @@ public class DiningController implements Controller {
     private static final TimeZone PST = TimeZone.getTimeZone("America/Los_Angeles");
 
     private static final String[] HAS_LATE_NIGHT = {"Crossroads","Foothill"};
-    private static final String LATE_NIGHT_OPEN = "2100-01-01T06:00:00.000Z";
-    private static final String LATE_NIGHT_CLOSE = "2100-01-01T10:00:00.000Z";
 
     private static DiningController instance;
 
@@ -94,6 +94,8 @@ public class DiningController implements Controller {
                             ));
                         }
 
+                        Collections.sort(breakfastMenu, CustomComparators.FacilityComparators.getFoodSortByFavorite(context));
+
                         JSONArray lunchJSON = diningHall.getJSONArray("lunch_menu");
                         ArrayList<FoodItem> lunchMenu = new ArrayList<>();
                         for (int j = 0; j < lunchJSON.length(); j++) {
@@ -107,6 +109,8 @@ public class DiningController implements Controller {
                             ));
                         }
 
+                        Collections.sort(lunchMenu, CustomComparators.FacilityComparators.getFoodSortByFavorite(context));
+
                         JSONArray dinnerJSON = diningHall.getJSONArray("dinner_menu");
                         ArrayList<FoodItem> dinnerMenu = new ArrayList<>();
                         for (int j = 0; j < dinnerJSON.length(); j++) {
@@ -119,6 +123,8 @@ public class DiningController implements Controller {
                                     foodJSON.optDouble("cost")
                             ));
                         }
+
+                        Collections.sort(dinnerMenu, CustomComparators.FacilityComparators.getFoodSortByFavorite(context));
 
                         /*
                           Late night is treated specially. Because dining halls without Late Night
@@ -138,9 +144,9 @@ public class DiningController implements Controller {
                                         foodJSON.optDouble("cost")
                                 ));
                             }
-                        } else {
-
                         }
+
+                        Collections.sort(lateNightMenu, CustomComparators.FacilityComparators.getFoodSortByFavorite(context));
 
                         long tmpDate;
 
