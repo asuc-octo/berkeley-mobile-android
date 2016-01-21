@@ -56,6 +56,7 @@ public class StartStopSelectActivity extends AppCompatActivity
     private TextView destButton;
     private static TextView timeButton;
     private LinearLayout refreshWrapper;
+    private MapFragment mapFragment;
 
     private String startName;
     private String endName;
@@ -102,9 +103,8 @@ public class StartStopSelectActivity extends AppCompatActivity
         startButton.setOnClickListener(new StartStopListener(START_INT));
         destButton.setOnClickListener(new StartStopListener(END_INT));
 
-        MapFragment mapFragment = (MapFragment) getFragmentManager()
+        mapFragment = (MapFragment) getFragmentManager()
                 .findFragmentById(R.id.map);
-        mapFragment.getMapAsync(this);
 
         myLocationButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -140,9 +140,16 @@ public class StartStopSelectActivity extends AppCompatActivity
     }
 
     @Override
-    protected void onStart() {
-        super.onStart();
+    public void onResume() {
+        super.onResume();
+        mapFragment.getMapAsync(this);
         timer = new Timer("liveBus", true);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        timer.purge();
     }
 
     @Override
