@@ -29,8 +29,7 @@ public class MainActivity extends AppCompatActivity {
                 new Category(getResources().getDrawable(R.drawable.dining_hall_blue), "DINING HALL MENUS", new Intent(this, DiningHallActivity.class)),
                 new Category(getResources().getDrawable(R.drawable.library_blue), "LIBRARY HOURS", new Intent(this, LibraryActivity.class)),
                 new Category(getResources().getDrawable(R.drawable.gym_blue), "GYM HOURS", new Intent(this, GymActivity.class)),
-                new Category(getResources().getDrawable(R.drawable.transit_blue), "BEARTRANSIT", new Intent(this, StartStopSelectActivity.class)),
-                new Category(getResources().getDrawable(R.drawable.transit_blue), "BEARTRANSITT", new Intent(this, LiveBusActivity.class))
+                new Category(getResources().getDrawable(R.drawable.transit_blue), "BEARTRANSIT", new Intent(this, StartStopSelectActivity.class))
         };
 
         ListView menuList = (ListView) findViewById(R.id.main_menu);
