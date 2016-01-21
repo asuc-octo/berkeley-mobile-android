@@ -114,7 +114,7 @@ public class OpenGymActivity extends AppCompatActivity {
 
                 if (percentFull != null) {
                     //gym with density + pic
-                    ((GradientDrawable) backgroundBar.getProgressDrawable()).setColor(getResources().getColor(R.color.primary_material_light));
+                    ((GradientDrawable) backgroundBar.getProgressDrawable()).setColor(getResources().getColor(R.color.off_white));
                     backgroundBar.setVisibility(View.VISIBLE);
                     tintOverlay.setVisibility(View.VISIBLE);
                     percentFullBar.setVisibility(View.VISIBLE);
@@ -127,7 +127,7 @@ public class OpenGymActivity extends AppCompatActivity {
                     animation.setInterpolator(new AccelerateDecelerateInterpolator());
                     animation.start();
 
-                    percentageText.setText(String.format("%d'%'", gym.getPercentFull()));
+                    percentageText.setText(String.format(Locale.US, "%d%%", gym.getPercentFull()));
                 }
             }
 
