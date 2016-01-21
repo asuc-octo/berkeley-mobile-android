@@ -4,6 +4,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ImageButton;
@@ -79,6 +82,24 @@ public class OpenRouteSelectionActivity extends AppCompatActivity {
         super.onStop();
 
         FlurryAgent.onEndSession(this);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.live_bus, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.live_bus:
+                Intent intent = new Intent(getBaseContext(), LiveBusActivity.class);
+                startActivity(intent);
+                return true;
+        }
+        return true;
     }
 
     private void refresh() {
