@@ -11,6 +11,6 @@
         android:id="@+id/imageView"
         android:scaleType="centerCrop"
         android:contentDescription="@string/content_desc"
-        android:src="@drawable/launchpage" />
+        android:src="@drawable/berkeley_mobile_launchpage" />
 
 </RelativeLayout>
