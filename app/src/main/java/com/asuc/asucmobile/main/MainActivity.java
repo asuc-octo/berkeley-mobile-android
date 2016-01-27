@@ -11,6 +11,7 @@ import android.widget.ListView;
 import com.asuc.asucmobile.R;
 import com.asuc.asucmobile.adapters.MainMenuAdapter;
 import com.asuc.asucmobile.models.Category;
+import com.asuc.asucmobile.utilities.HamburgerGenerator;
 import com.flurry.android.FlurryAgent;
 
 
@@ -22,27 +23,9 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         FlurryAgent.onStartSession(this, "4VPTT49FCCKH7Z2NVQ26");
 
-        setContentView(R.layout.activity_main);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        Category[] menuItems = new Category[] {
-                new Category(getResources().getDrawable(R.drawable.dining_hall_blue), "DINING HALL MENUS", new Intent(this, DiningHallActivity.class)),
-                new Category(getResources().getDrawable(R.drawable.library_blue), "LIBRARY HOURS", new Intent(this, LibraryActivity.class)),
-                new Category(getResources().getDrawable(R.drawable.gym_blue), "GYM HOURS", new Intent(this, GymActivity.class)),
-                new Category(getResources().getDrawable(R.drawable.transit_blue), "BEARTRANSIT", new Intent(this, StopActivity.class))
-        };
-
-        ListView menuList = (ListView) findViewById(R.id.main_menu);
-
-        final MainMenuAdapter adapter = new MainMenuAdapter(this, menuItems);
-        menuList.setAdapter(adapter);
-
-        menuList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                startActivity(adapter.getItem(i).getIntent());
-            }
-        });
+        Intent intent = new Intent(this, DiningHallActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
     }
 
     @Override

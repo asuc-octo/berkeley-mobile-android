@@ -15,6 +15,7 @@ import com.asuc.asucmobile.controllers.RouteController;
 import com.asuc.asucmobile.models.Route;
 import com.asuc.asucmobile.models.Stop;
 import com.asuc.asucmobile.models.Trip;
+import com.asuc.asucmobile.utilities.HamburgerGenerator;
 import com.asuc.asucmobile.views.MapHeaderView;
 import com.flurry.android.FlurryAgent;
 import com.google.android.gms.common.ConnectionResult;
@@ -51,6 +52,7 @@ public class OpenRouteActivity extends AppCompatActivity {
         }
 
         setContentView(R.layout.activity_open_route);
+        HamburgerGenerator.generateMenu(this);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         toolbar.setNavigationIcon(getResources().getDrawable(R.drawable.ic_action_back));

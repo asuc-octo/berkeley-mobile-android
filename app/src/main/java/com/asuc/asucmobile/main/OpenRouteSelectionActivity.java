@@ -19,6 +19,7 @@ import com.asuc.asucmobile.controllers.RouteController;
 import com.asuc.asucmobile.models.Route;
 import com.asuc.asucmobile.models.Stop;
 import com.asuc.asucmobile.utilities.Callback;
+import com.asuc.asucmobile.utilities.HamburgerGenerator;
 import com.flurry.android.FlurryAgent;
 import com.google.android.gms.maps.model.LatLng;
 
@@ -39,7 +40,7 @@ public class OpenRouteSelectionActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         FlurryAgent.onStartSession(this, "4VPTT49FCCKH7Z2NVQ26");
         setContentView(R.layout.activity_open_route_selection);
-
+        HamburgerGenerator.generateMenu(this);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         toolbar.setNavigationIcon(getResources().getDrawable(R.drawable.ic_action_back));

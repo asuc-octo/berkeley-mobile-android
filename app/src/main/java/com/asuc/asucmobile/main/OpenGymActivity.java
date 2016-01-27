@@ -23,6 +23,7 @@ import com.asuc.asucmobile.R;
 import com.asuc.asucmobile.controllers.GymController;
 import com.asuc.asucmobile.models.Gym;
 import com.asuc.asucmobile.utilities.Callback;
+import com.asuc.asucmobile.utilities.HamburgerGenerator;
 import com.asuc.asucmobile.utilities.ImageDownloadThread;
 import com.flurry.android.FlurryAgent;
 
@@ -50,6 +51,7 @@ public class OpenGymActivity extends AppCompatActivity {
         }
 
         setContentView(R.layout.activity_open_gym);
+        HamburgerGenerator.generateMenu(this);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle(gym.getName());
         setSupportActionBar(toolbar);

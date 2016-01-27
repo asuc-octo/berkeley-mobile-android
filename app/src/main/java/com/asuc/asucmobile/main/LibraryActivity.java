@@ -23,6 +23,7 @@ import com.asuc.asucmobile.controllers.LibraryController;
 import com.asuc.asucmobile.models.Library;
 import com.asuc.asucmobile.utilities.Callback;
 import com.asuc.asucmobile.utilities.CustomComparators;
+import com.asuc.asucmobile.utilities.HamburgerGenerator;
 import com.asuc.asucmobile.utilities.SerializableUtilities;
 import com.flurry.android.FlurryAgent;
 
@@ -53,15 +54,10 @@ public class LibraryActivity extends AppCompatActivity {
             SerializableUtilities.saveObject(listOfFavorites, "libraries");
         }
 
+        HamburgerGenerator.generateMenu(this);
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        toolbar.setNavigationIcon(getResources().getDrawable(R.drawable.ic_action_back));
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                finish();
-            }
-        });
 
         ImageButton refreshButton = (ImageButton) findViewById(R.id.refresh_button);
 

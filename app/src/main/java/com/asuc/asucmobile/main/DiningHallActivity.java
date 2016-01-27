@@ -18,6 +18,7 @@ import com.asuc.asucmobile.adapters.DiningHallAdapter;
 import com.asuc.asucmobile.controllers.DiningController;
 import com.asuc.asucmobile.models.DiningHall;
 import com.asuc.asucmobile.utilities.Callback;
+import com.asuc.asucmobile.utilities.HamburgerGenerator;
 import com.asuc.asucmobile.utilities.SerializableUtilities;
 import com.flurry.android.FlurryAgent;
 
@@ -45,15 +46,9 @@ public class DiningHallActivity extends AppCompatActivity {
             listOfFavorites = new ListOfFavorites();
             SerializableUtilities.saveObject(listOfFavorites,"dining_halls");
         }
+        HamburgerGenerator.generateMenu(this);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        toolbar.setNavigationIcon(getResources().getDrawable(R.drawable.ic_action_back));
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                finish();
-            }
-        });
 
         ImageButton refreshButton = (ImageButton) findViewById(R.id.refresh_button);
 

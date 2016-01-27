@@ -20,6 +20,7 @@ import com.asuc.asucmobile.fragments.MenuFragment;
 import com.asuc.asucmobile.models.DiningHall;
 import com.asuc.asucmobile.models.FoodItem;
 import com.asuc.asucmobile.utilities.CustomComparators;
+import com.asuc.asucmobile.utilities.HamburgerGenerator;
 import com.flurry.android.FlurryAgent;
 
 import java.util.ArrayList;
@@ -44,6 +45,8 @@ public class OpenDiningHallActivity extends AppCompatActivity {
         }
 
         setContentView(R.layout.activity_open_dining_hall);
+
+        HamburgerGenerator.generateMenu(this);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle(diningHall.getName());
         setSupportActionBar(toolbar);

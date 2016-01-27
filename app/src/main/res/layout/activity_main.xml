@@ -6,13 +6,6 @@
     android:orientation="vertical"
     tools:context=".MainActivity">
 
-    <android.support.v7.widget.Toolbar
-        android:id="@+id/toolbar"
-        android:layout_height="wrap_content"
-        android:layout_width="match_parent"
-        android:elevation="8dp"
-        app:theme="@style/ToolbarTheme" />
-
     <ListView
         android:id="@+id/main_menu"
         android:layout_width="match_parent"

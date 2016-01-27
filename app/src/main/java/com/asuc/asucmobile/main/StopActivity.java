@@ -27,6 +27,7 @@ import com.asuc.asucmobile.adapters.StopAdapter;
 import com.asuc.asucmobile.controllers.LineController;
 import com.asuc.asucmobile.models.Stop;
 import com.asuc.asucmobile.utilities.Callback;
+import com.asuc.asucmobile.utilities.HamburgerGenerator;
 import com.flurry.android.FlurryAgent;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -73,15 +74,9 @@ public class StopActivity extends AppCompatActivity implements ConnectionCallbac
         buildGoogleApiClient();
 
         setContentView(R.layout.activity_stop);
+        HamburgerGenerator.generateMenu(this);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        toolbar.setNavigationIcon(getResources().getDrawable(R.drawable.ic_action_back));
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                finish();
-            }
-        });
 
         ImageButton refreshButton = (ImageButton) findViewById(R.id.refresh_button);
 

@@ -24,6 +24,7 @@ import com.asuc.asucmobile.R;
 import com.asuc.asucmobile.controllers.LibraryController;
 import com.asuc.asucmobile.models.Library;
 import com.asuc.asucmobile.utilities.Callback;
+import com.asuc.asucmobile.utilities.HamburgerGenerator;
 import com.asuc.asucmobile.utilities.ImageDownloadThread;
 import com.flurry.android.FlurryAgent;
 import com.google.android.gms.common.ConnectionResult;
@@ -62,6 +63,7 @@ public class OpenLibraryActivity extends AppCompatActivity {
         }
 
         setContentView(R.layout.activity_open_library);
+        HamburgerGenerator.generateMenu(this);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle(library.getName());
         setSupportActionBar(toolbar);
