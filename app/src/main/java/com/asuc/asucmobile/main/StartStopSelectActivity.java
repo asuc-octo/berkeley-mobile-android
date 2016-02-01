@@ -149,6 +149,7 @@ public class StartStopSelectActivity extends AppCompatActivity
     @Override
     public void onPause() {
         super.onPause();
+        timer.cancel();
         timer.purge();
     }
 

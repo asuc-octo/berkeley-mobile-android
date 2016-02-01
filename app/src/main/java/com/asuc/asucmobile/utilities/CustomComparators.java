@@ -73,9 +73,9 @@ public class CustomComparators {
 
         private static Comparator<Library> sortByOpenness = new Comparator<Library>() {
             public int compare(Library arg0, Library arg1) {
+                if (arg0.isOpen() && !arg1.isOpen()) return -1;
+                if (arg1.isOpen() && !arg0.isOpen()) return 1;
                 if (arg0.isOpen() && arg1.isOpen()) return 0;
-                if (arg0.isOpen()) return -1;
-                if (arg1.isOpen()) return 1;
                 return 0;
             }
         };
