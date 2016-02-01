@@ -25,19 +25,23 @@ public class SerializableUtilities {
             return favorites;
         }
 
-        try
-        {
-            FileInputStream inputStream = context.openFileInput(SAVE_FILE_NAME);
-            InputStream buffer = new BufferedInputStream(inputStream);
-            ObjectInput input = new ObjectInputStream(buffer);
+        try {
+            String[] files = context.fileList();
+            for (String fileName : files) {
+                if (fileName.equals(SAVE_FILE_NAME)) {
+                    FileInputStream inputStream = context.openFileInput(SAVE_FILE_NAME);
+                    InputStream buffer = new BufferedInputStream(inputStream);
+                    ObjectInput input = new ObjectInputStream(buffer);
 
-            favorites = (ListOfFavorites) input.readObject();
-            return favorites;
+                    favorites = (ListOfFavorites) input.readObject();
+                    return favorites;
+                }
+            }
         }
-        catch(Exception ex)
-        {
+        catch(Exception ex) {
             ex.printStackTrace();
         }
+
         return null;
     }
 
