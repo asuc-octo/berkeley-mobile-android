@@ -19,6 +19,7 @@ import com.asuc.asucmobile.fragments.MenuFragment;
 import com.asuc.asucmobile.models.DiningHall;
 import com.asuc.asucmobile.models.FoodItem;
 import com.asuc.asucmobile.utilities.CustomComparators;
+import com.asuc.asucmobile.utilities.SerializableUtilities;
 import com.flurry.android.FlurryAgent;
 
 import java.util.ArrayList;
@@ -42,6 +43,12 @@ public class OpenDiningHallActivity extends AppCompatActivity {
         if (diningHall == null) {
             finish();
             return;
+        }
+
+        ListOfFavorites listOfFavorites = (ListOfFavorites) SerializableUtilities.loadSerializedObject(this);
+        if (listOfFavorites == null) {
+            listOfFavorites = new ListOfFavorites();
+            SerializableUtilities.saveObject(this, listOfFavorites);
         }
 
         setContentView(R.layout.activity_open_dining_hall);
@@ -123,50 +130,62 @@ public class OpenDiningHallActivity extends AppCompatActivity {
         }
         if (id == R.id.sortAZ) {
             DiningHall diningHall = MenuFragment.getDiningHall();
-            ArrayList<FoodItem> arrayListBreakfast = diningHall.getBreakfastMenu();
-            if (arrayListBreakfast.size() != 0) Collections.sort(arrayListBreakfast, CustomComparators.FacilityComparators.getFoodSortByAZ());
-            ArrayList<FoodItem> arrayListLunch = diningHall.getLunchMenu();
-            if (arrayListLunch.size() != 0) Collections.sort(arrayListLunch, CustomComparators.FacilityComparators.getFoodSortByAZ());
-            ArrayList<FoodItem> arrayListDinner = diningHall.getDinnerMenu();
-            if (arrayListDinner.size() != 0) Collections.sort(arrayListDinner, CustomComparators.FacilityComparators.getFoodSortByAZ());
-            MenuFragment.refreshLists();
 
+            ArrayList<FoodItem> arrayListBreakfast = diningHall.getBreakfastMenu();
+            Collections.sort(arrayListBreakfast, CustomComparators.FacilityComparators.getFoodSortByAZ());
+            ArrayList<FoodItem> arrayListLunch = diningHall.getLunchMenu();
+            Collections.sort(arrayListLunch, CustomComparators.FacilityComparators.getFoodSortByAZ());
+            ArrayList<FoodItem> arrayListDinner = diningHall.getDinnerMenu();
+            Collections.sort(arrayListDinner, CustomComparators.FacilityComparators.getFoodSortByAZ());
+            ArrayList<FoodItem> arrayListLateNight = diningHall.getLateNightMenu();
+            Collections.sort(arrayListLateNight, CustomComparators.FacilityComparators.getFoodSortByAZ());
+
+            MenuFragment.refreshLists();
             return true;
         }
         if (id == R.id.sortVegetarian) {
             DiningHall diningHall = MenuFragment.getDiningHall();
-            ArrayList<FoodItem> arrayListBreakfast = diningHall.getBreakfastMenu();
-            if (arrayListBreakfast.size() != 0) Collections.sort(arrayListBreakfast, CustomComparators.FacilityComparators.getFoodSortByVegetarian());
-            ArrayList<FoodItem> arrayListLunch = diningHall.getLunchMenu();
-            if (arrayListLunch.size() != 0) Collections.sort(arrayListLunch, CustomComparators.FacilityComparators.getFoodSortByVegetarian());
-            ArrayList<FoodItem> arrayListDinner = diningHall.getDinnerMenu();
-            if (arrayListDinner.size() != 0) Collections.sort(arrayListDinner, CustomComparators.FacilityComparators.getFoodSortByVegetarian());
-            MenuFragment.refreshLists();
 
+            ArrayList<FoodItem> arrayListBreakfast = diningHall.getBreakfastMenu();
+            Collections.sort(arrayListBreakfast, CustomComparators.FacilityComparators.getFoodSortByVegetarian());
+            ArrayList<FoodItem> arrayListLunch = diningHall.getLunchMenu();
+            Collections.sort(arrayListLunch, CustomComparators.FacilityComparators.getFoodSortByVegetarian());
+            ArrayList<FoodItem> arrayListDinner = diningHall.getDinnerMenu();
+            Collections.sort(arrayListDinner, CustomComparators.FacilityComparators.getFoodSortByVegetarian());
+            ArrayList<FoodItem> arrayListLateNight = diningHall.getLateNightMenu();
+            Collections.sort(arrayListLateNight, CustomComparators.FacilityComparators.getFoodSortByVegetarian());
+
+            MenuFragment.refreshLists();
             return true;
         }
         if (id == R.id.sortVegan) {
             DiningHall diningHall = MenuFragment.getDiningHall();
-            ArrayList<FoodItem> arrayListBreakfast = diningHall.getBreakfastMenu();
-            if (arrayListBreakfast.size() != 0) Collections.sort(arrayListBreakfast, CustomComparators.FacilityComparators.getFoodSortByVegan());
-            ArrayList<FoodItem> arrayListLunch = diningHall.getLunchMenu();
-            if (arrayListLunch.size() != 0) Collections.sort(arrayListLunch, CustomComparators.FacilityComparators.getFoodSortByVegan());
-            ArrayList<FoodItem> arrayListDinner = diningHall.getDinnerMenu();
-            if (arrayListDinner.size() != 0) Collections.sort(arrayListDinner, CustomComparators.FacilityComparators.getFoodSortByVegan());
-            MenuFragment.refreshLists();
 
+            ArrayList<FoodItem> arrayListBreakfast = diningHall.getBreakfastMenu();
+            Collections.sort(arrayListBreakfast, CustomComparators.FacilityComparators.getFoodSortByVegan());
+            ArrayList<FoodItem> arrayListLunch = diningHall.getLunchMenu();
+            Collections.sort(arrayListLunch, CustomComparators.FacilityComparators.getFoodSortByVegan());
+            ArrayList<FoodItem> arrayListDinner = diningHall.getDinnerMenu();
+            Collections.sort(arrayListDinner, CustomComparators.FacilityComparators.getFoodSortByVegan());
+            ArrayList<FoodItem> arrayListLateNight = diningHall.getLateNightMenu();
+            Collections.sort(arrayListLateNight, CustomComparators.FacilityComparators.getFoodSortByVegan());
+
+            MenuFragment.refreshLists();
             return true;
         }
         if (id == R.id.sortFavorites) {
             DiningHall diningHall = MenuFragment.getDiningHall();
-            ArrayList<FoodItem> arrayListBreakfast = diningHall.getBreakfastMenu();
-            if (arrayListBreakfast.size() != 0) Collections.sort(arrayListBreakfast, CustomComparators.FacilityComparators.getFoodSortByFavorite(this));
-            ArrayList<FoodItem> arrayListLunch = diningHall.getLunchMenu();
-            if (arrayListLunch.size() != 0) Collections.sort(arrayListLunch, CustomComparators.FacilityComparators.getFoodSortByFavorite(this));
-            ArrayList<FoodItem> arrayListDinner = diningHall.getDinnerMenu();
-            if (arrayListDinner.size() != 0) Collections.sort(arrayListDinner, CustomComparators.FacilityComparators.getFoodSortByFavorite(this));
-            MenuFragment.refreshLists();
 
+            ArrayList<FoodItem> arrayListBreakfast = diningHall.getBreakfastMenu();
+            Collections.sort(arrayListBreakfast, CustomComparators.FacilityComparators.getFoodSortByFavorite(this));
+            ArrayList<FoodItem> arrayListLunch = diningHall.getLunchMenu();
+            Collections.sort(arrayListLunch, CustomComparators.FacilityComparators.getFoodSortByFavorite(this));
+            ArrayList<FoodItem> arrayListDinner = diningHall.getDinnerMenu();
+            Collections.sort(arrayListDinner, CustomComparators.FacilityComparators.getFoodSortByFavorite(this));
+            ArrayList<FoodItem> arrayListLateNight = diningHall.getLateNightMenu();
+            Collections.sort(arrayListLateNight, CustomComparators.FacilityComparators.getFoodSortByFavorite(this));
+
+            MenuFragment.refreshLists();
             return true;
         }
 
