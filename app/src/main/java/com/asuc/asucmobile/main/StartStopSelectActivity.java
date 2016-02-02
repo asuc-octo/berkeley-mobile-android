@@ -39,8 +39,6 @@ import java.util.Locale;
 import java.util.Timer;
 import java.util.TimerTask;
 
-//TODO: flurry
-//TODO: check for existing location through sharedPreferences
 public class StartStopSelectActivity extends AppCompatActivity
     implements OnMapReadyCallback {
 
@@ -110,6 +108,7 @@ public class StartStopSelectActivity extends AppCompatActivity
             @Override
             public void onClick(View v) {
                 LocationGrabber.getLocation(StartStopSelectActivity.this,  new LocationCallback());
+                startButton.setText(getString(R.string.retrieving_location));
             }
         });
 
@@ -170,13 +169,11 @@ public class StartStopSelectActivity extends AppCompatActivity
     private void getStartFromPref(Intent data) {
         startName = data.getStringExtra("startName");
         startLatLng = data.getParcelableExtra("startLatLng");
-        //TODO: error checking
     }
 
     private void getEndFromPref(Intent data) {
         endName = data.getStringExtra("endName");
         endLatLng = data.getParcelableExtra("endLatLng");
-        //TODO: error checking
     }
 
     private class StartStopListener implements View.OnClickListener {
