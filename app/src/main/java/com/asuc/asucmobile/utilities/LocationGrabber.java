@@ -43,6 +43,7 @@ public class LocationGrabber {
                         Manifest.permission.ACCESS_FINE_LOCATION
                 };
                 ActivityCompat.requestPermissions(activity, permissions, LOCATION_PERMISSION);
+                return;
             }
         }
 
