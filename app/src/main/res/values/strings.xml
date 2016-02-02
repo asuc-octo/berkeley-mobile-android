@@ -36,5 +36,6 @@
     <string name="no_routes">No routes available</string>
     <string name="now">Now</string>
     <string name="live_bus_map">Live Bus Map</string>
+    <string name="retrieving_location">Retreiving location</string>
 
 </resources>
