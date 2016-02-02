@@ -9,6 +9,7 @@ import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -40,7 +41,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 public class StartStopSelectActivity extends AppCompatActivity
-    implements OnMapReadyCallback {
+    implements OnMapReadyCallback, ActivityCompat.OnRequestPermissionsResultCallback {
 
     private static final int LOCATION_PERMISSION = 0;
     private static final int START_INT = 1;
