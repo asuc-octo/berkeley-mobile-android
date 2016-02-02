@@ -7,6 +7,7 @@
     android:gravity="center_vertical"
     android:paddingLeft="16dp"
     android:paddingRight="16dp"
+    android:baselineAligned="false"
     android:background="@android:color/white">
 
     <LinearLayout
@@ -38,7 +39,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="center_vertical|end"
-        android:orientation="vertical"
+        android:orientation="horizontal"
         android:layout_marginLeft="8dp"
         android:layout_marginStart="8dp">
 
@@ -47,7 +48,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="16sp"
-            android:textColor="@color/grizzly_gray" />
+            android:textColor="@android:color/darker_gray" />
 
         <ImageView
             android:id="@+id/favorite"

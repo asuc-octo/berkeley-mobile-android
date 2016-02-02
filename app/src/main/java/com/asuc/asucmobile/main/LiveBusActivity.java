@@ -8,6 +8,7 @@ import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
@@ -39,10 +40,22 @@ public class LiveBusActivity extends AppCompatActivity implements OnMapReadyCall
     private LinearLayout mRefreshWrapper;
 
     @Override
+    @SuppressWarnings("deprecation")
     protected void onCreate(Bundle savedInstanceState) {
         this.activity = this;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_live_bus);
+
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        toolbar.setNavigationIcon(getResources().getDrawable(R.drawable.ic_action_back));
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
+
         mapFragment = (MapFragment) getFragmentManager()
                 .findFragmentById(R.id.map);
         mRefreshWrapper = (LinearLayout) findViewById(R.id.refresh);
@@ -105,7 +118,7 @@ public class LiveBusActivity extends AppCompatActivity implements OnMapReadyCall
             this.timer = timer;
 
             Bitmap b = BitmapFactory.decodeResource(context.getResources(), R.drawable.transit_blue);
-            icon = BitmapDescriptorFactory.fromBitmap(Bitmap.createScaledBitmap(b, 75, 75, false));
+            icon = BitmapDescriptorFactory.fromBitmap(Bitmap.createScaledBitmap(b, 64, 64, false));
         }
 
         @Override

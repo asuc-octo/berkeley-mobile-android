@@ -1,10 +1,15 @@
 package com.asuc.asucmobile.main;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -115,6 +120,7 @@ public class OpenRouteActivity extends AppCompatActivity {
         return true;
     }
 
+    @SuppressWarnings("deprecation")
     private void setUpMap() {
         // Checking if Google Play Services are available to set up the map.
         int status = GooglePlayServicesUtil.isGooglePlayServicesAvailable(this);
@@ -144,19 +150,24 @@ public class OpenRouteActivity extends AppCompatActivity {
                 LocationManager locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
                 String bestProvider = locationManager.getBestProvider(new Criteria(), false);
 
-                BitmapDescriptor bitmap = BitmapDescriptorFactory.fromResource(R.drawable.icon_map_pin);
+                Bitmap b = BitmapFactory.decodeResource(getResources(), R.drawable.icon_map_pin);
+                BitmapDescriptor pin = BitmapDescriptorFactory.fromBitmap(Bitmap.createScaledBitmap(b, 39, 64, false));
+
                 map.addMarker(new MarkerOptions()
                                 .position(lastStop.getLocation())
-                                .icon(bitmap)
+                                .icon(pin)
                 );
                 map.addMarker(new MarkerOptions()
                                 .position(firstStop.getLocation())
-                                .icon(bitmap)
+                                .icon(pin)
                 );
                 map.getUiSettings().setAllGesturesEnabled(false);
                 map.getUiSettings().setZoomControlsEnabled(false);
                 map.getUiSettings().setMyLocationButtonEnabled(false);
-                map.setMyLocationEnabled(true);
+                if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED ||
+                        ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+                    map.setMyLocationEnabled(true);
+                }
 
                 final LatLngBounds.Builder builder = LatLngBounds.builder();
                 builder.include(firstStop.getLocation());

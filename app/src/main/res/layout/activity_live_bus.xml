@@ -5,11 +5,20 @@
     android:layout_height="match_parent"
     tools:context="com.asuc.asucmobile.main.LiveBusActivity"
     android:padding="0dp">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:elevation="8dp"
+        style="@style/ToolbarTheme" />
+
     <fragment xmlns:android="http://schemas.android.com/apk/res/android"
         android:name="com.google.android.gms.maps.MapFragment"
         android:id="@+id/map"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
+
     <LinearLayout
         android:id="@+id/refresh"
         android:layout_width="match_parent"
@@ -17,6 +26,7 @@
         android:gravity="center"
         android:background="@color/off_white"
         android:visibility="gone">
+
         <ImageButton
             android:id="@+id/refresh_button"
             android:layout_width="80dp"
@@ -24,5 +34,7 @@
             android:layout_gravity="center"
             android:contentDescription="@string/content_desc"
             android:background="@drawable/ic_action_refresh" />
+
     </LinearLayout>
+
 </RelativeLayout>
