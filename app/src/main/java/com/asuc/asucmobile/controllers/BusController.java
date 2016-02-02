@@ -62,6 +62,9 @@ public class BusController implements Controller{
                     for (int i = 0; i < array.length(); i++) {
                         JSONObject bus = array.getJSONObject(i);
                         boolean inService = bus.getBoolean("in_service");
+                        if (!inService) {
+                            continue;
+                        }
                         int id = bus.getInt("id");
                         LatLng location = new LatLng(bus.getDouble("latitude"), bus.getDouble("longitude"));
                         Bus newBus = new Bus(id, location, 0, 0, 0, 0, inService);
