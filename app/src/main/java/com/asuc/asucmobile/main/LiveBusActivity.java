@@ -130,10 +130,13 @@ public class LiveBusActivity extends AppCompatActivity implements OnMapReadyCall
             buses = (ArrayList<Bus>) data;
             map.clear();
             for(Bus bus : buses) {
-                map.addMarker(new MarkerOptions()
-                        .position(bus.getLocation())
-                        .icon(icon)
-                );
+                if (bus.getLineName() != null && !bus.getLineName().equals("null")) {
+                    map.addMarker(new MarkerOptions()
+                            .position(bus.getLocation())
+                            .icon(icon)
+                            .title(bus.getLineName())
+                    );
+                }
             }
         }
 
