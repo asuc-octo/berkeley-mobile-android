@@ -66,8 +66,9 @@ public class BusController implements Controller{
                             continue;
                         }
                         int id = bus.getInt("id");
+                        String name = bus.getString("line_name");
                         LatLng location = new LatLng(bus.getDouble("latitude"), bus.getDouble("longitude"));
-                        Bus newBus = new Bus(id, location, 0, 0, 0, 0, inService);
+                        Bus newBus = new Bus(id, location, 0, 0, 0, 0, name, true);
                         buses.add(newBus);
                     }
                     ((Activity) context).runOnUiThread(new Runnable() {

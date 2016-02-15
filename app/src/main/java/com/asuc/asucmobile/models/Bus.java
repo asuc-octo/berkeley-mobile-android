@@ -11,16 +11,18 @@ public class Bus {
     private double speed;
     private double bearing;
     private int vehicleId;
+    private String lineName;
     private boolean inService;
 
     public Bus(int id, LatLng location, int lineId, double speed, double bearing, int vehicleId,
-               boolean inService) {
+               String lineName, boolean inService) {
         this.id = id;
         this.location = location;
         this.lineId = lineId;
         this.speed = speed;
         this.bearing = bearing;
         this.vehicleId = vehicleId;
+        this.lineName = lineName;
         this.inService = inService;
     }
 
@@ -46,6 +48,10 @@ public class Bus {
 
     public int getVehicleId() {
         return vehicleId;
+    }
+
+    public String getLineName() {
+        return lineName;
     }
 
     public boolean isInService() {
