@@ -2,6 +2,8 @@ package com.asuc.asucmobile.models;
 
 import com.google.android.gms.maps.model.LatLng;
 
+import org.json.JSONArray;
+
 import java.util.Date;
 
 public class Library {
@@ -12,12 +14,15 @@ public class Library {
     private String phone;
     private Date opening;
     private Date closing;
+    private Date[] weeklyOpen;
+    private Date[] weeklyClose;
     private String imageUrl;
     private LatLng latLng;
     private boolean byAppointment;
 
     public Library(int id, String name, String location, String phone, Date opening,
-                   Date closing, String imageUrl, double lat, double lng,
+                   Date closing, Date[] weeklyOpen, Date[] weeklyClose,
+                   String imageUrl, double lat, double lng,
                    boolean byAppointment) {
         this.id = id;
         this.name = name;
@@ -28,6 +33,8 @@ public class Library {
         this.imageUrl = imageUrl;
         this.latLng = new LatLng(lat, lng);
         this.byAppointment = byAppointment;
+        this.weeklyOpen = weeklyOpen;
+        this.weeklyClose = weeklyClose;
     }
 
     public int getId() {
@@ -78,6 +85,10 @@ public class Library {
 
         Date currentTime = new Date();
         return currentTime.after(opening) && currentTime.before(closing);
+    }
+
+    public String weeklyHours() {
+        return "RESISTANCE IS FUTILE\nMERRY EASTER";
     }
 
 }

@@ -74,39 +74,19 @@ public class OpenLibraryActivity extends AppCompatActivity {
         });
 
         final ImageView image = (ImageView) findViewById(R.id.image);
-        TextView hours = (TextView) findViewById(R.id.hours);
+        final TextView hours = (TextView) findViewById(R.id.hours);
         TextView address = (TextView) findViewById(R.id.location);
         TextView phone = (TextView) findViewById(R.id.phone);
+
+        LinearLayout hoursLayout = (LinearLayout) findViewById(R.id.hours_layout);
         LinearLayout locationLayout = (LinearLayout) findViewById(R.id.location_layout);
         LinearLayout phoneLayout = (LinearLayout) findViewById(R.id.phone_layout);
         mapFragment = (MapFragment) getFragmentManager().findFragmentById(R.id.map);
         final ProgressBar progressBar= (ProgressBar) findViewById(R.id.progress_bar);
 
-        Spannable hoursString;
-        if (library.isByAppointment()) {
-            hoursString = new SpannableString("Today  BY APPOINTMENT");
-            hoursString.setSpan(new ForegroundColorSpan(Color.rgb(114, 205, 244)), 7, 21, Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
-        } else if (library.getOpening() != null && library.getClosing() != null) {
-            String isOpen;
-            int color;
-            if (library.isOpen()) {
-                isOpen = "OPEN";
-                color = Color.rgb(153, 204, 0);
-            } else {
-                isOpen = "CLOSED";
-                color = Color.rgb(255, 68, 68);
-            }
+        Spannable hoursString = this.setUpHours();
 
-            String opening = HOURS_FORMAT.format(library.getOpening());
-            String closing = HOURS_FORMAT.format(library.getClosing());
-            hoursString = new SpannableString("Today  " + isOpen + "\n" + opening + " to " + closing);
-            hoursString.setSpan(new ForegroundColorSpan(color), 7, 7 + isOpen.length(), Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
-        } else {
-            hoursString = new SpannableString("Today  CLOSED ALL DAY");
-            hoursString.setSpan(new ForegroundColorSpan(Color.rgb(186, 52, 52)), 7, 21, Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
-        }
-
-        hours.setText(hoursString);
+        hours.setText(setUpHours());
         address.setText(library.getLocation());
         phone.setText(library.getPhone());
 
@@ -114,6 +94,26 @@ public class OpenLibraryActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 openMap();
+            }
+        });
+
+        hoursLayout.setOnClickListener(new com.asuc.asucmobile.utilities.hoursOnClickListener() {
+            @Override
+            public void onClick(View v) {
+                System.out.println(status);
+
+                if (status == false) {
+                    //TextView hours = (TextView) findViewById(R.id.hours);
+
+                    Spannable hoursString = new SpannableString(library.weeklyHours());
+                    hoursString.setSpan(new ForegroundColorSpan(Color.rgb(52, 52, 52)), 7, 21, Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
+
+                    hours.setText(hoursString);
+                    status = true;
+                } else {
+                    hours.setText(setUpHours());
+                    status = false;
+                }
             }
         });
 
@@ -134,24 +134,6 @@ public class OpenLibraryActivity extends AppCompatActivity {
         }
 
         setUpMap();
-        new ImageDownloadThread(this, library.getImageUrl(), new Callback() {
-            @Override
-            public void onDataRetrieved(Object data) {
-                if (data != null) {
-                    Bitmap bitmap = (Bitmap) data;
-                    image.setImageBitmap(bitmap);
-                }
-
-                progressBar.setVisibility(View.GONE);
-                image.setVisibility(View.VISIBLE);
-            }
-
-            @Override
-            public void onRetrievalFailed() {
-                progressBar.setVisibility(View.GONE);
-                image.setVisibility(View.VISIBLE);
-            }
-        }).start();
     }
 
     @Override
@@ -240,6 +222,33 @@ public class OpenLibraryActivity extends AppCompatActivity {
 
         Intent i = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
         startActivity(i);
+    }
+
+    private Spannable setUpHours() {
+        Spannable hoursString;
+        if (library.isByAppointment()) {
+            hoursString = new SpannableString("Today  BY APPOINTMENT");
+            hoursString.setSpan(new ForegroundColorSpan(Color.rgb(114, 205, 244)), 7, 21, Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
+        } else if (library.getOpening() != null && library.getClosing() != null) {
+            String isOpen;
+            int color;
+            if (library.isOpen()) {
+                isOpen = "OPEN";
+                color = Color.rgb(153, 204, 0);
+            } else {
+                isOpen = "CLOSED";
+                color = Color.rgb(255, 68, 68);
+            }
+
+            String opening = HOURS_FORMAT.format(library.getOpening());
+            String closing = HOURS_FORMAT.format(library.getClosing());
+            hoursString = new SpannableString("Today  " + isOpen + "\n" + opening + " to " + closing);
+            hoursString.setSpan(new ForegroundColorSpan(color), 7, 7 + isOpen.length(), Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
+        } else {
+            hoursString = new SpannableString("Today  CLOSED ALL DAY");
+            hoursString.setSpan(new ForegroundColorSpan(Color.rgb(186, 52, 52)), 7, 21, Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
+        }
+        return hoursString;
     }
 
 }
