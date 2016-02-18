@@ -43,6 +43,7 @@
             android:layout_weight=".33"
             android:paddingLeft="24dp"
             android:paddingRight="24dp"
+            android:animateLayoutChanges="true"
             android:gravity="center_vertical"
             android:orientation="horizontal">
 
@@ -58,7 +59,19 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="24dp"
                 android:layout_marginLeft="24dp"
+                android:gravity="center_vertical"
                 android:textColor="@android:color/black" />
+
+            <TextView
+                android:id="@+id/hours_expand"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="24dp"
+                android:layout_marginRight="24dp"
+                android:layout_marginLeft="24dp"
+                android:gravity="right"
+                android:textColor="@android:color/black" />
+
 
         </LinearLayout>
 

@@ -13,6 +13,7 @@ import org.json.JSONObject;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
 import java.util.Locale;
@@ -115,10 +116,20 @@ public class LibraryController implements Controller {
                         double lat = libraryJSON.getDouble("latitude");
                         double lng = libraryJSON.getDouble("longitude");
 
-                        boolean byAppointment = libraryJSON.getBoolean("by_appointment");
+                        JSONArray weeklyAppointmentArray = libraryJSON.getJSONArray("weekly_by_appointment");
+                        boolean[] weeklyAppointments = new boolean[7];
+                        for (int j=0; j < weeklyAppointmentArray.length(); j++) {
+                            weeklyAppointments[j] = weeklyAppointmentArray.getBoolean(j);
+                        }
+                        boolean byAppointment = weeklyAppointments[0];
+
+                        Calendar c = Calendar.getInstance();
+                        Date d = DATE_FORMAT.parse(libraryJSON.getString("updated_at"));
+                        c.setTime(d);
+                        int weekday = c.get(Calendar.DAY_OF_WEEK);
 
                         libraries.add(
-                                new Library(id, name, location, phone, weeklyOpen[0], weeklyClose[0], weeklyOpen, weeklyClose, imageUrl, lat, lng, byAppointment));
+                                new Library(id, name, location, phone, weeklyOpen[0], weeklyClose[0], weeklyOpen, weeklyClose, imageUrl, lat, lng, byAppointment, weeklyAppointments, weekday));
                     }
 
                     // Sort the libraries alphabetically, putting favorites at top
