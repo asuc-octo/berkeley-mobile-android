@@ -1,2 +1,1 @@
-include ':app', ':library', ':extras-actionbarcompat', ':extras-actionbarsherlock', ':ParallaxScroll', ':hamburgerMenu'
-project(':hamburgerMenu').projectDir = new File('app/libs/hamburgerMenu')
+include ':app', ':extras-actionbarcompat', ':extras-actionbarsherlock', ':ParallaxScroll', ':sliding'
