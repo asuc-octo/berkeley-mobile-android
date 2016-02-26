@@ -97,13 +97,6 @@ public class StartStopSelectActivity extends AppCompatActivity
                 startActivity(adapter.getItem(i).getIntent());
             }
         });
-        ImageButton backButton = (ImageButton) findViewById(R.id.back_button);
-        backButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                finish();
-            }
-        });
 
         startButton = (TextView) findViewById(R.id.start_stop);
         destButton = (TextView) findViewById(R.id.dest_stop);
