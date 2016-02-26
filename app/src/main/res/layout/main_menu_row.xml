@@ -1,7 +1,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="horizontal"
     android:layout_width="match_parent"
-    android:layout_height="96dp"
+    android:layout_height="72dp"
     android:paddingLeft="36dp"
     android:paddingStart="36dp"
     android:paddingRight="16dp"
