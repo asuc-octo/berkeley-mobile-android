@@ -2,6 +2,7 @@ package com.asuc.asucmobile.main;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
@@ -15,7 +16,9 @@ import android.widget.Toast;
 
 import com.asuc.asucmobile.R;
 import com.asuc.asucmobile.adapters.DiningHallAdapter;
+import com.asuc.asucmobile.adapters.MainMenuAdapter;
 import com.asuc.asucmobile.controllers.DiningController;
+import com.asuc.asucmobile.models.Category;
 import com.asuc.asucmobile.models.DiningHall;
 import com.asuc.asucmobile.utilities.Callback;
 import com.flurry.android.FlurryAgent;
@@ -39,15 +42,26 @@ public class DiningHallActivity extends AppCompatActivity {
         FlurryAgent.onStartSession(this, "4VPTT49FCCKH7Z2NVQ26");
 
         setContentView(R.layout.activity_dining_hall);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        toolbar.setNavigationIcon(getResources().getDrawable(R.drawable.ic_action_back));
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+        DrawerLayout mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        ListView mDrawerList = (ListView) findViewById(R.id.left_drawer);
+        // Set the adapter for the list view
+        Category[] menuItems = new Category[] {
+                new Category(getResources().getDrawable(R.drawable.beartransit), "BearTransit", new Intent(this, StartStopSelectActivity.class)),
+                new Category(getResources().getDrawable(R.drawable.dining_hall), "Dining Halls", new Intent(this, DiningHallActivity.class)),
+                new Category(getResources().getDrawable(R.drawable.library), "Libraries", new Intent(this, LibraryActivity.class)),
+                new Category(getResources().getDrawable(R.drawable.gym), "Gyms", new Intent(this, GymActivity.class))
+        };
+
+        final MainMenuAdapter adapter = new MainMenuAdapter(this, menuItems);
+        mDrawerList.setAdapter(adapter);
+        mDrawerList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onClick(View view) {
-                finish();
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                startActivity(adapter.getItem(i).getIntent());
             }
         });
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
 
         ImageButton refreshButton = (ImageButton) findViewById(R.id.refresh_button);
 

@@ -21,28 +21,9 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         FlurryAgent.onStartSession(this, "4VPTT49FCCKH7Z2NVQ26");
-
-        setContentView(R.layout.activity_main);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        Category[] menuItems = new Category[] {
-                new Category(getResources().getDrawable(R.drawable.beartransit), "BearTransit", new Intent(this, StartStopSelectActivity.class)),
-                new Category(getResources().getDrawable(R.drawable.dining_hall), "Dining Halls", new Intent(this, DiningHallActivity.class)),
-                new Category(getResources().getDrawable(R.drawable.library), "Libraries", new Intent(this, LibraryActivity.class)),
-                new Category(getResources().getDrawable(R.drawable.gym), "Gyms", new Intent(this, GymActivity.class))
-        };
-
-        ListView menuList = (ListView) findViewById(R.id.main_menu);
-
-        final MainMenuAdapter adapter = new MainMenuAdapter(this, menuItems);
-        menuList.setAdapter(adapter);
-
-        menuList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                startActivity(adapter.getItem(i).getIntent());
-            }
-        });
+        Intent start = new Intent(this, StopActivity.class);
+        start.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(start);
     }
 
     @Override
