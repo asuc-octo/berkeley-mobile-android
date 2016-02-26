@@ -21,7 +21,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         FlurryAgent.onStartSession(this, "4VPTT49FCCKH7Z2NVQ26");
-        Intent start = new Intent(this, StopActivity.class);
+        Intent start = new Intent(this, StartStopSelectActivity.class);
         start.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(start);
     }
