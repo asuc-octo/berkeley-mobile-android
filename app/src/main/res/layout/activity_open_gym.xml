@@ -1,155 +1,171 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v4.widget.DrawerLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
-
-    <android.support.v7.widget.Toolbar
-        android:id="@+id/toolbar"
-        android:layout_height="wrap_content"
+    android:layout_height="match_parent">
+    <!-- The main content view -->
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
-        android:elevation="8dp"
-        style="@style/ToolbarTheme" />
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="2">
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:elevation="8dp"
+            style="@style/ToolbarTheme" />
 
-        <ProgressBar
-            android:id="@+id/progress_bar"
-            style="?android:attr/progressBarStyleSmall"
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:padding="96dp"
-            android:layout_gravity="center"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true" />
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="2">
+
+            <ProgressBar
+                android:id="@+id/progress_bar"
+                style="?android:attr/progressBarStyleSmall"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:padding="96dp"
+                android:layout_gravity="center"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true" />
+
+            <View
+                android:id="@+id/image"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:background="@drawable/default_gym"
+                android:visibility="invisible" />
+
+            <View
+                android:id="@+id/tint"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:background="@android:color/black"
+                android:alpha="0.75"
+                android:visibility="invisible" />
+
+            <ProgressBar
+                android:id="@+id/backing_ring"
+                style="?android:attr/progressBarStyleHorizontal"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:max="100"
+                android:progress="100"
+                android:progressDrawable="@drawable/circular_progress_background"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:visibility="invisible" />
+
+            <ProgressBar
+                android:id="@+id/percent_full_bar"
+                style="?android:attr/progressBarStyleHorizontal"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:max="100"
+                android:progress="0"
+                android:progressDrawable="@drawable/circular_progress"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:rotation="-90"
+                android:visibility="invisible" />
+
+            <TextView
+                android:id="@+id/percentage"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:gravity="center"
+                android:textSize="72sp"
+                android:fontFamily="sans-serif-thin"
+                android:textColor="@android:color/white"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:visibility="invisible" />
+
+            <ImageView
+                android:layout_width="112dp"
+                android:layout_height="wrap_content"
+                android:id="@+id/density_logo"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
+                android:layout_marginBottom="8dp"
+                android:src="@drawable/density_logo"
+                android:visibility="invisible"
+                android:contentDescription="@string/content_desc" />
+
+        </RelativeLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:paddingLeft="36dp"
+            android:paddingRight="36dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:contentDescription="@string/content_desc"
+                android:src="@drawable/icon_hours" />
+
+            <TextView
+                android:id="@+id/hours"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
+                android:layout_marginLeft="24dp"
+                android:textSize="14sp"
+                android:textColor="@android:color/black" />
+
+        </LinearLayout>
 
         <View
-            android:id="@+id/image"
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:background="@drawable/default_gym"
-            android:visibility="invisible" />
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@android:color/darker_gray" />
 
-        <View
-            android:id="@+id/tint"
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:background="@android:color/black"
-            android:alpha="0.75"
-            android:visibility="invisible" />
+        <LinearLayout
+            android:id="@+id/location_layout"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:paddingLeft="36dp"
+            android:paddingRight="36dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:background="@drawable/white_selector">
 
-        <ProgressBar
-            android:id="@+id/backing_ring"
-            style="?android:attr/progressBarStyleHorizontal"
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:max="100"
-            android:progress="100"
-            android:progressDrawable="@drawable/circular_progress_background"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:visibility="invisible" />
+            <ImageView
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:contentDescription="@string/content_desc"
+                android:src="@drawable/icon_location" />
 
-        <ProgressBar
-            android:id="@+id/percent_full_bar"
-            style="?android:attr/progressBarStyleHorizontal"
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:max="100"
-            android:progress="0"
-            android:progressDrawable="@drawable/circular_progress"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:rotation="-90"
-            android:visibility="invisible" />
+            <TextView
+                android:id="@+id/location"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
+                android:layout_marginLeft="24dp"
+                android:textSize="14sp"
+                android:textColor="@android:color/black" />
 
-        <TextView
-            android:id="@+id/percentage"
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:gravity="center"
-            android:textSize="72sp"
-            android:fontFamily="sans-serif-thin"
-            android:textColor="@android:color/white"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:visibility="invisible" />
-
-        <ImageView
-            android:layout_width="112dp"
-            android:layout_height="wrap_content"
-            android:id="@+id/density_logo"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentEnd="true"
-            android:layout_marginBottom="8dp"
-            android:src="@drawable/density_logo"
-            android:visibility="invisible"
-            android:contentDescription="@string/content_desc" />
-
-    </RelativeLayout>
-
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:paddingLeft="36dp"
-        android:paddingRight="36dp"
-        android:gravity="center_vertical"
-        android:orientation="horizontal">
-
-        <ImageView
-            android:layout_width="32dp"
-            android:layout_height="32dp"
-            android:contentDescription="@string/content_desc"
-            android:src="@drawable/icon_hours" />
-
-        <TextView
-            android:id="@+id/hours"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="24dp"
-            android:layout_marginLeft="24dp"
-            android:textSize="14sp"
-            android:textColor="@android:color/black" />
+        </LinearLayout>
 
     </LinearLayout>
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@android:color/darker_gray" />
-
-    <LinearLayout
-        android:id="@+id/location_layout"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:paddingLeft="36dp"
-        android:paddingRight="36dp"
-        android:gravity="center_vertical"
-        android:orientation="horizontal"
-        android:background="@drawable/white_selector">
-
-        <ImageView
-            android:layout_width="32dp"
-            android:layout_height="32dp"
-            android:contentDescription="@string/content_desc"
-            android:src="@drawable/icon_location" />
-
-        <TextView
-            android:id="@+id/location"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="24dp"
-            android:layout_marginLeft="24dp"
-            android:textSize="14sp"
-            android:textColor="@android:color/black" />
-
-    </LinearLayout>
-
-</LinearLayout>
+    <!-- The navigation drawer -->
+    <ListView android:id="@+id/left_drawer"
+        android:layout_width="240dp"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        android:choiceMode="singleChoice"
+        android:divider="@android:color/transparent"
+        android:dividerHeight="0dp"
+        android:background="@color/off_white"/>
+</android.support.v4.widget.DrawerLayout>
