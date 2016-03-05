@@ -20,6 +20,22 @@
             android:elevation="8dp">
 
             <LinearLayout
+                android:layout_width="64dp"
+                android:layout_height="match_parent"
+                android:background="@color/ASUC_blue"
+                android:orientation="vertical">
+
+                <ImageButton
+                    android:id="@+id/menu_button"
+                    android:layout_width="64dp"
+                    android:layout_height="64dp"
+                    android:layout_gravity="center"
+                    android:background="?android:attr/selectableItemBackground"
+                    android:src="@drawable/navi" />
+
+            </LinearLayout>
+
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/ASUC_blue"
@@ -136,6 +152,13 @@
 
         </LinearLayout>
 
+        <fragment
+            android:name="com.google.android.gms.maps.MapFragment"
+            android:id="@+id/map"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/start_dest_control" />
+
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/navigate_button"
             android:layout_width="wrap_content"
@@ -145,13 +168,6 @@
             android:layout_alignParentRight="true"
             android:layout_alignParentEnd="true"
             app:backgroundTint="@color/two_chainz_gold" />
-
-        <fragment
-            android:name="com.google.android.gms.maps.MapFragment"
-            android:id="@+id/map"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_below="@+id/start_dest_control" />
 
         <LinearLayout
             android:orientation="vertical"
