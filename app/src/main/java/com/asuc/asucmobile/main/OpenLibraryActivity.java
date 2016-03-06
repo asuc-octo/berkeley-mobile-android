@@ -7,6 +7,7 @@ import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Spannable;
@@ -22,7 +23,6 @@ import android.view.animation.AnimationUtils;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -89,7 +89,6 @@ public class OpenLibraryActivity extends AppCompatActivity {
         LinearLayout locationLayout = (LinearLayout) findViewById(R.id.location_layout);
         LinearLayout phoneLayout = (LinearLayout) findViewById(R.id.phone_layout);
         mapFragment = (MapFragment) getFragmentManager().findFragmentById(R.id.map);
-        final ProgressBar progressBar= (ProgressBar) findViewById(R.id.progress_bar);
 
         hours.setText(setUpHours());
         address.setText(library.getLocation());
@@ -231,19 +230,22 @@ public class OpenLibraryActivity extends AppCompatActivity {
     }
 
     private Spannable setUpHours() {
+        /*
+           This code sets up daily hours, only.
+         */
         Spannable hoursString;
         if (library.isByAppointment()) {
-            hoursString = new SpannableString("Today  BY APPOINTMENT");
-            hoursString.setSpan(new ForegroundColorSpan(Color.rgb(114, 205, 244)), 7, 21, Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
+            hoursString = new SpannableString("Today ▼  BY APPOINTMENT");
+            hoursString.setSpan(new ForegroundColorSpan(ContextCompat.getColor(getApplicationContext(),R.color.pavan_light)), 9, 23, Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
         } else if (library.getOpening() != null && library.getClosing() != null) {
             String isOpen;
             int color;
             if (library.isOpen()) {
                 isOpen = "OPEN";
-                color = Color.rgb(153, 204, 0);
+                color = ContextCompat.getColor(getApplicationContext(), R.color.green);
             } else {
                 isOpen = "CLOSED";
-                color = Color.rgb(255, 68, 68);
+                color = ContextCompat.getColor(getApplicationContext(), R.color.red);
             }
 
             String opening = HOURS_FORMAT.format(library.getOpening());
@@ -251,13 +253,18 @@ public class OpenLibraryActivity extends AppCompatActivity {
             hoursString = new SpannableString("Today  " + "                  " + isOpen + "\n" + "Hours ▼     " + opening + " to " + closing);
             hoursString.setSpan(new ForegroundColorSpan(color), 25, 25 + isOpen.length(), Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
         } else {
-            hoursString = new SpannableString("Today  CLOSED ALL DAY");
-            hoursString.setSpan(new ForegroundColorSpan(Color.rgb(186, 52, 52)), 7, 21, Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
+            hoursString = new SpannableString("Today ▼  CLOSED ALL DAY");
+            hoursString.setSpan(new ForegroundColorSpan(ContextCompat.getColor(getApplicationContext(), R.color.maroon)), 9, 23, Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
         }
         return hoursString;
     }
 
     private Spanned setUpWeeklyHoursLeft() {
+        /*
+            This function is called with setUpWeeklyHoursRight() to set up the weekly hours
+            page, which essentially appears as left and right justified text. The left side
+            holds days of the week and some description.
+         */
         Date[] openings = library.getWeeklyOpen();
 
         Spanned weeklyHoursString = new SpannableString("Today" + "\n" + "Hours ▲\n");
@@ -271,6 +278,11 @@ public class OpenLibraryActivity extends AppCompatActivity {
     }
 
     private Spanned setUpWeeklyHoursRight() {
+        /*
+            This function is called with setUpWeeklyHoursLeft() to set up the weekly hours
+            page, which essentially appears as left and right justified text. The right side
+            holds hours for each day of the week and some description.
+         */
         Date[] openings = library.getWeeklyOpen();
         Date[] closings = library.getWeeklyClose();
         boolean[] byAppointments = library.getWeeklyAppointments();
@@ -278,37 +290,40 @@ public class OpenLibraryActivity extends AppCompatActivity {
         Spannable hoursString;
         if (library.isByAppointment()) {
             hoursString = new SpannableString("BY APPOINTMENT  \n");
-            hoursString.setSpan(new ForegroundColorSpan(Color.rgb(114, 205, 244)), 9, 23, Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
+            hoursString.setSpan(new ForegroundColorSpan(ContextCompat.getColor(getApplicationContext(),R.color.pavan_light )), 9, 23, Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
         } else if (library.getOpening() != null && library.getClosing() != null) {
             String isOpen;
             int color;
             if (library.isOpen()) {
                 isOpen = "OPEN";
-                color = Color.rgb(153, 204, 0);
+                color = ContextCompat.getColor(getApplicationContext(),R.color.green);
             } else {
                 isOpen = "CLOSED";
-                color = Color.rgb(255, 68, 68);
+                color = ContextCompat.getColor(getApplicationContext(),R.color.red);
             }
 
             hoursString = new SpannableString(isOpen + "\n" + "\n");
             hoursString.setSpan(new ForegroundColorSpan(color), 0,isOpen.length(), Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
         } else {
-            hoursString = new SpannableString("CLOSED ALL DAY   " + "\n" + "\n");
-            hoursString.setSpan(new ForegroundColorSpan(Color.rgb(186, 52, 52)), 0, 17, Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
+            hoursString = new SpannableString("CLOSED ALL DAY" + "\n" + "\n");
+            hoursString.setSpan(new ForegroundColorSpan(ContextCompat.getColor(getApplicationContext(),R.color.maroon) ), 0, 15, Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
         }
 
         Spanned weeklyHoursString = hoursString;
         for (int i=0; i < openings.length; i++) {
             if (byAppointments[i]) {
-                hoursString = new SpannableString("\nBY APPOINTMENT ");
-                hoursString.setSpan(new ForegroundColorSpan(Color.rgb(114, 205, 244)), 0, 15, Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
+                hoursString = new SpannableString("\n  BY APPOINTMENT");
+                hoursString.setSpan(new ForegroundColorSpan(ContextCompat.getColor(getApplicationContext(),R.color.pavan_light) ), 0, 16, Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
             } else if (openings[i] != null && closings[i] != null) {
                 String opening = HOURS_FORMAT.format(openings[i]);
                 String closing = HOURS_FORMAT.format(closings[i]);
                 hoursString = new SpannableString("\n" + opening + " to " + closing);
+                if (hoursString.length() > 20) {
+                    hoursString = new SpannableString("\n" + opening + " - " + closing);
+                }
             } else {
                 hoursString = new SpannableString("\n" + "  CLOSED ALL DAY");
-                hoursString.setSpan(new ForegroundColorSpan(Color.rgb(186, 52, 52)), 0, 17, Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
+                hoursString.setSpan(new ForegroundColorSpan(ContextCompat.getColor(getApplicationContext(),R.color.maroon) ), 0, 17, Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
             }
             weeklyHoursString = (Spanned) TextUtils.concat(weeklyHoursString, hoursString);
         }

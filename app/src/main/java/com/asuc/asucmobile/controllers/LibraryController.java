@@ -82,8 +82,6 @@ public class LibraryController implements Controller {
 
                         Date opening = null;
                         Date closing = null;
-                        //String openingString = libraryJSON.getString("opening_time_today");
-                        //String closingString = libraryJSON.getString("closing_time_today");
                         JSONArray weeklyOpenArray = libraryJSON.getJSONArray("weekly_opening_times");
                         JSONArray weeklyCloseArray = libraryJSON.getJSONArray("weekly_closing_times");
 
