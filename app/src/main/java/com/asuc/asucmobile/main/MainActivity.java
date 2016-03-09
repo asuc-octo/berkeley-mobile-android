@@ -11,6 +11,7 @@ import android.widget.ListView;
 import com.asuc.asucmobile.R;
 import com.asuc.asucmobile.adapters.MainMenuAdapter;
 import com.asuc.asucmobile.models.Category;
+import com.asuc.asucmobile.utilities.PushReceiver;
 import com.flurry.android.FlurryAgent;
 
 
@@ -43,6 +44,8 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(adapter.getItem(i).getIntent());
             }
         });
+
+        PushReceiver.registerPushes(getApplicationContext());
     }
 
     @Override
