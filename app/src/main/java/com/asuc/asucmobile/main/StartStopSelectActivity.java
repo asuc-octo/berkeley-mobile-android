@@ -1,11 +1,13 @@
 package com.asuc.asucmobile.main;
 
 import android.Manifest;
+import android.app.Activity;
 import android.app.Dialog;
 import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
@@ -67,6 +69,9 @@ public class StartStopSelectActivity extends AppCompatActivity
     private Timer timer;
     private StartStopSelectActivity activity;
 
+    private static final String LYFT_PACKAGE = "me.lyft.android";
+    private static final String LYFT_CLIENT_ID = "";
+
     private static Calendar departureTime = Calendar.getInstance();
 
     @Override
@@ -94,8 +99,10 @@ public class StartStopSelectActivity extends AppCompatActivity
         });
         ImageView myLocationButton = (ImageView) findViewById(R.id.my_location);
         FloatingActionButton navigateButton = (FloatingActionButton) findViewById(R.id.navigate_button);
+        FloatingActionButton lyftButton = (FloatingActionButton) findViewById(R.id.lyft_button);
 
         navigateButton.setImageDrawable(getResources().getDrawable(R.drawable.ic_navigation));
+        lyftButton.setImageDrawable(getResources().getDrawable(R.drawable.lyft_logo));
         refreshWrapper = (LinearLayout) findViewById(R.id.refresh);
 
         context = getBaseContext();
@@ -110,6 +117,13 @@ public class StartStopSelectActivity extends AppCompatActivity
             public void onClick(View v) {
                 LocationGrabber.getLocation(StartStopSelectActivity.this,  new LocationCallback());
                 startButton.setText(getString(R.string.retrieving_location));
+            }
+        });
+        lyftButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                lyftIntentLaunch();
+
             }
         });
 
@@ -176,6 +190,41 @@ public class StartStopSelectActivity extends AppCompatActivity
         endName = data.getStringExtra("endName");
         endLatLng = data.getParcelableExtra("endLatLng");
     }
+
+    private void lyftIntentLaunch() {
+        if (isPackageInstalled(this, LYFT_PACKAGE)) {
+            StringBuilder sb = new StringBuilder();
+            sb.append("lyft://ridetype?id=lyft&partner=" + LYFT_CLIENT_ID + "&");
+            if(startLatLng != null) {
+                sb.append("pickup[latitude]=" + startLatLng.latitude + "&" + "pickup[longitude]=" + startLatLng.longitude + "&");
+            }
+            if(endLatLng != null) {
+                sb.append("destination[latitude]=" + endLatLng.latitude + "&" + "destination[longitude]=" + endLatLng.longitude + "&");
+            }
+            openLink(this, sb.toString());
+        } else {
+            openLink(this, "https://play.google.com/store/apps/details?id=" + LYFT_PACKAGE);
+        }
+    }
+
+    private boolean isPackageInstalled(Context context, String packageId) {
+        PackageManager pm = context.getPackageManager();
+        try {
+            pm.getPackageInfo(packageId, PackageManager.GET_ACTIVITIES);
+            return true;
+        } catch (PackageManager.NameNotFoundException e) {
+            // ignored.
+        }
+        return false;
+    }
+
+    private static void openLink(Activity activity, String link) {
+        Intent intent = new Intent(Intent.ACTION_VIEW);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        intent.setData(Uri.parse(link));
+        activity.startActivity(intent);
+    }
+
 
     private class StartStopListener implements View.OnClickListener {
 

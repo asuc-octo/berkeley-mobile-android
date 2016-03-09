@@ -157,6 +157,16 @@
         android:layout_alignParentEnd="true"
         app:backgroundTint="@color/two_chainz_gold" />
 
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/lyft_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:foregroundTintMode="src_over"
+        android:layout_toLeftOf="@+id/navigate_button"
+        android:layout_alignParentRight="false"
+        android:layout_marginBottom="16dp" />
+
     <fragment
         android:name="com.google.android.gms.maps.MapFragment"
         android:id="@+id/map"
@@ -168,8 +178,9 @@
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_alignParentTop="false"
-        android:layout_alignTop="@+id/map"
-        android:id="@+id/refresh" />
+        android:id="@+id/refresh"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
 
 </RelativeLayout>
