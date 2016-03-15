@@ -122,7 +122,7 @@
             </intent-filter>
         </receiver>
         <receiver
-            android:name=".utilities.PushReceiver"
+            android:name=".main.PushReceiver"
             android:enabled="true"
             android:exported="true">
             <intent-filter>
@@ -149,11 +149,11 @@
         </service>
         <service
             android:name="com.pushwoosh.GCMRegistrationService"
-            android:exported="false"></service>
+            android:exported="false" />
         <service
-            android:name=".main.InstanceService"
+            android:name=".main.NotificationService"
             android:enabled="true"
-            android:exported="true"></service>
+            android:exported="true" />
     </application>
 
 </manifest>
