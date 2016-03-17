@@ -26,6 +26,7 @@ import com.asuc.asucmobile.controllers.LineController;
 import com.asuc.asucmobile.models.Stop;
 import com.asuc.asucmobile.utilities.Callback;
 import com.asuc.asucmobile.utilities.LocationGrabber;
+import com.asuc.asucmobile.utilities.NavigationGenerator;
 import com.flurry.android.FlurryAgent;
 import com.google.android.gms.maps.model.LatLng;
 
@@ -66,6 +67,7 @@ public class StopActivity extends AppCompatActivity {
         setContentView(R.layout.activity_stop);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        NavigationGenerator.generateMenu(this, toolbar);
         toolbar.setNavigationIcon(getResources().getDrawable(R.drawable.ic_action_back));
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override

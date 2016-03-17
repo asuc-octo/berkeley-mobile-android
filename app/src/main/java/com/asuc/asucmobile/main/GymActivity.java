@@ -17,6 +17,7 @@ import com.asuc.asucmobile.adapters.GymAdapter;
 import com.asuc.asucmobile.controllers.GymController;
 import com.asuc.asucmobile.models.Gym;
 import com.asuc.asucmobile.utilities.Callback;
+import com.asuc.asucmobile.utilities.NavigationGenerator;
 import com.flurry.android.FlurryAgent;
 
 import java.util.ArrayList;
@@ -38,15 +39,11 @@ public class GymActivity extends AppCompatActivity {
         FlurryAgent.onStartSession(this, "4VPTT49FCCKH7Z2NVQ26");
 
         setContentView(R.layout.activity_gym);
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        toolbar.setNavigationIcon(getResources().getDrawable(R.drawable.ic_action_back));
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                finish();
-            }
-        });
+
+        NavigationGenerator.generateMenu(this, toolbar);
 
         ImageButton refreshButton = (ImageButton) findViewById(R.id.refresh_button);
 

@@ -21,6 +21,7 @@ import com.asuc.asucmobile.controllers.LineController;
 import com.asuc.asucmobile.controllers.RouteController;
 import com.asuc.asucmobile.models.Route;
 import com.asuc.asucmobile.utilities.Callback;
+import com.asuc.asucmobile.utilities.NavigationGenerator;
 import com.flurry.android.FlurryAgent;
 import com.google.android.gms.maps.model.LatLng;
 
@@ -44,8 +45,10 @@ public class OpenRouteSelectionActivity extends AppCompatActivity {
         FlurryAgent.onStartSession(this, "4VPTT49FCCKH7Z2NVQ26");
         setContentView(R.layout.activity_open_route_selection);
 
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        NavigationGenerator.generateMenu(this, toolbar);
         toolbar.setNavigationIcon(getResources().getDrawable(R.drawable.ic_action_back));
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override

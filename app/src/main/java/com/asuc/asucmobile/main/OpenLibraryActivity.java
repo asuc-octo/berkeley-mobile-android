@@ -25,6 +25,7 @@ import com.asuc.asucmobile.controllers.LibraryController;
 import com.asuc.asucmobile.models.Library;
 import com.asuc.asucmobile.utilities.Callback;
 import com.asuc.asucmobile.utilities.ImageDownloadThread;
+import com.asuc.asucmobile.utilities.NavigationGenerator;
 import com.flurry.android.FlurryAgent;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
@@ -65,6 +66,7 @@ public class OpenLibraryActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle(library.getName());
         setSupportActionBar(toolbar);
+        NavigationGenerator.generateMenu(this, toolbar);
         toolbar.setNavigationIcon(getResources().getDrawable(R.drawable.ic_action_back));
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override

@@ -17,6 +17,7 @@ import com.asuc.asucmobile.R;
 import com.asuc.asucmobile.controllers.BusController;
 import com.asuc.asucmobile.models.Bus;
 import com.asuc.asucmobile.utilities.Callback;
+import com.asuc.asucmobile.utilities.NavigationGenerator;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -48,6 +49,7 @@ public class LiveBusActivity extends AppCompatActivity implements OnMapReadyCall
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        NavigationGenerator.generateMenu(this, toolbar);
         toolbar.setNavigationIcon(getResources().getDrawable(R.drawable.ic_action_back));
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override

@@ -10,20 +10,26 @@ import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ListView;
 import android.widget.Toast;
 
 import com.asuc.asucmobile.R;
+import com.asuc.asucmobile.adapters.MainMenuAdapter;
 import com.asuc.asucmobile.adapters.RouteAdapter;
 import com.asuc.asucmobile.controllers.RouteController;
+import com.asuc.asucmobile.models.Category;
 import com.asuc.asucmobile.models.Route;
 import com.asuc.asucmobile.models.Stop;
 import com.asuc.asucmobile.models.Trip;
+import com.asuc.asucmobile.utilities.NavigationGenerator;
 import com.asuc.asucmobile.views.MapHeaderView;
 import com.flurry.android.FlurryAgent;
 import com.google.android.gms.common.ConnectionResult;
@@ -62,6 +68,7 @@ public class OpenRouteActivity extends AppCompatActivity {
         setContentView(R.layout.activity_open_route);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        NavigationGenerator.generateMenu(this, toolbar);
         toolbar.setNavigationIcon(getResources().getDrawable(R.drawable.ic_action_back));
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
