@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.SparseArray;
@@ -22,10 +21,8 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.asuc.asucmobile.R;
-import com.asuc.asucmobile.adapters.MainMenuAdapter;
 import com.asuc.asucmobile.adapters.StopAdapter;
 import com.asuc.asucmobile.controllers.LineController;
-import com.asuc.asucmobile.models.Category;
 import com.asuc.asucmobile.models.Stop;
 import com.asuc.asucmobile.utilities.Callback;
 import com.asuc.asucmobile.utilities.LocationGrabber;
