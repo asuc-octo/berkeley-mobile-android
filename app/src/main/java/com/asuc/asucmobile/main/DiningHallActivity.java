@@ -18,9 +18,7 @@ import android.widget.Toast;
 
 import com.asuc.asucmobile.R;
 import com.asuc.asucmobile.adapters.DiningHallAdapter;
-import com.asuc.asucmobile.adapters.MainMenuAdapter;
 import com.asuc.asucmobile.controllers.DiningController;
-import com.asuc.asucmobile.models.Category;
 import com.asuc.asucmobile.models.DiningHall;
 import com.asuc.asucmobile.utilities.Callback;
 import com.asuc.asucmobile.utilities.NavigationGenerator;

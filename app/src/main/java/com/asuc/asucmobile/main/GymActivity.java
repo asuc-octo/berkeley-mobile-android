@@ -2,8 +2,6 @@ package com.asuc.asucmobile.main;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -16,9 +14,7 @@ import android.widget.Toast;
 
 import com.asuc.asucmobile.R;
 import com.asuc.asucmobile.adapters.GymAdapter;
-import com.asuc.asucmobile.adapters.MainMenuAdapter;
 import com.asuc.asucmobile.controllers.GymController;
-import com.asuc.asucmobile.models.Category;
 import com.asuc.asucmobile.models.Gym;
 import com.asuc.asucmobile.utilities.Callback;
 import com.asuc.asucmobile.utilities.NavigationGenerator;
