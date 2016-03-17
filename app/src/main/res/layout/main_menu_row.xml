@@ -5,8 +5,7 @@
     android:paddingLeft="36dp"
     android:paddingStart="36dp"
     android:paddingRight="16dp"
-    android:paddingEnd="16dp"
-    android:background="@drawable/card_selector">
+    android:paddingEnd="16dp">
 
     <ImageView
         android:id="@+id/menu_icon"
