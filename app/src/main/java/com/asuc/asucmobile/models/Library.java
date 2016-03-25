@@ -4,7 +4,7 @@ import com.google.android.gms.maps.model.LatLng;
 
 import java.util.Date;
 
-public class Library {
+public class Library implements Comparable<Library> {
 
     private int id;
     private String name;
@@ -78,6 +78,11 @@ public class Library {
 
         Date currentTime = new Date();
         return currentTime.after(opening) && currentTime.before(closing);
+    }
+
+    @Override
+    public int compareTo(Library other) {
+        return this.getName().compareTo(other.getName());
     }
 
 }
