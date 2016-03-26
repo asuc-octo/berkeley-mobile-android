@@ -2,7 +2,7 @@ package com.asuc.asucmobile.models;
 
 import java.text.DecimalFormat;
 
-public class FoodItem {
+public class FoodItem implements Comparable<FoodItem> {
 
     private String id;
     private String name;
@@ -37,6 +37,11 @@ public class FoodItem {
     public String getCost() {
         DecimalFormat df = new DecimalFormat("0.00");
         return "$" + df.format(cost);
+    }
+
+    @Override
+    public int compareTo(FoodItem other) {
+        return this.getName().compareTo(other.getName());
     }
 
 }
