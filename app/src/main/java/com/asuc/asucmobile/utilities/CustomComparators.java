@@ -28,10 +28,12 @@ public class CustomComparators {
                         return 0;
                     }
 
-                    if (listOfFavorites.contains(lhs.getName()) && listOfFavorites.contains(rhs.getName())) return 0;
+                    if (listOfFavorites.contains(lhs.getName()) && listOfFavorites.contains(rhs.getName())) {
+                        return lhs.compareTo(rhs);
+                    }
                     if (listOfFavorites.contains(lhs.getName())) return -1;
                     if (listOfFavorites.contains(rhs.getName())) return 1;
-                    return 0;
+                    return lhs.compareTo(rhs);
                 }
             };
         }
@@ -57,17 +59,19 @@ public class CustomComparators {
                         return 0;
                     }
 
-                    if (listOfFavorites.contains(lhs.getName()) && listOfFavorites.contains(rhs.getName())) return 0;
+                    if (listOfFavorites.contains(lhs.getName()) && listOfFavorites.contains(rhs.getName())) {
+                        return lhs.compareTo(rhs);
+                    }
                     if (listOfFavorites.contains(lhs.getName())) return -1;
                     if (listOfFavorites.contains(rhs.getName())) return 1;
-                    return 0;
+                    return lhs.compareTo(rhs);
                 }
             };
         }
 
         private static Comparator<Library> sortByAZ = new Comparator<Library>() {
             public int compare(Library arg0, Library arg1) {
-                return arg0.getName().compareTo(arg1.getName());
+                return arg0.compareTo(arg1);
             }
         };
 
@@ -75,13 +79,13 @@ public class CustomComparators {
             public int compare(Library arg0, Library arg1) {
                 if (arg0.isOpen() && !arg1.isOpen()) return -1;
                 if (arg1.isOpen() && !arg0.isOpen()) return 1;
-                if (arg0.isOpen() && arg1.isOpen()) return 0;
-                return 0;
+                if (arg0.isOpen() && arg1.isOpen()) return arg0.compareTo(arg1);
+                return arg0.compareTo(arg1);
             }
         };
         private static Comparator<FoodItem> foodSortByAZ = new Comparator<FoodItem>() {
             public int compare(FoodItem arg0, FoodItem arg1) {
-                return arg0.getName().compareTo(arg1.getName());
+                return arg0.compareTo(arg1);
             }
         };
 
@@ -89,7 +93,7 @@ public class CustomComparators {
             public int compare(FoodItem arg0, FoodItem arg1) {
                 if (!arg0.getFoodType().equals("None") && arg0.getFoodType().toUpperCase().equals("VEGETARIAN")) return -1;
                 if (!arg1.getFoodType().equals("None") && arg1.getFoodType().toUpperCase().equals("VEGETARIAN")) return 1;
-                return 0;
+                return arg0.compareTo(arg1);
             }
         };
 
@@ -97,7 +101,7 @@ public class CustomComparators {
             public int compare(FoodItem arg0, FoodItem arg1) {
                 if (!arg0.getFoodType().equals("None") && arg0.getFoodType().toUpperCase().equals("VEGAN")) return -1;
                 if (!arg1.getFoodType().equals("None") && arg1.getFoodType().toUpperCase().equals("VEGAN")) return 1;
-                return 0;
+                return arg0.compareTo(arg1);
             }
         };
 

@@ -93,8 +93,13 @@ public class LibraryController implements Controller {
                         }
 
                         String imageUrl = libraryJSON.getString("image_link");
-                        double lat = libraryJSON.getDouble("latitude");
-                        double lng = libraryJSON.getDouble("longitude");
+
+                        double lat = 0;
+                        double lng = 0;
+                        if (!libraryJSON.isNull("latitude") && !libraryJSON.isNull("longitude")) {
+                            lat = libraryJSON.getDouble("latitude");
+                            lng = libraryJSON.getDouble("longitude");
+                        }
 
                         boolean byAppointment = libraryJSON.getBoolean("by_appointment");
 
