@@ -224,6 +224,7 @@ public class StartStopSelectActivity extends AppCompatActivity
             LocationGrabber.getLocation(this, new LocationCallback());
         } else {
             Toast.makeText(this, "Please allow location permissions and try again", Toast.LENGTH_SHORT).show();
+            startButton.setText("");
         }
     }
 
@@ -261,6 +262,7 @@ public class StartStopSelectActivity extends AppCompatActivity
         @Override
         public void onRetrievalFailed() {
             Toast.makeText(StartStopSelectActivity.this, "Unable to find your location", Toast.LENGTH_SHORT).show();
+            startButton.setText("");
         }
 
     }
