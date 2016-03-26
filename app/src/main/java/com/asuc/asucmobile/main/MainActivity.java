@@ -43,6 +43,8 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(adapter.getItem(i).getIntent());
             }
         });
+
+        PushReceiver.registerPushes(this);
     }
 
     @Override
