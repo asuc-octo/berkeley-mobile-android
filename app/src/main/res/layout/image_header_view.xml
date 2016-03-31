@@ -48,6 +48,6 @@
         android:scrollHorizontally="true"
         android:focusable="true"
         android:focusableInTouchMode="true"
-        android:background="@color/ASUC_blue" />
+        android:background="@color/hotline_blue" />
 
 </LinearLayout>

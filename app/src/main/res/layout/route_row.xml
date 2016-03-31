@@ -7,7 +7,7 @@
         android:id="@+id/line"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/ASUC_blue"
+        android:background="@color/hotline_blue"
         android:gravity="center"
         android:textStyle="bold"
         android:textColor="@android:color/white"
@@ -38,7 +38,7 @@
             android:paddingRight="24dp"
             android:paddingLeft="24dp"
             android:gravity="center_vertical"
-            android:textColor="@color/ASUC_blue" />
+            android:textColor="@color/hotline_blue" />
 
     </LinearLayout>
 
