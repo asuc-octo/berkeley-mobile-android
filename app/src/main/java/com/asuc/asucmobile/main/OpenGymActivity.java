@@ -24,6 +24,7 @@ import com.asuc.asucmobile.controllers.GymController;
 import com.asuc.asucmobile.models.Gym;
 import com.asuc.asucmobile.utilities.Callback;
 import com.asuc.asucmobile.utilities.ImageDownloadThread;
+import com.asuc.asucmobile.utilities.NavigationGenerator;
 import com.flurry.android.FlurryAgent;
 
 import java.text.SimpleDateFormat;
@@ -51,15 +52,19 @@ public class OpenGymActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_open_gym);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        toolbar.setTitle(gym.getName());
-        setSupportActionBar(toolbar);
-        toolbar.setNavigationIcon(getResources().getDrawable(R.drawable.ic_action_back));
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                finish();
-            }
-        });
+        if (toolbar != null) {
+            toolbar.setTitle(gym.getName());
+            setSupportActionBar(toolbar);
+            toolbar.setNavigationIcon(getResources().getDrawable(R.drawable.ic_action_back));
+            toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    finish();
+                }
+            });
+        }
+
+        NavigationGenerator.generateMenu(this);
 
         TextView hours = (TextView) findViewById(R.id.hours);
         TextView address = (TextView) findViewById(R.id.location);
@@ -86,8 +91,12 @@ public class OpenGymActivity extends AppCompatActivity {
             hoursString.setSpan(new ForegroundColorSpan(Color.rgb(114, 205, 244)), 7, 14, Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
         }
 
-        hours.setText(hoursString);
-        address.setText(gym.getAddress());
+        if (hours != null) {
+            hours.setText(hoursString);
+        }
+        if (address != null) {
+            address.setText(gym.getAddress());
+        }
 
 
         //density stuff
@@ -99,41 +108,60 @@ public class OpenGymActivity extends AppCompatActivity {
         final TextView percentageText = (TextView) findViewById(R.id.percentage);
         final Integer percentFull = gym.getPercentFull();
         final ImageView densityLogo = (ImageView) findViewById(R.id.density_logo);
-        loadingBar.bringToFront();
+        if (loadingBar != null) {
+            loadingBar.bringToFront();
+        }
         new ImageDownloadThread(this, gym.getImageUrl(), new Callback() {
             @Override
             public void onDataRetrieved(Object data) {
                 if (data != null) {
                     Bitmap bitmap = (Bitmap) data;
                     Drawable bitmapDrawable = new BitmapDrawable(getResources(), bitmap);
-                    image.setBackgroundDrawable(bitmapDrawable);
+                    if (image != null) {
+                        image.setBackgroundDrawable(bitmapDrawable);
+                    }
                 }
 
-                loadingBar.setVisibility(View.GONE);
-                image.setVisibility(View.VISIBLE);
+                if (loadingBar != null) {
+                    loadingBar.setVisibility(View.GONE);
+                }
+                if (image != null) {
+                    image.setVisibility(View.VISIBLE);
+                }
 
                 if (percentFull != null) {
                     //gym with density + pic
-                    ((GradientDrawable) backgroundBar.getProgressDrawable()).setColor(getResources().getColor(R.color.off_white));
-                    backgroundBar.setVisibility(View.VISIBLE);
-                    tintOverlay.setVisibility(View.VISIBLE);
-                    percentFullBar.setVisibility(View.VISIBLE);
-                    percentageText.setVisibility(View.VISIBLE);
-                    densityLogo.setVisibility(View.VISIBLE);
+                    if (backgroundBar != null) {
+                        ((GradientDrawable) backgroundBar.getProgressDrawable()).setColor(getResources().getColor(R.color.off_white));
+                        backgroundBar.setVisibility(View.VISIBLE);
+                    }
+                    if (tintOverlay != null) {
+                        tintOverlay.setVisibility(View.VISIBLE);
+                    }
+                    if (percentFullBar != null) {
+                        percentFullBar.setVisibility(View.VISIBLE);
+                    }
+                    if (percentageText != null) {
+                        percentageText.setVisibility(View.VISIBLE);
+                        percentageText.setText(String.format(Locale.US, "%d%%", gym.getPercentFull()));
+                    }
+                    if (densityLogo != null) {
+                        densityLogo.setVisibility(View.VISIBLE);
+                    }
 
                     ObjectAnimator animation = ObjectAnimator.ofInt(percentFullBar,
                             "progress", 0, gym.getPercentFull());
                     animation.setDuration(1000); //in milliseconds
                     animation.setInterpolator(new AccelerateDecelerateInterpolator());
                     animation.start();
-
-                    percentageText.setText(String.format(Locale.US, "%d%%", gym.getPercentFull()));
                 }
             }
 
             @Override
             public void onRetrievalFailed() {
-                loadingBar.setVisibility(View.GONE);
+                if (loadingBar != null) {
+                    loadingBar.setVisibility(View.GONE);
+                }
                 if (percentFull != null) {
                     //gym with density
                     ObjectAnimator animation = ObjectAnimator.ofInt(percentFullBar,
@@ -143,7 +171,9 @@ public class OpenGymActivity extends AppCompatActivity {
                     animation.start();
                 } else {
                     //gym with nothing
-                    backgroundBar.setVisibility(View.GONE);
+                    if (backgroundBar != null) {
+                        backgroundBar.setVisibility(View.GONE);
+                    }
                 }
             }
         }).start();
