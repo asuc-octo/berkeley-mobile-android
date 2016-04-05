@@ -163,7 +163,11 @@ public class StartStopSelectFragment extends Fragment
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        stopLocationTracking();
+        try {
+            stopLocationTracking();
+        } catch (Exception e) {
+            // Don't worry about it!
+        }
     }
 
     @Override
@@ -217,10 +221,10 @@ public class StartStopSelectFragment extends Fragment
     public void onMapReady(GoogleMap map) {
         this.map = map;
         map.setMapType(GoogleMap.MAP_TYPE_NORMAL);
-//        if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED ||
-//                ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
-//            map.setMyLocationEnabled(true);
-//        }
+        if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED ||
+                ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+            map.setMyLocationEnabled(true);
+        }
         CameraUpdate update = CameraUpdateFactory.newLatLngZoom(new LatLng(37.871899, -122.25854), 14.5f);
         map.moveCamera(update);
         busCallback = new BusCallback(map, refreshWrapper, timer, context);
