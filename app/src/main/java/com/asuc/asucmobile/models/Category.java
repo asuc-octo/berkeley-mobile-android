@@ -1,30 +1,28 @@
 package com.asuc.asucmobile.models;
 
-import android.content.Intent;
+import android.content.Context;
 import android.graphics.drawable.Drawable;
+import android.support.v4.app.FragmentManager;
 
-public class Category {
+public abstract class Category {
 
-    private Drawable icon;
+    private int iconId;
     private String name;
-    private Intent intent;
 
-    public Category(Drawable icon, String name, Intent intent) {
-        this.icon = icon;
+    public Category(int iconId, String name) {
+        this.iconId = iconId;
         this.name = name;
-        this.intent = intent;
     }
 
-    public Drawable getIcon() {
-        return icon;
+    @SuppressWarnings("deprecation")
+    public Drawable getIcon(Context context) {
+        return context.getResources().getDrawable(iconId);
     }
 
     public String getName() {
         return name;
     }
 
-    public Intent getIntent() {
-        return intent;
-    }
+    public abstract void loadFragment(FragmentManager fragmentManager);
 
 }

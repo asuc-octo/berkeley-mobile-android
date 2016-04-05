@@ -1,11 +1,13 @@
-package com.asuc.asucmobile.main;
+package com.asuc.asucmobile.fragments;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.MenuItem;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
@@ -16,54 +18,49 @@ import android.widget.Toast;
 import com.asuc.asucmobile.R;
 import com.asuc.asucmobile.adapters.DiningHallAdapter;
 import com.asuc.asucmobile.controllers.DiningController;
+import com.asuc.asucmobile.main.OpenDiningHallActivity;
 import com.asuc.asucmobile.models.DiningHall;
 import com.asuc.asucmobile.utilities.Callback;
+import com.asuc.asucmobile.utilities.NavigationGenerator;
 import com.flurry.android.FlurryAgent;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-public class DiningHallActivity extends AppCompatActivity {
+public class DiningHallFragment extends Fragment {
 
     private ListView mDiningList;
     private ProgressBar mProgressBar;
     private LinearLayout mRefreshWrapper;
-
     private DiningHallAdapter mAdapter;
 
     @Override
     @SuppressWarnings("deprecation")
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        FlurryAgent.onStartSession(this, "4VPTT49FCCKH7Z2NVQ26");
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        FlurryAgent.onStartSession(getContext(), "4VPTT49FCCKH7Z2NVQ26");
+        View layout = inflater.inflate(R.layout.fragment_dining_hall, container, false);
 
-        setContentView(R.layout.activity_dining_hall);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        toolbar.setNavigationIcon(getResources().getDrawable(R.drawable.ic_action_back));
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                finish();
-            }
-        });
+        Toolbar toolbar = (Toolbar) layout.findViewById(R.id.toolbar);
+        ((AppCompatActivity) getContext()).setSupportActionBar(toolbar);
+        NavigationGenerator.generateToolbarMenuButton(toolbar);
+        toolbar.setTitle("Dining Halls");
 
-        ImageButton refreshButton = (ImageButton) findViewById(R.id.refresh_button);
+        ImageButton refreshButton = (ImageButton) layout.findViewById(R.id.refresh_button);
 
-        mDiningList = (ListView) findViewById(R.id.dining_hall_list);
-        mProgressBar = (ProgressBar) findViewById(R.id.progress_bar);
-        mRefreshWrapper = (LinearLayout) findViewById(R.id.refresh);
+        mDiningList = (ListView) layout.findViewById(R.id.dining_hall_list);
+        mProgressBar = (ProgressBar) layout.findViewById(R.id.progress_bar);
+        mRefreshWrapper = (LinearLayout) layout.findViewById(R.id.refresh);
 
-        mAdapter = new DiningHallAdapter(this);
+        mAdapter = new DiningHallAdapter(getContext());
         mDiningList.setAdapter(mAdapter);
 
         mDiningList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                DiningController controller = ((DiningController) DiningController.getInstance(getBaseContext()));
+                DiningController controller = ((DiningController) DiningController.getInstance(getContext()));
                 controller.setCurrentDiningHall(mAdapter.getItem(i));
-                Intent intent = new Intent(getBaseContext(), OpenDiningHallActivity.class);
+                Intent intent = new Intent(getContext(), OpenDiningHallActivity.class);
 
                 //Flurry log for tapping Dining Hall Menus.
                 Map<String, String> diningParams = new HashMap<>();
@@ -80,33 +77,16 @@ public class DiningHallActivity extends AppCompatActivity {
                 refresh();
             }
         });
-
         refresh();
+
+        return layout;
     }
 
     @Override
-    protected void onStop() {
+    public void onStop() {
         super.onStop();
 
-        FlurryAgent.onEndSession(this);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-        if (id == android.R.id.home) {
-            finish();
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }
-
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-
-        //Flurry logging for pressing the Back Button
-        FlurryAgent.logEvent("Tapped on the Back Button (Dining Halls)");
+        FlurryAgent.onEndSession(getContext());
     }
 
     /**
@@ -118,7 +98,7 @@ public class DiningHallActivity extends AppCompatActivity {
         mRefreshWrapper.setVisibility(View.GONE);
         mProgressBar.setVisibility(View.VISIBLE);
 
-        DiningController.getInstance(this).refreshInBackground(new Callback() {
+        DiningController.getInstance(getContext()).refreshInBackground(new Callback() {
             @Override
             @SuppressWarnings("unchecked")
             public void onDataRetrieved(Object data) {
@@ -132,7 +112,7 @@ public class DiningHallActivity extends AppCompatActivity {
             public void onRetrievalFailed() {
                 mProgressBar.setVisibility(View.GONE);
                 mRefreshWrapper.setVisibility(View.VISIBLE);
-                Toast.makeText(getBaseContext(), "Unable to retrieve data, please try again", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), "Unable to retrieve data, please try again", Toast.LENGTH_SHORT).show();
             }
         });
     }

@@ -10,6 +10,7 @@ import android.location.LocationListener;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 
 import com.google.android.gms.common.ConnectionResult;
@@ -24,7 +25,7 @@ public class LocationGrabber {
     private static final int LOCATION_PERMISSION = 0;
 
     /**
-     * getLocation() is the public entrypoint to update location and handle it in the callback.
+     * getLocation() is the public entry point to update location and handle it in the callback.
      */
     public static void getLocation(final Activity activity, final Callback callback) {
         // Check if we're on Android 6.0
@@ -43,6 +44,41 @@ public class LocationGrabber {
                         Manifest.permission.ACCESS_FINE_LOCATION
                 };
                 ActivityCompat.requestPermissions(activity, permissions, LOCATION_PERMISSION);
+                return;
+            }
+        }
+
+        // Run a new background thread to grab location
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                updateLocation(activity, callback);
+            }
+        }).start();
+    }
+
+    /**
+     * Same as the above function, except for Fragments
+     */
+    public static void getLocation(final Fragment fragment, final Callback callback) {
+        final Activity activity = fragment.getActivity();
+
+        // Check if we're on Android 6.0
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            // Check permissions
+            int hasCoarsePermission =
+                    ContextCompat.checkSelfPermission(activity, Manifest.permission.ACCESS_COARSE_LOCATION);
+            int hasFinePermission =
+                    ContextCompat.checkSelfPermission(activity, Manifest.permission.ACCESS_FINE_LOCATION);
+
+            // Ask for location permissions if we don't already have them
+            if (hasFinePermission != PackageManager.PERMISSION_GRANTED &&
+                    hasCoarsePermission != PackageManager.PERMISSION_GRANTED) {
+                String[] permissions = new String[]{
+                        Manifest.permission.ACCESS_COARSE_LOCATION,
+                        Manifest.permission.ACCESS_FINE_LOCATION
+                };
+                fragment.requestPermissions(permissions, LOCATION_PERMISSION);
                 return;
             }
         }
@@ -101,6 +137,11 @@ public class LocationGrabber {
                 // Called when a new location is found by the network location provider.
                 public void onLocationChanged(Location location) {
                     returnLocation(activity, callback, location.getLatitude(), location.getLongitude());
+                    try {
+                        locationManager.removeUpdates(this);
+                    } catch (SecurityException e) {
+                        // Don't worry about it
+                    }
                 }
 
                 public void onStatusChanged(String provider, int status, Bundle extras) {}

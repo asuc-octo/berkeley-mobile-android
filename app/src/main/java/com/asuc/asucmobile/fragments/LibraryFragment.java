@@ -1,14 +1,17 @@
-package com.asuc.asucmobile.main;
+package com.asuc.asucmobile.fragments;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.Filter;
@@ -21,9 +24,12 @@ import android.widget.Toast;
 import com.asuc.asucmobile.R;
 import com.asuc.asucmobile.adapters.LibraryAdapter;
 import com.asuc.asucmobile.controllers.LibraryController;
+import com.asuc.asucmobile.main.ListOfFavorites;
+import com.asuc.asucmobile.main.OpenLibraryActivity;
 import com.asuc.asucmobile.models.Library;
 import com.asuc.asucmobile.utilities.Callback;
 import com.asuc.asucmobile.utilities.CustomComparators;
+import com.asuc.asucmobile.utilities.NavigationGenerator;
 import com.asuc.asucmobile.utilities.SerializableUtilities;
 import com.flurry.android.FlurryAgent;
 
@@ -32,7 +38,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
-public class LibraryActivity extends AppCompatActivity {
+public class LibraryFragment extends Fragment {
 
     private ListView mLibraryList;
     private ProgressBar mProgressBar;
@@ -42,43 +48,37 @@ public class LibraryActivity extends AppCompatActivity {
 
     @Override
     @SuppressWarnings("deprecation")
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        FlurryAgent.onStartSession(this, "4VPTT49FCCKH7Z2NVQ26");
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        FlurryAgent.onStartSession(getContext(), "4VPTT49FCCKH7Z2NVQ26");
+        View layout = inflater.inflate(R.layout.fragment_library, container, false);
 
-        setContentView(R.layout.activity_library);
+        Toolbar toolbar = (Toolbar) layout.findViewById(R.id.toolbar);
+        ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
+        NavigationGenerator.generateToolbarMenuButton(toolbar);
+        setHasOptionsMenu(true);
+        toolbar.setTitle("Libraries");
 
-        ListOfFavorites listOfFavorites = (ListOfFavorites) SerializableUtilities.loadSerializedObject(this);
+        ListOfFavorites listOfFavorites = (ListOfFavorites) SerializableUtilities.loadSerializedObject(getContext());
         if (listOfFavorites == null) {
             listOfFavorites = new ListOfFavorites();
-            SerializableUtilities.saveObject(this, listOfFavorites);
+            SerializableUtilities.saveObject(getContext(), listOfFavorites);
         }
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        toolbar.setNavigationIcon(getResources().getDrawable(R.drawable.ic_action_back));
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                finish();
-            }
-        });
+        ImageButton refreshButton = (ImageButton) layout.findViewById(R.id.refresh_button);
 
-        ImageButton refreshButton = (ImageButton) findViewById(R.id.refresh_button);
+        mLibraryList = (ListView) layout.findViewById(R.id.library_list);
+        mProgressBar = (ProgressBar) layout.findViewById(R.id.progress_bar);
+        mRefreshWrapper = (LinearLayout) layout.findViewById(R.id.refresh);
 
-        mLibraryList = (ListView) findViewById(R.id.library_list);
-        mProgressBar = (ProgressBar) findViewById(R.id.progress_bar);
-        mRefreshWrapper = (LinearLayout) findViewById(R.id.refresh);
-
-        mAdapter = new LibraryAdapter(this);
+        mAdapter = new LibraryAdapter(getContext());
         mLibraryList.setAdapter(mAdapter);
 
         mLibraryList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                LibraryController controller = ((LibraryController) LibraryController.getInstance(getBaseContext()));
+                LibraryController controller = ((LibraryController) LibraryController.getInstance(getContext()));
                 controller.setCurrentLibrary(mAdapter.getItem(i));
-                Intent intent = new Intent(getBaseContext(), OpenLibraryActivity.class);
+                Intent intent = new Intent(getContext(), OpenLibraryActivity.class);
 
                 //Flurry log for tapping Library hours.
                 Map<String, String> libParams = new HashMap<>();
@@ -95,19 +95,19 @@ public class LibraryActivity extends AppCompatActivity {
                 refresh();
             }
         });
-
         refresh();
+
+        return layout;
     }
 
     @Override
-    protected void onStop() {
+    public void onStop() {
         super.onStop();
 
-        FlurryAgent.onEndSession(this);
+        FlurryAgent.onEndSession(getContext());
     }
 
     //start off lv sorted by favorites
-
     @Override
     public boolean onOptionsItemSelected(MenuItem menuItem) {
 
@@ -121,7 +121,7 @@ public class LibraryActivity extends AppCompatActivity {
                 mAdapter.notifyDataSetChanged();
                 break;
             case R.id.sortFavorites:
-                Collections.sort(mAdapter.getLibraries(), CustomComparators.FacilityComparators.getSortByFavoriteLibrary(this));
+                Collections.sort(mAdapter.getLibraries(), CustomComparators.FacilityComparators.getSortByFavoriteLibrary(getContext()));
                 mAdapter.notifyDataSetChanged();
                 break;
         }
@@ -129,18 +129,8 @@ public class LibraryActivity extends AppCompatActivity {
     }
 
     @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-
-        //Flurry logging for pressing the Back Button
-        FlurryAgent.logEvent("Tapped on the Back Button (Libraries)");
-    }
-
-    @Override
     @SuppressWarnings("deprecation")
-    public boolean onCreateOptionsMenu(Menu menu) {
-
-        MenuInflater inflater = getMenuInflater();
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.library, menu);
 
         final MenuItem searchMenuItem = menu.findItem(R.id.search);
@@ -177,8 +167,6 @@ public class LibraryActivity extends AppCompatActivity {
                 });
             }
         }
-
-        return true;
     }
 
     /**
@@ -190,7 +178,7 @@ public class LibraryActivity extends AppCompatActivity {
         mRefreshWrapper.setVisibility(View.GONE);
         mProgressBar.setVisibility(View.VISIBLE);
 
-        LibraryController.getInstance(this).refreshInBackground(new Callback() {
+        LibraryController.getInstance(getContext()).refreshInBackground(new Callback() {
             @Override
             @SuppressWarnings("unchecked")
             public void onDataRetrieved(Object data) {
@@ -204,7 +192,7 @@ public class LibraryActivity extends AppCompatActivity {
             public void onRetrievalFailed() {
                 mProgressBar.setVisibility(View.GONE);
                 mRefreshWrapper.setVisibility(View.VISIBLE);
-                Toast.makeText(getBaseContext(), "Unable to retrieve data, please try again", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), "Unable to retrieve data, please try again", Toast.LENGTH_SHORT).show();
             }
         });
     }

@@ -25,6 +25,7 @@ import com.asuc.asucmobile.controllers.LibraryController;
 import com.asuc.asucmobile.models.Library;
 import com.asuc.asucmobile.utilities.Callback;
 import com.asuc.asucmobile.utilities.ImageDownloadThread;
+import com.asuc.asucmobile.utilities.NavigationGenerator;
 import com.flurry.android.FlurryAgent;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
@@ -63,15 +64,19 @@ public class OpenLibraryActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_open_library);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        toolbar.setTitle(library.getName());
-        setSupportActionBar(toolbar);
-        toolbar.setNavigationIcon(getResources().getDrawable(R.drawable.ic_action_back));
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                finish();
-            }
-        });
+        if (toolbar != null) {
+            toolbar.setTitle(library.getName());
+            setSupportActionBar(toolbar);
+            toolbar.setNavigationIcon(getResources().getDrawable(R.drawable.ic_action_back));
+            toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    finish();
+                }
+            });
+        }
+
+        NavigationGenerator.generateMenu(this);
 
         final ImageView image = (ImageView) findViewById(R.id.image);
         TextView hours = (TextView) findViewById(R.id.hours);
@@ -106,25 +111,35 @@ public class OpenLibraryActivity extends AppCompatActivity {
             hoursString.setSpan(new ForegroundColorSpan(Color.rgb(186, 52, 52)), 7, 21, Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
         }
 
-        hours.setText(hoursString);
-        address.setText(library.getLocation());
-        phone.setText(library.getPhone());
+        if (hours != null) {
+            hours.setText(hoursString);
+        }
+        if (address != null) {
+            address.setText(library.getLocation());
+        }
+        if (phone != null) {
+            phone.setText(library.getPhone());
+        }
 
-        locationLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                openMap();
-            }
-        });
+        if (locationLayout != null) {
+            locationLayout.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    openMap();
+                }
+            });
+        }
 
-        phoneLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i = new Intent(Intent.ACTION_DIAL);
-                i.setData(Uri.parse("tel:" + library.getPhone()));
-                startActivity(i);
-            }
-        });
+        if (phoneLayout != null) {
+            phoneLayout.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent i = new Intent(Intent.ACTION_DIAL);
+                    i.setData(Uri.parse("tel:" + library.getPhone()));
+                    startActivity(i);
+                }
+            });
+        }
 
         SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
         boolean firstTime = sharedPref.getBoolean("library_initial", true);
@@ -139,17 +154,27 @@ public class OpenLibraryActivity extends AppCompatActivity {
             public void onDataRetrieved(Object data) {
                 if (data != null) {
                     Bitmap bitmap = (Bitmap) data;
-                    image.setImageBitmap(bitmap);
+                    if (image != null) {
+                        image.setImageBitmap(bitmap);
+                    }
                 }
 
-                progressBar.setVisibility(View.GONE);
-                image.setVisibility(View.VISIBLE);
+                if (progressBar != null) {
+                    progressBar.setVisibility(View.GONE);
+                }
+                if (image != null) {
+                    image.setVisibility(View.VISIBLE);
+                }
             }
 
             @Override
             public void onRetrievalFailed() {
-                progressBar.setVisibility(View.GONE);
-                image.setVisibility(View.VISIBLE);
+                if (progressBar != null) {
+                    progressBar.setVisibility(View.GONE);
+                }
+                if (image != null) {
+                    image.setVisibility(View.VISIBLE);
+                }
             }
         }).start();
     }
@@ -189,6 +214,7 @@ public class OpenLibraryActivity extends AppCompatActivity {
         }
     }
 
+    @SuppressWarnings("deprecation")
     private void setUpMap() {
         // Checking if Google Play Services are available to set up the map.
         int status = GooglePlayServicesUtil.isGooglePlayServicesAvailable(this);
