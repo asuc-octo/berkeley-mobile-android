@@ -24,6 +24,7 @@ import com.asuc.asucmobile.controllers.RouteController;
 import com.asuc.asucmobile.models.Route;
 import com.asuc.asucmobile.models.Stop;
 import com.asuc.asucmobile.models.Trip;
+import com.asuc.asucmobile.utilities.NavigationGenerator;
 import com.asuc.asucmobile.views.MapHeaderView;
 import com.flurry.android.FlurryAgent;
 import com.google.android.gms.common.ConnectionResult;
@@ -61,23 +62,28 @@ public class OpenRouteActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_open_route);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        toolbar.setNavigationIcon(getResources().getDrawable(R.drawable.ic_action_back));
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                finish();
-            }
-        });
+        if (toolbar != null) {
+            setSupportActionBar(toolbar);
+            toolbar.setNavigationIcon(getResources().getDrawable(R.drawable.ic_action_back));
+            toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    finish();
+                }
+            });
+        }
+
+        NavigationGenerator.generateMenu(this);
 
         ParallaxListView routeList = (ParallaxListView) findViewById(R.id.stop_list);
+        if (routeList != null) {
+            routeList.addParallaxedHeaderView(new MapHeaderView(this));
+            RouteAdapter adapter = new RouteAdapter(this, route);
+            routeList.setAdapter(adapter);
+        }
 
-        routeList.addParallaxedHeaderView(new MapHeaderView(this));
         mapFragment = (MapFragment) getFragmentManager().findFragmentById(R.id.map);
         setUpMap();
-
-        RouteAdapter adapter = new RouteAdapter(this, route);
-        routeList.setAdapter(adapter);
     }
 
     @Override

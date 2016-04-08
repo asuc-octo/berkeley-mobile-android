@@ -21,6 +21,7 @@ import com.asuc.asucmobile.controllers.LineController;
 import com.asuc.asucmobile.controllers.RouteController;
 import com.asuc.asucmobile.models.Route;
 import com.asuc.asucmobile.utilities.Callback;
+import com.asuc.asucmobile.utilities.NavigationGenerator;
 import com.flurry.android.FlurryAgent;
 import com.google.android.gms.maps.model.LatLng;
 
@@ -45,14 +46,18 @@ public class OpenRouteSelectionActivity extends AppCompatActivity {
         setContentView(R.layout.activity_open_route_selection);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        toolbar.setNavigationIcon(getResources().getDrawable(R.drawable.ic_action_back));
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                finish();
-            }
-        });
+        if (toolbar != null) {
+            setSupportActionBar(toolbar);
+            toolbar.setNavigationIcon(getResources().getDrawable(R.drawable.ic_action_back));
+            toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    finish();
+                }
+            });
+        }
+
+        NavigationGenerator.generateMenu(this);
 
         LatLng startLatLng = getIntent().getParcelableExtra("startLngLat");
         LatLng endLatLng = getIntent().getParcelableExtra("endLngLat");
@@ -67,13 +72,15 @@ public class OpenRouteSelectionActivity extends AppCompatActivity {
         routeController = (RouteController) RouteController.createInstance(this, startLatLng,
                 endLatLng, departureTime);
         lineController = (LineController) LineController.getInstance(this);
-        mRefreshButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                refresh();
-            }
-        });
 
+        if (mRefreshButton != null) {
+            mRefreshButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    refresh();
+                }
+            });
+        }
         refresh();
     }
 
