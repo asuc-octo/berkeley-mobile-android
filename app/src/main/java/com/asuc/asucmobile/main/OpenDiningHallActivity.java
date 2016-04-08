@@ -19,6 +19,7 @@ import com.asuc.asucmobile.fragments.MenuFragment;
 import com.asuc.asucmobile.models.DiningHall;
 import com.asuc.asucmobile.models.FoodItem;
 import com.asuc.asucmobile.utilities.CustomComparators;
+import com.asuc.asucmobile.utilities.NavigationGenerator;
 import com.asuc.asucmobile.utilities.SerializableUtilities;
 import com.flurry.android.FlurryAgent;
 
@@ -53,15 +54,19 @@ public class OpenDiningHallActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_open_dining_hall);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        toolbar.setTitle(diningHall.getName());
-        setSupportActionBar(toolbar);
-        toolbar.setNavigationIcon(getResources().getDrawable(R.drawable.ic_action_back));
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                finish();
-            }
-        });
+        if (toolbar != null) {
+            toolbar.setTitle(diningHall.getName());
+            setSupportActionBar(toolbar);
+            toolbar.setNavigationIcon(getResources().getDrawable(R.drawable.ic_action_back));
+            toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    finish();
+                }
+            });
+        }
+
+        NavigationGenerator.generateMenu(this);
 
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
@@ -69,31 +74,35 @@ public class OpenDiningHallActivity extends AppCompatActivity {
 
         // Set up the ViewPager with the sections adapter.
         ViewPager viewPager = (ViewPager) findViewById(R.id.pager);
-        if (Arrays.asList(HAS_LATE_NIGHT).contains(diningHall.getName())) {
-            viewPager.setOffscreenPageLimit(4);
-        } else {
-            viewPager.setOffscreenPageLimit(3);
-        }
-        viewPager.setAdapter(pagerAdapter);
+        if (viewPager != null) {
+            if (Arrays.asList(HAS_LATE_NIGHT).contains(diningHall.getName())) {
+                viewPager.setOffscreenPageLimit(4);
+            } else {
+                viewPager.setOffscreenPageLimit(3);
+            }
+            viewPager.setAdapter(pagerAdapter);
 
-        Date currentTime = new Date();
-        if (diningHall.isLateNightOpen() ||
-                (diningHall.getDinnerClosing() != null && currentTime.after(diningHall.getDinnerClosing()))) {
-            viewPager.setCurrentItem(3);
-        } else if (diningHall.isDinnerOpen() ||
-                (diningHall.getLunchClosing() != null && currentTime.after(diningHall.getLunchClosing())) ||
-                (diningHall.getDinnerClosing() != null && currentTime.after(diningHall.getDinnerClosing()))) {
-            viewPager.setCurrentItem(2);
-        } else if (diningHall.isLunchOpen() ||
-                (diningHall.getBreakfastClosing() != null && currentTime.after(diningHall.getBreakfastClosing()))) {
-            viewPager.setCurrentItem(1);
-        } else {
-            viewPager.setCurrentItem(0);
+            Date currentTime = new Date();
+            if (diningHall.isLateNightOpen() ||
+                    (diningHall.getDinnerClosing() != null && currentTime.after(diningHall.getDinnerClosing()))) {
+                viewPager.setCurrentItem(3);
+            } else if (diningHall.isDinnerOpen() ||
+                    (diningHall.getLunchClosing() != null && currentTime.after(diningHall.getLunchClosing())) ||
+                    (diningHall.getDinnerClosing() != null && currentTime.after(diningHall.getDinnerClosing()))) {
+                viewPager.setCurrentItem(2);
+            } else if (diningHall.isLunchOpen() ||
+                    (diningHall.getBreakfastClosing() != null && currentTime.after(diningHall.getBreakfastClosing()))) {
+                viewPager.setCurrentItem(1);
+            } else {
+                viewPager.setCurrentItem(0);
+            }
         }
 
         PagerTabStrip tabStrip = (PagerTabStrip) findViewById(R.id.pager_tab_strip);
-        tabStrip.setTextColor(getResources().getColor(R.color.off_white));
-        tabStrip.setTabIndicatorColor(getResources().getColor(R.color.off_white));
+        if (tabStrip != null) {
+            tabStrip.setTextColor(getResources().getColor(R.color.off_white));
+            tabStrip.setTabIndicatorColor(getResources().getColor(R.color.off_white));
+        }
     }
 
     @Override
