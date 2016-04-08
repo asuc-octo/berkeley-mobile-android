@@ -13,6 +13,7 @@ import org.json.JSONObject;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
 import java.util.Locale;
@@ -20,6 +21,7 @@ import java.util.TimeZone;
 
 public class LibraryController implements Controller {
 
+    private static final String URL = BASE_URL + "/weekly_libraries";
     private static final SimpleDateFormat DATE_FORMAT =
             new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.ENGLISH);
     private static final TimeZone PST = TimeZone.getTimeZone("America/Los_Angeles");
@@ -80,31 +82,65 @@ public class LibraryController implements Controller {
 
                         Date opening = null;
                         Date closing = null;
-                        String openingString = libraryJSON.getString("opening_time_today");
-                        String closingString = libraryJSON.getString("closing_time_today");
+                        JSONArray weeklyOpenArray = libraryJSON.getJSONArray("weekly_opening_times");
+                        JSONArray weeklyCloseArray = libraryJSON.getJSONArray("weekly_closing_times");
 
-                        if (!openingString.equals("null")) {
-                            tmpDate = DATE_FORMAT.parse(openingString).getTime();
-                            opening = new Date(tmpDate + PST.getOffset(tmpDate));
+                        String openingString;
+                        String closingString;
+
+                        Date[] weeklyOpen = new Date[7];
+                        Date[] weeklyClose = new Date[7];
+
+                        for (int j=0; j < weeklyOpenArray.length(); j++) {
+                            openingString = weeklyOpenArray.getString(j);
+                            opening = null;
+                            if (!openingString.equals("null")) {
+                                tmpDate = DATE_FORMAT.parse(openingString).getTime();
+                                opening = new Date(tmpDate + PST.getOffset(tmpDate));
+                            }
+                            weeklyOpen[j] = opening;
                         }
-                        if (!closingString.equals("null")) {
-                            tmpDate = DATE_FORMAT.parse(closingString).getTime();
-                            closing = new Date(tmpDate + PST.getOffset(tmpDate));
+                        for (int j=0; j < weeklyCloseArray.length(); j++) {
+                            closingString = weeklyCloseArray.getString(j);
+                            closing = null;
+                            if (!closingString.equals("null")) {
+                                tmpDate = DATE_FORMAT.parse(closingString).getTime();
+                                closing = new Date(tmpDate + PST.getOffset(tmpDate));
+                            }
+                            weeklyClose[j] = closing;
                         }
 
                         String imageUrl = libraryJSON.getString("image_link");
-
-                        double lat = 0;
-                        double lng = 0;
-                        if (!libraryJSON.isNull("latitude") && !libraryJSON.isNull("longitude")) {
+                        double lat;
+                        double lng;
+                        if (libraryJSON.getString("latitude") != "null" && libraryJSON.getString("longitude") != "null") {
                             lat = libraryJSON.getDouble("latitude");
                             lng = libraryJSON.getDouble("longitude");
+                        } else {
+                            /*
+                            Replace with the lat/long of Sproul Plaza, I guess.
+                            Right now this lat/long is whatever Bing says UC Berkeley is at.
+                            Notably this code allows libraries to open but some libraries have
+                                null lat/longs.
+                             */
+                            lat = 37.87;
+                            lng = -122.259;
                         }
 
-                        boolean byAppointment = libraryJSON.getBoolean("by_appointment");
+                        JSONArray weeklyAppointmentArray = libraryJSON.getJSONArray("weekly_by_appointment");
+                        boolean[] weeklyAppointments = new boolean[7];
+                        for (int j=0; j < weeklyAppointmentArray.length(); j++) {
+                            weeklyAppointments[j] = weeklyAppointmentArray.getBoolean(j);
+                        }
+                        boolean byAppointment = weeklyAppointments[0];
+
+                        Calendar c = Calendar.getInstance();
+                        Date d = DATE_FORMAT.parse(libraryJSON.getString("updated_at"));
+                        c.setTime(d);
+                        int weekday = c.get(Calendar.DAY_OF_WEEK);
 
                         libraries.add(
-                                new Library(id, name, location, phone, opening, closing, imageUrl, lat, lng, byAppointment));
+                                new Library(id, name, location, phone, weeklyOpen[0], weeklyClose[0], weeklyOpen, weeklyClose, imageUrl, lat, lng, byAppointment, weeklyAppointments, weekday));
                     }
 
                     // Sort the libraries alphabetically, putting favorites at top
@@ -132,7 +168,7 @@ public class LibraryController implements Controller {
     @Override
     public void refreshInBackground(Callback callback) {
         this.callback = callback;
-        JSONUtilities.readJSONFromUrl("http://asuc-mobile.herokuapp.com/api/libraries", "libraries", LibraryController.getInstance(context));
+        JSONUtilities.readJSONFromUrl(URL, "libraries", LibraryController.getInstance(context));
     }
 
     public void setCurrentLibrary(Library library) {
