@@ -53,7 +53,7 @@ public class DiningHallAdapter extends BaseAdapter {
         if (i % 2 == 0) {
             highlights.setBackgroundColor(ContextCompat.getColor(context, R.color.two_chainz_gold));
         } else {
-            highlights.setBackgroundColor(ContextCompat.getColor(context, R.color.ASUC_blue));
+            highlights.setBackgroundColor(ContextCompat.getColor(context, R.color.hotline_blue));
         }
 
         name.setText(diningHall.getName());
