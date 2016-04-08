@@ -2,8 +2,6 @@ package com.asuc.asucmobile.models;
 
 import com.google.android.gms.maps.model.LatLng;
 
-import org.json.JSONArray;
-
 import java.util.Date;
 
 public class Library implements Comparable<Library>{
