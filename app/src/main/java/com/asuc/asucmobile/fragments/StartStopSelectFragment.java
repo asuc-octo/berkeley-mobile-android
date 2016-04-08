@@ -1,6 +1,7 @@
-package com.asuc.asucmobile.main;
+package com.asuc.asucmobile.fragments;
 
 import android.Manifest;
+import android.app.Activity;
 import android.app.Dialog;
 import android.app.TimePickerDialog;
 import android.content.Context;
@@ -11,11 +12,13 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.DialogFragment;
+import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AppCompatActivity;
 import android.text.format.DateFormat;
+import android.view.InflateException;
+import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.ImageButton;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -25,8 +28,11 @@ import android.widget.Toast;
 import com.asuc.asucmobile.R;
 import com.asuc.asucmobile.controllers.BusController;
 import com.asuc.asucmobile.main.LiveBusActivity.BusCallback;
+import com.asuc.asucmobile.main.OpenRouteSelectionActivity;
+import com.asuc.asucmobile.main.StopActivity;
 import com.asuc.asucmobile.utilities.Callback;
 import com.asuc.asucmobile.utilities.LocationGrabber;
+import com.asuc.asucmobile.utilities.NavigationGenerator;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -40,7 +46,7 @@ import java.util.Locale;
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class StartStopSelectActivity extends AppCompatActivity
+public class StartStopSelectFragment extends Fragment
     implements OnMapReadyCallback, ActivityCompat.OnRequestPermissionsResultCallback {
 
     private static final int LOCATION_PERMISSION = 0;
@@ -51,6 +57,7 @@ public class StartStopSelectActivity extends AppCompatActivity
 
     private Context context;
 
+    private static View layout;
     private TextView startButton;
     private TextView destButton;
     private static TextView timeButton;
@@ -65,50 +72,48 @@ public class StartStopSelectActivity extends AppCompatActivity
 
     private BusCallback busCallback;
     private Timer timer;
-    private StartStopSelectActivity activity;
+    private GoogleMap map;
 
     private static Calendar departureTime = Calendar.getInstance();
 
     @Override
     @SuppressWarnings("deprecation")
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_start_stop_select);
-        ImageButton backButton = (ImageButton) findViewById(R.id.back_button);
-        backButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                finish();
-            }
-        });
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        try {
+            layout = inflater.inflate(R.layout.fragment_start_stop_select, container, false);
+        } catch (InflateException e) {
+            // Don't worry about it!
+        }
 
-        startButton = (TextView) findViewById(R.id.start_stop);
-        destButton = (TextView) findViewById(R.id.dest_stop);
-        timeButton = (TextView) findViewById(R.id.departure_time);
+        ImageView menuButton = (ImageView) layout.findViewById(R.id.menu_button);
+        NavigationGenerator.generateToolbarMenuButton(menuButton);
+
+        startButton = (TextView) layout.findViewById(R.id.start_stop);
+        destButton = (TextView) layout.findViewById(R.id.dest_stop);
+        timeButton = (TextView) layout.findViewById(R.id.departure_time);
         timeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 DialogFragment newFragment = new TimePickerFragment();
-                newFragment.show(getSupportFragmentManager(), "timePicker");
+                newFragment.show(getActivity().getSupportFragmentManager(), "timePicker");
             }
         });
-        ImageView myLocationButton = (ImageView) findViewById(R.id.my_location);
-        FloatingActionButton navigateButton = (FloatingActionButton) findViewById(R.id.navigate_button);
+        ImageView myLocationButton = (ImageView) layout.findViewById(R.id.my_location);
+        FloatingActionButton navigateButton = (FloatingActionButton) layout.findViewById(R.id.navigate_button);
 
         navigateButton.setImageDrawable(getResources().getDrawable(R.drawable.ic_navigation));
-        refreshWrapper = (LinearLayout) findViewById(R.id.refresh);
+        refreshWrapper = (LinearLayout) layout.findViewById(R.id.refresh);
 
-        context = getBaseContext();
+        context = getContext();
         startButton.setOnClickListener(new StartStopListener(START_INT));
         destButton.setOnClickListener(new StartStopListener(END_INT));
 
-        mapFragment = (MapFragment) getFragmentManager()
-                .findFragmentById(R.id.map);
+        mapFragment = (MapFragment) getActivity().getFragmentManager().findFragmentById(R.id.map);
 
         myLocationButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                LocationGrabber.getLocation(StartStopSelectActivity.this,  new LocationCallback());
+                LocationGrabber.getLocation(getActivity(),  new LocationCallback());
                 startButton.setText(getString(R.string.retrieving_location));
             }
         });
@@ -116,7 +121,7 @@ public class StartStopSelectActivity extends AppCompatActivity
         navigateButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getBaseContext(), OpenRouteSelectionActivity.class);
+                Intent intent = new Intent(getContext(), OpenRouteSelectionActivity.class);
                 if (startLatLng == null) {
                     Toast.makeText(context, "Please select a start location", Toast.LENGTH_SHORT).show();
                     return;
@@ -136,7 +141,8 @@ public class StartStopSelectActivity extends AppCompatActivity
                 startActivity(intent);
             }
         });
-        this.activity = this;
+
+        return layout;
     }
 
     @Override
@@ -151,11 +157,22 @@ public class StartStopSelectActivity extends AppCompatActivity
         super.onPause();
         timer.cancel();
         timer.purge();
+        stopLocationTracking();
     }
 
     @Override
-    protected void onActivityResult (int requestCode, int resultCode, Intent data) {
-        if (resultCode == RESULT_CANCELED) {
+    public void onDestroyView() {
+        super.onDestroyView();
+        try {
+            stopLocationTracking();
+        } catch (Exception e) {
+            // Don't worry about it!
+        }
+    }
+
+    @Override
+    public void onActivityResult (int requestCode, int resultCode, Intent data) {
+        if (resultCode == Activity.RESULT_CANCELED) {
             return;
         }
         if (requestCode == START_INT) {
@@ -164,6 +181,14 @@ public class StartStopSelectActivity extends AppCompatActivity
         } else if (requestCode == END_INT) {
             getEndFromPref(data);
             destButton.setText(endName);
+        }
+    }
+
+    private void stopLocationTracking() {
+        if (map != null &&
+                ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED ||
+                ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+            map.setMyLocationEnabled(false);
         }
     }
 
@@ -194,9 +219,10 @@ public class StartStopSelectActivity extends AppCompatActivity
 
     @Override
     public void onMapReady(GoogleMap map) {
+        this.map = map;
         map.setMapType(GoogleMap.MAP_TYPE_NORMAL);
-        if (ContextCompat.checkSelfPermission(activity, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED ||
-                ContextCompat.checkSelfPermission(activity, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+        if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED ||
+                ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
             map.setMyLocationEnabled(true);
         }
         CameraUpdate update = CameraUpdateFactory.newLatLngZoom(new LatLng(37.871899, -122.25854), 14.5f);
@@ -209,7 +235,7 @@ public class StartStopSelectActivity extends AppCompatActivity
         timer.schedule(new TimerTask() {
             @Override
             public void run() {
-                BusController.getInstance(activity).refreshInBackground(busCallback);
+                BusController.getInstance(getActivity()).refreshInBackground(busCallback);
             }
         }, 0L, 3000L);
     }
@@ -221,9 +247,9 @@ public class StartStopSelectActivity extends AppCompatActivity
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         if (requestCode == LOCATION_PERMISSION && grantResults.length > 0 &&
                 (grantResults[0] == PackageManager.PERMISSION_GRANTED || grantResults[1] == PackageManager.PERMISSION_GRANTED)) {
-            LocationGrabber.getLocation(this, new LocationCallback());
+            LocationGrabber.getLocation(getActivity(), new LocationCallback());
         } else {
-            Toast.makeText(this, "Please allow location permissions and try again", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), "Please allow location permissions and try again", Toast.LENGTH_SHORT).show();
             startButton.setText("");
         }
     }
@@ -261,7 +287,7 @@ public class StartStopSelectActivity extends AppCompatActivity
 
         @Override
         public void onRetrievalFailed() {
-            Toast.makeText(StartStopSelectActivity.this, "Unable to find your location", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), "Unable to find your location", Toast.LENGTH_SHORT).show();
             startButton.setText("");
         }
 

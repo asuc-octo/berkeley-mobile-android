@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
-    tools:context="com.asuc.asucmobile.main.StartStopSelectActivity">
+    tools:context=".fragments.StartStopSelectFragment">
 
     <LinearLayout
         android:id="@+id/start_dest_control"
@@ -20,13 +20,12 @@
             android:orientation="vertical">
 
             <ImageButton
-                android:id="@+id/back_button"
+                android:id="@+id/menu_button"
                 android:layout_width="64dp"
                 android:layout_height="64dp"
                 android:layout_gravity="center"
                 android:background="?android:attr/selectableItemBackground"
-                android:src="@drawable/ic_action_back"
-                android:contentDescription="@string/content_desc" />
+                android:src="@drawable/navi" />
 
         </LinearLayout>
 
@@ -73,10 +72,13 @@
 
                 <ImageView
                     android:id="@+id/my_location"
-                    android:layout_width="0dp"
+                    android:layout_width="20dp"
                     android:layout_height="20dp"
-                    android:layout_weight="1"
                     android:layout_gravity="center"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginEnd="4dp"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginRight="4dp"
                     android:contentDescription="@string/content_desc"
                     android:src="@drawable/ic_my_location_white_24dp" />
 
@@ -147,6 +149,13 @@
 
     </LinearLayout>
 
+    <fragment
+        android:name="com.google.android.gms.maps.MapFragment"
+        android:id="@+id/map"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/start_dest_control" />
+
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/navigate_button"
         android:layout_width="wrap_content"
@@ -156,13 +165,6 @@
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
         app:backgroundTint="@color/two_chainz_gold" />
-
-    <fragment
-        android:name="com.google.android.gms.maps.MapFragment"
-        android:id="@+id/map"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@+id/start_dest_control" />
 
     <LinearLayout
         android:orientation="vertical"
