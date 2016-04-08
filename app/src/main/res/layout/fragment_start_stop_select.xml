@@ -16,7 +16,7 @@
         <LinearLayout
             android:layout_width="64dp"
             android:layout_height="match_parent"
-            android:background="@color/ASUC_blue"
+            android:background="@color/hotline_blue"
             android:orientation="vertical">
 
             <ImageButton
@@ -32,7 +32,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/ASUC_blue"
+            android:background="@color/hotline_blue"
             android:paddingTop="8dp"
             android:paddingRight="6dp"
             android:paddingEnd="4dp"
@@ -67,7 +67,7 @@
                     android:maxLines="1"
                     android:ellipsize="marquee"
                     android:padding="8dp"
-                    android:background="@color/pavan_light"
+                    android:background="@color/off_white"
                     android:layout_gravity="fill" />
 
                 <ImageView
@@ -109,7 +109,7 @@
                     android:textColor="@android:color/black"
                     android:textAllCaps="false"
                     android:maxLines="1"
-                    android:background="@color/pavan_light"
+                    android:background="@color/off_white"
                     android:padding="8dp" />
 
             </LinearLayout>
@@ -139,7 +139,7 @@
                     android:textAllCaps="false"
                     android:maxLines="1"
                     android:ellipsize="marquee"
-                    android:background="@color/pavan_light"
+                    android:background="@color/off_white"
                     android:padding="8dp"
                     android:text="@string/now" />
 

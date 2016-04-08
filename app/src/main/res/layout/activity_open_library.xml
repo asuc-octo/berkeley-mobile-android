@@ -9,56 +9,64 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
+        <ScrollView
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:id="@+id/scroll"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content">
 
-        <android.support.v7.widget.Toolbar
-            android:id="@+id/toolbar"
-            android:layout_height="wrap_content"
-            android:layout_width="match_parent"
-            android:elevation="8dp"
-            style="@style/ToolbarTheme" />
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1">
-
-            <ProgressBar
-                android:id="@+id/progress_bar"
-                style="?android:attr/progressBarStyleSmall"
+            <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:tools="http://schemas.android.com/tools"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:padding="96dp"
-                android:layout_gravity="center" />
-
-            <ImageView
-                android:id="@+id/image"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:scaleType="fitXY"
-                android:src="@drawable/default_library"
-                android:contentDescription="@string/content_desc"
-                android:visibility="gone" />
-
-        </RelativeLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:orientation="horizontal">
-
-            <LinearLayout
-                android:layout_width="225dp"
-                android:layout_height="match_parent"
-                android:divider="@color/ASUC_blue"
                 android:orientation="vertical">
 
-                <LinearLayout
+                <android.support.v7.widget.Toolbar
+                    android:id="@+id/toolbar"
+                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent"
+                    android:elevation="8dp"
+                    style="@style/ToolbarTheme" />
+
+                <FrameLayout
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
-                    android:layout_weight="1"
+                    android:layout_weight="1">
+
+
+
+                    <ProgressBar
+                        android:id="@+id/progress_bar"
+                        style="?android:attr/progressBarStyleSmall"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:padding="96dp"
+                        android:layout_gravity="center" />
+
+                    <fragment
+                        android:id="@+id/map"
+                        android:layout_width="fill_parent"
+                        android:layout_height="match_parent"
+                        android:name="com.google.android.gms.maps.MapFragment"
+                        tools:layout="@android:layout/list_content" />
+
+
+                </FrameLayout>
+
+
+
+                <LinearLayout
+                    android:id="@+id/hours_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight=".33"
                     android:paddingLeft="24dp"
                     android:paddingRight="24dp"
+
+                    android:paddingTop="42dp"
+                    android:paddingBottom="42dp"
+
+                    android:animateLayoutChanges="true"
                     android:gravity="center_vertical"
                     android:orientation="horizontal">
 
@@ -74,7 +82,19 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="24dp"
                         android:layout_marginLeft="24dp"
+                        android:gravity="center_vertical"
                         android:textColor="@android:color/black" />
+
+                    <TextView
+                        android:id="@+id/hours_expand"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="24dp"
+                        android:layout_marginRight="24dp"
+                        android:layout_marginLeft="24dp"
+                        android:gravity="right"
+                        android:textColor="@android:color/black" />
+
 
                 </LinearLayout>
 
@@ -87,9 +107,13 @@
                     android:id="@+id/location_layout"
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
-                    android:layout_weight="1"
+                    android:layout_weight=".33"
                     android:paddingLeft="24dp"
                     android:paddingRight="24dp"
+
+                    android:paddingTop="42dp"
+                    android:paddingBottom="42dp"
+
                     android:gravity="center_vertical"
                     android:orientation="horizontal"
                     android:background="@drawable/white_selector">
@@ -120,9 +144,13 @@
                     android:id="@+id/phone_layout"
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
-                    android:layout_weight="1"
+                    android:layout_weight=".33"
                     android:paddingLeft="24dp"
                     android:paddingRight="24dp"
+
+                    android:paddingTop="42dp"
+                    android:paddingBottom="42dp"
+
                     android:gravity="center_vertical"
                     android:orientation="horizontal"
                     android:background="@drawable/white_selector">
@@ -143,19 +171,11 @@
 
                 </LinearLayout>
 
+
             </LinearLayout>
 
-            <fragment
-                android:id="@+id/map"
-                android:layout_width="fill_parent"
-                android:layout_height="match_parent"
-                android:name="com.google.android.gms.maps.MapFragment"
-                tools:layout="@android:layout/list_content" />
-
-        </LinearLayout>
-
+        </ScrollView>
     </LinearLayout>
-
     <LinearLayout
         android:id="@+id/left_drawer"
         android:layout_width="293dp"
