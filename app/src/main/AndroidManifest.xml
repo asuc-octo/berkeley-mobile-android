@@ -34,7 +34,8 @@
         android:allowBackup="true"
         android:icon="@drawable/app_icon"
         android:label="@string/app_name"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme"
+        android:largeHeap="true">
         <meta-data
             android:name="com.google.android.maps.v2.API_KEY"
             android:value="AIzaSyDNePR1dpHnITWKLTpq_q0F3WFO0ZmiORk" />
@@ -67,7 +68,7 @@
             android:label="@string/app_name"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".main.LibraryActivity"
+            android:name=".fragments.LibraryFragment"
             android:label="@string/title_activity_library"
             android:screenOrientation="portrait" />
         <activity
@@ -75,7 +76,7 @@
             android:label="@string/title_activity_open_library"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".main.GymActivity"
+            android:name=".fragments.GymFragment"
             android:label="@string/title_activity_gym"
             android:screenOrientation="portrait" />
         <activity
@@ -83,7 +84,7 @@
             android:label="@string/title_activity_open_gym"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".main.DiningHallActivity"
+            android:name=".fragments.DiningHallFragment"
             android:label="@string/title_activity_dining_hall"
             android:screenOrientation="portrait" />
         <activity
@@ -103,7 +104,7 @@
             android:label="@string/title_activity_stop"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".main.StartStopSelectActivity"
+            android:name=".fragments.StartStopSelectFragment"
             android:label="@string/title_activity_start_stop_select"
             android:screenOrientation="portrait" />
         <activity
