@@ -5,6 +5,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.LinearLayout;
@@ -125,7 +126,7 @@ public class NavigationGenerator {
 
     public static void closeMenu() {
         if (drawerLayout != null) {
-            drawerLayout.closeDrawer(drawer);
+            drawerLayout.closeDrawer(Gravity.LEFT);
         }
     }
 

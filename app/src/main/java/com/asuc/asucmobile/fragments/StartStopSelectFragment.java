@@ -232,12 +232,16 @@ public class StartStopSelectFragment extends Fragment
     }
 
     private void liveTrack() {
-        timer.schedule(new TimerTask() {
-            @Override
-            public void run() {
-                BusController.getInstance(getActivity()).refreshInBackground(busCallback);
-            }
-        }, 0L, 3000L);
+        try {
+            timer.schedule(new TimerTask() {
+                @Override
+                public void run() {
+                    BusController.getInstance(getActivity()).refreshInBackground(busCallback);
+                }
+            }, 0L, 3000L);
+        } catch (Exception e) {
+            // Don't worry about it!
+        }
     }
 
     /**
