@@ -17,6 +17,7 @@ import com.asuc.asucmobile.R;
 import com.asuc.asucmobile.controllers.BusController;
 import com.asuc.asucmobile.models.Bus;
 import com.asuc.asucmobile.utilities.Callback;
+import com.asuc.asucmobile.utilities.NavigationGenerator;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -48,24 +49,30 @@ public class LiveBusActivity extends AppCompatActivity implements OnMapReadyCall
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        toolbar.setNavigationIcon(getResources().getDrawable(R.drawable.ic_action_back));
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                finish();
-            }
-        });
+        if (toolbar != null) {
+            toolbar.setNavigationIcon(getResources().getDrawable(R.drawable.ic_action_back));
+            toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    finish();
+                }
+            });
+        }
+
+        NavigationGenerator.generateMenu(this);
 
         mapFragment = (MapFragment) getFragmentManager()
                 .findFragmentById(R.id.map);
         mRefreshWrapper = (LinearLayout) findViewById(R.id.refresh);
         ImageButton refreshButton = (ImageButton) findViewById(R.id.refresh_button);
-        refreshButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                liveTrack();
-            }
-        });
+        if (refreshButton != null) {
+            refreshButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    liveTrack();
+                }
+            });
+        }
     }
 
     @Override

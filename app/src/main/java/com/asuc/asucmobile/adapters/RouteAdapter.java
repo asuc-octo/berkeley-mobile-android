@@ -70,7 +70,7 @@ public class RouteAdapter extends BaseAdapter {
             if (stop.getStartTime() != null) {
                 if (i == 0) {
                     line.setText(stop.getName());
-                    line.setBackgroundColor(context.getResources().getColor(R.color.ASUC_blue));
+                    line.setBackgroundColor(context.getResources().getColor(R.color.hotline_blue));
                 } else {
                     line.setText("TRANSFER: " + stop.getName());
                     line.setBackgroundColor(context.getResources().getColor(R.color.two_chainz_gold));
@@ -114,7 +114,7 @@ public class RouteAdapter extends BaseAdapter {
             if (i > route.getTrips().get(0).getStops().size()) {
                 stopName.setTextColor(context.getResources().getColor(R.color.two_chainz_gold));
             } else {
-                stopName.setTextColor(context.getResources().getColor(R.color.ASUC_blue));
+                stopName.setTextColor(context.getResources().getColor(R.color.hotline_blue));
             }
         }
 

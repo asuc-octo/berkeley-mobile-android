@@ -21,7 +21,7 @@ public class Test {
         Date closing1 = new Date();
         closing1.setTime(currentTime.getTime() + 1000000);
         Library testLibrary1 =
-                new Library(0, "Library", "Location", "000-000-0000", opening1, closing1, "", 0, 0, false);
+                new Library(0, "Library", "Location", "000-000-0000", opening1, closing1, null, null, "", 0, 0, false, null, 0);
 
         Date opening2 = new Date();
         opening2.setTime(currentTime.getTime() + 1000000);
@@ -31,7 +31,7 @@ public class Test {
                 new Gym(0, "Library", "Location", opening2, closing2, "", 0D, 0D);
 
         Library testLibrary2 =
-                new Library(1, "Library", "Location", "000-000-0000", null, null, "", 0, 0, false);
+                new Library(1, "Library", "Location", "000-000-0000", null, null, null, null, "", 0, 0, false, null, 0);
 
         if (!testLibrary1.isOpen()) {
             System.out.println("Open library reported as closed");
