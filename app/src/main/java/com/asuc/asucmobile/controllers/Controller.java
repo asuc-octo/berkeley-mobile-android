@@ -6,7 +6,7 @@ import org.json.JSONArray;
 
 public interface Controller {
 
-    String BASE_URL = "http://asuc-mobile-development.herokuapp.com/api";
+    String BASE_URL = "http://asuc-mobile.herokuapp.com/api";
 
     /**
      *  setResources() is a centralized function for all data controllers that the JSON utility
