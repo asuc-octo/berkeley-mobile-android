@@ -113,7 +113,7 @@ public class StartStopSelectFragment extends Fragment
         myLocationButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                LocationGrabber.getLocation(getActivity(),  new LocationCallback());
+                LocationGrabber.getLocation(StartStopSelectFragment.this,  new LocationCallback());
                 startButton.setText(getString(R.string.retrieving_location));
             }
         });
@@ -251,7 +251,7 @@ public class StartStopSelectFragment extends Fragment
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         if (requestCode == LOCATION_PERMISSION && grantResults.length > 0 &&
                 (grantResults[0] == PackageManager.PERMISSION_GRANTED || grantResults[1] == PackageManager.PERMISSION_GRANTED)) {
-            LocationGrabber.getLocation(getActivity(), new LocationCallback());
+            LocationGrabber.getLocation(this, new LocationCallback());
         } else {
             Toast.makeText(getActivity(), "Please allow location permissions and try again", Toast.LENGTH_SHORT).show();
             startButton.setText("");
