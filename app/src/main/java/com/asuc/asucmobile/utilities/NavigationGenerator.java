@@ -8,7 +8,6 @@ import android.support.v7.widget.Toolbar;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.LinearLayout;
 import android.widget.ListView;
 
 import com.asuc.asucmobile.R;
@@ -57,7 +56,6 @@ public class NavigationGenerator {
             }
     };
 
-    private static LinearLayout drawer;
     private static DrawerLayout drawerLayout;
     private static AppCompatActivity activity;
     private static MainMenuAdapter adapter;
@@ -66,7 +64,6 @@ public class NavigationGenerator {
         // Set the adapter for the list view
         NavigationGenerator.activity = activity;
         drawerLayout = (DrawerLayout) activity.findViewById(R.id.drawer_layout);
-        drawer = (LinearLayout) activity.findViewById(R.id.left_drawer);
         ListView drawerList = (ListView) activity.findViewById(R.id.drawer_list);
 
         adapter = new MainMenuAdapter(activity, SECTIONS);
@@ -120,7 +117,7 @@ public class NavigationGenerator {
 
     public static void openMenu() {
         if (drawerLayout != null) {
-            drawerLayout.openDrawer(drawer);
+            drawerLayout.openDrawer(Gravity.LEFT);
         }
     }
 
