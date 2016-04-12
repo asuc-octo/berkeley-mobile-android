@@ -26,15 +26,6 @@
 
     </RelativeLayout>
 
-    <ImageView
-        android:layout_width="24dp"
-        android:layout_height="24dp"
-        android:layout_marginTop="-30dp"
-        android:layout_marginStart="45dp"
-        android:layout_marginLeft="45dp"
-        android:contentDescription="@string/content_desc"
-        android:src="@drawable/pointer_triangle"/>
-
     <TextView
         android:id="@+id/header_text"
         android:layout_width="match_parent"
@@ -48,6 +39,6 @@
         android:scrollHorizontally="true"
         android:focusable="true"
         android:focusableInTouchMode="true"
-        android:background="@color/ASUC_blue" />
+        android:background="@color/hotline_blue" />
 
 </LinearLayout>

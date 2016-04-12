@@ -7,7 +7,7 @@
     </style>
 
     <style name="ToolbarTheme" parent="@style/Widget.AppCompat.Toolbar">
-        <item name="android:background">@color/ASUC_blue</item>
+        <item name="android:background">@color/hotline_blue</item>
         <item name="titleTextColor">@android:color/white</item>
     </style>
 
