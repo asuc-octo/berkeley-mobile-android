@@ -4,7 +4,6 @@ import com.asuc.asucmobile.utilities.Callback;
 
 import org.json.JSONArray;
 
-//TODO: nullsafe getDouble, getInt, etc
 public interface Controller {
 
     String BASE_URL = "http://asuc-mobile-development.herokuapp.com/api";
