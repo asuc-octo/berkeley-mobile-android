@@ -4,7 +4,7 @@ import com.google.android.gms.maps.model.LatLng;
 
 import java.util.Date;
 
-public class Library implements Comparable<Library> {
+public class Library implements Comparable<Library>{
 
     private int id;
     private String name;
@@ -12,13 +12,19 @@ public class Library implements Comparable<Library> {
     private String phone;
     private Date opening;
     private Date closing;
+    private Date[] weeklyOpen;
+    private Date[] weeklyClose;
     private String imageUrl;
     private LatLng latLng;
     private boolean byAppointment;
+    private boolean[] weeklyAppointments;
+    private int weekday;
+    private final static String[] weekdays = {"Sunday   ","Monday   ","Tuesday  ","Wednesday","Thursday ","Friday   ","Saturday "};
 
     public Library(int id, String name, String location, String phone, Date opening,
-                   Date closing, String imageUrl, double lat, double lng,
-                   boolean byAppointment) {
+                   Date closing, Date[] weeklyOpen, Date[] weeklyClose,
+                   String imageUrl, double lat, double lng,
+                   boolean byAppointment, boolean[] weeklyAppointments, int weekday) {
         this.id = id;
         this.name = name;
         this.location = location;
@@ -28,6 +34,10 @@ public class Library implements Comparable<Library> {
         this.imageUrl = imageUrl;
         this.latLng = new LatLng(lat, lng);
         this.byAppointment = byAppointment;
+        this.weeklyOpen = weeklyOpen;
+        this.weeklyClose = weeklyClose;
+        this.weeklyAppointments = weeklyAppointments;
+        this.weekday = weekday;
     }
 
     public int getId() {
@@ -54,6 +64,10 @@ public class Library implements Comparable<Library> {
         return closing;
     }
 
+    public Date[] getWeeklyOpen() { return weeklyOpen; }
+
+    public Date[] getWeeklyClose() { return weeklyClose; }
+
     public String getImageUrl() {
         return imageUrl;
     }
@@ -64,6 +78,19 @@ public class Library implements Comparable<Library> {
 
     public boolean isByAppointment() {
         return byAppointment;
+    }
+
+    public boolean[] getWeeklyAppointments() { return weeklyAppointments; }
+
+    public int getWeekday() { return weekday; }
+
+    public String[] getWeekdays() {
+        return weekdays;
+    }
+
+    public String getDayOfWeek(int i) {
+
+        return weekdays[(i + weekday) % 7];
     }
 
     /**
@@ -78,6 +105,15 @@ public class Library implements Comparable<Library> {
 
         Date currentTime = new Date();
         return currentTime.after(opening) && currentTime.before(closing);
+    }
+
+    public boolean isOpenGivenTimes(Date i, Date j) {
+        if (i == null || j == null) {
+            return false;
+        }
+
+        Date currentTime = new Date();
+        return true;
     }
 
     @Override

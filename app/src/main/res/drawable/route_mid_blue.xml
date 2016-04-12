@@ -16,7 +16,7 @@
         android:right="14dp" >
         <shape android:shape="rectangle">
             <solid
-                android:color="@color/ASUC_blue" />
+                android:color="@color/hotline_blue" />
         </shape>
     </item>
 
@@ -27,10 +27,10 @@
         android:bottom="38dp" >
         <shape android:shape="oval">
             <solid
-                android:color="@color/ASUC_blue" />
+                android:color="@color/hotline_blue" />
             <stroke
                 android:width="3dp"
-                android:color="@color/ASUC_blue" />
+                android:color="@color/hotline_blue" />
         </shape>
     </item>
 
