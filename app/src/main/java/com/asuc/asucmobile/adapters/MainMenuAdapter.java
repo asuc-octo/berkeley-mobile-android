@@ -47,7 +47,7 @@ public class MainMenuAdapter extends BaseAdapter {
         ImageView icon = (ImageView) convertView.findViewById(R.id.menu_icon);
         TextView name = (TextView) convertView.findViewById(R.id.menu_name);
 
-        icon.setImageDrawable(item.getIcon());
+        icon.setImageDrawable(item.getIcon(context));
         name.setText(item.getName());
 
         return convertView;
