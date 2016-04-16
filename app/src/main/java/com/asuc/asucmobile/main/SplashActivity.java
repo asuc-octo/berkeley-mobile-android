@@ -11,7 +11,8 @@ import com.asuc.asucmobile.R;
 
 public class SplashActivity extends Activity {
 
-    private static String TAG = SplashActivity.class.getName();
+    private static final String TAG = SplashActivity.class.getName();
+    private static final int DURATION = 2000; // in milliseconds
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,7 +37,7 @@ public class SplashActivity extends Activity {
          public void run() {
             try {
                 // Sleeping (in milliseconds)
-                Thread.sleep(1500);
+                Thread.sleep(DURATION);
                 } catch (Exception e) {
                     Log.e(TAG, e.getMessage());
                 }

@@ -38,4 +38,6 @@
     <string name="live_bus_map">Live Bus Map</string>
     <string name="retrieving_location">Retreiving location</string>
 
+    <string name="google_app_id">44923358263</string>
+
 </resources>
