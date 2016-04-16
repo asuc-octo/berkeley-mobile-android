@@ -26,6 +26,7 @@ import com.asuc.asucmobile.controllers.LineController;
 import com.asuc.asucmobile.models.Stop;
 import com.asuc.asucmobile.utilities.Callback;
 import com.asuc.asucmobile.utilities.LocationGrabber;
+import com.asuc.asucmobile.utilities.NavigationGenerator;
 import com.flurry.android.FlurryAgent;
 import com.google.android.gms.maps.model.LatLng;
 
@@ -65,14 +66,18 @@ public class StopActivity extends AppCompatActivity {
         // Set up layout and toolbar
         setContentView(R.layout.activity_stop);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        toolbar.setNavigationIcon(getResources().getDrawable(R.drawable.ic_action_back));
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                finish();
-            }
-        });
+        if (toolbar != null) {
+            setSupportActionBar(toolbar);
+            toolbar.setNavigationIcon(getResources().getDrawable(R.drawable.ic_action_back));
+            toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    finish();
+                }
+            });
+        }
+
+        NavigationGenerator.generateMenu(this);
 
         // Get layout views
         ImageButton refreshButton = (ImageButton) findViewById(R.id.refresh_button);
@@ -104,12 +109,14 @@ public class StopActivity extends AppCompatActivity {
 
         mRequestType = getIntent().getIntExtra("requestCode", 1);
         // Set up on click listeners for the refresh button
-        refreshButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                refresh();
-            }
-        });
+        if (refreshButton != null) {
+            refreshButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    refresh();
+                }
+            });
+        }
     }
 
     @Override
