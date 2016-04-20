@@ -18,11 +18,12 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         NavigationGenerator.generateMenu(this);
+        NavigationGenerator.openMenu();
         if (getIntent().getExtras() != null) {
             int page = getIntent().getExtras().getInt("page", 0);
             NavigationGenerator.loadSection(page);
         } else {
-            NavigationGenerator.loadSection(0);
+            NavigationGenerator.loadSection(-1);
         }
     }
 
@@ -36,6 +37,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onStop() {
         super.onStop();
         FlurryAgent.onEndSession(this);
+        LiveBusActivity.stopBusTracking();
     }
 
 }

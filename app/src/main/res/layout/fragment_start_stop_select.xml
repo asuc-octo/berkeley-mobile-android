@@ -175,6 +175,7 @@
     <ImageView
         android:layout_width="30dp"
         android:layout_height="30dp"
+        android:paddingTop="4dp"
         android:elevation="8dp"
         android:id="@+id/lyft_image"
         android:layout_alignLeft="@+id/lyft_button"
@@ -202,7 +203,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="12dp"
-        app:backgroundTint="@color/two_chainz_gold"
+        app:backgroundTint="@color/hotline_blue"
         android:layout_above="@+id/lyft_button"
         android:layout_alignRight="@+id/lyft_button" />
 
