@@ -173,11 +173,14 @@
     </LinearLayout>
 
     <ImageView
-        android:layout_width="56dp"
-        android:layout_height="56dp"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:elevation="8dp"
         android:id="@+id/lyft_image"
         android:layout_alignLeft="@+id/lyft_button"
-        android:layout_alignTop="@+id/lyft_button">
+        android:layout_alignTop="@+id/lyft_button"
+        android:layout_marginTop="13dp"
+        android:layout_marginLeft="13dp">
     </ImageView>
 
     <android.support.design.widget.FloatingActionButton
