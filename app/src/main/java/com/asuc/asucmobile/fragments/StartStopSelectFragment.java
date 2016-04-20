@@ -1,6 +1,7 @@
 package com.asuc.asucmobile.fragments;
 
 import android.Manifest;
+import android.animation.ObjectAnimator;
 import android.app.Activity;
 import android.app.Dialog;
 import android.app.TimePickerDialog;
@@ -22,6 +23,8 @@ import android.view.InflateException;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AccelerateDecelerateInterpolator;
+import android.view.animation.LinearInterpolator;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -45,6 +48,7 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.plus.model.people.Person;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -412,11 +416,32 @@ public class StartStopSelectFragment extends Fragment
             }
         }
 
+        private class AnimatedLayoutParams {
+
+            private ViewGroup.LayoutParams params;
+
+            public AnimatedLayoutParams(ViewGroup.LayoutParams params) {
+                this.params = params;
+            }
+
+            public int getWidth() {
+                return this.params.width;
+            }
+
+            public void setWidth(int width) {
+                lyftButton.requestLayout();
+                this.params.width = width;
+            }
+        }
+
         @Override
         protected void onPostExecute(Void aVoid) {
-            ViewGroup.LayoutParams tempParams = lyftButton.getLayoutParams();
-            tempParams.width = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 180, getResources().getDisplayMetrics());;
-            lyftButton.setLayoutParams(tempParams);
+            AnimatedLayoutParams tempParams = new AnimatedLayoutParams(lyftButton.getLayoutParams());
+            int width = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 180, getResources().getDisplayMetrics());
+            ObjectAnimator anim = ObjectAnimator.ofInt(tempParams, "width", width);
+            anim.setDuration(1000);
+            anim.setInterpolator(new AccelerateDecelerateInterpolator());
+            anim.start();
             lyftImage.bringToFront();
             lyftEtaText.setText(LYFT_BEFORE_TEXT + lyftEta + LYFT_AFTER_TEXT);
             lyftEtaText.setVisibility(View.VISIBLE);
