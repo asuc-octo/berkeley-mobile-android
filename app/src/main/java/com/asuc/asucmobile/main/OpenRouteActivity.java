@@ -3,8 +3,6 @@ package com.asuc.asucmobile.main;
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationManager;
@@ -156,8 +154,7 @@ public class OpenRouteActivity extends AppCompatActivity {
                 LocationManager locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
                 String bestProvider = locationManager.getBestProvider(new Criteria(), false);
 
-                Bitmap b = BitmapFactory.decodeResource(getResources(), R.drawable.icon_map_pin);
-                BitmapDescriptor pin = BitmapDescriptorFactory.fromBitmap(Bitmap.createScaledBitmap(b, 39, 64, false));
+                BitmapDescriptor pin = BitmapDescriptorFactory.fromResource(R.drawable.icon_map_pin);
 
                 map.addMarker(new MarkerOptions()
                                 .position(lastStop.getLocation())

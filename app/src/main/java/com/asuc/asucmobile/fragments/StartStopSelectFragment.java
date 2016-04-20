@@ -32,6 +32,7 @@ import android.widget.Toast;
 
 import com.asuc.asucmobile.R;
 import com.asuc.asucmobile.controllers.BusController;
+import com.asuc.asucmobile.main.LiveBusActivity;
 import com.asuc.asucmobile.main.LiveBusActivity.BusCallback;
 import com.asuc.asucmobile.main.OpenRouteSelectionActivity;
 import com.asuc.asucmobile.main.StopActivity;
@@ -91,8 +92,7 @@ public class StartStopSelectFragment extends Fragment
     private LinearLayout lyftButton;
     private TextView lyftEtaText;
     private Integer lyftEta;
-    private static final String LYFT_BEFORE_TEXT = "Pickup in ";
-    private static final String LYFT_AFTER_TEXT = " min";
+    private static final String LYFT_TEXT = "Pickup in %d min";
 
     private static final String LYFT_PACKAGE = "me.lyft.android";
     private static final String LYFT_CLIENT_ID = "";
@@ -126,7 +126,6 @@ public class StartStopSelectFragment extends Fragment
 
         navigateButton.setImageDrawable(getResources().getDrawable(R.drawable.ic_navigation));
         refreshWrapper = (LinearLayout) layout.findViewById(R.id.refresh);
-//        FloatingActionButton lyftButton = (FloatingActionButton) layout.findViewById(R.id.lyft_button);
 
         context = getContext();
         startButton.setOnClickListener(new StartStopListener(START_INT));
@@ -141,20 +140,19 @@ public class StartStopSelectFragment extends Fragment
                 startButton.setText(getString(R.string.retrieving_location));
             }
         });
+
         lyftButton = (LinearLayout) layout.findViewById(R.id.lyft_button);
         lyftButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 lyftIntentLaunch();
-
             }
         });
-
         lyftImage = (ImageView) layout.findViewById(R.id.lyft_image);
         lyftImage.setImageDrawable(getContext().getResources().getDrawable(R.drawable.lyft_text));
         lyftImage.bringToFront();
-
         lyftEtaText = (TextView) layout.findViewById(R.id.lyft_eta_text);
+
         navigateButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -187,13 +185,13 @@ public class StartStopSelectFragment extends Fragment
         mapFragment.getMapAsync(this);
         timer = new Timer("liveBus", true);
         LocationGrabber.getLocation(StartStopSelectFragment.this,  new RawLocationCallback());
+        NavigationGenerator.closeMenu();
     }
 
     @Override
     public void onPause() {
         super.onPause();
-        timer.cancel();
-        timer.purge();
+        LiveBusActivity.stopBusTracking();
         stopLocationTracking();
     }
 
@@ -222,10 +220,14 @@ public class StartStopSelectFragment extends Fragment
     }
 
     private void stopLocationTracking() {
-        if (map != null &&
-                ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED ||
-                ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
-            map.setMyLocationEnabled(false);
+        try {
+            if (map != null &&
+                    ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED ||
+                    ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+                map.setMyLocationEnabled(false);
+            }
+        } catch (Exception e) {
+            // Do nothing! Because sometimes the map may get nulled out during the if statement.
         }
     }
 
@@ -356,15 +358,23 @@ public class StartStopSelectFragment extends Fragment
 
         @Override
         public void onDataRetrieved(Object data) {
-            startButton.setText(R.string.my_location);
-            startName = getResources().getString(R.string.my_location);
-            startLatLng = (LatLng) data;
+            try {
+                startButton.setText(R.string.my_location);
+                startName = getResources().getString(R.string.my_location);
+                startLatLng = (LatLng) data;
+            } catch (Exception e) {
+                // In case the fragment is switched out while getting location.
+            }
         }
 
         @Override
         public void onRetrievalFailed() {
-            Toast.makeText(getActivity(), "Unable to find your location", Toast.LENGTH_SHORT).show();
-            startButton.setText("");
+            try {
+                Toast.makeText(getActivity(), "Unable to find your location", Toast.LENGTH_SHORT).show();
+                startButton.setText("");
+            } catch (Exception e) {
+                // In case the fragment is switched out while getting location.
+            }
         }
 
     }
@@ -372,17 +382,22 @@ public class StartStopSelectFragment extends Fragment
     private class RawLocationCallback implements Callback {
         @Override
         public void onDataRetrieved(Object data) {
-            if(data == null) {
-                return;
+            try {
+                if (data == null) {
+                    return;
+                }
+                startButton.setText(R.string.my_location);
+                startName = getResources().getString(R.string.my_location);
+                startLatLng = (LatLng) data;
+                new LyftEtaFetchTask().execute("http://asuc-mobile-development.herokuapp.com/api/lyft/eta?" + "lat=" + startLatLng.latitude + "&lng=" + startLatLng.longitude);
+            } catch (Exception e) {
+                // In case the fragment is switched out while getting location.
             }
-            startLatLng = (LatLng) data;
-            new LyftEtaFetchTask().execute("http://asuc-mobile-development.herokuapp.com/api/lyft/eta?" + "lat=" + startLatLng.latitude + "&lng=" + startLatLng.longitude);
         }
 
         @Override
-        public void onRetrievalFailed() {
+        public void onRetrievalFailed() {}
 
-        }
     }
 
     private class LyftEtaFetchTask extends AsyncTask<String, Void, Void> {
@@ -394,7 +409,7 @@ public class StartStopSelectFragment extends Fragment
                 String jsonText = JSONUtilities.getUrlBody(buffer);
                 JSONObject json = new JSONObject(jsonText);
                 JSONObject response = json.getJSONObject("lyft_response");
-                if(response.getBoolean("success") != true) {
+                if(!response.getBoolean("success")) {
                     return null;
                 }
                 if(response.getLong("eta") % 60 == 0) {
@@ -405,7 +420,7 @@ public class StartStopSelectFragment extends Fragment
                 }
 
                 return null;
-            } catch(Exception e) {
+            } catch (Exception e) {
                 return null;
             }
         }
@@ -426,19 +441,24 @@ public class StartStopSelectFragment extends Fragment
                 lyftButton.requestLayout();
                 this.params.width = width;
             }
+
         }
 
         @Override
         protected void onPostExecute(Void aVoid) {
-            AnimatedLayoutParams tempParams = new AnimatedLayoutParams(lyftButton.getLayoutParams());
-            int width = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 180, getResources().getDisplayMetrics());
-            ObjectAnimator anim = ObjectAnimator.ofInt(tempParams, "width", width);
-            anim.setDuration(1000);
-            anim.setInterpolator(new AccelerateDecelerateInterpolator());
-            anim.start();
-            lyftImage.bringToFront();
-            lyftEtaText.setText(LYFT_BEFORE_TEXT + lyftEta + LYFT_AFTER_TEXT);
-            lyftEtaText.setVisibility(View.VISIBLE);
+            try {
+                AnimatedLayoutParams tempParams = new AnimatedLayoutParams(lyftButton.getLayoutParams());
+                int width = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 180, getResources().getDisplayMetrics());
+                ObjectAnimator anim = ObjectAnimator.ofInt(tempParams, "width", width);
+                anim.setDuration(1000);
+                anim.setInterpolator(new AccelerateDecelerateInterpolator());
+                anim.start();
+                lyftImage.bringToFront();
+                lyftEtaText.setText(String.format(Locale.US, LYFT_TEXT, lyftEta));
+                lyftEtaText.setVisibility(View.VISIBLE);
+            } catch (Exception e) {
+                // In case the fragment is switched out during the eta fetch.
+            }
         }
     }
 

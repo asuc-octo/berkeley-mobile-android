@@ -1,6 +1,7 @@
 package com.asuc.asucmobile.utilities;
 
 import android.content.Intent;
+import android.os.Handler;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -12,6 +13,7 @@ import android.widget.ListView;
 
 import com.asuc.asucmobile.R;
 import com.asuc.asucmobile.adapters.MainMenuAdapter;
+import com.asuc.asucmobile.fragments.BlankFragment;
 import com.asuc.asucmobile.fragments.DiningHallFragment;
 import com.asuc.asucmobile.fragments.GymFragment;
 import com.asuc.asucmobile.fragments.LibraryFragment;
@@ -61,6 +63,10 @@ public class NavigationGenerator {
     private static MainMenuAdapter adapter;
 
     public static void generateMenu(final AppCompatActivity activity) {
+        if (NavigationGenerator.activity != null && NavigationGenerator.activity == activity) {
+            return;
+        }
+
         // Set the adapter for the list view
         NavigationGenerator.activity = activity;
         drawerLayout = (DrawerLayout) activity.findViewById(R.id.drawer_layout);
@@ -71,23 +77,33 @@ public class NavigationGenerator {
             drawerList.setAdapter(adapter);
             drawerList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
-                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    closeMenu();
-                    if (activity.findViewById(R.id.content_frame) == null) {
-                        Intent i = new Intent(activity, MainActivity.class);
-                        i.putExtra("page", position);
-                        activity.startActivity(i);
-                        activity.finish();
-                    } else {
-                        adapter.getItem(position).loadFragment(activity.getSupportFragmentManager());
-                    }
+                public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
+                    new Handler().postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            if (activity.findViewById(R.id.content_frame) == null) {
+                                Intent i = new Intent(activity, MainActivity.class);
+                                i.putExtra("page", position);
+                                activity.startActivity(i);
+                                activity.finish();
+                            } else {
+                                adapter.getItem(position).loadFragment(activity.getSupportFragmentManager());
+                            }
+                        }
+                    }, 0);
                 }
             });
         }
     }
 
     public static void loadSection(int index) {
-        adapter.getItem(index).loadFragment(activity.getSupportFragmentManager());
+        if (index == -1) {
+            activity.getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.content_frame, new BlankFragment())
+                    .commit();
+        } else {
+            adapter.getItem(index).loadFragment(activity.getSupportFragmentManager());
+        }
     }
 
     /**
@@ -123,7 +139,12 @@ public class NavigationGenerator {
 
     public static void closeMenu() {
         if (drawerLayout != null) {
-            drawerLayout.closeDrawer(Gravity.LEFT);
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    drawerLayout.closeDrawer(Gravity.LEFT);
+                }
+            }, 0);
         }
     }
 

@@ -84,9 +84,14 @@ public class GymFragment extends Fragment {
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+        NavigationGenerator.closeMenu();
+    }
+
+    @Override
     public void onStop() {
         super.onStop();
-
         FlurryAgent.onEndSession(getContext());
     }
 
