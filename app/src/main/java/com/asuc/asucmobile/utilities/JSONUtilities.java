@@ -26,7 +26,7 @@ public class JSONUtilities {
      *  @param reader The buffer attached to a website to retrieve all characters.
      *  @return JSON data in String format.
      */
-    private static String getUrlBody(Reader reader) throws IOException {
+    public static String getUrlBody(Reader reader) throws IOException {
         StringBuilder builder = new StringBuilder();
         int character = reader.read();
 

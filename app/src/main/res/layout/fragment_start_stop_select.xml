@@ -156,15 +156,38 @@
         android:layout_height="match_parent"
         android:layout_below="@+id/start_dest_control" />
 
+    <LinearLayout
+        android:layout_width="56dp"
+        android:layout_height="56dp"
+        android:id="@+id/lyft_button"
+        android:background="@drawable/lyft_rounded_rectangle"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="false"
+        android:elevation="8dp"
+        android:layout_alignParentEnd="true"
+        android:orientation="horizontal"
+        android:animateLayoutChanges="true"
+        android:layout_marginBottom="12dp"
+        android:layout_marginRight="12dp"
+        android:layout_marginLeft="12dp">
+    </LinearLayout>
+
+    <ImageView
+        android:layout_width="56dp"
+        android:layout_height="56dp"
+        android:id="@+id/lyft_image"
+        android:layout_alignLeft="@+id/lyft_button"
+        android:layout_alignTop="@+id/lyft_button">
+    </ImageView>
+
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/navigate_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="16dp"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        app:backgroundTint="@color/two_chainz_gold" />
+        android:layout_marginBottom="12dp"
+        app:backgroundTint="@color/two_chainz_gold"
+        android:layout_above="@+id/lyft_button"
+        android:layout_alignRight="@+id/lyft_button" />
 
     <LinearLayout
         android:orientation="vertical"

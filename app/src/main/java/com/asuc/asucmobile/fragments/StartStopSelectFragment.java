@@ -8,6 +8,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
@@ -22,16 +23,19 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.asuc.asucmobile.R;
 import com.asuc.asucmobile.controllers.BusController;
+import com.asuc.asucmobile.controllers.Controller;
 import com.asuc.asucmobile.main.LiveBusActivity.BusCallback;
 import com.asuc.asucmobile.main.OpenRouteSelectionActivity;
 import com.asuc.asucmobile.main.StopActivity;
 import com.asuc.asucmobile.utilities.Callback;
+import com.asuc.asucmobile.utilities.JSONUtilities;
 import com.asuc.asucmobile.utilities.LocationGrabber;
 import com.asuc.asucmobile.utilities.NavigationGenerator;
 import com.google.android.gms.maps.CameraUpdate;
@@ -41,6 +45,14 @@ import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.LatLng;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Locale;
@@ -74,6 +86,7 @@ public class StartStopSelectFragment extends Fragment
     private BusCallback busCallback;
     private Timer timer;
     private GoogleMap map;
+    private ImageView lyftImage;
 
     private static final String LYFT_PACKAGE = "me.lyft.android";
     private static final String LYFT_CLIENT_ID = "";
@@ -130,6 +143,9 @@ public class StartStopSelectFragment extends Fragment
 //            }
 //        });
 
+        lyftImage = (ImageView) layout.findViewById(R.id.lyft_image);
+        lyftImage.setImageDrawable(getContext().getResources().getDrawable(R.drawable.lyft_logo));
+        lyftImage.bringToFront();
         navigateButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -153,7 +169,6 @@ public class StartStopSelectFragment extends Fragment
                 startActivity(intent);
             }
         });
-
         return layout;
     }
 
@@ -162,6 +177,7 @@ public class StartStopSelectFragment extends Fragment
         super.onResume();
         mapFragment.getMapAsync(this);
         timer = new Timer("liveBus", true);
+        LocationGrabber.getLocation(StartStopSelectFragment.this,  new RawLocationCallback());
     }
 
     @Override
@@ -342,6 +358,51 @@ public class StartStopSelectFragment extends Fragment
             startButton.setText("");
         }
 
+    }
+
+    private class RawLocationCallback implements Callback {
+        @Override
+        public void onDataRetrieved(Object data) {
+            if(data == null) {
+                return;
+            }
+            startLatLng = (LatLng) data;
+            new LyftEtaFetchTask().execute("http://asuc-mobile-development.herokuapp.com" + "/api/lyft/eta?" + "lat=" + startLatLng.latitude + "&lng=" + startLatLng.longitude);
+        }
+
+        @Override
+        public void onRetrievalFailed() {
+
+        }
+    }
+
+    private class LyftEtaFetchTask extends AsyncTask<String, Void, Void> {
+        @Override
+        protected Void doInBackground(String... params) {
+            try {
+                InputStream input = (new URL(params[0])).openStream();
+                BufferedReader buffer = new BufferedReader(new InputStreamReader(input));
+                String jsonText = JSONUtilities.getUrlBody(buffer);
+                JSONObject json = new JSONObject(jsonText);
+                if(json.getJSONObject("lyft_response").getBoolean("success") != true) {
+                    return null;
+                }
+
+
+                return null;
+            } catch(Exception e) {
+                return null;
+            }
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            LinearLayout lyftButton = (LinearLayout) layout.findViewById(R.id.lyft_button);
+            ViewGroup.LayoutParams tempParams = lyftButton.getLayoutParams();
+            tempParams.width = 400;
+            lyftButton.setLayoutParams(tempParams);
+            lyftImage.bringToFront();
+        }
     }
 
 }
