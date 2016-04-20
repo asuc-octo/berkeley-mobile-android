@@ -187,6 +187,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:elevation="8dp"
+        android:singleLine="true"
         android:id="@+id/lyft_eta_text"
         android:layout_toRightOf="@+id/lyft_image"
         android:layout_alignTop="@+id/lyft_image"
