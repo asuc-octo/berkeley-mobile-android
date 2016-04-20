@@ -17,6 +17,7 @@ import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.text.format.DateFormat;
+import android.util.TypedValue;
 import android.view.InflateException;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -86,7 +87,9 @@ public class StartStopSelectFragment extends Fragment
     private BusCallback busCallback;
     private Timer timer;
     private GoogleMap map;
+
     private ImageView lyftImage;
+    private LinearLayout lyftButton;
 
     private static final String LYFT_PACKAGE = "me.lyft.android";
     private static final String LYFT_CLIENT_ID = "";
@@ -135,16 +138,17 @@ public class StartStopSelectFragment extends Fragment
                 startButton.setText(getString(R.string.retrieving_location));
             }
         });
-//        lyftButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                lyftIntentLaunch();
-//
-//            }
-//        });
+        lyftButton = (LinearLayout) layout.findViewById(R.id.lyft_button);
+        lyftButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                lyftIntentLaunch();
+
+            }
+        });
 
         lyftImage = (ImageView) layout.findViewById(R.id.lyft_image);
-        lyftImage.setImageDrawable(getContext().getResources().getDrawable(R.drawable.lyft_logo));
+        lyftImage.setImageDrawable(getContext().getResources().getDrawable(R.drawable.lyft_text));
         lyftImage.bringToFront();
         navigateButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -397,9 +401,8 @@ public class StartStopSelectFragment extends Fragment
 
         @Override
         protected void onPostExecute(Void aVoid) {
-            LinearLayout lyftButton = (LinearLayout) layout.findViewById(R.id.lyft_button);
             ViewGroup.LayoutParams tempParams = lyftButton.getLayoutParams();
-            tempParams.width = 400;
+            tempParams.width = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 180, getResources().getDisplayMetrics());;
             lyftButton.setLayoutParams(tempParams);
             lyftImage.bringToFront();
         }
