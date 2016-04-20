@@ -183,6 +183,19 @@
         android:layout_marginLeft="13dp">
     </ImageView>
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:elevation="8dp"
+        android:id="@+id/lyft_eta_text"
+        android:layout_toRightOf="@+id/lyft_image"
+        android:layout_alignTop="@+id/lyft_image"
+        android:layout_marginTop="6dp"
+        android:layout_marginLeft="20dp"
+        android:textColor="@color/off_white"
+        android:visibility="gone"
+        />
+
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/navigate_button"
         android:layout_width="wrap_content"
