@@ -34,7 +34,7 @@ import java.util.TimerTask;
 
 public class LiveBusActivity extends AppCompatActivity implements OnMapReadyCallback{
 
-    private Timer timer;
+    private static Timer timer;
     private LiveBusActivity activity;
     private MapFragment mapFragment;
     private Callback busCallback;
@@ -98,7 +98,7 @@ public class LiveBusActivity extends AppCompatActivity implements OnMapReadyCall
     @Override
     public void onPause() {
         super.onPause();
-        timer.purge();
+        stopBusTracking();
     }
 
     private void liveTrack() {
@@ -108,6 +108,18 @@ public class LiveBusActivity extends AppCompatActivity implements OnMapReadyCall
                 BusController.getInstance(activity).refreshInBackground(busCallback);
             }
         }, 0L, 3000L);
+    }
+
+    public static void stopBusTracking() {
+        if (timer != null) {
+            try {
+                timer.cancel();
+                timer.purge();
+                timer = null;
+            } catch (Exception e) {
+                // Don't worry about it!
+            }
+        }
     }
 
     public static class BusCallback implements Callback {
@@ -125,7 +137,7 @@ public class LiveBusActivity extends AppCompatActivity implements OnMapReadyCall
             this.timer = timer;
 
             Bitmap b = BitmapFactory.decodeResource(context.getResources(), R.drawable.transit_blue);
-            icon = BitmapDescriptorFactory.fromBitmap(Bitmap.createScaledBitmap(b, 64, 64, false));
+            icon = BitmapDescriptorFactory.fromBitmap(Bitmap.createScaledBitmap(b, 72, 72, false));
         }
 
         @Override

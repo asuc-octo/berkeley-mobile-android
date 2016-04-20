@@ -12,7 +12,7 @@ import com.asuc.asucmobile.R;
 public class SplashActivity extends Activity {
 
     private static final String TAG = SplashActivity.class.getName();
-    private static final int DURATION = 2000; // in milliseconds
+    private static final int DURATION = 1500; // in milliseconds
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
