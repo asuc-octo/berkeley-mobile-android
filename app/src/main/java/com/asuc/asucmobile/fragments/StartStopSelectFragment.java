@@ -59,6 +59,7 @@ import java.util.Calendar;
 import java.util.Locale;
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.concurrent.TimeUnit;
 
 public class StartStopSelectFragment extends Fragment
     implements OnMapReadyCallback, ActivityCompat.OnRequestPermissionsResultCallback {
@@ -90,6 +91,10 @@ public class StartStopSelectFragment extends Fragment
 
     private ImageView lyftImage;
     private LinearLayout lyftButton;
+    private TextView lyftEtaText;
+    private Integer lyftEta;
+    private static final String LYFT_BEFORE_TEXT = "Pickup in ";
+    private static final String LYFT_AFTER_TEXT = " min";
 
     private static final String LYFT_PACKAGE = "me.lyft.android";
     private static final String LYFT_CLIENT_ID = "";
@@ -150,6 +155,8 @@ public class StartStopSelectFragment extends Fragment
         lyftImage = (ImageView) layout.findViewById(R.id.lyft_image);
         lyftImage.setImageDrawable(getContext().getResources().getDrawable(R.drawable.lyft_text));
         lyftImage.bringToFront();
+
+        lyftEtaText = (TextView) layout.findViewById(R.id.lyft_eta_text);
         navigateButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -371,7 +378,7 @@ public class StartStopSelectFragment extends Fragment
                 return;
             }
             startLatLng = (LatLng) data;
-            new LyftEtaFetchTask().execute("http://asuc-mobile-development.herokuapp.com" + "/api/lyft/eta?" + "lat=" + startLatLng.latitude + "&lng=" + startLatLng.longitude);
+            new LyftEtaFetchTask().execute("http://asuc-mobile-development.herokuapp.com/api/lyft/eta?" + "lat=" + startLatLng.latitude + "&lng=" + startLatLng.longitude);
         }
 
         @Override
@@ -388,10 +395,16 @@ public class StartStopSelectFragment extends Fragment
                 BufferedReader buffer = new BufferedReader(new InputStreamReader(input));
                 String jsonText = JSONUtilities.getUrlBody(buffer);
                 JSONObject json = new JSONObject(jsonText);
-                if(json.getJSONObject("lyft_response").getBoolean("success") != true) {
+                JSONObject response = json.getJSONObject("lyft_response");
+                if(response.getBoolean("success") != true) {
                     return null;
                 }
-
+                if(response.getLong("eta") % 60 == 0) {
+                    lyftEta = (int) TimeUnit.MINUTES.convert(response.getLong("eta"), TimeUnit.SECONDS);
+                }
+                else {
+                    lyftEta = (int) TimeUnit.MINUTES.convert(response.getLong("eta"), TimeUnit.SECONDS) + 1;
+                }
 
                 return null;
             } catch(Exception e) {
@@ -405,6 +418,8 @@ public class StartStopSelectFragment extends Fragment
             tempParams.width = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 180, getResources().getDisplayMetrics());;
             lyftButton.setLayoutParams(tempParams);
             lyftImage.bringToFront();
+            lyftEtaText.setText(LYFT_BEFORE_TEXT + lyftEta + LYFT_AFTER_TEXT);
+            lyftEtaText.setVisibility(View.VISIBLE);
         }
     }
 
