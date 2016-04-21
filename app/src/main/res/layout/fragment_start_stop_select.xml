@@ -16,7 +16,7 @@
         <LinearLayout
             android:layout_width="64dp"
             android:layout_height="match_parent"
-            android:background="@color/hotline_blue"
+            android:background="@android:color/white"
             android:orientation="vertical">
 
             <ImageButton
@@ -25,14 +25,14 @@
                 android:layout_height="64dp"
                 android:layout_gravity="center"
                 android:background="?android:attr/selectableItemBackground"
-                android:src="@drawable/navi" />
+                android:src="@drawable/navi_black" />
 
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/hotline_blue"
+            android:background="@android:color/white"
             android:paddingTop="8dp"
             android:paddingRight="6dp"
             android:paddingEnd="4dp"
@@ -51,9 +51,8 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="2"
-                    android:gravity="end"
                     android:text="@string/from"
-                    android:textColor="@android:color/white"
+                    android:textColor="@color/hotline_blue"
                     android:layout_gravity="top|end"
                     android:padding="8dp" />
 
@@ -67,7 +66,8 @@
                     android:maxLines="1"
                     android:ellipsize="marquee"
                     android:padding="8dp"
-                    android:background="@color/off_white"
+                    android:layout_marginRight="4dp"
+                    android:background="@drawable/edit_text_background"
                     android:layout_gravity="fill" />
 
                 <ImageView
@@ -80,7 +80,7 @@
                     android:layout_marginLeft="8dp"
                     android:layout_marginRight="4dp"
                     android:contentDescription="@string/content_desc"
-                    android:src="@drawable/ic_my_location_white_24dp" />
+                    android:src="@drawable/ic_my_location_black_24dp" />
 
             </LinearLayout>
 
@@ -94,9 +94,8 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="2"
-                    android:gravity="end"
                     android:text="@string/to"
-                    android:textColor="@android:color/white"
+                    android:textColor="@color/hotline_blue"
                     android:layout_gravity="top|end"
                     android:padding="8dp" />
 
@@ -109,7 +108,8 @@
                     android:textColor="@android:color/black"
                     android:textAllCaps="false"
                     android:maxLines="1"
-                    android:background="@color/off_white"
+                    android:layout_marginRight="4dp"
+                    android:background="@drawable/edit_text_background"
                     android:padding="8dp" />
 
             </LinearLayout>
@@ -123,9 +123,8 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="2"
-                    android:gravity="end"
                     android:text="@string/depart_at"
-                    android:textColor="@android:color/white"
+                    android:textColor="@color/hotline_blue"
                     android:layout_gravity="top|end"
                     android:padding="8dp" />
 
@@ -139,7 +138,8 @@
                     android:textAllCaps="false"
                     android:maxLines="1"
                     android:ellipsize="marquee"
-                    android:background="@color/off_white"
+                    android:layout_marginRight="4dp"
+                    android:background="@drawable/edit_text_background"
                     android:padding="8dp"
                     android:text="@string/now" />
 
