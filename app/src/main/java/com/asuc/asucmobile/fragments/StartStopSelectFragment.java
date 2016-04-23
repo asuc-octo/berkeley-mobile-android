@@ -40,6 +40,7 @@ import com.asuc.asucmobile.utilities.Callback;
 import com.asuc.asucmobile.utilities.JSONUtilities;
 import com.asuc.asucmobile.utilities.LocationGrabber;
 import com.asuc.asucmobile.utilities.NavigationGenerator;
+import com.flurry.android.FlurryAgent;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -102,6 +103,7 @@ public class StartStopSelectFragment extends Fragment
     @Override
     @SuppressWarnings("deprecation")
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        FlurryAgent.onStartSession(getContext(), "4VPTT49FCCKH7Z2NVQ26");
         try {
             layout = inflater.inflate(R.layout.fragment_start_stop_select, container, false);
         } catch (InflateException e) {
@@ -196,6 +198,12 @@ public class StartStopSelectFragment extends Fragment
     }
 
     @Override
+    public void onStop() {
+        super.onStop();
+        FlurryAgent.onEndSession(getContext());
+    }
+
+    @Override
     public void onDestroyView() {
         super.onDestroyView();
         try {
@@ -242,6 +250,7 @@ public class StartStopSelectFragment extends Fragment
     }
 
     private void lyftIntentLaunch() {
+        FlurryAgent.logEvent("Launched Lyft from Berkeley Mobile");
         if (isPackageInstalled(getActivity(), LYFT_PACKAGE)) {
             StringBuilder sb = new StringBuilder();
             sb.append("lyft://ridetype?id=lyft&partner=" + LYFT_CLIENT_ID + "&");
