@@ -8,7 +8,7 @@ android {
         applicationId "com.asuc.asucmobile"
         minSdkVersion 15
         targetSdkVersion 23
-        versionCode 17
+        versionCode 18
         versionName "6.1.0"
     }
 

@@ -39,7 +39,7 @@ public class BusController implements Controller{
 
     @Override
     public void setResources(final JSONArray array) {
-        if (array == null) {
+        if (array == null && context != null) {
             ((Activity) context).runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
