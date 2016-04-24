@@ -410,6 +410,7 @@ public class StartStopSelectFragment extends Fragment
     }
 
     private class LyftEtaFetchTask extends AsyncTask<String, Void, Void> {
+
         @Override
         protected Void doInBackground(String... params) {
             try {
@@ -456,6 +457,9 @@ public class StartStopSelectFragment extends Fragment
         @Override
         protected void onPostExecute(Void aVoid) {
             try {
+                if (lyftEta == null) {
+                    return;
+                }
                 AnimatedLayoutParams tempParams = new AnimatedLayoutParams(lyftButton.getLayoutParams());
                 int width = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 180, getResources().getDisplayMetrics());
                 ObjectAnimator anim = ObjectAnimator.ofInt(tempParams, "width", width);
