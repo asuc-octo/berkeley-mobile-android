@@ -7,10 +7,12 @@ import android.app.Dialog;
 import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ActivityCompat;
@@ -254,7 +256,13 @@ public class StartStopSelectFragment extends Fragment
         FlurryAgent.logEvent("Launched Lyft from Berkeley Mobile");
         if (isPackageInstalled(getActivity(), LYFT_PACKAGE)) {
             StringBuilder sb = new StringBuilder();
-            sb.append("lyft://payment?credits=" + LYFT_PROMO_CODE + "&ridetype?id=lyft&partner=" + LYFT_CLIENT_ID + "&");
+            SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getContext());
+            if (!sharedPreferences.getBoolean("opened_lyft", false)) {
+                sharedPreferences.edit().putBoolean("opened_lyft", true).apply();
+                sb.append("lyft://payment?credits=" + LYFT_PROMO_CODE + "&ridetype?id=lyft&partner=" + LYFT_CLIENT_ID + "&");
+            } else {
+                sb.append("lyft://ridetype?id=lyft&partner=" + LYFT_CLIENT_ID + "&");
+            }
             if(startLatLng != null) {
                 sb.append("pickup[latitude]=" + startLatLng.latitude + "&" + "pickup[longitude]=" + startLatLng.longitude + "&");
             }
