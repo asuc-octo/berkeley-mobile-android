@@ -211,7 +211,7 @@ public class DiningController implements Controller {
                         diningHalls.add(new DiningHall(
                                 id, name, breakfastMenu, lunchMenu, dinnerMenu, lateNightMenu, breakfastOpening,
                                 breakfastClosing, lunchOpening, lunchClosing, dinnerOpening,
-                                dinnerClosing, lateNightOpening, lateNightClosing, imageUrl
+                                dinnerClosing, lateNightOpening, lateNightClosing, imageUrl, false
                         ));
                     }
 
