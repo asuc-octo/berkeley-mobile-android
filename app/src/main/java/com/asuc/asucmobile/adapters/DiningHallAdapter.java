@@ -1,11 +1,15 @@
 package com.asuc.asucmobile.adapters;
 
 import android.content.Context;
+import android.media.Image;
 import android.support.v4.content.ContextCompat;
+import android.text.SpannableStringBuilder;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.asuc.asucmobile.R;
@@ -47,13 +51,20 @@ public class DiningHallAdapter extends BaseAdapter {
             convertView = LayoutInflater.from(context).inflate(R.layout.dining_row, parent, false);
         }
 
-        View highlights = convertView.findViewById(R.id.highlights);
         TextView name = (TextView) convertView.findViewById(R.id.name);
+        ImageView imageView = (ImageView) convertView.findViewById(R.id.image);
+        TextView openStatus = (TextView) convertView.findViewById(R.id.open_status);
 
-        if (i % 2 == 0) {
-            highlights.setBackgroundColor(ContextCompat.getColor(context, R.color.two_chainz_gold));
+        if(diningHall.isDoorDash()) {
+            imageView.setImageDrawable(context.getResources().getDrawable(R.drawable.red_symbol_circular));
+            openStatus.setTextColor(context.getResources().getColor(R.color.dark_grey));
+            openStatus.setText(context.getText(R.string.door_dash));
+        } else if (diningHall.isOpen()) {
+            openStatus.setTextColor(context.getResources().getColor(R.color.green));
+            openStatus.setText(context.getText(R.string.open));
         } else {
-            highlights.setBackgroundColor(ContextCompat.getColor(context, R.color.hotline_blue));
+            openStatus.setTextColor(context.getResources().getColor(android.R.color.holo_red_light));
+            openStatus.setText(context.getText(R.string.closed));
         }
 
         name.setText(diningHall.getName());
