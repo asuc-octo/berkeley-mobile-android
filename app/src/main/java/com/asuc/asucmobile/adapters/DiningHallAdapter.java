@@ -1,6 +1,7 @@
 package com.asuc.asucmobile.adapters;
 
 import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.media.Image;
 import android.support.v4.content.ContextCompat;
 import android.text.SpannableStringBuilder;
@@ -21,11 +22,12 @@ public class DiningHallAdapter extends BaseAdapter {
 
     private Context context;
     private ArrayList<DiningHall> diningHalls;
+    private Drawable doordashSymbol;
 
     public DiningHallAdapter(Context context) {
         this.context = context;
-
         diningHalls = new ArrayList<>();
+        doordashSymbol = context.getResources().getDrawable(R.drawable.red_symbol_circular);
     }
 
     @Override
@@ -56,13 +58,15 @@ public class DiningHallAdapter extends BaseAdapter {
         TextView openStatus = (TextView) convertView.findViewById(R.id.open_status);
 
         if(diningHall.isDoorDash()) {
-            imageView.setImageDrawable(context.getResources().getDrawable(R.drawable.red_symbol_circular));
+            imageView.setImageDrawable(doordashSymbol);
             openStatus.setTextColor(context.getResources().getColor(R.color.dark_grey));
             openStatus.setText(context.getText(R.string.door_dash));
         } else if (diningHall.isOpen()) {
+            imageView.setImageDrawable(null);
             openStatus.setTextColor(context.getResources().getColor(R.color.green));
             openStatus.setText(context.getText(R.string.open));
         } else {
+            imageView.setImageDrawable(null);
             openStatus.setTextColor(context.getResources().getColor(android.R.color.holo_red_light));
             openStatus.setText(context.getText(R.string.closed));
         }
