@@ -1,7 +1,11 @@
 package com.asuc.asucmobile.main;
 
+import android.animation.ObjectAnimator;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Paint;
+import android.graphics.Rect;
 import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -13,9 +17,12 @@ import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.TextUtils;
 import android.text.style.ForegroundColorSpan;
+import android.util.TypedValue;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AccelerateDecelerateInterpolator;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -48,6 +55,26 @@ public class OpenLibraryActivity extends AppCompatActivity {
     private GoogleMap map;
     private Library library;
     private ViewGroup.LayoutParams hoursParams;
+    private LinearLayout hoursLayout;
+
+    private class AnimatedLayoutParams {
+
+        private ViewGroup.LayoutParams params;
+
+        public AnimatedLayoutParams(ViewGroup.LayoutParams params) {
+            this.params = params;
+        }
+
+        public int getHeight() {
+            return this.params.height;
+        }
+
+        public void setHeight(int height) {
+            hoursLayout.requestLayout();
+            this.params.height = height;
+        }
+
+    }
 
     @Override
     @SuppressWarnings("deprecation")
@@ -82,10 +109,17 @@ public class OpenLibraryActivity extends AppCompatActivity {
         TextView address = (TextView) findViewById(R.id.location);
         TextView phone = (TextView) findViewById(R.id.phone);
 
-        final LinearLayout hoursLayout = (LinearLayout) findViewById(R.id.hours_layout);
+        hoursLayout = (LinearLayout) findViewById(R.id.hours_layout);
         LinearLayout locationLayout = (LinearLayout) findViewById(R.id.location_layout);
         LinearLayout phoneLayout = (LinearLayout) findViewById(R.id.phone_layout);
         mapFragment = (MapFragment) getFragmentManager().findFragmentById(R.id.map);
+
+        //Set up the height values for the regular text and expanded text.
+//        Rect bounds = new Rect();
+//        Paint textPaint = hours.getPaint();
+//        String text = setUpHours();
+//        textPaint.getTextBounds(text,0,text.length(),bounds);
+//        regular_height = bounds.height();
 
         if (hours != null && address != null && phone != null && locationLayout != null &&
                 hoursLayout != null && phoneLayout != null && hours_expand != null) {
@@ -103,19 +137,35 @@ public class OpenLibraryActivity extends AppCompatActivity {
             hoursLayout.setOnClickListener(new com.asuc.asucmobile.utilities.hoursOnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    hoursParams = hoursLayout.getLayoutParams();
+                    System.out.println(hoursParams.height);
+
+
                     if (!status) {
+                        AnimatedLayoutParams tempParams = new AnimatedLayoutParams(hoursLayout.getLayoutParams());
+                        int height = 568; //792
+                        ObjectAnimator anim = ObjectAnimator.ofInt(tempParams, "height", height);
+                        anim.setDuration(750);
+                        anim.setInterpolator(new AccelerateDecelerateInterpolator());
+                        anim.start();
+
                         hours.setText(setUpWeeklyHoursLeft());
                         hoursParams = hoursLayout.getLayoutParams();
-                        hoursLayout.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, 0.2f));
                         hours_expand.setText(setUpWeeklyHoursRight());
                         status = true;
                     } else {
+                        AnimatedLayoutParams tempParams = new AnimatedLayoutParams(hoursLayout.getLayoutParams());
+                        int height = 264; //264
+                        ObjectAnimator anim = ObjectAnimator.ofInt(tempParams, "height", height);
+                        anim.setDuration(750);
+                        anim.setInterpolator(new AccelerateDecelerateInterpolator());
+                        anim.start();
+
                         if (hoursParams == null) {
                             finish();
                         } else {
                             hours.setText(setUpHours());
                             hours_expand.setText("");
-                            hoursLayout.setLayoutParams(hoursParams);
                             status = false;
                         }
                     }
