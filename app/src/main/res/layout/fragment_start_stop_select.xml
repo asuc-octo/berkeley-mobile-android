@@ -25,6 +25,7 @@
                 android:layout_height="64dp"
                 android:layout_gravity="center"
                 android:background="?android:attr/selectableItemBackground"
+                android:contentDescription="@string/content_desc"
                 android:src="@drawable/navi_black" />
 
         </LinearLayout>
@@ -67,6 +68,7 @@
                     android:ellipsize="marquee"
                     android:padding="8dp"
                     android:layout_marginRight="4dp"
+                    android:layout_marginEnd="4dp"
                     android:background="@drawable/edit_text_background"
                     android:layout_gravity="fill" />
 
@@ -109,6 +111,7 @@
                     android:textAllCaps="false"
                     android:maxLines="1"
                     android:layout_marginRight="4dp"
+                    android:layout_marginEnd="4dp"
                     android:background="@drawable/edit_text_background"
                     android:padding="8dp" />
 
@@ -139,6 +142,7 @@
                     android:maxLines="1"
                     android:ellipsize="marquee"
                     android:layout_marginRight="4dp"
+                    android:layout_marginEnd = "4dp"
                     android:background="@drawable/edit_text_background"
                     android:padding="8dp"
                     android:text="@string/now" />
@@ -156,56 +160,17 @@
         android:layout_height="match_parent"
         android:layout_below="@+id/start_dest_control" />
 
-    <LinearLayout
-        android:layout_width="56dp"
-        android:layout_height="56dp"
-        android:id="@+id/lyft_button"
-        android:background="@drawable/lyft_rounded_rectangle"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="false"
-        android:elevation="8dp"
-        android:layout_alignParentEnd="true"
-        android:orientation="horizontal"
-        android:animateLayoutChanges="true"
-        android:layout_marginBottom="12dp"
-        android:layout_marginRight="12dp"
-        android:layout_marginLeft="12dp">
-    </LinearLayout>
-
-    <ImageView
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:paddingTop="4dp"
-        android:elevation="8dp"
-        android:id="@+id/lyft_image"
-        android:layout_alignLeft="@+id/lyft_button"
-        android:layout_alignTop="@+id/lyft_button"
-        android:layout_marginTop="13dp"
-        android:layout_marginLeft="13dp">
-    </ImageView>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:elevation="8dp"
-        android:singleLine="true"
-        android:id="@+id/lyft_eta_text"
-        android:layout_toRightOf="@+id/lyft_image"
-        android:layout_alignTop="@+id/lyft_image"
-        android:layout_marginTop="6dp"
-        android:layout_marginLeft="20dp"
-        android:textColor="@color/off_white"
-        android:visibility="gone"
-        />
-
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/navigate_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="12dp"
-        app:backgroundTint="@color/hotline_blue"
-        android:layout_above="@+id/lyft_button"
-        android:layout_alignRight="@+id/lyft_button" />
+        android:layout_marginRight="12dp"
+        android:layout_marginEnd="12dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        app:backgroundTint="@color/hotline_blue" />
 
     <LinearLayout
         android:orientation="vertical"
