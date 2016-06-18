@@ -1,18 +1,13 @@
 package com.asuc.asucmobile.fragments;
 
 import android.Manifest;
-import android.animation.ObjectAnimator;
 import android.app.Activity;
 import android.app.Dialog;
 import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
-import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ActivityCompat;
@@ -20,12 +15,10 @@ import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.text.format.DateFormat;
-import android.util.TypedValue;
 import android.view.InflateException;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.AccelerateDecelerateInterpolator;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -39,7 +32,6 @@ import com.asuc.asucmobile.main.LiveBusActivity.BusCallback;
 import com.asuc.asucmobile.main.OpenRouteSelectionActivity;
 import com.asuc.asucmobile.main.StopActivity;
 import com.asuc.asucmobile.utilities.Callback;
-import com.asuc.asucmobile.utilities.JSONUtilities;
 import com.asuc.asucmobile.utilities.LocationGrabber;
 import com.asuc.asucmobile.utilities.NavigationGenerator;
 import com.flurry.android.FlurryAgent;
@@ -50,18 +42,11 @@ import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.LatLng;
 
-import org.json.JSONObject;
-
-import java.io.BufferedReader;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Locale;
 import java.util.Timer;
 import java.util.TimerTask;
-import java.util.concurrent.TimeUnit;
 
 public class StartStopSelectFragment extends Fragment
     implements OnMapReadyCallback, ActivityCompat.OnRequestPermissionsResultCallback {
@@ -71,11 +56,6 @@ public class StartStopSelectFragment extends Fragment
     private static final int END_INT = 2;
     private static final SimpleDateFormat TIME_FORMAT =
             new SimpleDateFormat("MMM d @ h:mm a", Locale.ENGLISH);
-
-    private static final String LYFT_TEXT = "Pickup in %d min";
-    private static final String LYFT_PACKAGE = "me.lyft.android";
-    private static final String LYFT_CLIENT_ID = "CPSC8hQmoDL5";
-    private static final String LYFT_PROMO_CODE = "CALBEARS16";
 
     private Context context;
 
@@ -95,11 +75,6 @@ public class StartStopSelectFragment extends Fragment
     private BusCallback busCallback;
     private Timer timer;
     private GoogleMap map;
-
-    private ImageView lyftImage;
-    private LinearLayout lyftButton;
-    private TextView lyftEtaText;
-    private Integer lyftEta;
 
     private static Calendar departureTime = Calendar.getInstance();
 
@@ -145,18 +120,6 @@ public class StartStopSelectFragment extends Fragment
                 startButton.setText(getString(R.string.retrieving_location));
             }
         });
-
-        lyftButton = (LinearLayout) layout.findViewById(R.id.lyft_button);
-        lyftButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                lyftIntentLaunch();
-            }
-        });
-        lyftImage = (ImageView) layout.findViewById(R.id.lyft_image);
-        lyftImage.setImageDrawable(getContext().getResources().getDrawable(R.drawable.lyft_text));
-        lyftImage.bringToFront();
-        lyftEtaText = (TextView) layout.findViewById(R.id.lyft_eta_text);
 
         navigateButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -251,48 +214,6 @@ public class StartStopSelectFragment extends Fragment
         endName = data.getStringExtra("endName");
         endLatLng = data.getParcelableExtra("endLatLng");
     }
-
-    private void lyftIntentLaunch() {
-        FlurryAgent.logEvent("Launched Lyft from Berkeley Mobile");
-        if (isPackageInstalled(getActivity(), LYFT_PACKAGE)) {
-            StringBuilder sb = new StringBuilder();
-            SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getContext());
-            if (!sharedPreferences.getBoolean("opened_lyft", false)) {
-                sharedPreferences.edit().putBoolean("opened_lyft", true).apply();
-                sb.append("lyft://payment?credits=" + LYFT_PROMO_CODE + "&ridetype?id=lyft&partner=" + LYFT_CLIENT_ID + "&");
-            } else {
-                sb.append("lyft://ridetype?id=lyft&partner=" + LYFT_CLIENT_ID + "&");
-            }
-            if(startLatLng != null) {
-                sb.append("pickup[latitude]=" + startLatLng.latitude + "&" + "pickup[longitude]=" + startLatLng.longitude + "&");
-            }
-            if(endLatLng != null) {
-                sb.append("destination[latitude]=" + endLatLng.latitude + "&" + "destination[longitude]=" + endLatLng.longitude + "&");
-            }
-            openLink(getActivity(), sb.toString());
-        } else {
-            openLink(getActivity(), "https://play.google.com/store/apps/details?id=" + LYFT_PACKAGE);
-        }
-    }
-
-    private boolean isPackageInstalled(Context context, String packageId) {
-        PackageManager pm = context.getPackageManager();
-        try {
-            pm.getPackageInfo(packageId, PackageManager.GET_ACTIVITIES);
-            return true;
-        } catch (PackageManager.NameNotFoundException e) {
-            // ignored.
-        }
-        return false;
-    }
-
-    private static void openLink(Activity activity, String link) {
-        Intent intent = new Intent(Intent.ACTION_VIEW);
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        intent.setData(Uri.parse(link));
-        activity.startActivity(intent);
-    }
-
 
     private class StartStopListener implements View.OnClickListener {
 
@@ -407,7 +328,6 @@ public class StartStopSelectFragment extends Fragment
                 startButton.setText(R.string.my_location);
                 startName = getResources().getString(R.string.my_location);
                 startLatLng = (LatLng) data;
-                new LyftEtaFetchTask().execute("http://asuc-mobile-development.herokuapp.com/api/lyft/eta?" + "lat=" + startLatLng.latitude + "&lng=" + startLatLng.longitude);
             } catch (Exception e) {
                 // In case the fragment is switched out while getting location.
             }
@@ -416,72 +336,6 @@ public class StartStopSelectFragment extends Fragment
         @Override
         public void onRetrievalFailed() {}
 
-    }
-
-    private class LyftEtaFetchTask extends AsyncTask<String, Void, Void> {
-
-        @Override
-        protected Void doInBackground(String... params) {
-            try {
-                InputStream input = (new URL(params[0])).openStream();
-                BufferedReader buffer = new BufferedReader(new InputStreamReader(input));
-                String jsonText = JSONUtilities.getUrlBody(buffer);
-                JSONObject json = new JSONObject(jsonText);
-                JSONObject response = json.getJSONObject("lyft_response");
-                if(!response.getBoolean("success")) {
-                    return null;
-                }
-                if(response.getLong("eta") % 60 == 0) {
-                    lyftEta = (int) TimeUnit.MINUTES.convert(response.getLong("eta"), TimeUnit.SECONDS);
-                }
-                else {
-                    lyftEta = (int) TimeUnit.MINUTES.convert(response.getLong("eta"), TimeUnit.SECONDS) + 1;
-                }
-
-                return null;
-            } catch (Exception e) {
-                return null;
-            }
-        }
-
-        private class AnimatedLayoutParams {
-
-            private ViewGroup.LayoutParams params;
-
-            public AnimatedLayoutParams(ViewGroup.LayoutParams params) {
-                this.params = params;
-            }
-
-            public int getWidth() {
-                return this.params.width;
-            }
-
-            public void setWidth(int width) {
-                lyftButton.requestLayout();
-                this.params.width = width;
-            }
-
-        }
-
-        @Override
-        protected void onPostExecute(Void aVoid) {
-            try {
-                if (lyftEta == null) {
-                    return;
-                }
-                AnimatedLayoutParams tempParams = new AnimatedLayoutParams(lyftButton.getLayoutParams());
-                int width = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 180, getResources().getDisplayMetrics());
-                ObjectAnimator anim = ObjectAnimator.ofInt(tempParams, "width", width);
-                anim.setDuration(1000);
-                anim.setInterpolator(new AccelerateDecelerateInterpolator());
-                anim.start();
-                lyftImage.bringToFront();
-                lyftEtaText.setText(String.format(Locale.US, LYFT_TEXT, lyftEta));
-                lyftEtaText.setVisibility(View.VISIBLE);
-            } catch (Exception e) {
-                // In case the fragment is switched out during the eta fetch.
-            }
-        }
     }
 
 }
