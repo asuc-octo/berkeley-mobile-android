@@ -17,6 +17,7 @@ import com.asuc.asucmobile.fragments.BlankFragment;
 import com.asuc.asucmobile.fragments.DiningHallFragment;
 import com.asuc.asucmobile.fragments.GymFragment;
 import com.asuc.asucmobile.fragments.LibraryFragment;
+import com.asuc.asucmobile.fragments.SAOFragment;
 import com.asuc.asucmobile.fragments.StartStopSelectFragment;
 import com.asuc.asucmobile.main.MainActivity;
 import com.asuc.asucmobile.models.Category;
@@ -53,6 +54,14 @@ public class NavigationGenerator {
                 public void loadFragment(FragmentManager fragmentManager) {
                     fragmentManager.beginTransaction()
                             .replace(R.id.content_frame, new GymFragment())
+                            .commit();
+                }
+            },
+            new Category(R.drawable.library, "Student Advocates Office") {
+                @Override
+                public void loadFragment(FragmentManager fragmentManager) {
+                    fragmentManager.beginTransaction()
+                            .replace(R.id.content_frame, new SAOFragment())
                             .commit();
                 }
             }
