@@ -7,8 +7,6 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
@@ -17,7 +15,6 @@ import com.asuc.asucmobile.R;
 import com.asuc.asucmobile.controllers.BusController;
 import com.asuc.asucmobile.models.Bus;
 import com.asuc.asucmobile.utilities.Callback;
-import com.asuc.asucmobile.utilities.NavigationGenerator;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -32,7 +29,7 @@ import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class LiveBusActivity extends AppCompatActivity implements OnMapReadyCallback{
+public class LiveBusActivity extends BaseActivity implements OnMapReadyCallback {
 
     private static Timer timer;
     private LiveBusActivity activity;
@@ -41,26 +38,13 @@ public class LiveBusActivity extends AppCompatActivity implements OnMapReadyCall
     private LinearLayout mRefreshWrapper;
 
     @Override
-    @SuppressWarnings("deprecation")
+    @SuppressWarnings("all")
     protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState, R.layout.activity_live_bus);
+        setupToolbar("Live Bus Map", true);
         this.activity = this;
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_live_bus);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        if (toolbar != null) {
-            toolbar.setNavigationIcon(getResources().getDrawable(R.drawable.ic_action_back));
-            toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    finish();
-                }
-            });
-        }
-
-        NavigationGenerator.generateMenu(this);
-
+        // Populate UI.
         mapFragment = (MapFragment) getFragmentManager()
                 .findFragmentById(R.id.map);
         mRefreshWrapper = (LinearLayout) findViewById(R.id.refresh);
@@ -141,6 +125,7 @@ public class LiveBusActivity extends AppCompatActivity implements OnMapReadyCall
         }
 
         @Override
+        @SuppressWarnings("unchecked")
         public synchronized void onDataRetrieved(Object data) {
             refreshWrapper.setVisibility(View.GONE);
             if (failCount != 0) {

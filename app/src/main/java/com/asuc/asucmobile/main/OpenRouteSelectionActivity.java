@@ -2,8 +2,6 @@ package com.asuc.asucmobile.main;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -21,14 +19,12 @@ import com.asuc.asucmobile.controllers.LineController;
 import com.asuc.asucmobile.controllers.RouteController;
 import com.asuc.asucmobile.models.Route;
 import com.asuc.asucmobile.utilities.Callback;
-import com.asuc.asucmobile.utilities.NavigationGenerator;
-import com.flurry.android.FlurryAgent;
 import com.google.android.gms.maps.model.LatLng;
 
 import java.util.ArrayList;
 import java.util.Date;
 
-public class OpenRouteSelectionActivity extends AppCompatActivity {
+public class OpenRouteSelectionActivity extends BaseActivity {
 
     private ListView mTripList;
     private ProgressBar mProgressBar;
@@ -39,40 +35,23 @@ public class OpenRouteSelectionActivity extends AppCompatActivity {
     private RouteSelectionAdapter mAdapter;
 
     @Override
-    @SuppressWarnings("deprecation")
+    @SuppressWarnings("all")
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        FlurryAgent.onStartSession(this, "4VPTT49FCCKH7Z2NVQ26");
-        setContentView(R.layout.activity_open_route_selection);
+        super.onCreate(savedInstanceState, R.layout.activity_open_route_selection);
+        setupToolbar("Select Route", true);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        if (toolbar != null) {
-            setSupportActionBar(toolbar);
-            toolbar.setNavigationIcon(getResources().getDrawable(R.drawable.ic_action_back));
-            toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    finish();
-                }
-            });
-        }
-
-        NavigationGenerator.generateMenu(this);
-
+        // Get route parameters.
         LatLng startLatLng = getIntent().getParcelableExtra("startLngLat");
         LatLng endLatLng = getIntent().getParcelableExtra("endLngLat");
         Date departureTime = (Date) getIntent().getSerializableExtra("departureTime");
 
+        // Populate UI.
         ImageButton mRefreshButton = (ImageButton) findViewById(R.id.refresh_button);
-
         mProgressBar = (ProgressBar) findViewById(R.id.progress_bar);
         mRefreshWrapper = (LinearLayout) findViewById(R.id.refresh);
         mTripList = (ListView) findViewById(R.id.tripList);
-
-        routeController = (RouteController) RouteController.createInstance(this, startLatLng,
-                endLatLng, departureTime);
+        routeController = (RouteController) RouteController.createInstance(this, startLatLng, endLatLng, departureTime);
         lineController = (LineController) LineController.getInstance(this);
-
         if (mRefreshButton != null) {
             mRefreshButton.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -82,13 +61,6 @@ public class OpenRouteSelectionActivity extends AppCompatActivity {
             });
         }
         refresh();
-    }
-
-    @Override
-    public void onStop() {
-        super.onStop();
-
-        FlurryAgent.onEndSession(this);
     }
 
     @Override
@@ -117,18 +89,16 @@ public class OpenRouteSelectionActivity extends AppCompatActivity {
             @Override
             public void onDataRetrieved(Object data) {
                 routeController.refreshInBackground(new Callback() {
+
                     @Override
                     @SuppressWarnings("unchecked")
                     public void onDataRetrieved(Object data) {
                         mProgressBar.setVisibility(View.INVISIBLE);
                         mTripList.setVisibility(View.VISIBLE);
-
                         ArrayList<Route> routes = (ArrayList<Route>) data;
-
                         if (routes.size() > 0) {
                             mAdapter = new RouteSelectionAdapter(getBaseContext(), routes);
                             mTripList.setAdapter(mAdapter);
-
                             mTripList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                                 @Override
                                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {

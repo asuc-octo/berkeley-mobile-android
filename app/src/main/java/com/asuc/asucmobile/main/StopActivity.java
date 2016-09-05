@@ -4,8 +4,6 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.util.SparseArray;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -26,7 +24,6 @@ import com.asuc.asucmobile.controllers.LineController;
 import com.asuc.asucmobile.models.Stop;
 import com.asuc.asucmobile.utilities.Callback;
 import com.asuc.asucmobile.utilities.LocationGrabber;
-import com.asuc.asucmobile.utilities.NavigationGenerator;
 import com.flurry.android.FlurryAgent;
 import com.google.android.gms.maps.model.LatLng;
 
@@ -34,7 +31,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 
-public class StopActivity extends AppCompatActivity {
+public class StopActivity extends BaseActivity {
 
     private static final Comparator<Stop> ALPHABETICAL_ORDER = new Comparator<Stop>() {
         public int compare(Stop stop1, Stop stop2) {
@@ -58,26 +55,10 @@ public class StopActivity extends AppCompatActivity {
     ///////////////////////////////////////
 
     @Override
-    @SuppressWarnings("deprecation")
+    @SuppressWarnings("all")
     public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        FlurryAgent.onStartSession(this, "4VPTT49FCCKH7Z2NVQ26");
-
-        // Set up layout and toolbar
-        setContentView(R.layout.activity_stop);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        if (toolbar != null) {
-            setSupportActionBar(toolbar);
-            toolbar.setNavigationIcon(getResources().getDrawable(R.drawable.ic_action_back));
-            toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    finish();
-                }
-            });
-        }
-
-        NavigationGenerator.generateMenu(this);
+        super.onCreate(savedInstanceState, R.layout.activity_stop);
+        setupToolbar("Select Stop", true);
 
         // Get layout views
         ImageButton refreshButton = (ImageButton) findViewById(R.id.refresh_button);
@@ -106,8 +87,8 @@ public class StopActivity extends AppCompatActivity {
                 finish();
             }
         });
-
         mRequestType = getIntent().getIntExtra("requestCode", 1);
+
         // Set up on click listeners for the refresh button
         if (refreshButton != null) {
             refreshButton.setOnClickListener(new View.OnClickListener() {
@@ -124,7 +105,6 @@ public class StopActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.destination, menu);
-
         final MenuItem searchMenuItem = menu.findItem(R.id.search);
         if (searchMenuItem != null) {
             final android.support.v7.widget.SearchView searchView = (android.support.v7.widget.SearchView) searchMenuItem.getActionView();
@@ -135,6 +115,7 @@ public class StopActivity extends AppCompatActivity {
                 searchEditText.setHintTextColor(getResources().getColor(android.R.color.white));
 
                 searchView.setOnQueryTextListener(new android.support.v7.widget.SearchView.OnQueryTextListener() {
+
                     @Override
                     public boolean onQueryTextSubmit(String s) {
                         // Close the keyboard
@@ -159,16 +140,8 @@ public class StopActivity extends AppCompatActivity {
     @Override
     public void onStart() {
         super.onStart();
-
         LocationGrabber.getLocation(this, new LocationCallback());
         refresh();
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-
-        FlurryAgent.onEndSession(this);
     }
 
     @Override
@@ -215,15 +188,12 @@ public class StopActivity extends AppCompatActivity {
             public void onDataRetrieved(Object data) {
                 mDestList.setVisibility(View.VISIBLE);
                 mProgressBar.setVisibility(View.GONE);
-
                 SparseArray<Stop> stopsMap = (SparseArray<Stop>) data;
                 final ArrayList<Stop> stops = new ArrayList();
                 for (int i = 0; i < stopsMap.size(); i++) {
                     stops.add(stopsMap.valueAt(i));
                 }
-
                 Collections.sort(stops, ALPHABETICAL_ORDER);
-
                 mAdapter.setList(stops);
             }
 
