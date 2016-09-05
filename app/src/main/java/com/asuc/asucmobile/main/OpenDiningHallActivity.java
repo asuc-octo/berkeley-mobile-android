@@ -6,12 +6,9 @@ import android.os.Bundle;
 import android.support.v13.app.FragmentPagerAdapter;
 import android.support.v4.view.PagerTabStrip;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
 
 import com.asuc.asucmobile.R;
 import com.asuc.asucmobile.controllers.DiningController;
@@ -19,54 +16,32 @@ import com.asuc.asucmobile.fragments.MenuFragment;
 import com.asuc.asucmobile.models.DiningHall;
 import com.asuc.asucmobile.models.FoodItem;
 import com.asuc.asucmobile.utilities.CustomComparators;
-import com.asuc.asucmobile.utilities.NavigationGenerator;
 import com.asuc.asucmobile.utilities.SerializableUtilities;
-import com.flurry.android.FlurryAgent;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
 
-public class OpenDiningHallActivity extends AppCompatActivity {
+public class OpenDiningHallActivity extends BaseActivity {
+
+    private static final String[] LATE_NIGHT_LOCATIONS = {"Crossroads","Foothill"};
 
     private DiningHall diningHall;
 
-    private static final String[] HAS_LATE_NIGHT = {"Crossroads","Foothill"};
-
     @Override
-    @SuppressWarnings("deprecation")
+    @SuppressWarnings("all")
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        FlurryAgent.onStartSession(this, "4VPTT49FCCKH7Z2NVQ26");
+        super.onCreate(savedInstanceState, R.layout.activity_open_dining_hall);
+        exitIfNoData();
+        setupToolbar(diningHall.getName(), true);
 
-        diningHall = ((DiningController) DiningController.getInstance(this)).getCurrentDiningHall();
-        if (diningHall == null) {
-            finish();
-            return;
-        }
-
+        // Load favorites from disk.
         ListOfFavorites listOfFavorites = (ListOfFavorites) SerializableUtilities.loadSerializedObject(this);
         if (listOfFavorites == null) {
             listOfFavorites = new ListOfFavorites();
             SerializableUtilities.saveObject(this, listOfFavorites);
         }
-
-        setContentView(R.layout.activity_open_dining_hall);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        if (toolbar != null) {
-            toolbar.setTitle(diningHall.getName());
-            setSupportActionBar(toolbar);
-            toolbar.setNavigationIcon(getResources().getDrawable(R.drawable.ic_action_back));
-            toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    finish();
-                }
-            });
-        }
-
-        NavigationGenerator.generateMenu(this);
 
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
@@ -75,13 +50,12 @@ public class OpenDiningHallActivity extends AppCompatActivity {
         // Set up the ViewPager with the sections adapter.
         ViewPager viewPager = (ViewPager) findViewById(R.id.pager);
         if (viewPager != null) {
-            if (Arrays.asList(HAS_LATE_NIGHT).contains(diningHall.getName())) {
+            if (Arrays.asList(LATE_NIGHT_LOCATIONS).contains(diningHall.getName())) {
                 viewPager.setOffscreenPageLimit(4);
             } else {
                 viewPager.setOffscreenPageLimit(3);
             }
             viewPager.setAdapter(pagerAdapter);
-
             Date currentTime = new Date();
             if (diningHall.isLateNightOpen() ||
                     (diningHall.getDinnerClosing() != null && currentTime.after(diningHall.getDinnerClosing()))) {
@@ -97,7 +71,6 @@ public class OpenDiningHallActivity extends AppCompatActivity {
                 viewPager.setCurrentItem(0);
             }
         }
-
         PagerTabStrip tabStrip = (PagerTabStrip) findViewById(R.id.pager_tab_strip);
         if (tabStrip != null) {
             tabStrip.setTextColor(getResources().getColor(R.color.off_white));
@@ -107,7 +80,6 @@ public class OpenDiningHallActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.dining, menu);
         return true;
@@ -116,18 +88,7 @@ public class OpenDiningHallActivity extends AppCompatActivity {
     @Override
     public void onResume() {
         super.onResume();
-
-        diningHall = ((DiningController) DiningController.getInstance(this)).getCurrentDiningHall();
-        if (diningHall == null) {
-            finish();
-        }
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-
-        FlurryAgent.onEndSession(this);
+        exitIfNoData();
     }
 
     @Override
@@ -139,7 +100,6 @@ public class OpenDiningHallActivity extends AppCompatActivity {
         }
         if (id == R.id.sortAZ) {
             DiningHall diningHall = MenuFragment.getDiningHall();
-
             ArrayList<FoodItem> arrayListBreakfast = diningHall.getBreakfastMenu();
             Collections.sort(arrayListBreakfast, CustomComparators.FacilityComparators.getFoodSortByAZ());
             ArrayList<FoodItem> arrayListLunch = diningHall.getLunchMenu();
@@ -148,13 +108,11 @@ public class OpenDiningHallActivity extends AppCompatActivity {
             Collections.sort(arrayListDinner, CustomComparators.FacilityComparators.getFoodSortByAZ());
             ArrayList<FoodItem> arrayListLateNight = diningHall.getLateNightMenu();
             Collections.sort(arrayListLateNight, CustomComparators.FacilityComparators.getFoodSortByAZ());
-
             MenuFragment.refreshLists();
             return true;
         }
         if (id == R.id.sortVegetarian) {
             DiningHall diningHall = MenuFragment.getDiningHall();
-
             ArrayList<FoodItem> arrayListBreakfast = diningHall.getBreakfastMenu();
             Collections.sort(arrayListBreakfast, CustomComparators.FacilityComparators.getFoodSortByVegetarian());
             ArrayList<FoodItem> arrayListLunch = diningHall.getLunchMenu();
@@ -163,13 +121,11 @@ public class OpenDiningHallActivity extends AppCompatActivity {
             Collections.sort(arrayListDinner, CustomComparators.FacilityComparators.getFoodSortByVegetarian());
             ArrayList<FoodItem> arrayListLateNight = diningHall.getLateNightMenu();
             Collections.sort(arrayListLateNight, CustomComparators.FacilityComparators.getFoodSortByVegetarian());
-
             MenuFragment.refreshLists();
             return true;
         }
         if (id == R.id.sortVegan) {
             DiningHall diningHall = MenuFragment.getDiningHall();
-
             ArrayList<FoodItem> arrayListBreakfast = diningHall.getBreakfastMenu();
             Collections.sort(arrayListBreakfast, CustomComparators.FacilityComparators.getFoodSortByVegan());
             ArrayList<FoodItem> arrayListLunch = diningHall.getLunchMenu();
@@ -178,13 +134,11 @@ public class OpenDiningHallActivity extends AppCompatActivity {
             Collections.sort(arrayListDinner, CustomComparators.FacilityComparators.getFoodSortByVegan());
             ArrayList<FoodItem> arrayListLateNight = diningHall.getLateNightMenu();
             Collections.sort(arrayListLateNight, CustomComparators.FacilityComparators.getFoodSortByVegan());
-
             MenuFragment.refreshLists();
             return true;
         }
         if (id == R.id.sortFavorites) {
             DiningHall diningHall = MenuFragment.getDiningHall();
-
             ArrayList<FoodItem> arrayListBreakfast = diningHall.getBreakfastMenu();
             Collections.sort(arrayListBreakfast, CustomComparators.FacilityComparators.getFoodSortByFavorite(this));
             ArrayList<FoodItem> arrayListLunch = diningHall.getLunchMenu();
@@ -193,11 +147,9 @@ public class OpenDiningHallActivity extends AppCompatActivity {
             Collections.sort(arrayListDinner, CustomComparators.FacilityComparators.getFoodSortByFavorite(this));
             ArrayList<FoodItem> arrayListLateNight = diningHall.getLateNightMenu();
             Collections.sort(arrayListLateNight, CustomComparators.FacilityComparators.getFoodSortByFavorite(this));
-
             MenuFragment.refreshLists();
             return true;
         }
-
         return super.onOptionsItemSelected(item);
     }
 
@@ -216,10 +168,8 @@ public class OpenDiningHallActivity extends AppCompatActivity {
             MenuFragment menuFragment = new MenuFragment();
             Bundle bundle = new Bundle(1);
 
-            /*
-                If late night exists in this dining hall, add it; otherwise, leave it out.
-             */
-            if (Arrays.asList(HAS_LATE_NIGHT).contains(diningHall.getName())) {
+            // If late night exists in this dining hall, add it; otherwise, leave it out.
+            if (Arrays.asList(LATE_NIGHT_LOCATIONS).contains(diningHall.getName())) {
                 switch (position) {
                     case 0:
                         bundle.putString("whichMenu", "Breakfast");
@@ -251,14 +201,13 @@ public class OpenDiningHallActivity extends AppCompatActivity {
                         return null;
                 }
             }
-
             menuFragment.setArguments(bundle);
             return menuFragment;
         }
 
         @Override
         public int getCount() {
-            if (Arrays.asList(HAS_LATE_NIGHT).contains(diningHall.getName())) {
+            if (Arrays.asList(LATE_NIGHT_LOCATIONS).contains(diningHall.getName())) {
                 return 4;
             } else {
                 return 3;
@@ -267,10 +216,8 @@ public class OpenDiningHallActivity extends AppCompatActivity {
 
         @Override
         public CharSequence getPageTitle(int position) {
-            /*
-                Only set up a Late Night option if it exists.
-             */
-            if (Arrays.asList(HAS_LATE_NIGHT).contains(diningHall.getName())) {
+            // Only set up a Late Night option if it exists.
+            if (Arrays.asList(LATE_NIGHT_LOCATIONS).contains(diningHall.getName())) {
                 switch (position) {
                     case 0:
                         return "     Breakfast     ";
@@ -303,6 +250,13 @@ public class OpenDiningHallActivity extends AppCompatActivity {
      */
     public DiningHall getDiningHall() {
         return diningHall;
+    }
+
+    private void exitIfNoData() {
+        diningHall = ((DiningController) DiningController.getInstance(this)).getCurrentDiningHall();
+        if (diningHall == null) {
+            finish();
+        }
     }
 
 }
