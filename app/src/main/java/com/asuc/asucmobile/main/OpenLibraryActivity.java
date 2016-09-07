@@ -156,7 +156,7 @@ public class OpenLibraryActivity extends BaseActivity {
             mapFragment.getMapAsync(new OnMapReadyCallback() {
                 @Override
                 public void onMapReady(GoogleMap googleMap) {
-                    if (map != null) {
+                    if (googleMap != null) {
                         map = googleMap;
                         BitmapDescriptor bitmap = BitmapDescriptorFactory.fromResource(R.drawable.icon_map_pin);
                         map.addMarker(new MarkerOptions()

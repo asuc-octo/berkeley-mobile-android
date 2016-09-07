@@ -1,16 +1,23 @@
 package com.asuc.asucmobile.main;
 
+import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.style.ForegroundColorSpan;
+import android.view.View;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.asuc.asucmobile.R;
 import com.asuc.asucmobile.controllers.GymController;
 import com.asuc.asucmobile.models.Gym;
+import com.asuc.asucmobile.utilities.Callback;
+import com.asuc.asucmobile.utilities.ImageDownloadThread;
 
 import java.text.SimpleDateFormat;
 import java.util.Locale;
@@ -32,6 +39,8 @@ public class OpenGymActivity extends BaseActivity {
         // Populate UI.
         TextView hours = (TextView) findViewById(R.id.hours);
         TextView address = (TextView) findViewById(R.id.location);
+        final ProgressBar loadingBar = (ProgressBar) findViewById(R.id.progress_bar);
+        final View image = findViewById(R.id.image);
         Spannable hoursString;
         if (gym.getOpening() != null && gym.getClosing() != null) {
             String isOpen;
@@ -53,6 +62,28 @@ public class OpenGymActivity extends BaseActivity {
         }
         hours.setText(hoursString);
         address.setText(gym.getAddress());
+
+        // Load gym image.
+        loadingBar.bringToFront();
+        new ImageDownloadThread(this, gym.getImageUrl(), new Callback() {
+            @Override
+            public void onDataRetrieved(Object data) {
+                if (data != null) {
+                    Bitmap bitmap = (Bitmap) data;
+                    Drawable bitmapDrawable = new BitmapDrawable(getResources(), bitmap);
+                    image.setBackgroundDrawable(bitmapDrawable);
+                }
+                loadingBar.setVisibility(View.GONE);
+                image.setVisibility(View.VISIBLE);
+            }
+
+            @Override
+            public void onRetrievalFailed() {
+                image.setBackgroundDrawable(getResources().getDrawable(R.drawable.default_gym));
+                loadingBar.setVisibility(View.GONE);
+                image.setVisibility(View.VISIBLE);
+            }
+        }).start();
     }
 
     @Override

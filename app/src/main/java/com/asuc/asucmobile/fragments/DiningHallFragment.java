@@ -1,7 +1,6 @@
 package com.asuc.asucmobile.fragments;
 
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
@@ -60,12 +59,6 @@ public class DiningHallFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 DiningHall diningHall = mAdapter.getItem(i);
-                if (diningHall.isDoorDash()) {
-                    FlurryAgent.logEvent("Tapped Doordash");
-                    Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://bnc.lt/GAUh/cQZrg3zUTs"));
-                    startActivity(browserIntent);
-                    return;
-                }
                 DiningController controller = ((DiningController) DiningController.getInstance(getContext()));
                 controller.setCurrentDiningHall(diningHall);
                 Intent intent = new Intent(getContext(), OpenDiningHallActivity.class);
@@ -74,7 +67,6 @@ public class DiningHallFragment extends Fragment {
                 Map<String, String> diningParams = new HashMap<>();
                 diningParams.put("Hall", mAdapter.getItem(i).getName());
                 FlurryAgent.logEvent("Taps Dining Hall Menus", diningParams);
-
                 startActivity(intent);
             }
         });
@@ -117,9 +109,6 @@ public class DiningHallFragment extends Fragment {
             public void onDataRetrieved(Object data) {
                 mDiningList.setVisibility(View.VISIBLE);
                 mProgressBar.setVisibility(View.GONE);
-                ArrayList<DiningHall> diningHalls = (ArrayList<DiningHall>) data;
-                diningHalls.add(new DiningHall("doordash", "Request Doordash", null, null,
-                        null, null, null, null, null, null, null, null, null, null, null, true));
                 mAdapter.setList((ArrayList<DiningHall>) data);
             }
 

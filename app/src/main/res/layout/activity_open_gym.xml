@@ -39,63 +39,6 @@
                 android:background="@drawable/default_gym"
                 android:visibility="invisible" />
 
-            <View
-                android:id="@+id/tint"
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
-                android:background="@android:color/black"
-                android:alpha="0.75"
-                android:visibility="invisible" />
-
-            <ProgressBar
-                android:id="@+id/backing_ring"
-                style="?android:attr/progressBarStyleHorizontal"
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
-                android:max="100"
-                android:progress="100"
-                android:progressDrawable="@drawable/circular_progress_background"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true"
-                android:visibility="invisible" />
-
-            <ProgressBar
-                android:id="@+id/percent_full_bar"
-                style="?android:attr/progressBarStyleHorizontal"
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
-                android:max="100"
-                android:progress="0"
-                android:progressDrawable="@drawable/circular_progress"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true"
-                android:rotation="-90"
-                android:visibility="invisible" />
-
-            <TextView
-                android:id="@+id/percentage"
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
-                android:gravity="center"
-                android:textSize="72sp"
-                android:fontFamily="sans-serif-thin"
-                android:textColor="@android:color/white"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true"
-                android:visibility="invisible" />
-
-            <ImageView
-                android:layout_width="112dp"
-                android:layout_height="wrap_content"
-                android:id="@+id/density_logo"
-                android:layout_alignParentBottom="true"
-                android:layout_alignParentRight="true"
-                android:layout_alignParentEnd="true"
-                android:layout_marginBottom="8dp"
-                android:src="@drawable/density_logo"
-                android:visibility="invisible"
-                android:contentDescription="@string/content_desc" />
-
         </RelativeLayout>
 
 
