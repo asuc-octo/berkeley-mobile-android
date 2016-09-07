@@ -106,7 +106,7 @@ public class OpenRouteActivity extends BaseActivity {
             mapFragment.getMapAsync(new OnMapReadyCallback() {
                 @Override
                 public void onMapReady(GoogleMap googleMap) {
-                    if (map != null) {
+                    if (googleMap != null) {
                         map = googleMap;
                         Trip firstTrip = route.getTrips().get(0);
                         Stop firstStop = firstTrip.getStops().get(0);
