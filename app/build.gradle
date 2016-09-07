@@ -8,29 +8,22 @@ android {
         applicationId "com.asuc.asucmobile"
         minSdkVersion 15
         targetSdkVersion 24
-        versionCode 21
-        versionName "6.1.2"
-    }
-
-    buildTypes {
-        release {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-        }
+        versionCode 22
+        versionName "6.2.0"
     }
 }
 
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     compile files('libs/FlurryAnalytics-4.2.0.jar')
-    compile 'com.android.support:appcompat-v7:24.1.1'
-    compile 'com.android.support:design:24.1.1'
-    compile 'com.android.support:support-v4:24.1.1'
-    compile 'com.android.support:support-v13:24.1.1'
+    compile 'com.android.support:appcompat-v7:24.2.0'
+    compile 'com.android.support:design:24.2.0'
+    compile 'com.android.support:support-v4:24.2.0'
+    compile 'com.android.support:support-v13:24.2.0'
     compile 'com.github.nirhart:parallaxscroll:1.0'
-    compile 'com.google.android.gms:play-services:9.2.1'
-    compile 'com.google.android.gms:play-services-ads:9.2.1'
-    compile 'com.google.android.gms:play-services-auth:9.2.1'
-    compile 'com.google.android.gms:play-services-gcm:9.2.1'
+    compile 'com.google.android.gms:play-services:9.4.0'
+    compile 'com.google.android.gms:play-services-ads:9.4.0'
+    compile 'com.google.android.gms:play-services-auth:9.4.0'
+    compile 'com.google.android.gms:play-services-gcm:9.4.0'
     compile 'com.pushwoosh:pushwoosh:4.6.2'
 }

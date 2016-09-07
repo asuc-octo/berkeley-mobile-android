@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<shape
-    android:useLevel="true"
-    android:innerRadiusRatio="4"
-    android:shape="ring"
-    android:thickness="4dp"
-    xmlns:android="http://schemas.android.com/apk/res/android">
-        <solid android:color="@color/hotline_blue" />
-</shape>

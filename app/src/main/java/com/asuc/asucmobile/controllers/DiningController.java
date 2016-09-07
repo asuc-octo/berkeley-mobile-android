@@ -209,9 +209,10 @@ public class DiningController implements Controller {
                         String imageUrl = diningHall.getString("image_link");
 
                         diningHalls.add(new DiningHall(
-                                id, name, breakfastMenu, lunchMenu, dinnerMenu, lateNightMenu, breakfastOpening,
-                                breakfastClosing, lunchOpening, lunchClosing, dinnerOpening,
-                                dinnerClosing, lateNightOpening, lateNightClosing, imageUrl, false
+                                id, name, breakfastMenu, lunchMenu, dinnerMenu, lateNightMenu,
+                                breakfastOpening, breakfastClosing, lunchOpening, lunchClosing,
+                                dinnerOpening, dinnerClosing, lateNightOpening, lateNightClosing,
+                                imageUrl
                         ));
                     }
 

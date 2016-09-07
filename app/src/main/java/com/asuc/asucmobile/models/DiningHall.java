@@ -20,12 +20,11 @@ public class DiningHall {
     private Date lateNightOpen;
     private Date lateNightClose;
     private String imageUrl;
-    private Boolean doorDash;
 
     public DiningHall(String id, String name, ArrayList<FoodItem> breakfastMenu,
                       ArrayList<FoodItem> lunchMenu, ArrayList<FoodItem> dinnerMenu, ArrayList<FoodItem> lateNightMenu,
                       Date breakfastOpen, Date breakfastClose, Date lunchOpen, Date lunchClose,
-                      Date dinnerOpen, Date dinnerClose, Date lateNightOpen, Date lateNightClose, String imageUrl, Boolean doorDash) {
+                      Date dinnerOpen, Date dinnerClose, Date lateNightOpen, Date lateNightClose, String imageUrl) {
         this.id = id;
         this.name = name;
         this.breakfastMenu = breakfastMenu;
@@ -41,7 +40,6 @@ public class DiningHall {
         this.lateNightOpen = lateNightOpen;
         this.lateNightClose = lateNightClose;
         this.imageUrl = imageUrl;
-        this.doorDash = doorDash;
     }
 
     public String getId() {
@@ -148,10 +146,6 @@ public class DiningHall {
 
     public boolean lateNightToday() {
         return lateNightOpen != null && lateNightClose != null;
-    }
-
-    public boolean isDoorDash() {
-        return this.doorDash;
     }
 
     public boolean isOpen() {
