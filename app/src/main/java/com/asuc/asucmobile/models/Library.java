@@ -89,8 +89,8 @@ public class Library implements Comparable<Library>{
     }
 
     public String getDayOfWeek(int i) {
-
-        return weekdays[(i + weekday) % 7];
+        // Aligns weekday with i. i was range [0,6] and weekday was range [1,7].
+        return weekdays[(i + weekday - 1) % 7];
     }
 
     /**
