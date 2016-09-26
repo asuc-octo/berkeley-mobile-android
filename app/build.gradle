@@ -8,8 +8,9 @@ android {
         applicationId "com.asuc.asucmobile"
         minSdkVersion 15
         targetSdkVersion 24
-        versionCode 22
-        versionName "6.2.0"
+        versionCode 23
+        versionName "6.2.1"
+        multiDexEnabled true
     }
 }
 
