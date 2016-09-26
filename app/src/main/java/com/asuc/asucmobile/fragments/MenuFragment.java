@@ -10,6 +10,8 @@ import android.text.style.ForegroundColorSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.asuc.asucmobile.R;
@@ -17,8 +19,6 @@ import com.asuc.asucmobile.adapters.FoodAdapter;
 import com.asuc.asucmobile.main.OpenDiningHallActivity;
 import com.asuc.asucmobile.models.DiningHall;
 import com.asuc.asucmobile.models.FoodItem;
-import com.asuc.asucmobile.views.ImageHeaderView;
-import com.nirhart.parallaxscroll.views.ParallaxListView;
 
 import java.io.InputStream;
 import java.text.SimpleDateFormat;
@@ -27,37 +27,38 @@ import java.util.Locale;
 
 public class MenuFragment extends Fragment {
 
-    private static ArrayList<FoodAdapter> adapters = new ArrayList<>();
-    private static DiningHall diningHall;
-
-    private static final SimpleDateFormat HOURS_FORMAT =
-            new SimpleDateFormat("h:mm a", Locale.ENGLISH);
+    private static final SimpleDateFormat HOURS_FORMAT = new SimpleDateFormat("h:mm a", Locale.ENGLISH);
     private static final String LATE_NIGHT_OPEN = "10:00 PM";
     private static final String LATE_NIGHT_CLOSE = "2:00 AM";
+
+    private static ArrayList<FoodAdapter> adapters = new ArrayList<>();
+    private static DiningHall diningHall;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
+        // Initialize view and retrieve dining hall info.
         View v = inflater.inflate(R.layout.fragment_menu, container, false);
-
-        ParallaxListView foodMenu = (ParallaxListView) v.findViewById(R.id.food_menu);
-        TextView emptyListView = (TextView) v.findViewById(R.id.empty_list);
-
         DiningHall diningHall = ((OpenDiningHallActivity) getActivity()).getDiningHall();
-
         if (diningHall == null) {
             getActivity().finish();
             return v;
         }
 
-        ImageHeaderView header = new ImageHeaderView(getActivity());
-        new DownloadImageThread(header, diningHall.getImageUrl()).start();
+        // Get references to views.
+        ListView foodMenu = (ListView) v.findViewById(R.id.food_menu);
+        TextView emptyListView = (TextView) v.findViewById(R.id.empty_list);
+        View header = getActivity().getLayoutInflater().inflate(R.layout.header_image, foodMenu, false);
+        ImageView headerImage = (ImageView) header.findViewById(R.id.image);
+        TextView headerHours = (TextView) header.findViewById(R.id.header_text);
 
+        // Add the header to the list.
+        foodMenu.addHeaderView(header);
+
+        // Populate menu views.
         String whichMenu = getArguments().getString("whichMenu");
         String opening;
         String closing;
-
         try {
             ArrayList<FoodItem> foodItems;
             boolean isOpen;
@@ -77,10 +78,8 @@ public class MenuFragment extends Fragment {
                         isOpen = diningHall.isLunchOpen();
                         break;
                     case "Late Night":
-                        /*
-                            A solution to get around the lack of late night hours--is it the right day of
-                            the week for late night?
-                         */
+                        // A solution to get around the lack of late night hours--is it the right
+                        // day of the week for late night?
                         if (diningHall.lateNightToday()) {
                             foodItems = diningHall.getLateNightMenu();
                         } else {
@@ -130,36 +129,38 @@ public class MenuFragment extends Fragment {
                                 SpannableString.SPAN_INCLUSIVE_EXCLUSIVE
                         );
                     }
-                    header.setText(spannableHeader);
+                    headerHours.setText(spannableHeader);
                     FoodAdapter adapter = new FoodAdapter(getActivity(), foodItems);
                     MenuFragment.adapters.add(adapter);
                     foodMenu.setAdapter(adapter);
-
-                    foodMenu.addParallaxedHeaderView(header);
                 }
             }
-        } catch (Exception e) { // Catch a null exception, meaning that there is no menu for this time slot.
+        } catch (Exception e) {
+            e.printStackTrace();
+            // Catch a null exception, meaning that there is no menu for this time slot.
             emptyListView.setText(String.format("No %s Today!", whichMenu));
             foodMenu.setVisibility(View.GONE);
             emptyListView.setVisibility(View.VISIBLE);
         }
+
+        // Download and set header image.
+        new DownloadImageThread(headerImage, diningHall.getImageUrl()).start();
 
         return v;
     }
 
     private class DownloadImageThread extends Thread {
 
-        ImageHeaderView headerView;
+        ImageView headerView;
         String url;
 
-        public DownloadImageThread(ImageHeaderView headerView, String url) {
+        private DownloadImageThread(ImageView headerView, String url) {
             this.headerView = headerView;
             this.url = url;
         }
 
         @Override
         public void run() {
-
             try {
                 InputStream input = new java.net.URL(url).openStream();
                 final Bitmap bitmap = BitmapFactory.decodeStream(input);
@@ -167,21 +168,21 @@ public class MenuFragment extends Fragment {
                 getActivity().runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        headerView.setImage(bitmap);
+                        headerView.setImageBitmap(bitmap);
                     }
                 });
             } catch (Exception e) {
                 if (getActivity() == null) {
                     return;
                 }
-
-                getActivity().runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        headerView.showImage();
-                    }
-                });
             }
+
+            getActivity().runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    headerView.setVisibility(View.VISIBLE);
+                }
+            });
         }
 
     }
