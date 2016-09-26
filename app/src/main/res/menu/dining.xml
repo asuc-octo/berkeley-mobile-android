@@ -11,10 +11,10 @@
                 android:title="Alphabetical" />
             <!--<item android:id="@+id/sortZA"-->
                 <!--android:title="Z-A" />-->
-            <item android:id="@+id/sortVegetarian"
-                android:title="Vegetarian" />
-            <item android:id="@+id/sortVegan"
-                android:title="Vegan" />
+            <!--<item android:id="@+id/sortVegetarian"-->
+                <!--android:title="Vegetarian" />-->
+            <!--<item android:id="@+id/sortVegan"-->
+                <!--android:title="Vegan" />-->
             <item android:id="@+id/sortFavorites"
                 android:title="Favorites" />
         </menu>

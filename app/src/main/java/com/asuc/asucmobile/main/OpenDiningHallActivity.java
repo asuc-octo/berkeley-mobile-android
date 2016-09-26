@@ -111,32 +111,33 @@ public class OpenDiningHallActivity extends BaseActivity {
             MenuFragment.refreshLists();
             return true;
         }
-        if (id == R.id.sortVegetarian) {
-            DiningHall diningHall = MenuFragment.getDiningHall();
-            ArrayList<FoodItem> arrayListBreakfast = diningHall.getBreakfastMenu();
-            Collections.sort(arrayListBreakfast, CustomComparators.FacilityComparators.getFoodSortByVegetarian());
-            ArrayList<FoodItem> arrayListLunch = diningHall.getLunchMenu();
-            Collections.sort(arrayListLunch, CustomComparators.FacilityComparators.getFoodSortByVegetarian());
-            ArrayList<FoodItem> arrayListDinner = diningHall.getDinnerMenu();
-            Collections.sort(arrayListDinner, CustomComparators.FacilityComparators.getFoodSortByVegetarian());
-            ArrayList<FoodItem> arrayListLateNight = diningHall.getLateNightMenu();
-            Collections.sort(arrayListLateNight, CustomComparators.FacilityComparators.getFoodSortByVegetarian());
-            MenuFragment.refreshLists();
-            return true;
-        }
-        if (id == R.id.sortVegan) {
-            DiningHall diningHall = MenuFragment.getDiningHall();
-            ArrayList<FoodItem> arrayListBreakfast = diningHall.getBreakfastMenu();
-            Collections.sort(arrayListBreakfast, CustomComparators.FacilityComparators.getFoodSortByVegan());
-            ArrayList<FoodItem> arrayListLunch = diningHall.getLunchMenu();
-            Collections.sort(arrayListLunch, CustomComparators.FacilityComparators.getFoodSortByVegan());
-            ArrayList<FoodItem> arrayListDinner = diningHall.getDinnerMenu();
-            Collections.sort(arrayListDinner, CustomComparators.FacilityComparators.getFoodSortByVegan());
-            ArrayList<FoodItem> arrayListLateNight = diningHall.getLateNightMenu();
-            Collections.sort(arrayListLateNight, CustomComparators.FacilityComparators.getFoodSortByVegan());
-            MenuFragment.refreshLists();
-            return true;
-        }
+        // Commented out until vegan and vegetarian indicators come back on the backend.
+//        if (id == R.id.sortVegetarian) {
+//            DiningHall diningHall = MenuFragment.getDiningHall();
+//            ArrayList<FoodItem> arrayListBreakfast = diningHall.getBreakfastMenu();
+//            Collections.sort(arrayListBreakfast, CustomComparators.FacilityComparators.getFoodSortByVegetarian());
+//            ArrayList<FoodItem> arrayListLunch = diningHall.getLunchMenu();
+//            Collections.sort(arrayListLunch, CustomComparators.FacilityComparators.getFoodSortByVegetarian());
+//            ArrayList<FoodItem> arrayListDinner = diningHall.getDinnerMenu();
+//            Collections.sort(arrayListDinner, CustomComparators.FacilityComparators.getFoodSortByVegetarian());
+//            ArrayList<FoodItem> arrayListLateNight = diningHall.getLateNightMenu();
+//            Collections.sort(arrayListLateNight, CustomComparators.FacilityComparators.getFoodSortByVegetarian());
+//            MenuFragment.refreshLists();
+//            return true;
+//        }
+//        if (id == R.id.sortVegan) {
+//            DiningHall diningHall = MenuFragment.getDiningHall();
+//            ArrayList<FoodItem> arrayListBreakfast = diningHall.getBreakfastMenu();
+//            Collections.sort(arrayListBreakfast, CustomComparators.FacilityComparators.getFoodSortByVegan());
+//            ArrayList<FoodItem> arrayListLunch = diningHall.getLunchMenu();
+//            Collections.sort(arrayListLunch, CustomComparators.FacilityComparators.getFoodSortByVegan());
+//            ArrayList<FoodItem> arrayListDinner = diningHall.getDinnerMenu();
+//            Collections.sort(arrayListDinner, CustomComparators.FacilityComparators.getFoodSortByVegan());
+//            ArrayList<FoodItem> arrayListLateNight = diningHall.getLateNightMenu();
+//            Collections.sort(arrayListLateNight, CustomComparators.FacilityComparators.getFoodSortByVegan());
+//            MenuFragment.refreshLists();
+//            return true;
+//        }
         if (id == R.id.sortFavorites) {
             DiningHall diningHall = MenuFragment.getDiningHall();
             ArrayList<FoodItem> arrayListBreakfast = diningHall.getBreakfastMenu();

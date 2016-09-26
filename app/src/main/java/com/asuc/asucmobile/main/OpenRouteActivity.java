@@ -11,6 +11,8 @@ import android.support.v4.content.ContextCompat;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ListView;
 import android.widget.Toast;
 
 import com.asuc.asucmobile.R;
@@ -19,7 +21,6 @@ import com.asuc.asucmobile.controllers.RouteController;
 import com.asuc.asucmobile.models.Route;
 import com.asuc.asucmobile.models.Stop;
 import com.asuc.asucmobile.models.Trip;
-import com.asuc.asucmobile.views.MapHeaderView;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -32,7 +33,6 @@ import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.nirhart.parallaxscroll.views.ParallaxListView;
 
 public class OpenRouteActivity extends BaseActivity {
 
@@ -49,12 +49,19 @@ public class OpenRouteActivity extends BaseActivity {
         exitIfNoData();
         setupToolbar("Route", true);
 
-        // Populate UI.
-        ParallaxListView routeList = (ParallaxListView) findViewById(R.id.stop_list);
-        routeList.addParallaxedHeaderView(new MapHeaderView(this));
+        // Get references to views.
+        ListView routeList = (ListView) findViewById(R.id.stop_list);
+        View header = getLayoutInflater().inflate(R.layout.header_map, routeList, false);
+        mapFragment = (MapFragment) getFragmentManager().findFragmentById(R.id.map);
+
+        // Add the header to the list.
+        routeList.addHeaderView(header);
+
+        // Populate route list.
         RouteAdapter adapter = new RouteAdapter(this, route);
         routeList.setAdapter(adapter);
-        mapFragment = (MapFragment) getFragmentManager().findFragmentById(R.id.map);
+
+        // Initialize map.
         setUpMap();
     }
 
@@ -81,6 +88,13 @@ public class OpenRouteActivity extends BaseActivity {
                 return true;
         }
         return true;
+    }
+
+    private void exitIfNoData() {
+        route = ((RouteController) RouteController.getInstance(this)).getCurrentRoute();
+        if (route == null) {
+            finish();
+        }
     }
 
     @SuppressWarnings("deprecation")
@@ -112,12 +126,9 @@ public class OpenRouteActivity extends BaseActivity {
                         Stop firstStop = firstTrip.getStops().get(0);
                         Trip lastTrip = route.getTrips().get(route.getTrips().size() - 1);
                         Stop lastStop = lastTrip.getStops().get(lastTrip.getStops().size() - 1);
-
                         LocationManager locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
                         String bestProvider = locationManager.getBestProvider(new Criteria(), false);
-
                         BitmapDescriptor pin = BitmapDescriptorFactory.fromResource(R.drawable.icon_map_pin);
-
                         map.addMarker(new MarkerOptions()
                                         .position(lastStop.getLocation())
                                         .icon(pin)
@@ -126,18 +137,14 @@ public class OpenRouteActivity extends BaseActivity {
                                         .position(firstStop.getLocation())
                                         .icon(pin)
                         );
-                        map.getUiSettings().setAllGesturesEnabled(false);
-                        map.getUiSettings().setZoomControlsEnabled(false);
                         map.getUiSettings().setMyLocationButtonEnabled(false);
                         if (ContextCompat.checkSelfPermission(getBaseContext(), Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED ||
                                 ContextCompat.checkSelfPermission(getBaseContext(), Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
                             map.setMyLocationEnabled(true);
                         }
-
                         final LatLngBounds.Builder builder = LatLngBounds.builder();
                         builder.include(firstStop.getLocation());
                         builder.include(lastStop.getLocation());
-
                         try {
                             Location myLocation = locationManager.getLastKnownLocation(bestProvider);
                             if (myLocation != null) {
@@ -146,23 +153,15 @@ public class OpenRouteActivity extends BaseActivity {
                         } catch (SecurityException e) {
                             // Don't do anything
                         }
-
                         map.setOnCameraChangeListener(new GoogleMap.OnCameraChangeListener() {
                             @Override
                             public void onCameraChange(CameraPosition cameraPosition) {
-                                map.moveCamera(CameraUpdateFactory.newLatLngBounds(builder.build(), 155));
+                                map.moveCamera(CameraUpdateFactory.newLatLngBounds(builder.build(), 240));
                             }
                         });
                     }
                 }
             });
-        }
-    }
-
-    private void exitIfNoData() {
-        route = ((RouteController) RouteController.getInstance(this)).getCurrentRoute();
-        if (route == null) {
-            finish();
         }
     }
 
