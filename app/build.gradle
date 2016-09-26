@@ -8,8 +8,8 @@ android {
         applicationId "com.asuc.asucmobile"
         minSdkVersion 15
         targetSdkVersion 24
-        versionCode 23
-        versionName "6.2.1"
+        versionCode 24
+        versionName "6.3.0"
         multiDexEnabled true
     }
 }
@@ -21,9 +21,9 @@ dependencies {
     compile 'com.android.support:design:24.2.1'
     compile 'com.android.support:support-v4:24.2.1'
     compile 'com.android.support:support-v13:24.2.1'
-    compile 'com.google.android.gms:play-services:9.4.0'
-    compile 'com.google.android.gms:play-services-ads:9.4.0'
-    compile 'com.google.android.gms:play-services-auth:9.4.0'
-    compile 'com.google.android.gms:play-services-gcm:9.4.0'
+    compile 'com.google.android.gms:play-services:9.6.1'
+    compile 'com.google.android.gms:play-services-ads:9.6.1'
+    compile 'com.google.android.gms:play-services-auth:9.6.1'
+    compile 'com.google.android.gms:play-services-gcm:9.6.1'
     compile 'com.pushwoosh:pushwoosh:4.6.2'
 }
