@@ -11,6 +11,7 @@
     <string name="title_activity_open_dining_hall">Dining Hall</string>
     <string name="title_activity_start_stop_select">BearTransit</string>
     <string name="title_activity_list_start_stop">ListStartStopActivity</string>
+    <string name="title_activity_open_resource">Resource</string>
     <string name="title_activity_open_route">Route</string>
     <string name="title_activity_open_trip_selection">Select Route</string>
     <string name="title_activity_stop">Select Stop</string>
