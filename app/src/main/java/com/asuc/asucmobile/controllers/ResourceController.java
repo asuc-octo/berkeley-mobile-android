@@ -73,6 +73,8 @@ public class ResourceController implements Controller {
                     for (int i = 0; i < array.length(); i++) {
                         JSONObject resourceJSON = array.getJSONObject(i);
 
+                        System.out.println(resourceJSON);
+
                         String resource = resourceJSON.getString("Resource");
                         String topic = resourceJSON.getString("Topic");
                         String phone1 = resourceJSON.getString("Phone 1");
@@ -84,10 +86,17 @@ public class ResourceController implements Controller {
 
                         double lat;
                         double lng;
-                        if (resourceJSON.getString("Latitude") != "null" && resourceJSON.getString("Longitude") != "null") {
+
+                        /*
+                            Can we get some consistency on the null values please, I can't for the
+                            life of me figure out how to match a string to "N/A" because nothing
+                            actually does. "N/A" and "N\/A" both don't match up to the N/A given
+                            from the JSON... so for now I'm just doing a catch-all solution.
+                        */
+                        try {
                             lat = resourceJSON.getDouble("Latitude");
                             lng = resourceJSON.getDouble("Longitude");
-                        } else {
+                        } catch (org.json.JSONException j) {
                             /*
                             Replace with the lat/long of Sproul Plaza, I guess.
                             Right now this lat/long is whatever Bing says UC Berkeley is at.
