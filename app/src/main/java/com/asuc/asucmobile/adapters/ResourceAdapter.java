@@ -62,6 +62,7 @@ public class ResourceAdapter extends BaseAdapter {
         TextView resourceTopic = (TextView) convertView.findViewById(R.id.topic);
 
         resourceResource.setText(resource.getResource());
+        resourceTopic.setTextColor(context.getResources().getColor(R.color.pavan_light));
 
         final ListOfFavorites listOfFavorites = (ListOfFavorites) SerializableUtilities.loadSerializedObject(context);
 

@@ -17,6 +17,7 @@ public class Resource implements Comparable<Resource>{
     double lat;
     double lng;
     String notes;
+    LatLng latLng;
 
     public String getResource() {
         return resource;
@@ -98,6 +99,10 @@ public class Resource implements Comparable<Resource>{
         this.lng = lng;
     }
 
+    public LatLng getCoordinates() {
+        return latLng;
+    }
+
     public String getNotes() {
         return notes;
     }
@@ -120,6 +125,7 @@ public class Resource implements Comparable<Resource>{
         this.lat = lat;
         this.lng = lng;
         this.notes = notes;
+        this.latLng = new LatLng(lat, lng);
     }
 
     @Override
