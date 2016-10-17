@@ -5,14 +5,7 @@ import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.support.v4.content.ContextCompat;
-import android.text.Spannable;
-import android.text.SpannableString;
-import android.text.Spanned;
-import android.text.TextUtils;
-import android.text.style.ForegroundColorSpan;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -31,8 +24,6 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -40,13 +31,12 @@ import java.util.regex.Pattern;
 public class OpenResourceActivity extends BaseActivity {
 
     private static final int REQUEST_CODE_PLAY_SERVICES = 1;
-    private static final SimpleDateFormat HOURS_FORMAT =
-            new SimpleDateFormat("h:mm a", Locale.ENGLISH);
+    private static final String PHONE_REGEX =
+            "^(\\+\\d{1,2}\\s)?\\(?\\d{3}\\)?[\\s.-]\\d{3}[\\s.-]\\d{4}$";
 
     private MapFragment mapFragment;
     private GoogleMap map;
     private Resource resource;
-    private ViewGroup.LayoutParams hoursParams;
 
     @Override
     @SuppressWarnings("all")
@@ -56,31 +46,28 @@ public class OpenResourceActivity extends BaseActivity {
         setupToolbar(resource.getResource(), true);
 
         // Populate UI.
-        final TextView hours = (TextView) findViewById(R.id.hours);
+        TextView hours = (TextView) findViewById(R.id.hours);
         TextView address = (TextView) findViewById(R.id.location);
         TextView phone = (TextView) findViewById(R.id.phone);
         TextView notes = (TextView) findViewById(R.id.notes);
-        final LinearLayout hoursLayout = (LinearLayout) findViewById(R.id.hours_layout);
+        LinearLayout hoursLayout = (LinearLayout) findViewById(R.id.hours_layout);
         LinearLayout locationLayout = (LinearLayout) findViewById(R.id.location_layout);
         LinearLayout phoneLayout = (LinearLayout) findViewById(R.id.phone_layout);
         LinearLayout notesLayout = (LinearLayout) findViewById(R.id.notes_layout);
+        View dividerTimeLocation = findViewById(R.id.divider_time_location);
+        View dividerLocationPhone = findViewById(R.id.divider_location_phone);
+        View dividerPhoneNotes = findViewById(R.id.divider_phone_notes);
         mapFragment = (MapFragment) getFragmentManager().findFragmentById(R.id.map);
 
         //This escape fixes a bug I had where the Tang center would display \n instead of newlines.
-        hours.setText(resource.getHours().replace("\\n", System.getProperty("line.separator")));
+        setText(new View[] { hoursLayout, dividerTimeLocation }, hours,
+                resource.getHours().replace("\\n", System.getProperty("line.separator")));
 
         //Escape for Confidential Care Advocates which has a null location.
-        address.setText(resource.getLocation() != "null" ? resource.getLocation() : "");
-        phone.setText(setUpPhone());
-        notes.setText(setUpNotes());
-
-        //Wrap hours around the text.
-        hoursLayout.setLayoutParams(
-                new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,
-                        ViewGroup.LayoutParams.WRAP_CONTENT, 0.2f));
-        notesLayout.setLayoutParams(
-                new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,
-                        ViewGroup.LayoutParams.WRAP_CONTENT, 0.2f));
+        setText(new View[] { locationLayout, dividerLocationPhone }, address,
+                resource.getLocation());
+        setText(new View[] { phoneLayout, dividerPhoneNotes }, phone, setUpPhone());
+        setText(new View[] { notesLayout, dividerPhoneNotes }, notes, setUpNotes());
 
         locationLayout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -88,7 +75,6 @@ public class OpenResourceActivity extends BaseActivity {
                 openMap();
             }
         });
-
         phoneLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -102,7 +88,8 @@ public class OpenResourceActivity extends BaseActivity {
         SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
         boolean firstTime = sharedPref.getBoolean("resource_initial", true);
         if (firstTime) {
-            Toast.makeText(this, "Tap on the location for directions,\nor the phone to dial!", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, "Tap on the location for directions,\nor the phone to dial!",
+                    Toast.LENGTH_LONG).show();
             sharedPref.edit().putBoolean("resource_initial", false).apply();
         }
         setUpMap();
@@ -146,7 +133,6 @@ public class OpenResourceActivity extends BaseActivity {
                         Toast.LENGTH_LONG
                 ).show();
             }
-
             return;
         }
         if (map == null) {
@@ -155,14 +141,16 @@ public class OpenResourceActivity extends BaseActivity {
                 public void onMapReady(GoogleMap googleMap) {
                     if (googleMap != null) {
                         map = googleMap;
-                        BitmapDescriptor bitmap = BitmapDescriptorFactory.fromResource(R.drawable.icon_map_pin);
+                        BitmapDescriptor bitmap =
+                                BitmapDescriptorFactory.fromResource(R.drawable.icon_map_pin);
                         map.addMarker(new MarkerOptions()
                                 .position(resource.getCoordinates())
                                 .icon(bitmap)
                                 .title(resource.getResource())
                         );
                         map.getUiSettings().setZoomControlsEnabled(false);
-                        map.moveCamera(CameraUpdateFactory.newLatLngZoom(resource.getCoordinates(), 17));
+                        map.moveCamera(
+                                CameraUpdateFactory.newLatLngZoom(resource.getCoordinates(),17));
                         map.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
                             @Override
                             public void onMapClick(LatLng latLng) {
@@ -198,9 +186,9 @@ public class OpenResourceActivity extends BaseActivity {
     }
 
     private String setUpNotes() {
-        String displayedNotes = resource.getNotes() != "null" ? "\n" + resource.getNotes() : "";
-        return "This is an " + resource.getOnOrOffCampus() + " resource. " +
-                displayedNotes;
+        String displayedNotes =
+                !resource.getNotes().equals("null") ? "\n" + resource.getNotes() : "";
+        return "This is an " + resource.getOnOrOffCampus() + " resource. " + displayedNotes;
     }
 
     private void exitIfNoData() {
@@ -211,13 +199,25 @@ public class OpenResourceActivity extends BaseActivity {
     }
 
     private boolean validatePhoneNumber(String num) {
-        Pattern pattern = Pattern.compile("^(\\+\\d{1,2}\\s)?\\(?\\d{3}\\)?[\\s.-]\\d{3}[\\s.-]\\d{4}$");
+        Pattern pattern = Pattern.compile(PHONE_REGEX);
         Matcher matcher = pattern.matcher(num);
+        return matcher.matches();
+    }
 
-        if (matcher.matches()) {
-            return true;
+    /**
+     * Sets the text for a view if valid text is present. Also strips unneeded whitespace from text.
+     * @param viewsToBeDeleted Views to delete if text is invalid.
+     * @param view TextView to set the text on.
+     * @param text Content string.
+     */
+    private void setText(View[] viewsToBeDeleted, TextView view, String text) {
+        if (text == null || text.equals("") || text.equals("null")) {
+            for (View v : viewsToBeDeleted) {
+                v.setVisibility(View.GONE);
+            }
         } else {
-            return false;
+            view.setText(text.trim());
         }
     }
+
 }
