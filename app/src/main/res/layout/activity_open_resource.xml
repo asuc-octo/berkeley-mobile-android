@@ -47,7 +47,7 @@
                 android:id="@+id/hours_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:minHeight="88dp"
+                android:minHeight="72dp"
                 android:paddingLeft="24dp"
                 android:paddingRight="24dp"
                 android:paddingTop="20dp"
@@ -58,7 +58,7 @@
                 <ImageView
                     android:layout_width="28dp"
                     android:layout_height="28dp"
-                    android:layout_marginTop="10dp"
+                    android:layout_marginTop="2dp"
                     android:contentDescription="@string/content_desc"
                     android:src="@drawable/icon_hours" />
 
@@ -83,7 +83,7 @@
                 android:id="@+id/location_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:minHeight="88dp"
+                android:minHeight="72dp"
                 android:paddingLeft="24dp"
                 android:paddingRight="24dp"
                 android:paddingTop="20dp"
@@ -95,7 +95,7 @@
                     android:layout_width="28dp"
                     android:layout_height="28dp"
                     android:contentDescription="@string/content_desc"
-                    android:layout_marginTop="10dp"
+                    android:layout_marginTop="2dp"
                     android:src="@drawable/icon_location" />
 
                 <TextView
@@ -119,7 +119,7 @@
                 android:id="@+id/phone_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:minHeight="88dp"
+                android:minHeight="72dp"
                 android:paddingLeft="24dp"
                 android:paddingRight="24dp"
                 android:paddingTop="20dp"
@@ -131,7 +131,7 @@
                     android:layout_width="28dp"
                     android:layout_height="28dp"
                     android:contentDescription="@string/content_desc"
-                    android:layout_marginTop="10dp"
+                    android:layout_marginTop="2dp"
                     android:src="@drawable/icon_phone" />
 
                 <TextView
@@ -155,7 +155,7 @@
                 android:id="@+id/notes_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:minHeight="88dp"
+                android:minHeight="72dp"
                 android:paddingLeft="24dp"
                 android:paddingRight="24dp"
                 android:paddingTop="20dp"
@@ -167,7 +167,7 @@
                     android:layout_width="28dp"
                     android:layout_height="28dp"
                     android:contentDescription="@string/content_desc"
-                    android:layout_marginTop="10dp"
+                    android:layout_marginTop="2dp"
                     android:src="@drawable/icon_phone" />
 
                 <TextView
