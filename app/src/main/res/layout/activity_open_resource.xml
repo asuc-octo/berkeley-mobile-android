@@ -12,7 +12,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="vertical">
 
             <android.support.v7.widget.Toolbar
@@ -46,7 +46,8 @@
             <LinearLayout
                 android:id="@+id/hours_layout"
                 android:layout_width="match_parent"
-                android:layout_height="88dp"
+                android:layout_height="wrap_content"
+                android:minHeight="88dp"
                 android:paddingLeft="24dp"
                 android:paddingRight="24dp"
                 android:paddingTop="20dp"
@@ -57,8 +58,8 @@
                 <ImageView
                     android:layout_width="28dp"
                     android:layout_height="28dp"
-                    android:contentDescription="@string/content_desc"
                     android:layout_marginTop="10dp"
+                    android:contentDescription="@string/content_desc"
                     android:src="@drawable/icon_hours" />
 
                 <TextView
@@ -69,9 +70,11 @@
                     android:layout_marginLeft="24dp"
                     android:layout_gravity="center_vertical"
                     android:textColor="@android:color/black" />
+
             </LinearLayout>
 
             <View
+                android:id="@+id/divider_time_location"
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:background="@android:color/darker_gray" />
@@ -79,7 +82,8 @@
             <LinearLayout
                 android:id="@+id/location_layout"
                 android:layout_width="match_parent"
-                android:layout_height="88dp"
+                android:layout_height="wrap_content"
+                android:minHeight="88dp"
                 android:paddingLeft="24dp"
                 android:paddingRight="24dp"
                 android:paddingTop="20dp"
@@ -106,6 +110,7 @@
             </LinearLayout>
 
             <View
+                android:id="@+id/divider_location_phone"
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:background="@android:color/darker_gray" />
@@ -113,7 +118,8 @@
             <LinearLayout
                 android:id="@+id/phone_layout"
                 android:layout_width="match_parent"
-                android:layout_height="88dp"
+                android:layout_height="wrap_content"
+                android:minHeight="88dp"
                 android:paddingLeft="24dp"
                 android:paddingRight="24dp"
                 android:paddingTop="20dp"
@@ -140,7 +146,7 @@
             </LinearLayout>
 
             <View
-                android:id="@+id/bottom_divider"
+                android:id="@+id/divider_phone_notes"
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:background="@android:color/darker_gray" />
@@ -148,7 +154,8 @@
             <LinearLayout
                 android:id="@+id/notes_layout"
                 android:layout_width="match_parent"
-                android:layout_height="150dp"
+                android:layout_height="wrap_content"
+                android:minHeight="88dp"
                 android:paddingLeft="24dp"
                 android:paddingRight="24dp"
                 android:paddingTop="20dp"

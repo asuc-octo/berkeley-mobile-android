@@ -11,20 +11,12 @@ import com.asuc.asucmobile.utilities.JSONUtilities;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Collections;
-import java.util.Date;
-import java.util.Locale;
-import java.util.TimeZone;
 
 public class ResourceController implements Controller {
 
     private static final String URL = BASE_URL + "/resources";
-    private static final SimpleDateFormat DATE_FORMAT =
-            new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.ENGLISH);
-    private static final TimeZone PST = TimeZone.getTimeZone("America/Los_Angeles");
 
     private static ResourceController instance;
 
@@ -44,7 +36,7 @@ public class ResourceController implements Controller {
         return instance;
     }
 
-    public ResourceController() {
+    private ResourceController() {
         resources = new ArrayList<>();
     }
 
@@ -72,9 +64,6 @@ public class ResourceController implements Controller {
                 try {
                     for (int i = 0; i < array.length(); i++) {
                         JSONObject resourceJSON = array.getJSONObject(i);
-
-                        System.out.println(resourceJSON);
-
                         String resource = resourceJSON.getString("Resource");
                         String topic = resourceJSON.getString("Topic");
                         String phone1 = resourceJSON.getString("Phone 1");
@@ -83,10 +72,8 @@ public class ResourceController implements Controller {
                         String location = resourceJSON.getString("Office Location");
                         String hours = resourceJSON.getString("Hours");
                         String onOrOffCampus = resourceJSON.getString("On/Off Campus");
-
                         double lat;
                         double lng;
-
                         /*
                             Can we get some consistency on the null values please, I can't for the
                             life of me figure out how to match a string to "N/A" because nothing
@@ -106,16 +93,13 @@ public class ResourceController implements Controller {
                             lat = 37.87;
                             lng = -122.259;
                         }
-
                         String notes = resourceJSON.getString("Notes");
-
                         resources.add(
                                 new Resource(resource, topic, phone1, phone2, email, location, hours, onOrOffCampus, lat, lng, notes));
                     }
 
                     // Sort the resources alphabetically, putting favorites at top
                     Collections.sort(resources, CustomComparators.FacilityComparators.getSortByFavoriteResource(context));
-
                     ((Activity) context).runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
