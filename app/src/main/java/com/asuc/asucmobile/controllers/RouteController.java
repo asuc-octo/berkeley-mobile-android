@@ -2,6 +2,7 @@ package com.asuc.asucmobile.controllers;
 
 import android.app.Activity;
 import android.content.Context;
+import android.support.annotation.NonNull;
 
 import com.asuc.asucmobile.models.Route;
 import com.asuc.asucmobile.models.Stop;
@@ -35,31 +36,23 @@ public class RouteController implements Controller {
     private LatLng start;
     private LatLng dest;
     private Date departure;
-
-    private Context context;
     private ArrayList<Route> routes;
     private Callback callback;
-
     private Route currentRoute;
 
-    public static Controller getInstance(Context context) {
+    public static Controller getInstance() {
         if (instance == null) {
             instance = new RouteController(new LatLng(0, 0), new LatLng(0, 0), new Date());
         }
-
-        instance.context = context;
-
         return instance;
     }
 
-    public static Controller createInstance(Context context, LatLng start, LatLng dest, Date departure) {
+    public static Controller createInstance(LatLng start, LatLng dest, Date departure) {
         instance = new RouteController(start, dest, departure);
-        instance.context = context;
-
         return instance;
     }
 
-    public RouteController(LatLng start, LatLng dest, Date departure) {
+    private RouteController(LatLng start, LatLng dest, Date departure) {
         this.start = start;
         this.dest = dest;
         this.departure = departure;
@@ -68,7 +61,7 @@ public class RouteController implements Controller {
     }
 
     @Override
-    public void setResources(final JSONArray array) {
+    public void setResources(@NonNull final Context context, final JSONArray array) {
         if (array == null) {
             ((Activity) context).runOnUiThread(new Runnable() {
                 @Override
@@ -78,7 +71,6 @@ public class RouteController implements Controller {
             });
             return;
         }
-
         routes.clear();
 
         /*
@@ -89,13 +81,12 @@ public class RouteController implements Controller {
             @Override
             public void run() {
                 try {
-                    LineController lineController = (LineController) LineController.getInstance(context);
+                    LineController lineController = (LineController) LineController.getInstance();
 
                     // Iterate through all possible routes.
                     for (int i = 0; i < array.length(); i++) {
                         JSONObject routeJSON = array.getJSONObject(i);
                         JSONArray tripListJSON = routeJSON.getJSONArray("trip_list");
-
                         ArrayList<Trip> trips = new ArrayList<>();
 
                         // Iterate through all Trips in a route.
@@ -108,15 +99,12 @@ public class RouteController implements Controller {
                             tmpTime = DATE_FORMAT.parse(tripJSON.getString("arrival_time")).getTime();
                             Date endTime = new Date(tmpTime + PST.getOffset(tmpTime));
                             String lineName = tripJSON.getString("line_name");
-
                             int startId = tripJSON.getJSONObject("starting_stop").getInt("id");
                             String startName = tripJSON.getJSONObject("starting_stop").getString("name");
                             int endId = tripJSON.getJSONObject("destination_stop").getInt("id");
                             String endName = tripJSON.getJSONObject("destination_stop").getString("name");
-
                             Stop startStop = lineController.getStop(startId, startName);
                             Stop endStop = lineController.getStop(endId, endName);
-
                             int lineId = tripJSON.getInt("line_id");
                             ArrayList<Stop> lineStops = lineController.getLine(lineId, lineName).getStops();
 
@@ -127,23 +115,18 @@ public class RouteController implements Controller {
                             while (!isPastEnd) {
                                 Stop stop = lineStops.get(index);
                                 stops.add(stop);
-
                                 if (stop == endStop) {
                                     isPastEnd = true;
                                 } else if (stops.size() > lineStops.size()) {
                                     // We have a problem!
                                     throw new Exception();
                                 }
-
                                 index = (index + 1) % lineStops.size();
                             }
-
                             trips.add(new Trip(startTime, endTime, stops, lineName));
                         }
-
                         routes.add(new Route(trips));
                     }
-
                     ((Activity) context).runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
@@ -164,15 +147,12 @@ public class RouteController implements Controller {
     }
 
     @Override
-    public void refreshInBackground(Callback callback) {
+    public void refreshInBackground(@NonNull Context context, Callback callback) {
         this.callback = callback;
-
-        JSONUtilities.readJSONFromUrl(
-                URL + "/new?" +
-                        "startlat=" + start.latitude + "&startlon=" + start.longitude +
-                        "&destlat=" + dest.latitude + "&destlon=" + dest.longitude + "&departuretime=" + RECEIVE_DATE_FORMAT.format(departure),
-                "journeys",
-                RouteController.getInstance(context));
+        JSONUtilities.readJSONFromUrl(context, URL + "/new?" + "startlat=" + start.latitude +
+                "&startlon=" + start.longitude + "&destlat=" + dest.latitude + "&destlon=" +
+                dest.longitude + "&departuretime=" + RECEIVE_DATE_FORMAT.format(departure),
+                "journeys", RouteController.getInstance());
     }
 
     public void setCurrentRoute(Route route) {

@@ -57,26 +57,21 @@ public class StartStopSelectFragment extends Fragment
     private static final SimpleDateFormat TIME_FORMAT =
             new SimpleDateFormat("MMM d @ h:mm a", Locale.ENGLISH);
 
-    private Context context;
+    private static Calendar departureTime = Calendar.getInstance();
 
-    private static View layout;
+    private Context context;
+    private View layout;
     private TextView startButton;
     private TextView destButton;
-    private static TextView timeButton;
     private LinearLayout refreshWrapper;
     private MapFragment mapFragment;
-
     private String startName;
     private String endName;
-
     private LatLng startLatLng;
     private LatLng endLatLng;
-
     private BusCallback busCallback;
     private Timer timer;
     private GoogleMap map;
-
-    private static Calendar departureTime = Calendar.getInstance();
 
     @Override
     @SuppressWarnings("deprecation")
@@ -93,7 +88,7 @@ public class StartStopSelectFragment extends Fragment
 
         startButton = (TextView) layout.findViewById(R.id.start_stop);
         destButton = (TextView) layout.findViewById(R.id.dest_stop);
-        timeButton = (TextView) layout.findViewById(R.id.departure_time);
+        TextView timeButton = (TextView) layout.findViewById(R.id.departure_time);
         timeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -102,7 +97,8 @@ public class StartStopSelectFragment extends Fragment
             }
         });
         ImageView myLocationButton = (ImageView) layout.findViewById(R.id.my_location);
-        FloatingActionButton navigateButton = (FloatingActionButton) layout.findViewById(R.id.navigate_button);
+        FloatingActionButton navigateButton =
+                (FloatingActionButton) layout.findViewById(R.id.navigate_button);
 
         navigateButton.setImageDrawable(getResources().getDrawable(R.drawable.ic_navigation));
         refreshWrapper = (LinearLayout) layout.findViewById(R.id.refresh);
@@ -126,16 +122,19 @@ public class StartStopSelectFragment extends Fragment
             public void onClick(View view) {
                 Intent intent = new Intent(getContext(), OpenRouteSelectionActivity.class);
                 if (startLatLng == null) {
-                    Toast.makeText(context, "Please select a start location", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context, "Please select a start location",Toast.LENGTH_SHORT)
+                            .show();
                     return;
                 }
                 if (endLatLng == null) {
-                    Toast.makeText(context, "Please select an end location", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context, "Please select an end location", Toast.LENGTH_SHORT)
+                            .show();
                     return;
                 }
                 //should be impossible
                 if (departureTime == null) {
-                    Toast.makeText(context, "Please select a departure time", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context, "Please select a departure time", Toast.LENGTH_SHORT)
+                            .show();
                     return;
                 }
                 intent.putExtra("startLngLat", startLatLng);
@@ -196,7 +195,7 @@ public class StartStopSelectFragment extends Fragment
     private void stopLocationTracking() {
         try {
             if (map != null &&
-                    ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED ||
+                    ContextCompat.checkSelfPermission(getActivity(),Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED ||
                     ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
                 map.setMyLocationEnabled(false);
             }
@@ -219,15 +218,17 @@ public class StartStopSelectFragment extends Fragment
 
         private int typeRequest;
 
-        public StartStopListener(int typeRequest) {
+        private StartStopListener(int typeRequest) {
             this.typeRequest = typeRequest;
         }
+
         @Override
         public void onClick(View view) {
             Intent intent = new Intent(context, StopActivity.class);
             intent.putExtra("requestCode", typeRequest);
             startActivityForResult(intent, typeRequest);
         }
+
     }
 
     @Override
@@ -240,7 +241,7 @@ public class StartStopSelectFragment extends Fragment
         }
         CameraUpdate update = CameraUpdateFactory.newLatLngZoom(new LatLng(37.871899, -122.25854), 14.5f);
         map.moveCamera(update);
-        busCallback = new BusCallback(map, refreshWrapper, timer, context);
+        busCallback = new BusCallback(context, map, refreshWrapper, timer);
         liveTrack();
     }
 
@@ -249,7 +250,9 @@ public class StartStopSelectFragment extends Fragment
             timer.schedule(new TimerTask() {
                 @Override
                 public void run() {
-                    BusController.getInstance(getActivity()).refreshInBackground(busCallback);
+                    if (getActivity() != null) {
+                        BusController.getInstance().refreshInBackground(getActivity(), busCallback);
+                    }
                 }
             }, 0L, 3000L);
         } catch (Exception e) {
@@ -287,10 +290,12 @@ public class StartStopSelectFragment extends Fragment
         }
 
         public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+            TextView timeButton = (TextView) getActivity().findViewById(R.id.departure_time);
             departureTime.set(Calendar.HOUR_OF_DAY, hourOfDay);
             departureTime.set(Calendar.MINUTE, minute);
             timeButton.setText(TIME_FORMAT.format(departureTime.getTime()));
         }
+
     }
 
     private class LocationCallback implements Callback {
@@ -309,7 +314,8 @@ public class StartStopSelectFragment extends Fragment
         @Override
         public void onRetrievalFailed() {
             try {
-                Toast.makeText(getActivity(), "Unable to find your location", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), "Unable to find your location", Toast.LENGTH_SHORT)
+                        .show();
                 startButton.setText("");
             } catch (Exception e) {
                 // In case the fragment is switched out while getting location.

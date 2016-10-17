@@ -76,7 +76,7 @@ public class LibraryFragment extends Fragment {
         mLibraryList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                LibraryController controller = ((LibraryController) LibraryController.getInstance(getContext()));
+                LibraryController controller = (LibraryController) LibraryController.getInstance();
                 controller.setCurrentLibrary(mAdapter.getItem(i));
                 Intent intent = new Intent(getContext(), OpenLibraryActivity.class);
 
@@ -183,7 +183,7 @@ public class LibraryFragment extends Fragment {
         mRefreshWrapper.setVisibility(View.GONE);
         mProgressBar.setVisibility(View.VISIBLE);
 
-        LibraryController.getInstance(getContext()).refreshInBackground(new Callback() {
+        LibraryController.getInstance().refreshInBackground(getActivity(), new Callback() {
             @Override
             @SuppressWarnings("unchecked")
             public void onDataRetrieved(Object data) {
@@ -197,7 +197,8 @@ public class LibraryFragment extends Fragment {
             public void onRetrievalFailed() {
                 mProgressBar.setVisibility(View.GONE);
                 mRefreshWrapper.setVisibility(View.VISIBLE);
-                Toast.makeText(getContext(), "Unable to retrieve data, please try again", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), "Unable to retrieve data, please try again",
+                        Toast.LENGTH_SHORT).show();
             }
         });
     }

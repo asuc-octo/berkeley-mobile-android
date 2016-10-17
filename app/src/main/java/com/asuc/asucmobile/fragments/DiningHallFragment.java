@@ -59,7 +59,7 @@ public class DiningHallFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 DiningHall diningHall = mAdapter.getItem(i);
-                DiningController controller = ((DiningController) DiningController.getInstance(getContext()));
+                DiningController controller = ((DiningController) DiningController.getInstance());
                 controller.setCurrentDiningHall(diningHall);
                 Intent intent = new Intent(getContext(), OpenDiningHallActivity.class);
 
@@ -102,8 +102,8 @@ public class DiningHallFragment extends Fragment {
         mDiningList.setVisibility(View.GONE);
         mRefreshWrapper.setVisibility(View.GONE);
         mProgressBar.setVisibility(View.VISIBLE);
+        DiningController.getInstance().refreshInBackground(getActivity(), new Callback() {
 
-        DiningController.getInstance(getContext()).refreshInBackground(new Callback() {
             @Override
             @SuppressWarnings("unchecked")
             public void onDataRetrieved(Object data) {
@@ -116,8 +116,10 @@ public class DiningHallFragment extends Fragment {
             public void onRetrievalFailed() {
                 mProgressBar.setVisibility(View.GONE);
                 mRefreshWrapper.setVisibility(View.VISIBLE);
-                Toast.makeText(getContext(), "Unable to retrieve data, please try again", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), "Unable to retrieve data, please try again",
+                        Toast.LENGTH_SHORT).show();
             }
+
         });
     }
 

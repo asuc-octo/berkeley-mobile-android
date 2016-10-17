@@ -2,6 +2,7 @@ package com.asuc.asucmobile.controllers;
 
 import android.app.Activity;
 import android.content.Context;
+import android.support.annotation.NonNull;
 
 import com.asuc.asucmobile.models.Library;
 import com.asuc.asucmobile.utilities.Callback;
@@ -28,28 +29,24 @@ public class LibraryController implements Controller {
 
     private static LibraryController instance;
 
-    private Context context;
     private ArrayList<Library> libraries;
     private Callback callback;
 
     private Library currentLibrary;
 
-    public static Controller getInstance(Context context) {
+    public static Controller getInstance() {
         if (instance == null) {
             instance = new LibraryController();
         }
-
-        instance.context = context;
-
         return instance;
     }
 
-    public LibraryController() {
+    private LibraryController() {
         libraries = new ArrayList<>();
     }
 
     @Override
-    public void setResources(final JSONArray array) {
+    public void setResources(@NonNull final Context context, final JSONArray array) {
         if (array == null) {
             ((Activity) context).runOnUiThread(new Runnable() {
                 @Override
@@ -72,25 +69,21 @@ public class LibraryController implements Controller {
                 try {
                     for (int i = 0; i < array.length(); i++) {
                         JSONObject libraryJSON = array.getJSONObject(i);
-
                         int id = libraryJSON.getInt("id");
                         String name = libraryJSON.getString("name");
                         String location = libraryJSON.getString("campus_location");
                         String phone = libraryJSON.getString("phone_number");
-
                         long tmpDate;
-
-                        Date opening = null;
-                        Date closing = null;
-                        JSONArray weeklyOpenArray = libraryJSON.getJSONArray("weekly_opening_times");
-                        JSONArray weeklyCloseArray = libraryJSON.getJSONArray("weekly_closing_times");
-
+                        Date opening;
+                        Date closing;
+                        JSONArray weeklyOpenArray =
+                                libraryJSON.getJSONArray("weekly_opening_times");
+                        JSONArray weeklyCloseArray =
+                                libraryJSON.getJSONArray("weekly_closing_times");
                         String openingString;
                         String closingString;
-
                         Date[] weeklyOpen = new Date[7];
                         Date[] weeklyClose = new Date[7];
-
                         for (int j=0; j < weeklyOpenArray.length(); j++) {
                             openingString = weeklyOpenArray.getString(j);
                             opening = null;
@@ -109,11 +102,10 @@ public class LibraryController implements Controller {
                             }
                             weeklyClose[j] = closing;
                         }
-
-                        String imageUrl = libraryJSON.getString("image_link");
                         double lat;
                         double lng;
-                        if (libraryJSON.getString("latitude") != "null" && libraryJSON.getString("longitude") != "null") {
+                        if (!libraryJSON.getString("latitude").equals("null") &&
+                                !libraryJSON.getString("longitude").equals("null")) {
                             lat = libraryJSON.getDouble("latitude");
                             lng = libraryJSON.getDouble("longitude");
                         } else {
@@ -126,26 +118,24 @@ public class LibraryController implements Controller {
                             lat = 37.87;
                             lng = -122.259;
                         }
-
-                        JSONArray weeklyAppointmentArray = libraryJSON.getJSONArray("weekly_by_appointment");
+                        JSONArray weeklyAppointmentArray =
+                                libraryJSON.getJSONArray("weekly_by_appointment");
                         boolean[] weeklyAppointments = new boolean[7];
                         for (int j=0; j < weeklyAppointmentArray.length(); j++) {
                             weeklyAppointments[j] = weeklyAppointmentArray.getBoolean(j);
                         }
                         boolean byAppointment = weeklyAppointments[0];
-
                         Calendar c = Calendar.getInstance();
                         Date d = DATE_FORMAT.parse(libraryJSON.getString("updated_at"));
                         c.setTime(d);
                         int weekday = c.get(Calendar.DAY_OF_WEEK);
-
-                        libraries.add(
-                                new Library(id, name, location, phone, weeklyOpen[0], weeklyClose[0], weeklyOpen, weeklyClose, imageUrl, lat, lng, byAppointment, weeklyAppointments, weekday));
+                        libraries.add(new Library(id, name, location, phone, weeklyOpen[0],
+                                weeklyClose[0], weeklyOpen, weeklyClose, lat, lng, byAppointment,
+                                weeklyAppointments, weekday));
                     }
 
                     // Sort the libraries alphabetically, putting favorites at top
                     Collections.sort(libraries, CustomComparators.FacilityComparators.getSortByFavoriteLibrary(context));
-
                     ((Activity) context).runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
@@ -166,9 +156,9 @@ public class LibraryController implements Controller {
     }
 
     @Override
-    public void refreshInBackground(Callback callback) {
+    public void refreshInBackground(@NonNull Context context, Callback callback) {
         this.callback = callback;
-        JSONUtilities.readJSONFromUrl(URL, "libraries", LibraryController.getInstance(context));
+        JSONUtilities.readJSONFromUrl(context, URL, "libraries", LibraryController.getInstance());
     }
 
     public void setCurrentLibrary(Library library) {

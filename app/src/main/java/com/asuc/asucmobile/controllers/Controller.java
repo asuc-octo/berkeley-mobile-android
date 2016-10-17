@@ -1,5 +1,8 @@
 package com.asuc.asucmobile.controllers;
 
+import android.content.Context;
+import android.support.annotation.NonNull;
+
 import com.asuc.asucmobile.utilities.Callback;
 
 import org.json.JSONArray;
@@ -13,7 +16,7 @@ public interface Controller {
      *  calls after retrieving data. The implementation will vary depending on what type of data
      *  was retrieved. It most likely consists of parsing the data into models for use with the UI.
      */
-    void setResources(final JSONArray array);
+    void setResources(@NonNull final Context context, final JSONArray array);
 
     /**
      * refreshInBackground() retrieves info from the web and calls the callback function once it's
@@ -21,6 +24,6 @@ public interface Controller {
      *
      * @param callback The method to be called after information has been retrieved from JSON.
      */
-    void refreshInBackground(Callback callback);
+    void refreshInBackground(@NonNull Context context, Callback callback);
 
 }
