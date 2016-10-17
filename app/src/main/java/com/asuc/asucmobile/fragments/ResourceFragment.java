@@ -31,12 +31,9 @@ import com.asuc.asucmobile.utilities.Callback;
 import com.asuc.asucmobile.utilities.CustomComparators;
 import com.asuc.asucmobile.utilities.NavigationGenerator;
 import com.asuc.asucmobile.utilities.SerializableUtilities;
-import com.flurry.android.FlurryAgent;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
 
 public class ResourceFragment extends Fragment {
 
@@ -49,30 +46,23 @@ public class ResourceFragment extends Fragment {
     @Override
     @SuppressWarnings("deprecation")
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        FlurryAgent.onStartSession(getContext(), "4VPTT49FCCKH7Z2NVQ26");
         View layout = inflater.inflate(R.layout.fragment_resource, container, false);
-
         Toolbar toolbar = (Toolbar) layout.findViewById(R.id.toolbar);
         ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
         NavigationGenerator.generateToolbarMenuButton(toolbar);
         setHasOptionsMenu(true);
         toolbar.setTitle("Resources");
-
         ListOfFavorites listOfFavorites = (ListOfFavorites) SerializableUtilities.loadSerializedObject(getContext());
         if (listOfFavorites == null) {
             listOfFavorites = new ListOfFavorites();
             SerializableUtilities.saveObject(getContext(), listOfFavorites);
         }
-
         ImageButton refreshButton = (ImageButton) layout.findViewById(R.id.refresh_button);
-
         mResourceList = (ListView) layout.findViewById(R.id.resource_list);
         mProgressBar = (ProgressBar) layout.findViewById(R.id.progress_bar);
         mRefreshWrapper = (LinearLayout) layout.findViewById(R.id.refresh);
-
         mAdapter = new ResourceAdapter(getContext());
         mResourceList.setAdapter(mAdapter);
-
         mResourceList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
@@ -80,16 +70,9 @@ public class ResourceFragment extends Fragment {
                         (ResourceController) ResourceController.getInstance();
                 controller.setCurrentResource(mAdapter.getItem(i));
                 Intent intent = new Intent(getContext(), OpenResourceActivity.class);
-
-                //Flurry log for tapping Resource hours.
-                Map<String, String> libParams = new HashMap<>();
-                libParams.put("Hall", mAdapter.getItem(i).getResource());
-                FlurryAgent.logEvent("Taps Resource Hours", libParams);
-
                 startActivity(intent);
             }
         });
-
         refreshButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -97,7 +80,6 @@ public class ResourceFragment extends Fragment {
             }
         });
         refresh();
-
         return layout;
     }
 
@@ -107,16 +89,9 @@ public class ResourceFragment extends Fragment {
         NavigationGenerator.closeMenu();
     }
 
-    @Override
-    public void onStop() {
-        super.onStop();
-        FlurryAgent.onEndSession(getContext());
-    }
-
     //start off lv sorted by favorites
     @Override
     public boolean onOptionsItemSelected(MenuItem menuItem) {
-
         switch (menuItem.getItemId()){
             case R.id.sortAZ:
                 Collections.sort(mAdapter.getResources(), CustomComparators.FacilityComparators.getSortResourcesByAZ());
@@ -134,9 +109,7 @@ public class ResourceFragment extends Fragment {
     @SuppressWarnings("deprecation")
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.resource, menu);
-
         final MenuItem searchMenuItem = menu.findItem(R.id.search);
-
         if (searchMenuItem != null) {
             final SearchView searchView = (SearchView) searchMenuItem.getActionView();
             if (searchView != null) {
@@ -144,14 +117,6 @@ public class ResourceFragment extends Fragment {
                 EditText searchEditText = (EditText) searchView.findViewById(android.support.v7.appcompat.R.id.search_src_text);
                 searchEditText.setTextColor(getResources().getColor(android.R.color.white));
                 searchEditText.setHintTextColor(getResources().getColor(android.R.color.white));
-
-                searchView.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        //Flurry log for searching for something!
-                        FlurryAgent.logEvent("Tapped on the Search Button (Resources)");
-                    }
-                });
                 searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
                     @Override
                     public boolean onQueryTextSubmit(String s) {
@@ -186,7 +151,6 @@ public class ResourceFragment extends Fragment {
             public void onDataRetrieved(Object data) {
                 mResourceList.setVisibility(View.VISIBLE);
                 mProgressBar.setVisibility(View.GONE);
-
                 mAdapter.setList((ArrayList<Resource>) data);
             }
 

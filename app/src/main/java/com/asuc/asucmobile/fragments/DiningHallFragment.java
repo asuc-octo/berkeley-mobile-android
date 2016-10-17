@@ -22,11 +22,8 @@ import com.asuc.asucmobile.main.OpenDiningHallActivity;
 import com.asuc.asucmobile.models.DiningHall;
 import com.asuc.asucmobile.utilities.Callback;
 import com.asuc.asucmobile.utilities.NavigationGenerator;
-import com.flurry.android.FlurryAgent;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 
 public class DiningHallFragment extends Fragment {
 
@@ -38,23 +35,17 @@ public class DiningHallFragment extends Fragment {
     @Override
     @SuppressWarnings("deprecation")
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        FlurryAgent.onStartSession(getContext(), "4VPTT49FCCKH7Z2NVQ26");
         View layout = inflater.inflate(R.layout.fragment_dining_hall, container, false);
-
         Toolbar toolbar = (Toolbar) layout.findViewById(R.id.toolbar);
         ((AppCompatActivity) getContext()).setSupportActionBar(toolbar);
         NavigationGenerator.generateToolbarMenuButton(toolbar);
         toolbar.setTitle("Dining Halls");
-
         ImageButton refreshButton = (ImageButton) layout.findViewById(R.id.refresh_button);
-
         mDiningList = (ListView) layout.findViewById(R.id.dining_hall_list);
         mProgressBar = (ProgressBar) layout.findViewById(R.id.progress_bar);
         mRefreshWrapper = (LinearLayout) layout.findViewById(R.id.refresh);
-
         mAdapter = new DiningHallAdapter(getContext());
         mDiningList.setAdapter(mAdapter);
-
         mDiningList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
@@ -62,15 +53,9 @@ public class DiningHallFragment extends Fragment {
                 DiningController controller = ((DiningController) DiningController.getInstance());
                 controller.setCurrentDiningHall(diningHall);
                 Intent intent = new Intent(getContext(), OpenDiningHallActivity.class);
-
-                //Flurry log for tapping Dining Hall Menus.
-                Map<String, String> diningParams = new HashMap<>();
-                diningParams.put("Hall", mAdapter.getItem(i).getName());
-                FlurryAgent.logEvent("Taps Dining Hall Menus", diningParams);
                 startActivity(intent);
             }
         });
-
         refreshButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -78,7 +63,6 @@ public class DiningHallFragment extends Fragment {
             }
         });
         refresh();
-
         return layout;
     }
 
@@ -86,12 +70,6 @@ public class DiningHallFragment extends Fragment {
     public void onResume() {
         super.onResume();
         NavigationGenerator.closeMenu();
-    }
-
-    @Override
-    public void onStop() {
-        super.onStop();
-        FlurryAgent.onEndSession(getContext());
     }
 
     /**

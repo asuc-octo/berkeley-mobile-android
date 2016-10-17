@@ -13,16 +13,16 @@ import com.asuc.asucmobile.utilities.NavigationGenerator;
 
 public class BlankFragment extends Fragment {
 
+    private static final String APP_NAME = "Berkeley Mobile";
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View layout = inflater.inflate(R.layout.fragment_blank, container, false);
-
         Toolbar toolbar = (Toolbar) layout.findViewById(R.id.toolbar);
         ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
         NavigationGenerator.generateToolbarMenuButton(toolbar);
-        toolbar.setTitle("Berkeley Mobile");
-
+        toolbar.setTitle(APP_NAME);
         return layout;
     }
 

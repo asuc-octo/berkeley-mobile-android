@@ -24,7 +24,6 @@ import com.asuc.asucmobile.controllers.LineController;
 import com.asuc.asucmobile.models.Stop;
 import com.asuc.asucmobile.utilities.Callback;
 import com.asuc.asucmobile.utilities.LocationGrabber;
-import com.flurry.android.FlurryAgent;
 import com.google.android.gms.maps.model.LatLng;
 
 import java.util.ArrayList;
@@ -142,14 +141,6 @@ public class StopActivity extends BaseActivity {
         super.onStart();
         LocationGrabber.getLocation(this, new LocationCallback());
         refresh();
-    }
-
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-
-        //Flurry logging for pressing the Back Button
-        FlurryAgent.logEvent("Tapped on the Back Button (Stops)");
     }
 
     //////////////////////////////////////
