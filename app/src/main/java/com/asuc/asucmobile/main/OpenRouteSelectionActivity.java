@@ -50,8 +50,8 @@ public class OpenRouteSelectionActivity extends BaseActivity {
         mProgressBar = (ProgressBar) findViewById(R.id.progress_bar);
         mRefreshWrapper = (LinearLayout) findViewById(R.id.refresh);
         mTripList = (ListView) findViewById(R.id.tripList);
-        routeController = (RouteController) RouteController.createInstance(this, startLatLng, endLatLng, departureTime);
-        lineController = (LineController) LineController.getInstance(this);
+        routeController = (RouteController) RouteController.createInstance(startLatLng, endLatLng, departureTime);
+        lineController = (LineController) LineController.getInstance();
         if (mRefreshButton != null) {
             mRefreshButton.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -85,10 +85,10 @@ public class OpenRouteSelectionActivity extends BaseActivity {
         mTripList.setVisibility(View.GONE);
         mRefreshWrapper.setVisibility(View.GONE);
         mProgressBar.setVisibility(View.VISIBLE);
-        lineController.refreshInBackground(new Callback() {
+        lineController.refreshInBackground(this, new Callback() {
             @Override
             public void onDataRetrieved(Object data) {
-                routeController.refreshInBackground(new Callback() {
+                routeController.refreshInBackground(OpenRouteSelectionActivity.this, new Callback() {
 
                     @Override
                     @SuppressWarnings("unchecked")

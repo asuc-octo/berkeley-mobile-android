@@ -182,7 +182,7 @@ public class StopActivity extends BaseActivity {
         mRefreshWrapper.setVisibility(View.GONE);
         mProgressBar.setVisibility(View.VISIBLE);
 
-        LineController.getInstance(this).refreshInBackground(new Callback() {
+        LineController.getInstance().refreshInBackground(this, new Callback() {
             @Override
             @SuppressWarnings("unchecked")
             public void onDataRetrieved(Object data) {
