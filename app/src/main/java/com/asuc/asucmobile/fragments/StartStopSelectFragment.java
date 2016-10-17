@@ -34,7 +34,6 @@ import com.asuc.asucmobile.main.StopActivity;
 import com.asuc.asucmobile.utilities.Callback;
 import com.asuc.asucmobile.utilities.LocationGrabber;
 import com.asuc.asucmobile.utilities.NavigationGenerator;
-import com.flurry.android.FlurryAgent;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -76,16 +75,13 @@ public class StartStopSelectFragment extends Fragment
     @Override
     @SuppressWarnings("deprecation")
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        FlurryAgent.onStartSession(getContext(), "4VPTT49FCCKH7Z2NVQ26");
         try {
             layout = inflater.inflate(R.layout.fragment_start_stop_select, container, false);
         } catch (InflateException e) {
-            // Don't worry about it!
+            return layout;
         }
-
         ImageView menuButton = (ImageView) layout.findViewById(R.id.menu_button);
         NavigationGenerator.generateToolbarMenuButton(menuButton);
-
         startButton = (TextView) layout.findViewById(R.id.start_stop);
         destButton = (TextView) layout.findViewById(R.id.dest_stop);
         TextView timeButton = (TextView) layout.findViewById(R.id.departure_time);
@@ -102,13 +98,10 @@ public class StartStopSelectFragment extends Fragment
 
         navigateButton.setImageDrawable(getResources().getDrawable(R.drawable.ic_navigation));
         refreshWrapper = (LinearLayout) layout.findViewById(R.id.refresh);
-
         context = getContext();
         startButton.setOnClickListener(new StartStopListener(START_INT));
         destButton.setOnClickListener(new StartStopListener(END_INT));
-
         mapFragment = (MapFragment) getActivity().getFragmentManager().findFragmentById(R.id.map);
-
         myLocationButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -116,7 +109,6 @@ public class StartStopSelectFragment extends Fragment
                 startButton.setText(getString(R.string.retrieving_location));
             }
         });
-
         navigateButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -131,7 +123,8 @@ public class StartStopSelectFragment extends Fragment
                             .show();
                     return;
                 }
-                //should be impossible
+
+                // Should be impossible.
                 if (departureTime == null) {
                     Toast.makeText(context, "Please select a departure time", Toast.LENGTH_SHORT)
                             .show();
@@ -160,12 +153,6 @@ public class StartStopSelectFragment extends Fragment
         super.onPause();
         LiveBusActivity.stopBusTracking();
         stopLocationTracking();
-    }
-
-    @Override
-    public void onStop() {
-        super.onStop();
-        FlurryAgent.onEndSession(getContext());
     }
 
     @Override

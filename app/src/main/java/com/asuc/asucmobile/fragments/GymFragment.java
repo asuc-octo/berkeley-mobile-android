@@ -22,11 +22,8 @@ import com.asuc.asucmobile.main.OpenGymActivity;
 import com.asuc.asucmobile.models.Gym;
 import com.asuc.asucmobile.utilities.Callback;
 import com.asuc.asucmobile.utilities.NavigationGenerator;
-import com.flurry.android.FlurryAgent;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 
 public class GymFragment extends Fragment {
 
@@ -39,35 +36,23 @@ public class GymFragment extends Fragment {
     @Override
     @SuppressWarnings("deprecation")
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        FlurryAgent.onStartSession(getContext(), "4VPTT49FCCKH7Z2NVQ26");
         View layout = inflater.inflate(R.layout.fragment_gym, container, false);
-
         Toolbar toolbar = (Toolbar) layout.findViewById(R.id.toolbar);
         ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
         NavigationGenerator.generateToolbarMenuButton(toolbar);
         toolbar.setTitle("Gyms");
-
         ImageButton refreshButton = (ImageButton) layout.findViewById(R.id.refresh_button);
-
         mGymList = (ListView) layout.findViewById(R.id.gym_list);
         mProgressBar = (ProgressBar) layout.findViewById(R.id.progress_bar);
         mRefreshWrapper = (LinearLayout) layout.findViewById(R.id.refresh);
-
         mAdapter = new GymAdapter(getContext());
         mGymList.setAdapter(mAdapter);
-
         mGymList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 GymController controller = ((GymController) GymController.getInstance());
                 controller.setCurrentGym(mAdapter.getItem(i));
                 Intent intent = new Intent(getActivity(), OpenGymActivity.class);
-
-                //Flurry log for tapping Gyms.
-                Map<String, String> gymParams = new HashMap<>();
-                gymParams.put("Hall", mAdapter.getItem(i).getName());
-                FlurryAgent.logEvent("Taps Gym Hours", gymParams);
-
                 startActivity(intent);
             }
         });
@@ -87,12 +72,6 @@ public class GymFragment extends Fragment {
     public void onResume() {
         super.onResume();
         NavigationGenerator.closeMenu();
-    }
-
-    @Override
-    public void onStop() {
-        super.onStop();
-        FlurryAgent.onEndSession(getContext());
     }
 
     /**
