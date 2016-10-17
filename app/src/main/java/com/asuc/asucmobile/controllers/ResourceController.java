@@ -2,6 +2,7 @@ package com.asuc.asucmobile.controllers;
 
 import android.app.Activity;
 import android.content.Context;
+import android.support.annotation.NonNull;
 
 import com.asuc.asucmobile.models.Resource;
 import com.asuc.asucmobile.utilities.Callback;
@@ -20,19 +21,14 @@ public class ResourceController implements Controller {
 
     private static ResourceController instance;
 
-    private Context context;
     private ArrayList<Resource> resources;
     private Callback callback;
-
     private Resource currentResource;
 
-    public static Controller getInstance(Context context) {
+    public static Controller getInstance() {
         if (instance == null) {
             instance = new ResourceController();
         }
-
-        instance.context = context;
-
         return instance;
     }
 
@@ -41,7 +37,7 @@ public class ResourceController implements Controller {
     }
 
     @Override
-    public void setResources(final JSONArray array) {
+    public void setResources(@NonNull final Context context, final JSONArray array) {
         if (array == null) {
             ((Activity) context).runOnUiThread(new Runnable() {
                 @Override
@@ -51,7 +47,6 @@ public class ResourceController implements Controller {
             });
             return;
         }
-
         resources.clear();
 
         /*
@@ -71,9 +66,9 @@ public class ResourceController implements Controller {
                         String email = resourceJSON.getString("Email");
                         String location = resourceJSON.getString("Office Location");
                         String hours = resourceJSON.getString("Hours");
-                        String onOrOffCampus = resourceJSON.getString("On/Off Campus");
                         double lat;
                         double lng;
+
                         /*
                             Can we get some consistency on the null values please, I can't for the
                             life of me figure out how to match a string to "N/A" because nothing
@@ -94,8 +89,8 @@ public class ResourceController implements Controller {
                             lng = -122.259;
                         }
                         String notes = resourceJSON.getString("Notes");
-                        resources.add(
-                                new Resource(resource, topic, phone1, phone2, email, location, hours, onOrOffCampus, lat, lng, notes));
+                        resources.add(new Resource(resource,topic, phone1, phone2, email, location,
+                                hours, lat, lng, notes));
                     }
 
                     // Sort the resources alphabetically, putting favorites at top
@@ -120,9 +115,9 @@ public class ResourceController implements Controller {
     }
 
     @Override
-    public void refreshInBackground(Callback callback) {
+    public void refreshInBackground(@NonNull Context context, Callback callback) {
         this.callback = callback;
-        JSONUtilities.readJSONFromUrl(URL, "resources", ResourceController.getInstance(context));
+        JSONUtilities.readJSONFromUrl(context, URL, "resources", ResourceController.getInstance());
     }
 
     public void setCurrentResource(Resource resource) {

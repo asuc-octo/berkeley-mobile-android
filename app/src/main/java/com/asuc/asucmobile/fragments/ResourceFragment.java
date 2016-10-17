@@ -76,7 +76,8 @@ public class ResourceFragment extends Fragment {
         mResourceList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                ResourceController controller = ((ResourceController) ResourceController.getInstance(getContext()));
+                ResourceController controller =
+                        (ResourceController) ResourceController.getInstance();
                 controller.setCurrentResource(mAdapter.getItem(i));
                 Intent intent = new Intent(getContext(), OpenResourceActivity.class);
 
@@ -179,7 +180,7 @@ public class ResourceFragment extends Fragment {
         mRefreshWrapper.setVisibility(View.GONE);
         mProgressBar.setVisibility(View.VISIBLE);
 
-        ResourceController.getInstance(getContext()).refreshInBackground(new Callback() {
+        ResourceController.getInstance().refreshInBackground(getActivity(), new Callback() {
             @Override
             @SuppressWarnings("unchecked")
             public void onDataRetrieved(Object data) {
@@ -193,7 +194,8 @@ public class ResourceFragment extends Fragment {
             public void onRetrievalFailed() {
                 mProgressBar.setVisibility(View.GONE);
                 mRefreshWrapper.setVisibility(View.VISIBLE);
-                Toast.makeText(getContext(), "Unable to retrieve data, please try again", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), "Unable to retrieve data, please try again",
+                        Toast.LENGTH_SHORT).show();
             }
         });
     }

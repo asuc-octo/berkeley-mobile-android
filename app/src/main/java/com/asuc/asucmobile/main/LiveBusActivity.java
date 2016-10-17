@@ -10,6 +10,7 @@ import android.support.v4.content.ContextCompat;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import com.asuc.asucmobile.R;
 import com.asuc.asucmobile.controllers.BusController;
@@ -75,7 +76,7 @@ public class LiveBusActivity extends BaseActivity implements OnMapReadyCallback 
         }
         CameraUpdate update = CameraUpdateFactory.newLatLngZoom(new LatLng(37.872508, -122.260783), 14.5f);
         googleMap.moveCamera(update);
-        busCallback = new BusCallback(googleMap, mRefreshWrapper, timer, getBaseContext());
+        busCallback = new BusCallback(getBaseContext(), googleMap, mRefreshWrapper, timer);
         liveTrack();
     }
 
@@ -89,7 +90,7 @@ public class LiveBusActivity extends BaseActivity implements OnMapReadyCallback 
         timer.schedule(new TimerTask() {
             @Override
             public void run() {
-                BusController.getInstance(activity).refreshInBackground(busCallback);
+                BusController.getInstance().refreshInBackground(LiveBusActivity.this, busCallback);
             }
         }, 0L, 3000L);
     }
@@ -115,11 +116,10 @@ public class LiveBusActivity extends BaseActivity implements OnMapReadyCallback 
         private Timer timer;
         private BitmapDescriptor icon;
 
-        public BusCallback(GoogleMap map, LinearLayout refreshWrapper, Timer timer, Context context) {
+        public BusCallback(Context context, GoogleMap map, LinearLayout refreshWrapper, Timer timer) {
             this.map = map;
             this.refreshWrapper = refreshWrapper;
             this.timer = timer;
-
             Bitmap b = BitmapFactory.decodeResource(context.getResources(), R.drawable.transit_blue);
             icon = BitmapDescriptorFactory.fromBitmap(Bitmap.createScaledBitmap(b, 72, 72, false));
         }

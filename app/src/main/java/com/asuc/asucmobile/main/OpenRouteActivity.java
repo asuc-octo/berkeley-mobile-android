@@ -91,7 +91,7 @@ public class OpenRouteActivity extends BaseActivity {
     }
 
     private void exitIfNoData() {
-        route = ((RouteController) RouteController.getInstance(this)).getCurrentRoute();
+        route = ((RouteController) RouteController.getInstance()).getCurrentRoute();
         if (route == null) {
             finish();
         }

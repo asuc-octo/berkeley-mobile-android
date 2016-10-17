@@ -9,7 +9,6 @@ import java.util.Date;
 
 public class Test {
 
-
     @SuppressWarnings("all")
     public static void runTests() {
 
@@ -21,17 +20,19 @@ public class Test {
         Date closing1 = new Date();
         closing1.setTime(currentTime.getTime() + 1000000);
         Library testLibrary1 =
-                new Library(0, "Library", "Location", "000-000-0000", opening1, closing1, null, null, "", 0, 0, false, null, 0);
+                new Library(0, "Library", "Location", "000-000-0000", opening1, closing1, null,
+                        null, 0, 0, false, null, 0);
 
         Date opening2 = new Date();
         opening2.setTime(currentTime.getTime() + 1000000);
         Date closing2 = new Date();
         closing2.setTime(currentTime.getTime() - 1000000);
         Gym testGym1 =
-                new Gym(0, "Library", "Location", opening2, closing2, "", 0D, 0D);
+                new Gym(0, "Library", "Location", opening2, closing2, "");
 
         Library testLibrary2 =
-                new Library(1, "Library", "Location", "000-000-0000", null, null, null, null, "", 0, 0, false, null, 0);
+                new Library(1, "Library", "Location", "000-000-0000", null, null, null, null, 0, 0,
+                        false, null, 0);
 
         if (!testLibrary1.isOpen()) {
             System.out.println("Open library reported as closed");
@@ -52,7 +53,8 @@ public class Test {
         Stop stop4 = new Stop(0, "ASUC; Bancroft Way: Telegraph Avenue", new LatLng(0, 0));
 
         if (!stop1.getAbbreviatedName().equals("Moffitt Library")) {
-            System.out.println("EXPECTED \"Moffitt Library\", but got: " + stop1.getAbbreviatedName());
+            System.out.println(
+                    "EXPECTED \"Moffitt Library\", but got: " + stop1.getAbbreviatedName());
         }
 
         if (!stop2.getAbbreviatedName().equals("Li Ka Shing")) {

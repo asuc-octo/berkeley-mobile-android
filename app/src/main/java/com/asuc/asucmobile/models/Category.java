@@ -9,7 +9,7 @@ public abstract class Category {
     private int iconId;
     private String name;
 
-    public Category(int iconId, String name) {
+    protected Category(int iconId, String name) {
         this.iconId = iconId;
         this.name = name;
     }

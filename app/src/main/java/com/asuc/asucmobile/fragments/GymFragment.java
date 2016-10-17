@@ -59,7 +59,7 @@ public class GymFragment extends Fragment {
         mGymList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                GymController controller = ((GymController) GymController.getInstance(getContext()));
+                GymController controller = ((GymController) GymController.getInstance());
                 controller.setCurrentGym(mAdapter.getItem(i));
                 Intent intent = new Intent(getActivity(), OpenGymActivity.class);
 
@@ -104,7 +104,7 @@ public class GymFragment extends Fragment {
         mRefreshWrapper.setVisibility(View.GONE);
         mProgressBar.setVisibility(View.VISIBLE);
 
-        GymController.getInstance(getContext()).refreshInBackground(new Callback() {
+        GymController.getInstance().refreshInBackground(getActivity(), new Callback() {
             @Override
             @SuppressWarnings("unchecked")
             public void onDataRetrieved(Object data) {
@@ -118,7 +118,8 @@ public class GymFragment extends Fragment {
             public void onRetrievalFailed() {
                 mProgressBar.setVisibility(View.GONE);
                 mRefreshWrapper.setVisibility(View.VISIBLE);
-                Toast.makeText(getContext(), "Unable to retrieve data, please try again", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), "Unable to retrieve data, please try again",
+                        Toast.LENGTH_SHORT).show();
             }
         });
     }

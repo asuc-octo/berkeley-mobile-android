@@ -192,7 +192,7 @@ public class OpenResourceActivity extends BaseActivity {
     }
 
     private void exitIfNoData() {
-        resource = ((ResourceController) ResourceController.getInstance(this)).getCurrentResource();
+        resource = ((ResourceController) ResourceController.getInstance()).getCurrentResource();
         if (resource == null) {
             finish();
         }
