@@ -38,7 +38,7 @@ public class DiningHallFragment extends Fragment {
         View layout = inflater.inflate(R.layout.fragment_dining_hall, container, false);
         Toolbar toolbar = (Toolbar) layout.findViewById(R.id.toolbar);
         ((AppCompatActivity) getContext()).setSupportActionBar(toolbar);
-        NavigationGenerator.generateToolbarMenuButton(toolbar);
+        NavigationGenerator.generateToolbarMenuButton(getActivity(), toolbar);
         toolbar.setTitle("Dining Halls");
         ImageButton refreshButton = (ImageButton) layout.findViewById(R.id.refresh_button);
         mDiningList = (ListView) layout.findViewById(R.id.dining_hall_list);
@@ -69,7 +69,7 @@ public class DiningHallFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        NavigationGenerator.closeMenu();
+        NavigationGenerator.closeMenu(getActivity());
     }
 
     /**

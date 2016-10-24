@@ -49,10 +49,11 @@ public class ResourceFragment extends Fragment {
         View layout = inflater.inflate(R.layout.fragment_resource, container, false);
         Toolbar toolbar = (Toolbar) layout.findViewById(R.id.toolbar);
         ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
-        NavigationGenerator.generateToolbarMenuButton(toolbar);
+        NavigationGenerator.generateToolbarMenuButton(getActivity(), toolbar);
         setHasOptionsMenu(true);
         toolbar.setTitle("Resources");
-        ListOfFavorites listOfFavorites = (ListOfFavorites) SerializableUtilities.loadSerializedObject(getContext());
+        ListOfFavorites listOfFavorites =
+                (ListOfFavorites) SerializableUtilities.loadSerializedObject(getContext());
         if (listOfFavorites == null) {
             listOfFavorites = new ListOfFavorites();
             SerializableUtilities.saveObject(getContext(), listOfFavorites);
@@ -86,10 +87,10 @@ public class ResourceFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        NavigationGenerator.closeMenu();
+        NavigationGenerator.closeMenu(getActivity());
     }
 
-    //start off lv sorted by favorites
+    // Start off list sorted by favorites.
     @Override
     public boolean onOptionsItemSelected(MenuItem menuItem) {
         switch (menuItem.getItemId()){
@@ -113,14 +114,14 @@ public class ResourceFragment extends Fragment {
         if (searchMenuItem != null) {
             final SearchView searchView = (SearchView) searchMenuItem.getActionView();
             if (searchView != null) {
-                // Setting up aesthetics
+                // Setting up aesthetics.
                 EditText searchEditText = (EditText) searchView.findViewById(android.support.v7.appcompat.R.id.search_src_text);
                 searchEditText.setTextColor(getResources().getColor(android.R.color.white));
                 searchEditText.setHintTextColor(getResources().getColor(android.R.color.white));
                 searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
                     @Override
                     public boolean onQueryTextSubmit(String s) {
-                        // Close the keyboard
+                        // Close the keyboard.
                         searchView.clearFocus();
                         return true;
                     }

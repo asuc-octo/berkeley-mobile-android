@@ -57,9 +57,9 @@ public class StartStopSelectFragment extends Fragment
             new SimpleDateFormat("MMM d @ h:mm a", Locale.ENGLISH);
 
     private static Calendar departureTime = Calendar.getInstance();
+    @SuppressWarnings("all") private static View layout; // Fuck it.
 
     private Context context;
-    private View layout;
     private TextView startButton;
     private TextView destButton;
     private LinearLayout refreshWrapper;
@@ -69,19 +69,25 @@ public class StartStopSelectFragment extends Fragment
     private LatLng startLatLng;
     private LatLng endLatLng;
     private BusCallback busCallback;
-    private Timer timer;
     private GoogleMap map;
+    private boolean customLocationSet;
 
     @Override
-    @SuppressWarnings("deprecation")
+    @SuppressWarnings("all")
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        if (layout != null) {
+            ViewGroup parent = (ViewGroup) layout.getParent();
+            if (parent != null)
+                parent.removeView(layout);
+        }
         try {
             layout = inflater.inflate(R.layout.fragment_start_stop_select, container, false);
         } catch (InflateException e) {
-            return layout;
+            // Don't worry about it!
         }
+        customLocationSet = false;
         ImageView menuButton = (ImageView) layout.findViewById(R.id.menu_button);
-        NavigationGenerator.generateToolbarMenuButton(menuButton);
+        NavigationGenerator.generateToolbarMenuButton(getActivity(), menuButton);
         startButton = (TextView) layout.findViewById(R.id.start_stop);
         destButton = (TextView) layout.findViewById(R.id.dest_stop);
         TextView timeButton = (TextView) layout.findViewById(R.id.departure_time);
@@ -95,7 +101,6 @@ public class StartStopSelectFragment extends Fragment
         ImageView myLocationButton = (ImageView) layout.findViewById(R.id.my_location);
         FloatingActionButton navigateButton =
                 (FloatingActionButton) layout.findViewById(R.id.navigate_button);
-
         navigateButton.setImageDrawable(getResources().getDrawable(R.drawable.ic_navigation));
         refreshWrapper = (LinearLayout) layout.findViewById(R.id.refresh);
         context = getContext();
@@ -105,6 +110,7 @@ public class StartStopSelectFragment extends Fragment
         myLocationButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                customLocationSet = false;
                 LocationGrabber.getLocation(StartStopSelectFragment.this,  new LocationCallback());
                 startButton.setText(getString(R.string.retrieving_location));
             }
@@ -143,9 +149,9 @@ public class StartStopSelectFragment extends Fragment
     public void onResume() {
         super.onResume();
         mapFragment.getMapAsync(this);
-        timer = new Timer("liveBus", true);
+        LiveBusActivity.timer = new Timer("liveBus", true);
         LocationGrabber.getLocation(StartStopSelectFragment.this,  new RawLocationCallback());
-        NavigationGenerator.closeMenu();
+        NavigationGenerator.closeMenu(getActivity());
     }
 
     @Override
@@ -158,6 +164,10 @@ public class StartStopSelectFragment extends Fragment
     @Override
     public void onDestroyView() {
         super.onDestroyView();
+        Fragment mapToDestroy = getFragmentManager().findFragmentById(R.id.map);
+        if (mapToDestroy != null) {
+            getFragmentManager().beginTransaction().remove(mapToDestroy).commit();
+        }
         try {
             stopLocationTracking();
         } catch (Exception e) {
@@ -171,6 +181,7 @@ public class StartStopSelectFragment extends Fragment
             return;
         }
         if (requestCode == START_INT) {
+            customLocationSet = true;
             getStartFromPref(data);
             startButton.setText(startName);
         } else if (requestCode == END_INT) {
@@ -228,13 +239,13 @@ public class StartStopSelectFragment extends Fragment
         }
         CameraUpdate update = CameraUpdateFactory.newLatLngZoom(new LatLng(37.871899, -122.25854), 14.5f);
         map.moveCamera(update);
-        busCallback = new BusCallback(context, map, refreshWrapper, timer);
+        busCallback = new BusCallback(context, map, refreshWrapper, LiveBusActivity.timer);
         liveTrack();
     }
 
     private void liveTrack() {
         try {
-            timer.schedule(new TimerTask() {
+            LiveBusActivity.timer.schedule(new TimerTask() {
                 @Override
                 public void run() {
                     if (getActivity() != null) {
@@ -290,9 +301,11 @@ public class StartStopSelectFragment extends Fragment
         @Override
         public void onDataRetrieved(Object data) {
             try {
-                startButton.setText(R.string.my_location);
-                startName = getResources().getString(R.string.my_location);
-                startLatLng = (LatLng) data;
+                if (!customLocationSet) {
+                    startButton.setText(R.string.my_location);
+                    startName = getResources().getString(R.string.my_location);
+                    startLatLng = (LatLng) data;
+                }
             } catch (Exception e) {
                 // In case the fragment is switched out while getting location.
             }
@@ -315,7 +328,7 @@ public class StartStopSelectFragment extends Fragment
         @Override
         public void onDataRetrieved(Object data) {
             try {
-                if (data == null) {
+                if (data == null || customLocationSet) {
                     return;
                 }
                 startButton.setText(R.string.my_location);
