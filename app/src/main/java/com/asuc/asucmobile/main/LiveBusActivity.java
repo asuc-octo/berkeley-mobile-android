@@ -10,7 +10,6 @@ import android.support.v4.content.ContextCompat;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
-import android.widget.Toast;
 
 import com.asuc.asucmobile.R;
 import com.asuc.asucmobile.controllers.BusController;
@@ -24,15 +23,19 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.BitmapDescriptor;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Timer;
 import java.util.TimerTask;
 
 public class LiveBusActivity extends BaseActivity implements OnMapReadyCallback {
 
-    private static Timer timer;
+    public static Timer timer;
+
     private LiveBusActivity activity;
     private MapFragment mapFragment;
     private Callback busCallback;
@@ -63,8 +66,8 @@ public class LiveBusActivity extends BaseActivity implements OnMapReadyCallback 
     @Override
     public void onResume() {
         super.onResume();
-        mapFragment.getMapAsync(this);
         timer = new Timer("liveBus", true);
+        mapFragment.getMapAsync(this);
     }
 
     @Override
@@ -112,16 +115,19 @@ public class LiveBusActivity extends BaseActivity implements OnMapReadyCallback 
         private int failCount = 0;
         private GoogleMap map;
         private LinearLayout refreshWrapper;
-        private ArrayList<Bus> buses;
+        private HashMap<String, Marker> markers;
         private Timer timer;
         private BitmapDescriptor icon;
 
         public BusCallback(Context context, GoogleMap map, LinearLayout refreshWrapper, Timer timer) {
             this.map = map;
             this.refreshWrapper = refreshWrapper;
+            this.markers = new HashMap<>();
             this.timer = timer;
-            Bitmap b = BitmapFactory.decodeResource(context.getResources(), R.drawable.transit_blue);
-            icon = BitmapDescriptorFactory.fromBitmap(Bitmap.createScaledBitmap(b, 72, 72, false));
+            Bitmap b =
+                    BitmapFactory.decodeResource(context.getResources(), R.drawable.transit_blue);
+            icon = BitmapDescriptorFactory.fromBitmap(Bitmap.createScaledBitmap(b, 96, 96, false));
+            map.clear();
         }
 
         @Override
@@ -131,15 +137,31 @@ public class LiveBusActivity extends BaseActivity implements OnMapReadyCallback 
             if (failCount != 0) {
                 failCount = 0;
             }
-            buses = (ArrayList<Bus>) data;
-            map.clear();
-            for(Bus bus : buses) {
+            ArrayList<Bus> buses = (ArrayList<Bus>) data;
+            HashSet<String> lines = new HashSet<>();
+
+            // Update bus locations and add new buses if available.
+            for (Bus bus : buses) {
                 if (bus.getLineName() != null && !bus.getLineName().equals("null")) {
-                    map.addMarker(new MarkerOptions()
-                            .position(bus.getLocation())
-                            .icon(icon)
-                            .title(bus.getLineName())
-                    );
+                    lines.add(bus.getLineName());
+                    if (!markers.containsKey(bus.getLineName())) {
+                        markers.put(
+                                bus.getLineName(),
+                                map.addMarker(new MarkerOptions()
+                                        .position(bus.getLocation())
+                                        .icon(icon)
+                                        .title(bus.getLineName())
+                        ));
+                    }
+                    markers.get(bus.getLineName()).setPosition(bus.getLocation());
+                }
+            }
+
+            // Go through current markers and remove buses that did not get updated.
+            for (String line : markers.keySet()) {
+                if (!lines.contains(line)) {
+                    markers.get(line).remove();
+                    markers.remove(line);
                 }
             }
         }
@@ -153,5 +175,7 @@ public class LiveBusActivity extends BaseActivity implements OnMapReadyCallback 
                 refreshWrapper.setVisibility(View.VISIBLE);
             }
         }
+
     }
+
 }

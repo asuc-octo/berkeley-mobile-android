@@ -27,7 +27,8 @@ import java.util.Locale;
 
 public class MenuFragment extends Fragment {
 
-    private static final SimpleDateFormat HOURS_FORMAT = new SimpleDateFormat("h:mm a", Locale.ENGLISH);
+    private static final SimpleDateFormat HOURS_FORMAT =
+            new SimpleDateFormat("h:mm a", Locale.ENGLISH);
     private static final String LATE_NIGHT_OPEN = "10:00 PM";
     private static final String LATE_NIGHT_CLOSE = "2:00 AM";
 
@@ -48,7 +49,8 @@ public class MenuFragment extends Fragment {
         // Get references to views.
         ListView foodMenu = (ListView) v.findViewById(R.id.food_menu);
         TextView emptyListView = (TextView) v.findViewById(R.id.empty_list);
-        View header = getActivity().getLayoutInflater().inflate(R.layout.header_image, foodMenu, false);
+        View header =
+                getActivity().getLayoutInflater().inflate(R.layout.header_image, foodMenu, false);
         ImageView headerImage = (ImageView) header.findViewById(R.id.image);
         TextView headerHours = (TextView) header.findViewById(R.id.header_text);
 
@@ -103,14 +105,12 @@ public class MenuFragment extends Fragment {
                         closing = HOURS_FORMAT.format(diningHall.getDinnerClosing());
                         isOpen = diningHall.isDinnerOpen();
                 }
-
                 if (foodItems == null || foodItems.size() == 0) {
                     emptyListView.setText(String.format("No %s Today!", whichMenu));
                     foodMenu.setVisibility(View.GONE);
                     emptyListView.setVisibility(View.VISIBLE);
                 } else {
                     String headerString = "Hours:  " + opening + " to " + closing + "  ";
-
                     SpannableString spannableHeader;
                     if (isOpen) {
                         spannableHeader = new SpannableString(headerString + "OPEN");
@@ -145,7 +145,6 @@ public class MenuFragment extends Fragment {
 
         // Download and set header image.
         new DownloadImageThread(headerImage, diningHall.getImageUrl()).start();
-
         return v;
     }
 
@@ -176,7 +175,6 @@ public class MenuFragment extends Fragment {
                     return;
                 }
             }
-
             getActivity().runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
@@ -191,7 +189,6 @@ public class MenuFragment extends Fragment {
         if (MenuFragment.adapters == null) {
             return;
         }
-
         for (FoodAdapter adapter : MenuFragment.adapters) {
             adapter.notifyDataSetChanged();
         }

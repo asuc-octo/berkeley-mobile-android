@@ -39,7 +39,7 @@ public class GymFragment extends Fragment {
         View layout = inflater.inflate(R.layout.fragment_gym, container, false);
         Toolbar toolbar = (Toolbar) layout.findViewById(R.id.toolbar);
         ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
-        NavigationGenerator.generateToolbarMenuButton(toolbar);
+        NavigationGenerator.generateToolbarMenuButton(getActivity(), toolbar);
         toolbar.setTitle("Gyms");
         ImageButton refreshButton = (ImageButton) layout.findViewById(R.id.refresh_button);
         mGymList = (ListView) layout.findViewById(R.id.gym_list);
@@ -71,7 +71,7 @@ public class GymFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        NavigationGenerator.closeMenu();
+        NavigationGenerator.closeMenu(getActivity());
     }
 
     /**

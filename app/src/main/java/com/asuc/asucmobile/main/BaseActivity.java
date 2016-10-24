@@ -13,13 +13,13 @@ public class BaseActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState, int layout) {
         super.onCreate(savedInstanceState);
         setContentView(layout);
-        NavigationGenerator.generateMenu(this);
+        NavigationGenerator.getInstance().generateMenu(this);
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        NavigationGenerator.generateMenu(this);
+        NavigationGenerator.getInstance().generateMenu(this);
     }
 
     @Override

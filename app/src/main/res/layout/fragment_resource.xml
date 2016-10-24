@@ -1,5 +1,6 @@
 <android.support.v4.widget.DrawerLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
@@ -16,7 +17,8 @@
             android:layout_height="wrap_content"
             android:layout_width="match_parent"
             android:elevation="8dp"
-            style="@style/ToolbarTheme" />
+            style="@style/ToolbarTheme"
+            tools:ignore="all" />
         
         <ListView
             android:id="@+id/resource_list"
@@ -38,6 +40,7 @@
             android:layout_height="match_parent"
             android:gravity="center"
             android:visibility="gone">
+
             <ImageButton
                 android:id="@+id/refresh_button"
                 android:layout_width="80dp"
@@ -45,6 +48,7 @@
                 android:layout_gravity="center"
                 android:contentDescription="@string/content_desc"
                 android:background="@drawable/ic_action_refresh" />
+
         </LinearLayout>
 
     </LinearLayout>
@@ -59,7 +63,8 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="160dp"
-            android:elevation="4dp">
+            android:elevation="4dp"
+            tools:ignore="all">
 
             <ImageView
                 android:layout_width="match_parent"

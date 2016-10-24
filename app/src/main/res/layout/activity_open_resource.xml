@@ -20,7 +20,8 @@
                 android:layout_height="wrap_content"
                 android:layout_width="match_parent"
                 android:elevation="8dp"
-                style="@style/ToolbarTheme" />
+                style="@style/ToolbarTheme"
+                tools:ignore="all" />
 
             <FrameLayout
                 android:layout_width="match_parent"
@@ -53,7 +54,8 @@
                 android:paddingTop="20dp"
                 android:paddingBottom="20dp"
                 android:animateLayoutChanges="true"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                tools:ignore="all">
 
                 <ImageView
                     android:layout_width="28dp"
@@ -168,7 +170,7 @@
                     android:layout_height="28dp"
                     android:contentDescription="@string/content_desc"
                     android:layout_marginTop="2dp"
-                    android:src="@drawable/icon_phone" />
+                    android:src="@drawable/icon_misc" />
 
                 <TextView
                     android:id="@+id/notes"
@@ -194,7 +196,8 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="160dp"
-            android:elevation="4dp">
+            android:elevation="4dp"
+            tools:ignore="all">
 
             <ImageView
                 android:layout_width="match_parent"

@@ -14,12 +14,12 @@ public class MainActivity extends BaseActivity {
         super.onCreate(savedInstanceState, R.layout.activity_main);
 
         // Setup navigation menu.
-        NavigationGenerator.openMenu();
+        NavigationGenerator.getInstance().openMenu(this);
         if (getIntent().getExtras() != null) {
             int page = getIntent().getExtras().getInt("page", 0);
-            NavigationGenerator.loadSection(page);
+            NavigationGenerator.getInstance().loadSection(this, page);
         } else {
-            NavigationGenerator.loadSection(-1);
+            NavigationGenerator.getInstance().loadSection(this, -1);
         }
     }
 
