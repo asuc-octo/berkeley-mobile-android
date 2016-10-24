@@ -49,7 +49,7 @@ public class LibraryFragment extends Fragment {
         View layout = inflater.inflate(R.layout.fragment_library, container, false);
         Toolbar toolbar = (Toolbar) layout.findViewById(R.id.toolbar);
         ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
-        NavigationGenerator.generateToolbarMenuButton(toolbar);
+        NavigationGenerator.generateToolbarMenuButton(getActivity(), toolbar);
         setHasOptionsMenu(true);
         toolbar.setTitle("Libraries");
         ListOfFavorites listOfFavorites = (ListOfFavorites) SerializableUtilities.loadSerializedObject(getContext());
@@ -85,7 +85,7 @@ public class LibraryFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        NavigationGenerator.closeMenu();
+        NavigationGenerator.closeMenu(getActivity());
     }
 
     //start off lv sorted by favorites

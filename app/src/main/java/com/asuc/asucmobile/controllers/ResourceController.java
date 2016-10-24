@@ -63,9 +63,9 @@ public class ResourceController implements Controller {
                         String topic = resourceJSON.getString("Topic");
                         String phone1 = resourceJSON.getString("Phone 1");
                         String phone2 = resourceJSON.getString("Phone 2 (Optional)");
-                        String email = resourceJSON.getString("Email");
                         String location = resourceJSON.getString("Office Location");
                         String hours = resourceJSON.getString("Hours");
+                        String onOrOffCampus = resourceJSON.getString("On/Off Campus");
                         double lat;
                         double lng;
 
@@ -89,8 +89,8 @@ public class ResourceController implements Controller {
                             lng = -122.259;
                         }
                         String notes = resourceJSON.getString("Notes");
-                        resources.add(new Resource(resource,topic, phone1, phone2, email, location,
-                                hours, lat, lng, notes));
+                        resources.add(new Resource(resource, topic, phone1, phone2, location, hours,
+                                onOrOffCampus, lat, lng, notes));
                     }
 
                     // Sort the resources alphabetically, putting favorites at top
