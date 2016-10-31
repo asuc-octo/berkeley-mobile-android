@@ -24,15 +24,21 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import java.util.HashSet;
 import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class OpenResourceActivity extends BaseActivity {
 
-    private static final int REQUEST_CODE_PLAY_SERVICES = 1;
+    private static final HashSet<String> NULL_STRINGS = new HashSet<String>() {{
+        add("");
+        add("null");
+        add("N/A");
+    }};
     private static final String PHONE_REGEX =
             "^(\\+\\d{1,2}\\s)?\\(?\\d{3}\\)?[\\s.-]\\d{3}[\\s.-]\\d{4}$";
+    private static final int REQUEST_CODE_PLAY_SERVICES = 1;
 
     private MapFragment mapFragment;
     private GoogleMap map;
@@ -47,40 +53,55 @@ public class OpenResourceActivity extends BaseActivity {
 
         // Populate UI.
         TextView hours = (TextView) findViewById(R.id.hours);
-        TextView address = (TextView) findViewById(R.id.location);
         TextView phone = (TextView) findViewById(R.id.phone);
+        TextView email = (TextView) findViewById(R.id.email);
+        TextView location = (TextView) findViewById(R.id.location);
         TextView notes = (TextView) findViewById(R.id.notes);
         LinearLayout hoursLayout = (LinearLayout) findViewById(R.id.hours_layout);
-        LinearLayout locationLayout = (LinearLayout) findViewById(R.id.location_layout);
         LinearLayout phoneLayout = (LinearLayout) findViewById(R.id.phone_layout);
+        LinearLayout emailLayout = (LinearLayout) findViewById(R.id.email_layout);
+        LinearLayout locationLayout = (LinearLayout) findViewById(R.id.location_layout);
         LinearLayout notesLayout = (LinearLayout) findViewById(R.id.notes_layout);
-        View dividerTimeLocation = findViewById(R.id.divider_time_location);
-        View dividerLocationPhone = findViewById(R.id.divider_location_phone);
-        View dividerPhoneNotes = findViewById(R.id.divider_phone_notes);
+        View dividerHoursPhone = findViewById(R.id.divider_hours_phone);
+        View dividerPhoneEmail = findViewById(R.id.divider_phone_email);
+        View dividerEmailLocation = findViewById(R.id.divider_email_location);
+        View dividerLocationNotes = findViewById(R.id.divider_location_notes);
         mapFragment = (MapFragment) getFragmentManager().findFragmentById(R.id.map);
 
         //This escape fixes a bug I had where the Tang center would display \n instead of newlines.
-        setText(new View[] { hoursLayout, dividerTimeLocation }, hours,
+        setText(new View[] { hoursLayout, dividerHoursPhone }, hours,
                 resource.getHours().replace("\\n", System.getProperty("line.separator")));
+        setText(new View[] { phoneLayout, dividerPhoneEmail }, phone, setUpPhone());
+        setText(new View[] { emailLayout, dividerEmailLocation }, email, resource.getEmail());
 
         //Escape for Confidential Care Advocates which has a null location.
-        setText(new View[] { locationLayout, dividerLocationPhone }, address,
+        setText(new View[] { locationLayout, dividerLocationNotes },location,
                 resource.getLocation());
-        setText(new View[] { phoneLayout, dividerPhoneNotes }, phone, setUpPhone());
-        setText(new View[] { notesLayout, dividerPhoneNotes }, notes, setUpNotes());
+        setText(new View[] { notesLayout, dividerLocationNotes }, notes, setUpNotes());
 
-        locationLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                openMap();
-            }
-        });
         phoneLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(Intent.ACTION_DIAL);
                 i.setData(Uri.parse("tel:" + resource.getPhone1()));
                 startActivity(i);
+            }
+        });
+        emailLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(Intent.ACTION_SEND);
+                i.setType("text/plain");
+                i.putExtra(Intent.EXTRA_EMAIL, new String[] { resource.getEmail() });
+                if (i.resolveActivity(getPackageManager()) != null) {
+                    startActivity(i);
+                }
+            }
+        });
+        locationLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openMap();
             }
         });
 
@@ -211,7 +232,7 @@ public class OpenResourceActivity extends BaseActivity {
      * @param text Content string.
      */
     private void setText(View[] viewsToBeDeleted, TextView view, String text) {
-        if (text == null || text.equals("") || text.equals("null")) {
+        if (NULL_STRINGS.contains(text)) {
             for (View v : viewsToBeDeleted) {
                 v.setVisibility(View.GONE);
             }
