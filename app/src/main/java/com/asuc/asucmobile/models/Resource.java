@@ -12,18 +12,21 @@ public class Resource implements Comparable<Resource>{
     private String phone2;
     private String location;
     private String hours;
+    private String email;
     private String onOrOffCampus;
     private String notes;
     private LatLng latLng;
 
     public Resource(String resource, String topic, String phone1, String phone2, String location,
-                    String hours, String onOrOffCampus, double lat, double lng, String notes) {
+                    String hours, String email, String onOrOffCampus, double lat, double lng,
+                    String notes) {
         this.resource = resource;
         this.topic = topic;
         this.phone1 = phone1;
         this.phone2 = phone2;
         this.location = location;
         this.hours = hours;
+        this.email = email;
         this.onOrOffCampus = onOrOffCampus;
         this.notes = notes;
         this.latLng = new LatLng(lat, lng);
@@ -59,6 +62,10 @@ public class Resource implements Comparable<Resource>{
 
     public void setHours(String hours) {
         this.hours = hours;
+    }
+
+    public String getEmail() {
+        return email;
     }
 
     public String getOnOrOffCampus() {
