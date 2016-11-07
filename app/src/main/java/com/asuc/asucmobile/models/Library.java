@@ -1,10 +1,16 @@
 package com.asuc.asucmobile.models;
 
+import android.support.annotation.NonNull;
+
 import com.google.android.gms.maps.model.LatLng;
 
 import java.util.Date;
 
 public class Library implements Comparable<Library>{
+
+    private static final int MAX_DAY_LENGTH = 9;
+    private static final String[] WEEKDAYS =
+            { "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday" };
 
     private int id;
     private String name;
@@ -14,16 +20,13 @@ public class Library implements Comparable<Library>{
     private Date closing;
     private Date[] weeklyOpen;
     private Date[] weeklyClose;
-    private String imageUrl;
     private LatLng latLng;
     private boolean byAppointment;
     private boolean[] weeklyAppointments;
     private int weekday;
-    private final static String[] weekdays = {"Sunday   ","Monday   ","Tuesday  ","Wednesday","Thursday ","Friday   ","Saturday "};
 
     public Library(int id, String name, String location, String phone, Date opening,
-                   Date closing, Date[] weeklyOpen, Date[] weeklyClose,
-                   String imageUrl, double lat, double lng,
+                   Date closing, Date[] weeklyOpen, Date[] weeklyClose, double lat, double lng,
                    boolean byAppointment, boolean[] weeklyAppointments, int weekday) {
         this.id = id;
         this.name = name;
@@ -31,7 +34,6 @@ public class Library implements Comparable<Library>{
         this.phone = phone;
         this.opening = opening;
         this.closing = closing;
-        this.imageUrl = imageUrl;
         this.latLng = new LatLng(lat, lng);
         this.byAppointment = byAppointment;
         this.weeklyOpen = weeklyOpen;
@@ -68,10 +70,6 @@ public class Library implements Comparable<Library>{
 
     public Date[] getWeeklyClose() { return weeklyClose; }
 
-    public String getImageUrl() {
-        return imageUrl;
-    }
-
     public LatLng getCoordinates() {
         return latLng;
     }
@@ -82,15 +80,13 @@ public class Library implements Comparable<Library>{
 
     public boolean[] getWeeklyAppointments() { return weeklyAppointments; }
 
-    public int getWeekday() { return weekday; }
-
-    public String[] getWeekdays() {
-        return weekdays;
-    }
-
+    /**
+     * Outputs a day of week as a string with spaces padded at the end to be equal length for all
+     * days.
+     */
     public String getDayOfWeek(int i) {
         // Aligns weekday with i. i was range [0,6] and weekday was range [1,7].
-        return weekdays[(i + weekday - 1) % 7];
+        return String.format("%1$-" + MAX_DAY_LENGTH + "s", WEEKDAYS[(i + weekday - 1) % 7]);
     }
 
     /**
@@ -107,17 +103,8 @@ public class Library implements Comparable<Library>{
         return currentTime.after(opening) && currentTime.before(closing);
     }
 
-    public boolean isOpenGivenTimes(Date i, Date j) {
-        if (i == null || j == null) {
-            return false;
-        }
-
-        Date currentTime = new Date();
-        return true;
-    }
-
     @Override
-    public int compareTo(Library other) {
+    public int compareTo(@NonNull Library other) {
         return this.getName().compareTo(other.getName());
     }
 

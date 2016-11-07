@@ -93,7 +93,7 @@ public class OpenGymActivity extends BaseActivity {
     }
 
     private void exitIfNoData() {
-        gym = ((GymController) GymController.getInstance(this)).getCurrentGym();
+        gym = ((GymController) GymController.getInstance()).getCurrentGym();
         if (gym == null) {
             finish();
         }

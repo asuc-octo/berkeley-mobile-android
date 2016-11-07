@@ -22,9 +22,10 @@ public class DiningHall {
     private String imageUrl;
 
     public DiningHall(String id, String name, ArrayList<FoodItem> breakfastMenu,
-                      ArrayList<FoodItem> lunchMenu, ArrayList<FoodItem> dinnerMenu, ArrayList<FoodItem> lateNightMenu,
-                      Date breakfastOpen, Date breakfastClose, Date lunchOpen, Date lunchClose,
-                      Date dinnerOpen, Date dinnerClose, Date lateNightOpen, Date lateNightClose, String imageUrl) {
+                      ArrayList<FoodItem> lunchMenu, ArrayList<FoodItem> dinnerMenu,
+                      ArrayList<FoodItem> lateNightMenu, Date breakfastOpen, Date breakfastClose,
+                      Date lunchOpen, Date lunchClose, Date dinnerOpen, Date dinnerClose,
+                      Date lateNightOpen, Date lateNightClose, String imageUrl) {
         this.id = id;
         this.name = name;
         this.breakfastMenu = breakfastMenu;
@@ -149,7 +150,7 @@ public class DiningHall {
     }
 
     public boolean isOpen() {
-        return this.isBreakfastOpen() | this.isLunchOpen() | this.isDinnerOpen() | this.isLateNightOpen();
+        return isBreakfastOpen() | isLunchOpen() | isDinnerOpen() | isLateNightOpen();
     }
 
 }

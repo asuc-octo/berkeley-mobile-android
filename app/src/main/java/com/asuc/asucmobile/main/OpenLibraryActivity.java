@@ -283,7 +283,7 @@ public class OpenLibraryActivity extends BaseActivity {
     }
 
     private void exitIfNoData() {
-        library = ((LibraryController) LibraryController.getInstance(this)).getCurrentLibrary();
+        library = ((LibraryController) LibraryController.getInstance()).getCurrentLibrary();
         if (library == null) {
             finish();
         }
