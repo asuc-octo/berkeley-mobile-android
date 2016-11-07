@@ -8,6 +8,7 @@ import java.util.Date;
 
 public class Library implements Comparable<Library>{
 
+    public static final double INVALID_COORD = -181;
     private static final int MAX_DAY_LENGTH = 9;
     private static final String[] WEEKDAYS =
             { "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday" };
@@ -22,6 +23,7 @@ public class Library implements Comparable<Library>{
     private Date[] weeklyClose;
     private LatLng latLng;
     private boolean byAppointment;
+    private boolean hasCoordinates;
     private boolean[] weeklyAppointments;
     private int weekday;
 
@@ -34,12 +36,17 @@ public class Library implements Comparable<Library>{
         this.phone = phone;
         this.opening = opening;
         this.closing = closing;
-        this.latLng = new LatLng(lat, lng);
         this.byAppointment = byAppointment;
         this.weeklyOpen = weeklyOpen;
         this.weeklyClose = weeklyClose;
         this.weeklyAppointments = weeklyAppointments;
         this.weekday = weekday;
+        if (lat == INVALID_COORD || lng == INVALID_COORD) {
+            hasCoordinates = false;
+        } else {
+            hasCoordinates = true;
+            this.latLng = new LatLng(lat, lng);
+        }
     }
 
     public int getId() {
@@ -71,7 +78,7 @@ public class Library implements Comparable<Library>{
     public Date[] getWeeklyClose() { return weeklyClose; }
 
     public LatLng getCoordinates() {
-        return latLng;
+        return hasCoordinates ? latLng : null;
     }
 
     public boolean isByAppointment() {
@@ -98,7 +105,6 @@ public class Library implements Comparable<Library>{
         if (opening == null || closing == null) {
             return false;
         }
-
         Date currentTime = new Date();
         return currentTime.after(opening) && currentTime.before(closing);
     }
