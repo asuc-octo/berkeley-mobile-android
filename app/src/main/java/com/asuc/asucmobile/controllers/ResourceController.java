@@ -69,25 +69,13 @@ public class ResourceController implements Controller {
                         String onOrOffCampus = resourceJSON.getString("On/Off Campus");
                         double lat;
                         double lng;
-
-                        /*
-                            Can we get some consistency on the null values please, I can't for the
-                            life of me figure out how to match a string to "N/A" because nothing
-                            actually does. "N/A" and "N\/A" both don't match up to the N/A given
-                            from the JSON... so for now I'm just doing a catch-all solution.
-                        */
                         try {
                             lat = resourceJSON.getDouble("Latitude");
                             lng = resourceJSON.getDouble("Longitude");
                         } catch (org.json.JSONException j) {
-                            /*
-                            Replace with the lat/long of Sproul Plaza, I guess.
-                            Right now this lat/long is whatever Bing says UC Berkeley is at.
-                            Notably this code allows resources to open but some resources have
-                                null lat/longs (this is carried over from libraries).
-                             */
-                            lat = 37.87;
-                            lng = -122.259;
+                            // Insert an invalid Lat and Lng.
+                            lat = Resource.INVALID_COORD;
+                            lng = Resource.INVALID_COORD;
                         }
                         String notes = resourceJSON.getString("Notes");
                         resources.add(new Resource(resource, topic, phone1, phone2, location, hours,
