@@ -109,14 +109,8 @@ public class LibraryController implements Controller {
                             lat = libraryJSON.getDouble("latitude");
                             lng = libraryJSON.getDouble("longitude");
                         } else {
-                            /*
-                            Replace with the lat/long of Sproul Plaza, I guess.
-                            Right now this lat/long is whatever Bing says UC Berkeley is at.
-                            Notably this code allows libraries to open but some libraries have
-                                null lat/longs.
-                             */
-                            lat = 37.87;
-                            lng = -122.259;
+                            lat = Library.INVALID_COORD;
+                            lng = Library.INVALID_COORD;
                         }
                         JSONArray weeklyAppointmentArray =
                                 libraryJSON.getJSONArray("weekly_by_appointment");

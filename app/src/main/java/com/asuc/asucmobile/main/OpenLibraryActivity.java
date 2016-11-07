@@ -37,9 +37,10 @@ import java.util.Locale;
 
 public class OpenLibraryActivity extends BaseActivity {
 
-    private static final int REQUEST_CODE_PLAY_SERVICES = 1;
+    private static final LatLng CAMPUS_LOCATION = new LatLng(37.871899, -122.25854);
     private static final SimpleDateFormat HOURS_FORMAT =
             new SimpleDateFormat("h:mm a", Locale.ENGLISH);
+    private static final int REQUEST_CODE_PLAY_SERVICES = 1;
 
     private MapFragment mapFragment;
     private GoogleMap map;
@@ -158,20 +159,25 @@ public class OpenLibraryActivity extends BaseActivity {
                 public void onMapReady(GoogleMap googleMap) {
                     if (googleMap != null) {
                         map = googleMap;
-                        BitmapDescriptor bitmap = BitmapDescriptorFactory.fromResource(R.drawable.icon_map_pin);
-                        map.addMarker(new MarkerOptions()
-                                .position(library.getCoordinates())
-                                .icon(bitmap)
-                                .title(library.getName())
-                        );
                         map.getUiSettings().setZoomControlsEnabled(false);
-                        map.moveCamera(CameraUpdateFactory.newLatLngZoom(library.getCoordinates(), 17));
-                        map.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
-                            @Override
-                            public void onMapClick(LatLng latLng) {
-                                openMap();
-                            }
-                        });
+                        if (library.getCoordinates() != null) {
+                            BitmapDescriptor bitmap =
+                                    BitmapDescriptorFactory.fromResource(R.drawable.icon_map_pin);
+                            map.addMarker(new MarkerOptions()
+                                    .position(library.getCoordinates())
+                                    .icon(bitmap)
+                                    .title(library.getName())
+                            );
+                            map.moveCamera(CameraUpdateFactory.newLatLngZoom(library.getCoordinates(), 17));
+                            map.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
+                                @Override
+                                public void onMapClick(LatLng latLng) {
+                                    openMap();
+                                }
+                            });
+                        } else {
+                            map.moveCamera(CameraUpdateFactory.newLatLngZoom(CAMPUS_LOCATION, 14));
+                        }
                     }
                 }
             });
