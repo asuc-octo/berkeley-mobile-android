@@ -2,6 +2,7 @@ package com.asuc.asucmobile.controllers;
 
 import android.app.Activity;
 import android.content.Context;
+import android.support.annotation.NonNull;
 import android.util.Log;
 
 import com.asuc.asucmobile.models.DiningHall;
@@ -24,38 +25,31 @@ import java.util.TimeZone;
 public class DiningController implements Controller {
 
     private static final String TAG = "DiningController";
-
     private static final String URL = BASE_URL + "/dining_halls";
     private static final SimpleDateFormat DATE_FORMAT =
             new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.ENGLISH);
     private static final TimeZone PST = TimeZone.getTimeZone("America/Los_Angeles");
-
     private static final String[] HAS_LATE_NIGHT = {"Crossroads","Foothill"};
 
     private static DiningController instance;
 
-    private Context context;
     private ArrayList<DiningHall> diningHalls;
     private Callback callback;
-
     private DiningHall currentDiningHall;
 
-    public static Controller getInstance(Context context) {
+    public static Controller getInstance() {
         if (instance == null) {
             instance = new DiningController();
         }
-
-        instance.context = context;
-
         return instance;
     }
 
-    public DiningController() {
+    private DiningController() {
         diningHalls = new ArrayList<>();
     }
 
     @Override
-    public void setResources(final JSONArray array) {
+    public void setResources(@NonNull final Context context, final JSONArray array) {
         if (array == null) {
             ((Activity) context).runOnUiThread(new Runnable() {
                 @Override
@@ -65,7 +59,6 @@ public class DiningController implements Controller {
             });
             return;
         }
-
         diningHalls.clear();
 
         /*
@@ -80,7 +73,6 @@ public class DiningController implements Controller {
                         JSONObject diningHall = array.getJSONObject(i);
                         String id = diningHall.getString("id");
                         String name = diningHall.getString("name");
-
                         JSONArray breakfastJSON = diningHall.getJSONArray("breakfast_menu");
                         ArrayList<FoodItem> breakfastMenu = new ArrayList<>();
                         for (int j = 0; j < breakfastJSON.length(); j++) {
@@ -93,9 +85,7 @@ public class DiningController implements Controller {
                                     foodJSON.optDouble("cost")
                             ));
                         }
-
                         Collections.sort(breakfastMenu, CustomComparators.FacilityComparators.getFoodSortByFavorite(context));
-
                         JSONArray lunchJSON = diningHall.getJSONArray("lunch_menu");
                         ArrayList<FoodItem> lunchMenu = new ArrayList<>();
                         for (int j = 0; j < lunchJSON.length(); j++) {
@@ -108,9 +98,7 @@ public class DiningController implements Controller {
                                     foodJSON.optDouble("cost")
                             ));
                         }
-
                         Collections.sort(lunchMenu, CustomComparators.FacilityComparators.getFoodSortByFavorite(context));
-
                         JSONArray dinnerJSON = diningHall.getJSONArray("dinner_menu");
                         ArrayList<FoodItem> dinnerMenu = new ArrayList<>();
                         for (int j = 0; j < dinnerJSON.length(); j++) {
@@ -123,7 +111,6 @@ public class DiningController implements Controller {
                                     foodJSON.optDouble("cost")
                             ));
                         }
-
                         Collections.sort(dinnerMenu, CustomComparators.FacilityComparators.getFoodSortByFavorite(context));
 
                         /*
@@ -145,14 +132,10 @@ public class DiningController implements Controller {
                                 ));
                             }
                         }
-
                         Collections.sort(lateNightMenu, CustomComparators.FacilityComparators.getFoodSortByFavorite(context));
-
                         long tmpDate;
-
                         String openingString = diningHall.getString("breakfast_open");
                         String closingString = diningHall.getString("breakfast_close");
-
                         Date breakfastOpening = null;
                         Date breakfastClosing = null;
                         if (!openingString.equals("null")) {
@@ -163,10 +146,8 @@ public class DiningController implements Controller {
                             tmpDate = DATE_FORMAT.parse(closingString).getTime();
                             breakfastClosing = new Date(tmpDate + PST.getOffset(tmpDate));
                         }
-                        
                         openingString = diningHall.getString("lunch_open");
                         closingString = diningHall.getString("lunch_close");
-                        
                         Date lunchOpening = null;
                         Date lunchClosing = null;
                         if (!openingString.equals("null")) {
@@ -177,10 +158,8 @@ public class DiningController implements Controller {
                             tmpDate = DATE_FORMAT.parse(closingString).getTime();
                             lunchClosing = new Date(tmpDate + PST.getOffset(tmpDate));
                         }
-
                         openingString = diningHall.getString("dinner_open");
                         closingString = diningHall.getString("dinner_close");
-
                         Date dinnerOpening = null;
                         Date dinnerClosing = null;
                         if (!openingString.equals("null")) {
@@ -191,10 +170,8 @@ public class DiningController implements Controller {
                             tmpDate = DATE_FORMAT.parse(closingString).getTime();
                             dinnerClosing = new Date(tmpDate + PST.getOffset(tmpDate));
                         }
-
                         openingString = diningHall.getString("late_night_open");
                         closingString = diningHall.getString("late_night_close");
-
                         Date lateNightOpening = null;
                         Date lateNightClosing = null;
                         if (!openingString.equals("null")) {
@@ -205,9 +182,7 @@ public class DiningController implements Controller {
                             tmpDate = DATE_FORMAT.parse(closingString).getTime();
                             lateNightClosing = new Date(tmpDate + PST.getOffset(tmpDate));
                         }
-
                         String imageUrl = diningHall.getString("image_link");
-
                         diningHalls.add(new DiningHall(
                                 id, name, breakfastMenu, lunchMenu, dinnerMenu, lateNightMenu,
                                 breakfastOpening, breakfastClosing, lunchOpening, lunchClosing,
@@ -215,7 +190,6 @@ public class DiningController implements Controller {
                                 imageUrl
                         ));
                     }
-
                     ((Activity) context).runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
@@ -236,9 +210,9 @@ public class DiningController implements Controller {
     }
 
     @Override
-    public void refreshInBackground(Callback callback) {
+    public void refreshInBackground(@NonNull Context context, Callback callback) {
         this.callback = callback;
-        JSONUtilities.readJSONFromUrl(URL, "dining_halls", DiningController.getInstance(context));
+        JSONUtilities.readJSONFromUrl(context, URL, "dining_halls", DiningController.getInstance());
     }
 
     public void setCurrentDiningHall(DiningHall diningHall) {

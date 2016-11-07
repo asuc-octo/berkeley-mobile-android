@@ -7,29 +7,24 @@ import android.view.View;
 
 import com.asuc.asucmobile.R;
 import com.asuc.asucmobile.utilities.NavigationGenerator;
-import com.flurry.android.FlurryAgent;
 
 public class BaseActivity extends AppCompatActivity {
-
-    private static final String FLURRY_API_KEY = "4VPTT49FCCKH7Z2NVQ26";
 
     protected void onCreate(Bundle savedInstanceState, int layout) {
         super.onCreate(savedInstanceState);
         setContentView(layout);
-        FlurryAgent.onStartSession(this, FLURRY_API_KEY);
-        NavigationGenerator.generateMenu(this);
+        NavigationGenerator.getInstance().generateMenu(this);
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        NavigationGenerator.generateMenu(this);
+        NavigationGenerator.getInstance().generateMenu(this);
     }
 
     @Override
     protected void onStop() {
         super.onStop();
-        FlurryAgent.onEndSession(this);
     }
 
     @SuppressWarnings("deprecation")

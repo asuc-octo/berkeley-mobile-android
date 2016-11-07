@@ -2,6 +2,7 @@ package com.asuc.asucmobile.controllers;
 
 import android.app.Activity;
 import android.content.Context;
+import android.support.annotation.NonNull;
 
 import com.asuc.asucmobile.models.Bus;
 import com.asuc.asucmobile.utilities.Callback;
@@ -18,28 +19,23 @@ public class BusController implements Controller{
     private static final String URL = BASE_URL + "/bt_buses";
 
     private static BusController instance;
-    private Context context;
     private Callback callback;
-
     private ArrayList<Bus> buses;
 
-    public static Controller getInstance(Context context) {
+    public static Controller getInstance() {
         if (instance == null) {
             instance = new BusController();
         }
-
-        instance.context = context;
-
         return instance;
     }
 
-    public BusController() {
+    private BusController() {
         buses = new ArrayList<>();
     }
 
     @Override
-    public void setResources(final JSONArray array) {
-        if (array == null && context != null) {
+    public void setResources(@NonNull final Context context, final JSONArray array) {
+        if (array == null) {
             ((Activity) context).runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
@@ -67,7 +63,8 @@ public class BusController implements Controller{
                         }
                         int id = bus.getInt("id");
                         String name = bus.getString("line_name");
-                        LatLng location = new LatLng(bus.getDouble("latitude"), bus.getDouble("longitude"));
+                        LatLng location =
+                                new LatLng(bus.getDouble("latitude"), bus.getDouble("longitude"));
                         Bus newBus = new Bus(id, location, 0, 0, 0, 0, name, true);
                         buses.add(newBus);
                     }
@@ -78,24 +75,21 @@ public class BusController implements Controller{
                         }
                     });
                 } catch (Exception e) {
-                    if (context != null) {
-                        ((Activity) context).runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                callback.onRetrievalFailed();
-                            }
-                        });
-                    }
+                    ((Activity) context).runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            callback.onRetrievalFailed();
+                        }
+                    });
                 }
             }
         }).start();
-
     }
 
     @Override
-    public void refreshInBackground(Callback callback) {
+    public void refreshInBackground(@NonNull Context context, Callback callback) {
         this.callback = callback;
-        JSONUtilities.readJSONFromUrl(URL, "buses", BusController.getInstance(context));
+        JSONUtilities.readJSONFromUrl(context, URL, "buses", BusController.getInstance());
     }
 
 }

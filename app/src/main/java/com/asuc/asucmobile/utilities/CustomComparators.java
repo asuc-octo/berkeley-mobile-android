@@ -5,6 +5,7 @@ import android.content.Context;
 import com.asuc.asucmobile.main.ListOfFavorites;
 import com.asuc.asucmobile.models.FoodItem;
 import com.asuc.asucmobile.models.Library;
+import com.asuc.asucmobile.models.Resource;
 
 import java.util.Comparator;
 
@@ -101,6 +102,35 @@ public class CustomComparators {
             public int compare(FoodItem arg0, FoodItem arg1) {
                 if (!arg0.getFoodType().equals("None") && arg0.getFoodType().toUpperCase().equals("VEGAN")) return -1;
                 if (!arg1.getFoodType().equals("None") && arg1.getFoodType().toUpperCase().equals("VEGAN")) return 1;
+                return arg0.compareTo(arg1);
+            }
+        };
+
+        public static Comparator<Resource> getSortByFavoriteResource(final Context context) {
+            return new Comparator<Resource>() {
+                @Override
+                public int compare(Resource lhs, Resource rhs) {
+                    ListOfFavorites listOfFavorites = (ListOfFavorites) SerializableUtilities.loadSerializedObject(context);
+                    if (listOfFavorites == null || lhs == null || rhs == null) {
+                        return 0;
+                    }
+
+                    if (listOfFavorites.contains(lhs.getResource()) && listOfFavorites.contains(rhs.getResource())) {
+                        return lhs.compareTo(rhs);
+                    }
+                    if (listOfFavorites.contains(lhs.getResource())) return -1;
+                    if (listOfFavorites.contains(rhs.getResource())) return 1;
+                    return lhs.compareTo(rhs);
+                }
+            };
+        }
+
+        public static Comparator<Resource> getSortResourcesByAZ() {
+            return sortResourcesByAZ;
+        }
+
+        private static Comparator<Resource> sortResourcesByAZ = new Comparator<Resource>() {
+            public int compare(Resource arg0, Resource arg1) {
                 return arg0.compareTo(arg1);
             }
         };

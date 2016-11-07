@@ -19,10 +19,8 @@ public class Stop {
     private String name;
     private String abbreviatedName;
     private LatLng location;
-
     private Date startTime;
     private Date endTime;
-
     private String distance = "";
 
     public Stop(int id, String name, LatLng location) {
@@ -73,7 +71,6 @@ public class Stop {
     public void setDistance(double lat, double lng) {
         float[] results = new float[1];
         Location.distanceBetween(lat, lng, location.latitude, location.longitude, results);
-
         distance = DECIMAL_FORMAT.format(results[0] * 0.000621371192);
     }
 

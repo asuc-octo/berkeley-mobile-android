@@ -1,5 +1,7 @@
 package com.asuc.asucmobile.models;
 
+import android.support.annotation.NonNull;
+
 import java.text.DecimalFormat;
 
 public class FoodItem implements Comparable<FoodItem> {
@@ -40,7 +42,7 @@ public class FoodItem implements Comparable<FoodItem> {
     }
 
     @Override
-    public int compareTo(FoodItem other) {
+    public int compareTo(@NonNull FoodItem other) {
         return this.getName().compareTo(other.getName());
     }
 
