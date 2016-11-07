@@ -6,6 +6,9 @@ import com.google.android.gms.maps.model.LatLng;
 
 public class Resource implements Comparable<Resource>{
 
+    public static final double INVALID_COORD = -181;
+
+    private boolean hasCoordinates;
     private String resource;
     private String topic;
     private String phone1;
@@ -29,7 +32,12 @@ public class Resource implements Comparable<Resource>{
         this.email = email;
         this.onOrOffCampus = onOrOffCampus;
         this.notes = notes;
-        this.latLng = new LatLng(lat, lng);
+        if (lat == INVALID_COORD || lng == INVALID_COORD) {
+            hasCoordinates = false;
+        } else {
+            hasCoordinates = true;
+            this.latLng = new LatLng(lat, lng);
+        }
     }
 
     public String getResource() {
@@ -73,7 +81,7 @@ public class Resource implements Comparable<Resource>{
     }
 
     public LatLng getCoordinates() {
-        return latLng;
+        return hasCoordinates ? latLng : null;
     }
 
     public String getNotes() {
