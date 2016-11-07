@@ -50,9 +50,10 @@ import java.util.TimerTask;
 public class StartStopSelectFragment extends Fragment
     implements OnMapReadyCallback, ActivityCompat.OnRequestPermissionsResultCallback {
 
+    private static final LatLng CAMPUS_LOCATION = new LatLng(37.871899, -122.25854);
+    private static final int END_INT = 2;
     private static final int LOCATION_PERMISSION = 0;
     private static final int START_INT = 1;
-    private static final int END_INT = 2;
     private static final SimpleDateFormat TIME_FORMAT =
             new SimpleDateFormat("MMM d @ h:mm a", Locale.ENGLISH);
 
@@ -237,7 +238,7 @@ public class StartStopSelectFragment extends Fragment
                 ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
             map.setMyLocationEnabled(true);
         }
-        CameraUpdate update = CameraUpdateFactory.newLatLngZoom(new LatLng(37.871899, -122.25854), 14.5f);
+        CameraUpdate update = CameraUpdateFactory.newLatLngZoom(CAMPUS_LOCATION, 14.5f);
         map.moveCamera(update);
         busCallback = new BusCallback(context, map, refreshWrapper, LiveBusActivity.timer);
         liveTrack();
