@@ -11,7 +11,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:elevation="8dp">
+        android:elevation="8dp"
+        tools:ignore="all">
 
         <LinearLayout
             android:layout_width="64dp"
@@ -170,7 +171,8 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
-        app:backgroundTint="@color/hotline_blue" />
+        app:backgroundTint="@color/hotline_blue"
+        tools:ignore="all" />
 
     <LinearLayout
         android:orientation="vertical"

@@ -33,7 +33,7 @@ public class SAOFragment extends Fragment {
 
         Toolbar toolbar = (Toolbar) layout.findViewById(R.id.toolbar);
         ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
-        NavigationGenerator.generateToolbarMenuButton(toolbar);
+        NavigationGenerator.generateToolbarMenuButton(getActivity(), toolbar);
         toolbar.setTitle("Student Advocate Office");
 
         final TextView description = (TextView) layout.findViewById(R.id.sao_description);
@@ -57,7 +57,7 @@ public class SAOFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        NavigationGenerator.closeMenu();
+        NavigationGenerator.closeMenu(getActivity());
     }
 
     private SpannableString createDescriptionText(String text, String button) {

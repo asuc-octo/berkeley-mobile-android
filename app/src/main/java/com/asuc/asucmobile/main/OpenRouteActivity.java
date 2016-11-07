@@ -46,7 +46,7 @@ public class OpenRouteActivity extends BaseActivity {
     @SuppressWarnings("all")
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState, R.layout.activity_open_route);
-        exitIfNoData();
+        if (exitIfNoData()) return;
         setupToolbar("Route", true);
 
         // Get references to views.
@@ -90,11 +90,13 @@ public class OpenRouteActivity extends BaseActivity {
         return true;
     }
 
-    private void exitIfNoData() {
-        route = ((RouteController) RouteController.getInstance(this)).getCurrentRoute();
+    private boolean exitIfNoData() {
+        route = ((RouteController) RouteController.getInstance()).getCurrentRoute();
         if (route == null) {
             finish();
+            return true;
         }
+        return false;
     }
 
     @SuppressWarnings("deprecation")

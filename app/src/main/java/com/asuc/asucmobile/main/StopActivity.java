@@ -24,7 +24,6 @@ import com.asuc.asucmobile.controllers.LineController;
 import com.asuc.asucmobile.models.Stop;
 import com.asuc.asucmobile.utilities.Callback;
 import com.asuc.asucmobile.utilities.LocationGrabber;
-import com.flurry.android.FlurryAgent;
 import com.google.android.gms.maps.model.LatLng;
 
 import java.util.ArrayList;
@@ -144,14 +143,6 @@ public class StopActivity extends BaseActivity {
         refresh();
     }
 
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-
-        //Flurry logging for pressing the Back Button
-        FlurryAgent.logEvent("Tapped on the Back Button (Stops)");
-    }
-
     //////////////////////////////////////
     //////// App callback methods ////////
     //////////////////////////////////////
@@ -182,7 +173,7 @@ public class StopActivity extends BaseActivity {
         mRefreshWrapper.setVisibility(View.GONE);
         mProgressBar.setVisibility(View.VISIBLE);
 
-        LineController.getInstance(this).refreshInBackground(new Callback() {
+        LineController.getInstance().refreshInBackground(this, new Callback() {
             @Override
             @SuppressWarnings("unchecked")
             public void onDataRetrieved(Object data) {

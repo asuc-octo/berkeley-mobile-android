@@ -20,7 +20,8 @@
                 android:layout_height="wrap_content"
                 android:layout_width="match_parent"
                 android:elevation="8dp"
-                style="@style/ToolbarTheme" />
+                style="@style/ToolbarTheme"
+                tools:ignore="all" />
 
             <FrameLayout
                 android:layout_width="match_parent"
@@ -53,13 +54,14 @@
                 android:paddingTop="20dp"
                 android:paddingBottom="20dp"
                 android:animateLayoutChanges="true"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                tools:ignore="all">
 
                 <ImageView
                     android:layout_width="28dp"
                     android:layout_height="28dp"
-                    android:contentDescription="@string/content_desc"
                     android:layout_marginTop="2dp"
+                    android:contentDescription="@string/content_desc"
                     android:src="@drawable/icon_hours" />
 
                 <TextView
@@ -71,18 +73,82 @@
                     android:layout_gravity="center_vertical"
                     android:textColor="@android:color/black" />
 
-                <TextView
-                    android:id="@+id/hours_expand"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="24dp"
-                    android:layout_marginRight="24dp"
-                    android:layout_marginLeft="24dp"
-                    android:gravity="right"
-                    android:textColor="@android:color/black" />
             </LinearLayout>
 
             <View
+                android:id="@+id/divider_hours_phone"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@android:color/darker_gray" />
+
+            <LinearLayout
+                android:id="@+id/phone_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:minHeight="72dp"
+                android:paddingLeft="24dp"
+                android:paddingRight="24dp"
+                android:paddingTop="20dp"
+                android:paddingBottom="20dp"
+                android:orientation="horizontal"
+                android:background="@drawable/white_selector">
+
+                <ImageView
+                    android:layout_width="28dp"
+                    android:layout_height="28dp"
+                    android:contentDescription="@string/content_desc"
+                    android:layout_marginTop="2dp"
+                    android:src="@drawable/icon_phone" />
+
+                <TextView
+                    android:id="@+id/phone"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="24dp"
+                    android:layout_marginLeft="24dp"
+                    android:layout_gravity="center_vertical"
+                    android:textColor="@android:color/black" />
+
+            </LinearLayout>
+
+            <View
+                android:id="@+id/divider_phone_email"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@android:color/darker_gray" />
+
+            <LinearLayout
+                android:id="@+id/email_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:minHeight="72dp"
+                android:paddingLeft="24dp"
+                android:paddingRight="24dp"
+                android:paddingTop="20dp"
+                android:paddingBottom="20dp"
+                android:orientation="horizontal"
+                android:background="@drawable/white_selector">
+
+                <ImageView
+                    android:layout_width="28dp"
+                    android:layout_height="28dp"
+                    android:contentDescription="@string/content_desc"
+                    android:layout_marginTop="2dp"
+                    android:src="@drawable/icon_email" />
+
+                <TextView
+                    android:id="@+id/email"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="24dp"
+                    android:layout_marginLeft="24dp"
+                    android:layout_gravity="center_vertical"
+                    android:textColor="@android:color/black" />
+
+            </LinearLayout>
+
+            <View
+                android:id="@+id/divider_email_location"
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:background="@android:color/darker_gray" />
@@ -118,13 +184,13 @@
             </LinearLayout>
 
             <View
-                android:id="@+id/bottom_divider"
+                android:id="@+id/divider_location_notes"
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:background="@android:color/darker_gray" />
 
             <LinearLayout
-                android:id="@+id/phone_layout"
+                android:id="@+id/notes_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:minHeight="72dp"
@@ -140,10 +206,10 @@
                     android:layout_height="28dp"
                     android:contentDescription="@string/content_desc"
                     android:layout_marginTop="2dp"
-                    android:src="@drawable/icon_phone" />
+                    android:src="@drawable/icon_misc" />
 
                 <TextView
-                    android:id="@+id/phone"
+                    android:id="@+id/notes"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="24dp"
@@ -166,7 +232,8 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="160dp"
-            android:elevation="4dp">
+            android:elevation="4dp"
+            tools:ignore="all">
 
             <ImageView
                 android:layout_width="match_parent"
