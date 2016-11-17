@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.support.annotation.NonNull;
 
+import com.asuc.asucmobile.models.Card;
 import com.asuc.asucmobile.models.Gym;
 import com.asuc.asucmobile.utilities.Callback;
 import com.asuc.asucmobile.utilities.JSONUtilities;
@@ -12,27 +13,24 @@ import com.asuc.asucmobile.utilities.JsonToObject;
 import org.json.JSONArray;
 import java.util.ArrayList;
 
-public class GymController implements Controller {
+public class GymCardController implements Controller {
 
-    private static final String URL = BASE_URL + "/gyms";
-
-    private static GymController instance;
-
-    private ArrayList<Gym> gyms;
+    private static String URL = BASE_URL+"/gyms";
+    private static GymCardController instance;
+    private ArrayList<Card> cards;
     private Callback callback;
-    private Gym currentGym;
 
     public static Controller getInstance() {
         if (instance == null) {
-            instance = new GymController();
+            instance = new GymCardController();
         }
         return instance;
     }
 
-    private GymController() {
-        gyms = new ArrayList<>();
+    private GymCardController() {
+        cards = new ArrayList<>();
     }
-    
+
     @Override
     public void setResources(@NonNull final Context context, final JSONArray array) {
         if (array == null) {
@@ -44,24 +42,20 @@ public class GymController implements Controller {
             });
             return;
         }
-        gyms.clear();
 
-        /*
-         *  Parsing JSON data into models is put into a background thread so that the UI thread
-         *  won't lag.
-         */
         new Thread(new Runnable() {
             @Override
             public void run() {
                 try {
                     for (int i = 0; i < array.length(); i++) {
-                        Gym gym = (Gym) JsonToObject.retrieve(array.getJSONObject(i), "gyms", context);
-                        gyms.add(gym);
+                        Gym data = (Gym) JsonToObject.retrieve(array.getJSONObject(i), "gyms", context);
+                        Card card = new Card(data.getImageUrl(), data.getName(), data.getAddress(), data.isOpen(), data);
+                        cards.add(card);
                     }
                     ((Activity) context).runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            callback.onDataRetrieved(gyms);
+                            callback.onDataRetrieved(cards);
                         }
                     });
                 } catch (Exception e) {
@@ -75,20 +69,14 @@ public class GymController implements Controller {
                 }
             }
         }).start();
+
+
     }
 
     @Override
     public void refreshInBackground(@NonNull Context context, Callback callback) {
         this.callback = callback;
-        JSONUtilities.readJSONFromUrl(context, URL, "gyms", GymController.getInstance());
-    }
-
-    public void setCurrentGym(Gym gym) {
-        currentGym = gym;
-    }
-
-    public Gym getCurrentGym() {
-        return currentGym;
+        JSONUtilities.readJSONFromUrl(context, URL, "gyms", GymCardController.getInstance());
     }
 
 }

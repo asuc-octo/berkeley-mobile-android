@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/off_white"
+    android:id="@+id/blank_fragment">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:elevation="8dp"
+        style="@style/ToolbarTheme" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/diningHallText"
+        android:layout_below="@+id/toolbar"
+        android:text="Dining Halls"/>
+
+    <com.devsmart.android.ui.HorizontalListView
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:layout_below="@+id/diningHallText"
+        android:id="@+id/listDiningHalls"></com.devsmart.android.ui.HorizontalListView>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/listDiningHalls"
+        android:id="@+id/gymText"
+        android:text="Gyms"/>
+
+    <com.devsmart.android.ui.HorizontalListView
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:layout_below="@+id/gymText"
+        android:id="@+id/listGyms"></com.devsmart.android.ui.HorizontalListView>
+
+
+
+</RelativeLayout>

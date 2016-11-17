@@ -18,7 +18,7 @@ public class BlankFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View layout = inflater.inflate(R.layout.fragment_blank, container, false);
+        View layout = inflater.inflate(R.layout.fragment_home, container, false);
         Toolbar toolbar = (Toolbar) layout.findViewById(R.id.toolbar);
         ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
         NavigationGenerator.generateToolbarMenuButton(getActivity(), toolbar);
