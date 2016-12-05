@@ -12,6 +12,10 @@ android {
         versionName "6.3.0"
         multiDexEnabled true
     }
+
+    dexOptions {
+        javaMaxHeapSize "4g"
+    }
 }
 
 dependencies {
