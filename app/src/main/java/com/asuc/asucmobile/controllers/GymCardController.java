@@ -11,7 +11,10 @@ import com.asuc.asucmobile.utilities.JSONUtilities;
 import com.asuc.asucmobile.utilities.JsonToObject;
 
 import org.json.JSONArray;
+
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Locale;
 
 public class GymCardController implements Controller {
 
@@ -19,6 +22,8 @@ public class GymCardController implements Controller {
     private static GymCardController instance;
     private ArrayList<Card> cards;
     private Callback callback;
+    private static final SimpleDateFormat HOURS_FORMAT =
+            new SimpleDateFormat("h:mm a", Locale.ENGLISH);
 
     public static Controller getInstance() {
         if (instance == null) {
@@ -49,7 +54,7 @@ public class GymCardController implements Controller {
                 try {
                     for (int i = 0; i < array.length(); i++) {
                         Gym data = (Gym) JsonToObject.retrieve(array.getJSONObject(i), "gyms", context);
-                        Card card = new Card(data.getImageUrl(), data.getName(), data.getAddress(), data.isOpen(), data);
+                        Card card = new Card(data.getImageUrl(), data.getName(), "Today: " + HOURS_FORMAT.format(data.getOpening()) + "- " + HOURS_FORMAT.format(data.getOpening()), data.isOpen(), data);
                         cards.add(card);
                     }
                     ((Activity) context).runOnUiThread(new Runnable() {

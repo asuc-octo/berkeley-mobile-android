@@ -12,10 +12,17 @@ import com.asuc.asucmobile.utilities.JSONUtilities;
 import com.asuc.asucmobile.utilities.JsonToObject;
 
 import org.json.JSONArray;
+
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Locale;
+
 import static android.content.ContentValues.TAG;
 
 public class DiningCardController implements Controller {
+
+    private static final SimpleDateFormat HOURS_FORMAT =
+            new SimpleDateFormat("h:mm a", Locale.ENGLISH);
 
     private static String URL = BASE_URL+"/dining_halls";
     private static DiningCardController instance;
@@ -51,7 +58,17 @@ public class DiningCardController implements Controller {
                 try {
                     for (int i = 0; i < array.length(); i++) {
                         DiningHall dining = (DiningHall) JsonToObject.retrieve(array.getJSONObject(i), "dining_halls", context);
-                        Card card = new Card(dining.getImageUrl(), dining.getName(), null, dining.isOpen(), dining);
+                        String menuOpen = null;
+                        if (dining.isBreakfastOpen()) {
+                            menuOpen = "Breakfast:" + HOURS_FORMAT.format(dining.getBreakfastOpening()) + "- "  + HOURS_FORMAT.format(dining.getBreakfastClosing()) ;
+                        } else if (dining.isLunchOpen()) {
+                            menuOpen = "Lunch:" + dining.getLunchOpening().toString() + "- " + dining.getLunchClosing().toString();
+                        } else if (dining.isDinnerOpen()) {
+                            menuOpen = "Dinner: " + dining.getDinnerOpening().toString() + "- " + dining.getDinnerClosing().toString();
+                        } else if (dining.isLateNightOpen()) {
+                            menuOpen = "Late Night: " + dining.getLateNightOpening().toString() + "- " + dining.getLateNightClosing().toString();
+                        }
+                        Card card = new Card(dining.getImageUrl(), dining.getName(), menuOpen, dining.isOpen(), dining);
                         cards.add(card);
 
                     }

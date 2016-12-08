@@ -4,14 +4,14 @@ public class Card {
 
     private String imageUrl;
     private String name;
-    private String location;
+    private String times;
     private boolean status;
     private Object data;
 
-    public Card(String imageUrl, String name, String location, boolean status, Object data) {
+    public Card(String imageUrl, String name, String times, boolean status, Object data) {
         this.imageUrl = imageUrl;
         this.name = name;
-        this.location = location;
+        this.times = times;
         this.status = status;
         this.data = data;
     }
@@ -32,12 +32,12 @@ public class Card {
         this.name = name;
     }
 
-    public String getLocation() {
-        return location;
+    public String getTimes() {
+        return times;
     }
 
-    public void setLocation(String location) {
-        this.location = location;
+    public void setTimes(String location) {
+        this.times = location;
     }
 
     public boolean getStatus() {
