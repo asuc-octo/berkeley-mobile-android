@@ -81,7 +81,17 @@ public class GymController implements Controller {
                             closing = new Date(tmpDate + PST.getOffset(tmpDate));
                         }
                         String imageUrl = gymJSON.getString("image_link");
-                        gyms.add(new Gym(id, name, address, opening, closing, imageUrl));
+                        double lat;
+                        double lng;
+                        if (!gymJSON.getString("latitude").equals("null") &&
+                                !gymJSON.getString("longitude").equals("null")) {
+                            lat = gymJSON.getDouble("latitude");
+                            lng = gymJSON.getDouble("longitude");
+                        } else {
+                            lat = Gym.INVALID_COORD;
+                            lng = Gym.INVALID_COORD;
+                        }
+                        gyms.add(new Gym(id, name, address, opening, closing, imageUrl, lat, lng));
                     }
                     ((Activity) context).runOnUiThread(new Runnable() {
                         @Override

@@ -2,6 +2,9 @@ package com.asuc.asucmobile.main;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -14,12 +17,15 @@ import android.text.style.ForegroundColorSpan;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.asuc.asucmobile.R;
 import com.asuc.asucmobile.controllers.LibraryController;
 import com.asuc.asucmobile.models.Library;
+import com.asuc.asucmobile.utilities.Callback;
+import com.asuc.asucmobile.utilities.ImageDownloadThread;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -50,13 +56,15 @@ public class OpenLibraryActivity extends BaseActivity {
     @Override
     @SuppressWarnings("all")
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState, R.layout.activity_open_library);
+        super.onCreate(savedInstanceState, R.layout.activity_open);
         exitIfNoData();
         setupToolbar(library.getName(), true);
 
         // Populate UI.
         final TextView hours = (TextView) findViewById(R.id.hours);
         final TextView hours_expand = (TextView) findViewById(R.id.hours_expand);
+        final View image = findViewById(R.id.image);
+        final ProgressBar loadingBar = (ProgressBar) findViewById(R.id.progress_bar);
         TextView address = (TextView) findViewById(R.id.location);
         TextView phone = (TextView) findViewById(R.id.phone);
         final LinearLayout hoursLayout = (LinearLayout) findViewById(R.id.hours_layout);
@@ -101,6 +109,28 @@ public class OpenLibraryActivity extends BaseActivity {
                 startActivity(i);
             }
         });
+
+        // Load library image.
+        loadingBar.bringToFront();
+        new ImageDownloadThread(this, library.getImageUrl(), new Callback() {
+            @Override
+            public void onDataRetrieved(Object data) {
+                if (data != null) {
+                    Bitmap bitmap = (Bitmap) data;
+                    Drawable bitmapDrawable = new BitmapDrawable(getResources(), bitmap);
+                    image.setBackgroundDrawable(bitmapDrawable);
+                }
+                loadingBar.setVisibility(View.GONE);
+                image.setVisibility(View.VISIBLE);
+            }
+
+            @Override
+            public void onRetrievalFailed() {
+                image.setBackgroundDrawable(getResources().getDrawable(R.drawable.default_library));
+                loadingBar.setVisibility(View.GONE);
+                image.setVisibility(View.VISIBLE);
+            }
+        }).start();
 
         // Display instructions if this is the first time opening this activity.
         SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
