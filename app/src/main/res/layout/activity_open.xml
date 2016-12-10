@@ -52,15 +52,15 @@
                     android:paddingTop="20dp"
                     android:paddingBottom="20dp"
                     android:animateLayoutChanges="true"
-                    android:background="#90000000"
-                    android:textColor="#ffffff"
+                    android:background="@color/transparent_black"
+                    android:textColor="@android:color/white"
                     android:layout_alignParentBottom="true">
 
                     <TextView
                         android:id="@+id/nametag"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textColor="#ffffff"
+                        android:textColor="@android:color/white"
                         android:textSize="18sp"
                         />
 
@@ -68,7 +68,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:id="@+id/addresstag"
-                        android:textColor="#ffffff"
+                        android:textColor="@android:color/white"
                         android:drawableLeft="@drawable/icon_pin"
                         android:layout_below="@+id/nametag"
                         android:gravity="center_vertical"
