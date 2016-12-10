@@ -63,6 +63,8 @@ public class OpenLibraryActivity extends BaseActivity {
         // Populate UI.
         final TextView hours = (TextView) findViewById(R.id.hours);
         final TextView hours_expand = (TextView) findViewById(R.id.hours_expand);
+        TextView nametag = (TextView) findViewById(R.id.nametag);
+        TextView addresstag = (TextView) findViewById(R.id.addresstag);
         final View image = findViewById(R.id.image);
         final ProgressBar loadingBar = (ProgressBar) findViewById(R.id.progress_bar);
         TextView address = (TextView) findViewById(R.id.location);
@@ -71,9 +73,14 @@ public class OpenLibraryActivity extends BaseActivity {
         LinearLayout locationLayout = (LinearLayout) findViewById(R.id.location_layout);
         LinearLayout phoneLayout = (LinearLayout) findViewById(R.id.phone_layout);
         mapFragment = (MapFragment) getFragmentManager().findFragmentById(R.id.map);
+
         hours.setText(setUpHours());
         address.setText(library.getLocation());
         phone.setText(library.getPhone());
+        android.util.Log.d("Library Name", library.getName());
+        nametag.setText(library.getName());
+        addresstag.setText(library.getLocation());
+
         locationLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

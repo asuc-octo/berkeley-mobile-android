@@ -19,7 +19,7 @@ public class Gym {
 
     public Gym(int id, String name, String address, Date opening, Date closing, String imageUrl, double lat, double lng) {
         this.id = id;
-        this.name = name;
+        this.name = name.replace("\n", "").trim();
         this.address = address;
         this.opening = opening;
         this.closing = closing;

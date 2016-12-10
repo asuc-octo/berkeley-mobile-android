@@ -32,7 +32,7 @@ public class Library implements Comparable<Library>{
                    Date closing, Date[] weeklyOpen, Date[] weeklyClose, double lat, double lng,
                    boolean byAppointment, boolean[] weeklyAppointments, int weekday, String imgUrl) {
         this.id = id;
-        this.name = name;
+        this.name = name.replace("\n", "").trim();
         this.location = location;
         this.phone = phone;
         this.opening = opening;
@@ -42,6 +42,7 @@ public class Library implements Comparable<Library>{
         this.weeklyClose = weeklyClose;
         this.weeklyAppointments = weeklyAppointments;
         this.weekday = weekday;
+        this.imageUrl = imgUrl;
         if (lat == INVALID_COORD || lng == INVALID_COORD) {
             hasCoordinates = false;
         } else {

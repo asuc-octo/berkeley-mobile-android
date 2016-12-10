@@ -41,9 +41,40 @@
                     android:id="@+id/image"
                     android:layout_width="fill_parent"
                     android:layout_height="fill_parent"
-                    android:background="@drawable/default_gym"
+                    android:background="@drawable/default_library"
                     android:visibility="invisible" />
 
+                <RelativeLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="24dp"
+                    android:paddingRight="24dp"
+                    android:paddingTop="20dp"
+                    android:paddingBottom="20dp"
+                    android:animateLayoutChanges="true"
+                    android:background="#90000000"
+                    android:textColor="#ffffff"
+                    android:layout_alignParentBottom="true">
+
+                    <TextView
+                        android:id="@+id/nametag"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textStyle="bold"
+                        android:textColor="#ffffff"
+                        android:textSize="18sp"
+                        />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/addresstag"
+                        android:textColor="#ffffff"
+                        android:drawableLeft="@drawable/icon_pin"
+                        android:layout_below="@+id/nametag"
+                        android:gravity="center_vertical"
+                        />
+                    </RelativeLayout>
             </RelativeLayout>
 
             <LinearLayout

@@ -57,6 +57,8 @@ public class OpenGymActivity extends BaseActivity {
         // Populate UI.
         TextView hours = (TextView) findViewById(R.id.hours);
         TextView address = (TextView) findViewById(R.id.location);
+        TextView nametag = (TextView) findViewById(R.id.nametag);
+        TextView addresstag = (TextView) findViewById(R.id.addresstag);
         final ProgressBar loadingBar = (ProgressBar) findViewById(R.id.progress_bar);
         final View image = findViewById(R.id.image);
         mapFragment = (MapFragment) getFragmentManager().findFragmentById(R.id.map);
@@ -83,6 +85,8 @@ public class OpenGymActivity extends BaseActivity {
         }
         hours.setText(hoursString);
         address.setText(gym.getAddress());
+        nametag.setText(gym.getName());
+        addresstag.setText(gym.getAddress());
 
         locationLayout.setOnClickListener(new View.OnClickListener() {
             @Override
