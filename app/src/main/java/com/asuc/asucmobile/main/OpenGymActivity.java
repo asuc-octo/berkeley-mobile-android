@@ -1,5 +1,6 @@
 package com.asuc.asucmobile.main;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
@@ -12,6 +13,7 @@ import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.style.ForegroundColorSpan;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
@@ -23,6 +25,7 @@ import com.asuc.asucmobile.controllers.GymController;
 import com.asuc.asucmobile.models.Gym;
 import com.asuc.asucmobile.utilities.Callback;
 import com.asuc.asucmobile.utilities.ImageDownloadThread;
+import com.asuc.asucmobile.utilities.SerializableUtilities;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -97,6 +100,32 @@ public class OpenGymActivity extends BaseActivity {
                 Intent i = new Intent(Intent.ACTION_DIAL);
                 i.setData(Uri.parse("tel:"));
                 startActivity(i);
+            }
+        });
+
+        //Add in favoriting to the individual view.
+        final Context context = getBaseContext();
+        final ListOfFavorites listOfFavorites = (ListOfFavorites) SerializableUtilities.loadSerializedObject(context);
+
+        final ImageView iconFavorite = (ImageView) findViewById(R.id.icon_favorite);
+        if (listOfFavorites != null && listOfFavorites.contains(gym.getName())) {
+            iconFavorite.setImageResource(R.drawable.post_favorite);
+        } else {
+            iconFavorite.setImageResource(R.drawable.pre_favorite);
+        }
+
+        iconFavorite.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (listOfFavorites != null && listOfFavorites.contains(gym.getName())) {
+                    listOfFavorites.remove(gym.getName());
+                    SerializableUtilities.saveObject(context, listOfFavorites);
+                    iconFavorite.setImageResource(R.drawable.pre_favorite);
+                } else if (listOfFavorites != null){
+                    listOfFavorites.add(gym.getName());
+                    SerializableUtilities.saveObject(context, listOfFavorites);
+                    iconFavorite.setImageResource(R.drawable.post_favorite);
+                }
             }
         });
 

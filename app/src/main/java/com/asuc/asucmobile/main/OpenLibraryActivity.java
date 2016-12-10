@@ -1,5 +1,6 @@
 package com.asuc.asucmobile.main;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
@@ -16,6 +17,7 @@ import android.text.TextUtils;
 import android.text.style.ForegroundColorSpan;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
@@ -27,6 +29,7 @@ import com.asuc.asucmobile.controllers.LibraryController;
 import com.asuc.asucmobile.models.Library;
 import com.asuc.asucmobile.utilities.Callback;
 import com.asuc.asucmobile.utilities.ImageDownloadThread;
+import com.asuc.asucmobile.utilities.SerializableUtilities;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -41,6 +44,8 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
+
+import static java.security.AccessController.getContext;
 
 public class OpenLibraryActivity extends BaseActivity {
 
@@ -111,6 +116,32 @@ public class OpenLibraryActivity extends BaseActivity {
                 Intent i = new Intent(Intent.ACTION_DIAL);
                 i.setData(Uri.parse("tel:" + library.getPhone()));
                 startActivity(i);
+            }
+        });
+
+        //Add in favoriting to the individual view.
+        final Context context = getBaseContext();
+        final ListOfFavorites listOfFavorites = (ListOfFavorites) SerializableUtilities.loadSerializedObject(context);
+
+        final ImageView iconFavorite = (ImageView) findViewById(R.id.icon_favorite);
+        if (listOfFavorites != null && listOfFavorites.contains(library.getName())) {
+            iconFavorite.setImageResource(R.drawable.post_favorite);
+        } else {
+            iconFavorite.setImageResource(R.drawable.pre_favorite);
+        }
+
+        iconFavorite.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (listOfFavorites != null && listOfFavorites.contains(library.getName())) {
+                    listOfFavorites.remove(library.getName());
+                    SerializableUtilities.saveObject(context, listOfFavorites);
+                    iconFavorite.setImageResource(R.drawable.pre_favorite);
+                } else if (listOfFavorites != null){
+                    listOfFavorites.add(library.getName());
+                    SerializableUtilities.saveObject(context, listOfFavorites);
+                    iconFavorite.setImageResource(R.drawable.post_favorite);
+                }
             }
         });
 

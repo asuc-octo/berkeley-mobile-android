@@ -85,6 +85,7 @@ public class LibraryFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
+        refresh();
         NavigationGenerator.closeMenu(getActivity());
     }
 
