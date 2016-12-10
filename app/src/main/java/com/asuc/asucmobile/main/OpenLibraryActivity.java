@@ -18,6 +18,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -67,16 +68,12 @@ public class OpenLibraryActivity extends BaseActivity {
         TextView addresstag = (TextView) findViewById(R.id.addresstag);
         final View image = findViewById(R.id.image);
         final ProgressBar loadingBar = (ProgressBar) findViewById(R.id.progress_bar);
-        TextView address = (TextView) findViewById(R.id.location);
-        TextView phone = (TextView) findViewById(R.id.phone);
         final LinearLayout hoursLayout = (LinearLayout) findViewById(R.id.hours_layout);
-        LinearLayout locationLayout = (LinearLayout) findViewById(R.id.location_layout);
-        LinearLayout phoneLayout = (LinearLayout) findViewById(R.id.phone_layout);
+        RelativeLayout phoneLayout = (RelativeLayout) findViewById(R.id.phone_layout);
+        RelativeLayout locationLayout = (RelativeLayout) findViewById(R.id.location_layout);
         mapFragment = (MapFragment) getFragmentManager().findFragmentById(R.id.map);
 
         hours.setText(setUpHours());
-        address.setText(library.getLocation());
-        phone.setText(library.getPhone());
         android.util.Log.d("Library Name", library.getName());
         nametag.setText(library.getName());
         addresstag.setText(library.getLocation());

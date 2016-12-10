@@ -14,6 +14,7 @@ import android.text.style.ForegroundColorSpan;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -55,15 +56,13 @@ public class OpenGymActivity extends BaseActivity {
         setupToolbar(gym.getName(), true);
 
         // Populate UI.
-        TextView hours = (TextView) findViewById(R.id.hours);
-        TextView address = (TextView) findViewById(R.id.location);
         TextView nametag = (TextView) findViewById(R.id.nametag);
         TextView addresstag = (TextView) findViewById(R.id.addresstag);
         final ProgressBar loadingBar = (ProgressBar) findViewById(R.id.progress_bar);
         final View image = findViewById(R.id.image);
         mapFragment = (MapFragment) getFragmentManager().findFragmentById(R.id.map);
-        LinearLayout phoneLayout = (LinearLayout) findViewById(R.id.phone_layout);
-        LinearLayout locationLayout = (LinearLayout) findViewById(R.id.location_layout);
+        RelativeLayout phoneLayout = (RelativeLayout) findViewById(R.id.phone_layout);
+        RelativeLayout locationLayout = (RelativeLayout) findViewById(R.id.location_layout);
         Spannable hoursString;
         if (gym.getOpening() != null && gym.getClosing() != null) {
             String isOpen;
@@ -83,8 +82,6 @@ public class OpenGymActivity extends BaseActivity {
             hoursString = new SpannableString("Today  UNKNOWN");
             hoursString.setSpan(new ForegroundColorSpan(Color.rgb(114, 205, 244)), 7, 14, Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
         }
-        hours.setText(hoursString);
-        address.setText(gym.getAddress());
         nametag.setText(gym.getName());
         addresstag.setText(gym.getAddress());
 
