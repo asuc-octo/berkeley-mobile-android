@@ -12,6 +12,7 @@ import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.style.ForegroundColorSpan;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -59,6 +60,8 @@ public class OpenGymActivity extends BaseActivity {
         final ProgressBar loadingBar = (ProgressBar) findViewById(R.id.progress_bar);
         final View image = findViewById(R.id.image);
         mapFragment = (MapFragment) getFragmentManager().findFragmentById(R.id.map);
+        LinearLayout phoneLayout = (LinearLayout) findViewById(R.id.phone_layout);
+        LinearLayout locationLayout = (LinearLayout) findViewById(R.id.location_layout);
         Spannable hoursString;
         if (gym.getOpening() != null && gym.getClosing() != null) {
             String isOpen;
@@ -81,6 +84,21 @@ public class OpenGymActivity extends BaseActivity {
         hours.setText(hoursString);
         address.setText(gym.getAddress());
 
+        locationLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openMap();
+            }
+        });
+        phoneLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(Intent.ACTION_DIAL);
+                i.setData(Uri.parse("tel:"));
+                startActivity(i);
+            }
+        });
+
         // Load gym image.
         loadingBar.bringToFront();
         new ImageDownloadThread(this, gym.getImageUrl(), new Callback() {
@@ -102,6 +120,7 @@ public class OpenGymActivity extends BaseActivity {
                 image.setVisibility(View.VISIBLE);
             }
         }).start();
+        setUpMap();
     }
 
     @SuppressWarnings("deprecation")
