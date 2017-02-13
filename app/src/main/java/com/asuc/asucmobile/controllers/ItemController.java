@@ -22,7 +22,7 @@ import java.util.TimeZone;
 
 public class ItemController implements Controller {
 
-    private static final String URL = BASE_URL + "/resources";
+    private static final String URL = BASE_URL + "/weekly_libraries";
     private static final SimpleDateFormat DATE_FORMAT =
             new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.ENGLISH);
     private static final TimeZone PST = TimeZone.getTimeZone("America/Los_Angeles");
@@ -152,7 +152,7 @@ public class ItemController implements Controller {
     @Override
     public void refreshInBackground(@NonNull Context context, Callback callback) {
         this.callback = callback;
-        JSONUtilities.readJSONFromUrl(context, URL, "items", ItemController.getInstance());
+        JSONUtilities.readJSONFromUrl(context, URL, "libraries", ItemController.getInstance());
     }
 
     public void setCurrentItem(Item item) {

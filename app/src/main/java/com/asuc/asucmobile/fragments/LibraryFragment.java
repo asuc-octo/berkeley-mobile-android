@@ -118,7 +118,6 @@ public class LibraryFragment extends Fragment {
             searchMenuItem.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
                 @Override
                 public boolean onMenuItemClick(MenuItem m) {
-                    System.out.println(m);
                     FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
                     return fragmentManager.beginTransaction()
                             .replace(R.id.content_frame, new ItemFragment())

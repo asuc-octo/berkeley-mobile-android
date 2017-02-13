@@ -3,6 +3,7 @@ package com.asuc.asucmobile.fragments;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
@@ -112,28 +113,16 @@ public class ResourceFragment extends Fragment {
         inflater.inflate(R.menu.resource, menu);
         final MenuItem searchMenuItem = menu.findItem(R.id.search);
         if (searchMenuItem != null) {
-            final SearchView searchView = (SearchView) searchMenuItem.getActionView();
-            if (searchView != null) {
-                // Setting up aesthetics.
-                EditText searchEditText = (EditText) searchView.findViewById(android.support.v7.appcompat.R.id.search_src_text);
-                searchEditText.setTextColor(getResources().getColor(android.R.color.white));
-                searchEditText.setHintTextColor(getResources().getColor(android.R.color.white));
-                searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-                    @Override
-                    public boolean onQueryTextSubmit(String s) {
-                        // Close the keyboard.
-                        searchView.clearFocus();
-                        return true;
-                    }
+            searchMenuItem.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+                @Override
+                public boolean onMenuItemClick(MenuItem m) {
+                    FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                    return fragmentManager.beginTransaction()
+                            .replace(R.id.content_frame, new ItemFragment())
+                            .commit() > 0;
+                }
+            });
 
-                    @Override
-                    public boolean onQueryTextChange(String s) {
-                        final Filter filter = mAdapter.getFilter();
-                        filter.filter(s);
-                        return true;
-                    }
-                });
-            }
         }
     }
 

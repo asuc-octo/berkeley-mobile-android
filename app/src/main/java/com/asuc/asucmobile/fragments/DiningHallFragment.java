@@ -40,6 +40,7 @@ public class DiningHallFragment extends Fragment {
         ((AppCompatActivity) getContext()).setSupportActionBar(toolbar);
         NavigationGenerator.generateToolbarMenuButton(getActivity(), toolbar);
         toolbar.setTitle("Dining Halls");
+        setHasOptionsMenu(true);
         ImageButton refreshButton = (ImageButton) layout.findViewById(R.id.refresh_button);
         mDiningList = (ListView) layout.findViewById(R.id.dining_hall_list);
         mProgressBar = (ProgressBar) layout.findViewById(R.id.progress_bar);
