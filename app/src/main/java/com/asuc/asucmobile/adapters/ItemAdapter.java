@@ -96,7 +96,7 @@ public class ItemAdapter extends BaseAdapter {
      */
     public void setList(ArrayList<Item> list) {
         allItems = list;
-        items = list;
+        items = new ArrayList<>();
 
         notifyDataSetChanged();
     }
@@ -116,7 +116,7 @@ public class ItemAdapter extends BaseAdapter {
                 ArrayList<Item> filteredItems = new ArrayList<>();
 
                 if (query == null || query.length() == 0) {
-                    filteredItems = allItems;
+                    //filteredItems = allItems;
                 } else {
                     for (Item item : allItems) {
                         if (item.getName().toLowerCase().contains(query.toString().toLowerCase()) ||
@@ -125,7 +125,6 @@ public class ItemAdapter extends BaseAdapter {
                         }
                     }
                 }
-
                 results.values = filteredItems;
                 results.count = filteredItems.size();
                 return results;

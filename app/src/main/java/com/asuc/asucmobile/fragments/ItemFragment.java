@@ -149,7 +149,7 @@ public class ItemFragment extends Fragment {
 
                 //Set up by clearing the list.
                 final Filter filter = mAdapter.getFilter();
-                filter.filter("!@#$%^&*()");
+                filter.filter("");
 
                 searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
                     @Override
