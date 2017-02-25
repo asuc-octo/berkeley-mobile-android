@@ -167,6 +167,8 @@ public class ItemFragment extends Fragment {
                     }
                 });
             }
+            //Expand searchView on entering the view.
+            searchMenuItem.expandActionView();
         }
     }
 
