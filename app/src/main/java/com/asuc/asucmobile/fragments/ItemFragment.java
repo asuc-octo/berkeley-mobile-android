@@ -1,5 +1,6 @@
 package com.asuc.asucmobile.fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
@@ -22,8 +23,14 @@ import android.widget.Toast;
 
 import com.asuc.asucmobile.R;
 import com.asuc.asucmobile.adapters.ItemAdapter;
+import com.asuc.asucmobile.controllers.DiningController;
+import com.asuc.asucmobile.controllers.GymController;
 import com.asuc.asucmobile.controllers.ItemController;
+import com.asuc.asucmobile.controllers.LibraryController;
 import com.asuc.asucmobile.main.ListOfFavorites;
+import com.asuc.asucmobile.main.OpenDiningHallActivity;
+import com.asuc.asucmobile.main.OpenGymActivity;
+import com.asuc.asucmobile.main.OpenLibraryActivity;
 import com.asuc.asucmobile.models.Item;
 import com.asuc.asucmobile.utilities.Callback;
 import com.asuc.asucmobile.utilities.NavigationGenerator;
@@ -31,6 +38,8 @@ import com.asuc.asucmobile.utilities.SerializableUtilities;
 
 import java.util.ArrayList;
 import java.util.Collections;
+
+import static com.asuc.asucmobile.controllers.Controller.FQDN;
 
 public class ItemFragment extends Fragment {
 
@@ -64,11 +73,41 @@ public class ItemFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 ItemController controller = (ItemController) ItemController.getInstance();
-                controller.setCurrentItem(mAdapter.getItem(i));
+                Item item = mAdapter.getItem(i);
+                controller.setCurrentItem(item);
+                String URL = FQDN + item.getQuery();
 
-                //Must be updated to a switch. Whoo.
-                //Intent intent = new Intent(getContext(), OpenItemActivity.class);
-                //startActivity(intent);
+                //Debugging. Jason debugs EXCLUSIVELY with print statements.
+                System.out.println(item);
+                Intent intent = null;
+                switch (item.getCategory()) {
+                    case "Dining Hall":
+                        controller.setItemFromUrl(getContext(),
+                                URL, "dining_halls", DiningController.getInstance());
+                        intent = new Intent(getContext(), OpenDiningHallActivity.class);
+                        break;
+                    case "Library":
+                        controller.setItemFromUrl(getContext(),
+                                URL, "library", LibraryController.getInstance());
+                        intent = new Intent(getContext(), OpenLibraryActivity.class);
+                        break;
+                    case "Sports Schedule":
+                        //intent = new Intent(getContext(), OpenItemActivity.class);
+                        break;
+                    case "Group Exercise":
+                        //intent = new Intent(getContext(), OpenItemActivity.class);
+                        break;
+                    case "Gym":
+                        controller.setItemFromUrl(getContext(),
+                                URL, "gym", GymController.getInstance());
+                        intent = new Intent(getContext(), OpenGymActivity.class);
+                        break;
+                    default:
+                        break;
+                }
+                if (intent != null) {
+                    startActivity(intent);
+                }
             }
         });
         refreshButton.setOnClickListener(new View.OnClickListener() {

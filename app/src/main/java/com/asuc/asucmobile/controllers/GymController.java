@@ -40,6 +40,28 @@ public class GymController implements Controller {
     private GymController() {
         gyms = new ArrayList<>();
     }
+
+    public Gym createNewItem(JSONObject gymJSON, Context context) throws Exception {
+        int id = gymJSON.getInt("id");
+        String name = gymJSON.getString("name");
+        String address = gymJSON.getString("address");
+        long tmpDate;
+        Date opening = null;
+        Date closing = null;
+        String openingString = gymJSON.getString("opening_time_today");
+        String closingString = gymJSON.getString("closing_time_today");
+        if (!openingString.equals("null")) {
+            tmpDate = DATE_FORMAT.parse(openingString).getTime();
+            opening = new Date(tmpDate + PST.getOffset(tmpDate));
+        }
+        if (!closingString.equals("null")) {
+            tmpDate = DATE_FORMAT.parse(closingString).getTime();
+            closing = new Date(tmpDate + PST.getOffset(tmpDate));
+        }
+        String imageUrl = gymJSON.getString("image_link");
+
+        return new Gym(id, name, address, opening, closing, imageUrl);
+    }
     
     @Override
     public void setResources(@NonNull final Context context, final JSONArray array) {
@@ -64,24 +86,8 @@ public class GymController implements Controller {
                 try {
                     for (int i = 0; i < array.length(); i++) {
                         JSONObject gymJSON = array.getJSONObject(i);
-                        int id = gymJSON.getInt("id");
-                        String name = gymJSON.getString("name");
-                        String address = gymJSON.getString("address");
-                        long tmpDate;
-                        Date opening = null;
-                        Date closing = null;
-                        String openingString = gymJSON.getString("opening_time_today");
-                        String closingString = gymJSON.getString("closing_time_today");
-                        if (!openingString.equals("null")) {
-                            tmpDate = DATE_FORMAT.parse(openingString).getTime();
-                            opening = new Date(tmpDate + PST.getOffset(tmpDate));
-                        }
-                        if (!closingString.equals("null")) {
-                            tmpDate = DATE_FORMAT.parse(closingString).getTime();
-                            closing = new Date(tmpDate + PST.getOffset(tmpDate));
-                        }
-                        String imageUrl = gymJSON.getString("image_link");
-                        gyms.add(new Gym(id, name, address, opening, closing, imageUrl));
+
+                        gyms.add(createNewItem(gymJSON, context));
                     }
                     ((Activity) context).runOnUiThread(new Runnable() {
                         @Override
@@ -106,6 +112,39 @@ public class GymController implements Controller {
     public void refreshInBackground(@NonNull Context context, Callback callback) {
         this.callback = callback;
         JSONUtilities.readJSONFromUrl(context, URL, "gyms", GymController.getInstance());
+    }
+
+    public void setItem(@NonNull final Context context, final JSONObject obj) {
+        if (obj == null) {
+            ((Activity) context).runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    callback.onRetrievalFailed();
+                }
+            });
+            return;
+        }
+
+        /*
+         *  Parsing JSON data into models is put into a background thread so that the UI thread
+         *  won't lag.
+         */
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    setCurrentGym(createNewItem(obj, context));
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    ((Activity) context).runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            callback.onRetrievalFailed();
+                        }
+                    });
+                }
+            }
+        }).start();
     }
 
     public void setCurrentGym(Gym gym) {

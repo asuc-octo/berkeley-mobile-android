@@ -22,7 +22,7 @@ import java.util.TimeZone;
 
 public class ItemController implements Controller {
 
-    private static final String URL = BASE_URL + "/weekly_libraries";
+    private static final String URL = BASE_URL + "/search_items";
     private static final SimpleDateFormat DATE_FORMAT =
             new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.ENGLISH);
     private static final TimeZone PST = TimeZone.getTimeZone("America/Los_Angeles");
@@ -43,6 +43,13 @@ public class ItemController implements Controller {
 
     private ItemController() {
         items = new ArrayList<>();
+    }
+
+    public Item createNewItem(JSONObject itemJSON, Context context) throws Exception {
+        String name = itemJSON.getString("name");
+        String category = itemJSON.getString("category");
+        String query = itemJSON.getString("query");
+        return new Item(name, category, query);
     }
 
     @Override
@@ -69,63 +76,7 @@ public class ItemController implements Controller {
                 try {
                     for (int i = 0; i < array.length(); i++) {
                         JSONObject itemJSON = array.getJSONObject(i);
-                        int id = itemJSON.getInt("id");
-                        String name = itemJSON.getString("name");
-                        String location = itemJSON.getString("campus_location");
-                        String phone = itemJSON.getString("phone_number");
-                        long tmpDate;
-                        Date opening;
-                        Date closing;
-                        JSONArray weeklyOpenArray =
-                                itemJSON.getJSONArray("weekly_opening_times");
-                        JSONArray weeklyCloseArray =
-                                itemJSON.getJSONArray("weekly_closing_times");
-                        String openingString;
-                        String closingString;
-                        Date[] weeklyOpen = new Date[7];
-                        Date[] weeklyClose = new Date[7];
-                        for (int j=0; j < weeklyOpenArray.length(); j++) {
-                            openingString = weeklyOpenArray.getString(j);
-                            opening = null;
-                            if (!openingString.equals("null")) {
-                                tmpDate = DATE_FORMAT.parse(openingString).getTime();
-                                opening = new Date(tmpDate + PST.getOffset(tmpDate));
-                            }
-                            weeklyOpen[j] = opening;
-                        }
-                        for (int j=0; j < weeklyCloseArray.length(); j++) {
-                            closingString = weeklyCloseArray.getString(j);
-                            closing = null;
-                            if (!closingString.equals("null")) {
-                                tmpDate = DATE_FORMAT.parse(closingString).getTime();
-                                closing = new Date(tmpDate + PST.getOffset(tmpDate));
-                            }
-                            weeklyClose[j] = closing;
-                        }
-                        double lat;
-                        double lng;
-                        if (!itemJSON.getString("latitude").equals("null") &&
-                                !itemJSON.getString("longitude").equals("null")) {
-                            lat = itemJSON.getDouble("latitude");
-                            lng = itemJSON.getDouble("longitude");
-                        } else {
-                            lat = Item.INVALID_COORD;
-                            lng = Item.INVALID_COORD;
-                        }
-                        JSONArray weeklyAppointmentArray =
-                                itemJSON.getJSONArray("weekly_by_appointment");
-                        boolean[] weeklyAppointments = new boolean[7];
-                        for (int j=0; j < weeklyAppointmentArray.length(); j++) {
-                            weeklyAppointments[j] = weeklyAppointmentArray.getBoolean(j);
-                        }
-                        boolean byAppointment = weeklyAppointments[0];
-                        Calendar c = Calendar.getInstance();
-                        Date d = DATE_FORMAT.parse(itemJSON.getString("updated_at"));
-                        c.setTime(d);
-                        int weekday = c.get(Calendar.DAY_OF_WEEK);
-                        items.add(new Item(id, name, location, phone, weeklyOpen[0],
-                                weeklyClose[0], weeklyOpen, weeklyClose, lat, lng, byAppointment,
-                                weeklyAppointments, weekday));
+                        items.add(createNewItem(itemJSON, context));
                     }
 
                     // Sort the items alphabetically
@@ -152,7 +103,44 @@ public class ItemController implements Controller {
     @Override
     public void refreshInBackground(@NonNull Context context, Callback callback) {
         this.callback = callback;
-        JSONUtilities.readJSONFromUrl(context, URL, "libraries", ItemController.getInstance());
+        JSONUtilities.readJSONFromUrl(context, URL, "search_list", ItemController.getInstance());
+    }
+
+    public void setItem(@NonNull final Context context, final JSONObject obj) {
+        if (obj == null) {
+            ((Activity) context).runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    callback.onRetrievalFailed();
+                }
+            });
+            return;
+        }
+
+        /*
+         *  Parsing JSON data into models is put into a background thread so that the UI thread
+         *  won't lag.
+         */
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    setCurrentItem(createNewItem(obj, context));
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    ((Activity) context).runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            callback.onRetrievalFailed();
+                        }
+                    });
+                }
+            }
+        }).start();
+    }
+
+    public void setItemFromUrl(@NonNull Context context, String ItemURL, String name, Controller controller) {
+        JSONUtilities.setObjectFromUrl(context, ItemURL, name, controller);
     }
 
     public void setCurrentItem(Item item) {
@@ -162,6 +150,5 @@ public class ItemController implements Controller {
     public Item getCurrentItem() {
         return currentItem;
     }
-
 }
 

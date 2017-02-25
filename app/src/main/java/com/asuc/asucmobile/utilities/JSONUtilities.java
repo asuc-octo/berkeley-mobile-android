@@ -83,4 +83,40 @@ public class JSONUtilities {
 
     }
 
+    public static void setObjectFromUrl(Context context, String url, String name, Controller controller) {
+        new JSONItemTask(context, url, name, controller).execute("");
+    }
+
+    private static class JSONItemTask extends AsyncTask<String, Void, Void> {
+
+        Context context;
+        String url;
+        String name;
+        Controller controller;
+
+        private JSONItemTask(Context context, String url, String name, Controller controller) {
+            this.context = context;
+            this.url = url;
+            this.name = name;
+            this.controller = controller;
+        }
+
+        @Override
+        protected Void doInBackground(String... strings) {
+            try {
+                InputStream input = (new URL(url)).openStream();
+                BufferedReader buffer = new BufferedReader(new InputStreamReader(input));
+                String jsonText = getUrlBody(buffer);
+                JSONObject json = new JSONObject(jsonText);
+                input.close();
+                controller.setItem(context, json);
+            } catch (Exception e) {
+                Log.e(TAG, e.getMessage());
+                controller.setItem(context, null);
+            }
+            return null;
+        }
+
+    }
+
  }

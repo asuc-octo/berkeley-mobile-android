@@ -59,20 +59,8 @@ public class ItemAdapter extends BaseAdapter {
         }
 
         TextView itemName = (TextView) convertView.findViewById(R.id.name);
-        TextView itemAvailability = (TextView) convertView.findViewById(R.id.availability);
 
         itemName.setText(item.getName());
-
-        if (item.isByAppointment()) {
-            itemAvailability.setTextColor(context.getResources().getColor(R.color.pavan_light));
-            itemAvailability.setText(context.getText(R.string.by_appointment));
-        } else if (item.isOpen()) {
-            itemAvailability.setTextColor(context.getResources().getColor(R.color.green));
-            itemAvailability.setText(context.getText(R.string.open));
-        } else {
-            itemAvailability.setTextColor(context.getResources().getColor(android.R.color.holo_red_light));
-            itemAvailability.setText(context.getText(R.string.closed));
-        }
 
         final ListOfFavorites listOfFavorites = (ListOfFavorites) SerializableUtilities.loadSerializedObject(context);
 
@@ -132,7 +120,7 @@ public class ItemAdapter extends BaseAdapter {
                 } else {
                     for (Item item : allItems) {
                         if (item.getName().toLowerCase().contains(query.toString().toLowerCase()) ||
-                                item.getLocation().toLowerCase().contains(query.toString().toLowerCase())) {
+                                item.getCategory().toLowerCase().contains(query.toString().toLowerCase())) {
                             filteredItems.add(item);
                         }
                     }

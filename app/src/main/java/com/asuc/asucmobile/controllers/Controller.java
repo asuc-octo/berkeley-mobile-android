@@ -6,10 +6,21 @@ import android.support.annotation.NonNull;
 import com.asuc.asucmobile.utilities.Callback;
 
 import org.json.JSONArray;
+import org.json.JSONObject;
 
-public interface Controller {
+public interface Controller<Obj> {
 
     String BASE_URL = "http://asuc-mobile.herokuapp.com/api";
+    String FQDN = "http://asuc-mobile.herokuapp.com";
+
+    /**
+     * createNewItem() is required for the global search. It takes in a JSONObject and the
+     * context, and spits out an item.
+     * setItem() is also required, and simply sets the current resource to a URL-determined
+     * location.
+     */
+    Obj createNewItem(JSONObject item, Context context) throws Exception;
+    void setItem(@NonNull final Context context, final JSONObject obj);
 
     /**
      *  setResources() is a centralized function for all data controllers that the JSON utility
