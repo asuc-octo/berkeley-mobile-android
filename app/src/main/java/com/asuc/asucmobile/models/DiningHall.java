@@ -153,4 +153,24 @@ public class DiningHall {
         return isBreakfastOpen() | isLunchOpen() | isDinnerOpen() | isLateNightOpen();
     }
 
+    @Override
+    public String toString() {
+        return "DiningHall{" +
+                "id='" + id + '\'' +
+                ", name='" + name + '\'' +
+                ", breakfastMenu=" + breakfastMenu +
+                ", lunchMenu=" + lunchMenu +
+                ", dinnerMenu=" + dinnerMenu +
+                ", lateNightMenu=" + lateNightMenu +
+                ", breakfastOpen=" + breakfastOpen +
+                ", breakfastClose=" + breakfastClose +
+                ", lunchOpen=" + lunchOpen +
+                ", lunchClose=" + lunchClose +
+                ", dinnerOpen=" + dinnerOpen +
+                ", dinnerClose=" + dinnerClose +
+                ", lateNightOpen=" + lateNightOpen +
+                ", lateNightClose=" + lateNightClose +
+                ", imageUrl='" + imageUrl + '\'' +
+                '}';
+    }
 }

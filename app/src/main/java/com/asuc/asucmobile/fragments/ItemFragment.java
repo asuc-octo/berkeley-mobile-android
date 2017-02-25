@@ -83,7 +83,7 @@ public class ItemFragment extends Fragment {
                 switch (item.getCategory()) {
                     case "Dining Hall":
                         controller.setItemFromUrl(getContext(),
-                                URL, "dining_halls", DiningController.getInstance());
+                                URL, "dining_hall", DiningController.getInstance());
                         intent = new Intent(getContext(), OpenDiningHallActivity.class);
                         break;
                     case "Library":

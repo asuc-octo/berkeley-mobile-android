@@ -4,6 +4,7 @@ import android.support.annotation.NonNull;
 
 import com.google.android.gms.maps.model.LatLng;
 
+import java.util.Arrays;
 import java.util.Date;
 
 public class Library implements Comparable<Library>{
@@ -114,4 +115,22 @@ public class Library implements Comparable<Library>{
         return this.getName().compareTo(other.getName());
     }
 
+    @Override
+    public String toString() {
+        return "Library{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", location='" + location + '\'' +
+                ", phone='" + phone + '\'' +
+                ", opening=" + opening +
+                ", closing=" + closing +
+                ", weeklyOpen=" + Arrays.toString(weeklyOpen) +
+                ", weeklyClose=" + Arrays.toString(weeklyClose) +
+                ", latLng=" + latLng +
+                ", byAppointment=" + byAppointment +
+                ", hasCoordinates=" + hasCoordinates +
+                ", weeklyAppointments=" + Arrays.toString(weeklyAppointments) +
+                ", weekday=" + weekday +
+                '}';
+    }
 }

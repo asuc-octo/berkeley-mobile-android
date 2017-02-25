@@ -107,36 +107,11 @@ public class ItemController implements Controller {
     }
 
     public void setItem(@NonNull final Context context, final JSONObject obj) {
-        if (obj == null) {
-            ((Activity) context).runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    callback.onRetrievalFailed();
-                }
-            });
-            return;
+        try {
+            setCurrentItem(createNewItem(obj, context));
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-
-        /*
-         *  Parsing JSON data into models is put into a background thread so that the UI thread
-         *  won't lag.
-         */
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    setCurrentItem(createNewItem(obj, context));
-                } catch (Exception e) {
-                    e.printStackTrace();
-                    ((Activity) context).runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            callback.onRetrievalFailed();
-                        }
-                    });
-                }
-            }
-        }).start();
     }
 
     public void setItemFromUrl(@NonNull Context context, String ItemURL, String name, Controller controller) {

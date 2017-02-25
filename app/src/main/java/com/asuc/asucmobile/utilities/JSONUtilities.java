@@ -107,7 +107,7 @@ public class JSONUtilities {
                 InputStream input = (new URL(url)).openStream();
                 BufferedReader buffer = new BufferedReader(new InputStreamReader(input));
                 String jsonText = getUrlBody(buffer);
-                JSONObject json = new JSONObject(jsonText);
+                JSONObject json = new JSONObject(jsonText).getJSONObject(name);;
                 input.close();
                 controller.setItem(context, json);
             } catch (Exception e) {
