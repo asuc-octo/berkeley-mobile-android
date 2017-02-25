@@ -3,6 +3,7 @@ package com.asuc.asucmobile.fragments;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
@@ -76,9 +77,6 @@ public class ItemFragment extends Fragment {
                 Item item = mAdapter.getItem(i);
                 controller.setCurrentItem(item);
                 String URL = FQDN + item.getQuery();
-
-                //Debugging. Jason debugs EXCLUSIVELY with print statements.
-                System.out.println(item);
                 Intent intent = null;
                 switch (item.getCategory()) {
                     case "Dining Hall":
@@ -167,6 +165,20 @@ public class ItemFragment extends Fragment {
                     }
                 });
             }
+            MenuItemCompat.setOnActionExpandListener(searchMenuItem, new MenuItemCompat.OnActionExpandListener() {
+                @Override
+                public boolean onMenuItemActionCollapse(MenuItem item) {
+                    if (mAdapter.getCount() <= 0) {
+                        getActivity().onBackPressed();
+                    }
+                    return true;
+                }
+
+                public boolean onMenuItemActionExpand(MenuItem item) {
+                    return true;
+                }
+            });
+
             //Expand searchView on entering the view.
             searchMenuItem.expandActionView();
         }
