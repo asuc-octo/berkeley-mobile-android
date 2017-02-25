@@ -3,6 +3,7 @@ package com.asuc.asucmobile.main;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Display;
 import android.widget.ExpandableListView;
 import android.widget.SimpleExpandableListAdapter;
 
@@ -14,7 +15,9 @@ import com.asuc.asucmobile.models.GroupExs.GroupEx;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -80,8 +83,11 @@ public class GroupExScheduleActivity extends BaseActivity {
         SimpleDateFormat childTimeSDF = new SimpleDateFormat("k':'mm aaa", Locale.US);
         List<Map<String, String>> groupData = new ArrayList<>();
         List<List<Map<String, String>>> childData= new ArrayList<>();
+        Calendar calendar = new GregorianCalendar();
         for (Date date : dates) {
+            calendar.setTime(date);
             Map<String, String> tempParentMap = new HashMap<>();
+            tempParentMap.put("dow", calendar.getDisplayName(Calendar.DAY_OF_WEEK, Calendar.LONG, Locale.US).substring(0, 2));
             tempParentMap.put("date", groupDateSDF.format(date));
             groupData.add(tempParentMap);
 
@@ -91,24 +97,29 @@ public class GroupExScheduleActivity extends BaseActivity {
             for (GroupEx groupEx : dateGroupExHashMap.get(date)) {
                 Map<String, String> tempChildMap = new HashMap<>();
                 tempChildMap.put("name", groupEx.getName());
-                tempChildMap.put("trainer", groupEx.getTrainer());
-                //TODO: Add location
-                tempChildMap.put("location", "");
-                String times = childTimeSDF.format(groupEx.getStartTime()) + " / " +
-                        childTimeSDF.format(groupEx.getEndTime());
-                tempChildMap.put("times", times);
+                tempChildMap.put("trainer", "Instructor: " + groupEx.getTrainer());
+                String times_location = childTimeSDF.format(groupEx.getStartTime()) + " - " +
+                        childTimeSDF.format(groupEx.getEndTime()) + " @ " + groupEx.getLocation();
+                tempChildMap.put("times_location", times_location);
                 tempChildList.add(tempChildMap);
             }
             childData.add(tempChildList);
         }
         Log.d("deeebug", "parsemania");
         expandableListView.setAdapter(new SimpleExpandableListAdapter(
-                this, groupData, R.layout.group_ex_schedule_group, new String[]{"date"},
-                new int[]{R.id.date}, childData, R.layout.group_ex_schedule_child_item,
-                new String[]{"name", "trainer", "location", "times"},
-                new int[]{R.id.name, R.id.trainer, R.id.location, R.id.times}));
+                this, groupData, R.layout.group_ex_schedule_group, new String[]{"date", "dow"},
+                new int[]{R.id.date, R.id.dow}, childData, R.layout.group_ex_schedule_child_item,
+                new String[]{"name", "trainer", "times_location"},
+                new int[]{R.id.name, R.id.trainer, R.id.times_place}));
+
+        Display newDisplay = getWindowManager().getDefaultDisplay();
+        int width = newDisplay.getWidth();
+        if(android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.JELLY_BEAN_MR2) {
+            expandableListView.setIndicatorBounds(width-150, width);
+        } else {
+            expandableListView.setIndicatorBoundsRelative(width-150, width);
+        }
 
     }
-
 
 }

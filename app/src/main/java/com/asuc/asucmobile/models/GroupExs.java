@@ -17,9 +17,19 @@ public class GroupExs {
         String description;
         String trainer;
         String classType;
+        String location;
+
+        public String getLocation() {
+            return location;
+        }
+
+        public void setLocation(String location) {
+            this.location = location;
+        }
 
         public Date getDate() {
             return date;
+
         }
 
         public Date getStartTime() {

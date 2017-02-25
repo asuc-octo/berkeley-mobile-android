@@ -1,52 +1,53 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
-    <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_height="wrap_content"
+    android:background="@android:color/white">
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="40dp"
+        android:layout_height="wrap_content"
         android:background="@android:color/white"
         android:layout_marginStart="75dp"
         android:layout_marginLeft="75dp"
-        android:layout_marginBottom="5dp"
         android:layout_marginEnd="10dp"
         android:layout_marginRight="10dp"
-        android:layout_marginTop="5dp"
-        android:translationZ="0.5dp">
+        android:layout_marginBottom="2.5dp"
+        android:layout_marginTop="2.5dp"
+        >
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/name"
-            android:layout_gravity="top|start"
-            android:textColor="@color/hotline_blue"
+            android:textColor="@android:color/black"
             android:textSize="16sp"
-            android:layout_margin="5dp" />
+            android:layout_margin="1dp" />
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/times"
-            android:layout_gravity="top|end"
-            android:textColor="@color/hotline_blue"
+            android:id="@+id/times_place"
+            android:textColor="@android:color/black"
             android:textSize="12sp"
-            android:layout_margin="5dp" />
+            android:layout_margin="1dp" />
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/trainer"
-            android:layout_gravity="bottom|start"
             android:textSize="12sp"
-            android:layout_margin="5dp" />
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/location"
-            android:layout_gravity="bottom|end"
-            android:textColor="@color/hotline_blue"
-            android:textSize="12sp"
-            android:layout_margin="5dp" />
-
-
-    </FrameLayout>
+            android:layout_margin="1dp" />
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_margin="1dp"
+            android:alpha="0.12"
+            android:background="@android:color/transparent"/>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_margin="1dp"
+            android:alpha="0.12"
+            android:background="@android:color/darker_gray"
+            />
+    </LinearLayout>
 </LinearLayout>
