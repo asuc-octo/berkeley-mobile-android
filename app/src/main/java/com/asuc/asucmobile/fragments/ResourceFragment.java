@@ -147,6 +147,7 @@ public class ResourceFragment extends Fragment {
                     FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
                     return fragmentManager.beginTransaction()
                             .replace(R.id.content_frame, new ItemFragment())
+                            .addToBackStack("tag")
                             .commit() > 0;
                 }
             });

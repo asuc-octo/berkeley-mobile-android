@@ -27,6 +27,8 @@ import com.asuc.asucmobile.models.Category;
 
 public class NavigationGenerator {
 
+    private static int lastPosition;
+
     private static final Category[] SECTIONS = new Category[] {
             new Category(R.drawable.beartransit, "BearTransit") {
                 @Override
@@ -134,6 +136,7 @@ public class NavigationGenerator {
     }
 
     public void loadSection(@NonNull AppCompatActivity activity, int index) {
+        setLastPosition(index);
         if (index == -1) {
             activity.getSupportFragmentManager().beginTransaction()
                     .replace(R.id.content_frame, new BlankFragment())
@@ -164,4 +167,11 @@ public class NavigationGenerator {
         }
     }
 
+    public int getLastPosition() {
+        return lastPosition;
+    }
+
+    public void setLastPosition(int lastPosition) {
+        this.lastPosition = lastPosition;
+    }
 }
