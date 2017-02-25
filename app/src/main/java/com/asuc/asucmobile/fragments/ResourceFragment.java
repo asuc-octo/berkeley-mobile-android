@@ -41,6 +41,7 @@ public class ResourceFragment extends Fragment {
     private ListView mResourceList;
     private ProgressBar mProgressBar;
     private LinearLayout mRefreshWrapper;
+    private SearchView mSearchView;
 
     private ResourceAdapter mAdapter;
 
@@ -63,6 +64,7 @@ public class ResourceFragment extends Fragment {
         mResourceList = (ListView) layout.findViewById(R.id.resource_list);
         mProgressBar = (ProgressBar) layout.findViewById(R.id.progress_bar);
         mRefreshWrapper = (LinearLayout) layout.findViewById(R.id.refresh);
+        mSearchView = (SearchView) layout.findViewById(R.id.local_search);
         mAdapter = new ResourceAdapter(getContext());
         mResourceList.setAdapter(mAdapter);
         mResourceList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -82,6 +84,32 @@ public class ResourceFragment extends Fragment {
             }
         });
         refresh();
+        if (mSearchView != null) {
+            // Setting up aesthetics
+            EditText searchEditText = (EditText) mSearchView.findViewById(android.support.v7.appcompat.R.id.search_src_text);
+            searchEditText.setTextColor(getResources().getColor(R.color.grizzly_gray));
+            searchEditText.setHintTextColor(getResources().getColor(R.color.grizzly_gray));
+
+            //Set up by clearing the list.
+            final Filter filter = mAdapter.getFilter();
+            filter.filter("");
+
+            mSearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+                @Override
+                public boolean onQueryTextSubmit(String s) {
+                    // Close the keyboard
+                    mSearchView.clearFocus();
+                    return true;
+                }
+
+                @Override
+                public boolean onQueryTextChange(String s) {
+                    final Filter filter = mAdapter.getFilter();
+                    filter.filter(s);
+                    return true;
+                }
+            });
+        }
         return layout;
     }
 
