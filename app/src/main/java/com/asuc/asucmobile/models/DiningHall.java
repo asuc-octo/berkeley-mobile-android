@@ -47,7 +47,7 @@ public class DiningHall {
         return id;
     }
 
-    public String getName()    {
+    public String getName() {
         return name;
     }
 
