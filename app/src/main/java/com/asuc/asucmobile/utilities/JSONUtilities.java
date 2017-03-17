@@ -15,6 +15,9 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.net.URL;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
 
 public class JSONUtilities {
 
@@ -84,7 +87,17 @@ public class JSONUtilities {
     }
 
     public static void setObjectFromUrl(Context context, String url, String name, Controller controller) {
-        new JSONItemTask(context, url, name, controller).execute("");
+        try {
+            new JSONItemTask(context, url, name, controller).execute().get(20, TimeUnit.SECONDS);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (TimeoutException e) {
+            e.printStackTrace();
+        }
+
+
     }
 
     private static class JSONItemTask extends AsyncTask<String, Void, Void> {
