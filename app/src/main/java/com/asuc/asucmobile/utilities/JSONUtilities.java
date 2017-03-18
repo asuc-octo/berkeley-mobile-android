@@ -15,6 +15,9 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.net.URL;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
 
 public class JSONUtilities {
 
@@ -77,6 +80,52 @@ public class JSONUtilities {
             } catch (Exception e) {
                 Log.e(TAG, e.getMessage());
                 controller.setResources(context, null);
+            }
+            return null;
+        }
+
+    }
+
+    public static void setObjectFromUrl(Context context, String url, String name, Controller controller) {
+        try {
+            new JSONItemTask(context, url, name, controller).execute().get(20, TimeUnit.SECONDS);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (TimeoutException e) {
+            e.printStackTrace();
+        }
+
+
+    }
+
+    private static class JSONItemTask extends AsyncTask<String, Void, Void> {
+
+        Context context;
+        String url;
+        String name;
+        Controller controller;
+
+        private JSONItemTask(Context context, String url, String name, Controller controller) {
+            this.context = context;
+            this.url = url;
+            this.name = name;
+            this.controller = controller;
+        }
+
+        @Override
+        protected Void doInBackground(String... strings) {
+            try {
+                InputStream input = (new URL(url)).openStream();
+                BufferedReader buffer = new BufferedReader(new InputStreamReader(input));
+                String jsonText = getUrlBody(buffer);
+                JSONObject json = new JSONObject(jsonText).getJSONObject(name);;
+                input.close();
+                controller.setItem(context, json);
+            } catch (Exception e) {
+                Log.e(TAG, e.getMessage());
+                controller.setItem(context, null);
             }
             return null;
         }

@@ -3,9 +3,13 @@ package com.asuc.asucmobile.fragments;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -40,6 +44,7 @@ public class DiningHallFragment extends Fragment {
         ((AppCompatActivity) getContext()).setSupportActionBar(toolbar);
         NavigationGenerator.generateToolbarMenuButton(getActivity(), toolbar);
         toolbar.setTitle("Dining Halls");
+        setHasOptionsMenu(true);
         ImageButton refreshButton = (ImageButton) layout.findViewById(R.id.refresh_button);
         mDiningList = (ListView) layout.findViewById(R.id.dining_hall_list);
         mProgressBar = (ProgressBar) layout.findViewById(R.id.progress_bar);
@@ -70,6 +75,26 @@ public class DiningHallFragment extends Fragment {
     public void onResume() {
         super.onResume();
         NavigationGenerator.closeMenu(getActivity());
+    }
+
+    @Override
+    @SuppressWarnings("deprecation")
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.dining_hall, menu);
+        final MenuItem searchMenuItem = menu.findItem(R.id.search);
+        if (searchMenuItem != null) {
+            searchMenuItem.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+                @Override
+                public boolean onMenuItemClick(MenuItem m) {
+                    FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                    return fragmentManager.beginTransaction()
+                            .replace(R.id.content_frame, new ItemFragment())
+                            .addToBackStack("tag")
+                            .commit() > 0;
+                }
+            });
+
+        }
     }
 
     /**

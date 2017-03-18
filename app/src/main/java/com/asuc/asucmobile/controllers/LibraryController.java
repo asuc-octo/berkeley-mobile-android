@@ -45,6 +45,67 @@ public class LibraryController implements Controller {
         libraries = new ArrayList<>();
     }
 
+    public Library createNewItem(JSONObject libraryJSON, Context context) throws Exception {
+        int id = libraryJSON.getInt("id");
+        String name = libraryJSON.getString("name");
+        String location = libraryJSON.getString("campus_location");
+        String phone = libraryJSON.getString("phone_number");
+        long tmpDate;
+        Date opening;
+        Date closing;
+        JSONArray weeklyOpenArray =
+                libraryJSON.getJSONArray("weekly_opening_times");
+        JSONArray weeklyCloseArray =
+                libraryJSON.getJSONArray("weekly_closing_times");
+        String openingString;
+        String closingString;
+        Date[] weeklyOpen = new Date[7];
+        Date[] weeklyClose = new Date[7];
+        for (int j = 0; j < weeklyOpenArray.length(); j++) {
+            openingString = weeklyOpenArray.getString(j);
+            opening = null;
+            if (!openingString.equals("null")) {
+                tmpDate = DATE_FORMAT.parse(openingString).getTime();
+                opening = new Date(tmpDate + PST.getOffset(tmpDate));
+            }
+            weeklyOpen[j] = opening;
+        }
+        for (int j = 0; j < weeklyCloseArray.length(); j++) {
+            closingString = weeklyCloseArray.getString(j);
+            closing = null;
+            if (!closingString.equals("null")) {
+                tmpDate = DATE_FORMAT.parse(closingString).getTime();
+                closing = new Date(tmpDate + PST.getOffset(tmpDate));
+            }
+            weeklyClose[j] = closing;
+        }
+        double lat;
+        double lng;
+        if (!libraryJSON.getString("latitude").equals("null") &&
+                !libraryJSON.getString("longitude").equals("null")) {
+            lat = libraryJSON.getDouble("latitude");
+            lng = libraryJSON.getDouble("longitude");
+        } else {
+            lat = Library.INVALID_COORD;
+            lng = Library.INVALID_COORD;
+        }
+        JSONArray weeklyAppointmentArray =
+                libraryJSON.getJSONArray("weekly_by_appointment");
+        boolean[] weeklyAppointments = new boolean[7];
+        for (int j = 0; j < weeklyAppointmentArray.length(); j++) {
+            weeklyAppointments[j] = weeklyAppointmentArray.getBoolean(j);
+        }
+        boolean byAppointment = weeklyAppointments[0];
+        Calendar c = Calendar.getInstance();
+        Date d = DATE_FORMAT.parse(libraryJSON.getString("updated_at"));
+        c.setTime(d);
+        int weekday = c.get(Calendar.DAY_OF_WEEK);
+
+        return new Library(id, name, location, phone, weeklyOpen[0],
+                weeklyClose[0], weeklyOpen, weeklyClose, lat, lng, byAppointment,
+                weeklyAppointments, weekday);
+    }
+
     @Override
     public void setResources(@NonNull final Context context, final JSONArray array) {
         if (array == null) {
@@ -69,63 +130,7 @@ public class LibraryController implements Controller {
                 try {
                     for (int i = 0; i < array.length(); i++) {
                         JSONObject libraryJSON = array.getJSONObject(i);
-                        int id = libraryJSON.getInt("id");
-                        String name = libraryJSON.getString("name");
-                        String location = libraryJSON.getString("campus_location");
-                        String phone = libraryJSON.getString("phone_number");
-                        long tmpDate;
-                        Date opening;
-                        Date closing;
-                        JSONArray weeklyOpenArray =
-                                libraryJSON.getJSONArray("weekly_opening_times");
-                        JSONArray weeklyCloseArray =
-                                libraryJSON.getJSONArray("weekly_closing_times");
-                        String openingString;
-                        String closingString;
-                        Date[] weeklyOpen = new Date[7];
-                        Date[] weeklyClose = new Date[7];
-                        for (int j=0; j < weeklyOpenArray.length(); j++) {
-                            openingString = weeklyOpenArray.getString(j);
-                            opening = null;
-                            if (!openingString.equals("null")) {
-                                tmpDate = DATE_FORMAT.parse(openingString).getTime();
-                                opening = new Date(tmpDate + PST.getOffset(tmpDate));
-                            }
-                            weeklyOpen[j] = opening;
-                        }
-                        for (int j=0; j < weeklyCloseArray.length(); j++) {
-                            closingString = weeklyCloseArray.getString(j);
-                            closing = null;
-                            if (!closingString.equals("null")) {
-                                tmpDate = DATE_FORMAT.parse(closingString).getTime();
-                                closing = new Date(tmpDate + PST.getOffset(tmpDate));
-                            }
-                            weeklyClose[j] = closing;
-                        }
-                        double lat;
-                        double lng;
-                        if (!libraryJSON.getString("latitude").equals("null") &&
-                                !libraryJSON.getString("longitude").equals("null")) {
-                            lat = libraryJSON.getDouble("latitude");
-                            lng = libraryJSON.getDouble("longitude");
-                        } else {
-                            lat = Library.INVALID_COORD;
-                            lng = Library.INVALID_COORD;
-                        }
-                        JSONArray weeklyAppointmentArray =
-                                libraryJSON.getJSONArray("weekly_by_appointment");
-                        boolean[] weeklyAppointments = new boolean[7];
-                        for (int j=0; j < weeklyAppointmentArray.length(); j++) {
-                            weeklyAppointments[j] = weeklyAppointmentArray.getBoolean(j);
-                        }
-                        boolean byAppointment = weeklyAppointments[0];
-                        Calendar c = Calendar.getInstance();
-                        Date d = DATE_FORMAT.parse(libraryJSON.getString("updated_at"));
-                        c.setTime(d);
-                        int weekday = c.get(Calendar.DAY_OF_WEEK);
-                        libraries.add(new Library(id, name, location, phone, weeklyOpen[0],
-                                weeklyClose[0], weeklyOpen, weeklyClose, lat, lng, byAppointment,
-                                weeklyAppointments, weekday));
+                        libraries.add(createNewItem(libraryJSON, context));
                     }
 
                     // Sort the libraries alphabetically, putting favorites at top
@@ -147,6 +152,14 @@ public class LibraryController implements Controller {
                 }
             }
         }).start();
+    }
+
+    public void setItem(@NonNull final Context context, final JSONObject obj) {
+        try {
+            setCurrentLibrary(createNewItem(obj, context));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @Override

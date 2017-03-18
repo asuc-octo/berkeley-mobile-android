@@ -33,6 +33,19 @@ public class BusController implements Controller{
         buses = new ArrayList<>();
     }
 
+    public Bus createNewItem(JSONObject bus, Context context) throws Exception {
+        boolean inService = bus.getBoolean("in_service");
+        if (!inService) {
+            return null;
+        }
+        int id = bus.getInt("id");
+        String name = bus.getString("line_name");
+        LatLng location =
+                new LatLng(bus.getDouble("latitude"), bus.getDouble("longitude"));
+        Bus newBus = new Bus(id, location, 0, 0, 0, 0, name, true);
+        return newBus;
+    }
+
     @Override
     public void setResources(@NonNull final Context context, final JSONArray array) {
         if (array == null) {
@@ -57,16 +70,9 @@ public class BusController implements Controller{
                     // Iterate through buses
                     for (int i = 0; i < array.length(); i++) {
                         JSONObject bus = array.getJSONObject(i);
-                        boolean inService = bus.getBoolean("in_service");
-                        if (!inService) {
-                            continue;
-                        }
-                        int id = bus.getInt("id");
-                        String name = bus.getString("line_name");
-                        LatLng location =
-                                new LatLng(bus.getDouble("latitude"), bus.getDouble("longitude"));
-                        Bus newBus = new Bus(id, location, 0, 0, 0, 0, name, true);
-                        buses.add(newBus);
+                        Bus newBus = createNewItem(bus, context);
+                        if (newBus != null)
+                            buses.add(newBus);
                     }
                     ((Activity) context).runOnUiThread(new Runnable() {
                         @Override
@@ -90,6 +96,10 @@ public class BusController implements Controller{
     public void refreshInBackground(@NonNull Context context, Callback callback) {
         this.callback = callback;
         JSONUtilities.readJSONFromUrl(context, URL, "buses", BusController.getInstance());
+    }
+
+    public void setItem(@NonNull final Context context, final JSONObject obj) {
+        //Required for some controllers, not this one.
     }
 
 }

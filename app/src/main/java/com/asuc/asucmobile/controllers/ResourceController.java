@@ -32,6 +32,30 @@ public class ResourceController implements Controller {
         return instance;
     }
 
+    public Resource createNewItem(JSONObject resourceJSON, Context context) throws Exception {
+        String resource = resourceJSON.getString("Resource");
+        String topic = resourceJSON.getString("Topic");
+        String phone1 = resourceJSON.getString("Phone 1");
+        String phone2 = resourceJSON.getString("Phone 2 (Optional)");
+        String location = resourceJSON.getString("Office Location");
+        String hours = resourceJSON.getString("Hours");
+        String email = resourceJSON.getString("Email");
+        String onOrOffCampus = resourceJSON.getString("On/Off Campus");
+        double lat;
+        double lng;
+        try {
+            lat = resourceJSON.getDouble("Latitude");
+            lng = resourceJSON.getDouble("Longitude");
+        } catch (org.json.JSONException j) {
+            // Insert an invalid Lat and Lng.
+            lat = Resource.INVALID_COORD;
+            lng = Resource.INVALID_COORD;
+        }
+        String notes = resourceJSON.getString("Notes");
+        return new Resource(resource, topic, phone1, phone2, location, hours,
+                email, onOrOffCampus, lat, lng, notes);
+    }
+
     private ResourceController() {
         resources = new ArrayList<>();
     }
@@ -59,27 +83,7 @@ public class ResourceController implements Controller {
                 try {
                     for (int i = 0; i < array.length(); i++) {
                         JSONObject resourceJSON = array.getJSONObject(i);
-                        String resource = resourceJSON.getString("Resource");
-                        String topic = resourceJSON.getString("Topic");
-                        String phone1 = resourceJSON.getString("Phone 1");
-                        String phone2 = resourceJSON.getString("Phone 2 (Optional)");
-                        String location = resourceJSON.getString("Office Location");
-                        String hours = resourceJSON.getString("Hours");
-                        String email = resourceJSON.getString("Email");
-                        String onOrOffCampus = resourceJSON.getString("On/Off Campus");
-                        double lat;
-                        double lng;
-                        try {
-                            lat = resourceJSON.getDouble("Latitude");
-                            lng = resourceJSON.getDouble("Longitude");
-                        } catch (org.json.JSONException j) {
-                            // Insert an invalid Lat and Lng.
-                            lat = Resource.INVALID_COORD;
-                            lng = Resource.INVALID_COORD;
-                        }
-                        String notes = resourceJSON.getString("Notes");
-                        resources.add(new Resource(resource, topic, phone1, phone2, location, hours,
-                                email, onOrOffCampus, lat, lng, notes));
+                        resources.add(createNewItem(resourceJSON, context));
                     }
 
                     // Sort the resources alphabetically, putting favorites at top
@@ -107,6 +111,14 @@ public class ResourceController implements Controller {
     public void refreshInBackground(@NonNull Context context, Callback callback) {
         this.callback = callback;
         JSONUtilities.readJSONFromUrl(context, URL, "resources", ResourceController.getInstance());
+    }
+
+    public void setItem(@NonNull final Context context, final JSONObject obj) {
+        try {
+            setCurrentResource(createNewItem(obj, context));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public void setCurrentResource(Resource resource) {

@@ -4,8 +4,9 @@ import android.app.Activity;
 import android.content.Context;
 import android.support.annotation.NonNull;
 
-import com.asuc.asucmobile.models.Gym;
+import com.asuc.asucmobile.models.Item;
 import com.asuc.asucmobile.utilities.Callback;
+import com.asuc.asucmobile.utilities.CustomComparators;
 import com.asuc.asucmobile.utilities.JSONUtilities;
 
 import org.json.JSONArray;
@@ -13,56 +14,44 @@ import org.json.JSONObject;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Collections;
 import java.util.Date;
 import java.util.Locale;
 import java.util.TimeZone;
 
-public class GymController implements Controller {
+public class ItemController implements Controller {
 
-    private static final String URL = BASE_URL + "/gyms";
+    private static final String URL = BASE_URL + "/search_items";
     private static final SimpleDateFormat DATE_FORMAT =
             new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.ENGLISH);
     private static final TimeZone PST = TimeZone.getTimeZone("America/Los_Angeles");
 
-    private static GymController instance;
+    private static ItemController instance;
 
-    private ArrayList<Gym> gyms;
+    private ArrayList<Item> items;
     private Callback callback;
-    private Gym currentGym;
+
+    private Item currentItem;
 
     public static Controller getInstance() {
         if (instance == null) {
-            instance = new GymController();
+            instance = new ItemController();
         }
         return instance;
     }
 
-    private GymController() {
-        gyms = new ArrayList<>();
+    private ItemController() {
+        items = new ArrayList<>();
     }
 
-    public Gym createNewItem(JSONObject gymJSON, Context context) throws Exception {
-        int id = gymJSON.getInt("id");
-        String name = gymJSON.getString("name");
-        String address = gymJSON.getString("address");
-        long tmpDate;
-        Date opening = null;
-        Date closing = null;
-        String openingString = gymJSON.getString("opening_time_today");
-        String closingString = gymJSON.getString("closing_time_today");
-        if (!openingString.equals("null")) {
-            tmpDate = DATE_FORMAT.parse(openingString).getTime();
-            opening = new Date(tmpDate + PST.getOffset(tmpDate));
-        }
-        if (!closingString.equals("null")) {
-            tmpDate = DATE_FORMAT.parse(closingString).getTime();
-            closing = new Date(tmpDate + PST.getOffset(tmpDate));
-        }
-        String imageUrl = gymJSON.getString("image_link");
-
-        return new Gym(id, name, address, opening, closing, imageUrl);
+    public Item createNewItem(JSONObject itemJSON, Context context) throws Exception {
+        String name = itemJSON.getString("name");
+        String category = itemJSON.getString("category");
+        String query = itemJSON.getString("query");
+        return new Item(name, category, query);
     }
-    
+
     @Override
     public void setResources(@NonNull final Context context, final JSONArray array) {
         if (array == null) {
@@ -74,7 +63,8 @@ public class GymController implements Controller {
             });
             return;
         }
-        gyms.clear();
+
+        items.clear();
 
         /*
          *  Parsing JSON data into models is put into a background thread so that the UI thread
@@ -85,14 +75,16 @@ public class GymController implements Controller {
             public void run() {
                 try {
                     for (int i = 0; i < array.length(); i++) {
-                        JSONObject gymJSON = array.getJSONObject(i);
-
-                        gyms.add(createNewItem(gymJSON, context));
+                        JSONObject itemJSON = array.getJSONObject(i);
+                        items.add(createNewItem(itemJSON, context));
                     }
+
+                    // Sort the items alphabetically
+                    Collections.sort(items);
                     ((Activity) context).runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            callback.onDataRetrieved(gyms);
+                            callback.onDataRetrieved(items);
                         }
                     });
                 } catch (Exception e) {
@@ -111,23 +103,27 @@ public class GymController implements Controller {
     @Override
     public void refreshInBackground(@NonNull Context context, Callback callback) {
         this.callback = callback;
-        JSONUtilities.readJSONFromUrl(context, URL, "gyms", GymController.getInstance());
+        JSONUtilities.readJSONFromUrl(context, URL, "search_list", ItemController.getInstance());
     }
 
     public void setItem(@NonNull final Context context, final JSONObject obj) {
         try {
-            setCurrentGym(createNewItem(obj, context));
+            setCurrentItem(createNewItem(obj, context));
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    public void setCurrentGym(Gym gym) {
-        currentGym = gym;
+    public void setItemFromUrl(@NonNull Context context, String ItemURL, String name, Controller controller) {
+        JSONUtilities.setObjectFromUrl(context, ItemURL, name, controller);
     }
 
-    public Gym getCurrentGym() {
-        return currentGym;
+    public void setCurrentItem(Item item) {
+        currentItem = item;
     }
 
+    public Item getCurrentItem() {
+        return currentItem;
+    }
 }
+

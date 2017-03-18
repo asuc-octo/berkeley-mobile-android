@@ -46,6 +46,8 @@ public class MenuFragment extends Fragment {
             return v;
         }
 
+        setHasOptionsMenu(true);
+
         // Get references to views.
         ListView foodMenu = (ListView) v.findViewById(R.id.food_menu);
         TextView emptyListView = (TextView) v.findViewById(R.id.empty_list);

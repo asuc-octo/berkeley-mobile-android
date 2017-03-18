@@ -3,6 +3,7 @@ package com.asuc.asucmobile.fragments;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
@@ -40,6 +41,7 @@ public class LibraryFragment extends Fragment {
     private ListView mLibraryList;
     private ProgressBar mProgressBar;
     private LinearLayout mRefreshWrapper;
+    private SearchView mSearchView;
 
     private LibraryAdapter mAdapter;
 
@@ -61,6 +63,7 @@ public class LibraryFragment extends Fragment {
         mLibraryList = (ListView) layout.findViewById(R.id.library_list);
         mProgressBar = (ProgressBar) layout.findViewById(R.id.progress_bar);
         mRefreshWrapper = (LinearLayout) layout.findViewById(R.id.refresh);
+        mSearchView = (SearchView) layout.findViewById(R.id.local_search);
         mAdapter = new LibraryAdapter(getContext());
         mLibraryList.setAdapter(mAdapter);
         mLibraryList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -79,6 +82,38 @@ public class LibraryFragment extends Fragment {
             }
         });
         refresh();
+        if (mSearchView != null) {
+            mSearchView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    mSearchView.onActionViewExpanded();
+                }
+            });
+            // Setting up aesthetics
+            EditText searchEditText = (EditText) mSearchView.findViewById(android.support.v7.appcompat.R.id.search_src_text);
+            searchEditText.setTextColor(getResources().getColor(R.color.grizzly_gray));
+            searchEditText.setHintTextColor(getResources().getColor(R.color.grizzly_gray));
+
+            //Set up by clearing the list.
+            final Filter filter = mAdapter.getFilter();
+            filter.filter("");
+
+            mSearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+                @Override
+                public boolean onQueryTextSubmit(String s) {
+                    // Close the keyboard
+                    mSearchView.clearFocus();
+                    return true;
+                }
+
+                @Override
+                public boolean onQueryTextChange(String s) {
+                    final Filter filter = mAdapter.getFilter();
+                    filter.filter(s);
+                    return true;
+                }
+            });
+        }
         return layout;
     }
 
@@ -114,28 +149,17 @@ public class LibraryFragment extends Fragment {
         inflater.inflate(R.menu.library, menu);
         final MenuItem searchMenuItem = menu.findItem(R.id.search);
         if (searchMenuItem != null) {
-            final SearchView searchView = (SearchView) searchMenuItem.getActionView();
-            if (searchView != null) {
-                // Setting up aesthetics
-                EditText searchEditText = (EditText) searchView.findViewById(android.support.v7.appcompat.R.id.search_src_text);
-                searchEditText.setTextColor(getResources().getColor(android.R.color.white));
-                searchEditText.setHintTextColor(getResources().getColor(android.R.color.white));
-                searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-                    @Override
-                    public boolean onQueryTextSubmit(String s) {
-                        // Close the keyboard
-                        searchView.clearFocus();
-                        return true;
-                    }
+            searchMenuItem.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+                @Override
+                public boolean onMenuItemClick(MenuItem m) {
+                    FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                    return fragmentManager.beginTransaction()
+                            .replace(R.id.content_frame, new ItemFragment())
+                            .addToBackStack("tag")
+                            .commit() > 0;
+                }
+            });
 
-                    @Override
-                    public boolean onQueryTextChange(String s) {
-                        final Filter filter = mAdapter.getFilter();
-                        filter.filter(s);
-                        return true;
-                    }
-                });
-            }
         }
     }
 
