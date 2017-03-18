@@ -85,6 +85,13 @@ public class ResourceFragment extends Fragment {
         });
         refresh();
         if (mSearchView != null) {
+            mSearchView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    mSearchView.onActionViewExpanded();
+                }
+            });
+
             // Setting up aesthetics
             EditText searchEditText = (EditText) mSearchView.findViewById(android.support.v7.appcompat.R.id.search_src_text);
             searchEditText.setTextColor(getResources().getColor(R.color.grizzly_gray));

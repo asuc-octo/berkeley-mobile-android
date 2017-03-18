@@ -168,9 +168,7 @@ public class ItemFragment extends Fragment {
             MenuItemCompat.setOnActionExpandListener(searchMenuItem, new MenuItemCompat.OnActionExpandListener() {
                 @Override
                 public boolean onMenuItemActionCollapse(MenuItem item) {
-                    if (mAdapter.getCount() <= 0) {
-                        getActivity().onBackPressed();
-                    }
+                    getActivity().onBackPressed();
                     return true;
                 }
 
