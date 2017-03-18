@@ -2,7 +2,6 @@ package com.asuc.asucmobile.main;
 
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Display;
 import android.widget.ExpandableListView;
 import android.widget.SimpleExpandableListAdapter;
@@ -62,7 +61,7 @@ public class GroupExScheduleActivity extends BaseActivity {
 
             @Override
             public void onFailure(Call<GroupExs> call, Throwable t) {
-                Log.d("deeebug", t.getMessage());
+                t.printStackTrace();
             }
         });
 
@@ -105,7 +104,6 @@ public class GroupExScheduleActivity extends BaseActivity {
             }
             childData.add(tempChildList);
         }
-        Log.d("deeebug", "parsemania");
         expandableListView.setAdapter(new SimpleExpandableListAdapter(
                 this, groupData, R.layout.group_ex_schedule_group, new String[]{"date", "dow"},
                 new int[]{R.id.date, R.id.dow}, childData, R.layout.group_ex_schedule_child_item,
