@@ -95,10 +95,10 @@ public class ItemFragment extends Fragment {
                     case "Group Exercise":
                         //intent = new Intent(getContext(), OpenItemActivity.class);
                         break;
-                    case "Gym":
-                        controller.setItemFromUrl(getContext(),
-                                URL, "gym", GymController.getInstance());
-                        intent = new Intent(getContext(), OpenGymActivity.class);
+                    case "Gyms":
+//                        controller.setItemFromUrl(getContext(),
+//                                URL, "gym", GymController.getInstance());
+//                        intent = new Intent(getContext(), OpenGymActivity.class);
                         break;
                     default:
                         break;

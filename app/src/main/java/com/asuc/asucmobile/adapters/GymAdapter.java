@@ -8,14 +8,16 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.asuc.asucmobile.R;
-import com.asuc.asucmobile.models.Gym;
+import com.asuc.asucmobile.models.Gyms.Gym;
+
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class GymAdapter extends BaseAdapter {
 
     private Context context;
-    private ArrayList<Gym> gyms;
+    private List<Gym> gyms;
 
     public GymAdapter(Context context) {
         this.context = context;
@@ -65,7 +67,7 @@ public class GymAdapter extends BaseAdapter {
      *
      * @param list The updated list of gyms.
      */
-    public void setList(ArrayList<Gym> list) {
+    public void setList(List<Gym> list) {
         gyms = list;
 
         notifyDataSetChanged();

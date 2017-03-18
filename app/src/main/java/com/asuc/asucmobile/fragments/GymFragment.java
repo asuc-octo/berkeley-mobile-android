@@ -21,13 +21,19 @@ import android.widget.Toast;
 
 import com.asuc.asucmobile.R;
 import com.asuc.asucmobile.adapters.GymAdapter;
+import com.asuc.asucmobile.controllers.Controller;
+import com.asuc.asucmobile.controllers.GroupExController;
 import com.asuc.asucmobile.controllers.GymController;
 import com.asuc.asucmobile.main.OpenGymActivity;
-import com.asuc.asucmobile.models.Gym;
+import com.asuc.asucmobile.models.GroupExs;
+import com.asuc.asucmobile.models.Gyms;
 import com.asuc.asucmobile.utilities.Callback;
 import com.asuc.asucmobile.utilities.NavigationGenerator;
 
 import java.util.ArrayList;
+
+import retrofit2.Call;
+import retrofit2.Response;
 
 public class GymFragment extends Fragment {
 
@@ -55,8 +61,7 @@ public class GymFragment extends Fragment {
         mGymList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                GymController controller = ((GymController) GymController.getInstance());
-                controller.setCurrentGym(mAdapter.getItem(i));
+                GymController.setCurrentGym(mAdapter.getItem(i));
                 Intent intent = new Intent(getActivity(), OpenGymActivity.class);
                 startActivity(intent);
             }
@@ -68,6 +73,11 @@ public class GymFragment extends Fragment {
                 refresh();
             }
         });
+        refresh();
+
+        mGymList.setVisibility(View.GONE);
+        mRefreshWrapper.setVisibility(View.GONE);
+        mProgressBar.setVisibility(View.VISIBLE);
         refresh();
 
         return layout;
@@ -99,27 +109,24 @@ public class GymFragment extends Fragment {
         }
     }
 
-    /**
-     * refresh() updates the visibility of necessary UI elements and refreshes the gym list
-     * from the web.
-     */
-    private void refresh() {
-        mGymList.setVisibility(View.GONE);
-        mRefreshWrapper.setVisibility(View.GONE);
-        mProgressBar.setVisibility(View.VISIBLE);
-
-        GymController.getInstance().refreshInBackground(getActivity(), new Callback() {
+    public void refresh() {
+        GymController.cService controller = Controller.retrofit.create(GymController.cService.class);
+        Call<Gyms> call = controller.getGyms();
+        call.enqueue(new retrofit2.Callback<Gyms>() {
             @Override
-            @SuppressWarnings("unchecked")
-            public void onDataRetrieved(Object data) {
-                mGymList.setVisibility(View.VISIBLE);
-                mProgressBar.setVisibility(View.GONE);
+            public void onResponse(Call<Gyms> call, Response<Gyms> response) {
+                if (response.isSuccessful()) {
+                    mGymList.setVisibility(View.VISIBLE);
+                    mProgressBar.setVisibility(View.GONE);
 
-                mAdapter.setList((ArrayList<Gym>) data);
+                    mAdapter.setList(GymController.parse(response.body()));
+                } else {
+                    onFailure(null, null);
+                }
             }
 
             @Override
-            public void onRetrievalFailed() {
+            public void onFailure(Call<Gyms> call, Throwable t) {
                 mProgressBar.setVisibility(View.GONE);
                 mRefreshWrapper.setVisibility(View.VISIBLE);
                 Toast.makeText(getContext(), "Unable to retrieve data, please try again",

@@ -45,7 +45,7 @@ public class GroupExScheduleActivity extends BaseActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setBackgroundColor(getResources().getColor(R.color.hotline_blue));
         ButterKnife.bind(this);
-        GroupExController controller = Controller.retrofit.create(GroupExController.class);
+        GroupExController.cService controller = Controller.retrofit.create(GroupExController.cService.class);
         Call<GroupExs> call = controller.getClasses();
 
         call.enqueue(new Callback<GroupExs>() {

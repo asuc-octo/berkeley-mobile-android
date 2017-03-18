@@ -15,7 +15,7 @@ import android.widget.TextView;
 
 import com.asuc.asucmobile.R;
 import com.asuc.asucmobile.controllers.GymController;
-import com.asuc.asucmobile.models.Gym;
+import com.asuc.asucmobile.models.Gyms.Gym;
 import com.asuc.asucmobile.utilities.Callback;
 import com.asuc.asucmobile.utilities.ImageDownloadThread;
 
@@ -65,7 +65,7 @@ public class OpenGymActivity extends BaseActivity {
 
         // Load gym image.
         loadingBar.bringToFront();
-        new ImageDownloadThread(this, gym.getImageUrl(), new Callback() {
+        new ImageDownloadThread(this, gym.getImageLink(), new Callback() {
             @Override
             public void onDataRetrieved(Object data) {
                 if (data != null) {
@@ -93,7 +93,7 @@ public class OpenGymActivity extends BaseActivity {
     }
 
     private void exitIfNoData() {
-        gym = ((GymController) GymController.getInstance()).getCurrentGym();
+        gym = GymController.getCurrentGym();
         if (gym == null) {
             finish();
         }
