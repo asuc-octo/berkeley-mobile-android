@@ -11,10 +11,12 @@ import retrofit2.http.Path;
 public class GroupExController {
     public interface cService {
 
-        @GET("group_exs/")
+        String PATH = "group_exs/";
+
+        @GET(PATH)
         Call<GroupExs> getData();
 
-        @GET("group_exs/{id}")
+        @GET(PATH + "{id}/")
         Call<GroupExs> getDatum(@Path("id") int id);
 
     }
