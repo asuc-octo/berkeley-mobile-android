@@ -5,7 +5,7 @@ import android.content.Context;
 import com.asuc.asucmobile.main.ListOfFavorites;
 import com.asuc.asucmobile.models.FoodItem;
 import com.asuc.asucmobile.models.Library;
-import com.asuc.asucmobile.models.Resource;
+import com.asuc.asucmobile.models.Resources.Resource;
 
 import java.util.Comparator;
 
