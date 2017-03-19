@@ -7,7 +7,8 @@ import java.util.List;
 
 public class Gyms {
 
-    public List<Gym> gyms;
+    @SerializedName("gyms")
+    public List<Gym> data;
 
     public class Gym {
         private int id;
