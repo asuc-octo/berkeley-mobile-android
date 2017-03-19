@@ -11,11 +11,11 @@ public class GroupExController {
     public interface cService {
 
         @GET("group_exs/")
-        Call<GroupExs> getClasses();
+        Call<GroupExs> getData();
 
     }
 
     public List<GroupEx> parse(GroupExs groupExs) {
-        return groupExs.groupExs;
+        return groupExs.data;
     }
 }

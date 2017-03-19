@@ -6,7 +6,7 @@ import java.util.Date;
 import java.util.List;
 
 public class GroupExs {
-    public List<GroupEx> groupExs;
+    public List<GroupEx> data;
 
     public class GroupEx {
 

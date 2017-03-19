@@ -46,13 +46,13 @@ public class GroupExScheduleActivity extends BaseActivity {
         toolbar.setBackgroundColor(getResources().getColor(R.color.hotline_blue));
         ButterKnife.bind(this);
         GroupExController.cService controller = Controller.retrofit.create(GroupExController.cService.class);
-        Call<GroupExs> call = controller.getClasses();
+        Call<GroupExs> call = controller.getData();
 
         call.enqueue(new Callback<GroupExs>() {
             @Override
             public void onResponse(Call<GroupExs> call, Response<GroupExs> response) {
                 if (response.isSuccessful()) {
-                    groupExs = response.body().groupExs;
+                    groupExs = response.body().data;
                     parse();
                 } else {
                     onFailure(null, null);
