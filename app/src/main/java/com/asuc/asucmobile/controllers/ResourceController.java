@@ -1,19 +1,11 @@
 package com.asuc.asucmobile.controllers;
 
-import android.app.Activity;
 import android.content.Context;
-import android.support.annotation.NonNull;
 
 import com.asuc.asucmobile.models.Resources;
 import com.asuc.asucmobile.models.Resources.Resource;
-import com.asuc.asucmobile.utilities.Callback;
 import com.asuc.asucmobile.utilities.CustomComparators;
-import com.asuc.asucmobile.utilities.JSONUtilities;
 
-import org.json.JSONArray;
-import org.json.JSONObject;
-
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -25,11 +17,16 @@ public class ResourceController {
     private static Resource currentResource;
 
     public interface cService {
+        
         @GET("resources")
         Call<Resources> getResources();
     }
-    public static List<Resource> parse(Resources resources) {
-        return resources.resources;
+    public static List<Resource> parse(Resources resources, Context context) {
+        for (Resource resource : resources.data) {
+            resource.generateLatLng();
+        }
+        Collections.sort(resources.data, CustomComparators.FacilityComparators.getSortByFavoriteResource(context));
+        return resources.data;
     }
 
     public static void setCurrentResource(Resource resource) {

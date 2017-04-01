@@ -8,7 +8,9 @@ import com.google.gson.annotations.SerializedName;
 import java.util.List;
 
 public class Resources {
-    public List<Resource> resources;
+
+    @SerializedName("resources")
+    public List<Resource> data;
 
     public class Resource implements Comparable<Resource> {
 
@@ -123,6 +125,15 @@ public class Resources {
         @Override
         public int compareTo(@NonNull Resource other) {
             return this.getResource().compareTo(other.getResource());
+        }
+
+        public void generateLatLng() {
+            if (this.lat == INVALID_COORD || this.lng == INVALID_COORD) {
+                hasCoordinates = false;
+            } else {
+                hasCoordinates = true;
+                this.latLng = new LatLng(this.lat, this.lng);
+            }
         }
     }
 }
