@@ -85,7 +85,10 @@ public class LibraryFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        refresh();
+//        refresh();
+        if (mAdapter != null) {
+            mAdapter.notifyDataSetChanged();
+        }
         NavigationGenerator.closeMenu(getActivity());
     }
 

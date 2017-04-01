@@ -61,6 +61,7 @@ public class OpenGymActivity extends BaseActivity {
         // Populate UI.
         TextView nametag = (TextView) findViewById(R.id.nametag);
         TextView addresstag = (TextView) findViewById(R.id.addresstag);
+        final TextView hours = (TextView) findViewById(R.id.hours);
         final ProgressBar loadingBar = (ProgressBar) findViewById(R.id.progress_bar);
         final View image = findViewById(R.id.image);
         mapFragment = (MapFragment) getFragmentManager().findFragmentById(R.id.map);
@@ -85,6 +86,7 @@ public class OpenGymActivity extends BaseActivity {
             hoursString = new SpannableString("Today  UNKNOWN");
             hoursString.setSpan(new ForegroundColorSpan(Color.rgb(114, 205, 244)), 7, 14, Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
         }
+        hours.setText(hoursString);
         nametag.setText(gym.getName());
         addresstag.setText(gym.getAddress());
 
