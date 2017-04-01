@@ -11,16 +11,17 @@ import android.widget.TextView;
 
 import com.asuc.asucmobile.R;
 import com.asuc.asucmobile.main.ListOfFavorites;
-import com.asuc.asucmobile.models.Item;
+import com.asuc.asucmobile.models.Items.Item;
 import com.asuc.asucmobile.utilities.SerializableUtilities;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class ItemAdapter extends BaseAdapter {
 
     private Context context;
-    private ArrayList<Item> allItems;
-    private ArrayList<Item> items;
+    private List<Item> allItems;
+    private List<Item> items;
 
     public ItemAdapter(Context context) {
         this.context = context;
@@ -44,10 +45,9 @@ public class ItemAdapter extends BaseAdapter {
         return i;
     }
 
-    public ArrayList<Item> getItems() {
+    public List<Item> getItems() {
         return items;
     }
-
 
     @Override
     @SuppressWarnings("deprecation")
@@ -94,7 +94,7 @@ public class ItemAdapter extends BaseAdapter {
      *
      * @param list The updated list of items.
      */
-    public void setList(ArrayList<Item> list) {
+    public void setList(List<Item> list) {
         allItems = list;
         items = new ArrayList<>();
 
@@ -118,6 +118,8 @@ public class ItemAdapter extends BaseAdapter {
                 if (query == null || query.length() == 0) {
                     //filteredItems = allItems;
                 } else {
+                    System.out.println("AllItems:");
+                    System.out.println(allItems);
                     for (Item item : allItems) {
                         if (item.getName().toLowerCase().contains(query.toString().toLowerCase()) ||
                                 item.getCategory().toLowerCase().contains(query.toString().toLowerCase())) {
@@ -134,6 +136,7 @@ public class ItemAdapter extends BaseAdapter {
             @SuppressWarnings("unchecked")
             protected void publishResults(CharSequence constraint, FilterResults filterResults) {
                 items = (ArrayList<Item>) filterResults.values;
+                System.out.println(items);
                 notifyDataSetChanged();
             }
 

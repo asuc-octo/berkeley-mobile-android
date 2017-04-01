@@ -24,10 +24,12 @@ import android.widget.Toast;
 
 import com.asuc.asucmobile.R;
 import com.asuc.asucmobile.adapters.ResourceAdapter;
+import com.asuc.asucmobile.controllers.Controller;
 import com.asuc.asucmobile.controllers.ResourceController;
 import com.asuc.asucmobile.main.ListOfFavorites;
 import com.asuc.asucmobile.main.OpenResourceActivity;
-import com.asuc.asucmobile.models.Resource;
+import com.asuc.asucmobile.models.Resources;
+import com.asuc.asucmobile.models.Resources.Resource;
 import com.asuc.asucmobile.utilities.Callback;
 import com.asuc.asucmobile.utilities.CustomComparators;
 import com.asuc.asucmobile.utilities.NavigationGenerator;
@@ -35,6 +37,10 @@ import com.asuc.asucmobile.utilities.SerializableUtilities;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Response;
 
 public class ResourceFragment extends Fragment {
 
@@ -70,9 +76,7 @@ public class ResourceFragment extends Fragment {
         mResourceList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                ResourceController controller =
-                        (ResourceController) ResourceController.getInstance();
-                controller.setCurrentResource(mAdapter.getItem(i));
+                ResourceController.setCurrentResource(mAdapter.getItem(i));
                 Intent intent = new Intent(getContext(), OpenResourceActivity.class);
                 startActivity(intent);
             }
@@ -83,6 +87,11 @@ public class ResourceFragment extends Fragment {
                 refresh();
             }
         });
+        refresh();
+
+        mResourceList.setVisibility(View.GONE);
+        mRefreshWrapper.setVisibility(View.GONE);
+        mProgressBar.setVisibility(View.VISIBLE);
         refresh();
         if (mSearchView != null) {
             mSearchView.setOnClickListener(new View.OnClickListener() {
@@ -166,22 +175,24 @@ public class ResourceFragment extends Fragment {
      * refresh() updates the visibility of necessary UI elements and refreshes the resource list
      * from the web.
      */
-    private void refresh() {
-        mResourceList.setVisibility(View.GONE);
-        mRefreshWrapper.setVisibility(View.GONE);
-        mProgressBar.setVisibility(View.VISIBLE);
-
-        ResourceController.getInstance().refreshInBackground(getActivity(), new Callback() {
+    public void refresh() {
+        ResourceController.cService controller = Controller.retrofit.create(ResourceController.cService.class);
+        Call<Resources> call = controller.getResources();
+        call.enqueue(new retrofit2.Callback<Resources>() {
             @Override
-            @SuppressWarnings("unchecked")
-            public void onDataRetrieved(Object data) {
-                mResourceList.setVisibility(View.VISIBLE);
-                mProgressBar.setVisibility(View.GONE);
-                mAdapter.setList((ArrayList<Resource>) data);
+            public void onResponse(Call<Resources> call, Response<Resources> response) {
+                if (response.isSuccessful()) {
+                    mResourceList.setVisibility(View.VISIBLE);
+                    mProgressBar.setVisibility(View.GONE);
+
+                    mAdapter.setList(ResourceController.parse(response.body()));
+                } else {
+                    onFailure(null, null);
+                }
             }
 
             @Override
-            public void onRetrievalFailed() {
+            public void onFailure(Call<Resources> call, Throwable t) {
                 mProgressBar.setVisibility(View.GONE);
                 mRefreshWrapper.setVisibility(View.VISIBLE);
                 Toast.makeText(getContext(), "Unable to retrieve data, please try again",
@@ -189,5 +200,4 @@ public class ResourceFragment extends Fragment {
             }
         });
     }
-
 }

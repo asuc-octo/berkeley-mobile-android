@@ -24,6 +24,7 @@ import android.widget.Toast;
 
 import com.asuc.asucmobile.R;
 import com.asuc.asucmobile.adapters.ItemAdapter;
+import com.asuc.asucmobile.controllers.Controller;
 import com.asuc.asucmobile.controllers.DiningController;
 import com.asuc.asucmobile.controllers.GymController;
 import com.asuc.asucmobile.controllers.ItemController;
@@ -32,13 +33,17 @@ import com.asuc.asucmobile.main.ListOfFavorites;
 import com.asuc.asucmobile.main.OpenDiningHallActivity;
 import com.asuc.asucmobile.main.OpenGymActivity;
 import com.asuc.asucmobile.main.OpenLibraryActivity;
-import com.asuc.asucmobile.models.Item;
+import com.asuc.asucmobile.models.Items;
+import com.asuc.asucmobile.models.Items.Item;
 import com.asuc.asucmobile.utilities.Callback;
 import com.asuc.asucmobile.utilities.NavigationGenerator;
 import com.asuc.asucmobile.utilities.SerializableUtilities;
 
 import java.util.ArrayList;
 import java.util.Collections;
+
+import retrofit2.Call;
+import retrofit2.Response;
 
 import static com.asuc.asucmobile.controllers.Controller.FQDN;
 
@@ -53,6 +58,7 @@ public class ItemFragment extends Fragment {
     @Override
     @SuppressWarnings("deprecation")
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        System.out.println("View created");
         View layout = inflater.inflate(R.layout.fragment_item, container, false);
         Toolbar toolbar = (Toolbar) layout.findViewById(R.id.toolbar);
         ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
@@ -73,13 +79,13 @@ public class ItemFragment extends Fragment {
         mItemList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                ItemController controller = (ItemController) ItemController.getInstance();
                 Item item = mAdapter.getItem(i);
-                controller.setCurrentItem(item);
+                ItemController.setCurrentItem(mAdapter.getItem(i));
                 String URL = FQDN + item.getQuery();
                 Intent intent = null;
                 switch (item.getCategory()) {
                     case "Dining Hall":
+
 //                        controller.setItemFromUrl(getContext(),
 //                                URL, "dining_hall", DiningController.getInstance());
 //                        intent = new Intent(getContext(), OpenDiningHallActivity.class);
@@ -88,7 +94,7 @@ public class ItemFragment extends Fragment {
 //                        controller.setItemFromUrl(getContext(),
 //                                URL, "library", LibraryController.getInstance());
 //                        intent = new Intent(getContext(), OpenLibraryActivity.class);
-//                        break;
+                        break;
                     case "Sports Schedule":
                         //intent = new Intent(getContext(), OpenItemActivity.class);
                         break;
@@ -96,7 +102,7 @@ public class ItemFragment extends Fragment {
                         //intent = new Intent(getContext(), OpenItemActivity.class);
                         break;
                     case "Gyms":
-//                        controller.setItemFromUrl(getContext(),
+//                        GymController.setItemFromUrl(getContext(),
 //                                URL, "gym", GymController.getInstance());
 //                        intent = new Intent(getContext(), OpenGymActivity.class);
                         break;
@@ -187,22 +193,25 @@ public class ItemFragment extends Fragment {
      * from the web.
      */
     private void refresh() {
-        mItemList.setVisibility(View.GONE);
-        mRefreshWrapper.setVisibility(View.GONE);
-        mProgressBar.setVisibility(View.VISIBLE);
-
-        ItemController.getInstance().refreshInBackground(getActivity(), new Callback() {
+        ItemController.cService controller = Controller.retrofit.create(ItemController.cService.class);
+        Call<Items> call = controller.getItems();
+        call.enqueue(new retrofit2.Callback<Items>() {
             @Override
-            @SuppressWarnings("unchecked")
-            public void onDataRetrieved(Object data) {
-                mItemList.setVisibility(View.VISIBLE);
-                mProgressBar.setVisibility(View.GONE);
+            public void onResponse(Call<Items> call, Response<Items> response) {
+                if (response.isSuccessful()) {
+                    mItemList.setVisibility(View.VISIBLE);
+                    mProgressBar.setVisibility(View.GONE);
 
-                mAdapter.setList((ArrayList<Item>) data);
+                    mAdapter.setList(ItemController.parse(response.body()));
+                    System.out.println(response.body());
+                } else {
+                    System.out.println("abc");
+                    onFailure(null, null);
+                }
             }
 
             @Override
-            public void onRetrievalFailed() {
+            public void onFailure(Call<Items> call, Throwable t) {
                 mProgressBar.setVisibility(View.GONE);
                 mRefreshWrapper.setVisibility(View.VISIBLE);
                 Toast.makeText(getContext(), "Unable to retrieve data, please try again",

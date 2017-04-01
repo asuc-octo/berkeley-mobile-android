@@ -12,7 +12,7 @@ import android.widget.Toast;
 
 import com.asuc.asucmobile.R;
 import com.asuc.asucmobile.controllers.ResourceController;
-import com.asuc.asucmobile.models.Resource;
+import com.asuc.asucmobile.models.Resources.Resource;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -217,7 +217,7 @@ public class OpenResourceActivity extends BaseActivity {
     }
 
     private void exitIfNoData() {
-        resource = ((ResourceController) ResourceController.getInstance()).getCurrentResource();
+        resource = ResourceController.getCurrentResource();
         if (resource == null) {
             finish();
         }
