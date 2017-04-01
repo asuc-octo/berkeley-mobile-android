@@ -1,8 +1,12 @@
 package com.asuc.asucmobile.models;
 
+import com.google.android.gms.maps.model.LatLng;
+
 import java.util.Date;
 
 public class Gym {
+
+    public static final double INVALID_COORD = -181;
 
     private int id;
     private String name;
@@ -10,14 +14,22 @@ public class Gym {
     private Date opening;
     private Date closing;
     private String imageUrl;
+    private LatLng latLng;
+    private boolean hasCoordinates;
 
-    public Gym(int id, String name, String address, Date opening, Date closing, String imageUrl) {
+    public Gym(int id, String name, String address, Date opening, Date closing, String imageUrl, double lat, double lng) {
         this.id = id;
-        this.name = name;
+        this.name = name.replace("\n", "").trim();
         this.address = address;
         this.opening = opening;
         this.closing = closing;
         this.imageUrl = imageUrl;
+        if (lat == INVALID_COORD || lng == INVALID_COORD) {
+            hasCoordinates = false;
+        } else {
+            hasCoordinates = true;
+            this.latLng = new LatLng(lat, lng);
+        }
     }
 
     public int getId() {
@@ -42,6 +54,10 @@ public class Gym {
 
     public String getImageUrl() {
         return imageUrl;
+    }
+
+    public LatLng getCoordinates() {
+        return hasCoordinates ? latLng : null;
     }
 
     /**

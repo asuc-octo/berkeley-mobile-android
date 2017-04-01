@@ -84,6 +84,7 @@ public class LibraryController implements Controller {
                         String closingString;
                         Date[] weeklyOpen = new Date[7];
                         Date[] weeklyClose = new Date[7];
+                        String imageUrl = libraryJSON.getString("image_link");
                         for (int j=0; j < weeklyOpenArray.length(); j++) {
                             openingString = weeklyOpenArray.getString(j);
                             opening = null;
@@ -125,7 +126,7 @@ public class LibraryController implements Controller {
                         int weekday = c.get(Calendar.DAY_OF_WEEK);
                         libraries.add(new Library(id, name, location, phone, weeklyOpen[0],
                                 weeklyClose[0], weeklyOpen, weeklyClose, lat, lng, byAppointment,
-                                weeklyAppointments, weekday));
+                                weeklyAppointments, weekday, imageUrl));
                     }
 
                     // Sort the libraries alphabetically, putting favorites at top

@@ -1,7 +1,11 @@
 package com.asuc.asucmobile.main;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -13,13 +17,19 @@ import android.text.TextUtils;
 import android.text.style.ForegroundColorSpan;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.asuc.asucmobile.R;
 import com.asuc.asucmobile.controllers.LibraryController;
 import com.asuc.asucmobile.models.Library;
+import com.asuc.asucmobile.utilities.Callback;
+import com.asuc.asucmobile.utilities.ImageDownloadThread;
+import com.asuc.asucmobile.utilities.SerializableUtilities;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -34,6 +44,8 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
+
+import static java.security.AccessController.getContext;
 
 public class OpenLibraryActivity extends BaseActivity {
 
@@ -50,22 +62,27 @@ public class OpenLibraryActivity extends BaseActivity {
     @Override
     @SuppressWarnings("all")
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState, R.layout.activity_open_library);
+        super.onCreate(savedInstanceState, R.layout.activity_open);
         exitIfNoData();
         setupToolbar(library.getName(), true);
 
         // Populate UI.
         final TextView hours = (TextView) findViewById(R.id.hours);
         final TextView hours_expand = (TextView) findViewById(R.id.hours_expand);
-        TextView address = (TextView) findViewById(R.id.location);
-        TextView phone = (TextView) findViewById(R.id.phone);
+        TextView nametag = (TextView) findViewById(R.id.nametag);
+        TextView addresstag = (TextView) findViewById(R.id.addresstag);
+        final View image = findViewById(R.id.image);
+        final ProgressBar loadingBar = (ProgressBar) findViewById(R.id.progress_bar);
         final LinearLayout hoursLayout = (LinearLayout) findViewById(R.id.hours_layout);
-        LinearLayout locationLayout = (LinearLayout) findViewById(R.id.location_layout);
-        LinearLayout phoneLayout = (LinearLayout) findViewById(R.id.phone_layout);
+        RelativeLayout phoneLayout = (RelativeLayout) findViewById(R.id.phone_layout);
+        RelativeLayout locationLayout = (RelativeLayout) findViewById(R.id.location_layout);
         mapFragment = (MapFragment) getFragmentManager().findFragmentById(R.id.map);
+
         hours.setText(setUpHours());
-        address.setText(library.getLocation());
-        phone.setText(library.getPhone());
+        android.util.Log.d("Library Name", library.getName());
+        nametag.setText(library.getName());
+        addresstag.setText(library.getLocation());
+
         locationLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -101,6 +118,54 @@ public class OpenLibraryActivity extends BaseActivity {
                 startActivity(i);
             }
         });
+
+        //Add in favoriting to the individual view.
+        final Context context = getBaseContext();
+        final ListOfFavorites listOfFavorites = (ListOfFavorites) SerializableUtilities.loadSerializedObject(context);
+
+        final ImageView iconFavorite = (ImageView) findViewById(R.id.icon_favorite);
+        if (listOfFavorites != null && listOfFavorites.contains(library.getName())) {
+            iconFavorite.setImageResource(R.drawable.post_favorite);
+        } else {
+            iconFavorite.setImageResource(R.drawable.pre_favorite);
+        }
+
+        iconFavorite.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (listOfFavorites != null && listOfFavorites.contains(library.getName())) {
+                    listOfFavorites.remove(library.getName());
+                    SerializableUtilities.saveObject(context, listOfFavorites);
+                    iconFavorite.setImageResource(R.drawable.pre_favorite);
+                } else if (listOfFavorites != null){
+                    listOfFavorites.add(library.getName());
+                    SerializableUtilities.saveObject(context, listOfFavorites);
+                    iconFavorite.setImageResource(R.drawable.post_favorite);
+                }
+            }
+        });
+
+        // Load library image.
+        loadingBar.bringToFront();
+        new ImageDownloadThread(this, library.getImageUrl(), new Callback() {
+            @Override
+            public void onDataRetrieved(Object data) {
+                if (data != null) {
+                    Bitmap bitmap = (Bitmap) data;
+                    Drawable bitmapDrawable = new BitmapDrawable(getResources(), bitmap);
+                    image.setBackgroundDrawable(bitmapDrawable);
+                }
+                loadingBar.setVisibility(View.GONE);
+                image.setVisibility(View.VISIBLE);
+            }
+
+            @Override
+            public void onRetrievalFailed() {
+                image.setBackgroundDrawable(getResources().getDrawable(R.drawable.default_library));
+                loadingBar.setVisibility(View.GONE);
+                image.setVisibility(View.VISIBLE);
+            }
+        }).start();
 
         // Display instructions if this is the first time opening this activity.
         SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);

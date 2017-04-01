@@ -26,12 +26,13 @@ public class Library implements Comparable<Library>{
     private boolean hasCoordinates;
     private boolean[] weeklyAppointments;
     private int weekday;
+    private String imageUrl;
 
     public Library(int id, String name, String location, String phone, Date opening,
                    Date closing, Date[] weeklyOpen, Date[] weeklyClose, double lat, double lng,
-                   boolean byAppointment, boolean[] weeklyAppointments, int weekday) {
+                   boolean byAppointment, boolean[] weeklyAppointments, int weekday, String imgUrl) {
         this.id = id;
-        this.name = name;
+        this.name = name.replace("\n", "").trim();
         this.location = location;
         this.phone = phone;
         this.opening = opening;
@@ -41,6 +42,7 @@ public class Library implements Comparable<Library>{
         this.weeklyClose = weeklyClose;
         this.weeklyAppointments = weeklyAppointments;
         this.weekday = weekday;
+        this.imageUrl = imgUrl;
         if (lat == INVALID_COORD || lng == INVALID_COORD) {
             hasCoordinates = false;
         } else {
@@ -86,6 +88,10 @@ public class Library implements Comparable<Library>{
     }
 
     public boolean[] getWeeklyAppointments() { return weeklyAppointments; }
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
 
     /**
      * Outputs a day of week as a string with spaces padded at the end to be equal length for all

@@ -71,6 +71,9 @@ public class GymFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
+        if (mAdapter != null) {
+            mAdapter.notifyDataSetChanged();
+        }
         NavigationGenerator.closeMenu(getActivity());
     }
 
