@@ -11,16 +11,17 @@ import android.widget.TextView;
 
 import com.asuc.asucmobile.R;
 import com.asuc.asucmobile.main.ListOfFavorites;
-import com.asuc.asucmobile.models.Library;
+import com.asuc.asucmobile.models.Libraries.Library;
 import com.asuc.asucmobile.utilities.SerializableUtilities;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class LibraryAdapter extends BaseAdapter {
 
     private Context context;
-    private ArrayList<Library> allLibraries;
-    private ArrayList<Library> libraries;
+    private List<Library> allLibraries;
+    private List<Library> libraries;
 
     public LibraryAdapter(Context context) {
         this.context = context;
@@ -44,7 +45,7 @@ public class LibraryAdapter extends BaseAdapter {
         return i;
     }
 
-    public ArrayList<Library> getLibraries() {
+    public List<Library> getLibraries() {
         return libraries;
     }
 
@@ -106,7 +107,7 @@ public class LibraryAdapter extends BaseAdapter {
      *
      * @param list The updated list of libraries.
      */
-    public void setList(ArrayList<Library> list) {
+    public void setList(List<Library> list) {
         allLibraries = list;
         libraries = list;
 
@@ -125,7 +126,7 @@ public class LibraryAdapter extends BaseAdapter {
             @Override
             protected FilterResults performFiltering(CharSequence query) {
                 FilterResults results = new FilterResults();
-                ArrayList<Library> filteredLibraries = new ArrayList<>();
+                List<Library> filteredLibraries = new ArrayList<>();
 
                 if (query == null || query.length() == 0) {
                     filteredLibraries = allLibraries;

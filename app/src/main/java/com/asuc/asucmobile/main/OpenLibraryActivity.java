@@ -19,7 +19,7 @@ import android.widget.Toast;
 
 import com.asuc.asucmobile.R;
 import com.asuc.asucmobile.controllers.LibraryController;
-import com.asuc.asucmobile.models.Library;
+import com.asuc.asucmobile.models.Libraries.Library;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -289,7 +289,7 @@ public class OpenLibraryActivity extends BaseActivity {
     }
 
     private void exitIfNoData() {
-        library = ((LibraryController) LibraryController.getInstance()).getCurrentLibrary();
+        library = LibraryController.getCurrentLibrary();
         if (library == null) {
             finish();
         }
