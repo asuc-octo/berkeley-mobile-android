@@ -7,14 +7,22 @@ import android.support.annotation.NonNull;
 import com.asuc.asucmobile.models.Gym;
 import com.asuc.asucmobile.utilities.Callback;
 import com.asuc.asucmobile.utilities.JSONUtilities;
-import com.asuc.asucmobile.utilities.JsonToObject;
 
 import org.json.JSONArray;
+import org.json.JSONObject;
+
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.Locale;
+import java.util.TimeZone;
 
 public class GymController implements Controller {
 
     private static final String URL = BASE_URL + "/gyms";
+    private static final SimpleDateFormat DATE_FORMAT =
+            new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.ENGLISH);
+    private static final TimeZone PST = TimeZone.getTimeZone("America/Los_Angeles");
 
     private static GymController instance;
 
@@ -55,8 +63,25 @@ public class GymController implements Controller {
             public void run() {
                 try {
                     for (int i = 0; i < array.length(); i++) {
-                        Gym gym = (Gym) JsonToObject.retrieve(array.getJSONObject(i), "gyms", context);
-                        gyms.add(gym);
+                        JSONObject gymJSON = array.getJSONObject(i);
+                        int id = gymJSON.getInt("id");
+                        String name = gymJSON.getString("name");
+                        String address = gymJSON.getString("address");
+                        long tmpDate;
+                        Date opening = null;
+                        Date closing = null;
+                        String openingString = gymJSON.getString("opening_time_today");
+                        String closingString = gymJSON.getString("closing_time_today");
+                        if (!openingString.equals("null")) {
+                            tmpDate = DATE_FORMAT.parse(openingString).getTime();
+                            opening = new Date(tmpDate + PST.getOffset(tmpDate));
+                        }
+                        if (!closingString.equals("null")) {
+                            tmpDate = DATE_FORMAT.parse(closingString).getTime();
+                            closing = new Date(tmpDate + PST.getOffset(tmpDate));
+                        }
+                        String imageUrl = gymJSON.getString("image_link");
+                        gyms.add(new Gym(id, name, address, opening, closing, imageUrl));
                     }
                     ((Activity) context).runOnUiThread(new Runnable() {
                         @Override

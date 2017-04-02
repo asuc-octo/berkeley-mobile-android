@@ -24,7 +24,7 @@
         android:layout_marginLeft="10dp"
         android:id="@+id/diningHallText"
         android:textSize="22sp"
-        android:textColor="@color/off_hotline_blue"
+        android:textColor="@android:color/black"
         android:layout_below="@+id/toolbar"
         android:text="Dining Halls"/>
 
@@ -39,21 +39,19 @@
 
     <com.devsmart.android.ui.HorizontalListView
         android:layout_width="match_parent"
-        android:layout_height="250dp"
+        android:layout_height="170dp"
         android:layout_below="@+id/diningDivider"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
+        android:layout_marginRight="0dp"
         android:layout_marginTop="10dp"
         android:divider="@android:color/transparent"
-        android:id="@+id/listDiningHalls"></com.devsmart.android.ui.HorizontalListView>
-
+        android:id="@+id/listDiningHalls" />
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
         android:textSize="22sp"
-        android:textColor="@color/off_hotline_blue"
+        android:textColor="@android:color/black"
         android:layout_below="@+id/listDiningHalls"
         android:id="@+id/gymText"
         android:text="Gyms"/>
@@ -69,13 +67,12 @@
 
     <com.devsmart.android.ui.HorizontalListView
         android:layout_width="match_parent"
-        android:layout_height="240dp"
-        android:layout_marginLeft="10dp"
+        android:layout_height="200dp"
         android:layout_marginRight="10dp"
         android:layout_marginTop="10dp"
         android:layout_below="@+id/gymDivider"
         android:divider="@android:color/transparent"
-        android:id="@+id/listGyms"></com.devsmart.android.ui.HorizontalListView>
+        android:id="@+id/listGyms" />
 
     </RelativeLayout>
 
