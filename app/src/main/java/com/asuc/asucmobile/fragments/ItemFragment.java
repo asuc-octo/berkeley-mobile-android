@@ -1,7 +1,9 @@
 package com.asuc.asucmobile.fragments;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -33,19 +35,19 @@ import com.asuc.asucmobile.main.ListOfFavorites;
 import com.asuc.asucmobile.main.OpenDiningHallActivity;
 import com.asuc.asucmobile.main.OpenGymActivity;
 import com.asuc.asucmobile.main.OpenLibraryActivity;
+import com.asuc.asucmobile.models.DiningHall;
+import com.asuc.asucmobile.models.Gyms;
 import com.asuc.asucmobile.models.Items;
 import com.asuc.asucmobile.models.Items.Item;
-import com.asuc.asucmobile.utilities.Callback;
+import com.asuc.asucmobile.models.Library;
+import com.asuc.asucmobile.utilities.JSONUtilities;
 import com.asuc.asucmobile.utilities.NavigationGenerator;
 import com.asuc.asucmobile.utilities.SerializableUtilities;
 
-import java.util.ArrayList;
 import java.util.Collections;
 
 import retrofit2.Call;
 import retrofit2.Response;
-
-import static com.asuc.asucmobile.controllers.Controller.FQDN;
 
 public class ItemFragment extends Fragment {
 
@@ -80,18 +82,20 @@ public class ItemFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Item item = mAdapter.getItem(i);
-                ItemController.setCurrentItem(mAdapter.getItem(i));
-                String URL = FQDN + item.getQuery();
+//                ItemController.setCurrentItem(mAdapter.getItem(i));
+                //String URL = FQDN + item.getQuery();
+                String query = item.getQuery().substring(5); //Remove "/api/" aka the first 5 chars
+                ItemController.cService controller = Controller.retrofit.create(ItemController.cService.class);
                 Intent intent = null;
                 switch (item.getCategory()) {
                     case "Dining Hall":
-                        ItemController.setItemFromUrl(getContext(),
-                                URL, "dining_hall", DiningController.getInstance());
+                        getSearchedItem(controller.getDiningHall(query));
+//                        DiningController.setCurrentDiningHall((DiningHall) ItemController.getCurrentSearch());
                         intent = new Intent(getContext(), OpenDiningHallActivity.class);
                         break;
                     case "Library":
-                        ItemController.setItemFromUrl(getContext(),
-                                URL, "library", LibraryController.getInstance());
+                        getSearchedItem(controller.getLibrary(query));
+//                        LibraryController.setCurrentLibrary((Library) ItemController.getCurrentSearch());
                         intent = new Intent(getContext(), OpenLibraryActivity.class);
                         break;
                     case "Sports Schedule":
@@ -101,9 +105,9 @@ public class ItemFragment extends Fragment {
                         //intent = new Intent(getContext(), OpenItemActivity.class);
                         break;
                     case "Gyms":
-//                        GymController.setItemFromUrl(getContext(),
-//                                URL, "gym", GymController.getInstance());
-//                        intent = new Intent(getContext(), OpenGymActivity.class);
+                        getSearchedItem(controller.getGym(query));
+                        GymController.setCurrentGym((Gyms.Gym) ItemController.getCurrentSearch());
+                        intent = new Intent(getContext(), OpenGymActivity.class);
                         break;
                     default:
                         break;
@@ -202,9 +206,7 @@ public class ItemFragment extends Fragment {
                     mProgressBar.setVisibility(View.GONE);
 
                     mAdapter.setList(ItemController.parse(response.body()));
-                    System.out.println(response.body());
                 } else {
-                    System.out.println("abc");
                     onFailure(null, null);
                 }
             }
@@ -219,4 +221,24 @@ public class ItemFragment extends Fragment {
         });
     }
 
+    private void getSearchedItem(Call call) {
+        call.enqueue(new retrofit2.Callback() {
+            @Override
+            public void onResponse(Call call, Response response) {
+                if (response.isSuccessful()) {
+                    ItemController.setCurrentSearch(response.body());
+                } else {
+                    onFailure(null, null);
+                }
+            }
+
+            @Override
+            public void onFailure(Call call, Throwable t) {
+                mProgressBar.setVisibility(View.GONE);
+                mRefreshWrapper.setVisibility(View.VISIBLE);
+                Toast.makeText(getContext(), "Unable to retrieve data, please try again",
+                        Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
 }

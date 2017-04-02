@@ -4,8 +4,11 @@ import android.app.Activity;
 import android.content.Context;
 import android.support.annotation.NonNull;
 
+import com.asuc.asucmobile.models.DiningHall;
+import com.asuc.asucmobile.models.Gyms.Gym;
 import com.asuc.asucmobile.models.Items;
 import com.asuc.asucmobile.models.Items.Item;
+import com.asuc.asucmobile.models.Library;
 import com.asuc.asucmobile.utilities.Callback;
 import com.asuc.asucmobile.utilities.CustomComparators;
 import com.asuc.asucmobile.utilities.JSONUtilities;
@@ -24,22 +27,37 @@ import java.util.TimeZone;
 
 import retrofit2.Call;
 import retrofit2.http.GET;
+import retrofit2.http.Path;
 
 public class ItemController {
 
     private static Item currentItem;
+    private static Object currentSearch;
+
+    public static Object getCurrentSearch() {
+        return currentSearch;
+    }
+
+    public static void setCurrentSearch(Object currentSearch) {
+        ItemController.currentSearch = currentSearch;
+    }
 
     public interface cService {
         @GET("search_items")
         Call<Items> getItems();
+
+        @GET("{path}")
+        Call<Gym> getGym(@Path("path") String path);
+
+        @GET("{path}")
+        Call<Library> getLibrary(@Path("path") String path);
+
+        @GET("{path}")
+        Call<DiningHall> getDiningHall(@Path("path") String path);
     }
 
     public static List<Item> parse(Items items) {
         return items.items;
-    }
-
-    public static void setItemFromUrl(@NonNull Context context, String ItemURL, String name, Controller controller) {
-        JSONUtilities.setObjectFromUrl(context, ItemURL, name, controller);
     }
 
     public static void setCurrentItem(Item item) {
