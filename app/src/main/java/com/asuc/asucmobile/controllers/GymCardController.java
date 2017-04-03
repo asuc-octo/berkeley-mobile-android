@@ -51,6 +51,7 @@ public class GymCardController implements Controller {
         new Thread(new Runnable() {
             @Override
             public void run() {
+                cards.clear();
                 try {
                     for (int i = 0; i < array.length(); i++) {
                         Gym data = (Gym) JsonToObject.retrieve(array.getJSONObject(i), "gyms", context);

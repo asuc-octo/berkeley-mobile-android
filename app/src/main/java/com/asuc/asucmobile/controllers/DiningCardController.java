@@ -55,6 +55,7 @@ public class DiningCardController implements Controller {
         new Thread(new Runnable() {
             @Override
             public void run() {
+                cards.clear();
                 try {
                     for (int i = 0; i < array.length(); i++) {
                         DiningHall dining = (DiningHall) JsonToObject.retrieve(array.getJSONObject(i), "dining_halls", context);
