@@ -55,7 +55,7 @@ public class GymCardController implements Controller {
                 try {
                     for (int i = 0; i < array.length(); i++) {
                         Gym data = (Gym) JsonToObject.retrieve(array.getJSONObject(i), "gyms", context);
-                        Card card = new Card(data.getImageUrl(), data.getName(), "Today: " + HOURS_FORMAT.format(data.getOpening()) + "- " + HOURS_FORMAT.format(data.getOpening()), data.isOpen(), data);
+                        Card card = new Card(data.getImageUrl(), data.getName(), "Today: " + HOURS_FORMAT.format(data.getOpening()) + "- " + HOURS_FORMAT.format(data.getClosing()), data.isOpen(), data);
                         cards.add(card);
                     }
                     ((Activity) context).runOnUiThread(new Runnable() {
