@@ -21,6 +21,18 @@ public class Gyms {
         private Date closing;
         private String imageLink;
 
+        @Override
+        public String toString() {
+            return "Gym{" +
+                    "id=" + id +
+                    ", name='" + name + '\'' +
+                    ", address='" + address + '\'' +
+                    ", opening=" + opening +
+                    ", closing=" + closing +
+                    ", imageLink='" + imageLink + '\'' +
+                    '}';
+        }
+
         public Gym(int id, String name, String address, Date opening, Date closing, String imageLink) {
             this.id = id;
             this.name = name;

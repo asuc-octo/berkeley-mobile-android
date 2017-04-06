@@ -17,6 +17,9 @@ public class GymController {
     public interface cService {
         @GET("gyms")
         Call<Gyms> getGyms();
+
+        @GET("gyms/{path}")
+        Call<Gym> getGym(@Path("path") String path);
     }
     public static List<Gym> parse(Gyms gyms) {
         return gyms.gyms;

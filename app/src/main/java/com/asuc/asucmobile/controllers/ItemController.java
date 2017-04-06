@@ -46,13 +46,13 @@ public class ItemController {
         @GET("search_items")
         Call<Items> getItems();
 
-        @GET("{path}")
+        @GET("gyms/{path}")
         Call<Gym> getGym(@Path("path") String path);
 
-        @GET("{path}")
+        @GET("weekly_libraries/{path}")
         Call<Library> getLibrary(@Path("path") String path);
 
-        @GET("{path}")
+        @GET("dining_halls/{path}")
         Call<DiningHall> getDiningHall(@Path("path") String path);
     }
 
