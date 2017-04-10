@@ -22,15 +22,10 @@ import android.widget.Toast;
 import com.asuc.asucmobile.R;
 import com.asuc.asucmobile.adapters.GymAdapter;
 import com.asuc.asucmobile.controllers.Controller;
-import com.asuc.asucmobile.controllers.GroupExController;
 import com.asuc.asucmobile.controllers.GymController;
 import com.asuc.asucmobile.main.OpenGymActivity;
-import com.asuc.asucmobile.models.GroupExs;
 import com.asuc.asucmobile.models.Gyms;
-import com.asuc.asucmobile.utilities.Callback;
 import com.asuc.asucmobile.utilities.NavigationGenerator;
-
-import java.util.ArrayList;
 
 import retrofit2.Call;
 import retrofit2.Response;
@@ -111,7 +106,7 @@ public class GymFragment extends Fragment {
 
     public void refresh() {
         GymController.cService controller = Controller.retrofit.create(GymController.cService.class);
-        Call<Gyms> call = controller.getGyms();
+        Call<Gyms> call = controller.getData();
         call.enqueue(new retrofit2.Callback<Gyms>() {
             @Override
             public void onResponse(Call<Gyms> call, Response<Gyms> response) {

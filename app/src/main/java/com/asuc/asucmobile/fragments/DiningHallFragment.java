@@ -21,13 +21,21 @@ import android.widget.Toast;
 
 import com.asuc.asucmobile.R;
 import com.asuc.asucmobile.adapters.DiningHallAdapter;
+import com.asuc.asucmobile.controllers.Controller;
 import com.asuc.asucmobile.controllers.DiningController;
+import com.asuc.asucmobile.controllers.GymController;
 import com.asuc.asucmobile.main.OpenDiningHallActivity;
-import com.asuc.asucmobile.models.DiningHall;
+import com.asuc.asucmobile.models.DiningHalls;
+import com.asuc.asucmobile.models.DiningHalls.DiningHall;
+import com.asuc.asucmobile.models.Gyms;
 import com.asuc.asucmobile.utilities.Callback;
 import com.asuc.asucmobile.utilities.NavigationGenerator;
 
 import java.util.ArrayList;
+import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Response;
 
 public class DiningHallFragment extends Fragment {
 
@@ -54,9 +62,7 @@ public class DiningHallFragment extends Fragment {
         mDiningList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                DiningHall diningHall = mAdapter.getItem(i);
-                DiningController controller = ((DiningController) DiningController.getInstance());
-                controller.setCurrentDiningHall(diningHall);
+                DiningController.setCurrentDiningHall(mAdapter.getItem(i));
                 Intent intent = new Intent(getContext(), OpenDiningHallActivity.class);
                 startActivity(intent);
             }
@@ -105,24 +111,24 @@ public class DiningHallFragment extends Fragment {
         mDiningList.setVisibility(View.GONE);
         mRefreshWrapper.setVisibility(View.GONE);
         mProgressBar.setVisibility(View.VISIBLE);
-        DiningController.getInstance().refreshInBackground(getActivity(), new Callback() {
-
+        DiningController.cService controller = Controller.retrofit.create(DiningController.cService.class);
+        Call<DiningHalls> call = controller.getData();
+        call.enqueue(new retrofit2.Callback<DiningHalls>() {
             @Override
-            @SuppressWarnings("unchecked")
-            public void onDataRetrieved(Object data) {
+            public void onResponse(Call<DiningHalls> call, Response<DiningHalls> response) {
+                List<DiningHall> diningHalls = DiningController.parse(response.body(), getContext());
                 mDiningList.setVisibility(View.VISIBLE);
                 mProgressBar.setVisibility(View.GONE);
-                mAdapter.setList((ArrayList<DiningHall>) data);
+                mAdapter.setList(diningHalls);
             }
 
             @Override
-            public void onRetrievalFailed() {
+            public void onFailure(Call<DiningHalls> call, Throwable t) {
                 mProgressBar.setVisibility(View.GONE);
                 mRefreshWrapper.setVisibility(View.VISIBLE);
                 Toast.makeText(getContext(), "Unable to retrieve data, please try again",
                         Toast.LENGTH_SHORT).show();
             }
-
         });
     }
 

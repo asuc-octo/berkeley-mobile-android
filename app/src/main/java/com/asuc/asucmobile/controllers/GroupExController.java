@@ -6,16 +6,22 @@ import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.http.GET;
+import retrofit2.http.Path;
 
 public class GroupExController {
     public interface cService {
 
-        @GET("group_exs/")
-        Call<GroupExs> getClasses();
+        String PATH = "group_exs/";
+
+        @GET(PATH)
+        Call<GroupExs> getData();
+
+        @GET(PATH + "{id}/")
+        Call<GroupExs> getDatum(@Path("id") int id);
 
     }
 
     public List<GroupEx> parse(GroupExs groupExs) {
-        return groupExs.groupExs;
+        return groupExs.data;
     }
 }

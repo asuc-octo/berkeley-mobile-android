@@ -6,7 +6,12 @@ import java.util.Date;
 import java.util.List;
 
 public class GroupExs {
-    public List<GroupEx> groupExs;
+
+    @SerializedName("group_exs")
+    public List<GroupEx> data;
+
+    @SerializedName("group_ex")
+    public GroupEx datum;
 
     public class GroupEx {
 

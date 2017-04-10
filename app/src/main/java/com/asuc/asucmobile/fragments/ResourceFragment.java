@@ -185,7 +185,7 @@ public class ResourceFragment extends Fragment {
                     mResourceList.setVisibility(View.VISIBLE);
                     mProgressBar.setVisibility(View.GONE);
 
-                    mAdapter.setList(ResourceController.parse(response.body()));
+                    mAdapter.setList(ResourceController.parse(response.body(), getContext()));
                 } else {
                     onFailure(null, null);
                 }

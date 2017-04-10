@@ -36,6 +36,7 @@ public class OpenResourceActivity extends BaseActivity {
         add("");
         add("null");
         add("N/A");
+        add(null);
     }};
     private static final String PHONE_REGEX =
             "^(\\+\\d{1,2}\\s)?\\(?\\d{3}\\)?[\\s.-]\\d{3}[\\s.-]\\d{4}$";
@@ -212,7 +213,7 @@ public class OpenResourceActivity extends BaseActivity {
 
     private String setUpNotes() {
         String displayedNotes =
-                !resource.getNotes().equals("null") ? "\n" + resource.getNotes() : "";
+                !(resource.getNotes() ==null) ? "\n" + resource.getNotes() : "";
         return "This is an " + resource.getOnOrOffCampus() + " resource. " + displayedNotes;
     }
 
