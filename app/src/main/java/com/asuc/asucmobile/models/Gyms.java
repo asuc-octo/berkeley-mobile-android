@@ -8,6 +8,7 @@ import java.util.List;
 public class Gyms {
 
     public List<Gym> gyms;
+    public Gym gym;
 
     public class Gym {
         private int id;

@@ -5,6 +5,7 @@ import android.content.Context;
 import android.support.annotation.NonNull;
 
 import com.asuc.asucmobile.models.DiningHall;
+import com.asuc.asucmobile.models.Gyms;
 import com.asuc.asucmobile.models.Gyms.Gym;
 import com.asuc.asucmobile.models.Items;
 import com.asuc.asucmobile.models.Items.Item;
@@ -47,7 +48,7 @@ public class ItemController {
         Call<Items> getItems();
 
         @GET("gyms/{path}")
-        Call<Gym> getGym(@Path("path") String path);
+        Call<Gyms> getGym(@Path("path") String path);
 
         @GET("weekly_libraries/{path}")
         Call<Library> getLibrary(@Path("path") String path);

@@ -79,19 +79,13 @@ public class ItemFragment extends Fragment {
         mRefreshWrapper = (LinearLayout) layout.findViewById(R.id.refresh);
         mAdapter = new ItemAdapter(getContext());
         mItemList.setAdapter(mAdapter);
-        //final Pattern p = Pattern.compile("[0-9]+$");
         mItemList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Item item = mAdapter.getItem(i);
-//                ItemController.setCurrentItem(mAdapter.getItem(i));
-                //String URL = FQDN + item.getQuery();
-                System.out.println(item.getCategory());
-                System.out.println(item.getQuery());
-                String query = item.getQuery().substring(item.getQuery().length() - 4);
-                System.out.println(query);
-
-                getSearchedGym(query);
+                String[] q = item.getQuery().split("/"); //Get the last part of the query.
+                String query = q[q.length - 1];
+                getSearchedItem(query, item);
             }
         });
         refreshButton.setOnClickListener(new View.OnClickListener() {
@@ -198,46 +192,16 @@ public class ItemFragment extends Fragment {
         });
     }
 
-    private void getSearchedGym(final String query) {
-        GymController.cService controller = Controller.retrofit.create(GymController.cService.class);
-        Call<Gyms.Gym> call = controller.getGym(query);
-        call.enqueue(new retrofit2.Callback<Gyms.Gym>() {
-            @Override
-            public void onResponse(Call call, Response response) {
-                if (response.isSuccessful()) {
-                    okhttp3.Response hr = response.raw();
-//                    System.out.println();
-                    //System.out.println();
-                    GymController.setCurrentGym((Gyms.Gym) response.body());
-                    System.out.println(GymController.getCurrentGym());
-                    System.out.println(GymController.getCurrentGym().getName());
-                    Intent intent = new Intent(getContext(), OpenGymActivity.class);
-                    if (intent != null) {
-                        startActivity(intent);
-                    } else {
-                        onFailure(null, null);
-                    }
-                }
-            }
-
-            @Override
-            public void onFailure(Call call, Throwable t) {
-                mProgressBar.setVisibility(View.GONE);
-                mRefreshWrapper.setVisibility(View.VISIBLE);
-                Toast.makeText(getContext(), "Unable to retrieve data, please try again",
-                        Toast.LENGTH_SHORT).show();
-            }
-        });
-    }
-
     private void getSearchedItem(final String query, final Item item) {
         Call call = null;
         ItemController.cService controller = Controller.retrofit.create(ItemController.cService.class);
         switch (item.getCategory()) {
             case "Dining Hall":
                 call = controller.getDiningHall(query);
+                break;
             case "Library":
                 call = controller.getLibrary(query);
+                break;
             case "Gym":
                 call = controller.getGym(query);
                 break;
@@ -246,24 +210,19 @@ public class ItemFragment extends Fragment {
         }
 
         if (call != null)
-            call.enqueue(new retrofit2.Callback<Gyms.Gym>() {
+            call.enqueue(new retrofit2.Callback() {
             @Override
             public void onResponse(Call call, Response response) {
                 if (response.isSuccessful()) {
-
                     Intent intent = null;
-                    System.out.println(response.body());
-                    ItemController.setCurrentSearch(response.body());
 
                     switch (item.getCategory()) {
                         case "Dining Hall":
-                            //getSearchedItem(controller.getDiningHall(query));
-//                        DiningController.setCurrentDiningHall((DiningHall) ItemController.getCurrentSearch());
+
                             intent = new Intent(getContext(), OpenDiningHallActivity.class);
                             break;
                         case "Library":
-                            //getSearchedItem(controller.getLibrary(query));
-//                        LibraryController.setCurrentLibrary((Library) ItemController.getCurrentSearch());
+
                             intent = new Intent(getContext(), OpenLibraryActivity.class);
                             break;
                         case "Sports Schedule":
@@ -273,11 +232,7 @@ public class ItemFragment extends Fragment {
                             //intent = new Intent(getContext(), OpenItemActivity.class);
                             break;
                         case "Gym":
-                            //getSearchedItem(controller.getGym(query));
-
-                            GymController.setCurrentGym((Gyms.Gym) ItemController.getCurrentSearch());
-                            System.out.println(GymController.getCurrentGym());
-                            System.out.println(GymController.getCurrentGym().getName());
+                            GymController.setCurrentGym(((Gyms) response.body()).gym);
                             intent = new Intent(getContext(), OpenGymActivity.class);
                             break;
                         default:
@@ -299,8 +254,5 @@ public class ItemFragment extends Fragment {
                         Toast.LENGTH_SHORT).show();
             }
         });
-
-
-
     }
 }
