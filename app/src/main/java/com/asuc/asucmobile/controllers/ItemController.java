@@ -4,12 +4,13 @@ import android.app.Activity;
 import android.content.Context;
 import android.support.annotation.NonNull;
 
-import com.asuc.asucmobile.models.DiningHall;
+import com.asuc.asucmobile.models.DiningHalls;
+import com.asuc.asucmobile.models.GroupExs;
 import com.asuc.asucmobile.models.Gyms;
 import com.asuc.asucmobile.models.Gyms.Gym;
 import com.asuc.asucmobile.models.Items;
 import com.asuc.asucmobile.models.Items.Item;
-import com.asuc.asucmobile.models.Library;
+import com.asuc.asucmobile.models.Libraries;
 import com.asuc.asucmobile.utilities.Callback;
 import com.asuc.asucmobile.utilities.CustomComparators;
 import com.asuc.asucmobile.utilities.JSONUtilities;
@@ -51,10 +52,13 @@ public class ItemController {
         Call<Gyms> getGym(@Path("path") String path);
 
         @GET("weekly_libraries/{path}")
-        Call<Library> getLibrary(@Path("path") String path);
+        Call<Libraries> getLibrary(@Path("path") String path);
+
+        @GET("group_exs/{path}")
+        Call<GroupExs> getGroupExs(@Path("path") String path);
 
         @GET("dining_halls/{path}")
-        Call<DiningHall> getDiningHall(@Path("path") String path);
+        Call<DiningHalls> getDiningHall(@Path("path") String path);
     }
 
     public static List<Item> parse(Items items) {

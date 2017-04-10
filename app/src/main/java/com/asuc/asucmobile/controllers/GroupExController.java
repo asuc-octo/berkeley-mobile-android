@@ -9,6 +9,7 @@ import retrofit2.http.GET;
 import retrofit2.http.Path;
 
 public class GroupExController {
+
     public interface cService {
 
         String PATH = "group_exs/";

@@ -202,6 +202,12 @@ public class ItemFragment extends Fragment {
             case "Library":
                 call = controller.getLibrary(query);
                 break;
+            case "Sports Schedule":
+                //call = controller.getSportsSchedules(query);
+                break;
+            case "Group Exercise":
+                call = controller.getGroupExs(query);
+                break;
             case "Gym":
                 call = controller.getGym(query);
                 break;
@@ -218,11 +224,11 @@ public class ItemFragment extends Fragment {
 
                     switch (item.getCategory()) {
                         case "Dining Hall":
-
+                            DiningController.setCurrentDiningHall(((DiningHalls) response.body()).datum);
                             intent = new Intent(getContext(), OpenDiningHallActivity.class);
                             break;
                         case "Library":
-
+                            LibraryController.setCurrentLibrary(((Libraries) response.body()).datum);
                             intent = new Intent(getContext(), OpenLibraryActivity.class);
                             break;
                         case "Sports Schedule":

@@ -11,6 +11,9 @@ public class DiningHalls {
     @SerializedName("dining_halls")
     public List<DiningHall> data;
 
+    @SerializedName("dining_hall")
+    public DiningHall datum;
+
     public class DiningHall {
 
         private String id;
