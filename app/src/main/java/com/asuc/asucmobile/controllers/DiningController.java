@@ -32,14 +32,19 @@ public class DiningController {
 
     public static List<DiningHall> parse(DiningHalls diningHalls, Context context) {
         for (DiningHall diningHall : diningHalls.data) {
-            Collections.sort(diningHall.getBreakfastMenu(), CustomComparators.FacilityComparators.getFoodSortByFavorite(context));
-            Collections.sort(diningHall.getLunchMenu(), CustomComparators.FacilityComparators.getFoodSortByFavorite(context));
-            Collections.sort(diningHall.getDinnerMenu(), CustomComparators.FacilityComparators.getFoodSortByFavorite(context));
-            if (diningHall.getLateNightMenu() != null) {
-                Collections.sort(diningHall.getBreakfastMenu(), CustomComparators.FacilityComparators.getFoodSortByFavorite(context));
-            }
+            parseDatum(diningHall, context);
         }
         return diningHalls.data;
+    }
+
+    public static DiningHall parseDatum(DiningHall diningHall, Context context) {
+        Collections.sort(diningHall.getBreakfastMenu(), CustomComparators.FacilityComparators.getFoodSortByFavorite(context));
+        Collections.sort(diningHall.getLunchMenu(), CustomComparators.FacilityComparators.getFoodSortByFavorite(context));
+        Collections.sort(diningHall.getDinnerMenu(), CustomComparators.FacilityComparators.getFoodSortByFavorite(context));
+        if (diningHall.getLateNightMenu() != null) {
+            Collections.sort(diningHall.getBreakfastMenu(), CustomComparators.FacilityComparators.getFoodSortByFavorite(context));
+        }
+        return diningHall;
     }
 
     public static void setCurrentDiningHall(DiningHall diningHall) {

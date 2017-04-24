@@ -224,10 +224,12 @@ public class ItemFragment extends Fragment {
 
                     switch (item.getCategory()) {
                         case "Dining Hall":
+                            DiningController.parseDatum(((DiningHalls) response.body()).datum, getContext());
                             DiningController.setCurrentDiningHall(((DiningHalls) response.body()).datum);
                             intent = new Intent(getContext(), OpenDiningHallActivity.class);
                             break;
                         case "Library":
+                            LibraryController.parseDatum(((Libraries) response.body()).datum);
                             LibraryController.setCurrentLibrary(((Libraries) response.body()).datum);
                             intent = new Intent(getContext(), OpenLibraryActivity.class);
                             break;
@@ -238,7 +240,8 @@ public class ItemFragment extends Fragment {
                             //intent = new Intent(getContext(), OpenItemActivity.class);
                             break;
                         case "Gym":
-                            GymController.setCurrentGym(((Gyms) response.body()).gym);
+                            GymController.parseDatum(((Gyms) response.body()).datum);
+                            GymController.setCurrentGym(((Gyms) response.body()).datum);
                             intent = new Intent(getContext(), OpenGymActivity.class);
                             break;
                         default:

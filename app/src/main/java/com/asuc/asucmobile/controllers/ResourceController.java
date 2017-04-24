@@ -23,10 +23,15 @@ public class ResourceController {
     }
     public static List<Resource> parse(Resources resources, Context context) {
         for (Resource resource : resources.data) {
-            resource.generateLatLng();
+            parse(resource, context);
         }
         Collections.sort(resources.data, CustomComparators.FacilityComparators.getSortByFavoriteResource(context));
         return resources.data;
+    }
+
+    public static Resource parse(Resource resource, Context context) {
+        resource.generateLatLng();
+        return resource;
     }
 
     public static void setCurrentResource(Resource resource) {

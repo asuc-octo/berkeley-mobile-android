@@ -28,6 +28,10 @@ public class GymController {
         return gyms.data;
     }
 
+    public static Gym parseDatum(Gym gym) {
+        return gym;
+    }
+
     public static void setCurrentGym(Gym gym) {
         currentGym = gym;
     }

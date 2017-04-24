@@ -17,9 +17,6 @@ public class GroupExController {
         @GET(PATH)
         Call<GroupExs> getData();
 
-        @GET(PATH + "{id}/")
-        Call<GroupExs> getDatum(@Path("id") int id);
-
     }
 
     public List<GroupEx> parse(GroupExs groupExs) {

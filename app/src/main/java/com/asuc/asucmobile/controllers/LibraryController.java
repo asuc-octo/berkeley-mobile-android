@@ -35,12 +35,18 @@ public class LibraryController {
 
     public static List<Library> parse(Libraries libraries, Context context) {
         for (Library library : libraries.data) {
-            library.generateLatLng();
-            library.setDayOfWeek();
+            parseDatum(library);
         }
         Collections.sort(libraries.data, CustomComparators.FacilityComparators.getSortByFavoriteLibrary(context));
         return libraries.data;
     }
+
+    public static Library parseDatum(Library library) {
+        library.generateLatLng();
+        library.setDayOfWeek();
+        return library;
+    }
+
 
     public static void setCurrentLibrary(Library library) {
         currentLibrary = library;
