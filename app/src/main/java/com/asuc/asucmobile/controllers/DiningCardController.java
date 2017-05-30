@@ -61,19 +61,19 @@ public class DiningCardController implements Controller {
                         DiningHall dining = (DiningHall) JsonToObject.retrieve(array.getJSONObject(i), "dining_halls", context);
                         String menuOpen = null;
                         if (dining.isBreakfastOpen()) {
-                            menuOpen = "Breakfast:" + HOURS_FORMAT.format(dining.getBreakfastOpening()) + "- "  + HOURS_FORMAT.format(dining.getBreakfastClosing()) ;
+                            menuOpen = "Breakfast: " + HOURS_FORMAT.format(dining.getBreakfastOpening()) + " - "  + HOURS_FORMAT.format(dining.getBreakfastClosing()) ;
                         } else if (dining.isLunchOpen()) {
-                            menuOpen = "Lunch:" + HOURS_FORMAT.format(dining.getLunchOpening()) + "- " + HOURS_FORMAT.format(dining.getLunchClosing());
+                            menuOpen = "Lunch: " + HOURS_FORMAT.format(dining.getLunchOpening()) + " - " + HOURS_FORMAT.format(dining.getLunchClosing());
                         } else if (dining.isDinnerOpen()) {
-                            menuOpen = "Dinner: " + HOURS_FORMAT.format(dining.getDinnerOpening()) + "- " + HOURS_FORMAT.format(dining.getDinnerClosing());
+                            menuOpen = "Dinner: " + HOURS_FORMAT.format(dining.getDinnerOpening()) + " - " + HOURS_FORMAT.format(dining.getDinnerClosing());
                         } else if (dining.isLateNightOpen()) {
-                            menuOpen = "Late Night: " + HOURS_FORMAT.format(dining.getLateNightOpening()) + "- " + HOURS_FORMAT.format(dining.getLateNightClosing());
+                            menuOpen = "Late Night: " + HOURS_FORMAT.format(dining.getLateNightOpening()) + " - " + HOURS_FORMAT.format(dining.getLateNightClosing());
                         }
                         if (menuOpen == null) {
                             if (dining.lateNightToday()) {
-                                menuOpen = "Late Night: " + HOURS_FORMAT.format(dining.getLateNightOpening()) + "- " + HOURS_FORMAT.format(dining.getLateNightClosing());
+                                menuOpen = "Late Night: " + HOURS_FORMAT.format(dining.getLateNightOpening()) + " - " + HOURS_FORMAT.format(dining.getLateNightClosing());
                             } else {
-                                menuOpen = "Dinner: " + HOURS_FORMAT.format(dining.getDinnerOpening()) + "- " + HOURS_FORMAT.format(dining.getDinnerClosing());
+                                menuOpen = "Dinner: " + HOURS_FORMAT.format(dining.getDinnerOpening()) + " - " + HOURS_FORMAT.format(dining.getDinnerClosing());
                             }
                         }
                         Card card = new Card(dining.getImageUrl(), dining.getName(), menuOpen, dining.isOpen(), dining);
