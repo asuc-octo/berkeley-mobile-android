@@ -5,30 +5,32 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.asuc.asucmobile.R;
 import com.asuc.asucmobile.adapters.CardAdapter;
-import com.asuc.asucmobile.controllers.DiningCardController;
+import com.asuc.asucmobile.controllers.Controller;
 import com.asuc.asucmobile.controllers.DiningController;
-import com.asuc.asucmobile.controllers.GymCardController;
 import com.asuc.asucmobile.controllers.GymController;
-import com.asuc.asucmobile.main.MainActivity;
 import com.asuc.asucmobile.main.OpenDiningHallActivity;
 import com.asuc.asucmobile.main.OpenGymActivity;
-import com.asuc.asucmobile.models.Card;
+import com.asuc.asucmobile.models.Cardable;
+import com.asuc.asucmobile.models.DiningHalls;
 import com.asuc.asucmobile.models.DiningHalls.DiningHall;
-import com.asuc.asucmobile.models.G.Gym;
-import com.asuc.asucmobile.utilities.Callback;
+import com.asuc.asucmobile.models.Gyms;
+import com.asuc.asucmobile.models.Gyms.Gym;
 import com.asuc.asucmobile.utilities.NavigationGenerator;
 import com.devsmart.android.ui.HorizontalListView;
 
-import java.util.ArrayList;
+import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Response;
 
 public class BlankFragment extends Fragment {
 
@@ -58,27 +60,65 @@ public class BlankFragment extends Fragment {
     }
 
     public void refresh() {
-        GymCardController.getInstance().refreshInBackground(getContext(), new Callback() {
-
+        DiningController.cService diningController = Controller.retrofit.create(DiningController.cService.class);
+        Call<DiningHalls> diningHallsCall = diningController.getData();
+        diningHallsCall.enqueue(new retrofit2.Callback<DiningHalls>() {
             @Override
-            public void onDataRetrieved(Object data) {
-                ArrayList cards = (ArrayList) data;
-                cardAdapterGyms.setList(cards);
+            public void onResponse(Call<DiningHalls> call, Response<DiningHalls> response) {
+                List<DiningHall> diningHalls = DiningController.parse(response.body(), getContext());
+                cardAdapterDining.setList(diningHalls);
+                HorizontalListView listView = (HorizontalListView) getView().findViewById(R.id.listDiningHalls);
+                listView.setAdapter(cardAdapterDining);
+                listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                        Cardable card = cardAdapterDining.getItem(i);
+                        DiningController.setCurrentDiningHall((DiningHall) card);
+                        Intent intent = new Intent(getActivity(), OpenDiningHallActivity.class);
+                        startActivity(intent);
+                    }
+                });
+                TextView diningHallText = (TextView) getView().findViewById(R.id.diningHallText);
+
+                diningHallText.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        getFragmentManager()
+                                .beginTransaction()
+                                .replace(R.id.content_frame, new DiningHallFragment())
+                                .addToBackStack(null)
+                                .commit();
+                    }
+                });
+            }
+            @Override
+            public void onFailure(Call<DiningHalls> call, Throwable t) {
+                Toast.makeText(getContext(), "Unable to retrieve data, please try again",
+                        Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        GymController.cService gymController = Controller.retrofit.create(GymController.cService.class);
+        Call<Gyms> gymsCall = gymController.getData();
+        gymsCall.enqueue(new retrofit2.Callback<Gyms>() {
+            @Override
+            public void onResponse(Call<Gyms> call, Response<Gyms> response) {
+                List<Gym> gyms = GymController.parse(response.body());
+                cardAdapterGyms.setList(gyms);
                 HorizontalListView listView = (HorizontalListView) getView().findViewById(R.id.listGyms);
                 listView.setAdapter(cardAdapterGyms);
                 listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                        Card card = cardAdapterGyms.getItem(i);
-                        GymController controller = ((GymController) GymController.getInstance());
-                        controller.setCurrentGym((Gym) card.getData());
+                        Cardable card = cardAdapterGyms.getItem(i);
+                        GymController.setCurrentGym((Gym) card);
                         Intent intent = new Intent(getActivity(), OpenGymActivity.class);
                         startActivity(intent);
                     }
                 });
-                TextView gymHallText = (TextView) getView().findViewById(R.id.gymText);
+                TextView gymText = (TextView) getView().findViewById(R.id.gymText);
 
-                gymHallText.setOnClickListener(new View.OnClickListener() {
+                gymText.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
                         getFragmentManager()
@@ -89,54 +129,11 @@ public class BlankFragment extends Fragment {
                     }
                 });
             }
-
             @Override
-            public void onRetrievalFailed() {
-                // Let the user know the app wasn't able to connect.
-                Log.e("GG", "FAIL MOFO");
+            public void onFailure(Call<Gyms> call, Throwable t) {
+                Toast.makeText(getContext(), "Unable to retrieve data, please try again",
+                        Toast.LENGTH_SHORT).show();
             }
-
-        });
-
-        DiningCardController.getInstance().refreshInBackground(getContext(), new Callback() {
-
-            @Override
-            public void onDataRetrieved(Object data) {
-                ArrayList cards = (ArrayList) data;
-                cardAdapterDining.setList(cards);
-                HorizontalListView listView = (HorizontalListView) getView().findViewById(R.id.listDiningHalls);
-                listView.setAdapter(cardAdapterDining);
-                listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                    @Override
-                    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                        Card card = cardAdapterDining.getItem(i);
-                        DiningController controller = ((DiningController) DiningController.getInstance());
-                        controller.setCurrentDiningHall((DiningHall) card.getData());
-                        Intent intent = new Intent(getActivity(), OpenDiningHallActivity.class);
-                        startActivity(intent);
-                    }
-                });
-
-                TextView diningHallText = (TextView) getView().findViewById(R.id.diningHallText);
-
-                diningHallText.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        getActivity().getSupportFragmentManager()
-                                .beginTransaction()
-                                .replace(R.id.content_frame, new DiningHallFragment())
-                                .addToBackStack(null)
-                                .commit();
-                    }
-                });
-
-            }
-            @Override
-            public void onRetrievalFailed() {
-                // Let the user know the app wasn't able to connect.
-                Log.e("GG", "FAIL MOFO");
-            }
-
         });
     }
 

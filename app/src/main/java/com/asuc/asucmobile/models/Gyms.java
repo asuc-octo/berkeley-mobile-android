@@ -13,7 +13,7 @@ public class Gyms {
     @SerializedName("gym")
     public Gym datum;
 
-    public static class Gym {
+    public static class Gym implements Cardable {
         private int id;
         private String name;
         private String address;
@@ -82,6 +82,12 @@ public class Gyms {
 
             Date currentTime = new Date();
             return currentTime.after(opening) && currentTime.before(closing);
+        }
+
+        @Override
+        public String getTimes() {
+            return "Today: " + HOURS_FORMAT.format(this.getOpening()) + "- " +
+                    HOURS_FORMAT.format(this.getOpening());
         }
     }
 }

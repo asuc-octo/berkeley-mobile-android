@@ -70,11 +70,6 @@ public class GymFragment extends Fragment {
         });
         refresh();
 
-        mGymList.setVisibility(View.GONE);
-        mRefreshWrapper.setVisibility(View.GONE);
-        mProgressBar.setVisibility(View.VISIBLE);
-        refresh();
-
         return layout;
     }
 

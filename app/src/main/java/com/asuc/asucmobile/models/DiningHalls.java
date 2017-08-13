@@ -14,7 +14,7 @@ public class DiningHalls {
     @SerializedName("dining_hall")
     public DiningHall datum;
 
-    public static class DiningHall {
+    public static class DiningHall implements Cardable {
 
         private String id;
         private String name;
@@ -183,6 +183,26 @@ public class DiningHalls {
                     ", lateNightClose=" + lateNightClose +
                     ", imageLink='" + imageLink + '\'' +
                     '}';
+        }
+
+        @Override
+        public String getTimes() {
+            // TODO: what the fuck is this shit why they different?
+            String menuOpen = null;
+            if (this.isBreakfastOpen()) {
+                menuOpen = "Breakfast:" + HOURS_FORMAT.format(this.getBreakfastOpening()) + "- "  +
+                        HOURS_FORMAT.format(this.getBreakfastClosing()) ;
+            } else if (this.isLunchOpen()) {
+                menuOpen = "Lunch:" + this.getLunchOpening().toString() + "- " +
+                            this.getLunchClosing().toString();
+            } else if (this.isDinnerOpen()) {
+                menuOpen = "Dinner: " + this.getDinnerOpening().toString() + "- " +
+                            this.getDinnerClosing().toString();
+            } else if (this.isLateNightOpen()) {
+                menuOpen = "Late Night: " + this.getLateNightOpening().toString() + "- " +
+                            this.getLateNightClosing().toString();
+            }
+            return menuOpen;
         }
 
     }
