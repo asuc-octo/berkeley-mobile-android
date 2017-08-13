@@ -12,7 +12,7 @@ import android.widget.Toast;
 
 import com.asuc.asucmobile.R;
 import com.asuc.asucmobile.controllers.ResourceController;
-import com.asuc.asucmobile.models.Resource;
+import com.asuc.asucmobile.models.Resources.Resource;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -36,6 +36,7 @@ public class OpenResourceActivity extends BaseActivity {
         add("");
         add("null");
         add("N/A");
+        add(null);
     }};
     private static final String PHONE_REGEX =
             "^(\\+\\d{1,2}\\s)?\\(?\\d{3}\\)?[\\s.-]\\d{3}[\\s.-]\\d{4}$";
@@ -212,12 +213,12 @@ public class OpenResourceActivity extends BaseActivity {
 
     private String setUpNotes() {
         String displayedNotes =
-                !resource.getNotes().equals("null") ? "\n" + resource.getNotes() : "";
+                !(resource.getNotes() ==null) ? "\n" + resource.getNotes() : "";
         return "This is an " + resource.getOnOrOffCampus() + " resource. " + displayedNotes;
     }
 
     private void exitIfNoData() {
-        resource = ((ResourceController) ResourceController.getInstance()).getCurrentResource();
+        resource = ResourceController.getCurrentResource();
         if (resource == null) {
             finish();
         }

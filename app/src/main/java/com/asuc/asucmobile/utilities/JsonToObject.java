@@ -2,9 +2,9 @@ package com.asuc.asucmobile.utilities;
 
 import android.content.Context;
 
-import com.asuc.asucmobile.models.DiningHall;
+import com.asuc.asucmobile.models.DiningHalls.DiningHall;
 import com.asuc.asucmobile.models.FoodItem;
-import com.asuc.asucmobile.models.Gym;
+import com.asuc.asucmobile.models.Gyms.Gym;
 
 import org.json.JSONArray;
 import org.json.JSONException;

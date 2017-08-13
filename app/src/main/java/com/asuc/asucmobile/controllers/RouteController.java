@@ -39,6 +39,7 @@ public class RouteController implements Controller {
     private ArrayList<Route> routes;
     private Callback callback;
     private Route currentRoute;
+    private LineController lineController;
 
     public static Controller getInstance() {
         if (instance == null) {
@@ -58,6 +59,49 @@ public class RouteController implements Controller {
         this.departure = departure;
         routes = new ArrayList<>();
         RECEIVE_DATE_FORMAT.setTimeZone((TimeZone.getTimeZone("UTC")));
+    }
+
+    public Route createNewItem(JSONObject routeJSON, Context context) throws Exception {
+        JSONArray tripListJSON = routeJSON.getJSONArray("trip_list");
+        ArrayList<Trip> trips = new ArrayList<>();
+
+        // Iterate through all Trips in a route.
+        for (int j = 0; j < tripListJSON.length(); j++) {
+            JSONObject tripJSON = tripListJSON.getJSONObject(j);
+
+            // Getting the start and end times of each Trip.
+            Long tmpTime = DATE_FORMAT.parse(tripJSON.getString("departure_time")).getTime();
+            Date startTime = new Date(tmpTime + PST.getOffset(tmpTime));
+            tmpTime = DATE_FORMAT.parse(tripJSON.getString("arrival_time")).getTime();
+            Date endTime = new Date(tmpTime + PST.getOffset(tmpTime));
+            String lineName = tripJSON.getString("line_name");
+            int startId = tripJSON.getJSONObject("starting_stop").getInt("id");
+            String startName = tripJSON.getJSONObject("starting_stop").getString("name");
+            int endId = tripJSON.getJSONObject("destination_stop").getInt("id");
+            String endName = tripJSON.getJSONObject("destination_stop").getString("name");
+            Stop startStop = lineController.getStop(startId, startName);
+            Stop endStop = lineController.getStop(endId, endName);
+            int lineId = tripJSON.getInt("line_id");
+            ArrayList<Stop> lineStops = lineController.getLine(lineId, lineName).getStops();
+
+            // Getting a sub-sequence of Stops in a Trip.
+            ArrayList<Stop> stops = new ArrayList<>();
+            boolean isPastEnd = false;
+            int index = lineStops.indexOf(startStop);
+            while (!isPastEnd) {
+                Stop stop = lineStops.get(index);
+                stops.add(stop);
+                if (stop == endStop) {
+                    isPastEnd = true;
+                } else if (stops.size() > lineStops.size()) {
+                    // We have a problem!
+                    throw new Exception();
+                }
+                index = (index + 1) % lineStops.size();
+            }
+            trips.add(new Trip(startTime, endTime, stops, lineName));
+        }
+        return new Route(trips);
     }
 
     @Override
@@ -81,51 +125,12 @@ public class RouteController implements Controller {
             @Override
             public void run() {
                 try {
-                    LineController lineController = (LineController) LineController.getInstance();
+                    lineController = (LineController) LineController.getInstance();
 
                     // Iterate through all possible routes.
                     for (int i = 0; i < array.length(); i++) {
                         JSONObject routeJSON = array.getJSONObject(i);
-                        JSONArray tripListJSON = routeJSON.getJSONArray("trip_list");
-                        ArrayList<Trip> trips = new ArrayList<>();
-
-                        // Iterate through all Trips in a route.
-                        for (int j = 0; j < tripListJSON.length(); j++) {
-                            JSONObject tripJSON = tripListJSON.getJSONObject(j);
-
-                            // Getting the start and end times of each Trip.
-                            Long tmpTime = DATE_FORMAT.parse(tripJSON.getString("departure_time")).getTime();
-                            Date startTime = new Date(tmpTime + PST.getOffset(tmpTime));
-                            tmpTime = DATE_FORMAT.parse(tripJSON.getString("arrival_time")).getTime();
-                            Date endTime = new Date(tmpTime + PST.getOffset(tmpTime));
-                            String lineName = tripJSON.getString("line_name");
-                            int startId = tripJSON.getJSONObject("starting_stop").getInt("id");
-                            String startName = tripJSON.getJSONObject("starting_stop").getString("name");
-                            int endId = tripJSON.getJSONObject("destination_stop").getInt("id");
-                            String endName = tripJSON.getJSONObject("destination_stop").getString("name");
-                            Stop startStop = lineController.getStop(startId, startName);
-                            Stop endStop = lineController.getStop(endId, endName);
-                            int lineId = tripJSON.getInt("line_id");
-                            ArrayList<Stop> lineStops = lineController.getLine(lineId, lineName).getStops();
-
-                            // Getting a sub-sequence of Stops in a Trip.
-                            ArrayList<Stop> stops = new ArrayList<>();
-                            boolean isPastEnd = false;
-                            int index = lineStops.indexOf(startStop);
-                            while (!isPastEnd) {
-                                Stop stop = lineStops.get(index);
-                                stops.add(stop);
-                                if (stop == endStop) {
-                                    isPastEnd = true;
-                                } else if (stops.size() > lineStops.size()) {
-                                    // We have a problem!
-                                    throw new Exception();
-                                }
-                                index = (index + 1) % lineStops.size();
-                            }
-                            trips.add(new Trip(startTime, endTime, stops, lineName));
-                        }
-                        routes.add(new Route(trips));
+                        routes.add(createNewItem(routeJSON, context));
                     }
                     ((Activity) context).runOnUiThread(new Runnable() {
                         @Override
@@ -153,6 +158,14 @@ public class RouteController implements Controller {
                 "&startlon=" + start.longitude + "&destlat=" + dest.latitude + "&destlon=" +
                 dest.longitude + "&departuretime=" + RECEIVE_DATE_FORMAT.format(departure),
                 "journeys", RouteController.getInstance());
+    }
+
+    public void setItem(@NonNull final Context context, final JSONObject obj) {
+        try {
+            setCurrentRoute(createNewItem(obj, context));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public void setCurrentRoute(Route route) {

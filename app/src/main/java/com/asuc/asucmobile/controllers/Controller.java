@@ -4,12 +4,33 @@ import android.content.Context;
 import android.support.annotation.NonNull;
 
 import com.asuc.asucmobile.utilities.Callback;
+import com.google.gson.FieldNamingPolicy;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 import org.json.JSONArray;
+import org.json.JSONObject;
 
-public interface Controller {
+import java.util.Date;
 
-    String BASE_URL = "http://asuc-mobile.herokuapp.com/api";
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
+
+public interface Controller<Obj> {
+
+
+    String BASE_URL = "http://asuc-mobile-development.herokuapp.com/api/";
+    String ISO_FORMAT = "yyyy-MM-dd'T'HH:mm:ss.SSSZ";
+    String FQDN = "http://asuc-mobile.herokuapp.com";
+
+    GsonBuilder gsonBuilder = new GsonBuilder()
+            .setDateFormat(ISO_FORMAT)
+            .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES);
+    Gson gson = gsonBuilder.create();
+    Retrofit retrofit = new Retrofit.Builder()
+            .baseUrl(BASE_URL)
+            .addConverterFactory(GsonConverterFactory.create(gson))
+            .build();
 
     /**
      *  setResources() is a centralized function for all data controllers that the JSON utility

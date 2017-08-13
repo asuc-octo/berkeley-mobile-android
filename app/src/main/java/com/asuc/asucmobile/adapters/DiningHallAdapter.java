@@ -9,14 +9,15 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.asuc.asucmobile.R;
-import com.asuc.asucmobile.models.DiningHall;
+import com.asuc.asucmobile.models.DiningHalls.DiningHall;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class DiningHallAdapter extends BaseAdapter {
 
     private Context context;
-    private ArrayList<DiningHall> diningHalls;
+    private List<DiningHall> diningHalls;
 
     public DiningHallAdapter(Context context) {
         this.context = context;
@@ -65,7 +66,7 @@ public class DiningHallAdapter extends BaseAdapter {
      *
      * @param list The updated list of dining halls.
      */
-    public void setList(ArrayList<DiningHall> list) {
+    public void setList(List<DiningHall> list) {
         diningHalls = list;
 
         notifyDataSetChanged();

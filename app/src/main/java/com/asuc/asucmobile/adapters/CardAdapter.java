@@ -15,8 +15,8 @@ import android.widget.TextView;
 
 import com.asuc.asucmobile.R;
 import com.asuc.asucmobile.models.Card;
-import com.asuc.asucmobile.models.DiningHall;
-import com.asuc.asucmobile.models.Gym;
+import com.asuc.asucmobile.models.DiningHalls.DiningHall;
+import com.asuc.asucmobile.models.Gyms.Gym;
 import com.asuc.asucmobile.utilities.Callback;
 import com.asuc.asucmobile.utilities.ImageDownloadThread;
 import com.bumptech.glide.Glide;

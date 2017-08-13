@@ -6,7 +6,7 @@ import android.support.annotation.NonNull;
 import android.util.Log;
 
 import com.asuc.asucmobile.models.Card;
-import com.asuc.asucmobile.models.DiningHall;
+import com.asuc.asucmobile.models.DiningHalls.DiningHall;
 import com.asuc.asucmobile.utilities.Callback;
 import com.asuc.asucmobile.utilities.JSONUtilities;
 import com.asuc.asucmobile.utilities.JsonToObject;
@@ -18,8 +18,9 @@ import java.util.ArrayList;
 import java.util.Locale;
 
 import static android.content.ContentValues.TAG;
+import static com.asuc.asucmobile.controllers.Controller.BASE_URL;
 
-public class DiningCardController implements Controller {
+public class DiningCardController {
 
     private static final SimpleDateFormat HOURS_FORMAT =
             new SimpleDateFormat("h:mm a", Locale.ENGLISH);
@@ -29,18 +30,10 @@ public class DiningCardController implements Controller {
     private ArrayList<Card> cards;
     private Callback callback;
 
-    public static Controller getInstance() {
-        if (instance == null) {
-            instance = new DiningCardController();
-        }
-        return instance;
-    }
-
     private DiningCardController() {
         cards = new ArrayList<>();
     }
 
-    @Override
     public void setResources(@NonNull final Context context, final JSONArray array) {
         if (array == null) {
             ((Activity) context).runOnUiThread(new Runnable() {
@@ -76,7 +69,7 @@ public class DiningCardController implements Controller {
                                 menuOpen = "Dinner: " + HOURS_FORMAT.format(dining.getDinnerOpening()) + " - " + HOURS_FORMAT.format(dining.getDinnerClosing());
                             }
                         }
-                        Card card = new Card(dining.getImageUrl(), dining.getName(), menuOpen, dining.isOpen(), dining);
+                        Card card = new Card(dining.getImageLink(), dining.getName(), menuOpen, dining.isOpen(), dining);
                         cards.add(card);
 
                     }
@@ -101,9 +94,4 @@ public class DiningCardController implements Controller {
 
     }
 
-    @Override
-    public void refreshInBackground(@NonNull Context context, Callback callback) {
-        this.callback = callback;
-        JSONUtilities.readJSONFromUrl(context, URL, "dining_halls", DiningCardController.getInstance());
-    }
 }
