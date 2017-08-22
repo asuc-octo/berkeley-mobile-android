@@ -13,7 +13,7 @@ import android.view.MenuItem;
 import com.asuc.asucmobile.R;
 import com.asuc.asucmobile.controllers.DiningController;
 import com.asuc.asucmobile.fragments.MenuFragment;
-import com.asuc.asucmobile.models.DiningHall;
+import com.asuc.asucmobile.models.DiningHalls.DiningHall;
 import com.asuc.asucmobile.models.FoodItem;
 import com.asuc.asucmobile.utilities.CustomComparators;
 import com.asuc.asucmobile.utilities.SerializableUtilities;
@@ -227,7 +227,7 @@ public class OpenDiningHallActivity extends BaseActivity {
     }
 
     private void exitIfNoData() {
-        diningHall = ((DiningController) DiningController.getInstance()).getCurrentDiningHall();
+        diningHall = DiningController.getCurrentDiningHall();
         if (diningHall == null) {
             finish();
         }
