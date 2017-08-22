@@ -113,7 +113,7 @@ public class Gyms {
         @Override
         public String getTimes() {
             return "Today: " + HOURS_FORMAT.format(this.getOpening()) + "- " +
-                    HOURS_FORMAT.format(this.getOpening());
+                    HOURS_FORMAT.format(this.getClosing());
         }
     }
 }
