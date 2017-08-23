@@ -11,21 +11,21 @@ import android.widget.TextView;
 
 import com.asuc.asucmobile.R;
 import com.asuc.asucmobile.main.ListOfFavorites;
-import com.asuc.asucmobile.models.Resource;
+import com.asuc.asucmobile.models.Resources;
+import com.asuc.asucmobile.models.Resources.Resource;
 import com.asuc.asucmobile.utilities.SerializableUtilities;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class ResourceAdapter extends BaseAdapter {
 
     private Context context;
-    private ArrayList<Resource> allResources;
-    private ArrayList<Resource> resources;
+    private List<Resource> resources;
 
     public ResourceAdapter(Context context) {
         this.context = context;
 
-        allResources = new ArrayList<>();
         resources = new ArrayList<>();
     }
 
@@ -44,13 +44,11 @@ public class ResourceAdapter extends BaseAdapter {
         return i;
     }
 
-    public ArrayList<Resource> getResources() {
+    public List<Resource> getResources() {
         return resources;
     }
 
-
     @Override
-    @SuppressWarnings("deprecation")
     public View getView(int i, View convertView, ViewGroup parent) {
         final Resource resource = getItem(i);
 
@@ -95,12 +93,11 @@ public class ResourceAdapter extends BaseAdapter {
     }
 
     /**
-     * setList() updates the list of resources (typically after calling for a refresh).
+     * setList() updates the list of gyms (typically after calling for a refresh).
      *
-     * @param list The updated list of resources.
+     * @param list The updated list of gyms.
      */
-    public void setList(ArrayList<Resource> list) {
-        allResources = list;
+    public void setList(List<Resource> list) {
         resources = list;
 
         notifyDataSetChanged();
@@ -118,12 +115,12 @@ public class ResourceAdapter extends BaseAdapter {
             @Override
             protected FilterResults performFiltering(CharSequence query) {
                 FilterResults results = new FilterResults();
-                ArrayList<Resource> filteredResources = new ArrayList<>();
+                List<Resource> filteredResources = new ArrayList<>();
 
                 if (query == null || query.length() == 0) {
-                    filteredResources = allResources;
+                    filteredResources = resources;
                 } else {
-                    for (Resource resource : allResources) {
+                    for (Resource resource : resources) {
                         if (resource.getResource().toLowerCase().contains(query.toString().toLowerCase()) ||
                                 resource.getLocation().toLowerCase().contains(query.toString().toLowerCase())) {
                             filteredResources.add(resource);

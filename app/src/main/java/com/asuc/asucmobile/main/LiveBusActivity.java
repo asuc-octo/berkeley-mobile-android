@@ -13,7 +13,9 @@ import android.widget.LinearLayout;
 
 import com.asuc.asucmobile.R;
 import com.asuc.asucmobile.controllers.BusController;
-import com.asuc.asucmobile.models.Bus;
+import com.asuc.asucmobile.controllers.Controller;
+import com.asuc.asucmobile.models.Buses;
+import com.asuc.asucmobile.models.Buses.Bus;
 import com.asuc.asucmobile.utilities.Callback;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -29,8 +31,14 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
+
+import retrofit2.Call;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+
 
 public class LiveBusActivity extends BaseActivity implements OnMapReadyCallback {
 
@@ -38,7 +46,7 @@ public class LiveBusActivity extends BaseActivity implements OnMapReadyCallback 
 
     private LiveBusActivity activity;
     private MapFragment mapFragment;
-    private Callback busCallback;
+    private BusCallback busCallback;
     private LinearLayout mRefreshWrapper;
 
     @Override
@@ -90,10 +98,12 @@ public class LiveBusActivity extends BaseActivity implements OnMapReadyCallback 
     }
 
     private void liveTrack() {
+        BusController.cService controller = Controller.retrofit.create(BusController.cService.class);
+        final Call<Buses> call = controller.getData();
         timer.schedule(new TimerTask() {
             @Override
             public void run() {
-                BusController.getInstance().refreshInBackground(LiveBusActivity.this, busCallback);
+                call.clone().enqueue(busCallback);
             }
         }, 0L, 3000L);
     }
@@ -110,7 +120,7 @@ public class LiveBusActivity extends BaseActivity implements OnMapReadyCallback 
         }
     }
 
-    public static class BusCallback implements Callback {
+    public static class BusCallback implements retrofit2.Callback<Buses> {
 
         private int failCount = 0;
         private GoogleMap map;
@@ -131,13 +141,12 @@ public class LiveBusActivity extends BaseActivity implements OnMapReadyCallback 
         }
 
         @Override
-        @SuppressWarnings("unchecked")
-        public synchronized void onDataRetrieved(Object data) {
+        public void onResponse(Call<Buses> call, Response<Buses> response) {
             refreshWrapper.setVisibility(View.GONE);
             if (failCount != 0) {
                 failCount = 0;
             }
-            ArrayList<Bus> buses = (ArrayList<Bus>) data;
+            List<Bus> buses = BusController.parse(response.body());
             HashSet<String> lines = new HashSet<>();
 
             // Update bus locations and add new buses if available.
@@ -151,7 +160,7 @@ public class LiveBusActivity extends BaseActivity implements OnMapReadyCallback 
                                         .position(bus.getLocation())
                                         .icon(icon)
                                         .title(bus.getLineName())
-                        ));
+                                ));
                     }
                     markers.get(bus.getLineName()).setPosition(bus.getLocation());
                 }
@@ -167,7 +176,7 @@ public class LiveBusActivity extends BaseActivity implements OnMapReadyCallback 
         }
 
         @Override
-        public synchronized void onRetrievalFailed() {
+        public void onFailure(Call<Buses> call, Throwable t) {
             failCount++;
             if (failCount > 1) {
                 timer.purge();
@@ -175,7 +184,6 @@ public class LiveBusActivity extends BaseActivity implements OnMapReadyCallback 
                 refreshWrapper.setVisibility(View.VISIBLE);
             }
         }
-
     }
 
 }

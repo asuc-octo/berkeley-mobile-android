@@ -26,7 +26,7 @@ import android.widget.Toast;
 
 import com.asuc.asucmobile.R;
 import com.asuc.asucmobile.controllers.LibraryController;
-import com.asuc.asucmobile.models.Library;
+import com.asuc.asucmobile.models.Libraries.Library;
 import com.asuc.asucmobile.utilities.Callback;
 import com.asuc.asucmobile.utilities.ImageDownloadThread;
 import com.asuc.asucmobile.utilities.SerializableUtilities;
@@ -147,7 +147,7 @@ public class OpenLibraryActivity extends BaseActivity {
 
         // Load library image.
         loadingBar.bringToFront();
-        new ImageDownloadThread(this, library.getImageUrl(), new Callback() {
+        new ImageDownloadThread(this, library.getImageLink(), new Callback() {
             @Override
             public void onDataRetrieved(Object data) {
                 if (data != null) {
@@ -354,7 +354,7 @@ public class OpenLibraryActivity extends BaseActivity {
     }
 
     private void exitIfNoData() {
-        library = ((LibraryController) LibraryController.getInstance()).getCurrentLibrary();
+        library = LibraryController.getCurrentLibrary();
         if (library == null) {
             finish();
         }

@@ -27,10 +27,12 @@ import android.widget.Toast;
 
 import com.asuc.asucmobile.R;
 import com.asuc.asucmobile.controllers.BusController;
+import com.asuc.asucmobile.controllers.Controller;
 import com.asuc.asucmobile.main.LiveBusActivity;
 import com.asuc.asucmobile.main.LiveBusActivity.BusCallback;
 import com.asuc.asucmobile.main.OpenRouteSelectionActivity;
 import com.asuc.asucmobile.main.StopActivity;
+import com.asuc.asucmobile.models.Buses;
 import com.asuc.asucmobile.utilities.Callback;
 import com.asuc.asucmobile.utilities.LocationGrabber;
 import com.asuc.asucmobile.utilities.NavigationGenerator;
@@ -46,6 +48,8 @@ import java.util.Calendar;
 import java.util.Locale;
 import java.util.Timer;
 import java.util.TimerTask;
+
+import retrofit2.Call;
 
 public class StartStopSelectFragment extends Fragment
     implements OnMapReadyCallback, ActivityCompat.OnRequestPermissionsResultCallback {
@@ -245,13 +249,13 @@ public class StartStopSelectFragment extends Fragment
     }
 
     private void liveTrack() {
+        BusController.cService controller = Controller.retrofit.create(BusController.cService.class);
+        final Call<Buses> call = controller.getData();
         try {
             LiveBusActivity.timer.schedule(new TimerTask() {
                 @Override
                 public void run() {
-                    if (getActivity() != null) {
-                        BusController.getInstance().refreshInBackground(getActivity(), busCallback);
-                    }
+                    call.clone().enqueue(busCallback);
                 }
             }, 0L, 3000L);
         } catch (Exception e) {

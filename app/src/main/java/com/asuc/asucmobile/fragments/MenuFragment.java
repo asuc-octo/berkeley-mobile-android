@@ -17,7 +17,7 @@ import android.widget.TextView;
 import com.asuc.asucmobile.R;
 import com.asuc.asucmobile.adapters.FoodAdapter;
 import com.asuc.asucmobile.main.OpenDiningHallActivity;
-import com.asuc.asucmobile.models.DiningHall;
+import com.asuc.asucmobile.models.DiningHalls.DiningHall;
 import com.asuc.asucmobile.models.FoodItem;
 
 import java.io.InputStream;
@@ -45,6 +45,8 @@ public class MenuFragment extends Fragment {
             getActivity().finish();
             return v;
         }
+
+        setHasOptionsMenu(true);
 
         // Get references to views.
         ListView foodMenu = (ListView) v.findViewById(R.id.food_menu);
@@ -146,7 +148,7 @@ public class MenuFragment extends Fragment {
         }
 
         // Download and set header image.
-        new DownloadImageThread(headerImage, diningHall.getImageUrl()).start();
+        new DownloadImageThread(headerImage, diningHall.getImageLink()).start();
         return v;
     }
 
