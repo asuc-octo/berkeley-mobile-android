@@ -54,6 +54,8 @@ public class Libraries {
 
         private int weekday;
 
+        private String imageLink;
+
         public Library(int id, String name, String location, String phone, Date opening,
                        Date closing, Date[] weeklyOpen, Date[] weeklyClose, double lat, double lng,
                        boolean byAppointment, boolean[] weeklyAppointments, int weekday) {
@@ -113,6 +115,10 @@ public class Libraries {
         }
 
         public boolean[] getWeeklyAppointments() { return weeklyAppointments; }
+
+        public String getImageLink() {
+            return imageLink;
+        }
 
         /**
          * Outputs a day of week as a string with spaces padded at the end to be equal length for all

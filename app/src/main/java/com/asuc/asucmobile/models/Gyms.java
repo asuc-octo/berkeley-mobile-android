@@ -1,5 +1,6 @@
 package com.asuc.asucmobile.models;
 
+import com.google.android.gms.maps.model.LatLng;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.Date;
@@ -14,6 +15,9 @@ public class Gyms {
     public Gym datum;
 
     public static class Gym implements Cardable {
+
+        public static final double INVALID_COORD = -181;
+
         private int id;
         private String name;
         private String address;
@@ -24,6 +28,15 @@ public class Gyms {
         @SerializedName("closing_time_today")
         private Date closing;
         private String imageLink;
+
+        @SerializedName("latitude")
+        private double latitude;
+
+        @SerializedName("longitude")
+        private double longitude;
+
+        private LatLng latLng;
+        private boolean hasCoordinates;
 
         @Override
         public String toString() {
@@ -70,6 +83,19 @@ public class Gyms {
             return imageLink;
         }
 
+        public void generateLatLng() {
+            if (this.latitude == INVALID_COORD || this.longitude == INVALID_COORD) {
+                hasCoordinates = false;
+            } else {
+                hasCoordinates = true;
+                this.latLng = new LatLng(this.latitude, this.longitude);
+            }
+        }
+
+        public LatLng getCoordinates() {
+            return hasCoordinates ? latLng : null;
+        }
+
         /**
          * isOpen() returns whether or not the facility is open.
          *
@@ -87,7 +113,7 @@ public class Gyms {
         @Override
         public String getTimes() {
             return "Today: " + HOURS_FORMAT.format(this.getOpening()) + "- " +
-                    HOURS_FORMAT.format(this.getOpening());
+                    HOURS_FORMAT.format(this.getClosing());
         }
     }
 }

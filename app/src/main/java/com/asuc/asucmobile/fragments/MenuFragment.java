@@ -55,6 +55,7 @@ public class MenuFragment extends Fragment {
                 getActivity().getLayoutInflater().inflate(R.layout.header_image, foodMenu, false);
         ImageView headerImage = (ImageView) header.findViewById(R.id.image);
         TextView headerHours = (TextView) header.findViewById(R.id.header_text);
+        TextView headerName = (TextView) header.findViewById(R.id.header_name);
 
         // Add the header to the list.
         foodMenu.addHeaderView(header);
@@ -112,7 +113,7 @@ public class MenuFragment extends Fragment {
                     foodMenu.setVisibility(View.GONE);
                     emptyListView.setVisibility(View.VISIBLE);
                 } else {
-                    String headerString = "Hours:  " + opening + " to " + closing + "  ";
+                    String headerString = opening + " to " + closing + "  ";
                     SpannableString spannableHeader;
                     if (isOpen) {
                         spannableHeader = new SpannableString(headerString + "OPEN");
@@ -131,6 +132,7 @@ public class MenuFragment extends Fragment {
                                 SpannableString.SPAN_INCLUSIVE_EXCLUSIVE
                         );
                     }
+                    headerName.setText(diningHall.getName());
                     headerHours.setText(spannableHeader);
                     FoodAdapter adapter = new FoodAdapter(getActivity(), foodItems);
                     MenuFragment.adapters.add(adapter);

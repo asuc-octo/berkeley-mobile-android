@@ -190,17 +190,17 @@ public class DiningHalls {
             // TODO: what the fuck is this shit why they different?
             String menuOpen = null;
             if (this.isBreakfastOpen()) {
-                menuOpen = "Breakfast:" + HOURS_FORMAT.format(this.getBreakfastOpening()) + "- "  +
-                        HOURS_FORMAT.format(this.getBreakfastClosing()) ;
+                menuOpen = "Breakfast: " + HOURS_FORMAT.format(this.getBreakfastOpening()) + "- "  +
+                            HOURS_FORMAT.format(this.getBreakfastClosing());
             } else if (this.isLunchOpen()) {
-                menuOpen = "Lunch:" + this.getLunchOpening().toString() + "- " +
-                            this.getLunchClosing().toString();
+                menuOpen = "Lunch: " + HOURS_FORMAT.format(this.getLunchOpening()) + "- "  +
+                            HOURS_FORMAT.format(this.getLunchClosing());
             } else if (this.isDinnerOpen()) {
-                menuOpen = "Dinner: " + this.getDinnerOpening().toString() + "- " +
-                            this.getDinnerClosing().toString();
+                menuOpen = "Dinner: " + HOURS_FORMAT.format(this.getDinnerOpening()) + "- "  +
+                            HOURS_FORMAT.format(this.getDinnerClosing());
             } else if (this.isLateNightOpen()) {
-                menuOpen = "Late Night: " + this.getLateNightOpening().toString() + "- " +
-                            this.getLateNightClosing().toString();
+                menuOpen = "Late Night: " + HOURS_FORMAT.format(this.getLateNightOpening()) + "- "  +
+                            HOURS_FORMAT.format(this.getLateNightClosing()) ;
             }
             return menuOpen;
         }

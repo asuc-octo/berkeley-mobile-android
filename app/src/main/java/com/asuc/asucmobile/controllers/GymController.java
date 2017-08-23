@@ -24,11 +24,16 @@ public class GymController {
         @GET(PATH + "{id}/")
         Call<GroupExs> getDatum(@Path("id") int id);
     }
+
     public static List<Gym> parse(Gyms gyms) {
+        for (Gym gym : gyms.data) {
+            parseDatum(gym);
+        }
         return gyms.data;
     }
 
     public static Gym parseDatum(Gym gym) {
+        gym.generateLatLng();
         return gym;
     }
 
