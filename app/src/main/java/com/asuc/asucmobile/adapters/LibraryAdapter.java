@@ -132,9 +132,11 @@ public class LibraryAdapter extends BaseAdapter {
                     filteredLibraries = allLibraries;
                 } else {
                     for (Library library : allLibraries) {
-                        if (library.getName().toLowerCase().contains(query.toString().toLowerCase()) ||
-                                library.getLocation().toLowerCase().contains(query.toString().toLowerCase())) {
-                            filteredLibraries.add(library);
+                        if (library.getLocation() != null) {
+                            if (library.getName().toLowerCase().contains(query.toString().toLowerCase()) ||
+                                    library.getLocation().toLowerCase().contains(query.toString().toLowerCase())) {
+                                filteredLibraries.add(library);
+                            }
                         }
                     }
                 }

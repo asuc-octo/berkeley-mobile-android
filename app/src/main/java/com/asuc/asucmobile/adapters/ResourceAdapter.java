@@ -22,10 +22,12 @@ public class ResourceAdapter extends BaseAdapter {
 
     private Context context;
     private List<Resource> resources;
+    private List<Resource> allResources;
 
     public ResourceAdapter(Context context) {
         this.context = context;
 
+        allResources = new ArrayList<>();
         resources = new ArrayList<>();
     }
 
@@ -99,7 +101,7 @@ public class ResourceAdapter extends BaseAdapter {
      */
     public void setList(List<Resource> list) {
         resources = list;
-
+        allResources = list;
         notifyDataSetChanged();
     }
 
@@ -118,13 +120,16 @@ public class ResourceAdapter extends BaseAdapter {
                 List<Resource> filteredResources = new ArrayList<>();
 
                 if (query == null || query.length() == 0) {
-                    filteredResources = resources;
+                    filteredResources = allResources;
                 } else {
-                    for (Resource resource : resources) {
-                        if (resource.getResource().toLowerCase().contains(query.toString().toLowerCase()) ||
-                                resource.getLocation().toLowerCase().contains(query.toString().toLowerCase())) {
-                            filteredResources.add(resource);
+                    for (Resource resource : allResources) {
+                        if(resource.getLocation() != null) {
+                            if (resource.getResource().toLowerCase().contains(query.toString().toLowerCase()) ||
+                                    resource.getLocation().toLowerCase().contains(query.toString().toLowerCase())) {
+                                filteredResources.add(resource);
+                            }
                         }
+
                     }
                 }
 
