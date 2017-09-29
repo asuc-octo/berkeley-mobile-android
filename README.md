@@ -1,24 +1,24 @@
-#ASUC-Android
+# ASUC-Android
 
-##Release APK
+## Release APK
 The most updated .apk file for the Play Store will be located in the "app" folder as "app-release.apk".
 
-##Testing
+## Testing
 To run unit tests, run
 ```
 Test.runTests();
 ```
 in your first Activity. Results will be displayed on your logcat.
 
-##JSON Parsing
-###Available Controllers
+## JSON Parsing
+### Available Controllers
   - DiningController
   - GymController
   - LibraryController
   - LineController
   - RouteController
 
-###How to Use
+### How to Use
 To retrieve data, call the refreshInBackground() method of a controller: 
 ```
 Controller.getInstance(activity).refreshInBackground(callback);
