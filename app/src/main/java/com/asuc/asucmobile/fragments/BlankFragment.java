@@ -57,6 +57,7 @@ public class BlankFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
+        NavigationGenerator.closeMenu(getActivity());
     }
 
     public void refresh() {

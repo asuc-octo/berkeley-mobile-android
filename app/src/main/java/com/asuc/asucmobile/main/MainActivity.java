@@ -16,7 +16,7 @@ public class MainActivity extends BaseActivity {
         super.onCreate(savedInstanceState, R.layout.activity_main);
 
         // Setup navigation menu.
-        NavigationGenerator.getInstance().openMenu(this);
+        //NavigationGenerator.getInstance().openMenu(this);
         if (getIntent().getExtras() != null) {
             int page = getIntent().getExtras().getInt("page", 0);
             NavigationGenerator.getInstance().loadSection(this, page);

@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
@@ -20,6 +21,7 @@ import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.asuc.asucmobile.R;
@@ -34,6 +36,8 @@ import com.asuc.asucmobile.utilities.Callback;
 import com.asuc.asucmobile.utilities.CustomComparators;
 import com.asuc.asucmobile.utilities.NavigationGenerator;
 import com.asuc.asucmobile.utilities.SerializableUtilities;
+
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -53,7 +57,11 @@ public class LibraryFragment extends Fragment {
     @Override
     @SuppressWarnings("deprecation")
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+
+
+
         View layout = inflater.inflate(R.layout.fragment_library, container, false);
+
         Toolbar toolbar = (Toolbar) layout.findViewById(R.id.toolbar);
         ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
         NavigationGenerator.generateToolbarMenuButton(getActivity(), toolbar);

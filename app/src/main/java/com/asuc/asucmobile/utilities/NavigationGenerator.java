@@ -21,6 +21,7 @@ import com.asuc.asucmobile.fragments.DiningHallFragment;
 import com.asuc.asucmobile.fragments.GymFragment;
 import com.asuc.asucmobile.fragments.LibraryFragment;
 import com.asuc.asucmobile.fragments.ResourceFragment;
+import com.asuc.asucmobile.fragments.SAOFragment;
 import com.asuc.asucmobile.fragments.StartStopSelectFragment;
 import com.asuc.asucmobile.main.MainActivity;
 import com.asuc.asucmobile.models.Category;
@@ -28,6 +29,14 @@ import com.asuc.asucmobile.models.Category;
 public class NavigationGenerator {
 
     private static final Category[] SECTIONS = new Category[] {
+            new Category(R.drawable.dining_hall, "Splash Page") {
+                @Override
+                public void loadFragment(FragmentManager fragmentManager) {
+                    fragmentManager.beginTransaction()
+                            .replace(R.id.content_frame, new BlankFragment())
+                            .commit();
+                }
+            },
             new Category(R.drawable.beartransit, "BearTransit") {
                 @Override
                 public void loadFragment(FragmentManager fragmentManager) {

@@ -5,10 +5,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.asuc.asucmobile.R;
+import com.asuc.asucmobile.main.ListOfFavorites;
 import com.asuc.asucmobile.models.Gyms.Gym;
+import com.asuc.asucmobile.utilities.SerializableUtilities;
 
 
 import java.util.ArrayList;
@@ -59,6 +62,16 @@ public class GymAdapter extends BaseAdapter {
             gymAvailability.setTextColor(context.getResources().getColor(android.R.color.holo_red_light));
             gymAvailability.setText("Closed");
         }
+
+        final ListOfFavorites listOfFavorites = (ListOfFavorites) SerializableUtilities.loadSerializedObject(context);
+
+        final ImageView imageView = (ImageView) convertView.findViewById(R.id.pre_favorite);
+        if (listOfFavorites != null && listOfFavorites.contains(gym.getName())) {
+            imageView.setImageResource(R.drawable.post_favorite);
+        } else {
+            imageView.setImageResource(R.drawable.pre_favorite);
+        }
+
         return convertView;
     }
 
