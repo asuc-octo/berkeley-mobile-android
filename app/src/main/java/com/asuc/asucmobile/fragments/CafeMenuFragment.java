@@ -7,7 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.asuc.asucmobile.adapters.FoodAdapter;
+import com.asuc.asucmobile.adapters.FoodPlaceAdapter;
 import com.asuc.asucmobile.models.Cafe;
 
 import java.text.SimpleDateFormat;
@@ -21,7 +21,7 @@ public class CafeMenuFragment extends Fragment {
     private static final SimpleDateFormat HOURS_FORMAT =
             new SimpleDateFormat("h:mm a", Locale.ENGLISH);
 
-    private static FoodAdapter adapter;
+    private static FoodPlaceAdapter adapter;
     private static Cafe cafe;
 
     @Nullable

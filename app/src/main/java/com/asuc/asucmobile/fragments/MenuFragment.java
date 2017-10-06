@@ -16,6 +16,7 @@ import android.widget.TextView;
 
 import com.asuc.asucmobile.R;
 import com.asuc.asucmobile.adapters.FoodAdapter;
+import com.asuc.asucmobile.adapters.FoodPlaceAdapter;
 import com.asuc.asucmobile.main.OpenDiningHallActivity;
 import com.asuc.asucmobile.models.DiningHall;
 import com.asuc.asucmobile.models.FoodItem;
