@@ -17,7 +17,7 @@ import android.widget.TextView;
 import com.asuc.asucmobile.R;
 import com.asuc.asucmobile.adapters.FoodAdapter;
 import com.asuc.asucmobile.main.OpenDiningHallActivity;
-import com.asuc.asucmobile.models.DiningHall;
+import com.asuc.asucmobile.models.DiningHalls.DiningHall;
 import com.asuc.asucmobile.models.FoodItem;
 
 import java.io.InputStream;
@@ -46,6 +46,8 @@ public class MenuFragment extends Fragment {
             return v;
         }
 
+        setHasOptionsMenu(true);
+
         // Get references to views.
         ListView foodMenu = (ListView) v.findViewById(R.id.food_menu);
         TextView emptyListView = (TextView) v.findViewById(R.id.empty_list);
@@ -53,6 +55,7 @@ public class MenuFragment extends Fragment {
                 getActivity().getLayoutInflater().inflate(R.layout.header_image, foodMenu, false);
         ImageView headerImage = (ImageView) header.findViewById(R.id.image);
         TextView headerHours = (TextView) header.findViewById(R.id.header_text);
+        TextView headerName = (TextView) header.findViewById(R.id.header_name);
 
         // Add the header to the list.
         foodMenu.addHeaderView(header);
@@ -110,7 +113,7 @@ public class MenuFragment extends Fragment {
                     foodMenu.setVisibility(View.GONE);
                     emptyListView.setVisibility(View.VISIBLE);
                 } else {
-                    String headerString = "Hours:  " + opening + " to " + closing + "  ";
+                    String headerString = opening + " to " + closing + "  ";
                     SpannableString spannableHeader;
                     if (isOpen) {
                         spannableHeader = new SpannableString(headerString + "OPEN");
@@ -129,6 +132,7 @@ public class MenuFragment extends Fragment {
                                 SpannableString.SPAN_INCLUSIVE_EXCLUSIVE
                         );
                     }
+                    headerName.setText(diningHall.getName());
                     headerHours.setText(spannableHeader);
                     FoodAdapter adapter = new FoodAdapter(getActivity(), foodItems);
                     MenuFragment.adapters.add(adapter);
@@ -144,7 +148,7 @@ public class MenuFragment extends Fragment {
         }
 
         // Download and set header image.
-        new DownloadImageThread(headerImage, diningHall.getImageUrl()).start();
+        new DownloadImageThread(headerImage, diningHall.getImageLink()).start();
         return v;
     }
 

@@ -1,95 +1,43 @@
 package com.asuc.asucmobile.controllers;
 
-import android.app.Activity;
 import android.content.Context;
-import android.support.annotation.NonNull;
-
-import com.asuc.asucmobile.models.Bus;
-import com.asuc.asucmobile.utilities.Callback;
-import com.asuc.asucmobile.utilities.JSONUtilities;
+import com.asuc.asucmobile.models.Buses;
+import com.asuc.asucmobile.models.Buses.Bus;
 import com.google.android.gms.maps.model.LatLng;
 
-import org.json.JSONArray;
 import org.json.JSONObject;
 
-import java.util.ArrayList;
 
-public class BusController implements Controller{
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
-    private static final String URL = BASE_URL + "/bt_buses";
+import retrofit2.Call;
+import retrofit2.http.GET;
+import retrofit2.http.Path;
 
-    private static BusController instance;
-    private Callback callback;
-    private ArrayList<Bus> buses;
+public class BusController {
 
-    public static Controller getInstance() {
-        if (instance == null) {
-            instance = new BusController();
-        }
-        return instance;
+    public interface cService {
+
+        String PATH = "bt_buses/";
+
+        @GET(PATH)
+        Call<Buses> getData();
+
     }
 
-    private BusController() {
-        buses = new ArrayList<>();
-    }
-
-    @Override
-    public void setResources(@NonNull final Context context, final JSONArray array) {
-        if (array == null) {
-            ((Activity) context).runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    callback.onRetrievalFailed();
-                }
-            });
-            return;
-        }
-        buses.clear();
-
-        /*
-         *  Parsing JSON data into models is put into a background thread so that the UI thread
-         *  won't lag.
-         */
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    // Iterate through buses
-                    for (int i = 0; i < array.length(); i++) {
-                        JSONObject bus = array.getJSONObject(i);
-                        boolean inService = bus.getBoolean("in_service");
-                        if (!inService) {
-                            continue;
-                        }
-                        int id = bus.getInt("id");
-                        String name = bus.getString("line_name");
-                        LatLng location =
-                                new LatLng(bus.getDouble("latitude"), bus.getDouble("longitude"));
-                        Bus newBus = new Bus(id, location, 0, 0, 0, 0, name, true);
-                        buses.add(newBus);
-                    }
-                    ((Activity) context).runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            callback.onDataRetrieved(buses);
-                        }
-                    });
-                } catch (Exception e) {
-                    ((Activity) context).runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            callback.onRetrievalFailed();
-                        }
-                    });
-                }
+    public static List<Bus> parse(Buses buses) {
+        Set<Bus> toRemove = new HashSet<>();
+        for (int i = 0; i < buses.data.size(); i++) {
+            if (!buses.data.get(i).isInService()) {
+                toRemove.add(buses.data.get(i));
+            } else {
+                buses.data.get(i).generateLatLng();
             }
-        }).start();
-    }
-
-    @Override
-    public void refreshInBackground(@NonNull Context context, Callback callback) {
-        this.callback = callback;
-        JSONUtilities.readJSONFromUrl(context, URL, "buses", BusController.getInstance());
+        }
+        buses.data.removeAll(toRemove);
+        return buses.data;
     }
 
 }

@@ -39,6 +39,30 @@ public class LineController implements Controller {
         lines = new SparseArray<>();
     }
 
+    public Line createNewItem(JSONObject lineJSON, Context context) throws Exception {
+        int id = lineJSON.getInt("id");
+        String name = lineJSON.getString("name");
+        JSONArray stopsJSON = lineJSON.getJSONArray("stop_list");
+        ArrayList<Stop> lineStops = new ArrayList<>();
+
+        // Add all the stops if needed.
+        for (int j = 0; j < stopsJSON.length(); j++) {
+            JSONObject stopJSON = stopsJSON.getJSONObject(j);
+            int stopId = stopJSON.getInt("id");
+            if (stops.get(stopId) == null) {
+                String stopName = stopJSON.getString("name");
+                Double latitude = stopJSON.getDouble("latitude");
+                Double longitude = stopJSON.getDouble("longitude");
+                Stop stop = new Stop(stopId, stopName, new LatLng(latitude, longitude));
+                stops.put(stopId, stop);
+                lineStops.add(stop);
+            } else {
+                lineStops.add(stops.get(stopId));
+            }
+        }
+        return new Line(id, name, lineStops);
+    }
+
     @Override
     public void setResources(@NonNull final Context context, final JSONArray array) {
         if (array == null) {
@@ -63,26 +87,7 @@ public class LineController implements Controller {
                     for (int i = 0; i < array.length(); i++) {
                         JSONObject lineJSON = array.getJSONObject(i);
                         int id = lineJSON.getInt("id");
-                        String name = lineJSON.getString("name");
-                        JSONArray stopsJSON = lineJSON.getJSONArray("stop_list");
-                        ArrayList<Stop> lineStops = new ArrayList<>();
-
-                        // Add all the stops if needed.
-                        for (int j = 0; j < stopsJSON.length(); j++) {
-                            JSONObject stopJSON = stopsJSON.getJSONObject(j);
-                            int stopId = stopJSON.getInt("id");
-                            if (stops.get(stopId) == null) {
-                                String stopName = stopJSON.getString("name");
-                                Double latitude = stopJSON.getDouble("latitude");
-                                Double longitude = stopJSON.getDouble("longitude");
-                                Stop stop = new Stop(stopId, stopName, new LatLng(latitude, longitude));
-                                stops.put(stopId, stop);
-                                lineStops.add(stop);
-                            } else {
-                                lineStops.add(stops.get(stopId));
-                            }
-                        }
-                        lines.put(id, new Line(id, name, lineStops));
+                        lines.put(id, createNewItem(lineJSON, context));
                     }
                     ((Activity) context).runOnUiThread(new Runnable() {
                         @Override
@@ -131,6 +136,10 @@ public class LineController implements Controller {
             }
         }
         return line;
+    }
+
+    public void setItem(@NonNull final Context context, final JSONObject obj) {
+        //Not required for this controller.
     }
 
 }
