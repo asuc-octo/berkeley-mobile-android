@@ -1,118 +1,47 @@
 package com.asuc.asucmobile.controllers;
 
-import android.app.Activity;
-import android.content.Context;
-import android.support.annotation.NonNull;
+import com.asuc.asucmobile.models.GroupExs;
+import com.asuc.asucmobile.models.Gyms;
+import com.asuc.asucmobile.models.Gyms.Gym;
 
-import com.asuc.asucmobile.models.Gym;
-import com.asuc.asucmobile.utilities.Callback;
-import com.asuc.asucmobile.utilities.JSONUtilities;
+import java.util.List;
 
-import org.json.JSONArray;
-import org.json.JSONObject;
+import retrofit2.Call;
+import retrofit2.http.GET;
+import retrofit2.http.Path;
 
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.Locale;
-import java.util.TimeZone;
+public class GymController {
 
-public class GymController implements Controller {
+    private static Gym currentGym;
 
-    private static final String URL = BASE_URL + "/gyms";
-    private static final SimpleDateFormat DATE_FORMAT =
-            new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.ENGLISH);
-    private static final TimeZone PST = TimeZone.getTimeZone("America/Los_Angeles");
+    public interface cService {
 
-    private static GymController instance;
+        String PATH = "gyms/";
 
-    private ArrayList<Gym> gyms;
-    private Callback callback;
-    private Gym currentGym;
+        @GET(PATH)
+        Call<Gyms> getData();
 
-    public static Controller getInstance() {
-        if (instance == null) {
-            instance = new GymController();
+        @GET(PATH + "{id}/")
+        Call<GroupExs> getDatum(@Path("id") int id);
+    }
+
+    public static List<Gym> parse(Gyms gyms) {
+        for (Gym gym : gyms.data) {
+            parseDatum(gym);
         }
-        return instance;
+        return gyms.data;
     }
 
-    private GymController() {
-        gyms = new ArrayList<>();
-    }
-    
-    @Override
-    public void setResources(@NonNull final Context context, final JSONArray array) {
-        if (array == null) {
-            ((Activity) context).runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    callback.onRetrievalFailed();
-                }
-            });
-            return;
-        }
-        gyms.clear();
-
-        /*
-         *  Parsing JSON data into models is put into a background thread so that the UI thread
-         *  won't lag.
-         */
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    for (int i = 0; i < array.length(); i++) {
-                        JSONObject gymJSON = array.getJSONObject(i);
-                        int id = gymJSON.getInt("id");
-                        String name = gymJSON.getString("name");
-                        String address = gymJSON.getString("address");
-                        long tmpDate;
-                        Date opening = null;
-                        Date closing = null;
-                        String openingString = gymJSON.getString("opening_time_today");
-                        String closingString = gymJSON.getString("closing_time_today");
-                        if (!openingString.equals("null")) {
-                            tmpDate = DATE_FORMAT.parse(openingString).getTime();
-                            opening = new Date(tmpDate + PST.getOffset(tmpDate));
-                        }
-                        if (!closingString.equals("null")) {
-                            tmpDate = DATE_FORMAT.parse(closingString).getTime();
-                            closing = new Date(tmpDate + PST.getOffset(tmpDate));
-                        }
-                        String imageUrl = gymJSON.getString("image_link");
-                        gyms.add(new Gym(id, name, address, opening, closing, imageUrl));
-                    }
-                    ((Activity) context).runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            callback.onDataRetrieved(gyms);
-                        }
-                    });
-                } catch (Exception e) {
-                    e.printStackTrace();
-                    ((Activity) context).runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            callback.onRetrievalFailed();
-                        }
-                    });
-                }
-            }
-        }).start();
+    public static Gym parseDatum(Gym gym) {
+        gym.generateLatLng();
+        return gym;
     }
 
-    @Override
-    public void refreshInBackground(@NonNull Context context, Callback callback) {
-        this.callback = callback;
-        JSONUtilities.readJSONFromUrl(context, URL, "gyms", GymController.getInstance());
-    }
-
-    public void setCurrentGym(Gym gym) {
+    public static void setCurrentGym(Gym gym) {
         currentGym = gym;
     }
 
-    public Gym getCurrentGym() {
+    public static Gym getCurrentGym() {
         return currentGym;
     }
 

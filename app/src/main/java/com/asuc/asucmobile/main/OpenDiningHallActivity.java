@@ -3,6 +3,7 @@ package com.asuc.asucmobile.main;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.os.Bundle;
+import android.support.design.widget.TabLayout;
 import android.support.v13.app.FragmentPagerAdapter;
 import android.support.v4.view.PagerTabStrip;
 import android.support.v4.view.ViewPager;
@@ -71,11 +72,11 @@ public class OpenDiningHallActivity extends BaseActivity {
                 viewPager.setCurrentItem(0);
             }
         }
-        PagerTabStrip tabStrip = (PagerTabStrip) findViewById(R.id.pager_tab_strip);
-        if (tabStrip != null) {
-            tabStrip.setTextColor(getResources().getColor(R.color.off_white));
-            tabStrip.setTabIndicatorColor(getResources().getColor(R.color.off_white));
-        }
+        TabLayout tabStrip = (TabLayout) findViewById(R.id.pager_tab_strip);
+        tabStrip.setupWithViewPager(viewPager);
+        if (tabStrip != null)
+            tabStrip.setTabTextColors(getResources().getColor(R.color.off_white), getResources().getColor(R.color.off_white));
+
     }
 
     @Override
