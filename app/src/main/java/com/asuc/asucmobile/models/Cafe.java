@@ -7,29 +7,108 @@ import java.util.Date;
  * Created by rustie on 9/28/17.
  */
 
-public class Cafe {
+public class Cafe extends FoodPlace {
 
 
     private String id;
     private String name;
     private ArrayList<FoodItem> breakfastMenu;
     private ArrayList<FoodItem> lunchDinnerMenu;
-    private Date open;
-    private Date close;
+    private Date breakfastOpen;
+    private Date lunchDinnerOpen;
+    private Date breakfastClose;
+    private Date lunchDinnerClose;
+
     private String imageUrl;
 
     public Cafe(String id, String name, ArrayList<FoodItem> breakfastMenu,
-                ArrayList<FoodItem> lunchDinnerMenu, Date open, Date close, String imageUrl) {
+                ArrayList<FoodItem> lunchDinnerMenu, Date breakfastOpen,
+                Date lunchDinnerOpen, Date breakfastClose, Date lunchDinnerClose,
+                String imageUrl) {
         this.id = id;
         this.name = name;
         this.breakfastMenu = breakfastMenu;
         this.lunchDinnerMenu = lunchDinnerMenu;
-        this.open = open;
-        this.close = close;
+        this.breakfastOpen = breakfastOpen;
+        this.lunchDinnerOpen = lunchDinnerOpen;
+        this.breakfastClose = breakfastClose;
+        this.lunchDinnerClose = lunchDinnerClose;
         this.imageUrl = imageUrl;
     }
 
+    public Date getBreakfastOpen() {
+        return breakfastOpen;
+    }
 
+    public void setBreakfastOpen(Date breakfastOpen) {
+        this.breakfastOpen = breakfastOpen;
+    }
+
+    public Date getLunchDinnerOpen() {
+        return lunchDinnerOpen;
+    }
+
+    public void setLunchDinnerOpen(Date lunchDinnerOpen) {
+        this.lunchDinnerOpen = lunchDinnerOpen;
+    }
+
+    public Date getBreakfastClose() {
+        return breakfastClose;
+    }
+
+    public void setBreakfastClose(Date breakfastClose) {
+        this.breakfastClose = breakfastClose;
+    }
+
+    public Date getLunchDinnerClose() {
+        return lunchDinnerClose;
+    }
+
+    public void setLunchDinnerClose(Date lunchDinnerClose) {
+        this.lunchDinnerClose = lunchDinnerClose;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public ArrayList<FoodItem> getBreakfastMenu() {
+        return breakfastMenu;
+    }
+
+    public void setBreakfastMenu(ArrayList<FoodItem> breakfastMenu) {
+        this.breakfastMenu = breakfastMenu;
+    }
+
+    public ArrayList<FoodItem> getLunchDinnerMenu() {
+        return lunchDinnerMenu;
+    }
+
+    public void setLunchDinnerMenu(ArrayList<FoodItem> lunchDinnerMenu) {
+        this.lunchDinnerMenu = lunchDinnerMenu;
+    }
+
+
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
+    }
 
     /**
      * isOpen() returns whether or not this cafe is open
@@ -37,12 +116,14 @@ public class Cafe {
      * @return Boolean indicating if a certain cafe is open or not.
      */
     public boolean isOpen() {
-        if (open == null || close == null) {
+        if (breakfastOpen == null || lunchDinnerOpen == null
+                || breakfastClose == null || lunchDinnerClose == null) {
             return false;
         }
 
         Date currentTime = new Date();
-        return currentTime.after(open) && currentTime.before(close);
+        return currentTime.after(breakfastOpen) && currentTime.before(breakfastClose)
+                || currentTime.after(lunchDinnerOpen) && currentTime.before(lunchDinnerClose);
     }
 
 }

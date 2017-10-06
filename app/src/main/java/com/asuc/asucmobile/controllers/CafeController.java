@@ -17,6 +17,7 @@ import org.json.JSONObject;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
 import java.util.Locale;
 import java.util.TimeZone;
 
@@ -38,7 +39,7 @@ public class CafeController implements Controller{
     private Callback callback;
     private Cafe currentCafe;
 
-    public static Controller getIntance() {
+    public static Controller getInstance() {
         if (instance == null) {
             instance = new CafeController();
         }
@@ -70,6 +71,7 @@ public class CafeController implements Controller{
         new Thread(new Runnable() {
             @Override
             public void run() {
+                Log.d(TAG, "RUANNANA");
                 try {
 
                     // for each entry in cafes
@@ -77,10 +79,28 @@ public class CafeController implements Controller{
                         JSONObject cafe = array.getJSONObject(i);
                         String id = cafe.getString("id");
                         String name = cafe.getString("name");
+                        String imageLink = cafe.getString("image_link");
                         JSONArray menus = cafe.getJSONArray("menus");
 
-                        // lunch and dinner is the first in menus array
-                        JSONArray lunchDinnerJSON = menus.getJSONObject(0).getJSONArray("menu_items");
+                        // breakfast first
+                        JSONArray breakfastJSON = menus.getJSONObject(0).getJSONArray("menu_items");
+
+                        ArrayList<FoodItem> breakfastMenu = new ArrayList<>();
+                        for (int j = 0; j < breakfastJSON.length(); j++) {
+                            JSONObject foodJSON = breakfastJSON.getJSONObject(j);
+                            breakfastMenu.add(new FoodItem(
+                                    foodJSON.getString("id"),
+                                    foodJSON.getString("name"),
+                                    foodJSON.getString("food_type"),
+                                    foodJSON.getString("calories"),
+                                    foodJSON.optDouble("cost")
+                            ));
+                        }
+                        Collections.sort(breakfastMenu, CustomComparators.FacilityComparators.getFoodSortByFavorite(context));
+
+
+                        // lunch and dinner next
+                        JSONArray lunchDinnerJSON = menus.getJSONObject(1).getJSONArray("menu_items");
                         ArrayList<FoodItem> lunchDinnerMenu = new ArrayList<>();
                         for (int j = 0; j < lunchDinnerJSON.length(); j++) {
                             JSONObject foodJSON = lunchDinnerJSON.getJSONObject(j);
@@ -94,22 +114,40 @@ public class CafeController implements Controller{
                         }
                         Collections.sort(lunchDinnerMenu, CustomComparators.FacilityComparators.getFoodSortByFavorite(context));
 
-                        // breakfast is the second in menus array
-                        JSONArray breakfastJSON = menus.getJSONObject(1).getJSONArray("menu_items");
-                        ArrayList<FoodItem> breakfastMenu = new ArrayList<>();
-                        for (int j = 0; j < breakfastJSON.length(); j++) {
-                            JSONObject foodJSON = breakfastJSON.getJSONObject(j);
-                                breakfastMenu.add(new FoodItem(
-                                    foodJSON.getString("id"),
-                                    foodJSON.getString("name"),
-                                    foodJSON.getString("food_type"),
-                                    foodJSON.getString("calories"),
-                                    foodJSON.optDouble("cost")
-                            ));
-                        }
-                        Collections.sort(breakfastMenu, CustomComparators.FacilityComparators.getFoodSortByFavorite(context));
-
                         //TODO: do something about opening and closing times
+                        // opening and closing times
+                        long tmpDate;
+                        String openingString = menus.getJSONObject(0).getString("start_time");
+                        String closingString = menus.getJSONObject(0).getString("end_time");
+
+                        Date breakfastOpening = null;
+                        Date breakfastClosing = null;
+                        if (!openingString.equals("null")) {
+                            tmpDate = DATE_FORMAT.parse(openingString).getTime();
+                            breakfastOpening = new Date(tmpDate + PST.getOffset(tmpDate));
+                        }
+                        if (!closingString.equals("null")) {
+                            tmpDate = DATE_FORMAT.parse(closingString).getTime();
+                            breakfastClosing = new Date(tmpDate + PST.getOffset(tmpDate));
+                        }
+
+                        Date lunchDinnerOpening = null;
+                        Date lunchDinnerClosing = null;
+                        openingString = menus.getJSONObject(1).getString("start_time");
+                        closingString = menus.getJSONObject(1).getString("end_time");
+                        if (!openingString.equals("null")) {
+                            tmpDate = DATE_FORMAT.parse(openingString).getTime();
+                            lunchDinnerOpening = new Date(tmpDate + PST.getOffset(tmpDate));
+                        }
+                        if (!closingString.equals("null")) {
+                            tmpDate = DATE_FORMAT.parse(closingString).getTime();
+                            lunchDinnerClosing = new Date(tmpDate + PST.getOffset(tmpDate));
+                        }
+
+                        cafes.add(new Cafe(id, name, breakfastMenu, lunchDinnerMenu, breakfastOpening,
+                                breakfastClosing, lunchDinnerOpening, lunchDinnerClosing, imageLink));
+
+
 
                     }
                     ((Activity) context).runOnUiThread(new Runnable() {
@@ -128,15 +166,14 @@ public class CafeController implements Controller{
                     });
                 }
             }
-        });
+        }).start();
 
     }
 
     @Override
     public void refreshInBackground(@NonNull Context context, Callback callback) {
         this.callback = callback;
-        JSONUtilities.readJSONFromUrl(context, URL, "cafes", DiningController.getInstance());
-
+        JSONUtilities.readJSONFromUrl(context, URL, "cafes", CafeController.getInstance());
     }
 
     public void setCurrentCafe(Cafe cafe) {
