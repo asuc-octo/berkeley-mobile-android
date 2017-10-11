@@ -36,35 +36,35 @@ public class Cafe extends FoodPlace {
         this.imageUrl = imageUrl;
     }
 
-    public Date getBreakfastOpen() {
+    public Date getBreakfastOpening() {
         return breakfastOpen;
     }
 
-    public void setBreakfastOpen(Date breakfastOpen) {
+    public void setBreakfastOpening(Date breakfastOpen) {
         this.breakfastOpen = breakfastOpen;
     }
 
-    public Date getLunchDinnerOpen() {
+    public Date getLunchDinnerOpening() {
         return lunchDinnerOpen;
     }
 
-    public void setLunchDinnerOpen(Date lunchDinnerOpen) {
+    public void setLunchDinnerOpening(Date lunchDinnerOpen) {
         this.lunchDinnerOpen = lunchDinnerOpen;
     }
 
-    public Date getBreakfastClose() {
+    public Date getBreakfastClosing() {
         return breakfastClose;
     }
 
-    public void setBreakfastClose(Date breakfastClose) {
+    public void setBreakfastClosing(Date breakfastClose) {
         this.breakfastClose = breakfastClose;
     }
 
-    public Date getLunchDinnerClose() {
+    public Date getLunchDinnerClosing() {
         return lunchDinnerClose;
     }
 
-    public void setLunchDinnerClose(Date lunchDinnerClose) {
+    public void setLunchDinnerClosing(Date lunchDinnerClose) {
         this.lunchDinnerClose = lunchDinnerClose;
     }
 
@@ -124,6 +124,24 @@ public class Cafe extends FoodPlace {
         Date currentTime = new Date();
         return currentTime.after(breakfastOpen) && currentTime.before(breakfastClose)
                 || currentTime.after(lunchDinnerOpen) && currentTime.before(lunchDinnerClose);
+    }
+
+    public boolean isBreakfastOpen() {
+        if (breakfastOpen == null || breakfastClose == null) {
+            return false;
+        }
+
+        Date currentTime = new Date();
+        return currentTime.after(breakfastOpen) && currentTime.before(breakfastClose);
+    }
+
+    public boolean isLunchDinnerOpen() {
+        if (lunchDinnerOpen == null || lunchDinnerClose == null) {
+            return false;
+        }
+
+        Date currentTime = new Date();
+        return currentTime.after(lunchDinnerOpen) && currentTime.before(lunchDinnerClose);
     }
 
 }

@@ -18,6 +18,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
+import java.util.ArrayList;
 import java.util.Locale;
 import java.util.TimeZone;
 
@@ -88,12 +89,22 @@ public class CafeController implements Controller{
                         ArrayList<FoodItem> breakfastMenu = new ArrayList<>();
                         for (int j = 0; j < breakfastJSON.length(); j++) {
                             JSONObject foodJSON = breakfastJSON.getJSONObject(j);
+
+                            // get the food types
+                            ArrayList<String> foodTypes = new ArrayList<>();
+                            if (foodJSON.has("food_type")) {
+                                JSONArray foodTypesArray = foodJSON.getJSONArray("food_type");
+                                for (int k = 0; k < foodTypesArray.length(); k++) {
+                                    foodTypes.add(foodTypesArray.getString(k).toUpperCase());
+                                }
+                            }
+
                             breakfastMenu.add(new FoodItem(
                                     foodJSON.getString("id"),
                                     foodJSON.getString("name"),
-                                    foodJSON.getString("food_type"),
                                     foodJSON.getString("calories"),
-                                    foodJSON.optDouble("cost")
+                                    foodJSON.optDouble("cost"),
+                                    foodTypes
                             ));
                         }
                         Collections.sort(breakfastMenu, CustomComparators.FacilityComparators.getFoodSortByFavorite(context));
@@ -104,12 +115,20 @@ public class CafeController implements Controller{
                         ArrayList<FoodItem> lunchDinnerMenu = new ArrayList<>();
                         for (int j = 0; j < lunchDinnerJSON.length(); j++) {
                             JSONObject foodJSON = lunchDinnerJSON.getJSONObject(j);
+                            // get the food types
+                            ArrayList<String> foodTypes = new ArrayList<>();
+                            if (foodJSON.has("food_type")) {
+                                JSONArray foodTypesArray = foodJSON.getJSONArray("food_type");
+                                for (int k = 0; k < foodTypesArray.length(); k++) {
+                                    foodTypes.add(foodTypesArray.getString(k).toUpperCase());
+                                }
+                            }
                             lunchDinnerMenu.add(new FoodItem(
                                     foodJSON.getString("id"),
                                     foodJSON.getString("name"),
-                                    foodJSON.getString("food_type"),
                                     foodJSON.getString("calories"),
-                                    foodJSON.optDouble("cost")
+                                    foodJSON.optDouble("cost"),
+                                    foodTypes
                             ));
                         }
                         Collections.sort(lunchDinnerMenu, CustomComparators.FacilityComparators.getFoodSortByFavorite(context));

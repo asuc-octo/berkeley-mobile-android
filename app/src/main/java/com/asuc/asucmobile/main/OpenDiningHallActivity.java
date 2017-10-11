@@ -99,6 +99,7 @@ public class OpenDiningHallActivity extends BaseActivity {
             return true;
         }
         if (id == R.id.sortAZ) {
+//            DiningHall diningHall = MenuFragment.getDiningHall();
             DiningHall diningHall = MenuFragment.getDiningHall();
             ArrayList<FoodItem> arrayListBreakfast = diningHall.getBreakfastMenu();
             Collections.sort(arrayListBreakfast, CustomComparators.FacilityComparators.getFoodSortByAZ());
@@ -108,10 +109,12 @@ public class OpenDiningHallActivity extends BaseActivity {
             Collections.sort(arrayListDinner, CustomComparators.FacilityComparators.getFoodSortByAZ());
             ArrayList<FoodItem> arrayListLateNight = diningHall.getLateNightMenu();
             Collections.sort(arrayListLateNight, CustomComparators.FacilityComparators.getFoodSortByAZ());
+//            MenuFragment.refreshLists();
             MenuFragment.refreshLists();
             return true;
         }
         if (id == R.id.sortFavorites) {
+//            DiningHall diningHall = MenuFragment.getDiningHall();
             DiningHall diningHall = MenuFragment.getDiningHall();
             ArrayList<FoodItem> arrayListBreakfast = diningHall.getBreakfastMenu();
             Collections.sort(arrayListBreakfast, CustomComparators.FacilityComparators.getFoodSortByFavorite(this));
@@ -121,6 +124,7 @@ public class OpenDiningHallActivity extends BaseActivity {
             Collections.sort(arrayListDinner, CustomComparators.FacilityComparators.getFoodSortByFavorite(this));
             ArrayList<FoodItem> arrayListLateNight = diningHall.getLateNightMenu();
             Collections.sort(arrayListLateNight, CustomComparators.FacilityComparators.getFoodSortByFavorite(this));
+//            MenuFragment.refreshLists();
             MenuFragment.refreshLists();
             return true;
         }
@@ -139,7 +143,8 @@ public class OpenDiningHallActivity extends BaseActivity {
 
         @Override
         public Fragment getItem(int position) {
-            MenuFragment menuFragment = new MenuFragment();
+//            MenuFragment menuFragment = new MenuFragment();
+            MenuFragment menuFragment = new MenuFragment(MenuFragment.FoodType.DiningHall);
             Bundle bundle = new Bundle(1);
 
             // If late night exists in this dining hall, add it; otherwise, leave it out.
