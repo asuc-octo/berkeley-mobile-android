@@ -20,6 +20,13 @@
             style="@style/ToolbarTheme" />
 
 
+        <TextView
+            android:padding="10dp"
+            android:text="Dining Halls"
+            android:textSize="18sp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
         <android.support.v7.widget.RecyclerView
             android:id="@+id/dining_hall_recycler_view"
             android:layout_width="match_parent"
@@ -27,6 +34,13 @@
             android:scrollbarStyle="outsideInset"
             android:divider="@color/transparent"
             android:listSelector="@android:color/transparent" />
+
+        <TextView
+            android:padding="10dp"
+            android:text="Cafes"
+            android:textSize="18sp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/cafe_recycler_view"
