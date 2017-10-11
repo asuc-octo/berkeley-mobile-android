@@ -96,27 +96,29 @@ public class FoodFragment extends Fragment {
      * from the web.
      */
     private void refresh() {
-        mRefreshWrapper.setVisibility(View.GONE); // TODO: do some boolean stuff to make sure we have both lists all th time
+        mRefreshWrapper.setVisibility(View.GONE);
         mProgressBar.setVisibility(View.VISIBLE);
 
         mCafeRecyclerView.setVisibility(View.GONE);
         mDiningRecyclerView.setVisibility(View.GONE);
 
+        getDining();
+        getCafes();
+
+    }
+
+    private void getCafes() {
         CafeController.getInstance().refreshInBackground(getActivity(), new Callback() {
 
             @Override
             @SuppressWarnings("unchecked")
             public void onDataRetrieved(Object data) {
-
-                mDiningRecyclerView.setVisibility(View.VISIBLE);
+                mCafeRecyclerView.setVisibility(View.VISIBLE);
                 mProgressBar.setVisibility(View.GONE);
                 mCafeList= (ArrayList<FoodPlace>) data;
-                Log.d(TAG + "CAFES", mCafeList.toString());
-                Log.d(TAG + "CAFES", mCafeList.get(0).getName());
-
-
                 mCafeRecyclerView.setAdapter(new FoodPlaceAdapter(getContext(), mCafeList, FoodPlaceAdapter.FoodType.Cafe));
-//                mDiningRecyclerView.setAdapter(new FoodPlaceAdapter(getContext(), mCafeList, FoodPlaceAdapter.FoodType.DiningHall));
+                Log.d(TAG, data.toString());
+
 
             }
 
@@ -125,14 +127,15 @@ public class FoodFragment extends Fragment {
 
                 mProgressBar.setVisibility(View.GONE);
                 mRefreshWrapper.setVisibility(View.VISIBLE);
-                Log.d(TAG + "CAFES", mCafeList.toString());
 
-                Toast.makeText(getContext(), "Unable to retrieve CAFES please try again",
+                Toast.makeText(getContext(), "Unable to retrieve cafe data please try again",
                         Toast.LENGTH_SHORT).show();
             }
 
         });
+    }
 
+    private void getDining() {
         DiningController.getInstance().refreshInBackground(getActivity(), new Callback() {
 
             @Override
@@ -142,10 +145,9 @@ public class FoodFragment extends Fragment {
                 mDiningRecyclerView.setVisibility(View.VISIBLE);
                 mProgressBar.setVisibility(View.GONE);
                 mDiningHallList = (ArrayList<FoodPlace>) data;
-                Log.d(TAG + "DINING", mDiningHallList.toString());
-                Log.d(TAG + "DINING", mDiningHallList.get(0).getName());
-
                 mDiningRecyclerView.setAdapter(new FoodPlaceAdapter(getContext(), mDiningHallList, FoodPlaceAdapter.FoodType.DiningHall));
+
+                Log.d(TAG, data.toString());
 
             }
 
@@ -153,13 +155,11 @@ public class FoodFragment extends Fragment {
             public void onRetrievalFailed() {
                 mProgressBar.setVisibility(View.GONE);
                 mRefreshWrapper.setVisibility(View.VISIBLE);
-                Toast.makeText(getContext(), "Unable to retrieve data, please try again",
+                Toast.makeText(getContext(), "Unable to retrieve dining hall data, please try again",
                         Toast.LENGTH_SHORT).show();
             }
 
         });
-
-
     }
 
 }

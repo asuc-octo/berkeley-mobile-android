@@ -5,49 +5,43 @@
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
-    card_view:cardCornerRadius="4dp"
+    card_view:cardCornerRadius="0dp"
     android:layout_height="wrap_content">
 
     <LinearLayout
 
-        android:orientation="horizontal"
+        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
         <ImageView
             android:id="@+id/image"
+            android:scaleType="centerCrop"
+            android:layout_width="180dp"
+            android:layout_height="120dp" />
+
+
+        <TextView
+            android:id="@+id/name"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:singleLine="true"
+            android:ellipsize="marquee"
+            android:textColor="@android:color/black"
+            android:textSize="18sp"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="14sp"
+            android:singleLine="true"
+            android:id="@+id/open_status"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            />
 
-
-        <LinearLayout
-            android:padding="5dp"
-            android:orientation="vertical"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-
-
-            <TextView
-                android:id="@+id/name"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:singleLine="true"
-                android:ellipsize="marquee"
-                android:textColor="@android:color/black"
-                android:textSize="18sp"
-                android:layout_marginLeft="13dp"
-                android:layout_marginStart="13dp"/>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="14sp"
-                android:singleLine="true"
-                android:id="@+id/open_status"
-                android:layout_marginTop="2dp" />
-
-
-        </LinearLayout>
 
 
     </LinearLayout>

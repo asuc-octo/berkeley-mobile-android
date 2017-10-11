@@ -17,6 +17,7 @@ import com.asuc.asucmobile.main.OpenDiningHallActivity;
 import com.asuc.asucmobile.models.Cafe;
 import com.asuc.asucmobile.models.DiningHall;
 import com.asuc.asucmobile.models.FoodPlace;
+import com.bumptech.glide.Glide;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -118,7 +119,10 @@ public class FoodPlaceAdapter extends RecyclerView.Adapter<FoodPlaceAdapter.View
         }
 
         nameTextView.setText(getItem(position).getName());
-        Picasso.with(mContext).load(getItem(position).getImageUrl()).resize(300, 300).into(imageView);
+        Glide.with(mContext)
+                .load(getItem(position)
+                        .getImageUrl()).into(imageView);
+
 
     }
 

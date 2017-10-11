@@ -88,6 +88,10 @@
             android:label="@string/title_activity_open_dining_hall"
             android:screenOrientation="portrait" />
         <activity
+            android:name=".main.OpenCafeActivity"
+            android:label="@string/title_activity_open_cafe"
+            android:screenOrientation="portrait" />
+        <activity
             android:name=".main.OpenResourceActivity"
             android:label="@string/title_activity_open_resource"
             android:screenOrientation="portrait" />
