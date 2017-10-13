@@ -21,6 +21,7 @@
 
 
         <TextView
+            android:id="@+id/dining_halls_label"
             android:padding="10dp"
             android:text="Dining Halls"
             android:textSize="18sp"
@@ -36,6 +37,7 @@
             android:listSelector="@android:color/transparent" />
 
         <TextView
+            android:id="@+id/cafes_label"
             android:padding="10dp"
             android:text="Cafes"
             android:textSize="18sp"
