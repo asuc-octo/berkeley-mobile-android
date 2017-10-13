@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.asuc.asucmobile.R;
@@ -33,6 +34,9 @@ import java.util.ArrayList;
 public class FoodFragment extends Fragment {
 
     public static final String TAG = "FoodFragment";
+
+    private TextView mDiningHallLabel;
+    private TextView mCafeLabel;
 
     private RecyclerView mDiningRecyclerView;
     private RecyclerView mCafeRecyclerView;
@@ -57,6 +61,9 @@ public class FoodFragment extends Fragment {
 
         mProgressBar = (ProgressBar) layout.findViewById(R.id.progress_bar);
         mRefreshWrapper = (LinearLayout) layout.findViewById(R.id.refresh);
+
+        mDiningHallLabel = (TextView) layout.findViewById(R.id.dining_halls_label);
+        mCafeLabel = (TextView) layout.findViewById(R.id.cafes_label);
 
 
         mDiningRecyclerView = (RecyclerView) layout.findViewById(R.id.dining_hall_recycler_view);
@@ -96,6 +103,9 @@ public class FoodFragment extends Fragment {
      * from the web.
      */
     private void refresh() {
+        mCafeLabel.setVisibility(View.GONE);
+        mDiningHallLabel.setVisibility(View.GONE);
+
         mRefreshWrapper.setVisibility(View.GONE);
         mProgressBar.setVisibility(View.VISIBLE);
 
@@ -113,6 +123,7 @@ public class FoodFragment extends Fragment {
             @Override
             @SuppressWarnings("unchecked")
             public void onDataRetrieved(Object data) {
+                mCafeLabel.setVisibility(View.VISIBLE);
                 mCafeRecyclerView.setVisibility(View.VISIBLE);
                 mProgressBar.setVisibility(View.GONE);
                 mCafeList= (ArrayList<FoodPlace>) data;
@@ -141,7 +152,7 @@ public class FoodFragment extends Fragment {
             @Override
             @SuppressWarnings("unchecked")
             public void onDataRetrieved(Object data) {
-
+                mDiningHallLabel.setVisibility(View.VISIBLE);
                 mDiningRecyclerView.setVisibility(View.VISIBLE);
                 mProgressBar.setVisibility(View.GONE);
                 mDiningHallList = (ArrayList<FoodPlace>) data;
