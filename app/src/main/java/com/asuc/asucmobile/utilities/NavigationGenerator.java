@@ -17,7 +17,7 @@ import android.widget.ListView;
 import com.asuc.asucmobile.R;
 import com.asuc.asucmobile.adapters.MainMenuAdapter;
 import com.asuc.asucmobile.fragments.BlankFragment;
-import com.asuc.asucmobile.fragments.DiningHallFragment;
+import com.asuc.asucmobile.fragments.FoodFragment;
 import com.asuc.asucmobile.fragments.GymFragment;
 import com.asuc.asucmobile.fragments.LibraryFragment;
 import com.asuc.asucmobile.fragments.ResourceFragment;
@@ -36,11 +36,11 @@ public class NavigationGenerator {
                             .commit();
                 }
             },
-            new Category(R.drawable.dining_hall, "Dining Halls") {
+            new Category(R.drawable.dining_hall, "Food") {
                 @Override
                 public void loadFragment(FragmentManager fragmentManager) {
                     fragmentManager.beginTransaction()
-                            .replace(R.id.content_frame, new DiningHallFragment())
+                            .replace(R.id.content_frame, new FoodFragment())
                             .commit();
                 }
             },
