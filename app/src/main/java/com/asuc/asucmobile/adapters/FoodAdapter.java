@@ -56,9 +56,9 @@ public class FoodAdapter extends BaseAdapter {
 
         foodName.setText(foodItem.getName());
 
-        if (!foodItem.getFoodType().equals("None") && foodItem.getFoodType() != null && !foodItem.getFoodType().equals("null")) {
+        if (foodItem.getFoodTypes() != null && foodItem.getFoodTypes().size() > 0) {
             foodType.setVisibility(View.VISIBLE);
-            foodType.setText(foodItem.getFoodType().toUpperCase());
+            foodType.setText(foodItem.getFoodTypes().toString().replace("[", "").replace("]", ""));
         } else {
             foodType.setVisibility(View.GONE);
         }
