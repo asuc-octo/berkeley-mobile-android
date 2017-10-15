@@ -52,25 +52,20 @@ public class FoodAdapter extends BaseAdapter {
 
         final TextView foodName = (TextView) convertView.findViewById(R.id.food_name);
         TextView foodType = (TextView) convertView.findViewById(R.id.food_type);
-        TextView foodCalories = (TextView) convertView.findViewById(R.id.calories);
 
         foodName.setText(foodItem.getName());
 
         if (foodItem.getFoodTypes() != null && foodItem.getFoodTypes().size() > 0) {
             foodType.setVisibility(View.VISIBLE);
             foodType.setText(foodItem.getFoodTypes().toString().replace("[", "").replace("]", ""));
+
+            // make imageViews dynamically, switch on types
+
         } else {
             foodType.setVisibility(View.GONE);
         }
 
-        if (!foodItem.getCost().equals("$NaN")) {
-            foodCalories.setText(foodItem.getCost());
-        } else if (foodItem.getCalories().equals("null")) {
-            foodCalories.setVisibility(View.GONE);
-        } else {
-            foodCalories.setVisibility(View.VISIBLE);
-            foodCalories.setText(String.format("%s cal", foodItem.getCalories()));
-        }
+
         final ListOfFavorites listOfFavorites = (ListOfFavorites) SerializableUtilities.loadSerializedObject(context);
         final ImageView imageView = (ImageView) convertView.findViewById(R.id.favorite);
 
