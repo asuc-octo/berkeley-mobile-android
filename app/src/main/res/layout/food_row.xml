@@ -12,12 +12,14 @@
     android:baselineAligned="false"
     android:background="@android:color/white">
 
+
     <LinearLayout
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:gravity="center_vertical"
-        android:orientation="vertical">
+        android:gravity="center_vertical|left"
+        android:orientation="horizontal"
+        android:layout_marginLeft="8dp"
+        android:layout_marginStart="8dp">
 
         <TextView
             android:id="@+id/food_name"
@@ -27,30 +29,12 @@
             android:textSize="16sp"
             android:textColor="@android:color/black" />
 
-        <TextView
-            android:id="@+id/food_type"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:singleLine="true"
-            android:textSize="16sp"
-            android:textColor="@color/green" />
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:gravity="center_vertical|end"
-        android:orientation="horizontal"
-        android:layout_marginLeft="8dp"
-        android:layout_marginStart="8dp">
-
-        <TextView
-            android:id="@+id/calories"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="16sp"
-            android:textColor="@android:color/darker_gray" />
+        <!--<TextView-->
+            <!--android:id="@+id/calories"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:textSize="16sp"-->
+            <!--android:textColor="@android:color/darker_gray" />-->
 
         <ImageView
             android:id="@+id/favorite"
@@ -58,6 +42,27 @@
             android:layout_height="32dp"
             android:layout_gravity="end"
             android:contentDescription="@string/content_desc" />
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:id="@+id/food_types_layout"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:gravity="center_vertical|right"
+        android:orientation="horizontal">
+
+
+        <TextView
+            android:text="TYPE"
+            android:id="@+id/food_type"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:singleLine="true"
+            android:textSize="16sp"
+            android:textColor="@color/green" />
 
     </LinearLayout>
 
