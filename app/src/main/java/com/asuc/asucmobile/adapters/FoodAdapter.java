@@ -1,11 +1,13 @@
 package com.asuc.asucmobile.adapters;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.asuc.asucmobile.R;
@@ -15,8 +17,11 @@ import com.asuc.asucmobile.models.FoodItem;
 import com.asuc.asucmobile.utilities.SerializableUtilities;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 
 public class FoodAdapter extends BaseAdapter {
+
+    public static final String TAG = "FoodAdapter";
 
     private Context context;
     private ArrayList<FoodItem> foodItems;
@@ -51,18 +56,25 @@ public class FoodAdapter extends BaseAdapter {
         }
 
         final TextView foodName = (TextView) convertView.findViewById(R.id.food_name);
-        TextView foodType = (TextView) convertView.findViewById(R.id.food_type);
 
         foodName.setText(foodItem.getName());
 
         if (foodItem.getFoodTypes() != null && foodItem.getFoodTypes().size() > 0) {
-            foodType.setVisibility(View.VISIBLE);
-            foodType.setText(foodItem.getFoodTypes().toString().replace("[", "").replace("]", ""));
 
             // make imageViews dynamically, switch on types
+            final LinearLayout foodTypesLayout = (LinearLayout) convertView.findViewById(R.id.food_types_layout);
+            foodTypesLayout.removeAllViews();
 
-        } else {
-            foodType.setVisibility(View.GONE);
+            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.MATCH_PARENT);
+            for (String str : foodItem.getFoodTypes()) {
+                ImageView imageView = new ImageView(context);
+                imageView.setImageResource(selectFoodIcon(str));
+                imageView.setLayoutParams(params);
+                foodTypesLayout.addView(imageView);
+                Log.d(TAG, "added imageView" + imageView.toString());
+
+            }
+
         }
 
 
@@ -92,6 +104,45 @@ public class FoodAdapter extends BaseAdapter {
         });
 
         return convertView;
+    }
+
+    private int selectFoodIcon(String string) {
+        switch (string) {
+            case ("alcohol"):
+                return R.drawable.alcohol;
+            case ("egg"):
+                return R.drawable.egg;
+            case ("fish"):
+                return R.drawable.fish;
+            case ("gluten"):
+                return R.drawable.gluten;
+            case ("halal"):
+                return R.drawable.halal;
+            case ("kosher"):
+                return R.drawable.kosher;
+            case ("milk"):
+                return R.drawable.milk;
+            case ("peanuts"):
+                return R.drawable.peanuts;
+            case ("pork"):
+                return R.drawable.pork;
+            case ("sesame"):
+                return R.drawable.sesame;
+            case ("shellfish"):
+                return R.drawable.shellfish;
+            case ("soybeans"):
+                return R.drawable.soybeans;
+            case ("tree_nuts"):
+                return R.drawable.tree_nuts;
+            case ("vegan"):
+                return R.drawable.vegan;
+            case ("vegetarian"):
+                return R.drawable.vegetarian;
+            case ("wheat"):
+                return R.drawable.wheat;
+            default:
+                return R.drawable.dining_hall;
+        }
     }
 
 }
