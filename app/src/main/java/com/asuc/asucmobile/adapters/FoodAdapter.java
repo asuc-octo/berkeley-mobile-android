@@ -59,14 +59,20 @@ public class FoodAdapter extends BaseAdapter {
 
         foodName.setText(foodItem.getName());
 
-        if (foodItem.getFoodTypes() != null && foodItem.getFoodTypes().size() > 0) {
+//        if (foodItem.getFoodTypes() != null && foodItem.getFoodTypes().size() > 0) {
 
             // make imageViews dynamically, switch on types
             final LinearLayout foodTypesLayout = (LinearLayout) convertView.findViewById(R.id.food_types_layout);
             foodTypesLayout.removeAllViews();
 
-            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.MATCH_PARENT);
-            for (String str : foodItem.getFoodTypes()) {
+        ArrayList<String> types = new ArrayList<>();
+        types.add("alcohol");
+        types.add("halal");
+        types.add("egg");
+        types.add("tree_nuts");
+
+            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+            for (String str : types) {
                 ImageView imageView = new ImageView(context);
                 imageView.setImageResource(selectFoodIcon(str));
                 imageView.setLayoutParams(params);
@@ -75,7 +81,7 @@ public class FoodAdapter extends BaseAdapter {
 
             }
 
-        }
+//        }
 
 
         final ListOfFavorites listOfFavorites = (ListOfFavorites) SerializableUtilities.loadSerializedObject(context);

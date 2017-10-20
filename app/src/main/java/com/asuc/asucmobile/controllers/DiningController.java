@@ -153,7 +153,7 @@ public class DiningController implements Controller {
                                 if (foodJSON.has("food_type")) {
                                     JSONArray foodTypesArray = foodJSON.getJSONArray("food_type");
                                     for (int k = 0; k < foodTypesArray.length(); k++) {
-                                        foodTypes.add(foodTypesArray.getString(k).toUpperCase());
+                                        foodTypes.add(foodTypesArray.getString(k).toLowerCase());
                                     }
                                 }
 
