@@ -74,8 +74,9 @@ public class OpenDiningHallActivity extends BaseActivity {
         }
         TabLayout tabStrip = (TabLayout) findViewById(R.id.pager_tab_strip);
         tabStrip.setupWithViewPager(viewPager);
-        if (tabStrip != null)
+        if (tabStrip != null) {
             tabStrip.setTabTextColors(getResources().getColor(R.color.off_white), getResources().getColor(R.color.off_white));
+        }
 
     }
 
@@ -103,12 +104,16 @@ public class OpenDiningHallActivity extends BaseActivity {
             DiningHall diningHall = MenuFragment.getDiningHall();
             ArrayList<FoodItem> arrayListBreakfast = diningHall.getBreakfastMenu();
             Collections.sort(arrayListBreakfast, CustomComparators.FacilityComparators.getFoodSortByAZ());
+
             ArrayList<FoodItem> arrayListLunch = diningHall.getLunchMenu();
             Collections.sort(arrayListLunch, CustomComparators.FacilityComparators.getFoodSortByAZ());
+
             ArrayList<FoodItem> arrayListDinner = diningHall.getDinnerMenu();
             Collections.sort(arrayListDinner, CustomComparators.FacilityComparators.getFoodSortByAZ());
+
             ArrayList<FoodItem> arrayListLateNight = diningHall.getLateNightMenu();
             Collections.sort(arrayListLateNight, CustomComparators.FacilityComparators.getFoodSortByAZ());
+
             MenuFragment.refreshLists();
             return true;
         }
@@ -116,12 +121,16 @@ public class OpenDiningHallActivity extends BaseActivity {
             DiningHall diningHall = MenuFragment.getDiningHall();
             ArrayList<FoodItem> arrayListBreakfast = diningHall.getBreakfastMenu();
             Collections.sort(arrayListBreakfast, CustomComparators.FacilityComparators.getFoodSortByFavorite(this));
+
             ArrayList<FoodItem> arrayListLunch = diningHall.getLunchMenu();
             Collections.sort(arrayListLunch, CustomComparators.FacilityComparators.getFoodSortByFavorite(this));
+
             ArrayList<FoodItem> arrayListDinner = diningHall.getDinnerMenu();
             Collections.sort(arrayListDinner, CustomComparators.FacilityComparators.getFoodSortByFavorite(this));
+
             ArrayList<FoodItem> arrayListLateNight = diningHall.getLateNightMenu();
             Collections.sort(arrayListLateNight, CustomComparators.FacilityComparators.getFoodSortByFavorite(this));
+
             MenuFragment.refreshLists();
             return true;
         }
@@ -153,10 +162,13 @@ public class OpenDiningHallActivity extends BaseActivity {
                         bundle.putString("whichMenu", "Lunch");
                         break;
                     case 2:
-                        bundle.putString("whichMenu", "Dinner");
+                        bundle.putString("whichMenu", "Limited");
                         break;
                     case 3:
-                        bundle.putString("whichMenu", "Late Night");
+                        bundle.putString("whichMenu", "Dinner");
+                        break;
+                    case 4:
+                        bundle.putString("whichMenu", "Limited");
                         break;
                     default:
                         return null;
@@ -183,7 +195,7 @@ public class OpenDiningHallActivity extends BaseActivity {
         @Override
         public int getCount() {
             if (Arrays.asList(LATE_NIGHT_LOCATIONS).contains(diningHall.getName())) {
-                return 4;
+                return 5;
             } else {
                 return 3;
             }
@@ -195,22 +207,24 @@ public class OpenDiningHallActivity extends BaseActivity {
             if (Arrays.asList(LATE_NIGHT_LOCATIONS).contains(diningHall.getName())) {
                 switch (position) {
                     case 0:
-                        return "     Breakfast     ";
+                        return "Breakfast";
                     case 1:
-                        return "     Lunch     ";
+                        return "Lunch";
                     case 2:
-                        return "     Dinner     ";
+                        return "Limited";
                     case 3:
-                        return "     Late Night     ";
+                        return "Dinner";
+                    case 4:
+                        return "Limited";
                 }
             } else {
                 switch (position) {
                     case 0:
-                        return "     Breakfast     ";
+                        return "Breakfast";
                     case 1:
-                        return "     Lunch     ";
+                        return "Lunch";
                     case 2:
-                        return "     Dinner     ";
+                        return "Dinner";
                 }
             }
             return null;
