@@ -79,7 +79,7 @@ public class MenuFragment extends Fragment {
                         closing = HOURS_FORMAT.format(diningHall.getLunchClosing());
                         isOpen = diningHall.isLunchOpen();
                         break;
-                    case "Late Night":
+                    case "Limited":
                         // A solution to get around the lack of late night hours--is it the right
                         // day of the week for late night?
                         if (diningHall.lateNightToday()) {
@@ -184,7 +184,6 @@ public class MenuFragment extends Fragment {
         }
 
     }
-
     public static void refreshLists() {
         if (MenuFragment.adapters == null) {
             return;
