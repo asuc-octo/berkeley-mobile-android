@@ -12,7 +12,7 @@
     </style>
 
     <style name="CustomTextStyle" parent="@android:style/TextAppearance.Widget.TabWidget">
-        <item name="android:textSize">10sp</item>
+        <item name="android:textSize">15sp</item>
         <item name="android:textAllCaps">true</item>
     </style>
 

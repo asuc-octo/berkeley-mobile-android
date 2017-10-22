@@ -2,7 +2,11 @@ package com.asuc.asucmobile.main;
 
 import android.app.Fragment;
 import android.app.FragmentManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Typeface;
 import android.os.Bundle;
+import android.provider.SyncStateContract;
 import android.support.design.widget.TabLayout;
 import android.support.v13.app.FragmentPagerAdapter;
 import android.support.v4.view.PagerTabStrip;
@@ -10,6 +14,10 @@ import android.support.v4.view.ViewPager;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.asuc.asucmobile.R;
 import com.asuc.asucmobile.controllers.DiningController;
@@ -19,6 +27,7 @@ import com.asuc.asucmobile.models.FoodItem;
 import com.asuc.asucmobile.utilities.CustomComparators;
 import com.asuc.asucmobile.utilities.SerializableUtilities;
 
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -37,6 +46,11 @@ public class OpenDiningHallActivity extends BaseActivity {
         exitIfNoData();
         setupToolbar(diningHall.getName(), true);
 
+        // Downloading Dining Hall image
+        ImageView headerImage = (ImageView) findViewById(R.id.headerImage);
+        new DownloadImageThread(headerImage, diningHall.getImageUrl()).start();
+
+
         // Load favorites from disk.
         ListOfFavorites listOfFavorites = (ListOfFavorites) SerializableUtilities.loadSerializedObject(this);
         if (listOfFavorites == null) {
@@ -48,15 +62,24 @@ public class OpenDiningHallActivity extends BaseActivity {
         // primary sections of the activity.
         SectionsPagerAdapter pagerAdapter = new SectionsPagerAdapter(getFragmentManager());
 
+
         // Set up the ViewPager with the sections adapter.
-        ViewPager viewPager = (ViewPager) findViewById(R.id.pager);
+        final ViewPager viewPager = (ViewPager) findViewById(R.id.pager);
         if (viewPager != null) {
+            viewPager.setAdapter(pagerAdapter);
+
+            TabLayout tabStrip = (TabLayout) findViewById(R.id.pager_tab_strip);
+            tabStrip.setupWithViewPager(viewPager);
+            tabStrip.setTabTextColors(getResources().getColor(R.color.off_white), getResources().getColor(R.color.off_white));
+
             if (Arrays.asList(LATE_NIGHT_LOCATIONS).contains(diningHall.getName())) {
-                viewPager.setOffscreenPageLimit(4);
+                viewPager.setOffscreenPageLimit(5);
+                tabStrip.setTabMode(TabLayout.MODE_SCROLLABLE);
             } else {
                 viewPager.setOffscreenPageLimit(3);
             }
-            viewPager.setAdapter(pagerAdapter);
+
+            // Finds the current tab
             Date currentTime = new Date();
             if (diningHall.isLateNightOpen() ||
                     (diningHall.getDinnerClosing() != null && currentTime.after(diningHall.getDinnerClosing()))) {
@@ -72,13 +95,11 @@ public class OpenDiningHallActivity extends BaseActivity {
                 viewPager.setCurrentItem(0);
             }
         }
-        TabLayout tabStrip = (TabLayout) findViewById(R.id.pager_tab_strip);
-        tabStrip.setupWithViewPager(viewPager);
-        if (tabStrip != null) {
-            tabStrip.setTabTextColors(getResources().getColor(R.color.off_white), getResources().getColor(R.color.off_white));
-        }
+
 
     }
+
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -248,4 +269,38 @@ public class OpenDiningHallActivity extends BaseActivity {
         }
     }
 
+    private class DownloadImageThread extends Thread {
+
+        ImageView headerView;
+        String url;
+
+        private DownloadImageThread(ImageView headerView, String url) {
+            this.headerView = headerView;
+            this.url = url;
+        }
+
+        @Override
+        public void run() {
+            try {
+                InputStream input = new java.net.URL(url).openStream();
+                final Bitmap bitmap = BitmapFactory.decodeStream(input);
+
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        headerView.setImageBitmap(bitmap);
+                    }
+                });
+            } catch (Exception e) {
+
+            }
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    headerView.setVisibility(View.VISIBLE);
+                }
+            });
+        }
+
+    }
 }

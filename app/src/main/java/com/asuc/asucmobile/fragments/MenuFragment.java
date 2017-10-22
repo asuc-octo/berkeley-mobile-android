@@ -49,13 +49,9 @@ public class MenuFragment extends Fragment {
         // Get references to views.
         ListView foodMenu = (ListView) v.findViewById(R.id.food_menu);
         TextView emptyListView = (TextView) v.findViewById(R.id.empty_list);
-        View header =
-                getActivity().getLayoutInflater().inflate(R.layout.header_image, foodMenu, false);
-        ImageView headerImage = (ImageView) header.findViewById(R.id.image);
+        View header = getActivity().getLayoutInflater().inflate(R.layout.header_image, foodMenu, false);
         TextView headerHours = (TextView) header.findViewById(R.id.header_text);
 
-        // Add the header to the list.
-        foodMenu.addHeaderView(header);
 
         // Populate menu views.
         String whichMenu = getArguments().getString("whichMenu");
@@ -80,8 +76,6 @@ public class MenuFragment extends Fragment {
                         isOpen = diningHall.isLunchOpen();
                         break;
                     case "Limited":
-                        // A solution to get around the lack of late night hours--is it the right
-                        // day of the week for late night?
                         if (diningHall.lateNightToday()) {
                             foodItems = diningHall.getLateNightMenu();
                         } else {
@@ -143,47 +137,12 @@ public class MenuFragment extends Fragment {
             emptyListView.setVisibility(View.VISIBLE);
         }
 
-        // Download and set header image.
-        new DownloadImageThread(headerImage, diningHall.getImageUrl()).start();
+
+
         return v;
     }
 
-    private class DownloadImageThread extends Thread {
 
-        ImageView headerView;
-        String url;
-
-        private DownloadImageThread(ImageView headerView, String url) {
-            this.headerView = headerView;
-            this.url = url;
-        }
-
-        @Override
-        public void run() {
-            try {
-                InputStream input = new java.net.URL(url).openStream();
-                final Bitmap bitmap = BitmapFactory.decodeStream(input);
-
-                getActivity().runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        headerView.setImageBitmap(bitmap);
-                    }
-                });
-            } catch (Exception e) {
-                if (getActivity() == null) {
-                    return;
-                }
-            }
-            getActivity().runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    headerView.setVisibility(View.VISIBLE);
-                }
-            });
-        }
-
-    }
     public static void refreshLists() {
         if (MenuFragment.adapters == null) {
             return;
