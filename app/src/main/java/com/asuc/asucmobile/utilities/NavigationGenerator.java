@@ -21,19 +21,29 @@ import com.asuc.asucmobile.fragments.FoodFragment;
 import com.asuc.asucmobile.fragments.GymFragment;
 import com.asuc.asucmobile.fragments.LibraryFragment;
 import com.asuc.asucmobile.fragments.ResourceFragment;
-import com.asuc.asucmobile.fragments.StartStopSelectFragment;
+//import com.asuc.asucmobile.fragments.StartStopSelectFragment;
 import com.asuc.asucmobile.main.MainActivity;
+import com.asuc.asucmobile.fragments.MapsFragment;
 import com.asuc.asucmobile.models.Category;
+import com.google.android.gms.maps.MapFragment;
 
 public class NavigationGenerator {
 
-    private static final Category[] SECTIONS = new Category[] {
+    private static final Category[] SECTIONS = new Category[]{
             new Category(R.drawable.beartransit, "BearTransit") {
+
                 @Override
                 public void loadFragment(FragmentManager fragmentManager) {
-                    fragmentManager.beginTransaction()
-                            .replace(R.id.content_frame, new StartStopSelectFragment())
-                            .commit();
+                    if (MapsFragment.getInstance() == null) {
+                        fragmentManager.beginTransaction()
+                                .replace(R.id.content_frame, new MapsFragment())
+                                .commit();
+                    }
+                    else{
+                        fragmentManager.beginTransaction()
+                                .replace(R.id.content_frame, MapsFragment.getInstance())
+                                .commit();
+                    }
                 }
             },
             new Category(R.drawable.dining_hall, "Food") {
