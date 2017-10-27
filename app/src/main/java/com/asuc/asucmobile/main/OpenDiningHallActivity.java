@@ -36,8 +36,8 @@ import java.util.Date;
 public class OpenDiningHallActivity extends BaseActivity {
 
     private static final String[] LATE_NIGHT_LOCATIONS = {"Crossroads","Foothill"};
-
     private DiningHall diningHall;
+    public static OpenDiningHallActivity self_reference;
 
     @Override
     @SuppressWarnings("all")
@@ -45,6 +45,7 @@ public class OpenDiningHallActivity extends BaseActivity {
         super.onCreate(savedInstanceState, R.layout.activity_open_dining_hall);
         exitIfNoData();
         setupToolbar(diningHall.getName(), true);
+        self_reference = OpenDiningHallActivity.this;
 
         // Downloading Dining Hall image
         ImageView headerImage = (ImageView) findViewById(R.id.headerImage);
@@ -81,13 +82,16 @@ public class OpenDiningHallActivity extends BaseActivity {
 
             // Finds the current tab
             Date currentTime = new Date();
-            if (diningHall.isLateNightOpen() ||
+            if (diningHall.isLimitedDinnerOpen() ||
                     (diningHall.getDinnerClosing() != null && currentTime.after(diningHall.getDinnerClosing()))) {
                 viewPager.setCurrentItem(3);
             } else if (diningHall.isDinnerOpen() ||
                     (diningHall.getLunchClosing() != null && currentTime.after(diningHall.getLunchClosing())) ||
                     (diningHall.getDinnerClosing() != null && currentTime.after(diningHall.getDinnerClosing()))) {
                 viewPager.setCurrentItem(2);
+            } else if (diningHall.isLimitedLunchOpen() ||
+                    (diningHall.getLunchClosing() != null && currentTime.after(diningHall.getLunchClosing()))) {
+                viewPager.setCurrentItem(1);
             } else if (diningHall.isLunchOpen() ||
                     (diningHall.getBreakfastClosing() != null && currentTime.after(diningHall.getBreakfastClosing()))) {
                 viewPager.setCurrentItem(1);
@@ -116,7 +120,7 @@ public class OpenDiningHallActivity extends BaseActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
+        /*int id = item.getItemId();
         if (id == android.R.id.home) {
             finish();
             return true;
@@ -154,7 +158,7 @@ public class OpenDiningHallActivity extends BaseActivity {
 
             MenuFragment.refreshLists();
             return true;
-        }
+        }*/
         return super.onOptionsItemSelected(item);
     }
 
@@ -183,13 +187,13 @@ public class OpenDiningHallActivity extends BaseActivity {
                         bundle.putString("whichMenu", "Lunch");
                         break;
                     case 2:
-                        bundle.putString("whichMenu", "Limited");
+                        bundle.putString("whichMenu", "LimitedL");
                         break;
                     case 3:
                         bundle.putString("whichMenu", "Dinner");
                         break;
                     case 4:
-                        bundle.putString("whichMenu", "Limited");
+                        bundle.putString("whichMenu", "LimitedD");
                         break;
                     default:
                         return null;
@@ -209,6 +213,7 @@ public class OpenDiningHallActivity extends BaseActivity {
                         return null;
                 }
             }
+
             menuFragment.setArguments(bundle);
             return menuFragment;
         }

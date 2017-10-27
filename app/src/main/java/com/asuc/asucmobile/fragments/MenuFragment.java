@@ -1,8 +1,6 @@
 package com.asuc.asucmobile.fragments;
 
 import android.app.Fragment;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.text.SpannableString;
@@ -10,7 +8,6 @@ import android.text.style.ForegroundColorSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -19,10 +16,11 @@ import com.asuc.asucmobile.adapters.FoodAdapter;
 import com.asuc.asucmobile.main.OpenDiningHallActivity;
 import com.asuc.asucmobile.models.DiningHall;
 import com.asuc.asucmobile.models.FoodItem;
+import com.asuc.asucmobile.utilities.CustomComparators;
 
-import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Locale;
 
 public class MenuFragment extends Fragment {
@@ -34,6 +32,7 @@ public class MenuFragment extends Fragment {
 
     private static ArrayList<FoodAdapter> adapters = new ArrayList<>();
     private static DiningHall diningHall;
+    private static ArrayList<FoodItem> foodItems;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -58,13 +57,13 @@ public class MenuFragment extends Fragment {
         String opening;
         String closing;
         try {
-            ArrayList<FoodItem> foodItems;
             boolean isOpen;
             MenuFragment.diningHall = diningHall;
             if (whichMenu != null) {
                 switch (whichMenu) {
                     case "Breakfast":
                         foodItems = diningHall.getBreakfastMenu();
+
                         opening = HOURS_FORMAT.format(diningHall.getBreakfastOpening());
                         closing = HOURS_FORMAT.format(diningHall.getBreakfastClosing());
                         isOpen = diningHall.isBreakfastOpen();
@@ -75,23 +74,41 @@ public class MenuFragment extends Fragment {
                         closing = HOURS_FORMAT.format(diningHall.getLunchClosing());
                         isOpen = diningHall.isLunchOpen();
                         break;
-                    case "Limited":
-                        if (diningHall.lateNightToday()) {
-                            foodItems = diningHall.getLateNightMenu();
+                    case "LimitedL":
+                        if (diningHall.limitedLunchToday()) {
+                            foodItems = diningHall.getLimitedLunchMenu();
                         } else {
                             foodItems = null;
                         }
-                        if (diningHall.getLateNightOpening() != null) {
-                            opening = HOURS_FORMAT.format(diningHall.getLateNightOpening());
+                        if (diningHall.getLimitedLunchOpen() != null) {
+                            opening = HOURS_FORMAT.format(diningHall.getLimitedLunchOpen());
                         } else {
                             opening = LATE_NIGHT_OPEN;
                         }
-                        if (diningHall.getLateNightClosing() != null) {
-                            closing = HOURS_FORMAT.format(diningHall.getLateNightClosing());
+                        if (diningHall.getLimitedLunchClosing() != null) {
+                            closing = HOURS_FORMAT.format(diningHall.getLimitedLunchClosing());
                         } else {
                             closing = LATE_NIGHT_CLOSE;
                         }
-                        isOpen = diningHall.isLateNightOpen();
+                        isOpen = diningHall.isLimitedLunchOpen();
+                        break;
+                    case "LimitedD":
+                        if (diningHall.limitedDinnerToday()) {
+                            foodItems = diningHall.getLimitedDinnerMenu();
+                        } else {
+                            foodItems = null;
+                        }
+                        if (diningHall.getLimitedDinnerOpen() != null) {
+                            opening = HOURS_FORMAT.format(diningHall.getLimitedDinnerOpen());
+                        } else {
+                            opening = LATE_NIGHT_OPEN;
+                        }
+                        if (diningHall.getLimitedDinnerClosing() != null) {
+                            closing = HOURS_FORMAT.format(diningHall.getLimitedDinnerClosing());
+                        } else {
+                            closing = LATE_NIGHT_CLOSE;
+                        }
+                        isOpen = diningHall.isLimitedDinnerOpen();
                         break;
                     default:
                         foodItems = diningHall.getDinnerMenu();
@@ -100,7 +117,10 @@ public class MenuFragment extends Fragment {
                         isOpen = diningHall.isDinnerOpen();
                 }
                 if (foodItems == null || foodItems.size() == 0) {
-                    emptyListView.setText(String.format("No %s Today!", whichMenu));
+                    if(whichMenu.equals("LimitedL") || whichMenu.equals("LimitedD"))
+                        emptyListView.setText(String.format("No %s Today!", "Limited"));
+                    else
+                        emptyListView.setText(String.format("No %s Today!", whichMenu));
                     foodMenu.setVisibility(View.GONE);
                     emptyListView.setVisibility(View.VISIBLE);
                 } else {
