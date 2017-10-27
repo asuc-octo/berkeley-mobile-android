@@ -75,12 +75,39 @@ public class JSONUtilities {
                 input.close();
                 controller.setResources(context, jsonArray);
             } catch (Exception e) {
-                Log.e(TAG, e.getMessage());
-                controller.setResources(context, null);
+                //VERY HACKY WAY TO GET BUSINFO CONTROLLER INTO JSON, TEMPORARY! - ALEX
+                try{
+                    InputStream input = (new URL(url)).openStream();
+                    BufferedReader buffer = new BufferedReader(new InputStreamReader(input));
+                    String jsonText = getUrlBody(buffer);
+                    JSONArray x = new JSONArray();
+                    x.put(jsonText);
+                    controller.setResources(context, x);
+
+                }catch (Exception e1){
+                    Log.e(TAG, e1.getMessage());
+                    controller.setResources(context, null);
+                }
             }
             return null;
         }
 
+    }
+
+    public static String readJSONFromAsset(Context context, String fileName) {
+        String json;
+        try {
+            InputStream is = context.getAssets().open(fileName);
+            int size = is.available();
+            byte[] buffer = new byte[size];
+            is.read(buffer);
+            is.close();
+            json = new String(buffer, "UTF-8");
+        } catch (IOException ex) {
+            ex.printStackTrace();
+            return null;
+        }
+        return json;
     }
 
  }

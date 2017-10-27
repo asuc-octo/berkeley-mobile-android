@@ -20,19 +20,18 @@
         <android.support.v4.view.ViewPager
             xmlns:android="http://schemas.android.com/apk/res/android"
             xmlns:tools="http://schemas.android.com/tools"
-            android:elevation="10dp"
             android:id="@+id/pager"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             tools:context="com.asuc.asucmobile.main.OpenDiningHallActivity">
 
-            <android.support.v4.view.PagerTabStrip
+            <android.support.design.widget.TabLayout
                 android:id="@+id/pager_tab_strip"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="top"
-                android:paddingBottom="4dp"
-                android:background="@color/hotline_blue"   />
+                android:background="@color/hotline_blue"
+                android:paddingBottom="4dp" />
         </android.support.v4.view.ViewPager>
 
     </LinearLayout>
