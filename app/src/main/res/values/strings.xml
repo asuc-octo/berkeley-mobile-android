@@ -42,6 +42,9 @@
     <string name="live_bus_map">Live Bus Map</string>
     <string name="retrieving_location">Retreiving location</string>
     <string name="door_dash">Food Delivery</string>
+    <string name="call">Call</string>
+    <string name="favorite">Favorite</string>
+    <string name="open_map">Open Map</string>
 
     <string name="request_caseworker">Request a Caseworker</string>
 

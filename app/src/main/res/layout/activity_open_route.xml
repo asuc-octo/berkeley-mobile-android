@@ -40,12 +40,6 @@
             android:layout_height="160dp"
             android:elevation="4dp">
 
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:src="@drawable/header_background"
-                android:scaleType="centerCrop"
-                android:contentDescription="@string/content_desc" />
 
             <TextView
                 android:layout_width="match_parent"

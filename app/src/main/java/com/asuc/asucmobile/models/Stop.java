@@ -7,12 +7,11 @@ import com.google.android.gms.maps.model.LatLng;
 import java.text.DecimalFormat;
 import java.util.Date;
 
-/*
- * The Stop class can signify either a bus stop or a transfer point. Transfer points lack a location
- * and have an extra field for their previous and next stop times.
+/**
+ * Created by alexthomas on 10/10/17.
  */
-public class Stop {
 
+public class Stop implements java.io.Serializable {
     private final static DecimalFormat DECIMAL_FORMAT = new DecimalFormat("#.##");
 
     private int id;
@@ -22,16 +21,21 @@ public class Stop {
     private Date startTime;
     private Date endTime;
     private String distance = "";
+    private double latitude;
+    private double longitude;
 
-    public Stop(int id, String name, LatLng location) {
+
+    public Stop(int id, String name, double lat, double lon) {
         this.id = id;
         this.name = name;
         this.abbreviatedName = name.split(":|;")[0];
-        this.location = location;
+        this.latitude = lat;
+        this.longitude = lon;
     }
 
     public Stop(String name, Date startTime, Date endTime) {
         this.name = name;
+        this.abbreviatedName = name.split(":|;")[0];
         this.startTime = startTime;
         this.endTime = endTime;
     }
@@ -44,6 +48,14 @@ public class Stop {
         return name;
     }
 
+    public double getLatitude() {
+        return latitude;
+    }
+
+    public double getLongitude() {
+        return longitude;
+    }
+
     public String getAbbreviatedName() {
         return abbreviatedName;
     }
@@ -53,7 +65,7 @@ public class Stop {
     }
 
     public boolean isTransfer() {
-        return location == null;
+        return this.latitude == 0 && this.longitude == 0;
     }
 
     public Date getStartTime() {
@@ -68,10 +80,20 @@ public class Stop {
         return distance;
     }
 
+    public void setID(int id){
+        this.id = id;
+    }
+
     public void setDistance(double lat, double lng) {
         float[] results = new float[1];
         Location.distanceBetween(lat, lng, location.latitude, location.longitude, results);
         distance = DECIMAL_FORMAT.format(results[0] * 0.000621371192);
+    }
+
+    @Override
+    public boolean equals(Object object) {
+        return this.getId() == ((Stop) object).getId();
+
     }
 
 }
