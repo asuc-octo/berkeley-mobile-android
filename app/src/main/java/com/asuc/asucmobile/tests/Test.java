@@ -47,7 +47,7 @@ public class Test {
         }
 
         // Name Abbreviation Test
-        Stop stop1 = new Stop(0, "Moffitt Library; Memorial Glade Side", new LatLng(0, 0));
+     /*   Stop stop1 = new Stop(0, "Moffitt Library; Memorial Glade Side", new LatLng(0, 0));
         Stop stop2 = new Stop(0, "Li Ka Shing: West Crescent Side", new LatLng(0, 0));
         Stop stop3 = new Stop(0, "ASUC: Bancroft Way; Telegraph Avenue", new LatLng(0, 0));
         Stop stop4 = new Stop(0, "ASUC; Bancroft Way: Telegraph Avenue", new LatLng(0, 0));
@@ -68,7 +68,7 @@ public class Test {
         if (!stop4.getAbbreviatedName().equals("ASUC")) {
             System.out.println("EXPECTED \"ASUC\", but got: " + stop4.getAbbreviatedName());
         }
-
+*/
         System.out.println("Tests completed. Check above for any errors.");
     }
 
