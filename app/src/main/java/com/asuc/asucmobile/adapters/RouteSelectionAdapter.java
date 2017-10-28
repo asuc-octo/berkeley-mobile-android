@@ -1,19 +1,27 @@
 package com.asuc.asucmobile.adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.asuc.asucmobile.R;
-import com.asuc.asucmobile.models.Route;
+import com.asuc.asucmobile.models.Journey;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
+
+import static java.security.AccessController.getContext;
+
+/**
+ * Created by alexthomas on 10/12/17.
+ */
 
 public class RouteSelectionAdapter extends BaseAdapter {
 
@@ -21,9 +29,9 @@ public class RouteSelectionAdapter extends BaseAdapter {
             new SimpleDateFormat("h:mm a", Locale.ENGLISH);
 
     private Context context;
-    private ArrayList<Route> routes;
+    private ArrayList<Journey> routes;
 
-    public RouteSelectionAdapter(Context context, ArrayList<Route> routes) {
+    public RouteSelectionAdapter(Context context, ArrayList<Journey> routes) {
         this.context = context;
         this.routes = routes;
     }
@@ -34,7 +42,7 @@ public class RouteSelectionAdapter extends BaseAdapter {
     }
 
     @Override
-    public Route getItem(int i) {
+    public Journey getItem(int i) {
         return routes.get(i);
     }
 
@@ -44,35 +52,30 @@ public class RouteSelectionAdapter extends BaseAdapter {
     }
 
     public View getView(int i, View convertView, ViewGroup parent) {
-        Route route = getItem(i);
-        Date startTime = route.getTrips().get(0).getStartTime();
-        Date endTime = route.getTrips().get(route.getTrips().size() - 1).getEndTime();
-        long timeDiff = endTime.getTime() - startTime.getTime();
+        final Journey route = getItem(i);
+        Date startTime = route.getTrips().get(0).getArrivalTime();
+        Date endTime = route.getTrips().get(route.getTrips().size() - 1).getDepartureTime();
+        long timeDiff = startTime.getTime() - endTime.getTime();
         int duration = (int) timeDiff / (60 * 1000);
 
         if (convertView == null) {
             convertView = LayoutInflater.from(context).inflate(R.layout.route_selection_row, parent, false);
         }
 
-        TextView tripBusTime = (TextView) convertView.findViewById(R.id.busTime);
-        TextView tripDuration = (TextView) convertView.findViewById(R.id.duration);
-        View tripLine2 = convertView.findViewById(R.id.line2);
 
-        tripBusTime.setText(TIME_FORMAT.format(startTime));
+        //TextView tripBusTime = (TextView) convertView.findViewById(R.id.busTime);
+        TextView tripDuration = (TextView) convertView.findViewById(R.id.duration);
+        //View tripLine2 = convertView.findViewById(R.id.line2);
+
+        //tripBusTime.setText(TIME_FORMAT.format(startTime));
         tripDuration.setText(String.format("%d min", duration));
 
-        if (route.getTrips().size() > 1) {
-            tripLine2.setBackgroundResource(R.color.two_chainz_gold);
-            TextView tripLineName1 = (TextView) convertView.findViewById(R.id.lineName1);
-            TextView tripLineName2 = (TextView) convertView.findViewById(R.id.lineName2);
-            tripLineName1.setText(route.getTrips().get(0).getLineName());
-            tripLineName2.setText(route.getTrips().get(route.getTrips().size() - 1).getLineName());
-        } else {
-            TextView tripLineName = (TextView) convertView.findViewById(R.id.lineName);
-            tripLineName.setText(route.getTrips().get(0).getLineName());
-        }
+        TextView startingStopName = (TextView) convertView.findViewById(R.id.startingStop);
+        TextView tripLineName = (TextView) convertView.findViewById(R.id.lineName);
+        tripLineName.setText(route.getTrips().get(0).getLineName());
+        startingStopName.setText(route.getTrips().get(0).getStops().get(0).getName());
+
 
         return convertView;
     }
-
 }

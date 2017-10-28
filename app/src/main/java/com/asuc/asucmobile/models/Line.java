@@ -2,16 +2,20 @@ package com.asuc.asucmobile.models;
 
 import java.util.ArrayList;
 
-public class Line {
+/**
+ * Created by alexthomas on 10/10/17.
+ */
+
+public class Line implements java.io.Serializable {
 
     private int id;
     private String name;
-    private ArrayList<Stop> stops;
+    private ArrayList<Stop> stop_list;
 
-    public Line(int id, String name, ArrayList<Stop> stops) {
+    public Line(int id, String name, ArrayList<Stop> stop_list) {
         this.id = id;
         this.name = name;
-        this.stops = stops;
+        this.stop_list = stop_list;
     }
 
     public int getId() {
@@ -23,7 +27,7 @@ public class Line {
     }
 
     public ArrayList<Stop> getStops() {
-        return stops;
+        return stop_list;
     }
 
 }
