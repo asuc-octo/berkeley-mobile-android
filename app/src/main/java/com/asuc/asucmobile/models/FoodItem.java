@@ -12,7 +12,7 @@ public class FoodItem implements Comparable<FoodItem> {
     private String calories;
     private double cost;
 
-    public FoodItem(String id, String name, String foodType, String calories, double cost) {
+    public FoodItem(String id, String name, String calories, double cost, String foodType) {
         this.id = id;
         this.name = name;
         this.foodType = foodType;
@@ -28,7 +28,7 @@ public class FoodItem implements Comparable<FoodItem> {
         return name;
     }
 
-    public String getFoodType() {
+    public String getFoodTypes() {
         return foodType;
     }
 

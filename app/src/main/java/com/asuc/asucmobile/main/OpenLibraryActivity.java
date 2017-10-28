@@ -185,12 +185,6 @@ public class OpenLibraryActivity extends BaseActivity {
     }
 
     private void openMap() {
-        if(library == null) {
-            Toast.makeText(this, "Unable to this library's details, please try again",
-                    Toast.LENGTH_SHORT).show();
-            return;
-        }
-
         double lat = library.getCoordinates().latitude;
         double lng = library.getCoordinates().longitude;
         String uri = String.format(
