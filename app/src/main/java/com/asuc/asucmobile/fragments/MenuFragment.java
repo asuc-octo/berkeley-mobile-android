@@ -117,8 +117,10 @@ public class MenuFragment extends Fragment {
                         isOpen = diningHall.isDinnerOpen();
                 }
                 if (foodItems == null || foodItems.size() == 0) {
-                    if(whichMenu.equals("LimitedL") || whichMenu.equals("LimitedD"))
-                        emptyListView.setText(String.format("No %s Today!", "Limited"));
+                    if(whichMenu.equals("LimitedL"))
+                        emptyListView.setText(String.format("No %s Today!", "Continuous Service"));
+                    else if(whichMenu.equals("LimitedD"))
+                        emptyListView.setText(String.format("No %s Tonight!", "Continuous Service"));
                     else
                         emptyListView.setText(String.format("No %s Today!", whichMenu));
                     foodMenu.setVisibility(View.GONE);
