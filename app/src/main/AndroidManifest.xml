@@ -88,25 +88,27 @@
             android:label="@string/title_activity_open_dining_hall"
             android:screenOrientation="portrait" />
         <activity
+            android:name=".main.OpenCafeActivity"
+            android:label="@string/title_activity_open_cafe"
+            android:screenOrientation="portrait" />
+        <activity
             android:name=".main.OpenResourceActivity"
             android:label="@string/title_activity_open_resource"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".main.OpenRouteActivity"
-            android:label="@string/title_activity_open_route"
+            android:name=".main.PopUpActivity"
+            android:label="@string/title_activity_open_resource"
+            android:theme="@style/AppTheme.CustomTheme"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".main.OpenRouteSelectionActivity"
-            android:label="@string/title_activity_open_trip_selection"
+            android:name=".main.RouteSelected"
+            android:label="@string/title_activity_open_resource"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".main.StopActivity"
-            android:label="@string/title_activity_stop"
+            android:name=".main.RouteSelectActivity"
+            android:label="@string/title_activity_open_resource"
             android:screenOrientation="portrait" />
-        <activity
-            android:name=".main.LiveBusActivity"
-            android:label="@string/live_bus_map"
-            android:screenOrientation="portrait" />
+
 
         <receiver
             android:name="com.google.android.gms.gcm.GcmReceiver"

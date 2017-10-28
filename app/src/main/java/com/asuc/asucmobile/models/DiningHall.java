@@ -3,7 +3,7 @@ package com.asuc.asucmobile.models;
 import java.util.ArrayList;
 import java.util.Date;
 
-public class DiningHall {
+public class DiningHall extends FoodPlace{
 
     private String id;
     private String name;
@@ -81,11 +81,11 @@ public class DiningHall {
     public String getImageUrl() {
         return imageUrl;
     }
-    
+
     public Date getBreakfastOpening() {
         return breakfastOpen;
     }
-    
+
     public Date getBreakfastClosing() {
         return breakfastClose;
     }

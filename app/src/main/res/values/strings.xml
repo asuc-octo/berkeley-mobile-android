@@ -9,6 +9,7 @@
     <string name="title_activity_open_gym">Gym</string>
     <string name="title_activity_dining_hall">Dining Halls</string>
     <string name="title_activity_open_dining_hall">Dining Hall</string>
+    <string name="title_activity_open_cafe">Cafe</string>
     <string name="title_activity_start_stop_select">BearTransit</string>
     <string name="title_activity_list_start_stop">ListStartStopActivity</string>
     <string name="title_activity_open_resource">Resource</string>
@@ -41,6 +42,9 @@
     <string name="live_bus_map">Live Bus Map</string>
     <string name="retrieving_location">Retreiving location</string>
     <string name="door_dash">Food Delivery</string>
+    <string name="call">Call</string>
+    <string name="favorite">Favorite</string>
+    <string name="open_map">Open Map</string>
 
     <string name="request_caseworker">Request a Caseworker</string>
 

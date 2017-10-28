@@ -80,10 +80,11 @@ public class DiningController implements Controller {
                             breakfastMenu.add(new FoodItem(
                                     foodJSON.getString("id"),
                                     foodJSON.getString("name"),
-                                    foodJSON.getString("food_type"),
                                     foodJSON.getString("calories"),
-                                    foodJSON.optDouble("cost")
-                            ));
+                                    foodJSON.optDouble("cost"),
+                                    foodJSON.getString("food_type")
+
+                                    ));
                         }
                         Collections.sort(breakfastMenu, CustomComparators.FacilityComparators.getFoodSortByFavorite(context));
                         JSONArray lunchJSON = diningHall.getJSONArray("lunch_menu");
@@ -93,9 +94,9 @@ public class DiningController implements Controller {
                             lunchMenu.add(new FoodItem(
                                     foodJSON.getString("id"),
                                     foodJSON.getString("name"),
-                                    foodJSON.getString("food_type"),
                                     foodJSON.getString("calories"),
-                                    foodJSON.optDouble("cost")
+                                    foodJSON.optDouble("cost"),
+                                    foodJSON.getString("food_type")
                             ));
                         }
                         Collections.sort(lunchMenu, CustomComparators.FacilityComparators.getFoodSortByFavorite(context));
@@ -106,9 +107,9 @@ public class DiningController implements Controller {
                             dinnerMenu.add(new FoodItem(
                                     foodJSON.getString("id"),
                                     foodJSON.getString("name"),
-                                    foodJSON.getString("food_type"),
                                     foodJSON.getString("calories"),
-                                    foodJSON.optDouble("cost")
+                                    foodJSON.optDouble("cost"),
+                                    foodJSON.getString("food_type")
                             ));
                         }
                         Collections.sort(dinnerMenu, CustomComparators.FacilityComparators.getFoodSortByFavorite(context));
@@ -130,9 +131,9 @@ public class DiningController implements Controller {
                                     limitedLunchMenu.add(new FoodItem(
                                             foodJSON.getString("id"),
                                             foodJSON.getString("name"),
-                                            foodJSON.getString("food_type"),
                                             foodJSON.getString("calories"),
-                                            foodJSON.optDouble("cost")
+                                            foodJSON.optDouble("cost"),
+                                            foodJSON.getString("food_type")
                                     ));
                                 }
                             }
@@ -145,9 +146,9 @@ public class DiningController implements Controller {
                                     limitedDinnerMenu.add(new FoodItem(
                                             foodJSON.getString("id"),
                                             foodJSON.getString("name"),
-                                            foodJSON.getString("food_type"),
                                             foodJSON.getString("calories"),
-                                            foodJSON.optDouble("cost")
+                                            foodJSON.optDouble("cost"),
+                                            foodJSON.getString("food_type")
                                     ));
                                 }
                             }
