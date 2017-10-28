@@ -109,7 +109,7 @@ public class OpenDiningHallActivity extends BaseActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.dining, menu);
-        return true;
+        return false;
     }
 
     @Override
@@ -118,49 +118,6 @@ public class OpenDiningHallActivity extends BaseActivity {
         exitIfNoData();
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        /*int id = item.getItemId();
-        if (id == android.R.id.home) {
-            finish();
-            return true;
-        }
-        if (id == R.id.sortAZ) {
-            DiningHall diningHall = MenuFragment.getDiningHall();
-            ArrayList<FoodItem> arrayListBreakfast = diningHall.getBreakfastMenu();
-            Collections.sort(arrayListBreakfast, CustomComparators.FacilityComparators.getFoodSortByAZ());
-
-            ArrayList<FoodItem> arrayListLunch = diningHall.getLunchMenu();
-            Collections.sort(arrayListLunch, CustomComparators.FacilityComparators.getFoodSortByAZ());
-
-            ArrayList<FoodItem> arrayListDinner = diningHall.getDinnerMenu();
-            Collections.sort(arrayListDinner, CustomComparators.FacilityComparators.getFoodSortByAZ());
-
-            ArrayList<FoodItem> arrayListLateNight = diningHall.getLateNightMenu();
-            Collections.sort(arrayListLateNight, CustomComparators.FacilityComparators.getFoodSortByAZ());
-
-            MenuFragment.refreshLists();
-            return true;
-        }
-        if (id == R.id.sortFavorites) {
-            DiningHall diningHall = MenuFragment.getDiningHall();
-            ArrayList<FoodItem> arrayListBreakfast = diningHall.getBreakfastMenu();
-            Collections.sort(arrayListBreakfast, CustomComparators.FacilityComparators.getFoodSortByFavorite(this));
-
-            ArrayList<FoodItem> arrayListLunch = diningHall.getLunchMenu();
-            Collections.sort(arrayListLunch, CustomComparators.FacilityComparators.getFoodSortByFavorite(this));
-
-            ArrayList<FoodItem> arrayListDinner = diningHall.getDinnerMenu();
-            Collections.sort(arrayListDinner, CustomComparators.FacilityComparators.getFoodSortByFavorite(this));
-
-            ArrayList<FoodItem> arrayListLateNight = diningHall.getLateNightMenu();
-            Collections.sort(arrayListLateNight, CustomComparators.FacilityComparators.getFoodSortByFavorite(this));
-
-            MenuFragment.refreshLists();
-            return true;
-        }*/
-        return super.onOptionsItemSelected(item);
-    }
 
     /**
      * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
