@@ -104,7 +104,8 @@ public class CafeController implements Controller{
                                     foodJSON.getString("name"),
                                     foodJSON.getString("calories"),
                                     foodJSON.optDouble("cost"),
-                                    foodTypes
+                                    foodTypes.toString()
+
                             ));
                         }
                         Collections.sort(breakfastMenu, CustomComparators.FacilityComparators.getFoodSortByFavorite(context));
@@ -128,7 +129,7 @@ public class CafeController implements Controller{
                                     foodJSON.getString("name"),
                                     foodJSON.getString("calories"),
                                     foodJSON.optDouble("cost"),
-                                    foodTypes
+                                    foodTypes.toString()
                             ));
                         }
                         Collections.sort(lunchDinnerMenu, CustomComparators.FacilityComparators.getFoodSortByFavorite(context));
