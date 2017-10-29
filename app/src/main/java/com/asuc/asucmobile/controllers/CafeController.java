@@ -105,6 +105,7 @@ public class CafeController implements Controller{
                                     foodJSON.getString("calories"),
                                     foodJSON.optDouble("cost"),
                                     foodTypes.toString()
+
                             ));
                         }
                         Collections.sort(breakfastMenu, CustomComparators.FacilityComparators.getFoodSortByFavorite(context));
