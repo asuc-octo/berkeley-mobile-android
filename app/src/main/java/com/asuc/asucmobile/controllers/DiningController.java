@@ -19,6 +19,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
+import java.util.ArrayList;
 import java.util.Locale;
 import java.util.TimeZone;
 
@@ -77,20 +78,34 @@ public class DiningController implements Controller {
                         ArrayList<FoodItem> breakfastMenu = new ArrayList<>();
                         for (int j = 0; j < breakfastJSON.length(); j++) {
                             JSONObject foodJSON = breakfastJSON.getJSONObject(j);
+                            // get the food types
+                            ArrayList<String> foodTypes = new ArrayList<>();
+                            if (foodJSON.has("food_type")) {
+                                JSONArray foodTypesArray = foodJSON.getJSONArray("food_type");
+                                for (int k = 0; k < foodTypesArray.length(); k++) {
+                                    foodTypes.add(foodTypesArray.getString(k).toUpperCase());
+                                }
+                            }
                             breakfastMenu.add(new FoodItem(
                                     foodJSON.getString("id"),
                                     foodJSON.getString("name"),
                                     foodJSON.getString("calories"),
                                     foodJSON.optDouble("cost"),
                                     foodJSON.getString("food_type")
-
-                                    ));
                         }
                         Collections.sort(breakfastMenu, CustomComparators.FacilityComparators.getFoodSortByFavorite(context));
                         JSONArray lunchJSON = diningHall.getJSONArray("lunch_menu");
                         ArrayList<FoodItem> lunchMenu = new ArrayList<>();
                         for (int j = 0; j < lunchJSON.length(); j++) {
                             JSONObject foodJSON = lunchJSON.getJSONObject(j);
+                            // get the food types
+                            ArrayList<String> foodTypes = new ArrayList<>();
+                            if (foodJSON.has("food_type")) {
+                                JSONArray foodTypesArray = foodJSON.getJSONArray("food_type");
+                                for (int k = 0; k < foodTypesArray.length(); k++) {
+                                    foodTypes.add(foodTypesArray.getString(k).toUpperCase());
+                                }
+                            }
                             lunchMenu.add(new FoodItem(
                                     foodJSON.getString("id"),
                                     foodJSON.getString("name"),
@@ -104,12 +119,21 @@ public class DiningController implements Controller {
                         ArrayList<FoodItem> dinnerMenu = new ArrayList<>();
                         for (int j = 0; j < dinnerJSON.length(); j++) {
                             JSONObject foodJSON = dinnerJSON.getJSONObject(j);
+                            // get the food types
+                            ArrayList<String> foodTypes = new ArrayList<>();
+                            if (foodJSON.has("food_type")) {
+                                JSONArray foodTypesArray = foodJSON.getJSONArray("food_type");
+                                for (int k = 0; k < foodTypesArray.length(); k++) {
+                                    foodTypes.add(foodTypesArray.getString(k).toUpperCase());
+                                }
+                            }
                             dinnerMenu.add(new FoodItem(
                                     foodJSON.getString("id"),
                                     foodJSON.getString("name"),
                                     foodJSON.getString("calories"),
                                     foodJSON.optDouble("cost"),
                                     foodJSON.getString("food_type")
+
                             ));
                         }
                         Collections.sort(dinnerMenu, CustomComparators.FacilityComparators.getFoodSortByFavorite(context));
@@ -151,6 +175,7 @@ public class DiningController implements Controller {
                                             foodJSON.getString("food_type")
                                     ));
                                 }
+
                             }
 
                             Collections.sort(limitedDinnerMenu, CustomComparators.FacilityComparators.getFoodSortByFavorite(context));

@@ -27,6 +27,7 @@
             tools:context="com.asuc.asucmobile.main.OpenDiningHallActivity">
 
             <android.support.v4.view.TabLayout
+
                 android:id="@+id/pager_tab_strip"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
