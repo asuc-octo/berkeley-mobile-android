@@ -91,8 +91,7 @@ public class DiningController implements Controller {
                                     foodJSON.getString("name"),
                                     foodJSON.getString("calories"),
                                     foodJSON.optDouble("cost"),
-                                    foodTypes
-                            ));
+                                    foodJSON.getString("food_type")
                         }
                         Collections.sort(breakfastMenu, CustomComparators.FacilityComparators.getFoodSortByFavorite(context));
                         JSONArray lunchJSON = diningHall.getJSONArray("lunch_menu");
@@ -112,7 +111,7 @@ public class DiningController implements Controller {
                                     foodJSON.getString("name"),
                                     foodJSON.getString("calories"),
                                     foodJSON.optDouble("cost"),
-                                    foodTypes
+                                    foodJSON.getString("food_type")
                             ));
                         }
                         Collections.sort(lunchMenu, CustomComparators.FacilityComparators.getFoodSortByFavorite(context));
@@ -133,40 +132,59 @@ public class DiningController implements Controller {
                                     foodJSON.getString("name"),
                                     foodJSON.getString("calories"),
                                     foodJSON.optDouble("cost"),
-                                    foodTypes
+                                    foodJSON.getString("food_type")
+
                             ));
                         }
                         Collections.sort(dinnerMenu, CustomComparators.FacilityComparators.getFoodSortByFavorite(context));
 
+
+                        ArrayList<FoodItem> limitedLunchMenu = new ArrayList<>();
+                        ArrayList<FoodItem> limitedDinnerMenu = new ArrayList<>();
+
+                        try {
                         /*
-                          Late night is treated specially. Because dining halls without Late Night
+                          Limited is treated specially. Because dining halls without Limited
                           have its menu as "null" rather than an empty list, we first ask if the
                           dining hall has late night, and then apply the appropriate actions.
                          */
-                        ArrayList<FoodItem> lateNightMenu = new ArrayList<>();
-                        if (Arrays.asList(HAS_LATE_NIGHT).contains(name)) {
-                            JSONArray lateNightJSON = diningHall.getJSONArray("late_night_menu");
-                            for (int j = 0; j < lateNightJSON.length(); j++) {
-                                JSONObject foodJSON = lateNightJSON.getJSONObject(j);
-                                // get the food types
-                                ArrayList<String> foodTypes = new ArrayList<>();
-                                if (foodJSON.has("food_type")) {
-                                    JSONArray foodTypesArray = foodJSON.getJSONArray("food_type");
-                                    for (int k = 0; k < foodTypesArray.length(); k++) {
-                                        foodTypes.add(foodTypesArray.getString(k).toUpperCase());
-                                    }
+                            if (Arrays.asList(HAS_LATE_NIGHT).contains(name)) {
+                                JSONArray lateNightJSON = diningHall.getJSONArray("limited_lunch_menu");
+                                for (int j = 0; j < lateNightJSON.length(); j++) {
+                                    JSONObject foodJSON = lateNightJSON.getJSONObject(j);
+                                    limitedLunchMenu.add(new FoodItem(
+                                            foodJSON.getString("id"),
+                                            foodJSON.getString("name"),
+                                            foodJSON.getString("calories"),
+                                            foodJSON.optDouble("cost"),
+                                            foodJSON.getString("food_type")
+                                    ));
+                                }
+                            }
+                            Collections.sort(limitedLunchMenu, CustomComparators.FacilityComparators.getFoodSortByFavorite(context));
+
+                            if (Arrays.asList(HAS_LATE_NIGHT).contains(name)) {
+                                JSONArray lateNightJSON = diningHall.getJSONArray("limited_dinner_menu");
+                                for (int j = 0; j < lateNightJSON.length(); j++) {
+                                    JSONObject foodJSON = lateNightJSON.getJSONObject(j);
+                                    limitedDinnerMenu.add(new FoodItem(
+                                            foodJSON.getString("id"),
+                                            foodJSON.getString("name"),
+                                            foodJSON.getString("calories"),
+                                            foodJSON.optDouble("cost"),
+                                            foodJSON.getString("food_type")
+                                    ));
                                 }
 
-                                lateNightMenu.add(new FoodItem(
-                                        foodJSON.getString("id"),
-                                        foodJSON.getString("name"),
-                                        foodJSON.getString("calories"),
-                                        foodJSON.optDouble("cost"),
-                                        foodTypes
-                                ));
                             }
+
+                            Collections.sort(limitedDinnerMenu, CustomComparators.FacilityComparators.getFoodSortByFavorite(context));
+
+                        }catch (Exception e){
+                            e.printStackTrace();
+                            System.out.println("Its the Backend's fault for messing up limited dining");
                         }
-                        Collections.sort(lateNightMenu, CustomComparators.FacilityComparators.getFoodSortByFavorite(context));
+
                         long tmpDate;
                         String openingString = diningHall.getString("breakfast_open");
                         String closingString = diningHall.getString("breakfast_close");
@@ -204,23 +222,40 @@ public class DiningController implements Controller {
                             tmpDate = DATE_FORMAT.parse(closingString).getTime();
                             dinnerClosing = new Date(tmpDate + PST.getOffset(tmpDate));
                         }
-                        openingString = diningHall.getString("late_night_open");
-                        closingString = diningHall.getString("late_night_close");
-                        Date lateNightOpening = null;
-                        Date lateNightClosing = null;
+
+
+                        openingString = diningHall.getString("limited_lunch_open");
+                        closingString = diningHall.getString("limited_lunch_close");
+                        Date limitedLunchOpening = null;
+                        Date limitedLunchClosing = null;
                         if (!openingString.equals("null")) {
                             tmpDate = DATE_FORMAT.parse(openingString).getTime();
-                            lateNightOpening = new Date(tmpDate + PST.getOffset(tmpDate));
+                            limitedLunchOpening = new Date(tmpDate + PST.getOffset(tmpDate));
                         }
                         if (!closingString.equals("null")) {
                             tmpDate = DATE_FORMAT.parse(closingString).getTime();
-                            lateNightClosing = new Date(tmpDate + PST.getOffset(tmpDate));
+                            limitedLunchClosing = new Date(tmpDate + PST.getOffset(tmpDate));
                         }
+
+                        openingString = diningHall.getString("limited_dinner_open");
+                        closingString = diningHall.getString("limited_dinner_close");
+                        Date limitedDinnerOpening = null;
+                        Date limitedDinnerClosing = null;
+                        if (!openingString.equals("null")) {
+                            tmpDate = DATE_FORMAT.parse(openingString).getTime();
+                            limitedDinnerOpening = new Date(tmpDate + PST.getOffset(tmpDate));
+                        }
+                        if (!closingString.equals("null")) {
+                            tmpDate = DATE_FORMAT.parse(closingString).getTime();
+                            limitedDinnerClosing = new Date(tmpDate + PST.getOffset(tmpDate));
+                        }
+
+
                         String imageUrl = diningHall.getString("image_link");
                         diningHalls.add(new DiningHall(
-                                id, name, breakfastMenu, lunchMenu, dinnerMenu, lateNightMenu,
+                                id, name, breakfastMenu, lunchMenu, dinnerMenu, limitedLunchMenu, limitedDinnerMenu,
                                 breakfastOpening, breakfastClosing, lunchOpening, lunchClosing,
-                                dinnerOpening, dinnerClosing, lateNightOpening, lateNightClosing,
+                                dinnerOpening, dinnerClosing, limitedLunchOpening, limitedLunchClosing, limitedDinnerOpening, limitedDinnerClosing,
                                 imageUrl
                         ));
                     }

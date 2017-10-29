@@ -10,36 +10,43 @@ public class DiningHall extends FoodPlace{
     private ArrayList<FoodItem> breakfastMenu;
     private ArrayList<FoodItem> lunchMenu;
     private ArrayList<FoodItem> dinnerMenu;
-    private ArrayList<FoodItem> lateNightMenu;
+    private ArrayList<FoodItem> limitedLunchMenu;
+    private ArrayList<FoodItem> limitedDinnerMenu;
+
     private Date breakfastOpen;
     private Date breakfastClose;
     private Date lunchOpen;
     private Date lunchClose;
     private Date dinnerOpen;
     private Date dinnerClose;
-    private Date lateNightOpen;
-    private Date lateNightClose;
+    private Date limitedLunchOpen;
+    private Date limitedLunchClose;
+    private Date limitedDinnerOpen;
+    private Date limitedDinnerClose;
     private String imageUrl;
 
     public DiningHall(String id, String name, ArrayList<FoodItem> breakfastMenu,
                       ArrayList<FoodItem> lunchMenu, ArrayList<FoodItem> dinnerMenu,
-                      ArrayList<FoodItem> lateNightMenu, Date breakfastOpen, Date breakfastClose,
+                      ArrayList<FoodItem> limitedLunchMenu, ArrayList<FoodItem> limitedDinnerMenu, Date breakfastOpen, Date breakfastClose,
                       Date lunchOpen, Date lunchClose, Date dinnerOpen, Date dinnerClose,
-                      Date lateNightOpen, Date lateNightClose, String imageUrl) {
+                      Date limitedLunchOpen, Date limitedLunchClose, Date limitedDinnerOpen, Date limitedDinnerClose, String imageUrl) {
         this.id = id;
         this.name = name;
         this.breakfastMenu = breakfastMenu;
         this.lunchMenu = lunchMenu;
         this.dinnerMenu = dinnerMenu;
-        this.lateNightMenu = lateNightMenu;
+        this.limitedLunchMenu = limitedLunchMenu;
+        this.limitedDinnerMenu = limitedDinnerMenu;
         this.breakfastOpen = breakfastOpen;
         this.breakfastClose = breakfastClose;
         this.lunchOpen = lunchOpen;
         this.lunchClose = lunchClose;
         this.dinnerOpen = dinnerOpen;
         this.dinnerClose = dinnerClose;
-        this.lateNightOpen = lateNightOpen;
-        this.lateNightClose = lateNightClose;
+        this.limitedLunchOpen = limitedLunchOpen;
+        this.limitedLunchClose = limitedLunchClose;
+        this.limitedDinnerOpen = limitedDinnerOpen;
+        this.limitedDinnerClose = limitedDinnerClose;
         this.imageUrl = imageUrl;
     }
 
@@ -63,18 +70,22 @@ public class DiningHall extends FoodPlace{
         return dinnerMenu;
     }
 
-    public ArrayList<FoodItem> getLateNightMenu() {
-        return lateNightMenu;
+    public ArrayList<FoodItem> getLimitedLunchMenu() {
+        return limitedLunchMenu;
+    }
+
+    public ArrayList<FoodItem> getLimitedDinnerMenu() {
+        return limitedDinnerMenu;
     }
 
     public String getImageUrl() {
         return imageUrl;
     }
-    
+
     public Date getBreakfastOpening() {
         return breakfastOpen;
     }
-    
+
     public Date getBreakfastClosing() {
         return breakfastClose;
     }
@@ -95,12 +106,20 @@ public class DiningHall extends FoodPlace{
         return dinnerClose;
     }
 
-    public Date getLateNightOpening() {
-        return lateNightOpen;
+    public Date getLimitedLunchOpen() {
+        return limitedLunchOpen;
     }
 
-    public Date getLateNightClosing() {
-        return lateNightClose;
+    public Date getLimitedLunchClosing() {
+        return limitedLunchClose;
+    }
+
+    public Date getLimitedDinnerOpen() {
+        return limitedDinnerOpen;
+    }
+
+    public Date getLimitedDinnerClosing() {
+        return limitedDinnerClose;
     }
 
     /**
@@ -136,21 +155,34 @@ public class DiningHall extends FoodPlace{
         return currentTime.after(dinnerOpen) && currentTime.before(dinnerClose);
     }
 
-    public boolean isLateNightOpen() {
-        if (lateNightOpen == null || lateNightClose == null) {
+    public boolean isLimitedLunchOpen() {
+        if (limitedLunchOpen == null || limitedLunchClose == null) {
             return false;
         }
 
         Date currentTime = new Date();
-        return currentTime.after(lateNightOpen) && currentTime.before(lateNightClose);
+        return currentTime.after(limitedLunchOpen) && currentTime.before(limitedLunchClose);
     }
 
-    public boolean lateNightToday() {
-        return lateNightOpen != null && lateNightClose != null;
+    public boolean isLimitedDinnerOpen() {
+        if (limitedDinnerOpen == null || limitedDinnerClose == null) {
+            return false;
+        }
+
+        Date currentTime = new Date();
+        return currentTime.after(limitedDinnerOpen) && currentTime.before(limitedDinnerClose);
+    }
+
+    public boolean limitedLunchToday() {
+        return limitedLunchOpen != null && limitedLunchClose != null;
+    }
+
+    public boolean limitedDinnerToday() {
+        return limitedDinnerOpen != null && limitedDinnerClose != null;
     }
 
     public boolean isOpen() {
-        return isBreakfastOpen() | isLunchOpen() | isDinnerOpen() | isLateNightOpen();
+        return isBreakfastOpen() | isLunchOpen() | isDinnerOpen() | isLimitedLunchOpen() | isLimitedDinnerOpen();
     }
 
 }
