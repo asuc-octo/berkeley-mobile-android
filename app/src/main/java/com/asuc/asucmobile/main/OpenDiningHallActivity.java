@@ -3,7 +3,6 @@ package com.asuc.asucmobile.main;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.os.Bundle;
-import android.support.design.widget.TabLayout;
 import android.support.v13.app.FragmentPagerAdapter;
 import android.support.v4.view.PagerTabStrip;
 import android.support.v4.view.ViewPager;
@@ -58,16 +57,13 @@ public class OpenDiningHallActivity extends BaseActivity {
             }
             viewPager.setAdapter(pagerAdapter);
             Date currentTime = new Date();
-            if (diningHall.isLimitedDinnerOpen() ||
+            if (diningHall.isLateNightOpen() ||
                     (diningHall.getDinnerClosing() != null && currentTime.after(diningHall.getDinnerClosing()))) {
                 viewPager.setCurrentItem(3);
             } else if (diningHall.isDinnerOpen() ||
                     (diningHall.getLunchClosing() != null && currentTime.after(diningHall.getLunchClosing())) ||
                     (diningHall.getDinnerClosing() != null && currentTime.after(diningHall.getDinnerClosing()))) {
                 viewPager.setCurrentItem(2);
-            } else if (diningHall.isLimitedLunchOpen() ||
-                    (diningHall.getLunchClosing() != null && currentTime.after(diningHall.getLunchClosing()))) {
-                viewPager.setCurrentItem(1);
             } else if (diningHall.isLunchOpen() ||
                     (diningHall.getBreakfastClosing() != null && currentTime.after(diningHall.getBreakfastClosing()))) {
                 viewPager.setCurrentItem(1);
@@ -75,8 +71,11 @@ public class OpenDiningHallActivity extends BaseActivity {
                 viewPager.setCurrentItem(0);
             }
         }
-        TabLayout tabStrip = (TabLayout) findViewById(R.id.pager_tab_strip);
-
+        PagerTabStrip tabStrip = (PagerTabStrip) findViewById(R.id.pager_tab_strip);
+        if (tabStrip != null) {
+            tabStrip.setTextColor(getResources().getColor(R.color.off_white));
+            tabStrip.setTabIndicatorColor(getResources().getColor(R.color.off_white));
+        }
     }
 
     @Override
@@ -94,7 +93,7 @@ public class OpenDiningHallActivity extends BaseActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        /*int id = item.getItemId();
+        int id = item.getItemId();
         if (id == android.R.id.home) {
             finish();
             return true;
@@ -129,8 +128,7 @@ public class OpenDiningHallActivity extends BaseActivity {
             MenuFragment.refreshLists();
             return true;
         }
-        return super.onOptionsItemSelected(item);*/
-        return false;
+        return super.onOptionsItemSelected(item);
     }
 
     /**
@@ -159,13 +157,10 @@ public class OpenDiningHallActivity extends BaseActivity {
                         bundle.putString("whichMenu", "Lunch");
                         break;
                     case 2:
-                        bundle.putString("whichMenu", "LimitedL");
-                        break;
-                    case 3:
                         bundle.putString("whichMenu", "Dinner");
                         break;
-                    case 4:
-                        bundle.putString("whichMenu", "LimitedD");
+                    case 3:
+                        bundle.putString("whichMenu", "Late Night");
                         break;
                     default:
                         return null;

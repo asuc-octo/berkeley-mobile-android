@@ -14,8 +14,9 @@ public class FoodItem implements Comparable<FoodItem> {
     private String calories;
     private double cost;
 
-    public FoodItem(String id, String name, String calories, double cost, String foodType) {
+    private ArrayList<String> foodTypes; // all in upper case
 
+    public FoodItem(String id, String name, String calories, double cost, ArrayList<String> types) {
         this.id = id;
         this.name = name;
         this.calories = calories;
@@ -30,11 +31,6 @@ public class FoodItem implements Comparable<FoodItem> {
     public String getName() {
         return name;
     }
-
-    public String getFoodTypes() {
-        return foodType;
-    }
-
 
     public String getCalories() {
         return calories;

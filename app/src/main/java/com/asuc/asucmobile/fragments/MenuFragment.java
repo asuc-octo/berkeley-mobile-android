@@ -242,7 +242,6 @@ public class MenuFragment extends Fragment {
                 switch (whichMenu) {
                     case "Breakfast":
                         foodItems = diningHall.getBreakfastMenu();
-
                         opening = HOURS_FORMAT.format(diningHall.getBreakfastOpening());
                         closing = HOURS_FORMAT.format(diningHall.getBreakfastClosing());
                         isOpen = diningHall.isBreakfastOpen();
@@ -253,41 +252,25 @@ public class MenuFragment extends Fragment {
                         closing = HOURS_FORMAT.format(diningHall.getLunchClosing());
                         isOpen = diningHall.isLunchOpen();
                         break;
-                    case "LimitedL":
-                        if (diningHall.limitedLunchToday()) {
-                            foodItems = diningHall.getLimitedLunchMenu();
+                    case "Late Night":
+                        // A solution to get around the lack of late night hours--is it the right
+                        // day of the week for late night?
+                        if (diningHall.lateNightToday()) {
+                            foodItems = diningHall.getLateNightMenu();
                         } else {
                             foodItems = null;
                         }
-                        if (diningHall.getLimitedLunchOpen() != null) {
-                            opening = HOURS_FORMAT.format(diningHall.getLimitedLunchOpen());
+                        if (diningHall.getLateNightOpening() != null) {
+                            opening = HOURS_FORMAT.format(diningHall.getLateNightOpening());
                         } else {
                             opening = LATE_NIGHT_OPEN;
                         }
-                        if (diningHall.getLimitedLunchClosing() != null) {
-                            closing = HOURS_FORMAT.format(diningHall.getLimitedLunchClosing());
+                        if (diningHall.getLateNightClosing() != null) {
+                            closing = HOURS_FORMAT.format(diningHall.getLateNightClosing());
                         } else {
                             closing = LATE_NIGHT_CLOSE;
                         }
-                        isOpen = diningHall.isLimitedLunchOpen();
-                        break;
-                    case "LimitedD":
-                        if (diningHall.limitedDinnerToday()) {
-                            foodItems = diningHall.getLimitedDinnerMenu();
-                        } else {
-                            foodItems = null;
-                        }
-                        if (diningHall.getLimitedDinnerOpen() != null) {
-                            opening = HOURS_FORMAT.format(diningHall.getLimitedDinnerOpen());
-                        } else {
-                            opening = LATE_NIGHT_OPEN;
-                        }
-                        if (diningHall.getLimitedDinnerClosing() != null) {
-                            closing = HOURS_FORMAT.format(diningHall.getLimitedDinnerClosing());
-                        } else {
-                            closing = LATE_NIGHT_CLOSE;
-                        }
-                        isOpen = diningHall.isLimitedDinnerOpen();
+                        isOpen = diningHall.isLateNightOpen();
                         break;
                     default:
                         foodItems = diningHall.getDinnerMenu();
@@ -296,10 +279,7 @@ public class MenuFragment extends Fragment {
                         isOpen = diningHall.isDinnerOpen();
                 }
                 if (foodItems == null || foodItems.size() == 0) {
-                    if(whichMenu.equals("LimitedL") || whichMenu.equals("LimitedD"))
-                        emptyListView.setText(String.format("No %s Today!", "Limited"));
-                    else
-                        emptyListView.setText(String.format("No %s Today!", whichMenu));
+                    emptyListView.setText(String.format("No %s Today!", whichMenu));
                     foodMenu.setVisibility(View.GONE);
                     emptyListView.setVisibility(View.VISIBLE);
                 } else {
