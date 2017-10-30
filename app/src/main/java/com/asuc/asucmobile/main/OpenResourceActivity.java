@@ -45,12 +45,15 @@ public class OpenResourceActivity extends BaseActivity {
     private GoogleMap map;
     private Resource resource;
 
+    public static OpenResourceActivity self_reference;
+
     @Override
     @SuppressWarnings("all")
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState, R.layout.activity_open_resource);
         exitIfNoData();
         setupToolbar(resource.getResource(), true);
+        self_reference = this;
 
         // Populate UI.
         TextView hours = (TextView) findViewById(R.id.hours);

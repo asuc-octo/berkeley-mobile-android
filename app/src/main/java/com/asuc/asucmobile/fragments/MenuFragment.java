@@ -48,8 +48,7 @@ public class MenuFragment extends Fragment {
         // Get references to views.
         ListView foodMenu = (ListView) v.findViewById(R.id.food_menu);
         TextView emptyListView = (TextView) v.findViewById(R.id.empty_list);
-        View header = getActivity().getLayoutInflater().inflate(R.layout.header_image, foodMenu, false);
-        TextView headerHours = (TextView) header.findViewById(R.id.header_text);
+        TextView headerHours = (TextView) v.findViewById(R.id.header_text);
 
 
         // Populate menu views.
@@ -63,7 +62,6 @@ public class MenuFragment extends Fragment {
                 switch (whichMenu) {
                     case "Breakfast":
                         foodItems = diningHall.getBreakfastMenu();
-
                         opening = HOURS_FORMAT.format(diningHall.getBreakfastOpening());
                         closing = HOURS_FORMAT.format(diningHall.getBreakfastClosing());
                         isOpen = diningHall.isBreakfastOpen();

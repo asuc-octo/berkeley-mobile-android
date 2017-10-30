@@ -182,7 +182,13 @@ public class DiningHall {
     }
 
     public boolean isOpen() {
-        return isBreakfastOpen() | isLunchOpen() | isDinnerOpen() | isLimitedLunchOpen() | isLimitedDinnerOpen();
+        System.out.println("Dining Hall Name:" + name);
+        System.out.println("BF:" + isBreakfastOpen());
+        System.out.println("Lunch:" + isLunchOpen());
+        System.out.println("Cont Lunch:" + isLimitedLunchOpen());
+        System.out.println("Dinner:" + isDinnerOpen());
+        System.out.println("Cont Dinner:" + isLimitedDinnerOpen());
+        return isBreakfastOpen() || isLunchOpen() || isDinnerOpen() || isLimitedLunchOpen() || isLimitedDinnerOpen();
     }
 
 }
