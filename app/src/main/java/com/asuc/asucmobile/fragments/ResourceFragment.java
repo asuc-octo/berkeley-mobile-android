@@ -41,7 +41,7 @@ public class ResourceFragment extends Fragment {
     private ProgressBar mProgressBar;
     private LinearLayout mRefreshWrapper;
 
-    private ResourceAdapter mAdapter;
+    private static ResourceAdapter mAdapter;
 
     @Override
     @SuppressWarnings("deprecation")
@@ -163,6 +163,13 @@ public class ResourceFragment extends Fragment {
                         Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    public static void refreshLists() {
+        if (ResourceFragment.mAdapter == null)
+            return;
+        ResourceFragment.mAdapter.notifyDataSetChanged();
+
     }
 
 }
