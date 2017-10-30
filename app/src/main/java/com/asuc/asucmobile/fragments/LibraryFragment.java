@@ -22,6 +22,7 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.asuc.asucmobile.R;
+import com.asuc.asucmobile.adapters.FoodAdapter;
 import com.asuc.asucmobile.adapters.LibraryAdapter;
 import com.asuc.asucmobile.controllers.LibraryController;
 import com.asuc.asucmobile.main.ListOfFavorites;
@@ -41,7 +42,7 @@ public class LibraryFragment extends Fragment {
     private ProgressBar mProgressBar;
     private LinearLayout mRefreshWrapper;
 
-    private LibraryAdapter mAdapter;
+    private static LibraryAdapter mAdapter;
 
     @Override
     @SuppressWarnings("deprecation")
@@ -92,16 +93,8 @@ public class LibraryFragment extends Fragment {
     @Override
     public boolean onOptionsItemSelected(MenuItem menuItem) {
         switch (menuItem.getItemId()){
-            case R.id.sortAZ:
-                Collections.sort(mAdapter.getLibraries(), CustomComparators.FacilityComparators.getSortByAZ());
-                mAdapter.notifyDataSetChanged();
-                break;
             case R.id.sortOpen:
                 Collections.sort(mAdapter.getLibraries(), CustomComparators.FacilityComparators.getSortByOpenness());
-                mAdapter.notifyDataSetChanged();
-                break;
-            case R.id.sortFavorites:
-                Collections.sort(mAdapter.getLibraries(), CustomComparators.FacilityComparators.getSortByFavoriteLibrary(getContext()));
                 mAdapter.notifyDataSetChanged();
                 break;
         }
@@ -112,6 +105,7 @@ public class LibraryFragment extends Fragment {
     @SuppressWarnings("deprecation")
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.library, menu);
+
         final MenuItem searchMenuItem = menu.findItem(R.id.search);
         if (searchMenuItem != null) {
             final SearchView searchView = (SearchView) searchMenuItem.getActionView();
@@ -168,4 +162,10 @@ public class LibraryFragment extends Fragment {
         });
     }
 
+    public static void refreshLists() {
+        if (LibraryFragment.mAdapter == null)
+            return;
+        mAdapter.notifyDataSetChanged();
+
+    }
 }
