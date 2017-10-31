@@ -92,16 +92,16 @@ public class CustomComparators {
 
         private static Comparator<FoodItem> foodSortByVegetarian = new Comparator<FoodItem>() {
             public int compare(FoodItem arg0, FoodItem arg1) {
-                if (!arg0.getFoodType().equals("None") && arg0.getFoodType().toUpperCase().equals("VEGETARIAN")) return -1;
-                if (!arg1.getFoodType().equals("None") && arg1.getFoodType().toUpperCase().equals("VEGETARIAN")) return 1;
+                if (!arg0.getFoodTypes().contains("NONE") && arg0.getFoodTypes().contains("VEGETARIAN")) return -1;
+                if (!arg1.getFoodTypes().equals("NONE") && arg1.getFoodTypes().contains("VEGETARIAN")) return 1;
                 return arg0.compareTo(arg1);
             }
         };
 
         private static Comparator<FoodItem> foodSortByVegan = new Comparator<FoodItem>() {
             public int compare(FoodItem arg0, FoodItem arg1) {
-                if (!arg0.getFoodType().equals("None") && arg0.getFoodType().toUpperCase().equals("VEGAN")) return -1;
-                if (!arg1.getFoodType().equals("None") && arg1.getFoodType().toUpperCase().equals("VEGAN")) return 1;
+                if (!arg0.getFoodTypes().contains("NONE") && arg0.getFoodTypes().contains("VEGAN")) return -1;
+                if (!arg1.getFoodTypes().contains("NONE") && arg1.getFoodTypes().contains("VEGAN")) return 1;
                 return arg0.compareTo(arg1);
             }
         };
