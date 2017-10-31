@@ -13,14 +13,15 @@ public class FoodItem implements Comparable<FoodItem> {
     private String name;
     private String calories;
     private double cost;
+    private String foodTypes;
 
-    public FoodItem(String id, String name, String calories, double cost, String foodType) {
+    public FoodItem(String id, String name, String calories, double cost, String foodTypes) {
 
         this.id = id;
         this.name = name;
         this.calories = calories;
         this.cost = cost;
-        this.foodTypes = types;
+        this.foodTypes = foodTypes;
     }
 
     public String getId() {
@@ -32,7 +33,7 @@ public class FoodItem implements Comparable<FoodItem> {
     }
 
     public String getFoodTypes() {
-        return foodType;
+        return foodTypes;
     }
 
 
@@ -45,9 +46,9 @@ public class FoodItem implements Comparable<FoodItem> {
         return "$" + df.format(cost);
     }
 
-    public ArrayList<String> getFoodTypes() {
+    /*public ArrayList<String> getFoodTypes() {
         return foodTypes;
-    }
+    }*/
 
     @Override
     public int compareTo(@NonNull FoodItem other) {
