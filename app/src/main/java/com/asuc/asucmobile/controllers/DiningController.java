@@ -77,39 +77,80 @@ public class DiningController implements Controller {
                         ArrayList<FoodItem> breakfastMenu = new ArrayList<>();
                         for (int j = 0; j < breakfastJSON.length(); j++) {
                             JSONObject foodJSON = breakfastJSON.getJSONObject(j);
-                            breakfastMenu.add(new FoodItem(
-                                    foodJSON.getString("id"),
-                                    foodJSON.getString("name"),
-                                    foodJSON.getString("food_type"),
-                                    foodJSON.getString("calories"),
-                                    foodJSON.optDouble("cost")
-                            ));
+                            // get the food types
+                            ArrayList<String> foodTypes = new ArrayList<>();
+
+                            try {
+                                if (foodJSON.has("food_type")) {
+                                    JSONArray foodTypesArray = foodJSON.getJSONArray("food_type");
+                                    for (int k = 0; k < foodTypesArray.length(); k++) {
+                                        foodTypes.add(foodTypesArray.getString(k).toUpperCase());
+                                    }
+                                }
+                            }catch (Exception e){
+                                e.printStackTrace();
+                            }finally {
+                                breakfastMenu.add(new FoodItem(
+                                        foodJSON.getString("id"),
+                                        foodJSON.getString("name"),
+                                        foodJSON.getString("calories"),
+                                        foodJSON.optDouble("cost"),
+                                        foodTypes
+                                ));
+                            }
                         }
                         Collections.sort(breakfastMenu, CustomComparators.FacilityComparators.getFoodSortByFavorite(context));
                         JSONArray lunchJSON = diningHall.getJSONArray("lunch_menu");
                         ArrayList<FoodItem> lunchMenu = new ArrayList<>();
                         for (int j = 0; j < lunchJSON.length(); j++) {
                             JSONObject foodJSON = lunchJSON.getJSONObject(j);
-                            lunchMenu.add(new FoodItem(
-                                    foodJSON.getString("id"),
-                                    foodJSON.getString("name"),
-                                    foodJSON.getString("food_type"),
-                                    foodJSON.getString("calories"),
-                                    foodJSON.optDouble("cost")
-                            ));
+                            // get the food types
+                            ArrayList<String> foodTypes = new ArrayList<>();
+                            try {
+                                if (foodJSON.has("food_type")) {
+                                    JSONArray foodTypesArray = foodJSON.getJSONArray("food_type");
+                                    for (int k = 0; k < foodTypesArray.length(); k++) {
+                                        foodTypes.add(foodTypesArray.getString(k).toUpperCase());
+                                    }
+                                }
+                            }catch (Exception e){
+                                e.printStackTrace();
+                            }finally {
+                                lunchMenu.add(new FoodItem(
+                                        foodJSON.getString("id"),
+                                        foodJSON.getString("name"),
+                                        foodJSON.getString("calories"),
+                                        foodJSON.optDouble("cost"),
+                                        foodTypes
+                                ));
+                            }
+
                         }
                         Collections.sort(lunchMenu, CustomComparators.FacilityComparators.getFoodSortByFavorite(context));
                         JSONArray dinnerJSON = diningHall.getJSONArray("dinner_menu");
                         ArrayList<FoodItem> dinnerMenu = new ArrayList<>();
                         for (int j = 0; j < dinnerJSON.length(); j++) {
                             JSONObject foodJSON = dinnerJSON.getJSONObject(j);
-                            dinnerMenu.add(new FoodItem(
-                                    foodJSON.getString("id"),
-                                    foodJSON.getString("name"),
-                                    foodJSON.getString("food_type"),
-                                    foodJSON.getString("calories"),
-                                    foodJSON.optDouble("cost")
-                            ));
+                            // get the food types
+                            ArrayList<String> foodTypes = new ArrayList<>();
+                            try {
+                                if (foodJSON.has("food_type")) {
+                                    JSONArray foodTypesArray = foodJSON.getJSONArray("food_type");
+                                    for (int k = 0; k < foodTypesArray.length(); k++) {
+                                        foodTypes.add(foodTypesArray.getString(k).toUpperCase());
+                                    }
+                                }
+                            }catch (Exception e){
+                                e.printStackTrace();
+                            }finally {
+                                dinnerMenu.add(new FoodItem(
+                                        foodJSON.getString("id"),
+                                        foodJSON.getString("name"),
+                                        foodJSON.getString("calories"),
+                                        foodJSON.optDouble("cost"),
+                                        foodTypes
+                                ));
+                            }
                         }
                         Collections.sort(dinnerMenu, CustomComparators.FacilityComparators.getFoodSortByFavorite(context));
 
@@ -117,47 +158,69 @@ public class DiningController implements Controller {
                         ArrayList<FoodItem> limitedLunchMenu = new ArrayList<>();
                         ArrayList<FoodItem> limitedDinnerMenu = new ArrayList<>();
 
-                        try {
+
                         /*
                           Limited is treated specially. Because dining halls without Limited
                           have its menu as "null" rather than an empty list, we first ask if the
                           dining hall has late night, and then apply the appropriate actions.
                          */
-                            if (Arrays.asList(HAS_LATE_NIGHT).contains(name)) {
-                                JSONArray lateNightJSON = diningHall.getJSONArray("limited_lunch_menu");
-                                for (int j = 0; j < lateNightJSON.length(); j++) {
-                                    JSONObject foodJSON = lateNightJSON.getJSONObject(j);
+                        if (Arrays.asList(HAS_LATE_NIGHT).contains(name)) {
+                            JSONArray lateNightJSON = diningHall.getJSONArray("limited_dinner_menu");
+                            for (int j = 0; j < lateNightJSON.length(); j++) {
+                                JSONObject foodJSON = lateNightJSON.getJSONObject(j);
+                                // get the food types
+                                ArrayList<String> foodTypes = new ArrayList<>();
+                                try {
+                                    if (foodJSON.has("food_type")) {
+                                        JSONArray foodTypesArray = foodJSON.getJSONArray("food_type");
+                                        for (int k = 0; k < foodTypesArray.length(); k++) {
+                                            foodTypes.add(foodTypesArray.getString(k).toUpperCase());
+                                        }
+                                    }
+                                }catch (Exception e){
+                                    e.printStackTrace();
+                                }finally {
                                     limitedLunchMenu.add(new FoodItem(
                                             foodJSON.getString("id"),
                                             foodJSON.getString("name"),
-                                            foodJSON.getString("food_type"),
                                             foodJSON.getString("calories"),
-                                            foodJSON.optDouble("cost")
+                                            foodJSON.optDouble("cost"),
+                                            foodTypes
                                     ));
                                 }
                             }
-                            Collections.sort(limitedLunchMenu, CustomComparators.FacilityComparators.getFoodSortByFavorite(context));
+                        }
+                        Collections.sort(limitedLunchMenu, CustomComparators.FacilityComparators.getFoodSortByFavorite(context));
 
-                            if (Arrays.asList(HAS_LATE_NIGHT).contains(name)) {
-                                JSONArray lateNightJSON = diningHall.getJSONArray("limited_dinner_menu");
-                                for (int j = 0; j < lateNightJSON.length(); j++) {
-                                    JSONObject foodJSON = lateNightJSON.getJSONObject(j);
+                        if (Arrays.asList(HAS_LATE_NIGHT).contains(name)) {
+                            JSONArray lateNightJSON = diningHall.getJSONArray("limited_dinner_menu");
+                            for (int j = 0; j < lateNightJSON.length(); j++) {
+                                JSONObject foodJSON = lateNightJSON.getJSONObject(j);
+                                // get the food types
+                                ArrayList<String> foodTypes = new ArrayList<>();
+                                try {
+                                    if (foodJSON.has("food_type")) {
+                                        JSONArray foodTypesArray = foodJSON.getJSONArray("food_type");
+                                        for (int k = 0; k < foodTypesArray.length(); k++) {
+                                            foodTypes.add(foodTypesArray.getString(k).toUpperCase());
+                                        }
+                                    }
+                                }catch (Exception e){
+                                    e.printStackTrace();
+                                } finally {
                                     limitedDinnerMenu.add(new FoodItem(
                                             foodJSON.getString("id"),
                                             foodJSON.getString("name"),
-                                            foodJSON.getString("food_type"),
                                             foodJSON.getString("calories"),
-                                            foodJSON.optDouble("cost")
+                                            foodJSON.optDouble("cost"),
+                                            foodTypes
                                     ));
                                 }
                             }
-
-                            Collections.sort(limitedDinnerMenu, CustomComparators.FacilityComparators.getFoodSortByFavorite(context));
-
-                        }catch (Exception e){
-                            e.printStackTrace();
-                            System.out.println("Its the Backend's fault for messing up limited dining");
                         }
+
+                        Collections.sort(limitedDinnerMenu, CustomComparators.FacilityComparators.getFoodSortByFavorite(context));
+
 
                         long tmpDate;
                         String openingString = diningHall.getString("breakfast_open");

@@ -11,13 +11,10 @@ import android.widget.TextView;
 import com.asuc.asucmobile.R;
 import com.asuc.asucmobile.fragments.MenuFragment;
 import com.asuc.asucmobile.main.ListOfFavorites;
-import com.asuc.asucmobile.main.OpenDiningHallActivity;
 import com.asuc.asucmobile.models.FoodItem;
-import com.asuc.asucmobile.utilities.CustomComparators;
 import com.asuc.asucmobile.utilities.SerializableUtilities;
 
 import java.util.ArrayList;
-import java.util.Collections;
 
 public class FoodAdapter extends BaseAdapter {
 
@@ -59,9 +56,9 @@ public class FoodAdapter extends BaseAdapter {
 
         foodName.setText(foodItem.getName());
 
-        if (!foodItem.getFoodType().equals("None") && foodItem.getFoodType() != null && !foodItem.getFoodType().equals("null")) {
+        if (foodItem.getFoodTypes() != null && foodItem.getFoodTypes().size() > 0) {
             foodType.setVisibility(View.VISIBLE);
-            foodType.setText(foodItem.getFoodType().toUpperCase());
+            foodType.setText(foodItem.getFoodTypes().toString().replace("[", "").replace("]", ""));
         } else {
             foodType.setVisibility(View.GONE);
         }
@@ -95,7 +92,6 @@ public class FoodAdapter extends BaseAdapter {
                     imageView.setImageResource(R.drawable.post_favorite);
                 }
 
-                Collections.sort(foodItems, CustomComparators.FacilityComparators.getFoodSortByFavorite(OpenDiningHallActivity.self_reference));
                 MenuFragment.refreshLists();
             }
         });
