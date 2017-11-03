@@ -1,21 +1,106 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="72dp" >
+    android:layout_height="72dp">
 
-    <TextView
-        android:id="@+id/line"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/hotline_blue"
-        android:gravity="center"
-        android:textStyle="bold"
-        android:textColor="@android:color/white"
-        android:textSize="20sp" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
+
+        <TextView
+            android:layout_width="30dp"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:paddingLeft="24dp"
+            android:paddingRight="0dp" />
+
+        <RelativeLayout
+            android:layout_width="200dp"
+            android:layout_height="match_parent">
+            <ImageView
+                android:id="@+id/busIcon"
+                android:layout_marginTop="10dp"
+                android:layout_width="20dp"
+                android:layout_height="25dp"
+                android:visibility="invisible"
+                android:layout_gravity="right"
+                android:contentDescription="image"
+                android:src="@drawable/busicon" />
+
+            <TextView
+                android:id="@+id/lineName"
+                android:layout_marginTop="10dp"
+                android:layout_width="215dp"
+                android:layout_height="42dp"
+                android:textSize="20dp"
+                android:layout_marginLeft="5dp"
+                android:text=""
+                android:layout_toRightOf="@id/busIcon"
+                android:textColor="@android:color/black" />
+
+
+            <TextView
+                android:id="@+id/startingStop"
+                android:layout_width="wrap_content"
+                android:layout_marginTop="5dp"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/busIcon"
+                android:textColor="@android:color/black"
+                android:layout_marginLeft="1dp"
+                android:text="" />
+
+
+
+        </RelativeLayout>
+        <TextView
+            android:layout_width="40dp"
+            android:layout_height="match_parent" />
+
+
+        <TextView
+            android:id="@+id/duration"
+            android:layout_width="96dp"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:textSize="19dp"
+            android:paddingBottom="30dp"
+            android:textColor="@android:color/black" />
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:weightSum="1">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:paddingLeft="24dp"
+            android:paddingRight="0dp" />
+
+        <ImageView
+            android:id="@+id/lollipop"
+            android:layout_width="30dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="right"
+            android:contentDescription="image" />
+
+        <TextView
+            android:id="@+id/stop_name"
+            android:layout_width="215dp"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:paddingLeft="14dp"
+            android:paddingRight="0dp"
+            android:textColor="@android:color/black" />
 
         <TextView
             android:id="@+id/endpoint"
@@ -23,22 +108,6 @@
             android:layout_height="match_parent"
             android:gravity="center"
             android:textColor="@android:color/black" />
-
-        <ImageView
-            android:id="@+id/lollipop"
-            android:layout_width="32dp"
-            android:layout_height="match_parent"
-            android:layout_gravity="center"
-            android:contentDescription="@string/content_desc" />
-
-        <TextView
-            android:id="@+id/stop_name"
-            android:layout_width="fill_parent"
-            android:layout_height="match_parent"
-            android:paddingRight="24dp"
-            android:paddingLeft="24dp"
-            android:gravity="center_vertical"
-            android:textColor="@color/hotline_blue" />
 
     </LinearLayout>
 

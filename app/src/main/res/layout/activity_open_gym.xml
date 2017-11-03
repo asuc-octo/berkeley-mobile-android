@@ -9,6 +9,13 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:elevation="8dp"
+            style="@style/ToolbarTheme" />
+
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="240dp">
@@ -30,14 +37,6 @@
                 android:layout_height="fill_parent"
                 android:background="@drawable/default_gym"
                 android:visibility="invisible" />
-
-            <android.support.v7.widget.Toolbar
-                android:id="@+id/toolbar"
-                style="@style/ToolbarTheme"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/toolbarTransparent"
-                android:elevation="8dp" />
 
         </RelativeLayout>
 

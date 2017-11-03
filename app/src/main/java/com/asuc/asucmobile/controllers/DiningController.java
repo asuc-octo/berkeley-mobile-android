@@ -19,6 +19,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
+import java.util.ArrayList;
 import java.util.Locale;
 import java.util.TimeZone;
 
@@ -216,6 +217,7 @@ public class DiningController implements Controller {
                                             foodTypes
                                     ));
                                 }
+
                             }
                         }
 
