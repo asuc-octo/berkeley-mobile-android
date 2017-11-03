@@ -18,6 +18,11 @@
             android:elevation="8dp"
             style="@style/ToolbarTheme" />
 
+        <android.support.v7.widget.SearchView
+            android:id="@+id/local_search"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent" />
+
         <ListView
             android:id="@+id/library_list"
             android:layout_width="match_parent"
@@ -69,6 +74,7 @@
                 android:contentDescription="@string/content_desc" />
 
             <TextView
+                android:id="@+id/drawer_text"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="bottom"
