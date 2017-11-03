@@ -26,7 +26,7 @@ public class MainActivity extends BaseActivity {
     @Override
     protected void onStop() {
         super.onStop();
-        LiveBusActivity.stopBusTracking();
+        //LiveBusActivity.stopBusTracking();
     }
 
 }

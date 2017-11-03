@@ -3,11 +3,10 @@ package com.asuc.asucmobile.models;
 import android.support.annotation.NonNull;
 
 import java.util.ArrayList;
-
-        import java.text.DecimalFormat;
-        import java.util.ArrayList;
-        import java.util.HashSet;
-        import java.util.Set;
+import java.text.DecimalFormat;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 
 public class FoodItem implements Comparable<FoodItem> {
 
@@ -16,6 +15,7 @@ public class FoodItem implements Comparable<FoodItem> {
     private String calories;
     private double cost;
 
+
     private ArrayList<String> foodTypes; // all in upper case
 
     public FoodItem(String id, String name, String calories, double cost, ArrayList<String> types) {
@@ -23,7 +23,7 @@ public class FoodItem implements Comparable<FoodItem> {
         this.name = name;
         this.calories = calories;
         this.cost = cost;
-        this.foodTypes = types;
+        this.foodTypes = foodTypes;
     }
 
     public String getId() {
@@ -46,6 +46,7 @@ public class FoodItem implements Comparable<FoodItem> {
     public ArrayList<String> getFoodTypes() {
         return foodTypes;
     }
+
 
     @Override
     public int compareTo(@NonNull FoodItem other) {

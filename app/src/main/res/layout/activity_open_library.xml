@@ -15,18 +15,16 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:elevation="8dp"
+                style="@style/ToolbarTheme" />
+
             <FrameLayout
                 android:layout_width="match_parent"
                 android:layout_height="240dp">
-
-                <android.support.v7.widget.Toolbar
-                    android:id="@+id/toolbar"
-                    style="@style/ToolbarTheme"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@color/toolbarTransparentForMaps"
-                    android:foreground="@color/ASUC_blue"
-                    android:elevation="8dp" />
 
                 <ProgressBar
                     android:id="@+id/progress_bar"
