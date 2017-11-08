@@ -93,7 +93,7 @@ public class OpenCafeActivity extends BaseActivity {
 
         @Override
         public Fragment getItem(int position) {
-            MenuFragment menuFragment = new MenuFragment();
+            MenuFragment menuFragment = new MenuFragment(MenuFragment.FoodType.Cafe);
             Bundle bundle = new Bundle();
             bundle.putString("foodType", "Cafe");
 
