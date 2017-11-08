@@ -7,6 +7,7 @@ import android.support.design.widget.TabLayout;
 import android.support.v13.app.FragmentPagerAdapter;
 import android.support.v4.view.PagerTabStrip;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -26,6 +27,8 @@ import java.util.Date;
 
 public class OpenDiningHallActivity extends BaseActivity {
 
+    public static final String TAG = "OpenDiningHallActivity";
+
     private static final String[] LIMITED_NIGHT_LOCATIONS = {"Crossroads","Foothill"};
 
     private DiningHall diningHall;
@@ -36,6 +39,8 @@ public class OpenDiningHallActivity extends BaseActivity {
         super.onCreate(savedInstanceState, R.layout.activity_open_dining_hall);
         exitIfNoData();
         setupToolbar(diningHall.getName(), true);
+
+        Log.d(TAG, "Enter");
 
         // Load favorites from disk.
         ListOfFavorites listOfFavorites = (ListOfFavorites) SerializableUtilities.loadSerializedObject(this);
@@ -61,18 +66,27 @@ public class OpenDiningHallActivity extends BaseActivity {
             if (diningHall.isLimitedDinnerOpen() ||
                     (diningHall.getDinnerClosing() != null && currentTime.after(diningHall.getDinnerClosing()))) {
                 viewPager.setCurrentItem(3);
+                Log.d(TAG, "Dinner");
             } else if (diningHall.isDinnerOpen() ||
                     (diningHall.getLunchClosing() != null && currentTime.after(diningHall.getLunchClosing())) ||
                     (diningHall.getDinnerClosing() != null && currentTime.after(diningHall.getDinnerClosing()))) {
                 viewPager.setCurrentItem(2);
+                Log.d(TAG, "LimitedL");
+
             } else if (diningHall.isLimitedLunchOpen() ||
                     (diningHall.getLunchClosing() != null && currentTime.after(diningHall.getLunchClosing()))) {
                 viewPager.setCurrentItem(1);
+                Log.d(TAG, "Lunch");
+
             } else if (diningHall.isLunchOpen() ||
                     (diningHall.getBreakfastClosing() != null && currentTime.after(diningHall.getBreakfastClosing()))) {
                 viewPager.setCurrentItem(1);
+                Log.d(TAG, "Lunch");
+
             } else {
                 viewPager.setCurrentItem(0);
+                Log.d(TAG, "Breakfast");
+
             }
         }
         TabLayout tabStrip = (TabLayout) findViewById(R.id.pager_tab_strip);
@@ -146,7 +160,7 @@ public class OpenDiningHallActivity extends BaseActivity {
         @Override
         public Fragment getItem(int position) {
 //            MenuFragment menuFragment = new MenuFragment();
-            MenuFragment menuFragment = new MenuFragment();
+            MenuFragment menuFragment = new MenuFragment(MenuFragment.FoodType.DiningHall);
             Bundle bundle = new Bundle();
             bundle.putString("foodType", "DiningHall");
 
@@ -193,7 +207,7 @@ public class OpenDiningHallActivity extends BaseActivity {
         @Override
         public int getCount() {
             if (Arrays.asList(LIMITED_NIGHT_LOCATIONS).contains(diningHall.getName())) {
-                return 4;
+                return 5;
             } else {
                 return 3;
             }

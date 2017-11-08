@@ -66,7 +66,9 @@ public class MenuFragment extends Fragment {
     private View v;
 
 
-
+    public MenuFragment(FoodType type) {
+        foodType = type;
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -89,12 +91,11 @@ public class MenuFragment extends Fragment {
         // Add the header to the list.
         foodMenu.addHeaderView(header);
 
-        Bundle bundle = this.getArguments();
-        String foodType = bundle.getString("foodType"); // need to error check this
+
         FoodPlace foodPlace = null;
-        if (foodType.equals("DiningHall")) {
+        if (foodType == FoodType.DiningHall) {
             foodPlace = ((OpenDiningHallActivity) getActivity()).getDiningHall();
-        } else if (foodType.equals("Cafe")) {
+        } else if (foodType == FoodType.Cafe) {
             foodPlace = ((OpenCafeActivity) getActivity()).getCafe();
         }
 
@@ -103,10 +104,12 @@ public class MenuFragment extends Fragment {
             return v;
         }
 
-        // Get references to views.
-        ListView foodMenu = (ListView) v.findViewById(R.id.food_menu);
-        TextView emptyListView = (TextView) v.findViewById(R.id.empty_list);
-        TextView headerHours = (TextView) v.findViewById(R.id.header_text);
+        if (foodType == FoodType.DiningHall) {
+            populateDiningHall((DiningHall) foodPlace);
+        } else if (foodType == FoodType.Cafe) {
+            populateCafe((Cafe) foodPlace);
+        }
+
 
         // Download and set header image.
         new DownloadImageThread(headerImage, foodPlace.getImageUrl()).start();
@@ -239,6 +242,7 @@ public class MenuFragment extends Fragment {
                 switch (whichMenu) {
                     case "Breakfast":
                         foodItems = diningHall.getBreakfastMenu();
+
                         opening = HOURS_FORMAT.format(diningHall.getBreakfastOpening());
                         closing = HOURS_FORMAT.format(diningHall.getBreakfastClosing());
                         isOpen = diningHall.isBreakfastOpen();

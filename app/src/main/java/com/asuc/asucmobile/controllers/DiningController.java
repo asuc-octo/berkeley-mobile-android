@@ -177,6 +177,7 @@ public class DiningController implements Controller {
                                         for (int k = 0; k < foodTypesArray.length(); k++) {
                                             foodTypes.add(foodTypesArray.getString(k).toUpperCase());
                                         }
+
                                     }
                                 }catch (Exception e){
                                     e.printStackTrace();
