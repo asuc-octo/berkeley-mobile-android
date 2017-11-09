@@ -4,38 +4,28 @@ import android.app.Fragment;
 import android.app.FragmentManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Typeface;
 import android.os.Bundle;
-import android.provider.SyncStateContract;
 import android.support.design.widget.TabLayout;
 import android.support.v13.app.FragmentPagerAdapter;
-import android.support.v4.view.PagerTabStrip;
 import android.support.v4.view.ViewPager;
 import android.view.Menu;
 import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.asuc.asucmobile.R;
 import com.asuc.asucmobile.controllers.DiningController;
 import com.asuc.asucmobile.fragments.MenuFragment;
 import com.asuc.asucmobile.models.DiningHall;
-import com.asuc.asucmobile.models.FoodItem;
-import com.asuc.asucmobile.utilities.CustomComparators;
 import com.asuc.asucmobile.utilities.SerializableUtilities;
 
 import java.io.InputStream;
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.Date;
 
 public class OpenDiningHallActivity extends BaseActivity {
 
-    private static final String[] LATE_NIGHT_LOCATIONS = {"Crossroads","Foothill"};
+    private static final String[] LIMITED_LOCATIONS = {"Crossroads","Foothill"};
     private DiningHall diningHall;
     public static OpenDiningHallActivity self_reference;
 
@@ -73,7 +63,7 @@ public class OpenDiningHallActivity extends BaseActivity {
             tabStrip.setupWithViewPager(viewPager);
             tabStrip.setTabTextColors(getResources().getColor(R.color.off_white), getResources().getColor(R.color.off_white));
 
-            if (Arrays.asList(LATE_NIGHT_LOCATIONS).contains(diningHall.getName())) {
+            if (Arrays.asList(LIMITED_LOCATIONS).contains(diningHall.getName())) {
                 viewPager.setOffscreenPageLimit(5);
                 tabStrip.setTabMode(TabLayout.MODE_SCROLLABLE);
             } else {
@@ -137,7 +127,7 @@ public class OpenDiningHallActivity extends BaseActivity {
             Bundle bundle = new Bundle(1);
 
             // If late night exists in this dining hall, add it; otherwise, leave it out.
-            if (Arrays.asList(LATE_NIGHT_LOCATIONS).contains(diningHall.getName())) {
+            if (Arrays.asList(LIMITED_LOCATIONS).contains(diningHall.getName())) {
                 switch (position) {
                     case 0:
                         bundle.putString("whichMenu", "Breakfast");
@@ -179,7 +169,7 @@ public class OpenDiningHallActivity extends BaseActivity {
 
         @Override
         public int getCount() {
-            if (Arrays.asList(LATE_NIGHT_LOCATIONS).contains(diningHall.getName())) {
+            if (Arrays.asList(LIMITED_LOCATIONS).contains(diningHall.getName())) {
                 return 5;
             } else {
                 return 3;
@@ -189,7 +179,7 @@ public class OpenDiningHallActivity extends BaseActivity {
         @Override
         public CharSequence getPageTitle(int position) {
             // Only set up a Late Night option if it exists.
-            if (Arrays.asList(LATE_NIGHT_LOCATIONS).contains(diningHall.getName())) {
+            if (Arrays.asList(LIMITED_LOCATIONS).contains(diningHall.getName())) {
                 switch (position) {
                     case 0:
                         return "Breakfast";
