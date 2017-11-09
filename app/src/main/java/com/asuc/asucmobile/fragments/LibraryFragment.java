@@ -92,13 +92,18 @@ public class LibraryFragment extends Fragment {
     //start off lv sorted by favorites
     @Override
     public boolean onOptionsItemSelected(MenuItem menuItem) {
-        switch (menuItem.getItemId()){
+        /*switch (menuItem.getItemId()){
             case R.id.sortOpen:
                 Collections.sort(mAdapter.getLibraries(), CustomComparators.FacilityComparators.getSortByOpenness());
                 mAdapter.notifyDataSetChanged();
                 break;
-        }
-        return true;
+        }*/
+
+        /*
+        Must return false to hid the toolbar menu option
+        Auto sort feature is implemented in the controller
+         */
+        return false;
     }
 
     @Override

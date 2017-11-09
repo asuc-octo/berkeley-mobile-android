@@ -61,7 +61,6 @@ public class MenuFragment extends Fragment {
     private ListView foodMenu;
     private TextView emptyListView;
     private View header;
-    private ImageView headerImage;
     private TextView headerHours;
     private View v;
 
@@ -81,7 +80,6 @@ public class MenuFragment extends Fragment {
         foodMenu = (ListView) v.findViewById(R.id.food_menu);
         emptyListView = (TextView) v.findViewById(R.id.empty_list);
         header = getActivity().getLayoutInflater().inflate(R.layout.header_image, foodMenu, false);
-        headerImage = (ImageView) header.findViewById(R.id.image);
         headerHours = (TextView) header.findViewById(R.id.header_text);
 
         if (emptyListView == null) {
@@ -110,47 +108,7 @@ public class MenuFragment extends Fragment {
             populateCafe((Cafe) foodPlace);
         }
 
-
-        // Download and set header image.
-        new DownloadImageThread(headerImage, foodPlace.getImageUrl()).start();
         return v;
-    }
-
-    private class DownloadImageThread extends Thread {
-
-        ImageView headerView;
-        String url;
-
-        private DownloadImageThread(ImageView headerView, String url) {
-            this.headerView = headerView;
-            this.url = url;
-        }
-
-        @Override
-        public void run() {
-            try {
-                InputStream input = new java.net.URL(url).openStream();
-                final Bitmap bitmap = BitmapFactory.decodeStream(input);
-
-                getActivity().runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        headerView.setImageBitmap(bitmap);
-                    }
-                });
-            } catch (Exception e) {
-                if (getActivity() == null) {
-                    return;
-                }
-            }
-            getActivity().runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    headerView.setVisibility(View.VISIBLE);
-                }
-            });
-        }
-
     }
 
     /**
