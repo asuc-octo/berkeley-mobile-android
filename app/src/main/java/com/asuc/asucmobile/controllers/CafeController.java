@@ -90,22 +90,22 @@ public class CafeController implements Controller{
                         for (int j = 0; j < breakfastJSON.length(); j++) {
                             JSONObject foodJSON = breakfastJSON.getJSONObject(j);
 
-                            /*// get the food types
+
                             ArrayList<String> foodTypes = new ArrayList<>();
                             if (foodJSON.has("food_type")) {
                                 JSONArray foodTypesArray = foodJSON.getJSONArray("food_type");
                                 for (int k = 0; k < foodTypesArray.length(); k++) {
-                                    foodTypes.add(foodTypesArray.getString(k).toUpperCase());
+                                    foodTypes.add(foodTypesArray.getString(k).toLowerCase());
                                 }
-                            }*/
+                            }
+
 
                             breakfastMenu.add(new FoodItem(
                                     foodJSON.getString("id"),
                                     foodJSON.getString("name"),
                                     foodJSON.getString("calories"),
                                     foodJSON.optDouble("cost"),
-                                    foodJSON.getString("food_type")
-
+                                    foodTypes
                             ));
                         }
                         Collections.sort(breakfastMenu, CustomComparators.FacilityComparators.getFoodSortByFavorite(context));
@@ -116,20 +116,21 @@ public class CafeController implements Controller{
                         ArrayList<FoodItem> lunchDinnerMenu = new ArrayList<>();
                         for (int j = 0; j < lunchDinnerJSON.length(); j++) {
                             JSONObject foodJSON = lunchDinnerJSON.getJSONObject(j);
-                            /*// get the food types
+
                             ArrayList<String> foodTypes = new ArrayList<>();
                             if (foodJSON.has("food_type")) {
                                 JSONArray foodTypesArray = foodJSON.getJSONArray("food_type");
                                 for (int k = 0; k < foodTypesArray.length(); k++) {
                                     foodTypes.add(foodTypesArray.getString(k).toUpperCase());
                                 }
-                            }*/
+                            }
+
                             lunchDinnerMenu.add(new FoodItem(
                                     foodJSON.getString("id"),
                                     foodJSON.getString("name"),
                                     foodJSON.getString("calories"),
                                     foodJSON.optDouble("cost"),
-                                    foodJSON.getString("food_type")
+                                    foodTypes
                             ));
                         }
                         Collections.sort(lunchDinnerMenu, CustomComparators.FacilityComparators.getFoodSortByFavorite(context));
