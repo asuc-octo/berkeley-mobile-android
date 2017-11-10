@@ -46,6 +46,7 @@ public class OpenLibraryActivity extends BaseActivity {
     private GoogleMap map;
     private Library library;
     private ViewGroup.LayoutParams hoursParams;
+    public static OpenLibraryActivity self_reference;
 
     @Override
     @SuppressWarnings("all")
@@ -53,6 +54,7 @@ public class OpenLibraryActivity extends BaseActivity {
         super.onCreate(savedInstanceState, R.layout.activity_open_library);
         exitIfNoData();
         setupToolbar(library.getName(), true);
+        self_reference = this;
 
         // Populate UI.
         final TextView hours = (TextView) findViewById(R.id.hours);

@@ -9,20 +9,13 @@
         app:showAsAction="collapseActionView|ifRoom"
         app:actionViewClass="android.support.v7.widget.SearchView" />
 
-    <item android:id="@+id/sort"
+    <!--<item android:id="@+id/sort"
         android:title="Sort"
         android:icon="@drawable/ic_action_sort"
         app:showAsAction="collapseActionView|ifRoom">
         <menu>
-            <item android:id="@+id/sortAZ"
-                android:title="Alphabetical" />
-            <!--<item android:id="@+id/sortZA"-->
-                <!--android:title="Z-A" />-->
             <item android:id="@+id/sortOpen"
-                android:title="Open" />
-            <item android:id="@+id/sortFavorites"
-                android:title="Favorites" />
+                android:title="Sort By Open" />
         </menu>
-    </item>
-
+    </item>-->
 </menu>
