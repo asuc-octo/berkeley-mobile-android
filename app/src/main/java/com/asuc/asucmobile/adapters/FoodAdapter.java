@@ -1,11 +1,14 @@
 package com.asuc.asucmobile.adapters;
 
 import android.content.Context;
+import android.util.Log;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.asuc.asucmobile.R;
@@ -15,8 +18,11 @@ import com.asuc.asucmobile.models.FoodItem;
 import com.asuc.asucmobile.utilities.SerializableUtilities;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 
 public class FoodAdapter extends BaseAdapter {
+
+    public static final String TAG = "FoodAdapter";
 
     private Context context;
     private ArrayList<FoodItem> foodItems;
@@ -51,27 +57,38 @@ public class FoodAdapter extends BaseAdapter {
         }
 
         final TextView foodName = (TextView) convertView.findViewById(R.id.food_name);
-        TextView foodType = (TextView) convertView.findViewById(R.id.food_type);
-        TextView foodCalories = (TextView) convertView.findViewById(R.id.calories);
 
         foodName.setText(foodItem.getName());
 
-        if (foodItem.getFoodTypes() != null && foodItem.getFoodTypes().length() > 0) {
+        if (foodItem.getFoodTypes() != null && foodItem.getFoodTypes().size() > 0) {
 
-            foodType.setVisibility(View.VISIBLE);
-            foodType.setText(foodItem.getFoodTypes().toString().replace("[", "").replace("]", ""));
-        } else {
-            foodType.setVisibility(View.GONE);
+            // make imageViews dynamically, switch on types
+            final LinearLayout foodTypesLayout = (LinearLayout) convertView.findViewById(R.id.food_types_layout);
+            foodTypesLayout.removeAllViews();
+
+
+            // layout stuff; want to make icons the same size as the food name: 16 sp
+            int size = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, 16, context.getResources().getDisplayMetrics());
+            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+
+            for (String str : foodItem.getFoodTypes()) {
+                int id = selectFoodIcon(str);
+                if (id == -1) {
+                    continue; // failed to find an icon
+                }
+                ImageView imageView = new ImageView(context);
+                imageView.setImageResource(id);
+                imageView.setLayoutParams(params);
+
+                imageView.getLayoutParams().height = size;
+                imageView.getLayoutParams().width = size;
+
+                foodTypesLayout.addView(imageView);
+            }
+
         }
 
-        if (!foodItem.getCost().equals("$NaN")) {
-            foodCalories.setText(foodItem.getCost());
-        } else if (foodItem.getCalories().equals("null")) {
-            foodCalories.setVisibility(View.GONE);
-        } else {
-            foodCalories.setVisibility(View.VISIBLE);
-            foodCalories.setText(String.format("%s cal", foodItem.getCalories()));
-        }
+
         final ListOfFavorites listOfFavorites = (ListOfFavorites) SerializableUtilities.loadSerializedObject(context);
         final ImageView imageView = (ImageView) convertView.findViewById(R.id.favorite);
 
@@ -98,6 +115,45 @@ public class FoodAdapter extends BaseAdapter {
         });
 
         return convertView;
+    }
+
+    private int selectFoodIcon(String string) {
+        switch (string) {
+            case ("contains alcohol"):
+                return R.drawable.alcohol;
+            case ("egg"):
+                return R.drawable.egg;
+            case ("fish"):
+                return R.drawable.fish;
+            case ("contains gluten"):
+                return R.drawable.gluten;
+            case ("halal"):
+                return R.drawable.halal;
+            case ("kosher"):
+                return R.drawable.kosher;
+            case ("milk"):
+                return R.drawable.milk;
+            case ("peanuts"):
+                return R.drawable.peanuts;
+            case ("contains pork"):
+                return R.drawable.pork;
+            case ("sesame"):
+                return R.drawable.sesame;
+            case ("shellfish"):
+                return R.drawable.shellfish;
+            case ("soybeans"):
+                return R.drawable.soybeans;
+            case ("tree nuts"):
+                return R.drawable.tree_nuts;
+            case ("vegan option"):
+                return R.drawable.vegan;
+            case ("vegetarian option"):
+                return R.drawable.vegetarian;
+            case ("wheat"):
+                return R.drawable.wheat;
+            default:
+                return -1;
+        }
     }
 
 }

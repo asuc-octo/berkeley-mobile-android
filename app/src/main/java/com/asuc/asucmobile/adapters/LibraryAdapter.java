@@ -10,11 +10,16 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.asuc.asucmobile.R;
+import com.asuc.asucmobile.fragments.LibraryFragment;
 import com.asuc.asucmobile.main.ListOfFavorites;
+import com.asuc.asucmobile.main.OpenDiningHallActivity;
+import com.asuc.asucmobile.main.OpenLibraryActivity;
 import com.asuc.asucmobile.models.Library;
+import com.asuc.asucmobile.utilities.CustomComparators;
 import com.asuc.asucmobile.utilities.SerializableUtilities;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class LibraryAdapter extends BaseAdapter {
 
@@ -95,6 +100,11 @@ public class LibraryAdapter extends BaseAdapter {
                     SerializableUtilities.saveObject(context, listOfFavorites);
                     imageView.setImageResource(R.drawable.post_favorite);
                 }
+
+
+                Collections.sort(getLibraries(), CustomComparators.FacilityComparators.getSortByFavoriteLibrary(OpenLibraryActivity.self_reference));
+                LibraryFragment.refreshLists();
+
             }
         });
 
@@ -152,5 +162,7 @@ public class LibraryAdapter extends BaseAdapter {
 
         };
     }
+
+
 
 }

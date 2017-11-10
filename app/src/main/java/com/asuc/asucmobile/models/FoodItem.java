@@ -2,6 +2,7 @@ package com.asuc.asucmobile.models;
 
 import android.support.annotation.NonNull;
 
+import java.util.ArrayList;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -13,10 +14,11 @@ public class FoodItem implements Comparable<FoodItem> {
     private String name;
     private String calories;
     private double cost;
-    private String foodTypes;
 
-    public FoodItem(String id, String name, String calories, double cost, String foodTypes) {
 
+    private ArrayList<String> foodTypes; // all in upper case
+
+    public FoodItem(String id, String name, String calories, double cost, ArrayList<String> types) {
         this.id = id;
         this.name = name;
         this.calories = calories;
@@ -32,11 +34,6 @@ public class FoodItem implements Comparable<FoodItem> {
         return name;
     }
 
-    public String getFoodTypes() {
-        return foodTypes;
-    }
-
-
     public String getCalories() {
         return calories;
     }
@@ -46,9 +43,10 @@ public class FoodItem implements Comparable<FoodItem> {
         return "$" + df.format(cost);
     }
 
-    /*public ArrayList<String> getFoodTypes() {
+    public ArrayList<String> getFoodTypes() {
         return foodTypes;
-    }*/
+    }
+
 
     @Override
     public int compareTo(@NonNull FoodItem other) {
