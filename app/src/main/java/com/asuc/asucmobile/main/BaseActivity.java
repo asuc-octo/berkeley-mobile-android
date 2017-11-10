@@ -7,10 +7,14 @@ import android.view.View;
 
 import com.asuc.asucmobile.R;
 import com.asuc.asucmobile.utilities.NavigationGenerator;
+import com.flurry.android.FlurryAgent;
 
 public class BaseActivity extends AppCompatActivity {
 
     protected void onCreate(Bundle savedInstanceState, int layout) {
+        new FlurryAgent.Builder()
+                .withLogEnabled(true)
+                .build(this, "KS9FBV3HYGBGY8MK6ZNB");
         super.onCreate(savedInstanceState);
         setContentView(layout);
         NavigationGenerator.getInstance().generateMenu(this);
