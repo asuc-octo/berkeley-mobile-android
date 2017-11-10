@@ -5,6 +5,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.v13.view.ViewCompat;
 import android.text.SpannableString;
 import android.text.style.ForegroundColorSpan;
 import android.util.Log;
@@ -28,6 +29,8 @@ import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Locale;
+
+import static android.support.design.R.id.add;
 
 /**
  * Created by rustie on 10/11/17.
@@ -78,6 +81,8 @@ public class MenuFragment extends Fragment {
 
         // Get references to views.
         foodMenu = (ListView) v.findViewById(R.id.food_menu);
+        ViewCompat.setNestedScrollingEnabled(foodMenu,true);
+
         emptyListView = (TextView) v.findViewById(R.id.empty_list);
         header = getActivity().getLayoutInflater().inflate(R.layout.header_image, foodMenu, false);
         headerHours = (TextView) header.findViewById(R.id.header_text);
