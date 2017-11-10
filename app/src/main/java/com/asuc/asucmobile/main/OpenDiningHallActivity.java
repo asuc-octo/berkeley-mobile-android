@@ -74,14 +74,14 @@ public class OpenDiningHallActivity extends BaseActivity {
             Date currentTime = new Date();
             if (diningHall.isLimitedDinnerOpen() ||
                     (diningHall.getDinnerClosing() != null && currentTime.after(diningHall.getDinnerClosing()))) {
-                viewPager.setCurrentItem(3);
+                viewPager.setCurrentItem(4);
             } else if (diningHall.isDinnerOpen() ||
                     (diningHall.getLunchClosing() != null && currentTime.after(diningHall.getLunchClosing())) ||
                     (diningHall.getDinnerClosing() != null && currentTime.after(diningHall.getDinnerClosing()))) {
-                viewPager.setCurrentItem(2);
+                viewPager.setCurrentItem(3);
             } else if (diningHall.isLimitedLunchOpen() ||
                     (diningHall.getLunchClosing() != null && currentTime.after(diningHall.getLunchClosing()))) {
-                viewPager.setCurrentItem(1);
+                viewPager.setCurrentItem(2);
             } else if (diningHall.isLunchOpen() ||
                     (diningHall.getBreakfastClosing() != null && currentTime.after(diningHall.getBreakfastClosing()))) {
                 viewPager.setCurrentItem(1);
