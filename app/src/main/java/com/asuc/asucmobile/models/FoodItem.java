@@ -39,6 +39,9 @@ public class FoodItem implements Comparable<FoodItem> {
     }
 
     public String getCost() {
+        if (Double.isNaN(cost)) {
+            return null;
+        }
         DecimalFormat df = new DecimalFormat("0.00");
         return "$" + df.format(cost);
     }
