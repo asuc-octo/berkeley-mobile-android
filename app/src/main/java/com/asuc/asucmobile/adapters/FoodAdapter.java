@@ -57,8 +57,10 @@ public class FoodAdapter extends BaseAdapter {
         }
 
         final TextView foodName = (TextView) convertView.findViewById(R.id.food_name);
-
         foodName.setText(foodItem.getName());
+
+        final TextView foodCost = (TextView) convertView.findViewById(R.id.food_cost);
+        foodCost.setText(foodItem.getCost());
 
         if (foodItem.getFoodTypes() != null && foodItem.getFoodTypes().size() > 0) {
 
