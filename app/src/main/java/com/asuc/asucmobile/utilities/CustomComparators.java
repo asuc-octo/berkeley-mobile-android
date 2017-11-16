@@ -20,6 +20,12 @@ public class CustomComparators {
             return sortByOpenness;
         }
 
+
+        /*
+            - Updated November 9, 2017 to do following:
+                - First sorts by if Library is in favortie
+                - If not in favorite, then checks for openness
+         */
         public static Comparator<Library> getSortByFavoriteLibrary(final Context context) {
             return new Comparator<Library>() {
                 @Override
@@ -32,8 +38,19 @@ public class CustomComparators {
                     if (listOfFavorites.contains(lhs.getName()) && listOfFavorites.contains(rhs.getName())) {
                         return lhs.compareTo(rhs);
                     }
-                    if (listOfFavorites.contains(lhs.getName())) return -1;
-                    if (listOfFavorites.contains(rhs.getName())) return 1;
+                    if (listOfFavorites.contains(lhs.getName()))
+                        return -1;
+                    if (listOfFavorites.contains(rhs.getName()))
+                        return 1;
+
+                    /// Check for openness
+                    if (lhs.isOpen() && !rhs.isOpen())
+                        return -1;
+                    if (rhs.isOpen() && !lhs.isOpen())
+                        return 1;
+                    if (lhs.isOpen() && rhs.isOpen())
+                        return lhs.compareTo(rhs);
+
                     return lhs.compareTo(rhs);
                 }
             };
