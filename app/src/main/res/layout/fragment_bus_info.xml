@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="300dp"
+    android:layout_height="110dp"
+    android:orientation="vertical"
+    android:weightSum="1">
+
+
+    <LinearLayout
+        android:id="@+id/mainInfo"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_weight="0.09">
+
+        <RelativeLayout
+            android:layout_width="195dp"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/routeName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:clickable="false"
+                android:fontFamily="sans-serif"                android:text="51B"
+                android:layout_marginTop="5dp"
+                android:textColor="#022E81"
+                android:textSize="35dp"
+                android:textStyle="bold" />
+
+            <LinearLayout
+                android:id="@+id/routeNameWrapper"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/routeName"
+                android:layout_marginLeft="5dp"
+                android:layout_marginTop="-9dp">
+
+                <ImageView
+                    android:layout_width="17dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="5dp"
+                    android:paddingBottom="5dp"
+                    android:src="@drawable/arrowleft" />
+
+                <TextView
+                    android:textColor="#022E81"
+
+                    android:id="@+id/directionName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/routeName"
+                    android:layout_marginLeft="3dp"
+                    android:fontFamily="sans-serif"
+                    android:paddingBottom="3dp"
+                    android:text="Berkeley Amtrak"
+                    android:textSize="20dp" />
+
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/busStopName"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:textColor="#022E81"
+
+                android:fontFamily="sans-serif"
+                android:layout_alignLeft="@+id/routeName"
+                android:layout_alignParentBottom="true"
+                android:layout_alignStart="@+id/routeName"
+                android:layout_below="@+id/routeNameWrapper"
+                android:text="Bancroft &amp; Telegraph"
+                android:layout_marginTop="-7dp"
+                android:textSize="13dp" />
+
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="200dp"
+            android:layout_height="match_parent"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            android:layout_toEndOf="@+id/busStopName"
+            android:gravity="center_vertical"
+            android:orientation="vertical"
+            android:paddingBottom="25dp">
+
+
+            <LinearLayout
+                android:id="@+id/timeWrapper"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:orientation="horizontal"
+                android:visibility="visible"
+                android:weightSum="1">
+
+                <TextView
+                    android:id="@+id/mainTime"
+                    android:layout_width="35dp"
+                    android:fontFamily="sans-serif"
+                    android:layout_height="wrap_content"
+                    android:layout_above="@+id/time1"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
+                    android:text="3"
+                    android:textAlignment="center"
+                    android:textColor="#022E81"
+                    android:textSize="27dp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/min"
+                    android:layout_width="49dp"
+                    android:layout_height="wrap_content"
+                    android:layout_above="@+id/time1"
+                    android:text="min"
+                    android:fontFamily="sans-serif"
+                    android:textColor="#022E81"
+                    android:textSize="10dp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/timeWrapper1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_below="@id/timeWrapper"
+                android:orientation="horizontal"
+                android:weightSum="1">
+
+                <TextView
+                    android:id="@+id/mainTime1"
+                    android:layout_width="35dp"
+                    android:fontFamily="sans-serif"
+                    android:layout_height="wrap_content"
+                    android:layout_above="@+id/time1"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
+                    android:text="10"
+                    android:textAlignment="center"
+                    android:textColor="#022E81"
+                    android:textSize="10dp" />
+
+                <TextView
+                    android:id="@+id/min1"
+                    android:layout_width="21dp"
+                    android:layout_height="wrap_content"
+                    android:layout_above="@+id/time1"
+                    android:layout_weight="0.21"
+                    android:text="min"
+                    android:fontFamily="sans-serif"
+                    android:textColor="#022E81"
+                    android:textSize="10dp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_below="@id/timeWrapper1"
+                android:orientation="horizontal"
+                android:weightSum="1">
+
+                <TextView
+                    android:id="@+id/mainTime2"
+                    android:layout_width="35dp"
+                    android:layout_height="wrap_content"
+                    android:layout_above="@+id/time1"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
+                    android:text="30"
+                    android:textAlignment="center"
+                    android:fontFamily="sans-serif"
+                    android:textColor="#022E81"
+                    android:textSize="10dp" />
+
+                <TextView
+                    android:id="@+id/min2"
+                    android:layout_width="21dp"
+                    android:layout_height="wrap_content"
+                    android:layout_above="@+id/time1"
+                    android:layout_weight="0.21"
+                    android:fontFamily="sans-serif"
+                    android:text="min"
+                    android:textColor="#022E81"
+                    android:textSize="10dp" />
+
+            </LinearLayout>
+
+
+        </RelativeLayout>
+
+
+    </LinearLayout>
+
+
+</LinearLayout>

@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <Button
+        android:id="@+id/bear_transit_button"
+        android:layout_width="98dp"
+        android:layout_height="17dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:layout_marginTop="5dp"
+        android:background="@drawable/beartransit_pop_up_window_button_pressed"
+        android:text="Bear Transit"
+        android:textColor="#FFFFFFFF"
+        android:textSize="12dp"
+        android:textStyle="bold"
+        />
+
+    <TextView
+        android:id="@+id/markerTitle"
+        android:layout_below="@id/bear_transit_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="5dp"
+        android:fontFamily="serif"
+        android:text="Marker Title"
+        android:textColor="#2626ce"
+        android:textSize="12dp"
+        android:textStyle="bold"
+        android:clickable="false"/>
+
+    <TextView
+        android:id="@+id/minutesAway"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/markerTitle"
+        android:layout_marginLeft="5dp"
+        android:text="0.5 mi away"
+        android:textSize="9dp"
+        />
+
+    <TextView
+        android:id="@+id/arrivalTime"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/minutesAway"
+        android:layout_marginLeft="5dp"
+        android:fontFamily="serif"
+        android:text="Arrival: In 3 minutes (4:10 PM)"
+        android:textColor="#2626ce"
+        android:textSize="9dp"
+        android:textStyle="bold"
+        android:clickable="true"/>
+
+    <TextView
+        android:id="@+id/list_of_times"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/arrivalTime"
+        android:layout_marginLeft="5dp"
+        android:text="4:10 PM, 4:18 PM, 4:26 PM, 4:34 PM, 4:42 PM, 4:50 PM, ..."
+        android:textSize="9dp" />
+
+</RelativeLayout>
