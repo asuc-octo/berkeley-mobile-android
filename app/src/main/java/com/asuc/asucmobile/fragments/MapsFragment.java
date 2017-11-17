@@ -58,6 +58,7 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.Polyline;
+import com.google.firebase.analytics.FirebaseAnalytics;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.wang.avi.AVLoadingIndicatorView;
@@ -110,6 +111,8 @@ public class MapsFragment extends Fragment
     private MapFragment mapFragment;
     private static MapsFragment instance;
     private static Marker prevMarker;
+    private FirebaseAnalytics mFirebaseAnalytics;
+
 
 
     public static MapsFragment newInstance() {
@@ -139,6 +142,12 @@ public class MapsFragment extends Fragment
         }
 
         instance = this;
+
+        mFirebaseAnalytics = FirebaseAnalytics.getInstance(this.getContext());
+        Bundle bundle = new Bundle();
+        bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, "Opened BearTransit");
+        mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
+
 
         Toolbar toolbar = (Toolbar) layout.findViewById(R.id.toolbar);
         ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
@@ -225,6 +234,12 @@ public class MapsFragment extends Fragment
                 if (destination == null || origin == null) {
                     Toast.makeText(getActivity().getBaseContext(), "Please select a destination and an origin.", Toast.LENGTH_SHORT).show();
                 } else {
+
+                    mFirebaseAnalytics = FirebaseAnalytics.getInstance(MapsFragment.this.getContext());
+                    Bundle bundle = new Bundle();
+                    bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, "Clicked Go Button");
+                    mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
+
                     refresh(origin.getPosition(), destination.getPosition(), System.currentTimeMillis());
                 }
 
