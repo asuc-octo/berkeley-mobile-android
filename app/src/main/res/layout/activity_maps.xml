@@ -1,0 +1,116 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
+    android:orientation="vertical">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        style="@style/ToolbarTheme"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:elevation="7dp" />
+
+    <fragment
+        android:id="@+id/map"
+        android:name="com.google.android.gms.maps.SupportMapFragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        />
+
+    <RelativeLayout
+        android:id="@+id/topBox"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/toolbar"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:background="@color/transparent"
+        android:orientation="horizontal"
+        android:weightSum="1">
+
+
+        <LinearLayout
+            android:id="@+id/origin_bar_wrapper"
+            android:layout_width="match_parent"
+            android:layout_height="55dp"
+            android:visibility="visible">
+
+            <fragment
+                android:id="@+id/origin_bar"
+                android:name="com.asuc.asucmobile.fragments.OriginFragment"
+                android:layout_width="match_parent"
+                android:layout_height="55dp"
+                android:layout_alignBottom="@+id/loading_dots"
+                android:layout_toEndOf="@+id/loading_dots"
+                android:layout_toRightOf="@+id/loading_dots"
+                android:layout_weight="1"
+                tools:layout="@layout/origin_fragment"></fragment>
+        </LinearLayout>
+
+        <fragment
+            android:id="@+id/destination_bar"
+            android:name="com.asuc.asucmobile.fragments.DestinationFragment"
+            android:layout_width="match_parent"
+            android:layout_height="55dp"
+            android:layout_below="@id/origin_bar_wrapper"
+            tools:layout="@layout/destination_fragment" />
+
+        />
+
+
+    </RelativeLayout>
+
+
+    <Button
+        android:id="@+id/busesNearby"
+        android:layout_width="130dp"
+        android:layout_height="40dp"
+        android:layout_alignEnd="@+id/topBox"
+        android:layout_alignRight="@+id/topBox"
+        android:layout_below="@+id/topBox"
+        android:layout_marginTop="5dp"
+        android:background="@drawable/ac_bear_transit_pop_up_window_button"
+        android:text="Stops Nearby"
+        android:textColor="#022E81"
+        android:textSize="15dp"
+        android:fontFamily="sans-serif"/>
+
+
+    <view
+        android:id="@+id/determinate"
+        class="mbanje.kurt.fabbutton.FabButton"
+        android:layout_width="@dimen/button_size"
+        android:layout_height="@dimen/button_size"
+        android:color="#2685F5"
+        android:src="@drawable/go_button"
+
+
+        android:indeterminate="true"
+        android:max="100"
+        android:text="GO"
+        android:textColor="@color/holo_white"
+        android:visibility="visible"
+        app:fbb_autoStart="true"
+        app:fbb_endBitmap="@drawable/ic_action_refresh"
+        app:fbb_progressColor="@color/holo_white"
+        app:fbb_progressWidthRatio="0.1"
+        android:layout_alignParentBottom="true"
+        android:layout_alignEnd="@+id/busesNearby" />
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/refresh"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true" />
+
+
+</RelativeLayout>
