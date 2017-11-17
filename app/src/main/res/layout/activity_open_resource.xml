@@ -27,6 +27,15 @@
                     android:padding="96dp"
                     android:layout_gravity="center" />
 
+                <android.support.v7.widget.Toolbar
+                    android:id="@+id/toolbar"
+                    style="@style/ToolbarTheme"
+                    android:layout_width="match_parent"
+                    android:layout_height="?android:attr/actionBarSize"
+                    android:elevation="8dp"
+                    android:background="@color/hotline_blue"
+                    tools:ignore="all" />
+
                 <fragment
                     android:id="@+id/map"
                     android:layout_width="fill_parent"
@@ -34,14 +43,7 @@
                     android:name="com.google.android.gms.maps.MapFragment"
                     tools:layout="@android:layout/list_content" />
 
-                <android.support.v7.widget.Toolbar
-                    android:id="@+id/toolbar"
-                    style="@style/ToolbarTheme"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:elevation="8dp"
-                    android:background="@color/toolbarTransparentForMaps"
-                    tools:ignore="all" />
+
 
             </FrameLayout>
 
