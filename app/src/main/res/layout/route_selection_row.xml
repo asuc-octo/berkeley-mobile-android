@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/tripLayout"
+    android:layout_width="match_parent"
+    android:layout_height="90dp"
+    android:baselineAligned="false"
+    android:orientation="horizontal"
+    android:weightSum="1">
+
+
+    <ImageView
+        android:id="@+id/busIcon"
+        android:layout_width="20dp"
+        android:layout_height="match_parent"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignTop="@+id/lineName"
+        android:layout_marginStart="25dp"
+        android:paddingBottom="55dp"
+        android:src="@drawable/busicon" />
+
+    <RelativeLayout
+        android:layout_width="200dp"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/startingStop"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/lineName"
+            android:layout_marginLeft="9dp"
+            android:layout_marginStart="9dp"
+            android:text="Bancroft and Telegraph"
+            android:textColor="@android:color/black"
+            android:textSize="15dp" />
+
+        <TextView
+            android:id="@+id/lineName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/startingStop"
+            android:layout_alignParentTop="true"
+            android:layout_alignStart="@+id/startingStop"
+            android:text="6"
+            android:layout_marginTop="5dp"
+            android:textColor="@android:color/black"
+            android:textSize="20dp"
+            android:textStyle="bold" />
+
+
+    </RelativeLayout>
+
+
+    <TextView
+        android:id="@+id/duration"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:paddingTop="10dp"
+        android:text="30 min"
+        android:textColor="@android:color/black"
+        android:textSize="15dp" />
+
+    <ImageView
+        android:layout_width="25dp"
+        android:layout_height="match_parent"
+        android:paddingBottom="50dp"
+        android:src="@drawable/rightarrow" />
+
+</LinearLayout>
