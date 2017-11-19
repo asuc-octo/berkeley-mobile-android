@@ -1,12 +1,17 @@
 package com.asuc.asucmobile.main;
 
+import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.support.v7.widget.Toolbar;
 
 
 import com.asuc.asucmobile.R;
@@ -21,7 +26,7 @@ import java.util.List;
  * Created by alexthomas on 10/14/17.
  */
 
-public class RouteSelectActivity extends Activity {
+public class RouteSelectActivity extends BaseActivity {
 
 
     private ListView busList;
@@ -30,6 +35,8 @@ public class RouteSelectActivity extends Activity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.bus_list_times);
+
+        setupToolbar("Routes", true);
 
         ArrayList<Journey> routes = (ArrayList<Journey>) getIntent().getSerializableExtra("routes");
 
