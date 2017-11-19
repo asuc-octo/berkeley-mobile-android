@@ -130,12 +130,20 @@ public class LiveBusActivity extends BaseActivity implements OnMapReadyCallback 
         private HashMap<String, Marker> markers;
         private Timer timer;
         private BitmapDescriptor icon;
+        private static BusCallback instance;
+
+        public static BusCallback getInstance(){
+            return instance;
+        }
+
+
 
         public BusCallback(Context context, GoogleMap map, LinearLayout refreshWrapper, Timer timer) {
             this.map = map;
             this.refreshWrapper = refreshWrapper;
             this.markers = new HashMap<>();
             this.timer = timer;
+            this.instance = this;
             Bitmap b =
                     BitmapFactory.decodeResource(context.getResources(), R.drawable.transit_blue);
             icon = BitmapDescriptorFactory.fromBitmap(Bitmap.createScaledBitmap(b, 96, 96, false));
@@ -183,6 +191,7 @@ public class LiveBusActivity extends BaseActivity implements OnMapReadyCallback 
             failCount++;
             if (failCount > 1) {
                 timer.purge();
+                map.clear();
                 refreshWrapper.setVisibility(View.VISIBLE);
             }
         }
