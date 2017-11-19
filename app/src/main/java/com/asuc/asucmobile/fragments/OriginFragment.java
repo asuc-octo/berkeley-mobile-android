@@ -16,6 +16,7 @@ import android.text.Editable;
 import android.text.Html;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.InflateException;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -69,6 +70,8 @@ public class OriginFragment extends PlaceAutocompleteFragment implements
     private static final String TAG = "MainActivity";
     private static final int GOOGLE_API_CLIENT_ID = 0;
     private AutoCompleteTextView mAutocompleteTextView;
+    private static View layout;
+
     private TextView mNameView;
 
     private static GoogleApiClient mGoogleApiClient;
@@ -80,12 +83,21 @@ public class OriginFragment extends PlaceAutocompleteFragment implements
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View layout = inflater.inflate(R.layout.origin_fragment, container, false);
+        if (layout != null) {
+            ViewGroup parent = (ViewGroup) layout.getParent();
+            if (parent != null)
+                parent.removeView(layout);
+        }
+        try {
+            layout = inflater.inflate(R.layout.origin_fragment, container, false);
+        } catch (InflateException e) {
+            Log.e("hi", e.toString());
+            // Don't worry about it!
+        }
 
 
         mAutocompleteTextView = (AutoCompleteTextView) layout.findViewById(R.id.origin);
         mAutocompleteTextView.setThreshold(3);
-        //mNameView = (TextView) layout.findViewById(R.id.name);
 
         final ImageView clear = (ImageView) layout.findViewById(R.id.clear_button);
 
@@ -111,7 +123,7 @@ public class OriginFragment extends PlaceAutocompleteFragment implements
 
         mGoogleApiClient = new GoogleApiClient.Builder(getActivity())
                 .addApi(Places.GEO_DATA_API)
-                .enableAutoManage((FragmentActivity) getActivity(), GOOGLE_API_CLIENT_ID, this)
+                .enableAutoManage((FragmentActivity) layout.getContext(), GOOGLE_API_CLIENT_ID, this)
                 .addConnectionCallbacks(this)
                 .build();
 
@@ -142,19 +154,35 @@ public class OriginFragment extends PlaceAutocompleteFragment implements
             }
         });
 
-//        searchButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                searchButton.setVisibility(View.GONE);
-//                clear.setVisibility(View.VISIBLE);
-//
-//            }
-//        });
+        searchButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                searchButton.setVisibility(View.GONE);
+                clear.setVisibility(View.VISIBLE);
+                mAutocompleteTextView.setHint("Current Location");
+                try {
+                    clear.setVisibility(View.GONE);
+                    searchButton.setVisibility(View.VISIBLE);
+                    origin = MapsFragment.getInstance().getCurrLocation();
+                    Geocoder geocoder;
+                    List<Address> addresses;
+                    geocoder = new Geocoder(getActivity(), Locale.getDefault());
+                    addresses = geocoder.getFromLocation(origin.latitude, origin.longitude, 1); // Here 1 represent max location result to returned, by documents it recommended 1 to 5
+                    String address = addresses.get(0).getAddressLine(0);
+                    mAutocompleteTextView.setText(address);
+                } catch (Exception e) {
+
+                }
+
+
+            }
+        });
 
 
         clear.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                mAutocompleteTextView.setHint("");
                 mAutocompleteTextView.setText("");
                 clear.setVisibility(View.GONE);
                 searchButton.setVisibility(View.VISIBLE);
@@ -169,7 +197,7 @@ public class OriginFragment extends PlaceAutocompleteFragment implements
         mPlaceArrayAdapter = new PlaceArrayAdapter(getContext(), R.layout.maps_autocomplete_list_item, R.id.text1,
                 BOUNDS_MOUNTAIN_VIEW, filter);
         mAutocompleteTextView.setAdapter(mPlaceArrayAdapter);
-       // mAutocompleteTextView.setText("Current Location");
+       //mAutocompleteTextView.setText("Current Location");
         //origin = MapsFragment.getInstance().getCurrLocation();
 
         return layout;
@@ -226,6 +254,13 @@ public class OriginFragment extends PlaceAutocompleteFragment implements
     }
 
     @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        mGoogleApiClient.disconnect();
+
+    }
+
+    @Override
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
 
     }
@@ -233,12 +268,5 @@ public class OriginFragment extends PlaceAutocompleteFragment implements
     public LatLng getOrigin() {
 
         return origin;
-    }
-
-    public static GoogleApiClient getGoogleAPIClient() {
-
-        return mGoogleApiClient;
-
-
     }
 }
