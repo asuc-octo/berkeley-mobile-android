@@ -139,8 +139,7 @@ public class LiveBusActivity extends BaseActivity implements OnMapReadyCallback 
             Bitmap b =
                     BitmapFactory.decodeResource(context.getResources(), R.drawable.transit_blue);
             icon = BitmapDescriptorFactory.fromBitmap(Bitmap.createScaledBitmap(b, 96, 96, false));
-            //map.clear();
-            clear(markers);
+            map.clear();
         }
 
         @Override
@@ -150,7 +149,6 @@ public class LiveBusActivity extends BaseActivity implements OnMapReadyCallback 
                 failCount = 0;
             }
 
-            clear(markers);
             List<Bus> buses = LiveBusController.parse(response.body());
             HashSet<String> lines = new HashSet<>();
 
@@ -159,16 +157,13 @@ public class LiveBusActivity extends BaseActivity implements OnMapReadyCallback 
                 if (bus.getLineName() != null && !bus.getLineName().equals("null")) {
                     lines.add(bus.getLineName());
                     if (!markers.containsKey(bus.getLineName())) {
-                        Marker singleMarker = map.addMarker(new MarkerOptions()
-                                .position(bus.getLocation())
-                                .icon(icon)
-                                .title(bus.getLineName()
-                                )
-                        );
-                        singleMarker.setTag(true);
                         markers.put(
-                                bus.getLineName(), singleMarker
-                        );
+                                bus.getLineName(),
+                                map.addMarker(new MarkerOptions()
+                                        .position(bus.getLocation())
+                                        .icon(icon)
+                                        .title(bus.getLineName())
+                                ));
                     }
                     markers.get(bus.getLineName()).setPosition(bus.getLocation());
                 }
@@ -188,12 +183,11 @@ public class LiveBusActivity extends BaseActivity implements OnMapReadyCallback 
             failCount++;
             if (failCount > 1) {
                 timer.purge();
-                clear(markers);
                 refreshWrapper.setVisibility(View.VISIBLE);
             }
         }
 
-        public void clear(HashMap<String, Marker> hashmap) {
+       /* public void clear(HashMap<String, Marker> hashmap) {
 
             for (String x : hashmap.keySet()) {
                 hashmap.get(x).remove();
@@ -201,7 +195,7 @@ public class LiveBusActivity extends BaseActivity implements OnMapReadyCallback 
 
             //hashmap.clear();
 
-        }
+        }*/
     }
 
 }

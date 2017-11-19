@@ -141,7 +141,7 @@ public class RouteSelected extends BaseActivity {
                         builder.include(new LatLng(firstStop.getLatitude(), firstStop.getLongitude()));
                         builder.include(new LatLng(lastStop.getLatitude(), lastStop.getLongitude()));
 
-                        LatLng prevLocation = null;
+                      /*  LatLng prevLocation = null;
                         for (Trip trip : route.getTrips()) {
                             for (Stop stop : trip.getStops()) {
                                 if (prevLocation == null) {
@@ -155,7 +155,7 @@ public class RouteSelected extends BaseActivity {
                                     downloadTask.execute(url);
                                 }
                             }
-                        }
+                        }*/
 
 
                         try {
