@@ -16,13 +16,12 @@
 
     <fragment
         android:id="@+id/map"
-        android:name="com.google.android.gms.maps.SupportMapFragment"
+        android:name="com.google.android.gms.maps.MapFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        />
+        android:layout_alignParentTop="true" />
 
     <RelativeLayout
         android:id="@+id/topBox"
@@ -47,9 +46,6 @@
                 android:name="com.asuc.asucmobile.fragments.OriginFragment"
                 android:layout_width="match_parent"
                 android:layout_height="55dp"
-                android:layout_alignBottom="@+id/loading_dots"
-                android:layout_toEndOf="@+id/loading_dots"
-                android:layout_toRightOf="@+id/loading_dots"
                 android:layout_weight="1"
                 tools:layout="@layout/origin_fragment"></fragment>
         </LinearLayout>
@@ -64,7 +60,6 @@
 
         />
 
-
     </RelativeLayout>
 
 
@@ -77,10 +72,11 @@
         android:layout_below="@+id/topBox"
         android:layout_marginTop="5dp"
         android:background="@drawable/ac_bear_transit_pop_up_window_button"
+        android:fontFamily="sans-serif"
         android:text="Stops Nearby"
         android:textColor="#022E81"
         android:textSize="15dp"
-        android:fontFamily="sans-serif"/>
+        android:visibility="gone" />
 
 
     <view
@@ -88,30 +84,30 @@
         class="mbanje.kurt.fabbutton.FabButton"
         android:layout_width="@dimen/button_size"
         android:layout_height="@dimen/button_size"
+
+        android:layout_alignEnd="@+id/busesNearby"
+        android:layout_alignParentBottom="true"
         android:color="#2685F5"
-        android:src="@drawable/go_button"
-
-
         android:indeterminate="true"
         android:max="100"
+        android:src="@drawable/go_button"
         android:text="GO"
         android:textColor="@color/holo_white"
+        android:translationY="-20dp"
         android:visibility="visible"
+
         app:fbb_autoStart="true"
         app:fbb_endBitmap="@drawable/ic_action_refresh"
         app:fbb_progressColor="@color/holo_white"
-        app:fbb_progressWidthRatio="0.1"
-        android:layout_alignParentBottom="true"
-        android:layout_alignEnd="@+id/busesNearby"
-        android:translationY="-20dp"/>
+        app:fbb_progressWidthRatio="0.1" />
 
     <LinearLayout
-        android:orientation="vertical"
+        android:id="@+id/refresh"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/refresh"
+        android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true" />
+        android:orientation="vertical" />
 
 
 </RelativeLayout>

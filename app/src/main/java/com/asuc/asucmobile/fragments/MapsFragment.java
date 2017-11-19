@@ -49,6 +49,7 @@ import com.asuc.asucmobile.models.Journey;
 import com.asuc.asucmobile.models.Stop;
 import com.asuc.asucmobile.utilities.Callback;
 import com.asuc.asucmobile.utilities.JSONUtilities;
+import com.asuc.asucmobile.utilities.LocationGrabber;
 import com.asuc.asucmobile.utilities.NavigationGenerator;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -76,6 +77,7 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -116,21 +118,13 @@ public class MapsFragment extends Fragment
     private boolean nearByHighlighted = false;
     @SuppressWarnings("all")
     private static View layout;
-    private SupportMapFragment mapFragment;
+    private MapFragment mapFragment;
     private LiveBusActivity.BusCallback busCallback;
 
 
     private static MapsFragment instance;
     private static Marker prevMarker;
 
-
-    public static MapsFragment newInstance() {
-        Bundle args = new Bundle();
-
-        MapsFragment fragment = new MapsFragment();
-        fragment.setArguments(args);
-        return fragment;
-    }
 
     public static MapsFragment getInstance() {
         return instance;
@@ -146,10 +140,13 @@ public class MapsFragment extends Fragment
         }
         try {
             layout = inflater.inflate(R.layout.activity_maps, container, false);
-        } catch (InflateException e) {
+        } catch (Exception e) {
             Log.e("hi", e.toString());
-            // Don't worry about it!
+
+
         }
+//            Log.e("hi", e.getStackTrace().toString());
+        // Don't worry about it!
 
         instance = this;
 
@@ -161,7 +158,7 @@ public class MapsFragment extends Fragment
 
 
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
-        mapFragment = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.map);
+        mapFragment = (MapFragment) getActivity().getFragmentManager().findFragmentById(R.id.map);
         googleApiClient = new GoogleApiClient.Builder(getActivity())
                 .addConnectionCallbacks(this)
                 .addApi(Places.GEO_DATA_API)
@@ -179,7 +176,7 @@ public class MapsFragment extends Fragment
         navigation_button = (FabButton) layout.findViewById(R.id.determinate);
         busesNearby = (Button) layout.findViewById(R.id.busesNearby);
 
-        busesNearby.setOnClickListener(new View.OnClickListener() {
+        /*busesNearby.setOnClickListener(new View.OnClickListener() {
             @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
             @Override
             public void onClick(View v) {
@@ -225,7 +222,7 @@ public class MapsFragment extends Fragment
             }
 
 
-        });
+        });*/
 
 
         navigation_button.setOnClickListener(new View.OnClickListener()
@@ -299,6 +296,7 @@ public class MapsFragment extends Fragment
 
             currLocation = BERKELEY;
         }
+        LiveBusActivity.timer = new Timer("liveBus", true);
         busCallback = new LiveBusActivity.BusCallback(getContext(), mMap, refreshWrapper, LiveBusActivity.timer);
 
 
@@ -327,9 +325,9 @@ public class MapsFragment extends Fragment
         }.getType();
 
 
-        HashMap<String, Stop> AC_plots = gson.fromJson(JSONUtilities.readJSONFromAsset(getActivity(), "BerkeleyStops.json"), listType);
+        //  HashMap<String, Stop> AC_plots = gson.fromJson(JSONUtilities.readJSONFromAsset(getActivity(), "BerkeleyStops.json"), listType);
 
-        loadMarkers(AC_plots);
+        //loadMarkers(AC_plots);
 
 
         liveTrack();
@@ -405,8 +403,8 @@ public class MapsFragment extends Fragment
     @Override
     public void onMapLoaded() {
 
-        originWrapper = (LinearLayout) layout.findViewById(R.id.origin_bar_wrapper);
-        bearTransitPressed = false;
+        // originWrapper = (LinearLayout) layout.findViewById(R.id.origin_bar_wrapper);
+        //bearTransitPressed = false;
 
     }
 
@@ -481,7 +479,7 @@ public class MapsFragment extends Fragment
     public void onResume() {
         super.onResume();
         mapFragment.getMapAsync(this);
-        LiveBusActivity.timer = new Timer("liveBus", true);
+        //LocationGrabber.getLocation(MapsFragment.this,  new RawLocationCallback());
         NavigationGenerator.closeMenu(getActivity());
     }
 
@@ -530,9 +528,15 @@ public class MapsFragment extends Fragment
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        Fragment mapToDestroy = (Fragment) getFragmentManager().findFragmentById(R.id.map);
+        Fragment mapToDestroy = getFragmentManager().findFragmentById(R.id.map);
+        Fragment originFragment = getFragmentManager().findFragmentById(R.id.origin_bar);
+        Fragment destFragment = getFragmentManager().findFragmentById(R.id.destination_bar);
+
         if (mapToDestroy != null) {
             getFragmentManager().beginTransaction().remove(mapToDestroy).commit();
+            getFragmentManager().beginTransaction().remove(originFragment).commit();
+            getFragmentManager().beginTransaction().remove(destFragment).commit();
+
         }
         try {
             stopLocationTracking();
@@ -570,11 +574,15 @@ public class MapsFragment extends Fragment
                     public void onDataRetrieved(Object data) {
                         navigation_button.showProgress(false);
 
-                        Intent routeSelect = new Intent(getContext(), RouteSelectActivity.class);
+                        if (((ArrayList) data).size() == 0) {
+                            onRetrievalFailed();
 
-                        ArrayList<Journey> routes = (ArrayList<Journey>) data;
-                        routeSelect.putExtra("routes", routes);
-                        startActivity(routeSelect);
+                        } else {
+                            Intent routeSelect = new Intent(getContext(), RouteSelectActivity.class);
+                            ArrayList<Journey> routes = (ArrayList<Journey>) data;
+                            routeSelect.putExtra("routes", routes);
+                            startActivity(routeSelect);
+                        }
 
 
                     }
