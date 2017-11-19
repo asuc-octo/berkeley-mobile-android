@@ -94,6 +94,9 @@ public class RouteAdapter extends BaseAdapter {
                     startingStop.setText(getItem(1).getName());
                     duration.setText(getDuration());
                 } else {
+                    line.setText(stop.getName());
+                    busIcon.setVisibility(View.VISIBLE);
+                    startingStop.setText("TRANSFER: " + stop.getName());
                    // stopIcon.setVisibility(View.VISIBLE);
                     // stopIcon.setImageDrawable(context.getResources().getDrawable(R.drawable.route_start_yellow));
 
