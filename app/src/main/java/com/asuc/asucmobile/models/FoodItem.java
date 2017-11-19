@@ -23,7 +23,7 @@ public class FoodItem implements Comparable<FoodItem> {
         this.name = name;
         this.calories = calories;
         this.cost = cost;
-        this.foodTypes = foodTypes;
+        this.foodTypes = types;
     }
 
     public String getId() {
