@@ -274,6 +274,7 @@ public class MapsFragment extends Fragment
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
+
         this.mMap = googleMap;
         //Zooms camera to "my location"
         if (ActivityCompat.checkSelfPermission(getActivity(), android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getActivity(), android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
@@ -296,8 +297,11 @@ public class MapsFragment extends Fragment
 
             currLocation = BERKELEY;
         }
-        LiveBusActivity.timer = new Timer("liveBus", true);
-        busCallback = new LiveBusActivity.BusCallback(getContext(), mMap, refreshWrapper, LiveBusActivity.timer);
+
+        if (LiveBusActivity.BusCallback.getInstance() == null) {
+            busCallback = new LiveBusActivity.BusCallback(getContext(), mMap, refreshWrapper, LiveBusActivity.timer);
+            cameraLoadAnimation(currLocation);
+        }
 
 
         //Clears focus when user clicks on map
@@ -317,9 +321,8 @@ public class MapsFragment extends Fragment
 
         //Changes the FAB (my location button) to bottom right
         moveNavigationIcon(mapView);
-        cameraLoadAnimation(currLocation);
         mMap.setOnMarkerClickListener(this);
-        mMap.setOnMapLoadedCallback(this);
+        // mMap.setOnMapLoadedCallback(this);
 
         Type listType = new TypeToken<HashMap<String, Stop>>() {
         }.getType();
@@ -348,9 +351,11 @@ public class MapsFragment extends Fragment
 
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
     public boolean onMarkerClick(final Marker marker) {
-        BitmapDescriptor icon = BitmapDescriptorFactory.fromResource(R.drawable.markerclicked);
+        return true;
 
-        if ((boolean) marker.getTag()) {
+/*        BitmapDescriptor icon = BitmapDescriptorFactory.fromResource(R.drawable.markerclicked);
+
+        if (marker == null || (boolean) marker.getTag()) {
             return true;
         }
 
@@ -372,7 +377,7 @@ public class MapsFragment extends Fragment
         popUp.putExtra("location", marker.getPosition());
 
         startActivity(popUp);
-        return true;
+        return true;*/
     }
 
     public void cameraLoadAnimation(LatLng location) {
@@ -479,6 +484,7 @@ public class MapsFragment extends Fragment
     public void onResume() {
         super.onResume();
         mapFragment.getMapAsync(this);
+        LiveBusActivity.timer = new Timer("liveBus", true);
         //LocationGrabber.getLocation(MapsFragment.this,  new RawLocationCallback());
         NavigationGenerator.closeMenu(getActivity());
     }
