@@ -145,8 +145,7 @@ public class MapsFragment extends Fragment
 
         mFirebaseAnalytics = FirebaseAnalytics.getInstance(this.getContext());
         Bundle bundle = new Bundle();
-        bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, "Opened BearTransit");
-        mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
+        mFirebaseAnalytics.logEvent("opened_transit_screen", bundle);
 
 
         Toolbar toolbar = (Toolbar) layout.findViewById(R.id.toolbar);
@@ -237,8 +236,7 @@ public class MapsFragment extends Fragment
 
                     mFirebaseAnalytics = FirebaseAnalytics.getInstance(MapsFragment.this.getContext());
                     Bundle bundle = new Bundle();
-                    bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, "Clicked Go Button");
-                    mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
+                    mFirebaseAnalytics.logEvent("clicked_go_button", bundle);
 
                     refresh(origin.getPosition(), destination.getPosition(), System.currentTimeMillis());
                 }

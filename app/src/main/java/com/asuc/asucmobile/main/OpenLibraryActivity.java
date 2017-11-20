@@ -61,8 +61,8 @@ public class OpenLibraryActivity extends BaseActivity {
 
         mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
         Bundle bundle = new Bundle();
-        bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, "Opened Library " + library.getName());
-        mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
+        bundle.putString("opened_library", library.getName());
+        mFirebaseAnalytics.logEvent("opened_library", bundle);
 
         // Populate UI.
         final TextView hours = (TextView) findViewById(R.id.hours);
