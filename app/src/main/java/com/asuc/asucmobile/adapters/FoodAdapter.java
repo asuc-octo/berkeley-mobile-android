@@ -111,15 +111,17 @@ public class FoodAdapter extends BaseAdapter {
                     SerializableUtilities.saveObject(context, listOfFavorites);
                     imageView.setImageResource(R.drawable.pre_favorite);
 
-                    mFirebaseAnalytics = FirebaseAnalytics.getInstance(FoodAdapter.this.ge);
-                    Bundle bundle = new Bundle();
-                    bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, "Opened BearTransit");
-                    mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
-
                 } else if (listOfFavorites != null) {
                     listOfFavorites.add(foodItem.getName());
                     SerializableUtilities.saveObject(context, listOfFavorites);
                     imageView.setImageResource(R.drawable.post_favorite);
+
+                    mFirebaseAnalytics = FirebaseAnalytics.getInstance(FoodAdapter.this.context);
+                    Bundle bundle = new Bundle();
+                    bundle.putString("food_item", foodItem.getName());
+                    mFirebaseAnalytics.logEvent("favorited_food_item", bundle);
+
+
                 }
 
                 MenuFragment.refreshLists();

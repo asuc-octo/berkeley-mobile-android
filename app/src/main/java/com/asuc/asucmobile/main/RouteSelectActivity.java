@@ -36,8 +36,7 @@ public class RouteSelectActivity extends Activity {
 
         mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
         Bundle bundle = new Bundle();
-        bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, "Route Selected");
-        mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
+        mFirebaseAnalytics.logEvent("clicked_on_route", bundle);
 
 
         ArrayList<Journey> routes = (ArrayList<Journey>) getIntent().getSerializableExtra("routes");

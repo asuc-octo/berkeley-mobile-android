@@ -40,10 +40,11 @@ public class OpenCafeActivity extends BaseActivity {
         super.onCreate(savedInstanceState, R.layout.activity_open_cafe);
         exitIfNoData();
         setupToolbar(cafe.getName(), true);
+
         mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
         Bundle bundle = new Bundle();
-        bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, "Opened Cafe " + cafe.getName());
-        mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
+        bundle.putString("cafe", cafe.getName());
+        mFirebaseAnalytics.logEvent("opened_cafe", bundle);
 
 
         // Downloading Dining Hall image

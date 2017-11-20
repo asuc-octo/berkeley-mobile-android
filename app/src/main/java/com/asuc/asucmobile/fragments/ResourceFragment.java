@@ -52,8 +52,7 @@ public class ResourceFragment extends Fragment {
 
         mFirebaseAnalytics = FirebaseAnalytics.getInstance(this.getContext());
         Bundle bundle = new Bundle();
-        bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, "Opened Resource Screen");
-        mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
+        mFirebaseAnalytics.logEvent("opened_resource_screen", bundle);
 
         View layout = inflater.inflate(R.layout.fragment_resource, container, false);
         Toolbar toolbar = (Toolbar) layout.findViewById(R.id.toolbar);
