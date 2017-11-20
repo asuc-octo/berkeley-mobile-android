@@ -53,8 +53,7 @@ public class LibraryFragment extends Fragment {
 
         mFirebaseAnalytics = FirebaseAnalytics.getInstance(this.getContext());
         Bundle bundle = new Bundle();
-        bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, "Opened Resource Screen");
-        mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
+        mFirebaseAnalytics.logEvent("opened_library_screen", bundle);
 
         View layout = inflater.inflate(R.layout.fragment_library, container, false);
         Toolbar toolbar = (Toolbar) layout.findViewById(R.id.toolbar);
