@@ -60,8 +60,8 @@ public class OpenResourceActivity extends BaseActivity {
 
         mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
         Bundle bundle = new Bundle();
-        bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, "Opened Resource " + resource.getResource());
-        mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
+        bundle.putString("opened_resource", resource.getResource());
+        mFirebaseAnalytics.logEvent("opened_resource", bundle);
 
         // Populate UI.
         TextView hours = (TextView) findViewById(R.id.hours);

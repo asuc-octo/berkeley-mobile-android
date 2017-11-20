@@ -42,8 +42,8 @@ public class OpenDiningHallActivity extends BaseActivity {
 
         mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
         Bundle bundle = new Bundle();
-        bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, "Opened Dining Hall " + diningHall.getName());
-        mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
+        bundle.putString("dining_hall", diningHall.getName());
+        mFirebaseAnalytics.logEvent("opened_dining_hall", bundle);
 
         // Downloading Dining Hall image
         ImageView headerImage = (ImageView) findViewById(R.id.headerImage);

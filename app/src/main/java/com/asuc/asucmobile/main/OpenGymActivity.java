@@ -41,8 +41,8 @@ public class OpenGymActivity extends BaseActivity {
 
         mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
         Bundle bundle = new Bundle();
-        bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, "Opened Gym " + gym.getName());
-        mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
+        bundle.putString("gym", gym.getName());
+        mFirebaseAnalytics.logEvent("opened_gym", bundle);
 
         // Populate UI.
         TextView hours = (TextView) findViewById(R.id.hours);
