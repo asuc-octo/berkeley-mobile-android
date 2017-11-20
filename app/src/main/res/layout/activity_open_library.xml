@@ -19,14 +19,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="240dp">
 
-                <android.support.v7.widget.Toolbar
-                    android:id="@+id/toolbar"
-                    style="@style/ToolbarTheme"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@color/toolbarTransparentForMaps"
-                    android:foreground="@color/ASUC_blue"
-                    android:elevation="8dp" />
 
                 <ProgressBar
                     android:id="@+id/progress_bar"
@@ -35,6 +27,16 @@
                     android:layout_height="match_parent"
                     android:padding="96dp"
                     android:layout_gravity="center" />
+
+                <android.support.v7.widget.Toolbar
+                    android:id="@+id/toolbar"
+                    style="@style/ToolbarTheme"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/hotline_blue"
+                    android:elevation="8dp" />
+
+
 
                 <fragment
                     android:id="@+id/map"
