@@ -42,7 +42,6 @@ public class OpenCafeActivity extends BaseActivity {
         ImageView headerImage = (ImageView) findViewById(R.id.headerImage);
         new DownloadImageThread(headerImage, cafe.getImageUrl()).start();
 
-
         // Load favorites from disk.
         ListOfFavorites listOfFavorites = (ListOfFavorites) SerializableUtilities.loadSerializedObject(this);
         if (listOfFavorites == null) {
