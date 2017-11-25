@@ -18,6 +18,7 @@ import com.asuc.asucmobile.controllers.DiningController;
 import com.asuc.asucmobile.fragments.MenuFragment;
 import com.asuc.asucmobile.models.DiningHall;
 import com.asuc.asucmobile.utilities.SerializableUtilities;
+import com.google.firebase.analytics.FirebaseAnalytics;
 
 import java.io.InputStream;
 import java.util.Arrays;
@@ -28,6 +29,8 @@ public class OpenDiningHallActivity extends BaseActivity {
     private static final String[] LIMITED_LOCATIONS = {"Crossroads","Foothill"};
     private DiningHall diningHall;
     public static OpenDiningHallActivity self_reference;
+    private FirebaseAnalytics mFirebaseAnalytics;
+
 
     @Override
     @SuppressWarnings("all")
@@ -36,6 +39,11 @@ public class OpenDiningHallActivity extends BaseActivity {
         exitIfNoData();
         setupToolbar(diningHall.getName(), true);
         self_reference = OpenDiningHallActivity.this;
+
+        mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
+        Bundle bundle = new Bundle();
+        bundle.putString("dining_hall", diningHall.getName());
+        mFirebaseAnalytics.logEvent("opened_dining_hall", bundle);
 
         // Downloading Dining Hall image
         ImageView headerImage = (ImageView) findViewById(R.id.headerImage);

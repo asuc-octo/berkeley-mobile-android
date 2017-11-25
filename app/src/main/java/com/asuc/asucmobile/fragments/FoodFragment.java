@@ -24,6 +24,7 @@ import com.asuc.asucmobile.models.DiningHall;
 import com.asuc.asucmobile.models.FoodPlace;
 import com.asuc.asucmobile.utilities.Callback;
 import com.asuc.asucmobile.utilities.NavigationGenerator;
+import com.google.firebase.analytics.FirebaseAnalytics;
 
 import java.util.ArrayList;
 
@@ -46,6 +47,8 @@ public class FoodFragment extends Fragment {
     
     private ProgressBar mProgressBar;
     private LinearLayout mRefreshWrapper;
+    private FirebaseAnalytics mFirebaseAnalytics;
+
 
 
     @Override
@@ -58,6 +61,9 @@ public class FoodFragment extends Fragment {
         toolbar.setTitle("Food");
         ImageButton refreshButton = (ImageButton) layout.findViewById(R.id.refresh_button);
 
+        mFirebaseAnalytics = FirebaseAnalytics.getInstance(this.getContext());
+        Bundle bundle = new Bundle();
+        mFirebaseAnalytics.logEvent("opened_food_screen", bundle);
 
         mProgressBar = (ProgressBar) layout.findViewById(R.id.progress_bar);
         mRefreshWrapper = (LinearLayout) layout.findViewById(R.id.refresh);
