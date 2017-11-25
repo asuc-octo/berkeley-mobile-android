@@ -22,7 +22,6 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.asuc.asucmobile.R;
-import com.asuc.asucmobile.adapters.FoodAdapter;
 import com.asuc.asucmobile.adapters.LibraryAdapter;
 import com.asuc.asucmobile.controllers.LibraryController;
 import com.asuc.asucmobile.main.ListOfFavorites;
@@ -41,8 +40,8 @@ public class LibraryFragment extends Fragment {
     private ListView mLibraryList;
     private ProgressBar mProgressBar;
     private LinearLayout mRefreshWrapper;
-
     private static LibraryAdapter mAdapter;
+
 
     @Override
     @SuppressWarnings("deprecation")
@@ -110,7 +109,6 @@ public class LibraryFragment extends Fragment {
     @SuppressWarnings("deprecation")
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.library, menu);
-
         final MenuItem searchMenuItem = menu.findItem(R.id.search);
         if (searchMenuItem != null) {
             final SearchView searchView = (SearchView) searchMenuItem.getActionView();

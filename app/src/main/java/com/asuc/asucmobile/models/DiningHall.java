@@ -182,7 +182,7 @@ public class DiningHall extends FoodPlace{
     }
 
     public boolean isOpen() {
-        return isBreakfastOpen() || isLunchOpen() || isDinnerOpen() || isLimitedLunchOpen() || isLimitedDinnerOpen();
+        return isBreakfastOpen() | isLunchOpen() | isDinnerOpen() | isLimitedLunchOpen() | isLimitedDinnerOpen();
     }
 
 }

@@ -53,9 +53,9 @@ public class RouteSelectionAdapter extends BaseAdapter {
 
     public View getView(int i, View convertView, ViewGroup parent) {
         final Journey route = getItem(i);
-        Date startTime = route.getTrips().get(0).getArrivalTime();
-        Date endTime = route.getTrips().get(route.getTrips().size() - 1).getDepartureTime();
-        long timeDiff = startTime.getTime() - endTime.getTime();
+        Date startTime = route.getTrips().get(0).getDepartureTime();
+        Date endTime = route.getTrips().get(route.getTrips().size() - 1).getArrivalTime();
+        long timeDiff = endTime.getTime() - startTime.getTime();
         int duration = (int) timeDiff / (60 * 1000);
 
         if (convertView == null) {
