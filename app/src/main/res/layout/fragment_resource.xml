@@ -19,7 +19,6 @@
             android:elevation="8dp"
             style="@style/ToolbarTheme"
             tools:ignore="all" />
-
         
         <ListView
             android:id="@+id/resource_list"
