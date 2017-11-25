@@ -30,6 +30,7 @@ import com.google.android.gms.maps.model.BitmapDescriptor;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.firebase.analytics.FirebaseAnalytics;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -47,6 +48,8 @@ public class OpenLibraryActivity extends BaseActivity {
     private Library library;
     private ViewGroup.LayoutParams hoursParams;
     public static OpenLibraryActivity self_reference;
+    private FirebaseAnalytics mFirebaseAnalytics;
+
 
     @Override
     @SuppressWarnings("all")
@@ -55,6 +58,11 @@ public class OpenLibraryActivity extends BaseActivity {
         exitIfNoData();
         setupToolbar(library.getName(), true);
         self_reference = this;
+
+        mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
+        Bundle bundle = new Bundle();
+        bundle.putString("opened_library", library.getName());
+        mFirebaseAnalytics.logEvent("opened_library", bundle);
 
         // Populate UI.
         final TextView hours = (TextView) findViewById(R.id.hours);

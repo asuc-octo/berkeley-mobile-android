@@ -1,6 +1,7 @@
 package com.asuc.asucmobile.adapters;
 
 import android.content.Context;
+import android.os.Bundle;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
@@ -16,6 +17,7 @@ import com.asuc.asucmobile.fragments.MenuFragment;
 import com.asuc.asucmobile.main.ListOfFavorites;
 import com.asuc.asucmobile.models.FoodItem;
 import com.asuc.asucmobile.utilities.SerializableUtilities;
+import com.google.firebase.analytics.FirebaseAnalytics;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -23,6 +25,8 @@ import java.util.HashSet;
 public class FoodAdapter extends BaseAdapter {
 
     public static final String TAG = "FoodAdapter";
+    private FirebaseAnalytics mFirebaseAnalytics;
+
 
     private Context context;
     private ArrayList<FoodItem> foodItems;
@@ -106,10 +110,18 @@ public class FoodAdapter extends BaseAdapter {
                     listOfFavorites.remove(foodItem.getName());
                     SerializableUtilities.saveObject(context, listOfFavorites);
                     imageView.setImageResource(R.drawable.pre_favorite);
+
                 } else if (listOfFavorites != null) {
                     listOfFavorites.add(foodItem.getName());
                     SerializableUtilities.saveObject(context, listOfFavorites);
                     imageView.setImageResource(R.drawable.post_favorite);
+
+                    mFirebaseAnalytics = FirebaseAnalytics.getInstance(FoodAdapter.this.context);
+                    Bundle bundle = new Bundle();
+                    bundle.putString("food_item", foodItem.getName());
+                    mFirebaseAnalytics.logEvent("favorited_food_item", bundle);
+
+
                 }
 
                 MenuFragment.refreshLists();

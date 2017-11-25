@@ -13,6 +13,7 @@ import com.asuc.asucmobile.R;
 import com.asuc.asucmobile.adapters.RouteSelectionAdapter;
 import com.asuc.asucmobile.models.Journey;
 import com.asuc.asucmobile.models.Trip;
+import com.google.firebase.analytics.FirebaseAnalytics;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,11 +26,18 @@ public class RouteSelectActivity extends Activity {
 
 
     private ListView busList;
+    private FirebaseAnalytics mFirebaseAnalytics;
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.bus_list_times);
+
+        mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
+        Bundle bundle = new Bundle();
+        mFirebaseAnalytics.logEvent("clicked_on_route", bundle);
+
 
         ArrayList<Journey> routes = (ArrayList<Journey>) getIntent().getSerializableExtra("routes");
 
