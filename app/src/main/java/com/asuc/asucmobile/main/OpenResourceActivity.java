@@ -23,6 +23,7 @@ import com.google.android.gms.maps.model.BitmapDescriptor;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.firebase.analytics.FirebaseAnalytics;
 
 import java.util.HashSet;
 import java.util.Locale;
@@ -46,6 +47,8 @@ public class OpenResourceActivity extends BaseActivity {
     private Resource resource;
 
     public static OpenResourceActivity self_reference;
+    private FirebaseAnalytics mFirebaseAnalytics;
+
 
     @Override
     @SuppressWarnings("all")
@@ -54,6 +57,11 @@ public class OpenResourceActivity extends BaseActivity {
         exitIfNoData();
         setupToolbar(resource.getResource(), true);
         self_reference = this;
+
+        mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
+        Bundle bundle = new Bundle();
+        bundle.putString("opened_resource", resource.getResource());
+        mFirebaseAnalytics.logEvent("opened_resource", bundle);
 
         // Populate UI.
         TextView hours = (TextView) findViewById(R.id.hours);
