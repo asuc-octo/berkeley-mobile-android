@@ -19,6 +19,7 @@ import com.asuc.asucmobile.controllers.CafeController;
 import com.asuc.asucmobile.fragments.MenuFragment;
 import com.asuc.asucmobile.models.Cafe;
 import com.asuc.asucmobile.utilities.SerializableUtilities;
+import com.google.firebase.analytics.FirebaseAnalytics;
 
 import java.io.InputStream;
 import java.util.Date;
@@ -30,6 +31,8 @@ import java.util.Date;
 public class OpenCafeActivity extends BaseActivity {
 
     private Cafe cafe;
+    private FirebaseAnalytics mFirebaseAnalytics;
+
 
     @Override
     @SuppressWarnings("all")
@@ -37,6 +40,12 @@ public class OpenCafeActivity extends BaseActivity {
         super.onCreate(savedInstanceState, R.layout.activity_open_cafe);
         exitIfNoData();
         setupToolbar(cafe.getName(), true);
+
+        mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
+        Bundle bundle = new Bundle();
+        bundle.putString("cafe", cafe.getName());
+        mFirebaseAnalytics.logEvent("opened_cafe", bundle);
+
 
         // Downloading Dining Hall image
         ImageView headerImage = (ImageView) findViewById(R.id.headerImage);

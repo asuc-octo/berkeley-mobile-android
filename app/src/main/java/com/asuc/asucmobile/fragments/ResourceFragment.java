@@ -31,6 +31,7 @@ import com.asuc.asucmobile.utilities.Callback;
 import com.asuc.asucmobile.utilities.CustomComparators;
 import com.asuc.asucmobile.utilities.NavigationGenerator;
 import com.asuc.asucmobile.utilities.SerializableUtilities;
+import com.google.firebase.analytics.FirebaseAnalytics;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -42,10 +43,17 @@ public class ResourceFragment extends Fragment {
     private LinearLayout mRefreshWrapper;
 
     private static ResourceAdapter mAdapter;
+    private FirebaseAnalytics mFirebaseAnalytics;
+
 
     @Override
     @SuppressWarnings("deprecation")
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+
+        mFirebaseAnalytics = FirebaseAnalytics.getInstance(this.getContext());
+        Bundle bundle = new Bundle();
+        mFirebaseAnalytics.logEvent("opened_resource_screen", bundle);
+
         View layout = inflater.inflate(R.layout.fragment_resource, container, false);
         Toolbar toolbar = (Toolbar) layout.findViewById(R.id.toolbar);
         ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
