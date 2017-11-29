@@ -22,6 +22,7 @@ import com.asuc.asucmobile.main.OpenGymActivity;
 import com.asuc.asucmobile.models.Gym;
 import com.asuc.asucmobile.utilities.Callback;
 import com.asuc.asucmobile.utilities.NavigationGenerator;
+import com.google.firebase.analytics.FirebaseAnalytics;
 
 import java.util.ArrayList;
 
@@ -32,10 +33,17 @@ public class GymFragment extends Fragment {
     private LinearLayout mRefreshWrapper;
 
     private GymAdapter mAdapter;
+    private FirebaseAnalytics mFirebaseAnalytics;
+
 
     @Override
     @SuppressWarnings("deprecation")
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+
+        mFirebaseAnalytics = FirebaseAnalytics.getInstance(this.getContext());
+        Bundle bundle = new Bundle();
+        mFirebaseAnalytics.logEvent("opened_gym_screen", bundle);
+
         View layout = inflater.inflate(R.layout.fragment_gym, container, false);
         Toolbar toolbar = (Toolbar) layout.findViewById(R.id.toolbar);
         ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
