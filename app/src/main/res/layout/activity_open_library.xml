@@ -19,7 +19,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="240dp">
 
-
                 <ProgressBar
                     android:id="@+id/progress_bar"
                     style="?android:attr/progressBarStyleSmall"
@@ -35,7 +34,6 @@
                     android:layout_height="wrap_content"
                     android:background="@color/hotline_blue"
                     android:elevation="8dp" />
-
 
 
                 <fragment

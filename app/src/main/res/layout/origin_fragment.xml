@@ -12,8 +12,7 @@
         android:id="@+id/linear_auto_complete_textview"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="10dp"
-        android:layout_marginTop="12dp"
+        android:layout_margin="10dp"
         android:focusable="true"
         android:focusableInTouchMode="true"
         android:orientation="horizontal"
@@ -25,16 +24,17 @@
             android:src="@drawable/bluedot" />
 
         <AutoCompleteTextView
-            android:id="@+id/destination"
+
+            android:id="@+id/origin"
             android:layout_width="223dp"
             android:layout_height="match_parent"
             android:layout_marginLeft="10dp"
             android:background="@color/transparent"
             android:completionThreshold="2"
-            android:dropDownHorizontalOffset="0dp"
-            android:dropDownVerticalOffset="40dp"
+            android:dropDownHorizontalOffset="-35dp"
+            android:dropDownVerticalOffset="0dp"
             android:dropDownWidth="300dp"
-            android:text=""
+            android:hint="Current Location"
             android:textColor="#A8A8A8"
             android:textSize="15dp"
             android:layout_weight="0.57" />

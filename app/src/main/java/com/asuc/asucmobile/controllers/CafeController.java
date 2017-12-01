@@ -90,7 +90,6 @@ public class CafeController implements Controller{
                         for (int j = 0; j < breakfastJSON.length(); j++) {
                             JSONObject foodJSON = breakfastJSON.getJSONObject(j);
 
-
                             ArrayList<String> foodTypes = new ArrayList<>();
                             if (foodJSON.has("food_type")) {
                                 JSONArray foodTypesArray = foodJSON.getJSONArray("food_type");
@@ -124,7 +123,6 @@ public class CafeController implements Controller{
                                     foodTypes.add(foodTypesArray.getString(k).toLowerCase());
                                 }
                             }
-
                             lunchDinnerMenu.add(new FoodItem(
                                     foodJSON.getString("id"),
                                     foodJSON.getString("name"),

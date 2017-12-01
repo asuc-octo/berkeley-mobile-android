@@ -15,7 +15,6 @@ public class FoodItem implements Comparable<FoodItem> {
     private String calories;
     private double cost;
 
-
     private ArrayList<String> foodTypes; // all in upper case
 
     public FoodItem(String id, String name, String calories, double cost, ArrayList<String> types) {

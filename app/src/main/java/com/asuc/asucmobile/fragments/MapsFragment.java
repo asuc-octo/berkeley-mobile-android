@@ -24,6 +24,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.InflateException;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
@@ -35,14 +36,20 @@ import android.widget.Toast;
 
 
 import com.asuc.asucmobile.R;
+import com.asuc.asucmobile.controllers.BusController;
+import com.asuc.asucmobile.controllers.Controller;
+import com.asuc.asucmobile.controllers.LiveBusController;
 import com.asuc.asucmobile.controllers.RouteController;
 import com.asuc.asucmobile.controllers.LineController;
+import com.asuc.asucmobile.main.LiveBusActivity;
 import com.asuc.asucmobile.main.PopUpActivity;
 import com.asuc.asucmobile.main.RouteSelectActivity;
+import com.asuc.asucmobile.models.Buses;
 import com.asuc.asucmobile.models.Journey;
 import com.asuc.asucmobile.models.Stop;
 import com.asuc.asucmobile.utilities.Callback;
 import com.asuc.asucmobile.utilities.JSONUtilities;
+import com.asuc.asucmobile.utilities.LocationGrabber;
 import com.asuc.asucmobile.utilities.NavigationGenerator;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -52,12 +59,14 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptor;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.Polyline;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.analytics.FirebaseAnalytics;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -69,8 +78,12 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.Map;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import mbanje.kurt.fabbutton.FabButton;
+import retrofit2.Call;
 
 
 public class MapsFragment extends Fragment
@@ -96,32 +109,22 @@ public class MapsFragment extends Fragment
     final int color = Color.rgb(38, 38, 206); //Default color theme
     final int gray = Color.rgb(168, 168, 168); //Default unselected color
     ArrayList<Marker> markers_ACTransit = new ArrayList<>();
-    ArrayList<Marker> markers_BT = new ArrayList<>();
     HashMap<Marker, String> marker_to_ID = new HashMap<>(); //Given marker, gets ID (we can do this because marker is FINAL
     boolean bearTransitPressed;
     LinearLayout originWrapper;
     RelativeLayout busRouteWrapper;
-    private AVLoadingIndicatorView loading_dots;
-    private ArrayList<Polyline> polyLines = new ArrayList<>();
-    private ListView busList;
+    private LinearLayout refreshWrapper;
+
     private final double distThresh = 0.25;
     private boolean nearByHighlighted = false;
     @SuppressWarnings("all")
     private static View layout;
     private MapFragment mapFragment;
+    private LiveBusActivity.BusCallback busCallback;
     private static MapsFragment instance;
     private static Marker prevMarker;
     private FirebaseAnalytics mFirebaseAnalytics;
 
-
-
-    public static MapsFragment newInstance() {
-        Bundle args = new Bundle();
-
-        MapsFragment fragment = new MapsFragment();
-        fragment.setArguments(args);
-        return fragment;
-    }
 
     public static MapsFragment getInstance() {
         return instance;
@@ -137,9 +140,13 @@ public class MapsFragment extends Fragment
         }
         try {
             layout = inflater.inflate(R.layout.activity_maps, container, false);
-        } catch (InflateException e) {
-            // Don't worry about it!
+        } catch (Exception e) {
+            Log.e("hi", e.toString());
+
+
         }
+//            Log.e("hi", e.getStackTrace().toString());
+        // Don't worry about it!
 
         instance = this;
 
@@ -166,15 +173,15 @@ public class MapsFragment extends Fragment
         mapView = mapFragment.getView();
         mapFragment.getMapAsync(this);
 
+        refreshWrapper = (LinearLayout) layout.findViewById(R.id.refresh);
+
 
         final DestinationFragment searchBar = (DestinationFragment) getActivity().getFragmentManager().findFragmentById(R.id.destination_bar);
         final OriginFragment originBar = (OriginFragment) getActivity().getFragmentManager().findFragmentById(R.id.origin_bar);
-        busList = (ListView) layout.findViewById(R.id.routeList);
         navigation_button = (FabButton) layout.findViewById(R.id.determinate);
-        loading_dots = (AVLoadingIndicatorView) layout.findViewById(R.id.loading_dots);
         busesNearby = (Button) layout.findViewById(R.id.busesNearby);
 
-        busesNearby.setOnClickListener(new View.OnClickListener() {
+        /*busesNearby.setOnClickListener(new View.OnClickListener() {
             @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
             @Override
             public void onClick(View v) {
@@ -194,6 +201,7 @@ public class MapsFragment extends Fragment
                     latitude = location.getLatitude();
                     currLocation = new LatLng(latitude, longitude);
                 } catch (Exception e) {
+                    Location currentLocation = LocationServices.FusedLocationApi.getLastLocation(googleApiClient);
                     currLocation = BERKELEY;
                 }
 
@@ -219,7 +227,7 @@ public class MapsFragment extends Fragment
             }
 
 
-        });
+        });*/
 
 
         navigation_button.setOnClickListener(new View.OnClickListener()
@@ -228,17 +236,16 @@ public class MapsFragment extends Fragment
             @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
             public void onClick(View v) {
-                Marker destination = searchBar.getDestination();
-                Marker origin = originBar.getOrigin();
+                LatLng destination = searchBar.getDestination();
+                LatLng origin = originBar.getOrigin();
                 if (destination == null || origin == null) {
                     Toast.makeText(getActivity().getBaseContext(), "Please select a destination and an origin.", Toast.LENGTH_SHORT).show();
                 } else {
-
+                    refresh(origin, destination, System.currentTimeMillis());
                     mFirebaseAnalytics = FirebaseAnalytics.getInstance(MapsFragment.this.getContext());
                     Bundle bundle = new Bundle();
                     mFirebaseAnalytics.logEvent("clicked_go_button", bundle);
 
-                    refresh(origin.getPosition(), destination.getPosition(), System.currentTimeMillis());
                 }
 
 
@@ -256,6 +263,22 @@ public class MapsFragment extends Fragment
          * installed Google Play services and returned to the app.
          */
         return layout;
+    }
+
+    private void liveTrack() {
+        LiveBusController.cService controller = Controller.retrofit.create(LiveBusController.cService.class);
+        final Call<Buses> call = controller.getData();
+        try {
+            LiveBusActivity.timer.schedule(new TimerTask() {
+                @Override
+                public void run() {
+                    call.clone().enqueue(busCallback);
+                }
+            }, 0L, 3000L);
+        } catch (Exception e) {
+            // Don't worry about it!
+            System.out.println(e);
+        }
     }
 
     @Override
@@ -277,7 +300,15 @@ public class MapsFragment extends Fragment
             latitude = location.getLatitude();
             currLocation = new LatLng(latitude, longitude);
         } catch (Exception e) {
+            Location currentLocation = LocationServices.FusedLocationApi.getLastLocation(googleApiClient);
+
+
             currLocation = BERKELEY;
+        }
+
+        if (LiveBusActivity.BusCallback.getInstance() == null) {
+            busCallback = new LiveBusActivity.BusCallback(getContext(), mMap, refreshWrapper, LiveBusActivity.timer);
+            cameraLoadAnimation(currLocation);
         }
 
         //Clears focus when user clicks on map
@@ -297,12 +328,19 @@ public class MapsFragment extends Fragment
 
         //Changes the FAB (my location button) to bottom right
         moveNavigationIcon(mapView);
-
-        cameraLoadAnimation(currLocation);
         mMap.setOnMarkerClickListener(this);
+        // mMap.setOnMapLoadedCallback(this);
+
+        Type listType = new TypeToken<HashMap<String, Stop>>() {
+        }.getType();
 
 
-        mMap.setOnMapLoadedCallback(this);
+        //  HashMap<String, Stop> AC_plots = gson.fromJson(JSONUtilities.readJSONFromAsset(getActivity(), "BerkeleyStops.json"), listType);
+
+        //loadMarkers(AC_plots);
+
+
+        liveTrack();
     }
 
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
@@ -320,7 +358,14 @@ public class MapsFragment extends Fragment
 
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
     public boolean onMarkerClick(final Marker marker) {
-        BitmapDescriptor icon = BitmapDescriptorFactory.fromResource(R.drawable.markerclicked);
+        return true;
+
+/*        BitmapDescriptor icon = BitmapDescriptorFactory.fromResource(R.drawable.markerclicked);
+
+        if (marker == null || (boolean) marker.getTag()) {
+            return true;
+        }
+
         if (this.prevMarker != null) {
             this.prevMarker.setIcon(BitmapDescriptorFactory.fromResource(R.drawable.markernew));
             this.prevMarker = marker;
@@ -338,7 +383,7 @@ public class MapsFragment extends Fragment
         popUp.putExtra("location", marker.getPosition());
 
         startActivity(popUp);
-        return true;
+        return true;*/
     }
 
     public void cameraLoadAnimation(LatLng location) {
@@ -368,32 +413,10 @@ public class MapsFragment extends Fragment
 
     @Override
     public void onMapLoaded() {
-        Type listType = new TypeToken<HashMap<String, Stop>>() {
-        }.getType();
-        Type collectionType = new TypeToken<HashMap<String, Collection<Stop>>>() {
-        }.getType();
 
-        HashMap<String, Collection<Stop>> BT_plots = gson.fromJson(JSONUtilities.readJSONFromAsset(getActivity(), "bt_stops.json"), collectionType);
-        HashMap<String, Stop> AC_plots = gson.fromJson(JSONUtilities.readJSONFromAsset(getActivity(), "BerkeleyStops.json"), listType);
+        // originWrapper = (LinearLayout) layout.findViewById(R.id.origin_bar_wrapper);
+        //bearTransitPressed = false;
 
-        loadMarkers(AC_plots, BT_plots);
-
-        final DestinationFragment searchBar = (DestinationFragment) getActivity().getFragmentManager().findFragmentById(R.id.destination_bar);
-        final OriginFragment originBar = (OriginFragment) getActivity().getFragmentManager().findFragmentById(R.id.origin_bar);
-        originWrapper = (LinearLayout) getActivity().findViewById(R.id.origin_bar_wrapper);
-
-        searchBar.loadData();
-        originBar.loadData();
-
-
-        bearTransitPressed = false;
-
-    }
-
-
-    public ArrayList<Marker> getAC_Names() {
-
-        return this.markers_ACTransit;
     }
 
 
@@ -405,7 +428,7 @@ public class MapsFragment extends Fragment
     }
 
 
-    private void loadMarkers(HashMap<String, Stop> AC_plots, HashMap<String, Collection<Stop>> BT_plots) {
+    private void loadMarkers(HashMap<String, Stop> AC_plots) {
         BitmapDescriptor icon = BitmapDescriptorFactory.fromResource(R.drawable.markernew);
         if (markers_ACTransit.size() == 0) {
             for (String id : AC_plots.keySet()) {
@@ -433,21 +456,6 @@ public class MapsFragment extends Fragment
         float[] results = new float[1];
         Location.distanceBetween(lat, lng, currLocation.latitude, currLocation.longitude, results);
         return DECIMAL_FORMAT.format(results[0] * 0.000621371192);
-    }
-
-    private void hideTransitMarkers(ArrayList<Marker> list, boolean hide) {
-        for (Marker marker : list) {
-            marker.setVisible(hide);
-        }
-    }
-
-    public Button getNearbyButton() {
-        if (busesNearby == null) {
-            busesNearby = (Button) getActivity().findViewById(R.id.busesNearby);
-            return busesNearby;
-        } else {
-            return busesNearby;
-        }
     }
 
     public void hideKeyboard(View view) {
@@ -481,6 +489,8 @@ public class MapsFragment extends Fragment
     public void onResume() {
         super.onResume();
         mapFragment.getMapAsync(this);
+        LiveBusActivity.timer = new Timer("liveBus", true);
+        //LocationGrabber.getLocation(MapsFragment.this,  new RawLocationCallback());
         NavigationGenerator.closeMenu(getActivity());
     }
 
@@ -493,6 +503,25 @@ public class MapsFragment extends Fragment
     public void onConnectionSuspended(int i) {
 
     }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.live_bus:
+                Intent intent = new Intent(getContext(), LiveBusActivity.class);
+                startActivity(intent);
+                return true;
+        }
+        return true;
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        LiveBusActivity.stopBusTracking();
+        stopLocationTracking();
+    }
+
 
     @Override
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
@@ -510,9 +539,15 @@ public class MapsFragment extends Fragment
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        Fragment mapToDestroy = (Fragment) getFragmentManager().findFragmentById(R.id.map);
+        Fragment mapToDestroy = getFragmentManager().findFragmentById(R.id.map);
+        Fragment originFragment = getFragmentManager().findFragmentById(R.id.origin_bar);
+        Fragment destFragment = getFragmentManager().findFragmentById(R.id.destination_bar);
+
         if (mapToDestroy != null) {
             getFragmentManager().beginTransaction().remove(mapToDestroy).commit();
+            getFragmentManager().beginTransaction().remove(originFragment).commit();
+            getFragmentManager().beginTransaction().remove(destFragment).commit();
+
         }
         try {
             stopLocationTracking();
@@ -550,12 +585,15 @@ public class MapsFragment extends Fragment
                     public void onDataRetrieved(Object data) {
                         navigation_button.showProgress(false);
 
-                        Intent routeSelect = new Intent(getContext(), RouteSelectActivity.class);
+                        if (((ArrayList) data).size() == 0) {
+                            onRetrievalFailed();
 
-                        ArrayList<Journey> routes = (ArrayList<Journey>) data;
-                        routeSelect.putExtra("routes", routes);
-                        startActivity(routeSelect);
-
+                        } else {
+                            Intent routeSelect = new Intent(getContext(), RouteSelectActivity.class);
+                            ArrayList<Journey> routes = (ArrayList<Journey>) data;
+                            routeSelect.putExtra("routes", routes);
+                            startActivity(routeSelect);
+                        }
 
                     }
 
@@ -575,6 +613,10 @@ public class MapsFragment extends Fragment
         {
         }
 
+    }
+
+    public LatLng getCurrLocation() {
+        return currLocation;
     }
 
 

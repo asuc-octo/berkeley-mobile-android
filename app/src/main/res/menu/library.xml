@@ -10,12 +10,17 @@
         app:actionViewClass="android.support.v7.widget.SearchView" />
 
     <!--<item android:id="@+id/sort"
+=======
+    <item android:id="@+id/sort"
+>>>>>>> origin/AutoPlaceCompleteSidChanges
         android:title="Sort"
         android:icon="@drawable/ic_action_sort"
         app:showAsAction="collapseActionView|ifRoom">
         <menu>
+<<<<<<< HEAD
             <item android:id="@+id/sortOpen"
                 android:title="Sort By Open" />
         </menu>
     </item>-->
+
 </menu>
