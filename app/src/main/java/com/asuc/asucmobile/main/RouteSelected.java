@@ -13,6 +13,8 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.ListView;
@@ -50,7 +52,7 @@ import java.util.List;
  * Created by alexthomas on 5/24/17.
  */
 
-public class RouteSelected extends Activity {
+public class RouteSelected extends BaseActivity {
 
     private static final int REQUEST_CODE_PLAY_SERVICES = 1;
 
@@ -64,6 +66,9 @@ public class RouteSelected extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_open_route);
         if (exitIfNoData()) return;
+
+        setupToolbar("Route", true);
+
         route = (Journey) getIntent().getSerializableExtra("list_of_times");
 
         // Get references to views.
@@ -136,7 +141,7 @@ public class RouteSelected extends Activity {
                         builder.include(new LatLng(firstStop.getLatitude(), firstStop.getLongitude()));
                         builder.include(new LatLng(lastStop.getLatitude(), lastStop.getLongitude()));
 
-                        LatLng prevLocation = null;
+                      /*  LatLng prevLocation = null;
                         for (Trip trip : route.getTrips()) {
                             for (Stop stop : trip.getStops()) {
                                 if (prevLocation == null) {
@@ -150,7 +155,7 @@ public class RouteSelected extends Activity {
                                     downloadTask.execute(url);
                                 }
                             }
-                        }
+                        }*/
 
 
                         try {
