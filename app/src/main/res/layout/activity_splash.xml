@@ -6,11 +6,16 @@
     android:layout_gravity="center">
 
     <ImageView
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:id="@+id/imageView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:src="@drawable/blank_background"
         android:scaleType="centerCrop"
-        android:contentDescription="@string/content_desc"
-        android:src="@drawable/berkeley_mobile_launchpage" />
+        android:contentDescription="@string/content_desc" />
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:src="@drawable/blank_text"
+        android:contentDescription="@string/content_desc"/>
 
 </RelativeLayout>
