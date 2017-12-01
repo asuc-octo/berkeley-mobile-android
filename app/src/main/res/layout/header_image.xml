@@ -4,19 +4,33 @@
     android:layout_height="wrap_content"
     android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/header_text"
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:paddingLeft="32dp"
-        android:paddingRight="32dp"
-        android:gravity="center"
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="36dp"
+        android:paddingRight="36dp"
+        android:paddingTop="16dp"
+        android:paddingBottom="16dp"
+        android:animateLayoutChanges="true"
+        android:background="@color/transparent_black"
         android:textColor="@android:color/white"
-        android:maxLines="1"
-        android:ellipsize="marquee"
-        android:scrollHorizontally="true"
-        android:focusable="true"
-        android:focusableInTouchMode="true"
-        android:background="@color/hotline_blue" />
+        android:layout_alignParentBottom="true" >
+
+        <TextView
+            android:id="@+id/header_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@android:color/white"
+            android:maxLines="1"
+            android:ellipsize="marquee"
+            android:scrollHorizontally="true"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:drawableLeft="@drawable/icon_clock"
+            android:layout_below="@+id/header_name"
+            android:drawablePadding="5dp"
+            android:gravity="center_vertical" />
+
+    </RelativeLayout>
 
 </LinearLayout>

@@ -4,6 +4,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
 import android.util.TypedValue;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -74,6 +75,7 @@ public class FoodAdapter extends BaseAdapter {
 
 
             // layout stuff; want to make icons the same size as the food name: 16 sp
+            // layout stuff; want to make icons the same size as the food name: 16 sp
             int size = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, 16, context.getResources().getDisplayMetrics());
             LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
 
@@ -93,7 +95,6 @@ public class FoodAdapter extends BaseAdapter {
             }
 
         }
-
 
         final ListOfFavorites listOfFavorites = (ListOfFavorites) SerializableUtilities.loadSerializedObject(context);
         final ImageView imageView = (ImageView) convertView.findViewById(R.id.favorite);
