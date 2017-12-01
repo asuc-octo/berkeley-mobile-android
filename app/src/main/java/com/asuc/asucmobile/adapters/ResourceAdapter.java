@@ -20,7 +20,6 @@ import com.asuc.asucmobile.utilities.SerializableUtilities;
 
 import java.util.ArrayList;
 import java.util.Collections;
-
 public class ResourceAdapter extends BaseAdapter {
 
     private Context context;
@@ -98,7 +97,6 @@ public class ResourceAdapter extends BaseAdapter {
                 ResourceFragment.refreshLists();
             }
         });
-
 
         return convertView;
     }

@@ -44,7 +44,6 @@
                     tools:layout="@android:layout/list_content" />
 
 
-
             </FrameLayout>
 
             <LinearLayout

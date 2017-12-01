@@ -102,12 +102,10 @@ public class OpenDiningHallActivity extends BaseActivity {
     }
 
 
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.dining, menu);
-
         // Make this return true if you would like a menu
         return false;
     }
@@ -170,7 +168,6 @@ public class OpenDiningHallActivity extends BaseActivity {
                         return null;
                 }
             }
-
             menuFragment.setArguments(bundle);
             return menuFragment;
         }

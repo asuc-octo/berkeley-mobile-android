@@ -9,6 +9,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
 import android.support.annotation.RequiresApi;
+import android.support.v4.app.FragmentActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -19,6 +20,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.AutoCompleteTextView;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.asuc.asucmobile.R;
@@ -30,6 +32,22 @@ import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.location.places.Places;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
+import com.asuc.asucmobile.adapters.PlaceArrayAdapter;
+import com.asuc.asucmobile.models.customMarker;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.common.api.PendingResult;
+import com.google.android.gms.common.api.ResultCallback;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.location.places.AutocompleteFilter;
+import com.google.android.gms.location.places.Place;
+import com.google.android.gms.location.places.PlaceBuffer;
+import com.google.android.gms.location.places.Places;
+import com.google.android.gms.location.places.ui.PlaceAutocompleteFragment;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.Marker;
 
 import java.util.ArrayList;
@@ -42,67 +60,43 @@ import static com.bumptech.glide.gifdecoder.GifHeaderParser.TAG;
  * Created by alexthomas on 5/26/17.
  */
 
-public class DestinationFragment extends Fragment implements OnMapReadyCallback,
-        GoogleApiClient.ConnectionCallbacks,
+public class DestinationFragment extends PlaceAutocompleteFragment implements
         GoogleApiClient.OnConnectionFailedListener,
-        com.google.android.gms.location.LocationListener {
-    private GoogleApiClient mGoogleApiClient;
-    private AutoCompleteTextView autoCompleteTextView;
-    private MarkerAdapter adapter;
-    private static final ArrayList<customMarker> BERKELEY_PLACES =
-            new ArrayList();
-    private static final HashMap<String, Marker> all_markers = new HashMap<>();
-    private Marker selectedMarker = null;
+        GoogleApiClient.ConnectionCallbacks {
 
-    @Nullable
+    private static final String TAG = "MainActivity";
+    private static final int GOOGLE_API_CLIENT_ID = 1;
+    private AutoCompleteTextView mAutocompleteTextView;
+
+    private GoogleApiClient mGoogleApiClient;
+    private PlaceArrayAdapter mPlaceArrayAdapter;
+    private static final LatLngBounds BOUNDS_MOUNTAIN_VIEW = new LatLngBounds(
+            new LatLng(37.851532, -122.232216), new LatLng(37.902479, -122.313240));
+    private LatLng destination;
+
+
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.destination_fragment, container,
-                false);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View layout = inflater.inflate(R.layout.destination_fragment, container, false);
+
+
+        mAutocompleteTextView = (AutoCompleteTextView) layout.findViewById(R.id.destination);
+        mAutocompleteTextView.setThreshold(3);
+
+        final ImageView clear = (ImageView) layout.findViewById(R.id.clear_button);
+
+        final ImageView searchButton = (ImageView) layout.findViewById(R.id.search_button);
 
         mGoogleApiClient = new GoogleApiClient.Builder(getActivity())
-                .addConnectionCallbacks(this)
                 .addApi(Places.GEO_DATA_API)
-                .addOnConnectionFailedListener(this)
-                .addApi(LocationServices.API)
+                .enableAutoManage((FragmentActivity) getActivity(), GOOGLE_API_CLIENT_ID, this)
+                .addConnectionCallbacks(this)
                 .build();
 
 
-        adapter = new MarkerAdapter(getActivity(),
-                android.R.layout.simple_list_item_activated_1, BERKELEY_PLACES);
-        autoCompleteTextView = (AutoCompleteTextView) view.findViewById(R.id.destination);
+        mAutocompleteTextView.setOnItemClickListener(mAutocompleteClickListener);
 
-        final ImageView searchButton = (ImageView) view.findViewById(R.id.search_button);
-
-        autoCompleteTextView.setAdapter(adapter);
-
-        autoCompleteTextView.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                if (hasFocus) {
-                    MapsFragment.getInstance().getNearbyButton().setVisibility(View.INVISIBLE);
-                } else {
-                    MapsFragment.getInstance().getNearbyButton().setVisibility(View.VISIBLE);
-                    hideKeyboard(getView());
-
-                }
-            }
-        });
-
-        final ImageView clear = (ImageView) view.findViewById(R.id.clear_button);
-
-        clear.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                autoCompleteTextView.setText("");
-                selectedMarker = null;
-                clear.setVisibility(View.GONE);
-                searchButton.setVisibility(View.VISIBLE);
-
-            }
-        });
-
-        autoCompleteTextView.addTextChangedListener(new TextWatcher() {
+        mAutocompleteTextView.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
@@ -110,7 +104,7 @@ public class DestinationFragment extends Fragment implements OnMapReadyCallback,
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                autoCompleteTextView.setTextColor(getResources().getColor(R.color.ASUC_blue));
+                mAutocompleteTextView.setTextColor(getResources().getColor(R.color.ASUC_blue));
             }
 
             @Override
@@ -127,78 +121,84 @@ public class DestinationFragment extends Fragment implements OnMapReadyCallback,
             }
         });
 
-        autoCompleteTextView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
+        clear.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                customMarker marker = (customMarker) parent.getItemAtPosition(position);
-                selectedMarker = marker.marker;
-                if (marker != null) {
-                    MapsFragment.getInstance().markerZoom(marker.marker);
-                }
+            public void onClick(View v) {
+                mAutocompleteTextView.setText("");
+                clear.setVisibility(View.GONE);
+                searchButton.setVisibility(View.VISIBLE);
+                destination = null;
+
             }
         });
 
+        AutocompleteFilter filter =
+                new AutocompleteFilter.Builder().setCountry("US").build();
 
-        return view;
 
+        mPlaceArrayAdapter = new PlaceArrayAdapter(getContext(), R.layout.maps_autocomplete_list_item, R.id.text1,
+                BOUNDS_MOUNTAIN_VIEW, filter);
+        mAutocompleteTextView.setAdapter(mPlaceArrayAdapter);
 
+        return layout;
     }
 
-
-    @Override
-    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
-
-        Log.e(TAG, "onConnectionFailed: ConnectionResult.getErrorCode() = "
-                + connectionResult.getErrorCode());
-
-        // TODO(Developer): Check error code and notify the user of error state and resolution.
-        Toast.makeText(getActivity(), "Could not connect to Google API Client: Error "
-                + connectionResult.getErrorCode(), Toast.LENGTH_SHORT).show();
-
-    }
-
-    public void hideKeyboard(View view) {
-        InputMethodManager inputMethodManager = (InputMethodManager) getActivity().getSystemService(Activity.INPUT_METHOD_SERVICE);
-        inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
-    }
-
-    public void loadData() {
-        if (BERKELEY_PLACES.size() == 0) {
-            final ArrayList<Marker> AC_names = MapsFragment.getInstance().getAC_Names();
-            for (int i = 0; i < AC_names.size(); i += 1) {
-                BERKELEY_PLACES.add(new customMarker(AC_names.get(i).getTitle(), AC_names.get(i)));
+    private ResultCallback<PlaceBuffer> mUpdatePlaceDetailsCallback
+            = new ResultCallback<PlaceBuffer>() {
+        @Override
+        public void onResult(PlaceBuffer places) {
+            if (!places.getStatus().isSuccess()) {
+                Log.e(TAG, "Place query did not complete. Error: " +
+                        places.getStatus().toString());
+                return;
             }
-        }else{
-            //Do nothing!
+            // Selecting the first object buffer.
+            final Place place = places.get(0);
+            CharSequence attributions = places.getAttributions();
+
+            CharSequence address = place.getAddress();
+
+            destination = place.getLatLng();
+
+
         }
+    };
 
+    private AdapterView.OnItemClickListener mAutocompleteClickListener
+            = new AdapterView.OnItemClickListener() {
+        @Override
+        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-        adapter.notifyDataSetChanged();
+            final PlaceArrayAdapter.PlaceAutocomplete item = mPlaceArrayAdapter.getItem(position);
+            final String placeId = String.valueOf(item.placeId);
+            Log.i(TAG, "Selected: " + item.description);
+            PendingResult<PlaceBuffer> placeResult = Places.GeoDataApi
+                    .getPlaceById(mGoogleApiClient, placeId);
 
-    }
+            placeResult.setResultCallback(mUpdatePlaceDetailsCallback);
+            Log.i(TAG, "Fetching details for ID: " + item.placeId);
+        }
+    };
 
-    public Marker getDestination() {
-        return selectedMarker;
-    }
-
-    @Override
-    public void onLocationChanged(Location location) {
-
-    }
-
-    @Override
-    public void onMapReady(GoogleMap googleMap) {
-
-    }
 
     @Override
     public void onConnected(@Nullable Bundle bundle) {
-
+        mPlaceArrayAdapter.setGoogleApiClient(mGoogleApiClient);
+        Log.i(TAG, "Google Places API connected.");
     }
 
     @Override
     public void onConnectionSuspended(int i) {
-        loadData();
+        mPlaceArrayAdapter.setGoogleApiClient(null);
+        Log.e(TAG, "Google Places API connection suspended.");
+    }
+
+    @Override
+    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
+
+    }
+
+    public LatLng getDestination() {
+        return destination;
     }
 }
