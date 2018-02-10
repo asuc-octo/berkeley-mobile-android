@@ -22,6 +22,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public interface Controller {
 
+
     String BASE_URL = "http://asuc-mobile-dev.herokuapp.com/api/";
     String ISO_FORMAT = "yyyy-MM-dd'T'HH:mm:ss.SSSZ";
 
