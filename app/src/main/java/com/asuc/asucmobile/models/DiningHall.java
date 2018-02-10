@@ -1,29 +1,49 @@
 package com.asuc.asucmobile.models;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.util.ArrayList;
 import java.util.Date;
 
 public class DiningHall extends FoodPlace{
 
+    @SerializedName("id")
     private String id;
+    @SerializedName("name")
     private String name;
+    @SerializedName("breakfast_menu")
     private ArrayList<FoodItem> breakfastMenu;
+    @SerializedName("lunch_menu")
     private ArrayList<FoodItem> lunchMenu;
+    @SerializedName("dinner_menu")
     private ArrayList<FoodItem> dinnerMenu;
+    @SerializedName("limited_lunch_menu")
     private ArrayList<FoodItem> limitedLunchMenu;
+    @SerializedName("limited_dinner_menu")
     private ArrayList<FoodItem> limitedDinnerMenu;
-
+    @SerializedName("breakfast_open")
     private Date breakfastOpen;
+    @SerializedName("breakfast_close")
     private Date breakfastClose;
+    @SerializedName("lunch_open")
     private Date lunchOpen;
+    @SerializedName("lunch_close")
     private Date lunchClose;
+    @SerializedName("dinner_open")
     private Date dinnerOpen;
+    @SerializedName("dinner_close")
     private Date dinnerClose;
+    @SerializedName("limited_lunch_open")
     private Date limitedLunchOpen;
+    @SerializedName("limited_lunch_close")
     private Date limitedLunchClose;
+    @SerializedName("limited_dinner_open")
     private Date limitedDinnerOpen;
+    @SerializedName("limited_dinner_close")
     private Date limitedDinnerClose;
+    @SerializedName("image_link")
     private String imageUrl;
+
 
     public DiningHall(String id, String name, ArrayList<FoodItem> breakfastMenu,
                       ArrayList<FoodItem> lunchMenu, ArrayList<FoodItem> dinnerMenu,
@@ -183,6 +203,31 @@ public class DiningHall extends FoodPlace{
 
     public boolean isOpen() {
         return isBreakfastOpen() | isLunchOpen() | isDinnerOpen() | isLimitedLunchOpen() | isLimitedDinnerOpen();
+    }
+
+
+    @Override
+    public String toString() {
+        return "DiningHall{" +
+                "id='" + id + '\'' +
+                ", name='" + name + '\'' +
+                ", breakfastMenu=" + breakfastMenu +
+                ", lunchMenu=" + lunchMenu +
+                ", dinnerMenu=" + dinnerMenu +
+                ", limitedLunchMenu=" + limitedLunchMenu +
+                ", limitedDinnerMenu=" + limitedDinnerMenu +
+                ", breakfastOpen=" + breakfastOpen +
+                ", breakfastClose=" + breakfastClose +
+                ", lunchOpen=" + lunchOpen +
+                ", lunchClose=" + lunchClose +
+                ", dinnerOpen=" + dinnerOpen +
+                ", dinnerClose=" + dinnerClose +
+                ", limitedLunchOpen=" + limitedLunchOpen +
+                ", limitedLunchClose=" + limitedLunchClose +
+                ", limitedDinnerOpen=" + limitedDinnerOpen +
+                ", limitedDinnerClose=" + limitedDinnerClose +
+                ", imageUrl='" + imageUrl + '\'' +
+                '}';
     }
 
 }
