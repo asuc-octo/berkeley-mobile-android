@@ -1,13 +1,6 @@
 package com.asuc.asucmobile.tests;
 
-import com.asuc.asucmobile.controllers.BMAPI;
-import com.asuc.asucmobile.models.DiningHall;
-import com.asuc.asucmobile.utilities.ServiceGenerator;
-
 import java.io.IOException;
-import java.util.List;
-
-import retrofit2.Call;
 
 /**
  * Created by rustie on 2/10/18.
@@ -15,9 +8,23 @@ import retrofit2.Call;
 
 public class BMAPITest {
 
+    public static final String TAG = "BMAPI TEST";
+
+
+
     public static void main(String[] args) throws IOException {
-        BMAPI bmapi = ServiceGenerator.createService(BMAPI.class);
-        Call<List<DiningHall>> call = bmapi.diningHallList();
-        List<DiningHall> diningHalls = call.execute().body();
+//        BMAPI bmapi = ServiceGenerator.createService(BMAPI.class);
+//        Call<DiningHallsResponse> call = bmapi.diningHallList();
+//        call.enqueue(new Callback<DiningHallsResponse>() {
+//            @Override
+//            public void onResponse(Call<DiningHallsResponse> call, Response<DiningHallsResponse> response) {
+//                Log.d(TAG, String.valueOf(response.body().getDining_halls().get(0)));
+//            }
+//
+//            @Override
+//            public void onFailure(Call<DiningHallsResponse> call, Throwable t) {
+//
+//            }
+//        });
     }
 }

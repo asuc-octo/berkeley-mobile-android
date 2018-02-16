@@ -10,8 +10,7 @@ import java.util.Date;
 public class Cafe extends FoodPlace {
 
 
-    private String id;
-    private String name;
+
     private ArrayList<FoodItem> breakfastMenu;
     private ArrayList<FoodItem> lunchDinnerMenu;
     private Date breakfastOpen;
@@ -19,7 +18,6 @@ public class Cafe extends FoodPlace {
     private Date breakfastClose;
     private Date lunchDinnerClose;
 
-    private String imageUrl;
 
     public Cafe(String id, String name, ArrayList<FoodItem> breakfastMenu,
                 ArrayList<FoodItem> lunchDinnerMenu, Date breakfastOpen,
