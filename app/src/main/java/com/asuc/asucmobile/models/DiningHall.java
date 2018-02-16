@@ -4,45 +4,58 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
+
+
 
 public class DiningHall extends FoodPlace{
 
-    @SerializedName("id")
-    private String id;
-    @SerializedName("name")
-    private String name;
+
     @SerializedName("breakfast_menu")
     private ArrayList<FoodItem> breakfastMenu;
+
     @SerializedName("lunch_menu")
     private ArrayList<FoodItem> lunchMenu;
+
     @SerializedName("dinner_menu")
     private ArrayList<FoodItem> dinnerMenu;
+
     @SerializedName("limited_lunch_menu")
     private ArrayList<FoodItem> limitedLunchMenu;
+
     @SerializedName("limited_dinner_menu")
     private ArrayList<FoodItem> limitedDinnerMenu;
+
+
     @SerializedName("breakfast_open")
     private Date breakfastOpen;
+
     @SerializedName("breakfast_close")
     private Date breakfastClose;
+
     @SerializedName("lunch_open")
     private Date lunchOpen;
+
     @SerializedName("lunch_close")
     private Date lunchClose;
+
     @SerializedName("dinner_open")
     private Date dinnerOpen;
+
     @SerializedName("dinner_close")
     private Date dinnerClose;
+
     @SerializedName("limited_lunch_open")
     private Date limitedLunchOpen;
+
     @SerializedName("limited_lunch_close")
     private Date limitedLunchClose;
+
     @SerializedName("limited_dinner_open")
     private Date limitedDinnerOpen;
+
     @SerializedName("limited_dinner_close")
     private Date limitedDinnerClose;
-    @SerializedName("image_link")
-    private String imageUrl;
 
 
     public DiningHall(String id, String name, ArrayList<FoodItem> breakfastMenu,
@@ -205,6 +218,109 @@ public class DiningHall extends FoodPlace{
         return isBreakfastOpen() | isLunchOpen() | isDinnerOpen() | isLimitedLunchOpen() | isLimitedDinnerOpen();
     }
 
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setBreakfastMenu(ArrayList<FoodItem> breakfastMenu) {
+        this.breakfastMenu = breakfastMenu;
+    }
+
+    public void setLunchMenu(ArrayList<FoodItem> lunchMenu) {
+        this.lunchMenu = lunchMenu;
+    }
+
+    public void setDinnerMenu(ArrayList<FoodItem> dinnerMenu) {
+        this.dinnerMenu = dinnerMenu;
+    }
+
+    public void setLimitedLunchMenu(ArrayList<FoodItem> limitedLunchMenu) {
+        this.limitedLunchMenu = limitedLunchMenu;
+    }
+
+    public void setLimitedDinnerMenu(ArrayList<FoodItem> limitedDinnerMenu) {
+        this.limitedDinnerMenu = limitedDinnerMenu;
+    }
+
+    public Date getBreakfastOpen() {
+        return breakfastOpen;
+    }
+
+    public void setBreakfastOpen(Date breakfastOpen) {
+        this.breakfastOpen = breakfastOpen;
+    }
+
+    public Date getBreakfastClose() {
+        return breakfastClose;
+    }
+
+    public void setBreakfastClose(Date breakfastClose) {
+        this.breakfastClose = breakfastClose;
+    }
+
+    public Date getLunchOpen() {
+        return lunchOpen;
+    }
+
+    public void setLunchOpen(Date lunchOpen) {
+        this.lunchOpen = lunchOpen;
+    }
+
+    public Date getLunchClose() {
+        return lunchClose;
+    }
+
+    public void setLunchClose(Date lunchClose) {
+        this.lunchClose = lunchClose;
+    }
+
+    public Date getDinnerOpen() {
+        return dinnerOpen;
+    }
+
+    public void setDinnerOpen(Date dinnerOpen) {
+        this.dinnerOpen = dinnerOpen;
+    }
+
+    public Date getDinnerClose() {
+        return dinnerClose;
+    }
+
+    public void setDinnerClose(Date dinnerClose) {
+        this.dinnerClose = dinnerClose;
+    }
+
+    public void setLimitedLunchOpen(Date limitedLunchOpen) {
+        this.limitedLunchOpen = limitedLunchOpen;
+    }
+
+    public Date getLimitedLunchClose() {
+        return limitedLunchClose;
+    }
+
+    public void setLimitedLunchClose(Date limitedLunchClose) {
+        this.limitedLunchClose = limitedLunchClose;
+    }
+
+    public void setLimitedDinnerOpen(Date limitedDinnerOpen) {
+        this.limitedDinnerOpen = limitedDinnerOpen;
+    }
+
+    public Date getLimitedDinnerClose() {
+        return limitedDinnerClose;
+    }
+
+    public void setLimitedDinnerClose(Date limitedDinnerClose) {
+        this.limitedDinnerClose = limitedDinnerClose;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
+    }
 
     @Override
     public String toString() {
