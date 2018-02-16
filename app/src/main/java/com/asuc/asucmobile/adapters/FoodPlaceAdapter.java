@@ -21,6 +21,7 @@ import com.bumptech.glide.Glide;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by rustie on 10/4/17.
@@ -78,7 +79,7 @@ public class FoodPlaceAdapter extends RecyclerView.Adapter<FoodPlaceAdapter.View
         }
     }
 
-    private ArrayList<FoodPlace> mFoodPlaceList;
+    private List<FoodPlace> mFoodPlaceList;
     private Context mContext;
     private FoodType foodType;
 
@@ -88,7 +89,7 @@ public class FoodPlaceAdapter extends RecyclerView.Adapter<FoodPlaceAdapter.View
      * @param foodPlaces
      * @param type
      */
-    public FoodPlaceAdapter(Context context, ArrayList<FoodPlace> foodPlaces, FoodType type) {
+    public FoodPlaceAdapter(Context context, List<FoodPlace> foodPlaces, FoodType type) {
         mFoodPlaceList = foodPlaces;
         mContext = context;
         foodType = type;

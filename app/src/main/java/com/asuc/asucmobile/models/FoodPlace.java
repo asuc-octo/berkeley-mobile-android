@@ -1,5 +1,7 @@
 package com.asuc.asucmobile.models;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -9,9 +11,13 @@ import java.util.Date;
 
 public abstract class FoodPlace {
 
-    private String id;
-    private String name;
-    private String imageUrl;
+
+
+    protected String id;
+    protected String name;
+
+    @SerializedName("image_link")
+    protected String imageUrl;
 
     // TODO: do something with this
     private boolean isOpen;
