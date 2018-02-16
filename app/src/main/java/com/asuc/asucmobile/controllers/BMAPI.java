@@ -1,8 +1,7 @@
 package com.asuc.asucmobile.controllers;
 
-import com.asuc.asucmobile.models.DiningHall;
-
-import java.util.List;
+import com.asuc.asucmobile.models.responses.CafesResponse;
+import com.asuc.asucmobile.models.responses.DiningHallsResponse;
 
 import retrofit2.Call;
 import retrofit2.http.GET;
@@ -16,6 +15,10 @@ public interface BMAPI {
 
     @Headers("Cache-Control: max-age=640000")
     @GET("dining_halls")
-    Call<List<DiningHall>> diningHallList();
+    Call<DiningHallsResponse> callDiningHallList();
+
+    @Headers("Cache-Control: max-age=640000")
+    @GET("cafes")
+    Call<CafesResponse> callCafeList();
 
 }
