@@ -18,6 +18,7 @@ import android.widget.TextView;
 
 import com.asuc.asucmobile.R;
 import com.asuc.asucmobile.adapters.FoodAdapter;
+import com.asuc.asucmobile.adapters.FoodPlaceAdapter;
 import com.asuc.asucmobile.main.OpenCafeActivity;
 import com.asuc.asucmobile.main.OpenDiningHallActivity;
 import com.asuc.asucmobile.models.Cafe;
@@ -174,7 +175,7 @@ public class MenuFragment extends Fragment {
                         );
                     }
                     headerHours.setText(spannableHeader);
-                    FoodAdapter adapter = new FoodAdapter(getActivity(), foodItems);
+                    FoodAdapter adapter = new FoodAdapter(getActivity(), foodItems, FoodPlaceAdapter.FoodType.Cafe);
                     MenuFragment.adapters.add(adapter);
                     foodMenu.setAdapter(adapter);
                 }
@@ -286,7 +287,7 @@ public class MenuFragment extends Fragment {
                         );
                     }
                     headerHours.setText(spannableHeader);
-                    FoodAdapter adapter = new FoodAdapter(getActivity(), foodItems);
+                    FoodAdapter adapter = new FoodAdapter(getActivity(), foodItems, FoodPlaceAdapter.FoodType.DiningHall);
                     MenuFragment.adapters.add(adapter);
                     foodMenu.setAdapter(adapter);
                 }

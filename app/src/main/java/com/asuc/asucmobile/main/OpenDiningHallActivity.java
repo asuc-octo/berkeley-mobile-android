@@ -18,6 +18,7 @@ import com.asuc.asucmobile.controllers.DiningController;
 import com.asuc.asucmobile.fragments.MenuFragment;
 import com.asuc.asucmobile.models.DiningHall;
 import com.asuc.asucmobile.utilities.SerializableUtilities;
+import com.bumptech.glide.Glide;
 import com.google.firebase.analytics.FirebaseAnalytics;
 
 import java.io.InputStream;
@@ -47,7 +48,7 @@ public class OpenDiningHallActivity extends BaseActivity {
 
         // Downloading Dining Hall image
         ImageView headerImage = (ImageView) findViewById(R.id.headerImage);
-        new DownloadImageThread(headerImage, diningHall.getImageUrl()).start();
+        Glide.with(this).load(diningHall.getImageUrl()).into(headerImage);
 
 
         // Load favorites from disk.
@@ -226,40 +227,5 @@ public class OpenDiningHallActivity extends BaseActivity {
         if (diningHall == null) {
             finish();
         }
-    }
-
-    private class DownloadImageThread extends Thread {
-
-        ImageView headerView;
-        String url;
-
-        private DownloadImageThread(ImageView headerView, String url) {
-            this.headerView = headerView;
-            this.url = url;
-        }
-
-        @Override
-        public void run() {
-            try {
-                InputStream input = new java.net.URL(url).openStream();
-                final Bitmap bitmap = BitmapFactory.decodeStream(input);
-
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        headerView.setImageBitmap(bitmap);
-                    }
-                });
-            } catch (Exception e) {
-
-            }
-            runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    headerView.setVisibility(View.VISIBLE);
-                }
-            });
-        }
-
     }
 }
