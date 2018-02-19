@@ -3,7 +3,9 @@ package com.asuc.asucmobile.models;
 import android.support.annotation.NonNull;
 
 import com.google.android.gms.maps.model.LatLng;
+import com.google.gson.annotations.SerializedName;
 
+import java.util.Arrays;
 import java.util.Date;
 
 public class Library implements Comparable<Library>{
@@ -13,15 +15,24 @@ public class Library implements Comparable<Library>{
     private static final String[] WEEKDAYS =
             { "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday" };
 
+
     private int id;
     private String name;
+    @SerializedName("campus_location")
     private String location;
+    @SerializedName("phone_number")
     private String phone;
+    @SerializedName("opening_time_today")
     private Date opening;
+    @SerializedName("closing_time_today")
     private Date closing;
+    @SerializedName("weekly_opening_times")
     private Date[] weeklyOpen;
+    @SerializedName("weekly_closing_times")
     private Date[] weeklyClose;
     private LatLng latLng;
+    private double latitude;
+    private double longitude;
     private boolean byAppointment;
     private boolean hasCoordinates;
     private boolean[] weeklyAppointments;
@@ -41,12 +52,6 @@ public class Library implements Comparable<Library>{
         this.weeklyClose = weeklyClose;
         this.weeklyAppointments = weeklyAppointments;
         this.weekday = weekday;
-        if (lat == INVALID_COORD || lng == INVALID_COORD) {
-            hasCoordinates = false;
-        } else {
-            hasCoordinates = true;
-            this.latLng = new LatLng(lat, lng);
-        }
     }
 
     public int getId() {
@@ -78,6 +83,14 @@ public class Library implements Comparable<Library>{
     public Date[] getWeeklyClose() { return weeklyClose; }
 
     public LatLng getCoordinates() {
+        if (latLng == null) {
+            if (latitude == INVALID_COORD || longitude == INVALID_COORD) {
+                hasCoordinates = false;
+            } else {
+                hasCoordinates = true;
+                this.latLng = new LatLng(latitude, longitude);
+            }
+        }
         return hasCoordinates ? latLng : null;
     }
 
@@ -114,4 +127,23 @@ public class Library implements Comparable<Library>{
         return this.getName().compareTo(other.getName());
     }
 
+
+    @Override
+    public String toString() {
+        return "Library{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", location='" + location + '\'' +
+                ", phone='" + phone + '\'' +
+                ", opening=" + opening +
+                ", closing=" + closing +
+                ", weeklyOpen=" + Arrays.toString(weeklyOpen) +
+                ", weeklyClose=" + Arrays.toString(weeklyClose) +
+                ", latLng=" + latLng +
+                ", byAppointment=" + byAppointment +
+                ", hasCoordinates=" + hasCoordinates +
+                ", weeklyAppointments=" + Arrays.toString(weeklyAppointments) +
+                ", weekday=" + weekday +
+                '}';
+    }
 }
