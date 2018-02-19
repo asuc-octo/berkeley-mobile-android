@@ -34,10 +34,6 @@ public interface Controller {
     String BASE_URL = "http://asuc-mobile-dev.herokuapp.com/api/";
     String ISO_FORMAT = "yyyy-MM-dd'T'HH:mm:ss.SSSZ";
 
-//    File cacheDir = new File("cachedir");
-//    HttpResponseCache cache = new HttpResponseCache(cacheDir, 1024);
-//    okHttpClient.setResponseCache(cache);
-
     GsonBuilder gsonBuilder = new GsonBuilder()
             .setDateFormat(ISO_FORMAT)
             .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES);

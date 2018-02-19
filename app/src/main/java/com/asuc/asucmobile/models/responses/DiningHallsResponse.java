@@ -5,7 +5,6 @@ import com.asuc.asucmobile.models.FoodPlace;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by rustie on 2/14/18.
@@ -14,10 +13,10 @@ import java.util.List;
 public class DiningHallsResponse {
 
     @SerializedName("dining_halls")
-    private ArrayList<DiningHall> dining_halls;
+    private ArrayList<DiningHall> diningHalls;
 
     public ArrayList<? extends FoodPlace> getDiningHalls() {
-        return dining_halls;
+        return diningHalls;
     }
 
 }

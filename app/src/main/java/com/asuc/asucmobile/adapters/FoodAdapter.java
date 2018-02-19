@@ -31,10 +31,12 @@ public class FoodAdapter extends BaseAdapter {
 
     private Context context;
     private ArrayList<FoodItem> foodItems;
+    private FoodPlaceAdapter.FoodType foodType;
 
-    public FoodAdapter(Context context, ArrayList<FoodItem> foodItems) {
+    public FoodAdapter(Context context, ArrayList<FoodItem> foodItems, FoodPlaceAdapter.FoodType foodType) {
         this.context = context;
         this.foodItems = foodItems;
+        this.foodType = foodType;
     }
 
 
@@ -64,8 +66,10 @@ public class FoodAdapter extends BaseAdapter {
         final TextView foodName = (TextView) convertView.findViewById(R.id.food_name);
         foodName.setText(foodItem.getName());
 
-        final TextView foodCost = (TextView) convertView.findViewById(R.id.food_cost);
-        foodCost.setText(foodItem.getCost());
+        if (this.foodType == FoodPlaceAdapter.FoodType.Cafe) {
+            final TextView foodCost = (TextView) convertView.findViewById(R.id.food_cost);
+            foodCost.setText(foodItem.getCost());
+        }
 
         if (foodItem.getFoodTypes() != null && foodItem.getFoodTypes().size() > 0) {
 
