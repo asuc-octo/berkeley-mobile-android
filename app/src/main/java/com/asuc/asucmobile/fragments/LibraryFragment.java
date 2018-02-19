@@ -79,8 +79,7 @@ public class LibraryFragment extends Fragment {
         mLibraryList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                LibraryController controller = (LibraryController) LibraryController.getInstance();
-                controller.setCurrentLibrary(mAdapter.getItem(i));
+                OpenLibraryActivity.setLibrary(mAdapter.getItem(i));
                 Intent intent = new Intent(getContext(), OpenLibraryActivity.class);
                 startActivity(intent);
             }
@@ -163,7 +162,6 @@ public class LibraryFragment extends Fragment {
             public void onResponse(Call<LibrariesResponse> call, Response<LibrariesResponse> response) {
                 mLibraryList.setVisibility(View.VISIBLE);
                 mProgressBar.setVisibility(View.GONE);
-
                 mAdapter.setList(response.body().getLibraries());
             }
 
