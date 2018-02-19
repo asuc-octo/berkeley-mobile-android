@@ -10,8 +10,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.asuc.asucmobile.R;
-import com.asuc.asucmobile.controllers.CafeController;
-import com.asuc.asucmobile.controllers.DiningController;
 import com.asuc.asucmobile.main.OpenCafeActivity;
 import com.asuc.asucmobile.main.OpenDiningHallActivity;
 import com.asuc.asucmobile.models.Cafe;
