@@ -55,18 +55,14 @@ public class FoodPlaceAdapter extends RecyclerView.Adapter<FoodPlaceAdapter.View
                     // set the current cafe/dining hall and start the right intent
                     if (foodType == FoodType.Cafe) {
                         Cafe cafe = (Cafe) mFoodPlaceList.get(getAdapterPosition());
-                        CafeController controller = ((CafeController) CafeController.getInstance());
-                        controller.setCurrentCafe(cafe);
+                        OpenCafeActivity.setCafe(cafe);
                         intent = new Intent(mContext, OpenCafeActivity.class);
                         mContext.startActivity(intent);
-
                     } else if (foodType == FoodType.DiningHall) {
                         DiningHall diningHall = (DiningHall) mFoodPlaceList.get(getAdapterPosition());
-                        DiningController controller = ((DiningController) DiningController.getInstance());
-                        controller.setCurrentDiningHall(diningHall);
+                        OpenDiningHallActivity.setDiningHall(diningHall);
                         intent = new Intent(mContext, OpenDiningHallActivity.class);
                         mContext.startActivity(intent);
-
                     }
 
                 }

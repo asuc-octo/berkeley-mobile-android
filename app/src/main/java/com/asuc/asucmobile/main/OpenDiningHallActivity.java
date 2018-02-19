@@ -28,7 +28,7 @@ import java.util.Date;
 public class OpenDiningHallActivity extends BaseActivity {
 
     private static final String[] LIMITED_LOCATIONS = {"Crossroads","Foothill"};
-    private DiningHall diningHall;
+    private static DiningHall diningHall;
     public static OpenDiningHallActivity self_reference;
     private FirebaseAnalytics mFirebaseAnalytics;
 
@@ -222,8 +222,15 @@ public class OpenDiningHallActivity extends BaseActivity {
         return diningHall;
     }
 
+    /**
+     * Set the current dining hall. Call this method before opening this activity
+     * @param dh
+     */
+    public static void setDiningHall(DiningHall dh) {
+        diningHall = dh;
+    }
+
     private void exitIfNoData() {
-        diningHall = ((DiningController) DiningController.getInstance()).getCurrentDiningHall();
         if (diningHall == null) {
             finish();
         }

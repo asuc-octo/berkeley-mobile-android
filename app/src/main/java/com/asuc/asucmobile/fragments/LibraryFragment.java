@@ -27,6 +27,8 @@ import com.asuc.asucmobile.controllers.LibraryController;
 import com.asuc.asucmobile.main.ListOfFavorites;
 import com.asuc.asucmobile.main.OpenLibraryActivity;
 import com.asuc.asucmobile.models.Library;
+import com.asuc.asucmobile.models.responses.LibrariesResponse;
+import com.asuc.asucmobile.singletons.BMRetrofitController;
 import com.asuc.asucmobile.utilities.Callback;
 import com.asuc.asucmobile.utilities.CustomComparators;
 import com.asuc.asucmobile.utilities.NavigationGenerator;
@@ -35,6 +37,9 @@ import com.google.firebase.analytics.FirebaseAnalytics;
 
 import java.util.ArrayList;
 import java.util.Collections;
+
+import retrofit2.Call;
+import retrofit2.Response;
 
 public class LibraryFragment extends Fragment {
 
@@ -153,24 +158,42 @@ public class LibraryFragment extends Fragment {
         mRefreshWrapper.setVisibility(View.GONE);
         mProgressBar.setVisibility(View.VISIBLE);
 
-        LibraryController.getInstance().refreshInBackground(getActivity(), new Callback() {
+        BMRetrofitController.bmapi.callLibrariesList().enqueue(new retrofit2.Callback<LibrariesResponse>() {
             @Override
-            @SuppressWarnings("unchecked")
-            public void onDataRetrieved(Object data) {
+            public void onResponse(Call<LibrariesResponse> call, Response<LibrariesResponse> response) {
                 mLibraryList.setVisibility(View.VISIBLE);
                 mProgressBar.setVisibility(View.GONE);
 
-                mAdapter.setList((ArrayList<Library>) data);
+                mAdapter.setList(response.body().getLibraries());
             }
 
             @Override
-            public void onRetrievalFailed() {
+            public void onFailure(Call<LibrariesResponse> call, Throwable t) {
                 mProgressBar.setVisibility(View.GONE);
                 mRefreshWrapper.setVisibility(View.VISIBLE);
                 Toast.makeText(getContext(), "Unable to retrieve data, please try again",
                         Toast.LENGTH_SHORT).show();
             }
         });
+//
+//        LibraryController.getInstance().refreshInBackground(getActivity(), new Callback() {
+//            @Override
+//            @SuppressWarnings("unchecked")
+//            public void onDataRetrieved(Object data) {
+//                mLibraryList.setVisibility(View.VISIBLE);
+//                mProgressBar.setVisibility(View.GONE);
+//
+//                mAdapter.setList((ArrayList<Library>) data);
+//            }
+//
+//            @Override
+//            public void onRetrievalFailed() {
+//                mProgressBar.setVisibility(View.GONE);
+//                mRefreshWrapper.setVisibility(View.VISIBLE);
+//                Toast.makeText(getContext(), "Unable to retrieve data, please try again",
+//                        Toast.LENGTH_SHORT).show();
+//            }
+//        });
     }
 
     public static void refreshLists() {
