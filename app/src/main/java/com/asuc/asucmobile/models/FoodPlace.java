@@ -2,6 +2,7 @@ package com.asuc.asucmobile.models;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -9,7 +10,7 @@ import java.util.Date;
  * Created by rustie on 10/4/17.
  */
 
-public abstract class FoodPlace {
+public abstract class FoodPlace implements Serializable{
 
 
 
