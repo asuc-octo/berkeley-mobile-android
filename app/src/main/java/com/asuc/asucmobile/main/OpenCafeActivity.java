@@ -31,7 +31,7 @@ import java.util.Date;
 
 public class OpenCafeActivity extends BaseActivity {
 
-    private Cafe cafe;
+    private static Cafe cafe;
     private FirebaseAnalytics mFirebaseAnalytics;
 
 
@@ -163,8 +163,11 @@ public class OpenCafeActivity extends BaseActivity {
         return cafe;
     }
 
+    public static void setCafe(Cafe c) {
+        cafe = c;
+    }
+
     private void exitIfNoData() {
-        cafe = ((CafeController) CafeController.getInstance()).getCurrentCafe();
         if (cafe == null) {
             finish();
         }
