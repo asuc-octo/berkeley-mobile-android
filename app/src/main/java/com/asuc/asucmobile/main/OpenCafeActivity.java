@@ -19,6 +19,7 @@ import com.asuc.asucmobile.controllers.CafeController;
 import com.asuc.asucmobile.fragments.MenuFragment;
 import com.asuc.asucmobile.models.Cafe;
 import com.asuc.asucmobile.utilities.SerializableUtilities;
+import com.bumptech.glide.Glide;
 import com.google.firebase.analytics.FirebaseAnalytics;
 
 import java.io.InputStream;
@@ -49,7 +50,7 @@ public class OpenCafeActivity extends BaseActivity {
 
         // Downloading Dining Hall image
         ImageView headerImage = (ImageView) findViewById(R.id.headerImage);
-        new DownloadImageThread(headerImage, cafe.getImageUrl()).start();
+        Glide.with(this).load(cafe.getImageUrl()).into(headerImage);
 
         // Load favorites from disk.
         ListOfFavorites listOfFavorites = (ListOfFavorites) SerializableUtilities.loadSerializedObject(this);
@@ -167,41 +168,6 @@ public class OpenCafeActivity extends BaseActivity {
         if (cafe == null) {
             finish();
         }
-    }
-
-    private class DownloadImageThread extends Thread {
-
-        ImageView headerView;
-        String url;
-
-        private DownloadImageThread(ImageView headerView, String url) {
-            this.headerView = headerView;
-            this.url = url;
-        }
-
-        @Override
-        public void run() {
-            try {
-                InputStream input = new java.net.URL(url).openStream();
-                final Bitmap bitmap = BitmapFactory.decodeStream(input);
-
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        headerView.setImageBitmap(bitmap);
-                    }
-                });
-            } catch (Exception e) {
-
-            }
-            runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    headerView.setVisibility(View.VISIBLE);
-                }
-            });
-        }
-
     }
 
 }
