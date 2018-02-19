@@ -11,6 +11,7 @@ import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.TextUtils;
 import android.text.style.ForegroundColorSpan;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
@@ -38,6 +39,8 @@ import java.util.Locale;
 
 public class OpenLibraryActivity extends BaseActivity {
 
+    public static final String TAG = "OpenLibraryActivity";
+
     private static final LatLng CAMPUS_LOCATION = new LatLng(37.871899, -122.25854);
     private static final SimpleDateFormat HOURS_FORMAT =
             new SimpleDateFormat("h:mm a", Locale.ENGLISH);
@@ -45,7 +48,7 @@ public class OpenLibraryActivity extends BaseActivity {
 
     private MapFragment mapFragment;
     private GoogleMap map;
-    private Library library;
+    private static Library library;
     private ViewGroup.LayoutParams hoursParams;
     public static OpenLibraryActivity self_reference;
     private FirebaseAnalytics mFirebaseAnalytics;
@@ -85,7 +88,7 @@ public class OpenLibraryActivity extends BaseActivity {
         hoursLayout.setOnClickListener(new com.asuc.asucmobile.utilities.hoursOnClickListener() {
             @Override
             public void onClick(View v) {
-                if (!status) {
+                if (library.getWeeklyOpen() == null || library.getWeeklyClose() == null) {
                     hours.setText(setUpWeeklyHoursLeft());
                     hoursParams = hoursLayout.getLayoutParams();
                     hoursLayout.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, 0.2f));
@@ -298,8 +301,16 @@ public class OpenLibraryActivity extends BaseActivity {
         return weeklyHoursString;
     }
 
+    /**
+     * Set the library we are currently considering. Call before opening this activitiy
+     * @param l
+     */
+    public static void setLibrary(Library l) {
+        library = l;
+        Log.d(TAG, library.toString());
+    }
+
     private void exitIfNoData() {
-        library = ((LibraryController) LibraryController.getInstance()).getCurrentLibrary();
         if (library == null) {
             finish();
         }
