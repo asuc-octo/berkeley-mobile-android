@@ -22,8 +22,8 @@ import com.asuc.asucmobile.controllers.BMAPI;
 import com.asuc.asucmobile.models.responses.CafesResponse;
 import com.asuc.asucmobile.models.responses.DiningHallsResponse;
 import com.asuc.asucmobile.models.FoodPlace;
+import com.asuc.asucmobile.singletons.BMRetrofitController;
 import com.asuc.asucmobile.utilities.NavigationGenerator;
-import com.asuc.asucmobile.utilities.ServiceGenerator;
 import com.google.firebase.analytics.FirebaseAnalytics;
 
 import java.util.ArrayList;
@@ -54,19 +54,12 @@ public class FoodFragment extends Fragment {
     private LinearLayout mRefreshWrapper;
     private FirebaseAnalytics mFirebaseAnalytics;
 
-    BMAPI bmapi = ServiceGenerator.createService(BMAPI.class);
-
-
     Call<DiningHallsResponse> diningHallsCall;
     Call<CafesResponse> cafesCall;
 
     @Override
     @SuppressWarnings("deprecation")
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-
-        diningHallsCall = bmapi.callDiningHallList();
-        cafesCall = bmapi.callCafeList();
-
 
         View layout = inflater.inflate(R.layout.fragment_food, container, false);
         Toolbar toolbar = (Toolbar) layout.findViewById(R.id.toolbar);
@@ -90,7 +83,7 @@ public class FoodFragment extends Fragment {
         mDiningRecyclerView.setHasFixedSize(true);
         mDiningHallList = new ArrayList<>();
         mDiningRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
-        mDiningRecyclerView.setAdapter(new FoodPlaceAdapter(getContext(), (List<FoodPlace>) mDiningHallList, FoodPlaceAdapter.FoodType.DiningHall));
+        mDiningRecyclerView.setAdapter(new FoodPlaceAdapter(getContext(), mDiningHallList, FoodPlaceAdapter.FoodType.DiningHall));
 
         // null check on recyclerviews and size check on lists
 
@@ -123,6 +116,10 @@ public class FoodFragment extends Fragment {
      * from the web.
      */
     private void refresh() {
+
+        diningHallsCall = BMRetrofitController.bmapi.callDiningHallList();
+        cafesCall = BMRetrofitController.bmapi.callCafeList();
+
         mCafeLabel.setVisibility(View.GONE);
         mDiningHallLabel.setVisibility(View.GONE);
 
@@ -142,6 +139,8 @@ public class FoodFragment extends Fragment {
         cafesCall.enqueue(new Callback<CafesResponse>() {
             @Override
             public void onResponse(Call<CafesResponse> call, Response<CafesResponse> response) {
+
+
                 List<FoodPlace> dh = (List<FoodPlace>) response.body().getCafes();
                 mCafeList = dh;
 
@@ -160,34 +159,6 @@ public class FoodFragment extends Fragment {
                         Toast.LENGTH_SHORT).show();
             }
         });
-
-
-//        CafeController.getInstance().refreshInBackground(getActivity(), new Callback() {
-//
-//            @Override
-//            @SuppressWarnings("unchecked")
-//            public void onDataRetrieved(Object data) {
-//                mCafeLabel.setVisibility(View.VISIBLE);
-//                mCafeRecyclerView.setVisibility(View.VISIBLE);
-//                mProgressBar.setVisibility(View.GONE);
-//                mCafeList= (ArrayList<FoodPlace>) data;
-//                mCafeRecyclerView.setAdapter(new FoodPlaceAdapter(getContext(), mCafeList, FoodPlaceAdapter.FoodType.Cafe));
-//                Log.d(TAG, data.toString());
-//
-//
-//            }
-//
-//            @Override
-//            public void onRetrievalFailed() {
-//
-//                mProgressBar.setVisibility(View.GONE);
-//                mRefreshWrapper.setVisibility(View.VISIBLE);
-//
-//                Toast.makeText(getContext(), "Unable to retrieve cafe data please try again",
-//                        Toast.LENGTH_SHORT).show();
-//            }
-//
-//        });
     }
 
     private void getDining() {
@@ -196,7 +167,28 @@ public class FoodFragment extends Fragment {
              @Override
              public void onResponse(Call<DiningHallsResponse> call, Response<DiningHallsResponse> response) {
 
-                List<FoodPlace> dh = (List<FoodPlace>) response.body().getDiningHalls();
+                 Log.d("Dining Response: ", response.headers().toString());
+                 Log.d("Dining Response: ", response.body().toString());
+
+                 if (response.raw().cacheResponse() != null) {
+                     // true: response was served from cache
+                     Log.d("Dining Response: ", "Served from Cache");
+
+                 }
+
+                 if (response.raw().networkResponse() != null) {
+                     // true: response was served from network/server
+                     Log.d("Dining Response: ", "Served from Network");
+
+                 }
+
+                 if (BMRetrofitController.isConnected()) {
+                     Log.d("Dining Response: ", "Connected");
+                 }
+
+
+
+                 List<FoodPlace> dh = (List<FoodPlace>) response.body().getDiningHalls();
                 mDiningHallList = dh;
 
                 mDiningHallLabel.setVisibility(View.VISIBLE);
