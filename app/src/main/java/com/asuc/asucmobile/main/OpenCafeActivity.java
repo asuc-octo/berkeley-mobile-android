@@ -15,7 +15,6 @@ import android.view.View;
 import android.widget.ImageView;
 
 import com.asuc.asucmobile.R;
-import com.asuc.asucmobile.controllers.CafeController;
 import com.asuc.asucmobile.fragments.MenuFragment;
 import com.asuc.asucmobile.models.Cafe;
 import com.asuc.asucmobile.utilities.SerializableUtilities;
