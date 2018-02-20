@@ -23,7 +23,6 @@ import android.widget.Toast;
 
 import com.asuc.asucmobile.R;
 import com.asuc.asucmobile.adapters.ResourceAdapter;
-import com.asuc.asucmobile.controllers.ResourceController;
 import com.asuc.asucmobile.main.ListOfFavorites;
 import com.asuc.asucmobile.main.OpenResourceActivity;
 import com.asuc.asucmobile.models.Resource;
