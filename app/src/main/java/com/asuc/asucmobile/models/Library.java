@@ -5,6 +5,7 @@ import android.support.annotation.NonNull;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.gson.annotations.SerializedName;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 
@@ -27,9 +28,9 @@ public class Library implements Comparable<Library>{
     @SerializedName("closing_time_today")
     private Date closing;
     @SerializedName("weekly_opening_times")
-    private Date[] weeklyOpen;
+    private ArrayList<Date> weeklyOpen;
     @SerializedName("weekly_closing_times")
-    private Date[] weeklyClose;
+    private ArrayList<Date> weeklyClose;
     private LatLng latLng;
     private double latitude;
     private double longitude;
@@ -39,7 +40,7 @@ public class Library implements Comparable<Library>{
     private int weekday;
 
     public Library(int id, String name, String location, String phone, Date opening,
-                   Date closing, Date[] weeklyOpen, Date[] weeklyClose, double lat, double lng,
+                   Date closing, ArrayList<Date> weeklyOpen, ArrayList<Date> weeklyClose, double lat, double lng,
                    boolean byAppointment, boolean[] weeklyAppointments, int weekday) {
         this.id = id;
         this.name = name;
@@ -78,9 +79,9 @@ public class Library implements Comparable<Library>{
         return closing;
     }
 
-    public Date[] getWeeklyOpen() { return weeklyOpen; }
+    public ArrayList<Date> getWeeklyOpen() { return weeklyOpen; }
 
-    public Date[] getWeeklyClose() { return weeklyClose; }
+    public ArrayList<Date> getWeeklyClose() { return weeklyClose; }
 
     public LatLng getCoordinates() {
         if (latLng == null) {
@@ -137,8 +138,8 @@ public class Library implements Comparable<Library>{
                 ", phone='" + phone + '\'' +
                 ", opening=" + opening +
                 ", closing=" + closing +
-                ", weeklyOpen=" + Arrays.toString(weeklyOpen) +
-                ", weeklyClose=" + Arrays.toString(weeklyClose) +
+                ", weeklyOpen=" + weeklyOpen.toString() +
+                ", weeklyClose=" + weeklyClose.toString() +
                 ", latLng=" + latLng +
                 ", byAppointment=" + byAppointment +
                 ", hasCoordinates=" + hasCoordinates +

@@ -82,8 +82,8 @@ public class LibraryController implements Controller {
                                 libraryJSON.getJSONArray("weekly_closing_times");
                         String openingString;
                         String closingString;
-                        Date[] weeklyOpen = new Date[7];
-                        Date[] weeklyClose = new Date[7];
+                        ArrayList<Date> weeklyOpen = new ArrayList<>();
+                        ArrayList<Date> weeklyClose = new ArrayList<>();
                         for (int j=0; j < weeklyOpenArray.length(); j++) {
                             openingString = weeklyOpenArray.getString(j);
                             opening = null;
@@ -91,7 +91,7 @@ public class LibraryController implements Controller {
                                 tmpDate = DATE_FORMAT.parse(openingString).getTime();
                                 opening = new Date(tmpDate + PST.getOffset(tmpDate));
                             }
-                            weeklyOpen[j] = opening;
+                            weeklyOpen.add(j, opening);
                         }
                         for (int j=0; j < weeklyCloseArray.length(); j++) {
                             closingString = weeklyCloseArray.getString(j);
@@ -100,7 +100,7 @@ public class LibraryController implements Controller {
                                 tmpDate = DATE_FORMAT.parse(closingString).getTime();
                                 closing = new Date(tmpDate + PST.getOffset(tmpDate));
                             }
-                            weeklyClose[j] = closing;
+                            weeklyClose.add(j, closing);
                         }
                         double lat;
                         double lng;
@@ -123,8 +123,8 @@ public class LibraryController implements Controller {
                         Date d = DATE_FORMAT.parse(libraryJSON.getString("updated_at"));
                         c.setTime(d);
                         int weekday = c.get(Calendar.DAY_OF_WEEK);
-                        libraries.add(new Library(id, name, location, phone, weeklyOpen[0],
-                                weeklyClose[0], weeklyOpen, weeklyClose, lat, lng, byAppointment,
+                        libraries.add(new Library(id, name, location, phone, weeklyOpen.get(0),
+                                weeklyClose.get(0), weeklyOpen, weeklyClose, lat, lng, byAppointment,
                                 weeklyAppointments, weekday));
                     }
 
