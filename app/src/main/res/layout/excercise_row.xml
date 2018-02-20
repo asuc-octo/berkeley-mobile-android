@@ -1,0 +1,55 @@
+<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="20dp"
+    android:orientation="vertical"
+    android:stretchColumns="1">
+
+
+    <TableRow>
+
+        <Button
+            android:id="@+id/filter-color"
+            android:background="@color/colorAccent"
+            android:layout_width="7dp"
+            android:layout_height="match_parent"
+            android:color="@color/green"
+            android:text="" />
+
+        <TextView
+            android:id="@+id/excercise_time"
+            android:background="#FFFFFF"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_column="1"
+            android:layout_marginLeft="10dp"
+
+            android:text="07:15 - 08:15"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/excercise_name"
+            android:background="#FFFFFF"
+            android:layout_width="146dp"
+            android:layout_height="match_parent"
+            android:layout_column="2"
+            android:layout_marginLeft="10dp"
+
+            android:text="Cycle Fusion"
+            android:textSize="14sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/excercise_location"
+            android:layout_height="match_parent"
+            android:layout_column="3"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:background="#FFFFFF"
+
+            android:text="Court #5
+RSF"
+            android:textSize="14sp" />
+    </TableRow>
+
+</TableLayout>
