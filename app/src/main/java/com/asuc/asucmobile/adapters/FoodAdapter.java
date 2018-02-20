@@ -77,8 +77,6 @@ public class FoodAdapter extends BaseAdapter {
             final LinearLayout foodTypesLayout = (LinearLayout) convertView.findViewById(R.id.food_types_layout);
             foodTypesLayout.removeAllViews();
 
-
-            // layout stuff; want to make icons the same size as the food name: 16 sp
             // layout stuff; want to make icons the same size as the food name: 16 sp
             int size = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, 16, context.getResources().getDisplayMetrics());
             LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
