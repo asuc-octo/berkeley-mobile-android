@@ -173,25 +173,6 @@ public class LibraryFragment extends Fragment {
                         Toast.LENGTH_SHORT).show();
             }
         });
-//
-//        LibraryController.getInstance().refreshInBackground(getActivity(), new Callback() {
-//            @Override
-//            @SuppressWarnings("unchecked")
-//            public void onDataRetrieved(Object data) {
-//                mLibraryList.setVisibility(View.VISIBLE);
-//                mProgressBar.setVisibility(View.GONE);
-//
-//                mAdapter.setList((ArrayList<Library>) data);
-//            }
-//
-//            @Override
-//            public void onRetrievalFailed() {
-//                mProgressBar.setVisibility(View.GONE);
-//                mRefreshWrapper.setVisibility(View.VISIBLE);
-//                Toast.makeText(getContext(), "Unable to retrieve data, please try again",
-//                        Toast.LENGTH_SHORT).show();
-//            }
-//        });
     }
 
     public static void refreshLists() {
