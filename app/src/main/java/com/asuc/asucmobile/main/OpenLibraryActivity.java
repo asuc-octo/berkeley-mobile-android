@@ -19,7 +19,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.asuc.asucmobile.R;
-import com.asuc.asucmobile.controllers.LibraryController;
 import com.asuc.asucmobile.models.Library;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
