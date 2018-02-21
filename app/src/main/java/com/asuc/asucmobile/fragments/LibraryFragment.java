@@ -163,6 +163,7 @@ public class LibraryFragment extends Fragment {
                 mLibraryList.setVisibility(View.VISIBLE);
                 mProgressBar.setVisibility(View.GONE);
                 mAdapter.setList(response.body().getLibraries());
+                ArrayList<Library> l = response.body().getLibraries();
             }
 
             @Override
