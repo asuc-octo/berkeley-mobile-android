@@ -18,15 +18,20 @@ import android.widget.Toast;
 
 import com.asuc.asucmobile.R;
 import com.asuc.asucmobile.adapters.FoodPlaceAdapter;
-import com.asuc.asucmobile.controllers.CafeController;
-import com.asuc.asucmobile.controllers.DiningController;
-import com.asuc.asucmobile.models.DiningHall;
+import com.asuc.asucmobile.controllers.BMAPI;
+import com.asuc.asucmobile.models.responses.CafesResponse;
+import com.asuc.asucmobile.models.responses.DiningHallsResponse;
 import com.asuc.asucmobile.models.FoodPlace;
-import com.asuc.asucmobile.utilities.Callback;
+import com.asuc.asucmobile.singletons.BMRetrofitController;
 import com.asuc.asucmobile.utilities.NavigationGenerator;
 import com.google.firebase.analytics.FirebaseAnalytics;
 
 import java.util.ArrayList;
+import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * Created by rustie on 10/4/17.
@@ -42,18 +47,20 @@ public class FoodFragment extends Fragment {
     private RecyclerView mDiningRecyclerView;
     private RecyclerView mCafeRecyclerView;
 
-    private ArrayList<FoodPlace> mDiningHallList;
-    private ArrayList<FoodPlace> mCafeList;
+    private List<FoodPlace> mDiningHallList;
+    private List<FoodPlace> mCafeList;
     
     private ProgressBar mProgressBar;
     private LinearLayout mRefreshWrapper;
     private FirebaseAnalytics mFirebaseAnalytics;
 
-
+    Call<DiningHallsResponse> diningHallsCall;
+    Call<CafesResponse> cafesCall;
 
     @Override
     @SuppressWarnings("deprecation")
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+
         View layout = inflater.inflate(R.layout.fragment_food, container, false);
         Toolbar toolbar = (Toolbar) layout.findViewById(R.id.toolbar);
         ((AppCompatActivity) getContext()).setSupportActionBar(toolbar);
@@ -109,6 +116,10 @@ public class FoodFragment extends Fragment {
      * from the web.
      */
     private void refresh() {
+
+        diningHallsCall = BMRetrofitController.bmapi.callDiningHallList();
+        cafesCall = BMRetrofitController.bmapi.callCafeList();
+
         mCafeLabel.setVisibility(View.GONE);
         mDiningHallLabel.setVisibility(View.GONE);
 
@@ -124,59 +135,77 @@ public class FoodFragment extends Fragment {
     }
 
     private void getCafes() {
-        CafeController.getInstance().refreshInBackground(getActivity(), new Callback() {
 
+        cafesCall.enqueue(new Callback<CafesResponse>() {
             @Override
-            @SuppressWarnings("unchecked")
-            public void onDataRetrieved(Object data) {
+            public void onResponse(Call<CafesResponse> call, Response<CafesResponse> response) {
+
+
+                List<FoodPlace> dh = (List<FoodPlace>) response.body().getCafes();
+                mCafeList = dh;
+
                 mCafeLabel.setVisibility(View.VISIBLE);
                 mCafeRecyclerView.setVisibility(View.VISIBLE);
                 mProgressBar.setVisibility(View.GONE);
-                mCafeList= (ArrayList<FoodPlace>) data;
                 mCafeRecyclerView.setAdapter(new FoodPlaceAdapter(getContext(), mCafeList, FoodPlaceAdapter.FoodType.Cafe));
-                Log.d(TAG, data.toString());
-
-
+                Log.d(TAG, dh.toString());
             }
 
             @Override
-            public void onRetrievalFailed() {
-
+            public void onFailure(Call<CafesResponse> call, Throwable t) {
                 mProgressBar.setVisibility(View.GONE);
                 mRefreshWrapper.setVisibility(View.VISIBLE);
-
-                Toast.makeText(getContext(), "Unable to retrieve cafe data please try again",
+                Toast.makeText(getContext(), "Unable to retrieve cafe data, please try again",
                         Toast.LENGTH_SHORT).show();
             }
-
         });
     }
 
     private void getDining() {
-        DiningController.getInstance().refreshInBackground(getActivity(), new Callback() {
 
-            @Override
-            @SuppressWarnings("unchecked")
-            public void onDataRetrieved(Object data) {
+        diningHallsCall.enqueue(new retrofit2.Callback<DiningHallsResponse>() {
+             @Override
+             public void onResponse(Call<DiningHallsResponse> call, Response<DiningHallsResponse> response) {
+
+                 Log.d("Dining Response: ", response.headers().toString());
+                 Log.d("Dining Response: ", response.body().toString());
+
+                 if (response.raw().cacheResponse() != null) {
+                     // true: response was served from cache
+                     Log.d("Dining Response: ", "Served from Cache");
+
+                 }
+
+                 if (response.raw().networkResponse() != null) {
+                     // true: response was served from network/server
+                     Log.d("Dining Response: ", "Served from Network");
+
+                 }
+
+                 if (BMRetrofitController.isConnected()) {
+                     Log.d("Dining Response: ", "Connected");
+                 }
+
+
+
+                 List<FoodPlace> dh = (List<FoodPlace>) response.body().getDiningHalls();
+                mDiningHallList = dh;
+
                 mDiningHallLabel.setVisibility(View.VISIBLE);
                 mDiningRecyclerView.setVisibility(View.VISIBLE);
                 mProgressBar.setVisibility(View.GONE);
-                mDiningHallList = (ArrayList<FoodPlace>) data;
                 mDiningRecyclerView.setAdapter(new FoodPlaceAdapter(getContext(), mDiningHallList, FoodPlaceAdapter.FoodType.DiningHall));
+                 Log.d(TAG, dh.toString());
+             }
 
-                Log.d(TAG, data.toString());
-
-            }
-
-            @Override
-            public void onRetrievalFailed() {
+             @Override
+             public void onFailure(Call<DiningHallsResponse> call, Throwable t) {
                 mProgressBar.setVisibility(View.GONE);
                 mRefreshWrapper.setVisibility(View.VISIBLE);
                 Toast.makeText(getContext(), "Unable to retrieve dining hall data, please try again",
                         Toast.LENGTH_SHORT).show();
-            }
-
-        });
+             }
+         });
     }
 
 }

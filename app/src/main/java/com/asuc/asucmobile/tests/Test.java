@@ -19,9 +19,9 @@ public class Test {
         opening1.setTime(currentTime.getTime() - 1000000);
         Date closing1 = new Date();
         closing1.setTime(currentTime.getTime() + 1000000);
-        Library testLibrary1 =
-                new Library(0, "Library", "Location", "000-000-0000", opening1, closing1, null,
-                        null, 0, 0, false, null, 0);
+//        Library testLibrary1 =
+//                new Library(0, "Library", "Location", "000-000-0000", opening1, closing1, null,
+//                        null, 0, 0, false, null, 0);
 
         Date opening2 = new Date();
         opening2.setTime(currentTime.getTime() + 1000000);
@@ -30,21 +30,21 @@ public class Test {
         Gym testGym1 =
                 new Gym(0, "Library", "Location", opening2, closing2, "");
 
-        Library testLibrary2 =
-                new Library(1, "Library", "Location", "000-000-0000", null, null, null, null, 0, 0,
-                        false, null, 0);
+//        Library testLibrary2 =
+//                new Library(1, "Library", "Location", "000-000-0000", null, null, null, null, 0, 0,
+//                        false, null, 0);
 
-        if (!testLibrary1.isOpen()) {
-            System.out.println("Open library reported as closed");
-        }
+//        if (!testLibrary1.isOpen()) {
+//            System.out.println("Open library reported as closed");
+//        }
 
         if (testGym1.isOpen()) {
             System.out.println("Closed gym reported as open");
         }
 
-        if (testLibrary2.isOpen()) {
-            System.out.println("Library with null hours reported as open");
-        }
+//        if (testLibrary2.isOpen()) {
+//            System.out.println("Library with null hours reported as open");
+//        }
 
         // Name Abbreviation Test
      /*   Stop stop1 = new Stop(0, "Moffitt Library; Memorial Glade Side", new LatLng(0, 0));
