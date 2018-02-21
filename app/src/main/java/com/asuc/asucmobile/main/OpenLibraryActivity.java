@@ -243,7 +243,7 @@ public class OpenLibraryActivity extends BaseActivity {
      * holds days of the week and some description.
      */
     private Spanned setUpWeeklyHoursLeft() {
-        Date[] openings = library.getWeeklyOpen();
+        Date[] openings = (Date[]) library.getWeeklyOpen().toArray();
         Spanned weeklyHoursString = new SpannableString("Today\n");
         for (int i=0; i < openings.length; i++) {
             Spannable hoursString;
@@ -259,8 +259,8 @@ public class OpenLibraryActivity extends BaseActivity {
      * holds hours for each day of the week and some description.
      */
     private Spanned setUpWeeklyHoursRight() {
-        Date[] openings = library.getWeeklyOpen();
-        Date[] closings = library.getWeeklyClose();
+        Date[] openings = (Date[]) library.getWeeklyOpen().toArray();
+        Date[] closings = (Date[]) library.getWeeklyClose().toArray();
         boolean[] byAppointments = library.getWeeklyAppointments();
         Spannable hoursString;
         if (library.isByAppointment()) {

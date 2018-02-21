@@ -73,6 +73,8 @@ public class FoodAdapter extends BaseAdapter {
 
         if (foodItem.getFoodTypes() != null && foodItem.getFoodTypes().size() > 0) {
 
+            Log.d(TAG, foodItem.getFoodTypes().toString());
+
             // make imageViews dynamically, switch on types
             final LinearLayout foodTypesLayout = (LinearLayout) convertView.findViewById(R.id.food_types_layout);
             foodTypesLayout.removeAllViews();
