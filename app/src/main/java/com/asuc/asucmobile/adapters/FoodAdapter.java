@@ -73,8 +73,6 @@ public class FoodAdapter extends BaseAdapter {
 
         if (foodItem.getFoodTypes() != null && foodItem.getFoodTypes().size() > 0) {
 
-            Log.d(TAG, foodItem.getFoodTypes().toString());
-
             // make imageViews dynamically, switch on types
             final LinearLayout foodTypesLayout = (LinearLayout) convertView.findViewById(R.id.food_types_layout);
             foodTypesLayout.removeAllViews();
@@ -136,6 +134,11 @@ public class FoodAdapter extends BaseAdapter {
         return convertView;
     }
 
+    /**
+     * Selects proper food icon given a string food type in lower case
+     * @param string
+     * @return
+     */
     private int selectFoodIcon(String string) {
         switch (string) {
             case ("contains alcohol"):
