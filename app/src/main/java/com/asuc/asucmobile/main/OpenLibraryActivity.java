@@ -34,6 +34,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.firebase.analytics.FirebaseAnalytics;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
 
@@ -88,7 +89,7 @@ public class OpenLibraryActivity extends BaseActivity {
         hoursLayout.setOnClickListener(new com.asuc.asucmobile.utilities.hoursOnClickListener() {
             @Override
             public void onClick(View v) {
-                if (library.getWeeklyOpen() == null || library.getWeeklyClose() == null) {
+                if (!status) {
                     hours.setText(setUpWeeklyHoursLeft());
                     hoursParams = hoursLayout.getLayoutParams();
                     hoursLayout.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, 0.2f));
@@ -243,9 +244,9 @@ public class OpenLibraryActivity extends BaseActivity {
      * holds days of the week and some description.
      */
     private Spanned setUpWeeklyHoursLeft() {
-        Date[] openings = (Date[]) library.getWeeklyOpen().toArray();
+        ArrayList<Date> openings = library.getWeeklyOpen();
         Spanned weeklyHoursString = new SpannableString("Today\n");
-        for (int i=0; i < openings.length; i++) {
+        for (int i=0; i < openings.size(); i++) {
             Spannable hoursString;
             hoursString = new SpannableString("\n" + library.getDayOfWeek(i));
             weeklyHoursString = (Spanned) TextUtils.concat(weeklyHoursString, hoursString);
@@ -259,9 +260,9 @@ public class OpenLibraryActivity extends BaseActivity {
      * holds hours for each day of the week and some description.
      */
     private Spanned setUpWeeklyHoursRight() {
-        Date[] openings = (Date[]) library.getWeeklyOpen().toArray();
-        Date[] closings = (Date[]) library.getWeeklyClose().toArray();
-        boolean[] byAppointments = library.getWeeklyAppointments();
+        ArrayList<Date> openings = library.getWeeklyOpen();
+        ArrayList<Date> closings = library.getWeeklyClose();
+        ArrayList<Boolean> byAppointments = library.getWeeklyAppointments();
         Spannable hoursString;
         if (library.isByAppointment()) {
             hoursString = new SpannableString("BY APPOINTMENT  ▲\n");
@@ -284,13 +285,13 @@ public class OpenLibraryActivity extends BaseActivity {
             hoursString.setSpan(new ForegroundColorSpan(ContextCompat.getColor(getApplicationContext(),R.color.maroon) ), 0, hoursString.length() - 4, Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
         }
         Spanned weeklyHoursString = hoursString;
-        for (int i=0; i < openings.length; i++) {
-            if (byAppointments[i]) {
+        for (int i=0; i < openings.size(); i++) {
+            if (byAppointments.get(i)) {
                 hoursString = new SpannableString("\n  BY APPOINTMENT");
                 hoursString.setSpan(new ForegroundColorSpan(ContextCompat.getColor(getApplicationContext(),R.color.pavan_light) ), 0, 16, Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
-            } else if (openings[i] != null && closings[i] != null) {
-                String opening = HOURS_FORMAT.format(openings[i]);
-                String closing = HOURS_FORMAT.format(closings[i]);
+            } else if (openings.get(i) != null && closings.get(i) != null) {
+                String opening = HOURS_FORMAT.format(openings.get(i));
+                String closing = HOURS_FORMAT.format(closings.get(i));
                 hoursString = new SpannableString("\n" + opening + " - " + closing);
             } else {
                 hoursString = new SpannableString("\n  CLOSED ALL DAY");

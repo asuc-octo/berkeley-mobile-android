@@ -123,9 +123,9 @@ public class LibraryController implements Controller {
                         Date d = DATE_FORMAT.parse(libraryJSON.getString("updated_at"));
                         c.setTime(d);
                         int weekday = c.get(Calendar.DAY_OF_WEEK);
-                        libraries.add(new Library(id, name, location, phone, weeklyOpen.get(0),
-                                weeklyClose.get(0), weeklyOpen, weeklyClose, lat, lng, byAppointment,
-                                weeklyAppointments, weekday));
+//                        libraries.add(new Library(id, name, location, phone, weeklyOpen.get(0),
+//                                weeklyClose.get(0), weeklyOpen, weeklyClose, lat, lng, byAppointment,
+//                                weeklyAppointments, weekday));
                     }
 
                     // Sort the libraries alphabetically, putting favorites at top
