@@ -35,3 +35,7 @@ the related `adapters/FoodPlaceAdapter` uses enums:
     }
 
 ```
+
+## `/responses`
+
+Contain POJO responses from the backend, used in conjunction with Retrofit.
