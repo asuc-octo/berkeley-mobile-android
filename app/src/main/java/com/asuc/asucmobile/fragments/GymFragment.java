@@ -19,7 +19,7 @@ import com.asuc.asucmobile.R;
 import com.asuc.asucmobile.adapters.GymAdapter;
 import com.asuc.asucmobile.main.OpenGymActivity;
 import com.asuc.asucmobile.models.responses.GymsResponse;
-import com.asuc.asucmobile.singletons.BMRetrofitController;
+import com.asuc.asucmobile.controllers.BMRetrofitController;
 import com.asuc.asucmobile.utilities.NavigationGenerator;
 import com.google.firebase.analytics.FirebaseAnalytics;
 

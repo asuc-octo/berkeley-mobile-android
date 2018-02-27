@@ -26,7 +26,6 @@ public class DiningHall extends FoodPlace{
     @SerializedName("limited_dinner_menu")
     private ArrayList<FoodItem> limitedDinnerMenu;
 
-
     @SerializedName("breakfast_open")
     private Date breakfastOpen;
 
