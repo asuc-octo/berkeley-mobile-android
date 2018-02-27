@@ -18,11 +18,10 @@ import android.widget.Toast;
 
 import com.asuc.asucmobile.R;
 import com.asuc.asucmobile.adapters.FoodPlaceAdapter;
-import com.asuc.asucmobile.controllers.BMAPI;
 import com.asuc.asucmobile.models.responses.CafesResponse;
 import com.asuc.asucmobile.models.responses.DiningHallsResponse;
 import com.asuc.asucmobile.models.FoodPlace;
-import com.asuc.asucmobile.singletons.BMRetrofitController;
+import com.asuc.asucmobile.controllers.BMRetrofitController;
 import com.asuc.asucmobile.utilities.NavigationGenerator;
 import com.google.firebase.analytics.FirebaseAnalytics;
 

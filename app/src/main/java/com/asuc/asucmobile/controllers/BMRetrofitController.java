@@ -1,11 +1,9 @@
-package com.asuc.asucmobile.singletons;
+package com.asuc.asucmobile.controllers;
 
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
-import android.util.Log;
 
-import com.asuc.asucmobile.controllers.BMAPI;
 import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -31,7 +29,7 @@ public class BMRetrofitController {
 
     public static final String BASE_URL = "http://asuc-mobile-dev.herokuapp.com/api/";
     public static final String ISO_FORMAT = "yyyy-MM-dd'T'HH:mm:ss.SSSZ";
-    public static final int CACHE_SIZE = 10; // size of cache in MB
+    public static final int CACHE_SIZE = 10; // size of cache in MiB
     public static final int MAX_AGE = 60;
     public static final int MAX_STALE = 60 * 60 * 24;
 
@@ -45,7 +43,7 @@ public class BMRetrofitController {
     }
 
     /**
-     * Initiate the BMAPI
+     * Initiate the BMAPI from a main context
      * @param context
      * @param serviceClass
      */
@@ -56,6 +54,10 @@ public class BMRetrofitController {
         bmapi = (BMAPI) retrofit.create(serviceClass);
     }
 
+    /**
+     * Checks to see if we have internet connection
+     * @return
+     */
     public static boolean isConnected() {
         ConnectivityManager cm =
                 (ConnectivityManager) c.getSystemService(Context.CONNECTIVITY_SERVICE);
@@ -68,6 +70,9 @@ public class BMRetrofitController {
 
     }
 
+    /**
+     * All the magical caching, okhttp, gson, and retrofit settings
+     */
     private static void configureRetrofit() {
 
         // caching config
@@ -126,7 +131,7 @@ public class BMRetrofitController {
 
     private static class OfflineResponseCacheInterceptor implements Interceptor {
         @Override
-        public okhttp3.Response intercept(Chain chain) throws IOException {
+        public Response intercept(Chain chain) throws IOException {
             Request request = chain.request();
 //            NetworkInfo networkInfo =((ConnectivityManager)
 //                    (c.getSystemService(Context.CONNECTIVITY_SERVICE))).getActiveNetworkInfo();
