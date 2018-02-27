@@ -25,16 +25,13 @@ import com.asuc.asucmobile.R;
 import com.asuc.asucmobile.adapters.ResourceAdapter;
 import com.asuc.asucmobile.main.ListOfFavorites;
 import com.asuc.asucmobile.main.OpenResourceActivity;
-import com.asuc.asucmobile.models.Resource;
 import com.asuc.asucmobile.models.responses.ResourcesResponse;
-import com.asuc.asucmobile.singletons.BMRetrofitController;
-import com.asuc.asucmobile.utilities.Callback;
+import com.asuc.asucmobile.controllers.BMRetrofitController;
 import com.asuc.asucmobile.utilities.CustomComparators;
 import com.asuc.asucmobile.utilities.NavigationGenerator;
 import com.asuc.asucmobile.utilities.SerializableUtilities;
 import com.google.firebase.analytics.FirebaseAnalytics;
 
-import java.util.ArrayList;
 import java.util.Collections;
 
 import retrofit2.Call;
