@@ -27,7 +27,7 @@ import com.asuc.asucmobile.main.ListOfFavorites;
 import com.asuc.asucmobile.main.OpenLibraryActivity;
 import com.asuc.asucmobile.models.Library;
 import com.asuc.asucmobile.models.responses.LibrariesResponse;
-import com.asuc.asucmobile.singletons.BMRetrofitController;
+import com.asuc.asucmobile.controllers.BMRetrofitController;
 import com.asuc.asucmobile.utilities.NavigationGenerator;
 import com.asuc.asucmobile.utilities.SerializableUtilities;
 import com.google.firebase.analytics.FirebaseAnalytics;

@@ -9,7 +9,7 @@ import android.view.WindowManager;
 
 import com.asuc.asucmobile.R;
 import com.asuc.asucmobile.controllers.BMAPI;
-import com.asuc.asucmobile.singletons.BMRetrofitController;
+import com.asuc.asucmobile.controllers.BMRetrofitController;
 
 public class SplashActivity extends Activity {
 
