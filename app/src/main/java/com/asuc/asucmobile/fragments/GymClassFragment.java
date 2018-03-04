@@ -1,5 +1,6 @@
 package com.asuc.asucmobile.fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -7,14 +8,22 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.TableLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.asuc.asucmobile.R;
+import com.asuc.asucmobile.adapters.CardAdapter;
+import com.asuc.asucmobile.controllers.Controller;
 import com.asuc.asucmobile.controllers.GymClassController;
+import com.asuc.asucmobile.controllers.GymController;
+import com.asuc.asucmobile.main.OpenGymActivity;
+import com.asuc.asucmobile.models.Cardable;
+import com.asuc.asucmobile.models.Gym;
 import com.asuc.asucmobile.models.GymClass;
+import com.asuc.asucmobile.models.Gyms;
 import com.asuc.asucmobile.utilities.Callback;
 
 import org.joda.time.DateTime;
@@ -26,10 +35,13 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
 
 import noman.weekcalendar.WeekCalendar;
 import noman.weekcalendar.listener.OnDateClickListener;
+import retrofit2.Call;
+import retrofit2.Response;
 
 public class GymClassFragment extends Fragment {
     public static final String TAG = "GymClassFragment";
@@ -42,6 +54,9 @@ public class GymClassFragment extends Fragment {
     private WeekCalendar calendar;
     private View layout;
     private int dayOfMonth;
+
+    private CardAdapter cardAdapterGyms;
+    private CardAdapter cardAdapterDining;
 
     @Override
     public View onCreateView(final LayoutInflater inflater, ViewGroup container,
@@ -283,22 +298,7 @@ public class GymClassFragment extends Fragment {
 
 
     private void refresh() {
-        GymClassController.getInstance().refreshInBackground(getActivity(), new Callback() {
 
-            @Override
-            @SuppressWarnings("unchecked")
-            public void onDataRetrieved(Object data) {
-                mClasses = (ArrayList<GymClass>) data;
-                Log.d(TAG, data.toString());
-            }
-
-            @Override
-            public void onRetrievalFailed() {
-                Toast.makeText(getContext(), "Unable to retrieve cafe data please try again",
-                        Toast.LENGTH_SHORT).show();
-            }
-
-        });
     }
 
     private void createDummyData() {
