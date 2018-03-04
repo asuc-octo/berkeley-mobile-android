@@ -18,6 +18,7 @@ import android.widget.Toast;
 
 import com.asuc.asucmobile.R;
 import com.asuc.asucmobile.adapters.FoodPlaceAdapter;
+import com.asuc.asucmobile.models.Cafe;
 import com.asuc.asucmobile.models.responses.CafesResponse;
 import com.asuc.asucmobile.models.responses.DiningHallsResponse;
 import com.asuc.asucmobile.models.FoodPlace;
@@ -141,6 +142,9 @@ public class FoodFragment extends Fragment {
 
 
                 List<FoodPlace> dh = (List<FoodPlace>) response.body().getCafes();
+                for (FoodPlace cafe : dh) {
+                    ((Cafe) cafe).setMeals();
+                }
                 mCafeList = dh;
 
                 mCafeLabel.setVisibility(View.VISIBLE);
