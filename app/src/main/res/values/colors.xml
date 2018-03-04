@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <color name="black">#000000</color>
     <color name="hotline_blue">#005581</color>
     <color name="off_hotline_blue">#004467</color>
     <color name="OP_navy">#005581</color>
