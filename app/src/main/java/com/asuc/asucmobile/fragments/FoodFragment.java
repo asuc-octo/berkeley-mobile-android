@@ -141,7 +141,6 @@ public class FoodFragment extends Fragment {
 
             @Override
             public void onRetrievalFailed() {
-
                 mProgressBar.setVisibility(View.GONE);
                 mRefreshWrapper.setVisibility(View.VISIBLE);
 

@@ -17,6 +17,8 @@ import com.asuc.asucmobile.controllers.GymClassController;
 import com.asuc.asucmobile.models.GymClass;
 import com.asuc.asucmobile.utilities.Callback;
 
+import org.joda.time.DateTime;
+
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -26,6 +28,9 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Locale;
 
+import noman.weekcalendar.WeekCalendar;
+import noman.weekcalendar.listener.OnDateClickListener;
+
 public class GymClassFragment extends Fragment {
     public static final String TAG = "GymClassFragment";
 
@@ -34,17 +39,29 @@ public class GymClassFragment extends Fragment {
     private HashMap<Button, Boolean> clickTracker;
     private Button allAround, cardio, mind, core, dance, strength, aqua;
     private TableLayout table;
+    private WeekCalendar calendar;
     private View layout;
+    private int dayOfMonth;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(final LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
         mClasses = new ArrayList<>();
         filter = new ArrayList<>();
         clickTracker = new HashMap<>();
+        dayOfMonth = new DateTime().getDayOfMonth();
 
         layout = inflater.inflate(R.layout.fragment_class, container, false);
+        calendar = (WeekCalendar) layout.findViewById(R.id.weekCalendar);
+        calendar.setOnDateClickListener(new OnDateClickListener() {
+            @Override
+            public void onDateClick(DateTime dateTime) {
+                dayOfMonth = dateTime.getDayOfMonth();
+                initClassTable(inflater);
+                Log.d("LOL", dayOfMonth+"");
+            }
+        });
         createDummyData();
 
         initButtons(inflater);
@@ -225,7 +242,8 @@ public class GymClassFragment extends Fragment {
         table.addView(titleRow);
 
         for (GymClass gymClass: mClasses) {
-            if (filter.contains(gymClass.getClassType()))
+            if (filter.contains(gymClass.getClassType()) ||
+                    dayOfMonth != gymClass.getDate().getDate())
                 continue;
 
             View tr = inflater.inflate(R.layout.class_row, null, false);
@@ -284,6 +302,8 @@ public class GymClassFragment extends Fragment {
     }
 
     private void createDummyData() {
+        SimpleDateFormat TEMP_DATE_FORMATER =
+                new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.ENGLISH);
 
         for (int i = 0 ; i < 15; i++) {
             String name = "Class " + i;
@@ -300,15 +320,15 @@ public class GymClassFragment extends Fragment {
                 location = "Court #10, RSF";
             }
 
-            Date date = new Date(System.nanoTime());
+            Date date = Calendar.getInstance().getTime();
+            Log.d("LOLOL", TEMP_DATE_FORMATER.format(date));
+
             try {
                 long tmpDate;
                 Date startTime = null;
                 Date endTime = null;
                 String openingString = "2000-01-01T" + (i + 5) + ":15:00.000Z";
                 String closingString = "2000-01-01T" + (i + 6) + ":15:00.000Z";
-                SimpleDateFormat TEMP_DATE_FORMATER =
-                        new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.ENGLISH);
 
                 if (!openingString.equals("null")) {
                     tmpDate = TEMP_DATE_FORMATER.parse(openingString).getTime();

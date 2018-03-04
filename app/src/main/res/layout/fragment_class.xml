@@ -8,15 +8,12 @@
     <noman.weekcalendar.WeekCalendar
         android:id="@+id/weekCalendar"
         android:layout_width="match_parent"
-        android:layout_height="65dp"
-        android:foreground="@color/holo_white" />
+        android:layout_height="65dp" />
 
-    <ScrollView
-        android:id="@+id/scroll"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fillViewport="true"
-        android:scrollbars="horizontal">
+    <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:isScrollContainer="true">
 
         <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
             android:id="@+id/filter-buttons"
@@ -29,74 +26,76 @@
                 android:id="@+id/all-around"
                 android:background="@drawable/opaque_rounded_shape_1"
                 android:layout_width="wrap_content"
-                android:layout_margin="10dp"
+                android:layout_height="30dp"
                 android:color="@color/green"
                 android:text="ALL-AROUND"
-                android:textColor="@color/card_background"
-                android:textSize="12sp" />
+                android:textSize="10dp"
+                android:layout_margin="10dp"
+                android:textColor="@color/card_background"/>
 
             <Button
                 android:id="@+id/cardio"
                 android:background="@drawable/opaque_rounded_shape_2"
                 android:layout_width="wrap_content"
-                android:layout_height="30sp"
-                android:layout_margin="10dp"
+                android:layout_height="30dp"
                 android:text="CARDIO"
-                android:textColor="@color/card_background"
-                android:textSize="12sp" />
+                android:textSize="10dp"
+                android:layout_margin="10dp"
+                android:textColor="@color/card_background"/>
 
             <Button
                 android:id="@+id/mind"
                 android:background="@drawable/opaque_rounded_shape_3"
                 android:layout_width="wrap_content"
-                android:layout_height="24dp"
+                android:layout_height="30dp"
+                android:text="MIND/BODY"
+                android:textSize="10dp"
                 android:layout_margin="10dp"
-                android:text="   MIND/BODY   "
-                android:textColor="@color/card_background"
-                android:textSize="12sp" />
+                android:textColor="@color/card_background"/>
 
             <Button
                 android:id="@+id/core"
                 android:background="@drawable/opaque_rounded_shape_4"
-                android:layout_width="54dp"
-                android:layout_height="30sp"
-                android:layout_margin="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
                 android:text="CORE"
-                android:textColor="@color/card_background"
-                android:textSize="12sp" />
+                android:textSize="10dp"
+                android:layout_margin="10dp"
+                android:textColor="@color/card_background"/>
 
             <Button
                 android:id="@+id/dance"
                 android:background="@drawable/opaque_rounded_shape_5"
-                android:layout_width="54dp"
-                android:layout_height="30sp"
-                android:layout_margin="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
                 android:text="DANCE"
-                android:textColor="@color/card_background"
-                android:textSize="12sp" />
+                android:textSize="10dp"
+                android:layout_margin="10dp"
+                android:textColor="@color/card_background"/>
 
             <Button
                 android:id="@+id/strength"
                 android:background="@drawable/opaque_rounded_shape_6"
-                android:layout_width="54dp"
-                android:layout_height="30sp"
-                android:layout_margin="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
                 android:text="STRENGTH"
-                android:textColor="@color/card_background"
-                android:textSize="12sp" />
+                android:textSize="10dp"
+                android:layout_margin="10dp"
+                android:textColor="@color/card_background"/>
 
             <Button
                 android:id="@+id/aqua"
                 android:background="@drawable/opaque_rounded_shape_7"
-                android:layout_width="54dp"
-                android:layout_height="30sp"
-                android:layout_margin="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
                 android:text="AQUA"
-                android:textColor="@color/card_background"
-                android:textSize="12sp" />
+                android:textSize="10dp"
+                android:layout_margin="10dp"
+                android:textColor="@color/card_background"/>
 
         </LinearLayout>
     </ScrollView>
+
     <ScrollView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
