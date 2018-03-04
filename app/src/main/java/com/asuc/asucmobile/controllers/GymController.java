@@ -28,7 +28,7 @@ public class GymController implements Controller {
 
     private ArrayList<Gym> gyms;
     private Callback callback;
-    private Gym currentGym;
+    private static Gym currentGym;
 
     public static Controller getInstance() {
         if (instance == null) {
@@ -108,7 +108,7 @@ public class GymController implements Controller {
         JSONUtilities.readJSONFromUrl(context, URL, "gyms", GymController.getInstance());
     }
 
-    public void setCurrentGym(Gym gym) {
+    public static void setCurrentGym(Gym gym) {
         currentGym = gym;
     }
 
