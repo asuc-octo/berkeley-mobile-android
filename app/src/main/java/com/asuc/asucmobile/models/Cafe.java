@@ -25,6 +25,11 @@ public class Cafe extends FoodPlace {
     private Date breakfastClose;
     private Date lunchDinnerClose;
 
+    public void setMeals() {
+        setBreakfast();
+        setLunchDinner();
+    }
+
     private void setBreakfast(){
         if (breakfast == null) {
             for (CafeMenuResponse menu : cafeMenus) {
@@ -41,7 +46,7 @@ public class Cafe extends FoodPlace {
     private void setLunchDinner() {
         if (lunchDinner == null) {
             for (CafeMenuResponse menu : cafeMenus) {
-                if (menu.getMealType().toLowerCase().equals("Lunch\u0026Dinner")) {
+                if (menu.getMealType().toLowerCase().equals("lunch\u0026dinner")) {
                     lunchDinner = menu;
                     lunchDinnerOpen = menu.getStart();
                     lunchDinnerClose = menu.getEnd();
@@ -51,10 +56,7 @@ public class Cafe extends FoodPlace {
         }
     }
 
-
-
     public Date getBreakfastOpening() {
-        setBreakfast();
         return breakfastOpen;
     }
 
@@ -120,6 +122,8 @@ public class Cafe extends FoodPlace {
      * @return Boolean indicating if a certain cafe is open or not.
      */
     public boolean isOpen() {
+        setBreakfast();
+        setLunchDinner();
         if (breakfastOpen == null || lunchDinnerOpen == null
                 || breakfastClose == null || lunchDinnerClose == null) {
             return false;
@@ -131,6 +135,7 @@ public class Cafe extends FoodPlace {
     }
 
     public boolean isBreakfastOpen() {
+        setBreakfast();
         if (breakfastOpen == null || breakfastClose == null) {
             return false;
         }
@@ -140,6 +145,7 @@ public class Cafe extends FoodPlace {
     }
 
     public boolean isLunchDinnerOpen() {
+        setLunchDinner();
         if (lunchDinnerOpen == null || lunchDinnerClose == null) {
             return false;
         }
