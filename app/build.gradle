@@ -58,6 +58,8 @@ dependencies {
 
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
 
+    compile 'noman.weekcalendar:weekcalendar:1.0.6'
+
 }
 apply plugin: 'com.google.gms.google-services'
 
