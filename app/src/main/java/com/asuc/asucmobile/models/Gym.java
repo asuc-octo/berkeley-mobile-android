@@ -1,8 +1,10 @@
 package com.asuc.asucmobile.models;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class Gym {
+public class Gym implements Cardable {
 
     private int id;
     private String name;
@@ -24,8 +26,18 @@ public class Gym {
         return id;
     }
 
+    @Override
+    public String getImageLink() {
+        return imageUrl;
+    }
+
     public String getName() {
         return name;
+    }
+
+    @Override
+    public String getTimes() {
+        return parseTimes();
     }
 
     public String getAddress() {
@@ -56,6 +68,11 @@ public class Gym {
 
         Date currentTime = new Date();
         return currentTime.after(opening) && currentTime.before(closing);
+    }
+
+    private String parseTimes(){
+        DateFormat df = new SimpleDateFormat("HH:mm");
+        return df.format(opening) + " - " + df.format(closing);
     }
 
 }

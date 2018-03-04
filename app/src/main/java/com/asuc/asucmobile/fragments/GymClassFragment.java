@@ -13,17 +13,17 @@ import android.widget.Button;
 import android.widget.TableLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.Toolbar;
 
 import com.asuc.asucmobile.R;
 import com.asuc.asucmobile.adapters.CardAdapter;
-import com.asuc.asucmobile.controllers.Controller;
-import com.asuc.asucmobile.controllers.GymClassController;
 import com.asuc.asucmobile.controllers.GymController;
 import com.asuc.asucmobile.main.OpenGymActivity;
 import com.asuc.asucmobile.models.Cardable;
 import com.asuc.asucmobile.models.Gym;
 import com.asuc.asucmobile.models.GymClass;
-import com.asuc.asucmobile.models.Gyms;
+import com.asuc.asucmobile.models.HorizontalListView;
+import com.asuc.asucmobile.models.WeekCalendar;
 import com.asuc.asucmobile.utilities.Callback;
 
 import org.joda.time.DateTime;
@@ -35,13 +35,9 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Locale;
 
-import noman.weekcalendar.WeekCalendar;
 import noman.weekcalendar.listener.OnDateClickListener;
-import retrofit2.Call;
-import retrofit2.Response;
 
 public class GymClassFragment extends Fragment {
     public static final String TAG = "GymClassFragment";
@@ -49,14 +45,14 @@ public class GymClassFragment extends Fragment {
     private ArrayList<Integer> filter;
     private ArrayList<GymClass> mClasses;
     private HashMap<Button, Boolean> clickTracker;
+    private CardAdapter mGymCardAdapter;
+    private HorizontalListView horizontalListView;
     private Button allAround, cardio, mind, core, dance, strength, aqua;
     private TableLayout table;
     private WeekCalendar calendar;
     private View layout;
     private int dayOfMonth;
 
-    private CardAdapter cardAdapterGyms;
-    private CardAdapter cardAdapterDining;
 
     @Override
     public View onCreateView(final LayoutInflater inflater, ViewGroup container,
@@ -66,24 +62,37 @@ public class GymClassFragment extends Fragment {
         filter = new ArrayList<>();
         clickTracker = new HashMap<>();
         dayOfMonth = new DateTime().getDayOfMonth();
+        mGymCardAdapter = new CardAdapter(this.getContext());
 
         layout = inflater.inflate(R.layout.fragment_class, container, false);
-        calendar = (WeekCalendar) layout.findViewById(R.id.weekCalendar);
+        calendar = (com.asuc.asucmobile.models.WeekCalendar) layout.findViewById(R.id.weekCalendar);
         calendar.setOnDateClickListener(new OnDateClickListener() {
             @Override
             public void onDateClick(DateTime dateTime) {
                 dayOfMonth = dateTime.getDayOfMonth();
                 initClassTable(inflater);
-                Log.d("LOL", dayOfMonth+"");
             }
         });
-        createDummyData();
 
+        horizontalListView = (HorizontalListView) layout.findViewById(R.id.listGyms);
+        horizontalListView.setAdapter(mGymCardAdapter);
+        horizontalListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Cardable card = mGymCardAdapter.getItem(i);
+                GymController.setCurrentGym((Gym) card);
+                Intent intent = new Intent(getActivity(), OpenGymActivity.class);
+                startActivity(intent);
+            }
+        });
+
+
+        createDummyData();
         initButtons(inflater);
         initClassTable(inflater);
 
         // Work with Rustie and figure out pulling json
-        // refresh();
+        refresh();
         return layout;
     }
     private void initButtons(final LayoutInflater inflater) {
@@ -297,8 +306,24 @@ public class GymClassFragment extends Fragment {
     }
 
 
+    /**
+     * refresh() updates the visibility of necessary UI elements and refreshes the gym list
+     * from the web.
+     */
     private void refresh() {
+        GymController.getInstance().refreshInBackground(getActivity(), new Callback() {
+            @Override
+            @SuppressWarnings("unchecked")
+            public void onDataRetrieved(Object data) {
+                mGymCardAdapter.setList((ArrayList<Gym>) data);
+            }
 
+            @Override
+            public void onRetrievalFailed() {
+                Toast.makeText(getContext(), "Unable to retrieve data, please try again",
+                        Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     private void createDummyData() {
@@ -321,7 +346,6 @@ public class GymClassFragment extends Fragment {
             }
 
             Date date = Calendar.getInstance().getTime();
-            Log.d("LOLOL", TEMP_DATE_FORMATER.format(date));
 
             try {
                 long tmpDate;

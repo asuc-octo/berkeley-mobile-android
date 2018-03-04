@@ -5,7 +5,69 @@
     android:orientation="vertical"
     tools:context="com.asuc.asucmobile.fragments.GymClassFragment">
 
-    <noman.weekcalendar.WeekCalendar
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/class_fragment_toolbar"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:elevation="8dp"
+        style="@style/ToolbarTheme">
+
+        <TextView
+            android:paddingBottom="6dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="22sp"
+            android:textColor="@color/card_background"
+            android:text="Gyms"/>
+    </android.support.v7.widget.Toolbar>
+
+
+
+    <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+        android:orientation="vertical" android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/card_background"
+        android:layout_margin="0dp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/card_background">
+
+            <View
+                android:layout_width="match_parent"
+                android:id="@+id/gymDivider"
+                android:layout_height="1dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:background="@color/card_background" />
+
+            <com.asuc.asucmobile.models.HorizontalListView
+                android:layout_width="match_parent"
+                android:layout_height="180dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_below="@+id/gymDivider"
+                android:divider="@android:color/transparent"
+                android:id="@+id/listGyms"
+                android:background="@color/card_background" />
+
+        </RelativeLayout>
+    </ScrollView>
+
+    <TextView
+        android:paddingBottom="6dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:textSize="22sp"
+        android:textColor="@color/ASUC_blue"
+        android:textStyle="bold"
+        android:text="Schedule"/>
+
+    <com.asuc.asucmobile.models.WeekCalendar
         android:id="@+id/weekCalendar"
         android:layout_width="match_parent"
         android:layout_height="65dp" />
