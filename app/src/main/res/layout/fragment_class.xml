@@ -29,10 +29,9 @@
                 android:id="@+id/all-around"
                 android:background="@drawable/opaque_rounded_shape_1"
                 android:layout_width="wrap_content"
-                android:layout_height="30sp"
                 android:layout_margin="10dp"
                 android:color="@color/green"
-                android:text="   ALL-AROUND   "
+                android:text="ALL-AROUND"
                 android:textColor="@color/card_background"
                 android:textSize="12sp" />
 
@@ -42,7 +41,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="30sp"
                 android:layout_margin="10dp"
-                android:text="   CARDIO   "
+                android:text="CARDIO"
                 android:textColor="@color/card_background"
                 android:textSize="12sp" />
 
@@ -62,7 +61,7 @@
                 android:layout_width="54dp"
                 android:layout_height="30sp"
                 android:layout_margin="10dp"
-                android:text="   CORE   "
+                android:text="CORE"
                 android:textColor="@color/card_background"
                 android:textSize="12sp" />
 
@@ -72,7 +71,7 @@
                 android:layout_width="54dp"
                 android:layout_height="30sp"
                 android:layout_margin="10dp"
-                android:text="   DANCE   "
+                android:text="DANCE"
                 android:textColor="@color/card_background"
                 android:textSize="12sp" />
 
@@ -82,7 +81,7 @@
                 android:layout_width="54dp"
                 android:layout_height="30sp"
                 android:layout_margin="10dp"
-                android:text="   STRENGTH   "
+                android:text="STRENGTH"
                 android:textColor="@color/card_background"
                 android:textSize="12sp" />
 
@@ -92,7 +91,7 @@
                 android:layout_width="54dp"
                 android:layout_height="30sp"
                 android:layout_margin="10dp"
-                android:text="   AQUA   "
+                android:text="AQUA"
                 android:textColor="@color/card_background"
                 android:textSize="12sp" />
 
@@ -116,7 +115,7 @@
                     android:background="#FFFFFF"
                     android:layout_height="wrap_content"
                     android:layout_column="1"
-                    android:text="TIME            "
+                    android:text="TIME"
                     android:textStyle="bold"
                     android:layout_margin="10dp"
                     android:textSize="16sp" />
