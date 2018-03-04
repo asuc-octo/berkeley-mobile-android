@@ -37,6 +37,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
 
+import static android.icu.lang.UProperty.INT_START;
+
 public class OpenLibraryActivity extends BaseActivity {
 
     public static final String TAG = "OpenLibraryActivity";
@@ -68,52 +70,10 @@ public class OpenLibraryActivity extends BaseActivity {
         mFirebaseAnalytics.logEvent("opened_library", bundle);
 
         // Populate UI.
-        final TextView hours = (TextView) findViewById(R.id.hours);
-        final TextView hours_expand = (TextView) findViewById(R.id.hours_expand);
-        TextView address = (TextView) findViewById(R.id.location);
-        TextView phone = (TextView) findViewById(R.id.phone);
-        final LinearLayout hoursLayout = (LinearLayout) findViewById(R.id.hours_layout);
-        LinearLayout locationLayout = (LinearLayout) findViewById(R.id.location_layout);
-        LinearLayout phoneLayout = (LinearLayout) findViewById(R.id.phone_layout);
-        mapFragment = (MapFragment) getFragmentManager().findFragmentById(R.id.map);
-        hours.setText(setUpHours());
-        address.setText(library.getLocation());
-        phone.setText(library.getPhone());
-        locationLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                openMap();
-            }
-        });
-        hoursLayout.setOnClickListener(new com.asuc.asucmobile.utilities.hoursOnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (!status) {
-                    hours.setText(setUpWeeklyHoursLeft());
-                    hoursParams = hoursLayout.getLayoutParams();
-                    hoursLayout.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, 0.2f));
-                    hours_expand.setText(setUpWeeklyHoursRight());
-                    status = true;
-                } else {
-                    if (hoursParams == null) {
-                        finish();
-                    } else {
-                        hours.setText(setUpHours());
-                        hours_expand.setText("");
-                        hoursLayout.setLayoutParams(hoursParams);
-                        status = false;
-                    }
-                }
-            }
-        });
-        phoneLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i = new Intent(Intent.ACTION_DIAL);
-                i.setData(Uri.parse("tel:" + library.getPhone()));
-                startActivity(i);
-            }
-        });
+        setUpPhone();
+        setUpHours();
+        setUpMap();
+
 
         // Display instructions if this is the first time opening this activity.
         SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
@@ -148,8 +108,43 @@ public class OpenLibraryActivity extends BaseActivity {
         }
     }
 
+    private void setUpPhone() {
+        TextView phone = (TextView) findViewById(R.id.phone);
+        LinearLayout phoneLayout = (LinearLayout) findViewById(R.id.phone_layout);
+
+        if (library.getPhone() == null || library.getPhone().equals("")) {
+            phone.setText("No Phone Number");
+            return;
+        }
+
+        phone.setText(library.getPhone());
+        phoneLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(Intent.ACTION_DIAL);
+                i.setData(Uri.parse("tel:" + library.getPhone()));
+                startActivity(i);
+            }
+        });
+
+
+    }
+
     @SuppressWarnings("deprecation")
     private void setUpMap() {
+
+        TextView address = (TextView) findViewById(R.id.location);
+        LinearLayout locationLayout = (LinearLayout) findViewById(R.id.location_layout);
+        mapFragment = (MapFragment) getFragmentManager().findFragmentById(R.id.map);
+        address.setText(library.getLocation());
+        locationLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openMap();
+            }
+        });
+
+
         // Checking if Google Play Services are available to set up the map.
         int status = GooglePlayServicesUtil.isGooglePlayServicesAvailable(this);
         if (status != ConnectionResult.SUCCESS) {
@@ -211,30 +206,19 @@ public class OpenLibraryActivity extends BaseActivity {
     /**
      * This code sets up daily hours, only.
      */
-    private Spannable setUpHours() {
-        Spannable hoursString;
-        if (library.isByAppointment()) {
-            hoursString = new SpannableString("Today  BY APPOINTMENT  ▼");
-            hoursString.setSpan(new ForegroundColorSpan(ContextCompat.getColor(getApplicationContext(),R.color.pavan_light)), 7, 23, Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
-        } else if (library.getOpening() != null && library.getClosing() != null) {
-            String isOpen;
-            int color;
-            if (library.isOpen()) {
-                isOpen = "OPEN";
-                color = ContextCompat.getColor(getApplicationContext(), R.color.green);
-            } else {
-                isOpen = "CLOSED";
-                color = ContextCompat.getColor(getApplicationContext(), R.color.red);
-            }
-            String opening = HOURS_FORMAT.format(library.getOpening());
-            String closing = HOURS_FORMAT.format(library.getClosing());
-            hoursString = new SpannableString("Today  " + isOpen + "  ▼\n" + opening + " to " + closing);
-            hoursString.setSpan(new ForegroundColorSpan(color), 7, 7 + isOpen.length(), Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
-        } else {
-            hoursString = new SpannableString("Today  CLOSED ALL DAY  ▼");
-            hoursString.setSpan(new ForegroundColorSpan(ContextCompat.getColor(getApplicationContext(), R.color.maroon)), 7, 21, Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
-        }
-        return hoursString;
+    private void setUpHours() {
+
+        final TextView hours = (TextView) findViewById(R.id.hours);
+        final TextView hours_expand = (TextView) findViewById(R.id.hours_expand);
+        final LinearLayout hoursLayout = (LinearLayout) findViewById(R.id.hours_layout);
+
+
+        // weekly library hours should already be set up when you open the page
+        hours.setText(setUpWeeklyHoursLeft());
+        hoursParams = hoursLayout.getLayoutParams();
+        hoursLayout.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, 0.2f));
+        hours_expand.setText(setUpWeeklyHoursRight());
+
     }
 
     /**
@@ -248,6 +232,10 @@ public class OpenLibraryActivity extends BaseActivity {
         for (int i=0; i < openings.size(); i++) {
             Spannable hoursString;
             hoursString = new SpannableString("\n" + library.getDayOfWeek(i));
+            if (i == 0) {
+                hoursString.setSpan(new android.text.style.StyleSpan(android.graphics.Typeface.BOLD), 0, hoursString.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+            }
+
             weeklyHoursString = (Spanned) TextUtils.concat(weeklyHoursString, hoursString);
         }
         return weeklyHoursString;
@@ -264,37 +252,44 @@ public class OpenLibraryActivity extends BaseActivity {
         ArrayList<Boolean> byAppointments = library.getWeeklyAppointments();
         Spannable hoursString;
         if (library.isByAppointment()) {
-            hoursString = new SpannableString("BY APPOINTMENT  ▲\n");
-            hoursString.setSpan(new ForegroundColorSpan(ContextCompat.getColor(getApplicationContext(),R.color.pavan_light )), 0, hoursString.length() - 4, Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
+//            hoursString = new SpannableString("BY APPOINTMENT  ▲\n");
+            hoursString = new SpannableString("BY APPOINTMENT\n");
+            hoursString.setSpan(new ForegroundColorSpan(ContextCompat.getColor(getApplicationContext(),R.color.pavan_light )), 0, hoursString.length(), Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
         } else if (library.getOpening() != null && library.getClosing() != null) {
             String isOpen;
             int color;
             if (library.isOpen()) {
-                isOpen = "OPEN  ▲";
+//                isOpen = "OPEN  ▲";
+                isOpen = "OPEN";
                 color = ContextCompat.getColor(getApplicationContext(),R.color.green);
             } else {
-                isOpen = "CLOSED  ▲";
+//                isOpen = "CLOSED  ▲";
+                isOpen = "CLOSED";
                 color = ContextCompat.getColor(getApplicationContext(),R.color.red);
             }
 
             hoursString = new SpannableString(isOpen + "\n");
-            hoursString.setSpan(new ForegroundColorSpan(color), 0, hoursString.length() - 4, Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
+            hoursString.setSpan(new ForegroundColorSpan(color), 0, hoursString.length(), Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
         } else {
-            hoursString = new SpannableString("CLOSED ALL DAY  ▲\n");
-            hoursString.setSpan(new ForegroundColorSpan(ContextCompat.getColor(getApplicationContext(),R.color.maroon) ), 0, hoursString.length() - 4, Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
+//            hoursString = new SpannableString("CLOSED ALL DAY  ▲\n");
+            hoursString = new SpannableString("CLOSED ALL DAY\n");
+            hoursString.setSpan(new ForegroundColorSpan(ContextCompat.getColor(getApplicationContext(),R.color.maroon) ), 0, hoursString.length(), Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
         }
         Spanned weeklyHoursString = hoursString;
         for (int i=0; i < openings.size(); i++) {
             if (byAppointments.get(i)) {
                 hoursString = new SpannableString("\n  BY APPOINTMENT");
-                hoursString.setSpan(new ForegroundColorSpan(ContextCompat.getColor(getApplicationContext(),R.color.pavan_light) ), 0, 16, Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
+                hoursString.setSpan(new ForegroundColorSpan(ContextCompat.getColor(getApplicationContext(),R.color.pavan_light) ), 0, hoursString.length(), Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
             } else if (openings.get(i) != null && closings.get(i) != null) {
                 String opening = HOURS_FORMAT.format(openings.get(i));
                 String closing = HOURS_FORMAT.format(closings.get(i));
                 hoursString = new SpannableString("\n" + opening + " - " + closing);
             } else {
                 hoursString = new SpannableString("\n  CLOSED ALL DAY");
-                hoursString.setSpan(new ForegroundColorSpan(ContextCompat.getColor(getApplicationContext(),R.color.maroon) ), 0, 17, Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
+                hoursString.setSpan(new ForegroundColorSpan(ContextCompat.getColor(getApplicationContext(),R.color.maroon) ), 0, hoursString.length(), Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
+            }
+            if (i == 0) {
+                hoursString.setSpan(new android.text.style.StyleSpan(android.graphics.Typeface.BOLD), 0, hoursString.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
             }
             weeklyHoursString = (Spanned) TextUtils.concat(weeklyHoursString, hoursString);
         }
