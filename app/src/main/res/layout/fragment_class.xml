@@ -63,7 +63,7 @@
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
         android:textSize="22sp"
-        android:textColor="@color/ASUC_blue"
+        android:textColor="@color/OP_navy"
         android:textStyle="bold"
         android:text="Schedule"/>
 
