@@ -67,7 +67,9 @@ public class WeekCalendar extends LinearLayout {
             daysName = getDaysNames();
             addView(daysName, 0);
         }
+
         WeekPager weekPager = new WeekPager(getContext(), attrs);
+        weekPager.setBackgroundColor(getResources().getColor(R.color.OP_navy_transparent));
         addView(weekPager);
         BusProvider.getInstance().register(this);
 
@@ -120,7 +122,7 @@ public class WeekCalendar extends LinearLayout {
                 TextView day = (TextView) convertView.findViewById(R.id.daytext);
                 day.setText(days[position]);
                 if (typedArray != null) {
-                    day.setTextColor(getResources().getColor(R.color.black));
+                    day.setTextColor(getResources().getColor(R.color.card_background));
                     day.setTextSize(TypedValue.COMPLEX_UNIT_PX, typedArray.getDimension(R.styleable
                             .WeekCalendar_weekTextSize, day.getTextSize()));
                 }
@@ -143,7 +145,7 @@ public class WeekCalendar extends LinearLayout {
             }
         });
         if (typedArray != null)
-            daysName.setBackgroundColor(getResources().getColor(R.color.card_background));
+            daysName.setBackgroundColor(getResources().getColor(R.color.OP_navy_transparent));
         return daysName;
     }
 
