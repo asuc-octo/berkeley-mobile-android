@@ -11,7 +11,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.asuc.asucmobile.R;
-import com.asuc.asucmobile.controllers.ResourceController;
 import com.asuc.asucmobile.models.Resource;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
@@ -44,7 +43,7 @@ public class OpenResourceActivity extends BaseActivity {
 
     private MapFragment mapFragment;
     private GoogleMap map;
-    private Resource resource;
+    private static Resource resource;
 
     public static OpenResourceActivity self_reference;
     private FirebaseAnalytics mFirebaseAnalytics;
@@ -222,13 +221,19 @@ public class OpenResourceActivity extends BaseActivity {
     }
 
     private String setUpNotes() {
-        String displayedNotes =
-                !resource.getNotes().equals("null") ? "\n" + resource.getNotes() : "";
-        return "This is an " + resource.getOnOrOffCampus() + " resource. " + displayedNotes;
+        if (resource.getNotes() != null) {
+            String displayedNotes =
+                    !resource.getNotes().equals("null") ? "\n" + resource.getNotes() : "";
+            return "This is an " + resource.getOnOrOffCampus() + " resource. " + displayedNotes;
+        }
+        return "";
+    }
+
+    public static void setResource(Resource r) {
+        resource = r;
     }
 
     private void exitIfNoData() {
-        resource = ((ResourceController) ResourceController.getInstance()).getCurrentResource();
         if (resource == null) {
             finish();
         }
@@ -247,7 +252,7 @@ public class OpenResourceActivity extends BaseActivity {
      * @param text Content string.
      */
     private void setText(View[] viewsToBeDeleted, TextView view, String text) {
-        if (NULL_STRINGS.contains(text)) {
+        if (NULL_STRINGS.contains(text) || text == null) {
             for (View v : viewsToBeDeleted) {
                 v.setVisibility(View.GONE);
             }
