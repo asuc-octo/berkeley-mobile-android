@@ -17,13 +17,14 @@ import android.widget.Toast;
 
 import com.asuc.asucmobile.R;
 import com.asuc.asucmobile.adapters.GymAdapter;
-import com.asuc.asucmobile.controllers.GymController;
 import com.asuc.asucmobile.main.OpenGymActivity;
-import com.asuc.asucmobile.models.Gym;
-import com.asuc.asucmobile.utilities.Callback;
+import com.asuc.asucmobile.models.responses.GymsResponse;
+import com.asuc.asucmobile.controllers.BMRetrofitController;
 import com.asuc.asucmobile.utilities.NavigationGenerator;
+import com.google.firebase.analytics.FirebaseAnalytics;
 
-import java.util.ArrayList;
+import retrofit2.Call;
+import retrofit2.Response;
 
 public class GymFragment extends Fragment {
 
@@ -32,10 +33,17 @@ public class GymFragment extends Fragment {
     private LinearLayout mRefreshWrapper;
 
     private GymAdapter mAdapter;
+    private FirebaseAnalytics mFirebaseAnalytics;
+
 
     @Override
     @SuppressWarnings("deprecation")
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+
+        mFirebaseAnalytics = FirebaseAnalytics.getInstance(this.getContext());
+        Bundle bundle = new Bundle();
+        mFirebaseAnalytics.logEvent("opened_gym_screen", bundle);
+
         View layout = inflater.inflate(R.layout.fragment_gym, container, false);
         Toolbar toolbar = (Toolbar) layout.findViewById(R.id.toolbar);
         ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
@@ -50,8 +58,7 @@ public class GymFragment extends Fragment {
         mGymList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                GymController controller = ((GymController) GymController.getInstance());
-                controller.setCurrentGym(mAdapter.getItem(i));
+                OpenGymActivity.setGym(mAdapter.getItem(i));
                 Intent intent = new Intent(getActivity(), OpenGymActivity.class);
                 startActivity(intent);
             }
@@ -83,18 +90,16 @@ public class GymFragment extends Fragment {
         mRefreshWrapper.setVisibility(View.GONE);
         mProgressBar.setVisibility(View.VISIBLE);
 
-        GymController.getInstance().refreshInBackground(getActivity(), new Callback() {
+        BMRetrofitController.bmapi.callGymsList().enqueue(new retrofit2.Callback<GymsResponse>() {
             @Override
-            @SuppressWarnings("unchecked")
-            public void onDataRetrieved(Object data) {
+            public void onResponse(Call<GymsResponse> call, Response<GymsResponse> response) {
                 mGymList.setVisibility(View.VISIBLE);
                 mProgressBar.setVisibility(View.GONE);
-
-                mAdapter.setList((ArrayList<Gym>) data);
+                mAdapter.setList(response.body().getGyms());
             }
 
             @Override
-            public void onRetrievalFailed() {
+            public void onFailure(Call<GymsResponse> call, Throwable t) {
                 mProgressBar.setVisibility(View.GONE);
                 mRefreshWrapper.setVisibility(View.VISIBLE);
                 Toast.makeText(getContext(), "Unable to retrieve data, please try again",

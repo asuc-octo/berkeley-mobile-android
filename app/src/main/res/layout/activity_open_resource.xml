@@ -15,14 +15,6 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <android.support.v7.widget.Toolbar
-                android:id="@+id/toolbar"
-                android:layout_height="wrap_content"
-                android:layout_width="match_parent"
-                android:elevation="8dp"
-                style="@style/ToolbarTheme"
-                tools:ignore="all" />
-
             <FrameLayout
                 android:layout_width="match_parent"
                 android:layout_height="240dp">
@@ -35,12 +27,22 @@
                     android:padding="96dp"
                     android:layout_gravity="center" />
 
+                <android.support.v7.widget.Toolbar
+                    android:id="@+id/toolbar"
+                    style="@style/ToolbarTheme"
+                    android:layout_width="match_parent"
+                    android:layout_height="?android:attr/actionBarSize"
+                    android:elevation="8dp"
+                    android:background="@color/hotline_blue"
+                    tools:ignore="all" />
+
                 <fragment
                     android:id="@+id/map"
                     android:layout_width="fill_parent"
                     android:layout_height="match_parent"
                     android:name="com.google.android.gms.maps.MapFragment"
                     tools:layout="@android:layout/list_content" />
+
 
             </FrameLayout>
 

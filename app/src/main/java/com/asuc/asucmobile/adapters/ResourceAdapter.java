@@ -10,12 +10,16 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.asuc.asucmobile.R;
+import com.asuc.asucmobile.fragments.ResourceFragment;
 import com.asuc.asucmobile.main.ListOfFavorites;
+import com.asuc.asucmobile.main.OpenLibraryActivity;
+import com.asuc.asucmobile.main.OpenResourceActivity;
 import com.asuc.asucmobile.models.Resource;
+import com.asuc.asucmobile.utilities.CustomComparators;
 import com.asuc.asucmobile.utilities.SerializableUtilities;
 
 import java.util.ArrayList;
-
+import java.util.Collections;
 public class ResourceAdapter extends BaseAdapter {
 
     private Context context;
@@ -88,6 +92,9 @@ public class ResourceAdapter extends BaseAdapter {
                     SerializableUtilities.saveObject(context, listOfFavorites);
                     imageView.setImageResource(R.drawable.post_favorite);
                 }
+
+                Collections.sort(getResources(), CustomComparators.FacilityComparators.getSortByFavoriteResource(OpenResourceActivity.self_reference));
+                ResourceFragment.refreshLists();
             }
         });
 

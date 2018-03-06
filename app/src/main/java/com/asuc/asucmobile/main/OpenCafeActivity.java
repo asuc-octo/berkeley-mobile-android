@@ -2,19 +2,26 @@ package com.asuc.asucmobile.main;
 
 import android.app.Fragment;
 import android.app.FragmentManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.support.design.widget.TabLayout;
 import android.support.v13.app.FragmentPagerAdapter;
 import android.support.v4.view.PagerTabStrip;
 import android.support.v4.view.ViewPager;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.View;
+import android.widget.ImageView;
 
 import com.asuc.asucmobile.R;
-import com.asuc.asucmobile.controllers.CafeController;
 import com.asuc.asucmobile.fragments.MenuFragment;
 import com.asuc.asucmobile.models.Cafe;
 import com.asuc.asucmobile.utilities.SerializableUtilities;
+import com.bumptech.glide.Glide;
+import com.google.firebase.analytics.FirebaseAnalytics;
 
+import java.io.InputStream;
 import java.util.Date;
 
 /**
@@ -23,7 +30,9 @@ import java.util.Date;
 
 public class OpenCafeActivity extends BaseActivity {
 
-    private Cafe cafe;
+    private static Cafe cafe;
+    private FirebaseAnalytics mFirebaseAnalytics;
+
 
     @Override
     @SuppressWarnings("all")
@@ -31,6 +40,16 @@ public class OpenCafeActivity extends BaseActivity {
         super.onCreate(savedInstanceState, R.layout.activity_open_cafe);
         exitIfNoData();
         setupToolbar(cafe.getName(), true);
+
+        mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
+        Bundle bundle = new Bundle();
+        bundle.putString("cafe", cafe.getName());
+        mFirebaseAnalytics.logEvent("opened_cafe", bundle);
+
+
+        // Downloading Dining Hall image
+        ImageView headerImage = (ImageView) findViewById(R.id.headerImage);
+        Glide.with(this).load(cafe.getImageUrl()).into(headerImage);
 
         // Load favorites from disk.
         ListOfFavorites listOfFavorites = (ListOfFavorites) SerializableUtilities.loadSerializedObject(this);
@@ -46,9 +65,12 @@ public class OpenCafeActivity extends BaseActivity {
         // Set up the ViewPager with the sections adapter.
         ViewPager viewPager = (ViewPager) findViewById(R.id.pager);
         if (viewPager != null) {
-            viewPager.setOffscreenPageLimit(2);
-
             viewPager.setAdapter(pagerAdapter);
+
+            TabLayout tabStrip = (TabLayout) findViewById(R.id.pager_tab_strip);
+            tabStrip.setupWithViewPager(viewPager);
+            tabStrip.setTabTextColors(getResources().getColor(R.color.off_white), getResources().getColor(R.color.off_white));
+
             Date currentTime = new Date();
 
             // display a relevant tab based on time of day
@@ -60,18 +82,16 @@ public class OpenCafeActivity extends BaseActivity {
             }
 
         }
-        PagerTabStrip tabStrip = (PagerTabStrip) findViewById(R.id.pager_tab_strip);
-        if (tabStrip != null) {
-            tabStrip.setTextColor(getResources().getColor(R.color.off_white));
-            tabStrip.setTabIndicatorColor(getResources().getColor(R.color.off_white));
-        }
+
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.dining, menu);
-        return true;
+
+        // Make this return true if you would like a menu
+        return false;
     }
 
     @Override
@@ -94,7 +114,8 @@ public class OpenCafeActivity extends BaseActivity {
         @Override
         public Fragment getItem(int position) {
             MenuFragment menuFragment = new MenuFragment(MenuFragment.FoodType.Cafe);
-            Bundle bundle = new Bundle(1);
+            Bundle bundle = new Bundle();
+            bundle.putString("foodType", "Cafe");
 
             switch (position) {
                 case 0:
@@ -121,9 +142,9 @@ public class OpenCafeActivity extends BaseActivity {
 
             switch (position) {
                 case 0:
-                    return "     Breakfast     ";
+                    return "Breakfast";
                 case 1:
-                    return "    Lunch/Dinner    ";
+                    return "Lunch / Dinner";
             }
             return null;
         }
@@ -141,12 +162,14 @@ public class OpenCafeActivity extends BaseActivity {
         return cafe;
     }
 
+    public static void setCafe(Cafe c) {
+        cafe = c;
+    }
+
     private void exitIfNoData() {
-        cafe = ((CafeController) CafeController.getInstance()).getCurrentCafe();
         if (cafe == null) {
             finish();
         }
     }
-
 
 }
