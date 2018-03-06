@@ -2,6 +2,8 @@ package com.asuc.asucmobile.models;
 
 import android.support.annotation.NonNull;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.util.ArrayList;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -15,6 +17,9 @@ public class FoodItem implements Comparable<FoodItem> {
     private String calories;
     private double cost;
 
+    private boolean lower = false;
+
+    @SerializedName("food_type")
     private ArrayList<String> foodTypes; // all in upper case
 
     public FoodItem(String id, String name, String calories, double cost, ArrayList<String> types) {
@@ -45,7 +50,18 @@ public class FoodItem implements Comparable<FoodItem> {
         return "$" + df.format(cost);
     }
 
+    /**
+     * Upon first call, make all the food types lower case. Since we're fetching food types using
+     * Retrofit's POJO direct serialization, we have to do conversion to lower here.
+     * @return
+     */
     public ArrayList<String> getFoodTypes() {
+        if (!lower) {
+            lower = true;
+            for (int i = 0; i < foodTypes.size(); i++) {
+                foodTypes.set(i, foodTypes.get(i).toLowerCase());
+            }
+        }
         return foodTypes;
     }
 

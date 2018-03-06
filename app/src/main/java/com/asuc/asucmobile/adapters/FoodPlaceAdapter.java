@@ -10,8 +10,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.asuc.asucmobile.R;
-import com.asuc.asucmobile.controllers.CafeController;
-import com.asuc.asucmobile.controllers.DiningController;
 import com.asuc.asucmobile.main.OpenCafeActivity;
 import com.asuc.asucmobile.main.OpenDiningHallActivity;
 import com.asuc.asucmobile.models.Cafe;
@@ -21,6 +19,7 @@ import com.bumptech.glide.Glide;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by rustie on 10/4/17.
@@ -54,18 +53,14 @@ public class FoodPlaceAdapter extends RecyclerView.Adapter<FoodPlaceAdapter.View
                     // set the current cafe/dining hall and start the right intent
                     if (foodType == FoodType.Cafe) {
                         Cafe cafe = (Cafe) mFoodPlaceList.get(getAdapterPosition());
-                        CafeController controller = ((CafeController) CafeController.getInstance());
-                        controller.setCurrentCafe(cafe);
+                        OpenCafeActivity.setCafe(cafe);
                         intent = new Intent(mContext, OpenCafeActivity.class);
                         mContext.startActivity(intent);
-
                     } else if (foodType == FoodType.DiningHall) {
                         DiningHall diningHall = (DiningHall) mFoodPlaceList.get(getAdapterPosition());
-                        DiningController controller = ((DiningController) DiningController.getInstance());
-                        controller.setCurrentDiningHall(diningHall);
+                        OpenDiningHallActivity.setDiningHall(diningHall);
                         intent = new Intent(mContext, OpenDiningHallActivity.class);
                         mContext.startActivity(intent);
-
                     }
 
                 }
@@ -78,7 +73,7 @@ public class FoodPlaceAdapter extends RecyclerView.Adapter<FoodPlaceAdapter.View
         }
     }
 
-    private ArrayList<FoodPlace> mFoodPlaceList;
+    private List<FoodPlace> mFoodPlaceList;
     private Context mContext;
     private FoodType foodType;
 
@@ -88,7 +83,7 @@ public class FoodPlaceAdapter extends RecyclerView.Adapter<FoodPlaceAdapter.View
      * @param foodPlaces
      * @param type
      */
-    public FoodPlaceAdapter(Context context, ArrayList<FoodPlace> foodPlaces, FoodType type) {
+    public FoodPlaceAdapter(Context context, List<FoodPlace> foodPlaces, FoodType type) {
         mFoodPlaceList = foodPlaces;
         mContext = context;
         foodType = type;

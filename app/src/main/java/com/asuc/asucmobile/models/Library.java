@@ -1,53 +1,50 @@
 package com.asuc.asucmobile.models;
 
 import android.support.annotation.NonNull;
+import android.util.Log;
 
 import com.google.android.gms.maps.model.LatLng;
+import com.google.gson.annotations.SerializedName;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Calendar;
 import java.util.Date;
 
 public class Library implements Comparable<Library>{
+
+    public static final String TAG = "Library";
 
     public static final double INVALID_COORD = -181;
     private static final int MAX_DAY_LENGTH = 9;
     private static final String[] WEEKDAYS =
             { "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday" };
 
+
     private int id;
     private String name;
+    @SerializedName("campus_location")
     private String location;
+    @SerializedName("phone_number")
     private String phone;
+    @SerializedName("opening_time_today")
     private Date opening;
+    @SerializedName("closing_time_today")
     private Date closing;
-    private Date[] weeklyOpen;
-    private Date[] weeklyClose;
+    @SerializedName("weekly_opening_times")
+    private ArrayList<Date> weeklyOpen;
+    @SerializedName("weekly_closing_times")
+    private ArrayList<Date> weeklyClose;
     private LatLng latLng;
+    private double latitude;
+    private double longitude;
     private boolean byAppointment;
     private boolean hasCoordinates;
-    private boolean[] weeklyAppointments;
+
+    @SerializedName("weekly_by_appointment")
+    private ArrayList<Boolean> weeklyAppointments;
     private int weekday;
 
-    public Library(int id, String name, String location, String phone, Date opening,
-                   Date closing, Date[] weeklyOpen, Date[] weeklyClose, double lat, double lng,
-                   boolean byAppointment, boolean[] weeklyAppointments, int weekday) {
-        this.id = id;
-        this.name = name;
-        this.location = location;
-        this.phone = phone;
-        this.opening = opening;
-        this.closing = closing;
-        this.byAppointment = byAppointment;
-        this.weeklyOpen = weeklyOpen;
-        this.weeklyClose = weeklyClose;
-        this.weeklyAppointments = weeklyAppointments;
-        this.weekday = weekday;
-        if (lat == INVALID_COORD || lng == INVALID_COORD) {
-            hasCoordinates = false;
-        } else {
-            hasCoordinates = true;
-            this.latLng = new LatLng(lat, lng);
-        }
-    }
 
     public int getId() {
         return id;
@@ -66,18 +63,26 @@ public class Library implements Comparable<Library>{
     }
 
     public Date getOpening() {
-        return opening;
+        return weeklyOpen.get(0);
     }
 
     public Date getClosing() {
-        return closing;
+        return weeklyClose.get(0);
     }
 
-    public Date[] getWeeklyOpen() { return weeklyOpen; }
+    public ArrayList<Date> getWeeklyOpen() { return weeklyOpen; }
 
-    public Date[] getWeeklyClose() { return weeklyClose; }
+    public ArrayList<Date> getWeeklyClose() { return weeklyClose; }
 
     public LatLng getCoordinates() {
+        if (latLng == null) {
+            if (latitude == INVALID_COORD || longitude == INVALID_COORD) {
+                hasCoordinates = false;
+            } else {
+                hasCoordinates = true;
+                this.latLng = new LatLng(latitude, longitude);
+            }
+        }
         return hasCoordinates ? latLng : null;
     }
 
@@ -85,15 +90,16 @@ public class Library implements Comparable<Library>{
         return byAppointment;
     }
 
-    public boolean[] getWeeklyAppointments() { return weeklyAppointments; }
+    public ArrayList<Boolean> getWeeklyAppointments() { return weeklyAppointments; }
 
     /**
      * Outputs a day of week as a string with spaces padded at the end to be equal length for all
      * days.
      */
     public String getDayOfWeek(int i) {
+        int day = Calendar.getInstance().get(Calendar.DAY_OF_WEEK);
         // Aligns weekday with i. i was range [0,6] and weekday was range [1,7].
-        return String.format("%1$-" + MAX_DAY_LENGTH + "s", WEEKDAYS[(i + weekday - 1) % 7]);
+        return String.format("%1$-" + MAX_DAY_LENGTH + "s", WEEKDAYS[(i + day - 1) % 7]);
     }
 
     /**
@@ -102,11 +108,18 @@ public class Library implements Comparable<Library>{
      * @return Boolean indicating if the library is open or not.
      */
     public boolean isOpen() {
+
+        Date opening = weeklyOpen.get(0);
+        Date closing = weeklyClose.get(0);
+
         if (opening == null || closing == null) {
             return false;
         }
+
         Date currentTime = new Date();
-        return currentTime.after(opening) && currentTime.before(closing);
+        boolean isOpen = currentTime.after(opening) && currentTime.before(closing);
+        Log.d(TAG, "" + name + " " + isOpen);
+        return isOpen;
     }
 
     @Override
@@ -114,4 +127,23 @@ public class Library implements Comparable<Library>{
         return this.getName().compareTo(other.getName());
     }
 
+
+    @Override
+    public String toString() {
+        return "Library{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", location='" + location + '\'' +
+                ", phone='" + phone + '\'' +
+                ", opening=" + opening +
+                ", closing=" + closing +
+                ", weeklyOpen=" + weeklyOpen.toString() +
+                ", weeklyClose=" + weeklyClose.toString() +
+                ", latLng=" + latLng +
+                ", byAppointment=" + byAppointment +
+                ", hasCoordinates=" + hasCoordinates +
+                ", weeklyAppointments=" + weeklyAppointments.toString() +
+                ", weekday=" + weekday +
+                '}';
+    }
 }
