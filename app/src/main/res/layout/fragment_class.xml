@@ -21,186 +21,194 @@
             android:text="Gyms"/>
     </android.support.v7.widget.Toolbar>
 
-
-
-    <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-        android:orientation="vertical" android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/card_background"
-        android:layout_margin="0dp">
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/card_background">
-
-            <View
-                android:layout_width="match_parent"
-                android:id="@+id/gymDivider"
-                android:layout_height="1dp"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                android:background="@color/card_background" />
-
-            <com.asuc.asucmobile.models.HorizontalListView
-                android:layout_width="match_parent"
-                android:layout_height="180dp"
-                android:layout_marginRight="10dp"
-                android:layout_marginTop="10dp"
-                android:layout_below="@+id/gymDivider"
-                android:divider="@android:color/transparent"
-                android:id="@+id/listGyms"
-                android:background="@color/card_background" />
-
-        </RelativeLayout>
-    </ScrollView>
-
-    <TextView
-        android:paddingBottom="6dp"
-        android:layout_width="match_parent"
+    <ScrollView
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:textSize="22sp"
-        android:textColor="@color/OP_navy"
-        android:textStyle="bold"
-        android:text="Schedule"/>
-
-    <com.asuc.asucmobile.models.WeekCalendar
-        android:id="@+id/weekCalendar"
-        android:layout_width="match_parent"
-        android:layout_height="65dp" />
-
-    <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:isScrollContainer="true">
+        xmlns:android="http://schemas.android.com/apk/res/android">
 
         <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-            android:id="@+id/filter-buttons"
+            xmlns:tools="http://schemas.android.com/tools"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:fadeScrollbars="false"
-            android:orientation="horizontal">
+            android:orientation="vertical">
 
-            <Button
-                android:id="@+id/all-around"
-                android:background="@drawable/opaque_rounded_shape_1"
-                android:layout_width="wrap_content"
-                android:layout_height="30dp"
-                android:color="@color/green"
-                android:text="ALL-AROUND"
-                android:textSize="10dp"
-                android:layout_margin="10dp"
-                android:textColor="@color/card_background"/>
 
-            <Button
-                android:id="@+id/cardio"
-                android:background="@drawable/opaque_rounded_shape_2"
-                android:layout_width="wrap_content"
-                android:layout_height="30dp"
-                android:text="CARDIO"
-                android:textSize="10dp"
-                android:layout_margin="10dp"
-                android:textColor="@color/card_background"/>
 
-            <Button
-                android:id="@+id/mind"
-                android:background="@drawable/opaque_rounded_shape_3"
-                android:layout_width="wrap_content"
-                android:layout_height="30dp"
-                android:text="MIND/BODY"
-                android:textSize="10dp"
-                android:layout_margin="10dp"
-                android:textColor="@color/card_background"/>
+            <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+                android:orientation="vertical" android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/card_background"
+                android:layout_margin="0dp">
 
-            <Button
-                android:id="@+id/core"
-                android:background="@drawable/opaque_rounded_shape_4"
-                android:layout_width="wrap_content"
-                android:layout_height="30dp"
-                android:text="CORE"
-                android:textSize="10dp"
-                android:layout_margin="10dp"
-                android:textColor="@color/card_background"/>
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/card_background">
 
-            <Button
-                android:id="@+id/dance"
-                android:background="@drawable/opaque_rounded_shape_5"
-                android:layout_width="wrap_content"
-                android:layout_height="30dp"
-                android:text="DANCE"
-                android:textSize="10dp"
-                android:layout_margin="10dp"
-                android:textColor="@color/card_background"/>
+                    <View
+                        android:layout_width="match_parent"
+                        android:id="@+id/gymDivider"
+                        android:layout_height="1dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"
+                        android:background="@color/card_background" />
 
-            <Button
-                android:id="@+id/strength"
-                android:background="@drawable/opaque_rounded_shape_6"
-                android:layout_width="wrap_content"
-                android:layout_height="30dp"
-                android:text="STRENGTH"
-                android:textSize="10dp"
-                android:layout_margin="10dp"
-                android:textColor="@color/card_background"/>
+                    <com.asuc.asucmobile.models.HorizontalListView
+                        android:layout_width="match_parent"
+                        android:layout_height="180dp"
+                        android:layout_marginRight="10dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_below="@+id/gymDivider"
+                        android:divider="@android:color/transparent"
+                        android:id="@+id/listGyms"
+                        android:background="@color/card_background" />
 
-            <Button
-                android:id="@+id/aqua"
-                android:background="@drawable/opaque_rounded_shape_7"
-                android:layout_width="wrap_content"
-                android:layout_height="30dp"
-                android:text="AQUA"
-                android:textSize="10dp"
-                android:layout_margin="10dp"
-                android:textColor="@color/card_background"/>
+                </RelativeLayout>
+            </ScrollView>
+
+            <TextView
+                android:paddingBottom="6dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:textSize="22sp"
+                android:textColor="@color/OP_navy"
+                android:textStyle="bold"
+                android:text="Schedule"/>
+
+            <com.asuc.asucmobile.models.WeekCalendar
+                android:id="@+id/weekCalendar"
+                android:layout_width="match_parent"
+                android:layout_height="65dp" />
+
+
+            <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:id="@+id/filter-buttons1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fadeScrollbars="false"
+                android:gravity="center_horizontal"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/all-around"
+                    android:layout_width="wrap_content"
+                    android:layout_height="30dp"
+                    android:layout_marginBottom="5dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/opaque_rounded_shape_1"
+                    android:color="@color/green"
+                    android:text="ALL-AROUND"
+                    android:textColor="@color/card_background"
+                    android:textSize="10dp" />
+
+                <Button
+                    android:id="@+id/cardio"
+                    android:layout_width="wrap_content"
+                    android:layout_height="30dp"
+                    android:layout_marginBottom="5dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/opaque_rounded_shape_2"
+                    android:text="CARDIO"
+                    android:textColor="@color/card_background"
+                    android:textSize="10dp" />
+
+                <Button
+                    android:id="@+id/mind"
+                    android:layout_width="wrap_content"
+                    android:layout_height="30dp"
+                    android:layout_marginBottom="5dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/opaque_rounded_shape_3"
+                    android:text="MIND/BODY"
+                    android:textColor="@color/card_background"
+                    android:textSize="10dp" />
+
+                <Button
+                    android:id="@+id/core"
+                    android:layout_width="wrap_content"
+                    android:layout_height="30dp"
+                    android:layout_marginBottom="5dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/opaque_rounded_shape_4"
+                    android:text="CORE"
+                    android:textColor="@color/card_background"
+                    android:textSize="10dp" />
+
+            </LinearLayout>
+
+            <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:id="@+id/filter-buttons2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fadeScrollbars="false"
+                android:gravity="center_horizontal"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/dance"
+                    android:layout_width="wrap_content"
+                    android:layout_height="30dp"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginTop="5dp"
+                    android:background="@drawable/opaque_rounded_shape_5"
+                    android:text="DANCE"
+                    android:textColor="@color/card_background"
+                    android:textSize="10dp" />
+
+                <Button
+                    android:id="@+id/strength"
+                    android:layout_width="wrap_content"
+                    android:layout_height="30dp"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginTop="5dp"
+                    android:background="@drawable/opaque_rounded_shape_6"
+                    android:text="STRENGTH"
+                    android:textColor="@color/card_background"
+                    android:textSize="10dp" />
+
+                <Button
+                    android:id="@+id/aqua"
+                    android:layout_width="wrap_content"
+                    android:layout_height="30dp"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginTop="5dp"
+                    android:background="@drawable/opaque_rounded_shape_7"
+                    android:text="AQUA"
+                    android:textColor="@color/card_background"
+                    android:textSize="10dp" />
+
+            </LinearLayout>
+
+
+            <TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:id="@+id/class_table"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="15dp"
+                android:orientation="vertical"
+                android:stretchColumns="1">
+
+
+
+            </TableLayout>
 
         </LinearLayout>
     </ScrollView>
-
-    <ScrollView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
-        <TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
-            android:id="@+id/class_table"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_margin="15dp"
-            android:orientation="vertical"
-            android:stretchColumns="1">
-
-
-            <TableRow
-                android:id="@+id/title_row">
-                <TextView
-                    android:background="#FFFFFF"
-                    android:layout_height="wrap_content"
-                    android:layout_column="1"
-                    android:text="TIME"
-                    android:textStyle="bold"
-                    android:layout_margin="10dp"
-                    android:textSize="16sp" />
-
-                <TextView
-                    android:background="#FFFFFF"
-                    android:layout_height="wrap_content"
-                    android:layout_column="2"
-                    android:text="CLASS"
-                    android:textStyle="bold"
-                    android:layout_margin="10dp"
-                    android:textSize="16sp" />
-
-                <TextView
-                    android:background="#FFFFFF"
-                    android:layout_height="wrap_content"
-                    android:layout_column="3"
-                    android:text="LOCATION"
-                    android:textStyle="bold"
-                    android:layout_margin="10dp"
-                    android:textSize="16sp" />
-            </TableRow>
-        </TableLayout>
-
-    </ScrollView>
-
 </LinearLayout>

@@ -1,0 +1,29 @@
+<TableRow android:id="@+id/title_row"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <TextView
+        android:background="#FFFFFF"
+        android:layout_height="wrap_content"
+        android:layout_column="1"
+        android:text="TIME"
+        android:textStyle="bold"
+        android:layout_margin="10dp"
+        android:textSize="16sp" />
+
+    <TextView
+        android:background="#FFFFFF"
+        android:layout_height="wrap_content"
+        android:layout_column="2"
+        android:text="CLASS"
+        android:textStyle="bold"
+        android:layout_margin="10dp"
+        android:textSize="16sp" />
+
+    <TextView
+        android:background="#FFFFFF"
+        android:layout_height="wrap_content"
+        android:layout_column="3"
+        android:text="LOCATION"
+        android:textStyle="bold"
+        android:layout_margin="10dp"
+        android:textSize="16sp" />
+</TableRow>
