@@ -1,0 +1,14 @@
+<TableRow android:id="@+id/no_class_row"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <TextView
+        android:background="#FFFFFF"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_column="1"
+        android:text="No Data Available!"
+        android:textStyle="bold"
+        android:textAlignment="center"
+        android:layout_margin="10dp"
+        android:textSize="16sp" />
+
+</TableRow>
