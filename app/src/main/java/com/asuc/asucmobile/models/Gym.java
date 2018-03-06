@@ -2,6 +2,8 @@ package com.asuc.asucmobile.models;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import com.google.gson.annotations.SerializedName;
+
 import java.util.Date;
 
 public class Gym implements Cardable {
@@ -9,7 +11,9 @@ public class Gym implements Cardable {
     private int id;
     private String name;
     private String address;
+    @SerializedName("opening_time_today")
     private Date opening;
+    @SerializedName("closing_time_today")
     private Date closing;
     private String imageUrl;
 

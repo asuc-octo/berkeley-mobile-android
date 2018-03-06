@@ -84,7 +84,7 @@ public class GymClassFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Cardable card = mGymCardAdapter.getItem(i);
-                GymController.setCurrentGym((Gym) card);
+                OpenGymActivity.setGym((Gym) card);
                 Intent intent = new Intent(getActivity(), OpenGymActivity.class);
                 startActivity(intent);
             }
