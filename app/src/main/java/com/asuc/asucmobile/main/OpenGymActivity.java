@@ -14,10 +14,10 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.asuc.asucmobile.R;
-import com.asuc.asucmobile.controllers.GymController;
 import com.asuc.asucmobile.models.Gym;
 import com.asuc.asucmobile.utilities.Callback;
 import com.asuc.asucmobile.utilities.ImageDownloadThread;
+import com.google.firebase.analytics.FirebaseAnalytics;
 
 import java.text.SimpleDateFormat;
 import java.util.Locale;
@@ -27,7 +27,9 @@ public class OpenGymActivity extends BaseActivity {
     private static final SimpleDateFormat HOURS_FORMAT =
             new SimpleDateFormat("h:mm a", Locale.ENGLISH);
 
-    private Gym gym;
+    private static Gym gym;
+    private FirebaseAnalytics mFirebaseAnalytics;
+
 
     @Override
     @SuppressWarnings("all")
@@ -35,6 +37,11 @@ public class OpenGymActivity extends BaseActivity {
         super.onCreate(savedInstanceState, R.layout.activity_open_gym);
         exitIfNoData();
         setupToolbar(gym.getName(), true);
+
+        mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
+        Bundle bundle = new Bundle();
+        bundle.putString("gym", gym.getName());
+        mFirebaseAnalytics.logEvent("opened_gym", bundle);
 
         // Populate UI.
         TextView hours = (TextView) findViewById(R.id.hours);
@@ -92,8 +99,11 @@ public class OpenGymActivity extends BaseActivity {
         exitIfNoData();
     }
 
+    public static void setGym(Gym g) {
+        gym = g;
+    }
+
     private void exitIfNoData() {
-        gym = ((GymController) GymController.getInstance()).getCurrentGym();
         if (gym == null) {
             finish();
         }

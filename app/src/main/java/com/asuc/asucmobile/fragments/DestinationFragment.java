@@ -25,6 +25,13 @@ import android.widget.Toast;
 
 import com.asuc.asucmobile.R;
 import com.asuc.asucmobile.adapters.MarkerAdapter;
+import com.asuc.asucmobile.models.customMarker;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.location.places.Places;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.OnMapReadyCallback;
 import com.asuc.asucmobile.adapters.PlaceArrayAdapter;
 import com.asuc.asucmobile.models.customMarker;
 import com.google.android.gms.common.ConnectionResult;
@@ -114,7 +121,6 @@ public class DestinationFragment extends PlaceAutocompleteFragment implements
             }
         });
 
-
         clear.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -179,14 +185,12 @@ public class DestinationFragment extends PlaceAutocompleteFragment implements
     public void onConnected(@Nullable Bundle bundle) {
         mPlaceArrayAdapter.setGoogleApiClient(mGoogleApiClient);
         Log.i(TAG, "Google Places API connected.");
-
     }
 
     @Override
     public void onConnectionSuspended(int i) {
         mPlaceArrayAdapter.setGoogleApiClient(null);
         Log.e(TAG, "Google Places API connection suspended.");
-
     }
 
     @Override
@@ -197,5 +201,4 @@ public class DestinationFragment extends PlaceAutocompleteFragment implements
     public LatLng getDestination() {
         return destination;
     }
-
 }

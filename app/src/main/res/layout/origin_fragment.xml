@@ -24,6 +24,7 @@
             android:src="@drawable/bluedot" />
 
         <AutoCompleteTextView
+
             android:id="@+id/origin"
             android:layout_width="223dp"
             android:layout_height="match_parent"

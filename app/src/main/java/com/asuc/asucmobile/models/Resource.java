@@ -3,21 +3,37 @@ package com.asuc.asucmobile.models;
 import android.support.annotation.NonNull;
 
 import com.google.android.gms.maps.model.LatLng;
+import com.google.gson.annotations.SerializedName;
 
 public class Resource implements Comparable<Resource>{
 
     public static final double INVALID_COORD = -181;
 
     private boolean hasCoordinates;
+
+    @SerializedName("Resource")
     private String resource;
+    @SerializedName("Topic")
     private String topic;
+    @SerializedName("Phone 1")
     private String phone1;
+    @SerializedName("Phone 2 (Optional)")
     private String phone2;
+    @SerializedName("Office Location")
     private String location;
+    @SerializedName("Hours")
     private String hours;
+    @SerializedName("Email")
     private String email;
+    @SerializedName("On/Off Campus")
     private String onOrOffCampus;
+    @SerializedName("Notes")
     private String notes;
+
+    @SerializedName("Latitude")
+    private double latitude;
+    @SerializedName("Longitude")
+    private double longitude;
     private LatLng latLng;
 
     public Resource(String resource, String topic, String phone1, String phone2, String location,
@@ -32,12 +48,8 @@ public class Resource implements Comparable<Resource>{
         this.email = email;
         this.onOrOffCampus = onOrOffCampus;
         this.notes = notes;
-        if (lat == INVALID_COORD || lng == INVALID_COORD) {
-            hasCoordinates = false;
-        } else {
-            hasCoordinates = true;
-            this.latLng = new LatLng(lat, lng);
-        }
+        this.latitude = lat;
+        this.longitude = lng;
     }
 
     public String getResource() {
@@ -81,6 +93,14 @@ public class Resource implements Comparable<Resource>{
     }
 
     public LatLng getCoordinates() {
+        if (latLng == null) {
+            if (latitude == INVALID_COORD || longitude == INVALID_COORD) {
+                hasCoordinates = false;
+            } else {
+                hasCoordinates = true;
+                this.latLng = new LatLng(latitude, longitude);
+            }
+        }
         return hasCoordinates ? latLng : null;
     }
 

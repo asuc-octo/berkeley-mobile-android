@@ -23,29 +23,38 @@ import android.widget.Toast;
 
 import com.asuc.asucmobile.R;
 import com.asuc.asucmobile.adapters.LibraryAdapter;
-import com.asuc.asucmobile.controllers.LibraryController;
 import com.asuc.asucmobile.main.ListOfFavorites;
 import com.asuc.asucmobile.main.OpenLibraryActivity;
 import com.asuc.asucmobile.models.Library;
-import com.asuc.asucmobile.utilities.Callback;
-import com.asuc.asucmobile.utilities.CustomComparators;
+import com.asuc.asucmobile.models.responses.LibrariesResponse;
+import com.asuc.asucmobile.controllers.BMRetrofitController;
 import com.asuc.asucmobile.utilities.NavigationGenerator;
 import com.asuc.asucmobile.utilities.SerializableUtilities;
+import com.google.firebase.analytics.FirebaseAnalytics;
 
 import java.util.ArrayList;
-import java.util.Collections;
+
+import retrofit2.Call;
+import retrofit2.Response;
 
 public class LibraryFragment extends Fragment {
 
     private ListView mLibraryList;
     private ProgressBar mProgressBar;
     private LinearLayout mRefreshWrapper;
+    private static LibraryAdapter mAdapter;
+    private FirebaseAnalytics mFirebaseAnalytics;
 
-    private LibraryAdapter mAdapter;
+
 
     @Override
     @SuppressWarnings("deprecation")
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+
+        mFirebaseAnalytics = FirebaseAnalytics.getInstance(this.getContext());
+        Bundle bundle = new Bundle();
+        mFirebaseAnalytics.logEvent("opened_library_screen", bundle);
+
         View layout = inflater.inflate(R.layout.fragment_library, container, false);
         Toolbar toolbar = (Toolbar) layout.findViewById(R.id.toolbar);
         ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
@@ -66,8 +75,7 @@ public class LibraryFragment extends Fragment {
         mLibraryList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                LibraryController controller = (LibraryController) LibraryController.getInstance();
-                controller.setCurrentLibrary(mAdapter.getItem(i));
+                OpenLibraryActivity.setLibrary(mAdapter.getItem(i));
                 Intent intent = new Intent(getContext(), OpenLibraryActivity.class);
                 startActivity(intent);
             }
@@ -91,21 +99,18 @@ public class LibraryFragment extends Fragment {
     //start off lv sorted by favorites
     @Override
     public boolean onOptionsItemSelected(MenuItem menuItem) {
-        switch (menuItem.getItemId()){
-            case R.id.sortAZ:
-                Collections.sort(mAdapter.getLibraries(), CustomComparators.FacilityComparators.getSortByAZ());
-                mAdapter.notifyDataSetChanged();
-                break;
+        /*switch (menuItem.getItemId()){
             case R.id.sortOpen:
                 Collections.sort(mAdapter.getLibraries(), CustomComparators.FacilityComparators.getSortByOpenness());
                 mAdapter.notifyDataSetChanged();
                 break;
-            case R.id.sortFavorites:
-                Collections.sort(mAdapter.getLibraries(), CustomComparators.FacilityComparators.getSortByFavoriteLibrary(getContext()));
-                mAdapter.notifyDataSetChanged();
-                break;
-        }
-        return true;
+        }*/
+
+        /*
+        Must return false to hid the toolbar menu option
+        Auto sort feature is implemented in the controller
+         */
+        return false;
     }
 
     @Override
@@ -148,18 +153,17 @@ public class LibraryFragment extends Fragment {
         mRefreshWrapper.setVisibility(View.GONE);
         mProgressBar.setVisibility(View.VISIBLE);
 
-        LibraryController.getInstance().refreshInBackground(getActivity(), new Callback() {
+        BMRetrofitController.bmapi.callLibrariesList().enqueue(new retrofit2.Callback<LibrariesResponse>() {
             @Override
-            @SuppressWarnings("unchecked")
-            public void onDataRetrieved(Object data) {
+            public void onResponse(Call<LibrariesResponse> call, Response<LibrariesResponse> response) {
                 mLibraryList.setVisibility(View.VISIBLE);
                 mProgressBar.setVisibility(View.GONE);
-
-                mAdapter.setList((ArrayList<Library>) data);
+                mAdapter.setList(response.body().getLibraries());
+                ArrayList<Library> l = response.body().getLibraries();
             }
 
             @Override
-            public void onRetrievalFailed() {
+            public void onFailure(Call<LibrariesResponse> call, Throwable t) {
                 mProgressBar.setVisibility(View.GONE);
                 mRefreshWrapper.setVisibility(View.VISIBLE);
                 Toast.makeText(getContext(), "Unable to retrieve data, please try again",
@@ -168,4 +172,10 @@ public class LibraryFragment extends Fragment {
         });
     }
 
+    public static void refreshLists() {
+        if (LibraryFragment.mAdapter == null)
+            return;
+        mAdapter.notifyDataSetChanged();
+
+    }
 }

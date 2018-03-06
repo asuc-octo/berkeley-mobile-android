@@ -67,6 +67,7 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.analytics.FirebaseAnalytics;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.wang.avi.AVLoadingIndicatorView;
@@ -120,10 +121,9 @@ public class MapsFragment extends Fragment
     private static View layout;
     private MapFragment mapFragment;
     private LiveBusActivity.BusCallback busCallback;
-
-
     private static MapsFragment instance;
     private static Marker prevMarker;
+    private FirebaseAnalytics mFirebaseAnalytics;
 
 
     public static MapsFragment getInstance() {
@@ -149,6 +149,11 @@ public class MapsFragment extends Fragment
         // Don't worry about it!
 
         instance = this;
+
+        mFirebaseAnalytics = FirebaseAnalytics.getInstance(this.getContext());
+        Bundle bundle = new Bundle();
+        mFirebaseAnalytics.logEvent("opened_transit_screen", bundle);
+
 
         Toolbar toolbar = (Toolbar) layout.findViewById(R.id.toolbar);
         ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
@@ -237,6 +242,10 @@ public class MapsFragment extends Fragment
                     Toast.makeText(getActivity().getBaseContext(), "Please select a destination and an origin.", Toast.LENGTH_SHORT).show();
                 } else {
                     refresh(origin, destination, System.currentTimeMillis());
+                    mFirebaseAnalytics = FirebaseAnalytics.getInstance(MapsFragment.this.getContext());
+                    Bundle bundle = new Bundle();
+                    mFirebaseAnalytics.logEvent("clicked_go_button", bundle);
+
                 }
 
 
@@ -274,7 +283,6 @@ public class MapsFragment extends Fragment
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
-
         this.mMap = googleMap;
         //Zooms camera to "my location"
         if (ActivityCompat.checkSelfPermission(getActivity(), android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getActivity(), android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
@@ -302,7 +310,6 @@ public class MapsFragment extends Fragment
             busCallback = new LiveBusActivity.BusCallback(getContext(), mMap, refreshWrapper, LiveBusActivity.timer);
             cameraLoadAnimation(currLocation);
         }
-
 
         //Clears focus when user clicks on map
         mMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
@@ -357,7 +364,6 @@ public class MapsFragment extends Fragment
         if (marker == null || (boolean) marker.getTag()) {
             return true;
         }
-
 
         if (this.prevMarker != null) {
             this.prevMarker.setIcon(BitmapDescriptorFactory.fromResource(R.drawable.markernew));
@@ -450,7 +456,6 @@ public class MapsFragment extends Fragment
         Location.distanceBetween(lat, lng, currLocation.latitude, currLocation.longitude, results);
         return DECIMAL_FORMAT.format(results[0] * 0.000621371192);
     }
-
 
     public void hideKeyboard(View view) {
         InputMethodManager inputMethodManager = (InputMethodManager) getActivity().getSystemService(Activity.INPUT_METHOD_SERVICE);
@@ -588,7 +593,6 @@ public class MapsFragment extends Fragment
                             routeSelect.putExtra("routes", routes);
                             startActivity(routeSelect);
                         }
-
 
                     }
 
