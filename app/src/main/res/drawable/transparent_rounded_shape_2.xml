@@ -12,6 +12,6 @@
         android:radius="25dp"   >
     </corners>
 
-    <stroke android:width="2px" android:color="@color/excercise_color_2"/>
+    <!--<stroke android:width="2px" android:color="@color/excercise_color_2"/>-->
 
 </shape>

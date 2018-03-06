@@ -113,7 +113,7 @@ public class GymClassFragment extends Fragment {
                     } else {
                         filter.add(GymClass.ALL_AROUND);
                         allAround.setBackgroundResource(R.drawable.transparent_rounded_shape_1);
-                        allAround.setTextColor(getResources().getColor(R.color.excercise_color_1));
+//                        allAround.setTextColor(getResources().getColor(R.color.excercise_color_1));
                         clickTracker.put(allAround, true);
                     }
                 }
@@ -135,7 +135,7 @@ public class GymClassFragment extends Fragment {
                     } else {
                         filter.add(GymClass.CARDIO);
                         cardio.setBackgroundResource(R.drawable.transparent_rounded_shape_2);
-                        cardio.setTextColor(getResources().getColor(R.color.excercise_color_2));
+//                        cardio.setTextColor(getResources().getColor(R.color.excercise_color_2));
                         clickTracker.put(cardio, true);
                     }
                 }
@@ -157,7 +157,7 @@ public class GymClassFragment extends Fragment {
                     } else {
                         filter.add(GymClass.MIND);
                         mind.setBackgroundResource(R.drawable.transparent_rounded_shape_3);
-                        mind.setTextColor(getResources().getColor(R.color.excercise_color_3));
+//                        mind.setTextColor(getResources().getColor(R.color.excercise_color_3));
                         clickTracker.put(mind, true);
                     }
                 }
@@ -179,7 +179,7 @@ public class GymClassFragment extends Fragment {
                     } else {
                         filter.add(GymClass.CORE);
                         core.setBackgroundResource(R.drawable.transparent_rounded_shape_4);
-                        core.setTextColor(getResources().getColor(R.color.excercise_color_4));
+//                        core.setTextColor(getResources().getColor(R.color.excercise_color_4));
                         clickTracker.put(core, true);
                     }
                 }
@@ -201,7 +201,7 @@ public class GymClassFragment extends Fragment {
                     } else {
                         filter.add(GymClass.DANCE);
                         dance.setBackgroundResource(R.drawable.transparent_rounded_shape_5);
-                        dance.setTextColor(getResources().getColor(R.color.excercise_color_5));
+//                        dance.setTextColor(getResources().getColor(R.color.excercise_color_5));
                         clickTracker.put(dance, true);
                     }
                 }
@@ -223,7 +223,7 @@ public class GymClassFragment extends Fragment {
                     } else {
                         filter.add(GymClass.STRENGTH);
                         strength.setBackgroundResource(R.drawable.transparent_rounded_shape_6);
-                        strength.setTextColor(getResources().getColor(R.color.excercise_color_6));
+//                        strength.setTextColor(getResources().getColor(R.color.excercise_color_6));
                         clickTracker.put(strength, true);
                     }
                 }
@@ -245,7 +245,7 @@ public class GymClassFragment extends Fragment {
                     } else {
                         filter.add(GymClass.AQUA);
                         aqua.setBackgroundResource(R.drawable.transparent_rounded_shape_7);
-                        aqua.setTextColor(getResources().getColor(R.color.excercise_color_7));
+//                        aqua.setTextColor(getResources().getColor(R.color.excercise_color_7));
                         clickTracker.put(aqua, true);
                     }
                 }
@@ -283,22 +283,22 @@ public class GymClassFragment extends Fragment {
             TextView excerciseTrainer = (TextView) tr.findViewById(R.id.excerciseTrainer);
             TextView excerciseLocation = (TextView) tr.findViewById(R.id.excerciseLocation);
 
-            switch (gymClass.getClassType()) {
-                case GymClass.ALL_AROUND:
-                    filterColor.setBackgroundColor(getResources().getColor(R.color.excercise_color_1)); break;
-                case GymClass.CARDIO:
-                    filterColor.setBackgroundColor(getResources().getColor(R.color.excercise_color_2)); break;
-                case GymClass.MIND:
-                    filterColor.setBackgroundColor(getResources().getColor(R.color.excercise_color_3)); break;
-                case GymClass.CORE:
-                    filterColor.setBackgroundColor(getResources().getColor(R.color.excercise_color_4)); break;
-                case GymClass.DANCE:
-                    filterColor.setBackgroundColor(getResources().getColor(R.color.excercise_color_5)); break;
-                case GymClass.STRENGTH:
-                    filterColor.setBackgroundColor(getResources().getColor(R.color.excercise_color_6)); break;
-                case GymClass.AQUA:
-                    filterColor.setBackgroundColor(getResources().getColor(R.color.excercise_color_7)); break;
-            }
+//            switch (gymClass.getClassType()) {
+//                case GymClass.ALL_AROUND:
+//                    filterColor.setBackgroundColor(getResources().getColor(R.color.excercise_color_1)); break;
+//                case GymClass.CARDIO:
+//                    filterColor.setBackgroundColor(getResources().getColor(R.color.excercise_color_2)); break;
+//                case GymClass.MIND:
+//                    filterColor.setBackgroundColor(getResources().getColor(R.color.excercise_color_3)); break;
+//                case GymClass.CORE:
+//                    filterColor.setBackgroundColor(getResources().getColor(R.color.excercise_color_4)); break;
+//                case GymClass.DANCE:
+//                    filterColor.setBackgroundColor(getResources().getColor(R.color.excercise_color_5)); break;
+//                case GymClass.STRENGTH:
+//                    filterColor.setBackgroundColor(getResources().getColor(R.color.excercise_color_6)); break;
+//                case GymClass.AQUA:
+//                    filterColor.setBackgroundColor(getResources().getColor(R.color.excercise_color_7)); break;
+//            }
 
 
             DateFormat df = new SimpleDateFormat("HH:mm");
