@@ -47,7 +47,11 @@
     <string name="open_map">Open Map</string>
 
     <string name="request_caseworker">Request a Caseworker</string>
+
     <style name="google_api_key">AIzaSyCQzbLK8HbovUtZhdatSLm-BIjeBnCGzjM</style>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 
 </resources>
