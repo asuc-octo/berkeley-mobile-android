@@ -19,11 +19,6 @@
             android:elevation="8dp"
             style="@style/ToolbarTheme"
             tools:ignore="all" />
-
-        <android.support.v7.widget.SearchView
-            android:id="@+id/local_search"
-            android:layout_height="wrap_content"
-            android:layout_width="match_parent" />
         
         <ListView
             android:id="@+id/resource_list"

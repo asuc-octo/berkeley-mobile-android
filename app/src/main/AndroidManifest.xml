@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.asuc.asucmobile"
-    >
+    package="com.asuc.asucmobile">
+
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
@@ -14,7 +14,6 @@
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <uses-permission android:name="android.permission.BROADCAST_STICKY" />
     <uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES" />
-
 
     <uses-permission
         android:name="android.permission.WRITE_EXTERNAL_STORAGE"
@@ -51,7 +50,7 @@
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyCQzbLK8HbovUtZhdatSLm-BIjeBnCGzjM" />
+            android:value="AIzaSyBNHvNBivaDX5dgHCTu4VL7Vwo-pVKsWPM" />
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
@@ -62,7 +61,6 @@
         <meta-data
             android:name="PW_PROJECT_ID"
             android:value="A44923358263" />
-
 
         <activity android:name="com.pushwoosh.richpages.RichPageActivity" />
         <activity android:name="com.pushwoosh.MessageActivity" />

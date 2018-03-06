@@ -1,15 +1,25 @@
 package com.asuc.asucmobile.controllers;
 
 import android.content.Context;
+import android.net.http.HttpResponseCache;
 import android.support.annotation.NonNull;
 
 import com.asuc.asucmobile.utilities.Callback;
+
+import org.json.JSONArray;
 import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 import org.json.JSONArray;
 
+import java.io.File;
+import java.io.IOException;
+import java.util.UUID;
+
+import butterknife.internal.Utils;
+import okhttp3.Interceptor;
+import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
@@ -20,7 +30,8 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public interface Controller {
 
-    String BASE_URL = "http://asuc-mobile.herokuapp.com/api/";
+
+    String BASE_URL = "http://asuc-mobile-dev.herokuapp.com/api/";
     String ISO_FORMAT = "yyyy-MM-dd'T'HH:mm:ss.SSSZ";
 
     GsonBuilder gsonBuilder = new GsonBuilder()
@@ -31,7 +42,6 @@ public interface Controller {
             .baseUrl(BASE_URL)
             .addConverterFactory(GsonConverterFactory.create(gson))
             .build();
-
 
     /**
      * setResources() is a centralized function for all data controllers that the JSON utility

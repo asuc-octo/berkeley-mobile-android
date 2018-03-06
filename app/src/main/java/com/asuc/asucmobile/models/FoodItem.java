@@ -2,6 +2,9 @@ package com.asuc.asucmobile.models;
 
 import android.support.annotation.NonNull;
 
+import com.google.gson.annotations.SerializedName;
+
+import java.util.ArrayList;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -13,15 +16,18 @@ public class FoodItem implements Comparable<FoodItem> {
     private String name;
     private String calories;
     private double cost;
-    private String foodTypes;
 
-    public FoodItem(String id, String name, String calories, double cost, String foodTypes) {
+    private boolean lower = false;
 
+    @SerializedName("food_type")
+    private ArrayList<String> foodTypes; // all in upper case
+
+    public FoodItem(String id, String name, String calories, double cost, ArrayList<String> types) {
         this.id = id;
         this.name = name;
         this.calories = calories;
         this.cost = cost;
-        this.foodTypes = foodTypes;
+        this.foodTypes = types;
     }
 
     public String getId() {
@@ -32,23 +38,33 @@ public class FoodItem implements Comparable<FoodItem> {
         return name;
     }
 
-    public String getFoodTypes() {
-        return foodTypes;
-    }
-
-
     public String getCalories() {
         return calories;
     }
 
     public String getCost() {
+        if (Double.isNaN(cost)) {
+            return null;
+        }
         DecimalFormat df = new DecimalFormat("0.00");
         return "$" + df.format(cost);
     }
 
-    /*public ArrayList<String> getFoodTypes() {
+    /**
+     * Upon first call, make all the food types lower case. Since we're fetching food types using
+     * Retrofit's POJO direct serialization, we have to do conversion to lower here.
+     * @return
+     */
+    public ArrayList<String> getFoodTypes() {
+        if (!lower) {
+            lower = true;
+            for (int i = 0; i < foodTypes.size(); i++) {
+                foodTypes.set(i, foodTypes.get(i).toLowerCase());
+            }
+        }
         return foodTypes;
-    }*/
+    }
+
 
     @Override
     public int compareTo(@NonNull FoodItem other) {

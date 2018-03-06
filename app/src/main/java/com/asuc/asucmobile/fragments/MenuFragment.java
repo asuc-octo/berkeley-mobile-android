@@ -5,6 +5,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.v13.view.ViewCompat;
 import android.text.SpannableString;
 import android.text.style.ForegroundColorSpan;
 import android.util.Log;
@@ -17,6 +18,7 @@ import android.widget.TextView;
 
 import com.asuc.asucmobile.R;
 import com.asuc.asucmobile.adapters.FoodAdapter;
+import com.asuc.asucmobile.adapters.FoodPlaceAdapter;
 import com.asuc.asucmobile.main.OpenCafeActivity;
 import com.asuc.asucmobile.main.OpenDiningHallActivity;
 import com.asuc.asucmobile.models.Cafe;
@@ -28,6 +30,8 @@ import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Locale;
+
+import static android.support.design.R.id.add;
 
 /**
  * Created by rustie on 10/11/17.
@@ -61,7 +65,6 @@ public class MenuFragment extends Fragment {
     private ListView foodMenu;
     private TextView emptyListView;
     private View header;
-    private ImageView headerImage;
     private TextView headerHours;
     private View v;
 
@@ -79,9 +82,10 @@ public class MenuFragment extends Fragment {
 
         // Get references to views.
         foodMenu = (ListView) v.findViewById(R.id.food_menu);
+        ViewCompat.setNestedScrollingEnabled(foodMenu,true);
+
         emptyListView = (TextView) v.findViewById(R.id.empty_list);
         header = getActivity().getLayoutInflater().inflate(R.layout.header_image, foodMenu, false);
-        headerImage = (ImageView) header.findViewById(R.id.image);
         headerHours = (TextView) header.findViewById(R.id.header_text);
 
         if (emptyListView == null) {
@@ -110,47 +114,7 @@ public class MenuFragment extends Fragment {
             populateCafe((Cafe) foodPlace);
         }
 
-
-        // Download and set header image.
-        new DownloadImageThread(headerImage, foodPlace.getImageUrl()).start();
         return v;
-    }
-
-    private class DownloadImageThread extends Thread {
-
-        ImageView headerView;
-        String url;
-
-        private DownloadImageThread(ImageView headerView, String url) {
-            this.headerView = headerView;
-            this.url = url;
-        }
-
-        @Override
-        public void run() {
-            try {
-                InputStream input = new java.net.URL(url).openStream();
-                final Bitmap bitmap = BitmapFactory.decodeStream(input);
-
-                getActivity().runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        headerView.setImageBitmap(bitmap);
-                    }
-                });
-            } catch (Exception e) {
-                if (getActivity() == null) {
-                    return;
-                }
-            }
-            getActivity().runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    headerView.setVisibility(View.VISIBLE);
-                }
-            });
-        }
-
     }
 
     /**
@@ -211,7 +175,7 @@ public class MenuFragment extends Fragment {
                         );
                     }
                     headerHours.setText(spannableHeader);
-                    FoodAdapter adapter = new FoodAdapter(getActivity(), foodItems);
+                    FoodAdapter adapter = new FoodAdapter(getActivity(), foodItems, FoodPlaceAdapter.FoodType.Cafe);
                     MenuFragment.adapters.add(adapter);
                     foodMenu.setAdapter(adapter);
                 }
@@ -323,7 +287,7 @@ public class MenuFragment extends Fragment {
                         );
                     }
                     headerHours.setText(spannableHeader);
-                    FoodAdapter adapter = new FoodAdapter(getActivity(), foodItems);
+                    FoodAdapter adapter = new FoodAdapter(getActivity(), foodItems, FoodPlaceAdapter.FoodType.DiningHall);
                     MenuFragment.adapters.add(adapter);
                     foodMenu.setAdapter(adapter);
                 }

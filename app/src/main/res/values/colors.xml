@@ -23,4 +23,8 @@
     <color name="card_shadow_2">#dddddd</color>
     <color name="card_detailing">#eee</color>
 
+    <color name="toolbarTransparentForMaps">#46005581</color>
+    <color name="toolbarTransparent">#00005581</color>
+
+
 </resources>

@@ -57,7 +57,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
-
 /**
  * Created by alexthomas on 5/28/17.
  */
@@ -137,6 +136,7 @@ public class OriginFragment extends PlaceAutocompleteFragment implements
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
+
                 mAutocompleteTextView.setTextColor(getResources().getColor(R.color.ASUC_blue));
             }
 

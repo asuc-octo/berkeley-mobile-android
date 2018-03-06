@@ -11,7 +11,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.asuc.asucmobile.R;
-import com.asuc.asucmobile.controllers.ResourceController;
 import com.asuc.asucmobile.models.Resource;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
@@ -23,6 +22,7 @@ import com.google.android.gms.maps.model.BitmapDescriptor;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.firebase.analytics.FirebaseAnalytics;
 
 import java.util.HashSet;
 import java.util.Locale;
@@ -43,7 +43,11 @@ public class OpenResourceActivity extends BaseActivity {
 
     private MapFragment mapFragment;
     private GoogleMap map;
-    private Resource resource;
+    private static Resource resource;
+
+    public static OpenResourceActivity self_reference;
+    private FirebaseAnalytics mFirebaseAnalytics;
+
 
     @Override
     @SuppressWarnings("all")
@@ -51,6 +55,12 @@ public class OpenResourceActivity extends BaseActivity {
         super.onCreate(savedInstanceState, R.layout.activity_open_resource);
         exitIfNoData();
         setupToolbar(resource.getResource(), true);
+        self_reference = this;
+
+        mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
+        Bundle bundle = new Bundle();
+        bundle.putString("opened_resource", resource.getResource());
+        mFirebaseAnalytics.logEvent("opened_resource", bundle);
 
         // Populate UI.
         TextView hours = (TextView) findViewById(R.id.hours);
@@ -211,13 +221,19 @@ public class OpenResourceActivity extends BaseActivity {
     }
 
     private String setUpNotes() {
-        String displayedNotes =
-                !resource.getNotes().equals("null") ? "\n" + resource.getNotes() : "";
-        return "This is an " + resource.getOnOrOffCampus() + " resource. " + displayedNotes;
+        if (resource.getNotes() != null) {
+            String displayedNotes =
+                    !resource.getNotes().equals("null") ? "\n" + resource.getNotes() : "";
+            return "This is an " + resource.getOnOrOffCampus() + " resource. " + displayedNotes;
+        }
+        return "";
+    }
+
+    public static void setResource(Resource r) {
+        resource = r;
     }
 
     private void exitIfNoData() {
-        resource = ((ResourceController) ResourceController.getInstance()).getCurrentResource();
         if (resource == null) {
             finish();
         }
@@ -236,7 +252,7 @@ public class OpenResourceActivity extends BaseActivity {
      * @param text Content string.
      */
     private void setText(View[] viewsToBeDeleted, TextView view, String text) {
-        if (NULL_STRINGS.contains(text)) {
+        if (NULL_STRINGS.contains(text) || text == null) {
             for (View v : viewsToBeDeleted) {
                 v.setVisibility(View.GONE);
             }

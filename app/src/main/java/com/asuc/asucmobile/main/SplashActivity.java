@@ -8,6 +8,8 @@ import android.view.Window;
 import android.view.WindowManager;
 
 import com.asuc.asucmobile.R;
+import com.asuc.asucmobile.controllers.BMAPI;
+import com.asuc.asucmobile.controllers.BMRetrofitController;
 
 public class SplashActivity extends Activity {
 
@@ -21,6 +23,9 @@ public class SplashActivity extends Activity {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN); // Removes notification bar
         setContentView(R.layout.activity_splash);
+
+        // launch network stuff
+        BMRetrofitController.create(this, BMAPI.class);
 
         // Start timer and launch main activity
         IntentLauncher launcher = new IntentLauncher();
