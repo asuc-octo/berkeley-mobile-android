@@ -1,5 +1,8 @@
 package com.asuc.asucmobile.models;
 
+import com.asuc.asucmobile.models.responses.CafeMenuResponse;
+import com.google.gson.annotations.SerializedName;
+
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -9,9 +12,12 @@ import java.util.Date;
 
 public class Cafe extends FoodPlace {
 
+    // because JSON response for Cafes has a deeper structure...
+    @SerializedName("menus")
+    public ArrayList<CafeMenuResponse> cafeMenus;
+    private CafeMenuResponse breakfast;
+    private CafeMenuResponse lunchDinner;
 
-    private String id;
-    private String name;
     private ArrayList<FoodItem> breakfastMenu;
     private ArrayList<FoodItem> lunchDinnerMenu;
     private Date breakfastOpen;
@@ -19,54 +25,59 @@ public class Cafe extends FoodPlace {
     private Date breakfastClose;
     private Date lunchDinnerClose;
 
-    private String imageUrl;
+    public void setMeals() {
+        setBreakfast();
+        setLunchDinner();
+    }
 
-    public Cafe(String id, String name, ArrayList<FoodItem> breakfastMenu,
-                ArrayList<FoodItem> lunchDinnerMenu, Date breakfastOpen,
-                Date lunchDinnerOpen, Date breakfastClose, Date lunchDinnerClose,
-                String imageUrl) {
-        this.id = id;
-        this.name = name;
-        this.breakfastMenu = breakfastMenu;
-        this.lunchDinnerMenu = lunchDinnerMenu;
-        this.breakfastOpen = breakfastOpen;
-        this.lunchDinnerOpen = lunchDinnerOpen;
-        this.breakfastClose = breakfastClose;
-        this.lunchDinnerClose = lunchDinnerClose;
-        this.imageUrl = imageUrl;
+    private void setBreakfast(){
+        if (breakfast == null) {
+            for (CafeMenuResponse menu : cafeMenus) {
+                if (menu.getMealType().toLowerCase().equals("breakfast")) {
+                    breakfast = menu;
+                    breakfastOpen = menu.getStart();
+                    breakfastClose = menu.getEnd();
+                    breakfastMenu = menu.getMenuItems();
+                }
+            }
+        }
+    }
+
+    private void setLunchDinner() {
+        if (lunchDinner == null) {
+            for (CafeMenuResponse menu : cafeMenus) {
+                if (menu.getMealType().toLowerCase().equals("lunch\u0026dinner")) {
+                    lunchDinner = menu;
+                    lunchDinnerOpen = menu.getStart();
+                    lunchDinnerClose = menu.getEnd();
+                    lunchDinnerMenu = menu.getMenuItems();
+                }
+            }
+        }
     }
 
     public Date getBreakfastOpening() {
         return breakfastOpen;
     }
 
-    public void setBreakfastOpening(Date breakfastOpen) {
-        this.breakfastOpen = breakfastOpen;
-    }
 
     public Date getLunchDinnerOpening() {
+        setLunchDinner();
         return lunchDinnerOpen;
     }
 
-    public void setLunchDinnerOpening(Date lunchDinnerOpen) {
-        this.lunchDinnerOpen = lunchDinnerOpen;
-    }
 
     public Date getBreakfastClosing() {
+        setBreakfast();
         return breakfastClose;
     }
 
-    public void setBreakfastClosing(Date breakfastClose) {
-        this.breakfastClose = breakfastClose;
-    }
 
     public Date getLunchDinnerClosing() {
+        setLunchDinner();
         return lunchDinnerClose;
     }
 
-    public void setLunchDinnerClosing(Date lunchDinnerClose) {
-        this.lunchDinnerClose = lunchDinnerClose;
-    }
 
     public String getId() {
         return id;
@@ -85,20 +96,15 @@ public class Cafe extends FoodPlace {
     }
 
     public ArrayList<FoodItem> getBreakfastMenu() {
+        setBreakfast();
         return breakfastMenu;
     }
 
-    public void setBreakfastMenu(ArrayList<FoodItem> breakfastMenu) {
-        this.breakfastMenu = breakfastMenu;
-    }
-
     public ArrayList<FoodItem> getLunchDinnerMenu() {
+        setLunchDinner();
         return lunchDinnerMenu;
     }
 
-    public void setLunchDinnerMenu(ArrayList<FoodItem> lunchDinnerMenu) {
-        this.lunchDinnerMenu = lunchDinnerMenu;
-    }
 
 
 
@@ -116,6 +122,8 @@ public class Cafe extends FoodPlace {
      * @return Boolean indicating if a certain cafe is open or not.
      */
     public boolean isOpen() {
+        setBreakfast();
+        setLunchDinner();
         if (breakfastOpen == null || lunchDinnerOpen == null
                 || breakfastClose == null || lunchDinnerClose == null) {
             return false;
@@ -127,6 +135,7 @@ public class Cafe extends FoodPlace {
     }
 
     public boolean isBreakfastOpen() {
+        setBreakfast();
         if (breakfastOpen == null || breakfastClose == null) {
             return false;
         }
@@ -136,6 +145,7 @@ public class Cafe extends FoodPlace {
     }
 
     public boolean isLunchDinnerOpen() {
+        setLunchDinner();
         if (lunchDinnerOpen == null || lunchDinnerClose == null) {
             return false;
         }
