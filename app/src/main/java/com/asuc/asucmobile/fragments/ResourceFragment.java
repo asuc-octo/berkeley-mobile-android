@@ -23,18 +23,19 @@ import android.widget.Toast;
 
 import com.asuc.asucmobile.R;
 import com.asuc.asucmobile.adapters.ResourceAdapter;
-import com.asuc.asucmobile.controllers.ResourceController;
 import com.asuc.asucmobile.main.ListOfFavorites;
 import com.asuc.asucmobile.main.OpenResourceActivity;
-import com.asuc.asucmobile.models.Resource;
-import com.asuc.asucmobile.utilities.Callback;
+import com.asuc.asucmobile.models.responses.ResourcesResponse;
+import com.asuc.asucmobile.controllers.BMRetrofitController;
 import com.asuc.asucmobile.utilities.CustomComparators;
 import com.asuc.asucmobile.utilities.NavigationGenerator;
 import com.asuc.asucmobile.utilities.SerializableUtilities;
 import com.google.firebase.analytics.FirebaseAnalytics;
 
-import java.util.ArrayList;
 import java.util.Collections;
+
+import retrofit2.Call;
+import retrofit2.Response;
 
 public class ResourceFragment extends Fragment {
 
@@ -75,9 +76,7 @@ public class ResourceFragment extends Fragment {
         mResourceList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                ResourceController controller =
-                        (ResourceController) ResourceController.getInstance();
-                controller.setCurrentResource(mAdapter.getItem(i));
+                OpenResourceActivity.setResource(mAdapter.getItem(i));
                 Intent intent = new Intent(getContext(), OpenResourceActivity.class);
                 startActivity(intent);
             }
@@ -154,23 +153,23 @@ public class ResourceFragment extends Fragment {
         mRefreshWrapper.setVisibility(View.GONE);
         mProgressBar.setVisibility(View.VISIBLE);
 
-        ResourceController.getInstance().refreshInBackground(getActivity(), new Callback() {
+        BMRetrofitController.bmapi.callResourcesList().enqueue(new retrofit2.Callback<ResourcesResponse>() {
             @Override
-            @SuppressWarnings("unchecked")
-            public void onDataRetrieved(Object data) {
+            public void onResponse(Call<ResourcesResponse> call, Response<ResourcesResponse> response) {
                 mResourceList.setVisibility(View.VISIBLE);
                 mProgressBar.setVisibility(View.GONE);
-                mAdapter.setList((ArrayList<Resource>) data);
+                mAdapter.setList(response.body().getResources());
             }
 
             @Override
-            public void onRetrievalFailed() {
+            public void onFailure(Call<ResourcesResponse> call, Throwable t) {
                 mProgressBar.setVisibility(View.GONE);
                 mRefreshWrapper.setVisibility(View.VISIBLE);
                 Toast.makeText(getContext(), "Unable to retrieve data, please try again",
                         Toast.LENGTH_SHORT).show();
             }
         });
+
     }
 
     public static void refreshLists() {
