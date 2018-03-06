@@ -8,11 +8,13 @@ import android.support.v4.content.ContextCompat;
 import android.util.AttributeSet;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.GridView;
 import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.asuc.asucmobile.R;
@@ -68,8 +70,15 @@ public class WeekCalendar extends LinearLayout {
             addView(daysName, 0);
         }
 
-        WeekPager weekPager = new WeekPager(getContext(), attrs);
-        weekPager.setBackgroundColor(getResources().getColor(R.color.OP_navy_transparent));
+        final WeekPager weekPager = new WeekPager(getContext(), attrs);
+        weekPager.setBackgroundColor(getResources().getColor(R.color.OP_navy));
+        weekPager.setOnTouchListener(new OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                weekPager.setCurrentItem(weekPager.getCurrentItem());
+                return true;
+            }
+        });
         addView(weekPager);
         BusProvider.getInstance().register(this);
 
@@ -145,7 +154,7 @@ public class WeekCalendar extends LinearLayout {
             }
         });
         if (typedArray != null)
-            daysName.setBackgroundColor(getResources().getColor(R.color.OP_navy_transparent));
+            daysName.setBackgroundColor(getResources().getColor(R.color.OP_navy));
         return daysName;
     }
 

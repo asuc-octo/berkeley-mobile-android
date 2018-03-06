@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.TableLayout;
+import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.Toolbar;
@@ -27,6 +28,7 @@ import com.asuc.asucmobile.models.WeekCalendar;
 import com.asuc.asucmobile.utilities.Callback;
 
 import org.joda.time.DateTime;
+import org.w3c.dom.Text;
 
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -54,6 +56,7 @@ public class GymClassFragment extends Fragment {
     private int dayOfMonth;
 
 
+
     @Override
     public View onCreateView(final LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -65,6 +68,7 @@ public class GymClassFragment extends Fragment {
         mGymCardAdapter = new CardAdapter(this.getContext());
 
         layout = inflater.inflate(R.layout.fragment_class, container, false);
+        table = (TableLayout) layout.findViewById(R.id.class_table);
         calendar = (com.asuc.asucmobile.models.WeekCalendar) layout.findViewById(R.id.weekCalendar);
         calendar.setOnDateClickListener(new OnDateClickListener() {
             @Override
@@ -206,21 +210,21 @@ public class GymClassFragment extends Fragment {
             }
         });
 
-        strength = (Button) layout.findViewById(R.id.aqua);
+        strength = (Button) layout.findViewById(R.id.strength);
         strength.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
                 if (motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
-                    if (clickTracker.get(aqua)) {
-                        filter.remove((Integer) GymClass.ALL_AROUND);
-                        aqua.setBackgroundResource(R.drawable.opaque_rounded_shape_6);
-                        aqua.setTextColor(getResources().getColor(R.color.card_background));
-                        clickTracker.put(aqua, false);
+                    if (clickTracker.get(strength)) {
+                        filter.remove((Integer) GymClass.STRENGTH);
+                        strength.setBackgroundResource(R.drawable.opaque_rounded_shape_6);
+                        strength.setTextColor(getResources().getColor(R.color.card_background));
+                        clickTracker.put(strength, false);
                     } else {
                         filter.add(GymClass.STRENGTH);
-                        aqua.setBackgroundResource(R.drawable.transparent_rounded_shape_6);
-                        aqua.setTextColor(getResources().getColor(R.color.excercise_color_6));
-                        clickTracker.put(aqua, true);
+                        strength.setBackgroundResource(R.drawable.transparent_rounded_shape_6);
+                        strength.setTextColor(getResources().getColor(R.color.excercise_color_6));
+                        clickTracker.put(strength, true);
                     }
                 }
                 initClassTable(inflater);
@@ -234,11 +238,11 @@ public class GymClassFragment extends Fragment {
             public boolean onTouch(View view, MotionEvent motionEvent) {
                 if (motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
                     if (clickTracker.get(aqua)) {
+                        filter.remove((Integer) GymClass.AQUA);
                         aqua.setBackgroundResource(R.drawable.opaque_rounded_shape_7);
                         aqua.setTextColor(getResources().getColor(R.color.card_background));
                         clickTracker.put(aqua, false);
                     } else {
-                        filter.remove((Integer) GymClass.AQUA);
                         filter.add(GymClass.AQUA);
                         aqua.setBackgroundResource(R.drawable.transparent_rounded_shape_7);
                         aqua.setTextColor(getResources().getColor(R.color.excercise_color_7));
@@ -256,19 +260,21 @@ public class GymClassFragment extends Fragment {
         clickTracker.put(mind, false);
         clickTracker.put(core, false);
         clickTracker.put(dance, false);
+        clickTracker.put(strength, false);
         clickTracker.put(aqua, false);
     }
 
     private void initClassTable(LayoutInflater inflater) {
-        table = (TableLayout) layout.findViewById(R.id.class_table);
-        View titleRow = table.findViewById(R.id.title_row);
+        View titleRow = inflater.inflate(R.layout.title_row, null, false);
         table.removeAllViews();
-        table.addView(titleRow);
 
+        int numAdded = 0;
+        boolean firstIter = true;
         for (GymClass gymClass: mClasses) {
             if (filter.contains(gymClass.getClassType()) ||
-                    dayOfMonth != gymClass.getDate().getDate())
+                    dayOfMonth != gymClass.getDate().getDate()) {
                 continue;
+            }
 
             View tr = inflater.inflate(R.layout.class_row, null, false);
             Button filterColor = (Button) tr.findViewById(R.id.filterColor);
@@ -301,6 +307,18 @@ public class GymClassFragment extends Fragment {
             excerciseTrainer.setText(gymClass.getTrainer());
             excerciseLocation.setText(gymClass.getLocation());
 
+            if (firstIter) {
+                table.addView(titleRow);
+                firstIter = false;
+            }
+
+
+            table.addView(tr);
+            numAdded++;
+        }
+
+        if (numAdded == 0) {
+            TableRow tr = (TableRow) inflater.inflate(R.layout.no_class_row, null, false);
             table.addView(tr);
         }
     }
@@ -336,12 +354,12 @@ public class GymClassFragment extends Fragment {
 
 
             String trainer = "Emer Gencyexitonly";
-            int classType = (i % 7);
+            int classType = (i % 7) + 1;
             String location = "Court #5, RSF";
 
             if (i % 2 == 0) {
                 trainer = "Ladis Washeroom";
-                classType = (i % 7);
+                classType = (i % 7) + 1;
                 location = "Court #10, RSF";
             }
 
