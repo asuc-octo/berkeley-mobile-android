@@ -31,10 +31,12 @@ public class FoodAdapter extends BaseAdapter {
 
     private Context context;
     private ArrayList<FoodItem> foodItems;
+    private FoodPlaceAdapter.FoodType foodType;
 
-    public FoodAdapter(Context context, ArrayList<FoodItem> foodItems) {
+    public FoodAdapter(Context context, ArrayList<FoodItem> foodItems, FoodPlaceAdapter.FoodType foodType) {
         this.context = context;
         this.foodItems = foodItems;
+        this.foodType = foodType;
     }
 
 
@@ -64,8 +66,10 @@ public class FoodAdapter extends BaseAdapter {
         final TextView foodName = (TextView) convertView.findViewById(R.id.food_name);
         foodName.setText(foodItem.getName());
 
-        final TextView foodCost = (TextView) convertView.findViewById(R.id.food_cost);
-        foodCost.setText(foodItem.getCost());
+        if (this.foodType == FoodPlaceAdapter.FoodType.Cafe) {
+            final TextView foodCost = (TextView) convertView.findViewById(R.id.food_cost);
+            foodCost.setText(foodItem.getCost());
+        }
 
         if (foodItem.getFoodTypes() != null && foodItem.getFoodTypes().size() > 0) {
 
@@ -73,8 +77,6 @@ public class FoodAdapter extends BaseAdapter {
             final LinearLayout foodTypesLayout = (LinearLayout) convertView.findViewById(R.id.food_types_layout);
             foodTypesLayout.removeAllViews();
 
-
-            // layout stuff; want to make icons the same size as the food name: 16 sp
             // layout stuff; want to make icons the same size as the food name: 16 sp
             int size = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, 16, context.getResources().getDisplayMetrics());
             LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
@@ -132,6 +134,11 @@ public class FoodAdapter extends BaseAdapter {
         return convertView;
     }
 
+    /**
+     * Selects proper food icon given a string food type in lower case
+     * @param string
+     * @return
+     */
     private int selectFoodIcon(String string) {
         switch (string) {
             case ("contains alcohol"):

@@ -14,7 +14,6 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.asuc.asucmobile.R;
-import com.asuc.asucmobile.controllers.GymController;
 import com.asuc.asucmobile.models.Gym;
 import com.asuc.asucmobile.utilities.Callback;
 import com.asuc.asucmobile.utilities.ImageDownloadThread;
@@ -28,7 +27,7 @@ public class OpenGymActivity extends BaseActivity {
     private static final SimpleDateFormat HOURS_FORMAT =
             new SimpleDateFormat("h:mm a", Locale.ENGLISH);
 
-    private Gym gym;
+    private static Gym gym;
     private FirebaseAnalytics mFirebaseAnalytics;
 
 
@@ -100,8 +99,11 @@ public class OpenGymActivity extends BaseActivity {
         exitIfNoData();
     }
 
+    public static void setGym(Gym g) {
+        gym = g;
+    }
+
     private void exitIfNoData() {
-        gym = ((GymController) GymController.getInstance()).getCurrentGym();
         if (gym == null) {
             finish();
         }
