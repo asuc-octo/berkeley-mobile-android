@@ -154,29 +154,25 @@ public class RouteSelected extends BaseActivity {
                                     if (previd.equals("Li Ka Shing: West Crescent Side") && stop.getName().equals("Life Science Addition West Circle Side") ) {
                                         PolylineOptions polyLineOptions = new PolylineOptions();
                                         polyLineOptions.add(prevLocation);
-                                        polyLineOptions.add(new LatLng(37.872160, -122.263362));
-                                        polyLineOptions.add(new LatLng(37.872271, -122.263487));
+                                        polyLineOptions.add(new LatLng(37.871715, -122.264942));
+                                        polyLineOptions.add(new LatLng(37.871819, -122.264640));
+                                        polyLineOptions.add(new LatLng(37.872024, -122.263815));
 
-                                        polyLineOptions.add(new LatLng(37.872267, -122.263726));
-                                        polyLineOptions.add(new LatLng(37.872131, -122.263779));
-                                        polyLineOptions.add(new LatLng(37.871968, -122.264609));
-                                        polyLineOptions.add(prevLocation);
-
-
-
+                                        polyLineOptions.add(new LatLng(37.872039, -122.263737));
+                                        polyLineOptions.add(new LatLng(37.871981, -122.263620));
+                                        polyLineOptions.add(new LatLng(37.871981, -122.263620));
                                         polyLineOptions.add(new LatLng(stop.getLatitude(), stop.getLongitude()));
 
                                         polyLineOptions.width(10);
                                         polyLineOptions.color(Color.BLUE);
-
                                         mMap.addPolyline(polyLineOptions);
-
                                         previd = stop.getName();
                                         prevLocation = new LatLng(stop.getLatitude(), stop.getLongitude());
                                     }
                                     else if (previd.equals("Life Science Addition West Circle Side") && stop.getName().equals("Evans Hall Hearst Mining Circle Side")) {
                                         PolylineOptions polyLineOptions = new PolylineOptions();
                                         polyLineOptions.add(prevLocation);
+
                                         polyLineOptions.add(new LatLng(stop.getLatitude(), stop.getLongitude()));
 
                                         polyLineOptions.width(10);
@@ -197,7 +193,6 @@ public class RouteSelected extends BaseActivity {
                                         polyLineOptions.add(new LatLng(37.872131, -122.263779));
                                         polyLineOptions.add(new LatLng(37.871968, -122.264609));
                                         polyLineOptions.add(new LatLng(stop.getLatitude(), stop.getLongitude()));
-
                                         polyLineOptions.width(10);
                                         polyLineOptions.color(Color.BLUE);
 
@@ -209,18 +204,14 @@ public class RouteSelected extends BaseActivity {
                                         PolylineOptions polyLineOptions = new PolylineOptions();
                                         polyLineOptions.add(prevLocation);
                                         polyLineOptions.add(new LatLng(37.873268, -122.260197));
-
                                         polyLineOptions.add(new LatLng(37.873209, -122.260573));
                                         polyLineOptions.add(new LatLng(37.873167, -122.260959));
-
                                         polyLineOptions.add(new LatLng(37.872688, -122.261614));
                                         polyLineOptions.add(new LatLng(37.872807, -122.262085));
                                         polyLineOptions.add(new LatLng(37.872786, -122.262530));
-
                                         polyLineOptions.add(new LatLng(37.872689, -122.262895));
                                         polyLineOptions.add(new LatLng( 37.872333, -122.263426));
                                         polyLineOptions.add(new LatLng(37.872295, -122.263464));
-
                                         polyLineOptions.add(new LatLng(stop.getLatitude(), stop.getLongitude()));
 
                                         polyLineOptions.width(10);
