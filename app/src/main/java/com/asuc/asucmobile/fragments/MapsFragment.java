@@ -176,7 +176,7 @@ public class MapsFragment extends Fragment
         navigation_button = (FabButton) layout.findViewById(R.id.determinate);
         busesNearby = (Button) layout.findViewById(R.id.busesNearby);
 
-        /*busesNearby.setOnClickListener(new View.OnClickListener() {
+        busesNearby.setOnClickListener(new View.OnClickListener() {
             @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
             @Override
             public void onClick(View v) {
@@ -222,7 +222,7 @@ public class MapsFragment extends Fragment
             }
 
 
-        });*/
+        });
 
 
         navigation_button.setOnClickListener(new View.OnClickListener()
@@ -328,9 +328,9 @@ public class MapsFragment extends Fragment
         }.getType();
 
 
-        //  HashMap<String, Stop> AC_plots = gson.fromJson(JSONUtilities.readJSONFromAsset(getActivity(), "BerkeleyStops.json"), listType);
+        HashMap<String, Stop> AC_plots = gson.fromJson(JSONUtilities.readJSONFromAsset(getActivity(), "BerkeleyStops.json"), listType);
 
-        //loadMarkers(AC_plots);
+        loadMarkers(AC_plots);
 
 
         liveTrack();
@@ -351,9 +351,8 @@ public class MapsFragment extends Fragment
 
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
     public boolean onMarkerClick(final Marker marker) {
-        return true;
 
-/*        BitmapDescriptor icon = BitmapDescriptorFactory.fromResource(R.drawable.markerclicked);
+        BitmapDescriptor icon = BitmapDescriptorFactory.fromResource(R.drawable.markerclicked);
 
         if (marker == null || (boolean) marker.getTag()) {
             return true;
@@ -377,7 +376,7 @@ public class MapsFragment extends Fragment
         popUp.putExtra("location", marker.getPosition());
 
         startActivity(popUp);
-        return true;*/
+        return true;
     }
 
     public void cameraLoadAnimation(LatLng location) {
