@@ -4,9 +4,9 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:shape="rectangle"   >
 
-    <solid
-        android:color="@color/excercise_color_4" >
-    </solid>
+    <!--<solid-->
+        <!--android:color="@color/excercise_color_4" >-->
+    <!--</solid>-->
 
     <corners
         android:radius="25dp"   >
