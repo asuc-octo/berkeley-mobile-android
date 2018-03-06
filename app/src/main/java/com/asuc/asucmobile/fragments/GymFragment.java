@@ -18,12 +18,14 @@ import android.widget.Toast;
 import com.asuc.asucmobile.R;
 import com.asuc.asucmobile.adapters.GymAdapter;
 import com.asuc.asucmobile.main.OpenGymActivity;
+import com.asuc.asucmobile.models.responses.GymClassesResponse;
 import com.asuc.asucmobile.models.responses.GymsResponse;
 import com.asuc.asucmobile.controllers.BMRetrofitController;
 import com.asuc.asucmobile.utilities.NavigationGenerator;
 import com.google.firebase.analytics.FirebaseAnalytics;
 
 import retrofit2.Call;
+import retrofit2.Callback;
 import retrofit2.Response;
 
 public class GymFragment extends Fragment {
@@ -34,6 +36,9 @@ public class GymFragment extends Fragment {
 
     private GymAdapter mAdapter;
     private FirebaseAnalytics mFirebaseAnalytics;
+
+    Call<GymsResponse> gymsCall;
+    Call<GymClassesResponse> gymClassesCall;
 
 
     @Override
@@ -86,11 +91,21 @@ public class GymFragment extends Fragment {
      * from the web.
      */
     private void refresh() {
+
+        gymsCall = BMRetrofitController.bmapi.callGymsList();
+        gymClassesCall = BMRetrofitController.bmapi.callGymClasses();
+
         mGymList.setVisibility(View.GONE);
         mRefreshWrapper.setVisibility(View.GONE);
         mProgressBar.setVisibility(View.VISIBLE);
 
-        BMRetrofitController.bmapi.callGymsList().enqueue(new retrofit2.Callback<GymsResponse>() {
+        getGyms();
+        getGymClasses();
+    }
+
+    private void getGyms() {
+
+        gymsCall.enqueue(new retrofit2.Callback<GymsResponse>() {
             @Override
             public void onResponse(Call<GymsResponse> call, Response<GymsResponse> response) {
                 mGymList.setVisibility(View.VISIBLE);
@@ -104,6 +119,20 @@ public class GymFragment extends Fragment {
                 mRefreshWrapper.setVisibility(View.VISIBLE);
                 Toast.makeText(getContext(), "Unable to retrieve data, please try again",
                         Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    private void getGymClasses(){
+        gymClassesCall.enqueue(new Callback<GymClassesResponse>() {
+            @Override
+            public void onResponse(Call<GymClassesResponse> call, Response<GymClassesResponse> response) {
+                GymClassesResponse g = response.body();
+            }
+
+            @Override
+            public void onFailure(Call<GymClassesResponse> call, Throwable t) {
+
             }
         });
     }
