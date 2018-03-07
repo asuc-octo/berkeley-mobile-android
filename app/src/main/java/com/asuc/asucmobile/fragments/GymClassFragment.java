@@ -57,6 +57,7 @@ public class GymClassFragment extends Fragment {
     private WeekCalendar calendar;
     private View layout;
     private LayoutInflater inflater;
+    private Bundle bundle;
 
     Call<GymsResponse> gymsCall;
     Call<GymClassesResponse> gymClassesCall;
@@ -77,7 +78,7 @@ public class GymClassFragment extends Fragment {
         currentDate = new DateTime().getDayOfMonth();
 
         mFirebaseAnalytics = FirebaseAnalytics.getInstance(this.getContext());
-        Bundle bundle = new Bundle();
+        bundle = new Bundle();
         mFirebaseAnalytics.logEvent("opened_gym_screen", bundle);
 
         this.inflater = inflater;
@@ -131,6 +132,8 @@ public class GymClassFragment extends Fragment {
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
                 if (motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
+                    mFirebaseAnalytics.logEvent("clicked_excercise_filter", bundle);
+
                     if (clickTracker.get(allAround)) {
                         filter.remove((Integer) GymClass.ALL_AROUND);
                         allAround.setBackgroundResource(R.drawable.opaque_rounded_shape_1);
@@ -153,6 +156,7 @@ public class GymClassFragment extends Fragment {
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
                 if (motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
+                    mFirebaseAnalytics.logEvent("clicked_excercise_filter", bundle);
                     if (clickTracker.get(cardio)) {
                         filter.remove((Integer) GymClass.CARDIO);
                         cardio.setBackgroundResource(R.drawable.opaque_rounded_shape_2);
@@ -175,6 +179,7 @@ public class GymClassFragment extends Fragment {
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
                 if (motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
+                    mFirebaseAnalytics.logEvent("clicked_excercise_filter", bundle);
                     if (clickTracker.get(mind)) {
                         filter.remove((Integer) GymClass.MIND);
                         mind.setBackgroundResource(R.drawable.opaque_rounded_shape_3);
@@ -197,6 +202,7 @@ public class GymClassFragment extends Fragment {
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
                 if (motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
+                    mFirebaseAnalytics.logEvent("clicked_excercise_filter", bundle);
                     if (clickTracker.get(core)) {
                         filter.remove((Integer) GymClass.CORE);
                         core.setBackgroundResource(R.drawable.opaque_rounded_shape_4);
@@ -219,6 +225,7 @@ public class GymClassFragment extends Fragment {
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
                 if (motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
+                    mFirebaseAnalytics.logEvent("clicked_excercise_filter", bundle);
                     if (clickTracker.get(dance)) {
                         filter.remove((Integer) GymClass.DANCE);
                         dance.setBackgroundResource(R.drawable.opaque_rounded_shape_5);
@@ -241,6 +248,7 @@ public class GymClassFragment extends Fragment {
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
                 if (motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
+                    mFirebaseAnalytics.logEvent("clicked_excercise_filter", bundle);
                     if (clickTracker.get(strength)) {
                         filter.remove((Integer) GymClass.STRENGTH);
                         strength.setBackgroundResource(R.drawable.opaque_rounded_shape_6);
@@ -263,6 +271,7 @@ public class GymClassFragment extends Fragment {
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
                 if (motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
+                    mFirebaseAnalytics.logEvent("clicked_excercise_filter", bundle);
                     if (clickTracker.get(aqua)) {
                         filter.remove((Integer) GymClass.AQUA);
                         aqua.setBackgroundResource(R.drawable.opaque_rounded_shape_7);
