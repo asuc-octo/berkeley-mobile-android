@@ -6,7 +6,7 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.Date;
 
-public class Gym implements Cardable {
+public class Gym {
 
     private int id;
     private String name;
@@ -30,7 +30,6 @@ public class Gym implements Cardable {
         return id;
     }
 
-    @Override
     public String getImageLink() {
         return imageUrl;
     }
@@ -39,7 +38,6 @@ public class Gym implements Cardable {
         return name;
     }
 
-    @Override
     public String getTimes() {
         return parseTimes();
     }
