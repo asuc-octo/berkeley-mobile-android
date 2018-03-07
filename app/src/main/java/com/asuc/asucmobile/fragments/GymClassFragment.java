@@ -5,6 +5,7 @@ import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.DragEvent;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -37,6 +38,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.Locale;
 
 import noman.weekcalendar.listener.OnDateClickListener;
 import retrofit2.Call;
@@ -102,6 +104,14 @@ public class GymClassFragment extends Fragment {
                 initClassTable();
             }
         });
+        calendar.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                return false;
+            }
+        });
+
+
 
         gymRecyclerView = (RecyclerView) layout.findViewById(R.id.listGyms);
         gymRecyclerView.setHasFixedSize(true);
@@ -346,8 +356,9 @@ public class GymClassFragment extends Fragment {
             }
 
 
-            DateFormat df = new SimpleDateFormat("HH:mm");
-            excerciseTime.setText(df.format(gymClass.getStart()) + " - " + df.format(gymClass.getEnd()));
+            DateFormat df = new SimpleDateFormat("h:mm a", Locale.ENGLISH);
+
+            excerciseTime.setText(df.format(gymClass.getStart()) + " -\n" + df.format(gymClass.getEnd()));
             excerciseName.setText(gymClass.getName());
             excerciseTrainer.setText(gymClass.getTrainer());
             excerciseLocation.setText(gymClass.getLocation());

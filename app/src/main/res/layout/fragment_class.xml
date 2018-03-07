@@ -100,62 +100,59 @@
 
             <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 android:id="@+id/filter-buttons1"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="5dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center_horizontal"
                 android:orientation="horizontal">
 
-                <Button
-                    android:id="@+id/all-around"
-                    android:layout_width="wrap_content"
-                    android:layout_height="25dp"
-                    android:layout_marginBottom="5dp"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="10dp"
-                    android:layout_marginTop="10dp"
-                    android:background="@drawable/opaque_rounded_shape_1"
-                    android:color="@color/green"
-                    android:text="ALL-AROUND"
-                    android:textColor="@color/card_background"
-                    android:textSize="12sp"
-                    android:layout_weight="1"/>
 
                 <Button
                     android:id="@+id/cardio"
                     android:layout_width="wrap_content"
                     android:layout_height="25dp"
-                    android:layout_marginBottom="5dp"
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="10dp"
-                    android:layout_marginTop="10dp"
                     android:background="@drawable/opaque_rounded_shape_2"
                     android:text="CARDIO"
                     android:textColor="@color/card_background"
                     android:textSize="12sp"
                     android:layout_weight="1"/>
 
+
                 <Button
-                    android:id="@+id/mind"
+                    android:id="@+id/dance"
                     android:layout_width="wrap_content"
                     android:layout_height="25dp"
-                    android:layout_marginBottom="5dp"
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="10dp"
-                    android:layout_marginTop="10dp"
-                    android:background="@drawable/opaque_rounded_shape_3"
-                    android:text="MIND/BODY"
+                    android:background="@drawable/opaque_rounded_shape_5"
+                    android:text="DANCE"
                     android:textColor="@color/card_background"
                     android:textSize="12sp"
                     android:layout_weight="1"/>
 
                 <Button
+                    android:id="@+id/aqua"
+                    android:layout_width="wrap_content"
+                    android:layout_height="25dp"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
+                    android:background="@drawable/opaque_rounded_shape_7"
+                    android:text="AQUA"
+                    android:textColor="@color/card_background"
+                    android:textSize="12sp"
+                    android:layout_weight="1"/>
+
+
+
+                <Button
                     android:id="@+id/core"
                     android:layout_width="wrap_content"
                     android:layout_height="25dp"
-                    android:layout_marginBottom="5dp"
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="10dp"
-                    android:layout_marginTop="10dp"
                     android:background="@drawable/opaque_rounded_shape_4"
                     android:text="CORE"
                     android:textColor="@color/card_background"
@@ -170,18 +167,21 @@
                 android:layout_height="wrap_content"
                 android:fadeScrollbars="false"
                 android:gravity="center_horizontal"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="10dp"
                 android:orientation="horizontal">
 
+
+
+
                 <Button
-                    android:id="@+id/dance"
+                    android:id="@+id/mind"
                     android:layout_width="wrap_content"
                     android:layout_height="25dp"
-                    android:layout_marginBottom="10dp"
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="10dp"
-                    android:layout_marginTop="5dp"
-                    android:background="@drawable/opaque_rounded_shape_5"
-                    android:text="DANCE"
+                    android:background="@drawable/opaque_rounded_shape_3"
+                    android:text="MIND/BODY"
                     android:textColor="@color/card_background"
                     android:textSize="12sp"
                     android:layout_weight="1"/>
@@ -190,26 +190,25 @@
                     android:id="@+id/strength"
                     android:layout_width="wrap_content"
                     android:layout_height="25dp"
-                    android:layout_marginBottom="10dp"
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="10dp"
-                    android:layout_marginTop="5dp"
                     android:background="@drawable/opaque_rounded_shape_6"
                     android:text="STRENGTH"
                     android:textColor="@color/card_background"
                     android:textSize="12sp"
                     android:layout_weight="1"/>
 
+
+
                 <Button
-                    android:id="@+id/aqua"
+                    android:id="@+id/all-around"
                     android:layout_width="wrap_content"
                     android:layout_height="25dp"
-                    android:layout_marginBottom="10dp"
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="10dp"
-                    android:layout_marginTop="5dp"
-                    android:background="@drawable/opaque_rounded_shape_7"
-                    android:text="AQUA"
+                    android:background="@drawable/opaque_rounded_shape_1"
+                    android:color="@color/green"
+                    android:text="ALL-AROUND"
                     android:textColor="@color/card_background"
                     android:textSize="12sp"
                     android:layout_weight="1"/>
@@ -221,7 +220,6 @@
                 android:id="@+id/class_table"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_margin="15dp"
                 android:orientation="vertical"
                 android:stretchColumns="1">
 
