@@ -1,11 +1,20 @@
 package com.asuc.asucmobile.models;
 
+import android.support.annotation.NonNull;
+
 import com.google.gson.annotations.SerializedName;
 
 import java.sql.Time;
 import java.util.Date;
 
-public class GymClass {
+public class GymClass implements Comparable{
+    public static final int ALL_AROUND = 1;
+    public static final int CARDIO = 2;
+    public static final int MIND = 3;
+    public static final int CORE = 4;
+    public static final int DANCE = 5;
+    public static final int STRENGTH = 6;
+    public static final int AQUA = 7;
 
     private int id;
     private String date;
@@ -67,8 +76,17 @@ public class GymClass {
         return imageUrl;
     }
 
-    public String getClassType() {
-        return classType;
+    public int getClassType() {
+        switch (classType) {
+            case "ALL-AROUND WORKOUT": return ALL_AROUND;
+            case "CARDIO": return CARDIO;
+            case "MIND/BODY": return MIND;
+            case "CORE": return CORE;
+            case "DANCE": return DANCE;
+            case "STRENGTH": return STRENGTH;
+            case "AQUA": return AQUA;
+        }
+        return 0;
     }
 
     public Date getStart() {
@@ -77,5 +95,11 @@ public class GymClass {
 
     public Date getEnd() {
         return end;
+    }
+
+    @Override
+    public int compareTo(@NonNull Object o) {
+        GymClass b = (GymClass) o;
+        return (int) (start.getTime() - b.getStart().getTime());
     }
 }

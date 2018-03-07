@@ -1,29 +1,43 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context="com.asuc.asucmobile.fragments.GymClassFragment">
 
     <android.support.v7.widget.Toolbar
-        android:id="@+id/class_fragment_toolbar"
+        android:id="@+id/toolbar"
         android:layout_height="wrap_content"
         android:layout_width="match_parent"
         android:elevation="8dp"
-        style="@style/ToolbarTheme">
+        style="@style/ToolbarTheme" />
 
-        <TextView
-            android:paddingBottom="6dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textSize="22sp"
-            android:textColor="@color/card_background"
-            android:text="Gyms"/>
-    </android.support.v7.widget.Toolbar>
+    <ProgressBar
+        android:id="@+id/progress_bar"
+        style="?android:attr/progressBarStyleLarge"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="center" />
+
+    <LinearLayout
+        android:id="@+id/refresh"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:visibility="gone">
+        <ImageButton
+            android:id="@+id/refresh_button"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_gravity="center"
+            android:contentDescription="@string/content_desc"
+            android:background="@drawable/ic_action_refresh" />
+    </LinearLayout>
 
     <ScrollView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:id="@+id/gymClassView"
         xmlns:android="http://schemas.android.com/apk/res/android">
 
         <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -53,7 +67,7 @@
                         android:layout_marginRight="10dp"
                         android:background="@color/card_background" />
 
-                    <com.asuc.asucmobile.models.HorizontalListView
+                    <android.support.v7.widget.RecyclerView
                         android:layout_width="match_parent"
                         android:layout_height="180dp"
                         android:layout_marginRight="10dp"
@@ -104,7 +118,7 @@
                     android:color="@color/green"
                     android:text="ALL-AROUND"
                     android:textColor="@color/card_background"
-                    android:textSize="10dp" />
+                    android:textSize="12sp" />
 
                 <Button
                     android:id="@+id/cardio"
@@ -117,7 +131,7 @@
                     android:background="@drawable/opaque_rounded_shape_2"
                     android:text="CARDIO"
                     android:textColor="@color/card_background"
-                    android:textSize="10dp" />
+                    android:textSize="12sp" />
 
                 <Button
                     android:id="@+id/mind"
@@ -130,7 +144,7 @@
                     android:background="@drawable/opaque_rounded_shape_3"
                     android:text="MIND/BODY"
                     android:textColor="@color/card_background"
-                    android:textSize="10dp" />
+                    android:textSize="12sp" />
 
                 <Button
                     android:id="@+id/core"
@@ -143,7 +157,7 @@
                     android:background="@drawable/opaque_rounded_shape_4"
                     android:text="CORE"
                     android:textColor="@color/card_background"
-                    android:textSize="10dp" />
+                    android:textSize="12sp" />
 
             </LinearLayout>
 
@@ -166,7 +180,7 @@
                     android:background="@drawable/opaque_rounded_shape_5"
                     android:text="DANCE"
                     android:textColor="@color/card_background"
-                    android:textSize="10dp" />
+                    android:textSize="12sp" />
 
                 <Button
                     android:id="@+id/strength"
@@ -179,7 +193,7 @@
                     android:background="@drawable/opaque_rounded_shape_6"
                     android:text="STRENGTH"
                     android:textColor="@color/card_background"
-                    android:textSize="10dp" />
+                    android:textSize="12sp" />
 
                 <Button
                     android:id="@+id/aqua"
@@ -192,7 +206,7 @@
                     android:background="@drawable/opaque_rounded_shape_7"
                     android:text="AQUA"
                     android:textColor="@color/card_background"
-                    android:textSize="10dp" />
+                    android:textSize="12sp" />
 
             </LinearLayout>
 
@@ -211,4 +225,5 @@
 
         </LinearLayout>
     </ScrollView>
+
 </LinearLayout>

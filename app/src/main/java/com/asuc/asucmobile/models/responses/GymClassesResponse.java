@@ -1,6 +1,7 @@
 package com.asuc.asucmobile.models.responses;
 
 import com.asuc.asucmobile.models.Gym;
+import com.asuc.asucmobile.models.GymClass;
 import com.google.gson.annotations.SerializedName;
 
 import java.lang.reflect.Array;
@@ -13,51 +14,51 @@ import java.util.ArrayList;
 public class GymClassesResponse {
 
     @SerializedName("CARDIO")
-    ArrayList<Gym> cardio;
+    ArrayList<GymClass> cardio;
 
     @SerializedName("ALL-AROUND WORKOUT")
-    ArrayList<Gym> allAround;
+    ArrayList<GymClass> allAround;
 
     @SerializedName("AQUA")
-    ArrayList<Gym> aqua;
+    ArrayList<GymClass> aqua;
 
     @SerializedName("STRENGTH")
-    ArrayList<Gym> strength;
+    ArrayList<GymClass> strength;
 
     @SerializedName("DANCE")
-    ArrayList<Gym> dance;
+    ArrayList<GymClass> dance;
 
     @SerializedName("MIND/BODY")
-    ArrayList<Gym> mindBody;
+    ArrayList<GymClass> mindBody;
 
     @SerializedName("CORE")
-    ArrayList<Gym> core;
+    ArrayList<GymClass> core;
 
-    public ArrayList<Gym> getCardio() {
+    public ArrayList<GymClass> getCardio() {
         return cardio;
     }
 
-    public ArrayList<Gym> getAllAround() {
+    public ArrayList<GymClass> getAllAround() {
         return allAround;
     }
 
-    public ArrayList<Gym> getAqua() {
+    public ArrayList<GymClass> getAqua() {
         return aqua;
     }
 
-    public ArrayList<Gym> getStrength() {
+    public ArrayList<GymClass> getStrength() {
         return strength;
     }
 
-    public ArrayList<Gym> getDance() {
+    public ArrayList<GymClass> getDance() {
         return dance;
     }
 
-    public ArrayList<Gym> getMindBody() {
+    public ArrayList<GymClass> getMindBody() {
         return mindBody;
     }
 
-    public ArrayList<Gym> getCore() {
+    public ArrayList<GymClass> getCore() {
         return core;
     }
 }
