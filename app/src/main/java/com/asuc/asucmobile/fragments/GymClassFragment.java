@@ -39,6 +39,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Locale;
+import java.util.TimeZone;
 
 import noman.weekcalendar.listener.OnDateClickListener;
 import retrofit2.Call;
@@ -357,6 +358,7 @@ public class GymClassFragment extends Fragment {
 
 
             DateFormat df = new SimpleDateFormat("h:mm a", Locale.ENGLISH);
+            df.setTimeZone(TimeZone.getTimeZone("PST"));
 
             excerciseTime.setText(df.format(gymClass.getStart()) + " -\n" + df.format(gymClass.getEnd()));
             excerciseName.setText(gymClass.getName());
