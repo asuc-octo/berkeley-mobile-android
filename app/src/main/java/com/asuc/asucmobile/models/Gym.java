@@ -15,6 +15,8 @@ public class Gym {
     private Date opening;
     @SerializedName("closing_time_today")
     private Date closing;
+
+    @SerializedName("image_link")
     private String imageUrl;
 
     public Gym(int id, String name, String address, Date opening, Date closing, String imageUrl) {
@@ -28,10 +30,6 @@ public class Gym {
 
     public int getId() {
         return id;
-    }
-
-    public String getImageLink() {
-        return imageUrl;
     }
 
     public String getName() {
