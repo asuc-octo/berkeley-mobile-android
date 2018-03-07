@@ -1,5 +1,6 @@
 package com.asuc.asucmobile.fragments;
 
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
@@ -334,6 +335,7 @@ public class GymClassFragment extends Fragment {
 
             View tr = inflater.inflate(R.layout.class_row, null, false);
             Button filterColor = (Button) tr.findViewById(R.id.filterColor);
+            LinearLayout instructorDetails = (LinearLayout) tr.findViewById(R.id.instructorDetails);
             TextView excerciseTime = (TextView) tr.findViewById(R.id.excerciseTime);
             TextView excerciseName = (TextView) tr.findViewById(R.id.excerciseName);
             TextView excerciseTrainer = (TextView) tr.findViewById(R.id.excerciseTrainer);
@@ -360,7 +362,9 @@ public class GymClassFragment extends Fragment {
             DateFormat df = new SimpleDateFormat("h:mm a", Locale.ENGLISH);
             df.setTimeZone(TimeZone.getTimeZone("PST"));
 
-            excerciseTime.setText(df.format(gymClass.getStart()) + " -\n" + df.format(gymClass.getEnd()));
+            instructorDetails.getLayoutParams().width = (int) Math.round(Resources.getSystem().getDisplayMetrics().widthPixels / 2.5);
+
+            excerciseTime.setText((df.format(gymClass.getStart()) + " -\n" + df.format(gymClass.getEnd())).trim());
             excerciseName.setText(gymClass.getName());
             excerciseTrainer.setText(gymClass.getTrainer());
             excerciseLocation.setText(gymClass.getLocation());
