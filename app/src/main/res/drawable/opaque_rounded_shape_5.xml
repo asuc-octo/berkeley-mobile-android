@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape
+    android:id="@+id/rounded_shape"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle"   >
+
+    <solid
+        android:color="@color/excercise_color_5" >
+    </solid>
+
+    <corners
+        android:radius="25dp"   >
+    </corners>
+
+</shape>

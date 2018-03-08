@@ -18,14 +18,13 @@ import com.asuc.asucmobile.R;
 import com.asuc.asucmobile.adapters.MainMenuAdapter;
 import com.asuc.asucmobile.fragments.BlankFragment;
 import com.asuc.asucmobile.fragments.FoodFragment;
-import com.asuc.asucmobile.fragments.GymFragment;
+import com.asuc.asucmobile.fragments.GymClassFragment;
 import com.asuc.asucmobile.fragments.LibraryFragment;
 import com.asuc.asucmobile.fragments.ResourceFragment;
 //import com.asuc.asucmobile.fragments.StartStopSelectFragment;
 import com.asuc.asucmobile.main.MainActivity;
 import com.asuc.asucmobile.fragments.MapsFragment;
 import com.asuc.asucmobile.models.Category;
-import com.google.android.gms.maps.MapFragment;
 
 public class NavigationGenerator {
 
@@ -66,7 +65,7 @@ public class NavigationGenerator {
                 @Override
                 public void loadFragment(FragmentManager fragmentManager) {
                     fragmentManager.beginTransaction()
-                            .replace(R.id.content_frame, new GymFragment())
+                            .replace(R.id.content_frame, new GymClassFragment())
                             .commit();
                 }
             },
