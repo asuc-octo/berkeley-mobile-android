@@ -1,5 +1,7 @@
 package com.asuc.asucmobile.models;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.Date;
@@ -13,6 +15,8 @@ public class Gym {
     private Date opening;
     @SerializedName("closing_time_today")
     private Date closing;
+
+    @SerializedName("image_link")
     private String imageUrl;
 
     public Gym(int id, String name, String address, Date opening, Date closing, String imageUrl) {
@@ -30,6 +34,10 @@ public class Gym {
 
     public String getName() {
         return name;
+    }
+
+    public String getTimes() {
+        return parseTimes();
     }
 
     public String getAddress() {
@@ -60,6 +68,11 @@ public class Gym {
 
         Date currentTime = new Date();
         return currentTime.after(opening) && currentTime.before(closing);
+    }
+
+    private String parseTimes(){
+        DateFormat df = new SimpleDateFormat("HH:mm");
+        return df.format(opening) + " - " + df.format(closing);
     }
 
 }
