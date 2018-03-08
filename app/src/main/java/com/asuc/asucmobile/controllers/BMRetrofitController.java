@@ -29,7 +29,7 @@ public class BMRetrofitController {
 
     public static final String BASE_URL = "http://asuc-mobile-dev.herokuapp.com/api/";
     public static final String ISO_FORMAT = "yyyy-MM-dd'T'HH:mm:ss.SSSZ";
-    public static final int CACHE_SIZE = 10; // size of cache in MiB
+    public static final int CACHE_SIZE = 20; // size of cache in MiB
     public static final int MAX_AGE = 60;
     public static final int MAX_STALE = 60 * 60 * 24;
 

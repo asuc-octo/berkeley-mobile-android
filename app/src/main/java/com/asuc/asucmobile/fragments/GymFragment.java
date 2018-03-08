@@ -46,8 +46,8 @@ import noman.weekcalendar.listener.OnDateClickListener;
 import retrofit2.Call;
 import retrofit2.Response;
 
-public class GymClassFragment extends Fragment {
-    public static final String TAG = "GymClassFragment";
+public class GymFragment extends Fragment {
+    public static final String TAG = "GymFragment";
 
     private ArrayList<Integer> filter;
     private ArrayList<GymClass> mClasses;
@@ -102,6 +102,7 @@ public class GymClassFragment extends Fragment {
         calendar.setOnDateClickListener(new OnDateClickListener() {
             @Override
             public void onDateClick(DateTime dateTime) {
+                mFirebaseAnalytics.logEvent("gym_date_clicked", bundle);
                 currentDate = dateTime.getDayOfMonth();
                 initClassTable();
             }
