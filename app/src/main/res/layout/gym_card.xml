@@ -9,14 +9,14 @@
     android:layout_height="wrap_content">
 
     <LinearLayout
-
-        android:orientation="vertical"
         android:layout_width="180dp"
-        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_height="match_parent"
         android:paddingBottom="4dp">
 
         <ImageView
             android:id="@+id/image"
+            android:background="@drawable/default_gym"
             android:scaleType="centerCrop"
             android:layout_width="180dp"
             android:layout_height="120dp" />
