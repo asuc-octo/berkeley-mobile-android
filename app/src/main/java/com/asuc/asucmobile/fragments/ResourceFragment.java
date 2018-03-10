@@ -97,52 +97,6 @@ public class ResourceFragment extends Fragment {
         NavigationGenerator.closeMenu(getActivity());
     }
 
-    // Start off list sorted by favorites.
-    @Override
-    public boolean onOptionsItemSelected(MenuItem menuItem) {
-        switch (menuItem.getItemId()){
-            case R.id.sortAZ:
-                Collections.sort(mAdapter.getResources(), CustomComparators.FacilityComparators.getSortResourcesByAZ());
-                mAdapter.notifyDataSetChanged();
-                break;
-            case R.id.sortFavorites:
-                Collections.sort(mAdapter.getResources(), CustomComparators.FacilityComparators.getSortByFavoriteResource(getContext()));
-                mAdapter.notifyDataSetChanged();
-                break;
-        }
-        return true;
-    }
-
-    @Override
-    @SuppressWarnings("deprecation")
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        inflater.inflate(R.menu.resource, menu);
-        final MenuItem searchMenuItem = menu.findItem(R.id.search);
-        if (searchMenuItem != null) {
-            final SearchView searchView = (SearchView) searchMenuItem.getActionView();
-            if (searchView != null) {
-                // Setting up aesthetics.
-                EditText searchEditText = (EditText) searchView.findViewById(android.support.v7.appcompat.R.id.search_src_text);
-                searchEditText.setTextColor(getResources().getColor(android.R.color.white));
-                searchEditText.setHintTextColor(getResources().getColor(android.R.color.white));
-                searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-                    @Override
-                    public boolean onQueryTextSubmit(String s) {
-                        // Close the keyboard.
-                        searchView.clearFocus();
-                        return true;
-                    }
-
-                    @Override
-                    public boolean onQueryTextChange(String s) {
-                        final Filter filter = mAdapter.getFilter();
-                        filter.filter(s);
-                        return true;
-                    }
-                });
-            }
-        }
-    }
 
     /**
      * refresh() updates the visibility of necessary UI elements and refreshes the resource list
@@ -159,6 +113,11 @@ public class ResourceFragment extends Fragment {
                 mResourceList.setVisibility(View.VISIBLE);
                 mProgressBar.setVisibility(View.GONE);
                 mAdapter.setList(response.body().getResources());
+
+                // sorted by default
+                Collections.sort(mAdapter.getResources(), CustomComparators.FacilityComparators.getSortResourcesByAZ());
+                Collections.sort(mAdapter.getResources(), CustomComparators.FacilityComparators.getSortByFavoriteResource(getContext()));
+                mAdapter.notifyDataSetChanged();
             }
 
             @Override
