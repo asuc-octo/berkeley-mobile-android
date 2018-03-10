@@ -29,6 +29,8 @@ public class Resource implements Comparable<Resource>{
     private String onOrOffCampus;
     @SerializedName("Notes")
     private String notes;
+    @SerializedName("Description")
+    private String description;
 
     @SerializedName("Latitude")
     private double latitude;
@@ -36,21 +38,6 @@ public class Resource implements Comparable<Resource>{
     private double longitude;
     private LatLng latLng;
 
-    public Resource(String resource, String topic, String phone1, String phone2, String location,
-                    String hours, String email, String onOrOffCampus, double lat, double lng,
-                    String notes) {
-        this.resource = resource;
-        this.topic = topic;
-        this.phone1 = phone1;
-        this.phone2 = phone2;
-        this.location = location;
-        this.hours = hours;
-        this.email = email;
-        this.onOrOffCampus = onOrOffCampus;
-        this.notes = notes;
-        this.latitude = lat;
-        this.longitude = lng;
-    }
 
     public String getResource() {
         return resource;
@@ -72,20 +59,16 @@ public class Resource implements Comparable<Resource>{
         return location;
     }
 
-    public void setLocation(String location) {
-        this.location = location;
-    }
-
     public String getHours() {
         return hours;
     }
 
-    public void setHours(String hours) {
-        this.hours = hours;
-    }
-
     public String getEmail() {
         return email;
+    }
+
+    public String getDescription() {
+        return description;
     }
 
     public String getOnOrOffCampus() {
