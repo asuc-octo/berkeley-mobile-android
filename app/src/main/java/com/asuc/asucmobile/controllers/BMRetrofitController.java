@@ -33,22 +33,18 @@ public class BMRetrofitController {
     public static final int MAX_AGE = 60;
     public static final int MAX_STALE = 60 * 60 * 24;
 
-    private static Context c;
+    private static Context context;
     public static BMAPI bmapi;
 
     private static Retrofit retrofit;
 
-    private BMRetrofitController(Context c) {
-        this.c = c;
-    }
-
     /**
      * Initiate the BMAPI from a main context
-     * @param context
+     * @param c
      * @param serviceClass
      */
-    public static void create(Context context, Class serviceClass) {
-        new BMRetrofitController(context);
+    public static void create(Context c, Class serviceClass) {
+        context = c;
         configureRetrofit();
 
         bmapi = (BMAPI) retrofit.create(serviceClass);
@@ -60,7 +56,7 @@ public class BMRetrofitController {
      */
     public static boolean isConnected() {
         ConnectivityManager cm =
-                (ConnectivityManager) c.getSystemService(Context.CONNECTIVITY_SERVICE);
+                (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
 
         NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
         boolean isConnected = activeNetwork != null &&
@@ -76,7 +72,7 @@ public class BMRetrofitController {
     private static void configureRetrofit() {
 
         // caching config
-        File cacheDir = new File(c.getCacheDir(), "okHttpCache");
+        File cacheDir = new File(context.getCacheDir(), "okHttpCache");
         Cache cache = new Cache(cacheDir, CACHE_SIZE * 1024 * 1024);
 
         // okhttp config for cache
@@ -85,7 +81,6 @@ public class BMRetrofitController {
                 .addNetworkInterceptor(new ResponseCachingInterceptor())
                 .addInterceptor(new OfflineResponseCacheInterceptor())
                 .build();
-
 
         // gson config
         GsonBuilder gsonBuilder = new GsonBuilder()
@@ -100,19 +95,6 @@ public class BMRetrofitController {
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .build();
     }
-
-
-
-
-    /** Dangerous interceptor that rewrites the server's cache-control header. */
-    private static final Interceptor REWRITE_CACHE_CONTROL_INTERCEPTOR = new Interceptor() {
-        @Override public Response intercept(Chain chain) throws IOException {
-            Response originalResponse = chain.proceed(chain.request());
-            return originalResponse.newBuilder()
-                    .header("Cache-Control", String.format("max-age=%d, only-if-cached, max-stale=%d", MAX_AGE, MAX_STALE))
-                    .build();
-        }
-    };
 
     private static class ResponseCachingInterceptor implements Interceptor {
 
@@ -133,8 +115,6 @@ public class BMRetrofitController {
         @Override
         public Response intercept(Chain chain) throws IOException {
             Request request = chain.request();
-//            NetworkInfo networkInfo =((ConnectivityManager)
-//                    (c.getSystemService(Context.CONNECTIVITY_SERVICE))).getActiveNetworkInfo();
             if (!isConnected()) {
                 request = request.newBuilder()
                         .removeHeader("Pragma")
