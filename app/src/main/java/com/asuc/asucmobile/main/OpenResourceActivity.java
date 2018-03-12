@@ -45,7 +45,7 @@ public class OpenResourceActivity extends BaseActivity {
     private GoogleMap map;
     private static Resource resource;
 
-    public static OpenResourceActivity self_reference;
+    public static OpenResourceActivity selfReference;
     private FirebaseAnalytics mFirebaseAnalytics;
 
 
@@ -55,7 +55,7 @@ public class OpenResourceActivity extends BaseActivity {
         super.onCreate(savedInstanceState, R.layout.activity_open_resource);
         exitIfNoData();
         setupToolbar(resource.getResource(), true);
-        self_reference = this;
+        selfReference = this;
 
         mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
         Bundle bundle = new Bundle();
