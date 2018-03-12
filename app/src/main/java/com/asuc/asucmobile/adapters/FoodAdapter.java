@@ -2,7 +2,6 @@ package com.asuc.asucmobile.adapters;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.util.Log;
 import android.util.TypedValue;
 
 import android.view.LayoutInflater;
@@ -16,12 +15,15 @@ import android.widget.TextView;
 import com.asuc.asucmobile.R;
 import com.asuc.asucmobile.fragments.MenuFragment;
 import com.asuc.asucmobile.main.ListOfFavorites;
+import com.asuc.asucmobile.main.OpenCafeActivity;
+import com.asuc.asucmobile.main.OpenDiningHallActivity;
 import com.asuc.asucmobile.models.FoodItem;
+import com.asuc.asucmobile.utilities.CustomComparators;
 import com.asuc.asucmobile.utilities.SerializableUtilities;
 import com.google.firebase.analytics.FirebaseAnalytics;
 
 import java.util.ArrayList;
-import java.util.HashSet;
+import java.util.Collections;
 
 public class FoodAdapter extends BaseAdapter {
 
@@ -123,8 +125,12 @@ public class FoodAdapter extends BaseAdapter {
                     Bundle bundle = new Bundle();
                     bundle.putString("food_item", foodItem.getName());
                     mFirebaseAnalytics.logEvent("favorited_food_item", bundle);
+                }
 
-
+                if (foodType == FoodPlaceAdapter.FoodType.Cafe) {
+                    Collections.sort(foodItems, CustomComparators.FacilityComparators.getFoodSortByFavorite(OpenCafeActivity.selfReference));
+                } else if (foodType == FoodPlaceAdapter.FoodType.DiningHall) {
+                    Collections.sort(foodItems, CustomComparators.FacilityComparators.getFoodSortByFavorite(OpenDiningHallActivity.selfReference));
                 }
 
                 MenuFragment.refreshLists();
