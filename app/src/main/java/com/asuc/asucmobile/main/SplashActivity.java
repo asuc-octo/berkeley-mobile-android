@@ -6,6 +6,8 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Window;
 import android.view.WindowManager;
+import android.provider.Settings;
+import com.google.firebase.crash.FirebaseCrash;
 
 import com.asuc.asucmobile.R;
 import com.asuc.asucmobile.controllers.BMAPI;
@@ -23,6 +25,13 @@ public class SplashActivity extends Activity {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN); // Removes notification bar
         setContentView(R.layout.activity_splash);
+
+        int adb = Settings.Secure.getInt(this.getContentResolver(), Settings.Global.DEVELOPMENT_SETTINGS_ENABLED , 0);
+        if (adb == 1) {
+            FirebaseCrash.setCrashCollectionEnabled(false);
+        } else {
+            FirebaseCrash.setCrashCollectionEnabled(true);
+        }
 
         // launch network stuff
         BMRetrofitController.create(this, BMAPI.class);
