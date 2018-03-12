@@ -115,6 +115,11 @@ public class LibraryFragment extends Fragment {
                 mLibraryList.setVisibility(View.VISIBLE);
                 mProgressBar.setVisibility(View.GONE);
                 mAdapter.setList(response.body().getLibraries());
+
+                // sorted by default
+                Collections.sort(mAdapter.getLibraries(), CustomComparators.FacilityComparators.getSortByAZ());
+                Collections.sort(mAdapter.getLibraries(), CustomComparators.FacilityComparators.getSortByFavoriteLibrary(getContext()));
+                mAdapter.notifyDataSetChanged();
             }
 
             @Override
