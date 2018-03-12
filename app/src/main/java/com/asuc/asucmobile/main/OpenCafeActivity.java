@@ -2,26 +2,23 @@ package com.asuc.asucmobile.main;
 
 import android.app.Fragment;
 import android.app.FragmentManager;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v13.app.FragmentPagerAdapter;
-import android.support.v4.view.PagerTabStrip;
 import android.support.v4.view.ViewPager;
 import android.view.Menu;
 import android.view.MenuInflater;
-import android.view.View;
 import android.widget.ImageView;
 
 import com.asuc.asucmobile.R;
 import com.asuc.asucmobile.fragments.MenuFragment;
 import com.asuc.asucmobile.models.Cafe;
+import com.asuc.asucmobile.utilities.CustomComparators;
 import com.asuc.asucmobile.utilities.SerializableUtilities;
 import com.bumptech.glide.Glide;
 import com.google.firebase.analytics.FirebaseAnalytics;
 
-import java.io.InputStream;
+import java.util.Collections;
 import java.util.Date;
 
 /**
@@ -32,6 +29,8 @@ public class OpenCafeActivity extends BaseActivity {
 
     private static Cafe cafe;
     private FirebaseAnalytics mFirebaseAnalytics;
+    public static OpenCafeActivity selfReference;
+
 
 
     @Override
@@ -40,6 +39,7 @@ public class OpenCafeActivity extends BaseActivity {
         super.onCreate(savedInstanceState, R.layout.activity_open_cafe);
         exitIfNoData();
         setupToolbar(cafe.getName(), true);
+        selfReference = this;
 
         mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
         Bundle bundle = new Bundle();
@@ -57,6 +57,8 @@ public class OpenCafeActivity extends BaseActivity {
             listOfFavorites = new ListOfFavorites();
             SerializableUtilities.saveObject(this, listOfFavorites);
         }
+
+        sortMenus();
 
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
@@ -169,6 +171,21 @@ public class OpenCafeActivity extends BaseActivity {
     private void exitIfNoData() {
         if (cafe == null) {
             finish();
+        }
+    }
+
+    /**
+     * Sort all menus if present
+     */
+    private void sortMenus() {
+        if (cafe.getBreakfastMenu() != null) {
+            Collections.sort(cafe.getBreakfastMenu(), CustomComparators.FacilityComparators.getFoodSortByAZ());
+            Collections.sort(cafe.getBreakfastMenu(), CustomComparators.FacilityComparators.getFoodSortByFavorite(selfReference));
+        }
+
+        if (cafe.getLunchDinnerMenu() != null) {
+            Collections.sort(cafe.getLunchDinnerMenu(), CustomComparators.FacilityComparators.getFoodSortByAZ());
+            Collections.sort(cafe.getLunchDinnerMenu(), CustomComparators.FacilityComparators.getFoodSortByFavorite(selfReference));
         }
     }
 
