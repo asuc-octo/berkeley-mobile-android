@@ -171,8 +171,7 @@ public class GymFragment extends Fragment {
                 getResources().getColor(R.color.card_background), R.drawable.transparent_rounded_shape_7,
                 getResources().getColor(R.color.excercise_color_7)));
 
-
-
+        // all buttons unclicked by default
         clickTracker.put(allAround, false);
         clickTracker.put(cardio, false);
         clickTracker.put(mind, false);
