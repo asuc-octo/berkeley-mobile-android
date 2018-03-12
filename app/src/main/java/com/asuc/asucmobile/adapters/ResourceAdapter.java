@@ -28,7 +28,6 @@ public class ResourceAdapter extends BaseAdapter {
 
     public ResourceAdapter(Context context) {
         this.context = context;
-
         allResources = new ArrayList<>();
         resources = new ArrayList<>();
     }
@@ -131,8 +130,9 @@ public class ResourceAdapter extends BaseAdapter {
                     filteredResources = allResources;
                 } else {
                     for (Resource resource : allResources) {
-                        if (resource.getResource().toLowerCase().contains(query.toString().toLowerCase()) ||
-                                resource.getLocation().toLowerCase().contains(query.toString().toLowerCase())) {
+                        if (resource.getResource().toLowerCase().contains(query.toString().toLowerCase())) {
+//                        if (resource.getResource().toLowerCase().contains(query.toString().toLowerCase()) ||
+//                                resource.getLocation().toLowerCase().contains(query.toString().toLowerCase())) {
                             filteredResources.add(resource);
                         }
                     }
@@ -146,7 +146,8 @@ public class ResourceAdapter extends BaseAdapter {
             @Override
             @SuppressWarnings("unchecked")
             protected void publishResults(CharSequence constraint, FilterResults filterResults) {
-                resources = (ArrayList<Resource>) filterResults.values;
+                ArrayList<Resource> results = (ArrayList<Resource>) filterResults.values;
+                resources = results;
                 notifyDataSetChanged();
             }
 
