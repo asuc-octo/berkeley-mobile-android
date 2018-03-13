@@ -28,11 +28,13 @@ import com.asuc.asucmobile.main.OpenLibraryActivity;
 import com.asuc.asucmobile.models.Library;
 import com.asuc.asucmobile.models.responses.LibrariesResponse;
 import com.asuc.asucmobile.controllers.BMRetrofitController;
+import com.asuc.asucmobile.utilities.CustomComparators;
 import com.asuc.asucmobile.utilities.NavigationGenerator;
 import com.asuc.asucmobile.utilities.SerializableUtilities;
 import com.google.firebase.analytics.FirebaseAnalytics;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 import retrofit2.Call;
 import retrofit2.Response;
@@ -61,7 +63,8 @@ public class LibraryFragment extends Fragment {
         NavigationGenerator.generateToolbarMenuButton(getActivity(), toolbar);
         setHasOptionsMenu(true);
         toolbar.setTitle("Libraries");
-        ListOfFavorites listOfFavorites = (ListOfFavorites) SerializableUtilities.loadSerializedObject(getContext());
+        ListOfFavorites listOfFavorites =
+                (ListOfFavorites) SerializableUtilities.loadSerializedObject(getContext());
         if (listOfFavorites == null) {
             listOfFavorites = new ListOfFavorites();
             SerializableUtilities.saveObject(getContext(), listOfFavorites);
@@ -96,53 +99,6 @@ public class LibraryFragment extends Fragment {
         NavigationGenerator.closeMenu(getActivity());
     }
 
-    //start off lv sorted by favorites
-    @Override
-    public boolean onOptionsItemSelected(MenuItem menuItem) {
-        /*switch (menuItem.getItemId()){
-            case R.id.sortOpen:
-                Collections.sort(mAdapter.getLibraries(), CustomComparators.FacilityComparators.getSortByOpenness());
-                mAdapter.notifyDataSetChanged();
-                break;
-        }*/
-
-        /*
-        Must return false to hid the toolbar menu option
-        Auto sort feature is implemented in the controller
-         */
-        return false;
-    }
-
-    @Override
-    @SuppressWarnings("deprecation")
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        inflater.inflate(R.menu.library, menu);
-        final MenuItem searchMenuItem = menu.findItem(R.id.search);
-        if (searchMenuItem != null) {
-            final SearchView searchView = (SearchView) searchMenuItem.getActionView();
-            if (searchView != null) {
-                // Setting up aesthetics
-                EditText searchEditText = (EditText) searchView.findViewById(android.support.v7.appcompat.R.id.search_src_text);
-                searchEditText.setTextColor(getResources().getColor(android.R.color.white));
-                searchEditText.setHintTextColor(getResources().getColor(android.R.color.white));
-                searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-                    @Override
-                    public boolean onQueryTextSubmit(String s) {
-                        // Close the keyboard
-                        searchView.clearFocus();
-                        return true;
-                    }
-
-                    @Override
-                    public boolean onQueryTextChange(String s) {
-                        final Filter filter = mAdapter.getFilter();
-                        filter.filter(s);
-                        return true;
-                    }
-                });
-            }
-        }
-    }
 
     /**
      * refresh() updates the visibility of necessary UI elements and refreshes the library list
@@ -159,7 +115,11 @@ public class LibraryFragment extends Fragment {
                 mLibraryList.setVisibility(View.VISIBLE);
                 mProgressBar.setVisibility(View.GONE);
                 mAdapter.setList(response.body().getLibraries());
-                ArrayList<Library> l = response.body().getLibraries();
+
+                // sorted by default
+                Collections.sort(mAdapter.getLibraries(), CustomComparators.FacilityComparators.getSortByAZ());
+                Collections.sort(mAdapter.getLibraries(), CustomComparators.FacilityComparators.getSortByFavoriteLibrary(getContext()));
+                mAdapter.notifyDataSetChanged();
             }
 
             @Override
