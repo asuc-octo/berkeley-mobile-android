@@ -70,10 +70,11 @@ public class MenuFragment extends Fragment {
     private TextView headerHours;
     private View v;
 
-
-    public MenuFragment(FoodType type) {
-        foodType = type;
+    public MenuFragment() {
+        //Just pick a default menu type, this should never be directly called
+        foodType = FoodType.Cafe;
     }
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -81,6 +82,16 @@ public class MenuFragment extends Fragment {
 
         // Initialize view
         v = inflater.inflate(R.layout.fragment_menu, container, false);
+
+        Bundle bundle = this.getArguments();
+        if (bundle != null) {
+            String bundle_foodType =  bundle.getString("FoodType");
+            if (bundle_foodType.equals("DiningHall")) {
+                foodType = FoodType.DiningHall;
+            } else {
+                foodType = FoodType.Cafe;
+            }
+        }
 
         // Get references to views.
         foodMenu = (ListView) v.findViewById(R.id.food_menu);
