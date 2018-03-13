@@ -10,4 +10,5 @@ Documentation `README.md`'s in package directories.
 * [Open*Activity](app/src/main/java/com/asuc/asucmobile/main)
 * [Models](app/src/main/java/com/asuc/asucmobile/models)
 * [Responses](app/src/main/java/com/asuc/asucmobile/models/responses)
+* [Utilities](app/src/main/java/com/asuc/asucmobile/utilities)
 
