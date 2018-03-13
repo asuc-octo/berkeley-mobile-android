@@ -118,7 +118,6 @@ public class Library implements Comparable<Library>{
 
         Date currentTime = new Date();
         boolean isOpen = currentTime.after(opening) && currentTime.before(closing);
-        Log.d(TAG, "" + name + " " + isOpen);
         return isOpen;
     }
 

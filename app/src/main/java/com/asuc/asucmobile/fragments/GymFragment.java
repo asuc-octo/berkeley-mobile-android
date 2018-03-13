@@ -6,9 +6,7 @@ import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.DragEvent;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -22,7 +20,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.asuc.asucmobile.R;
-import com.asuc.asucmobile.adapters.FoodPlaceAdapter;
 import com.asuc.asucmobile.adapters.GymAdapter;
 import com.asuc.asucmobile.controllers.BMRetrofitController;
 import com.asuc.asucmobile.models.GymClass;
@@ -39,6 +36,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Locale;
 import java.util.TimeZone;
 
@@ -49,7 +47,7 @@ import retrofit2.Response;
 public class GymFragment extends Fragment {
     public static final String TAG = "GymFragment";
 
-    private ArrayList<Integer> filter;
+    private HashSet<Integer> filter;
     private ArrayList<GymClass> mClasses;
     private HashMap<Button, Boolean> clickTracker;
     private int currentDate;
@@ -77,7 +75,7 @@ public class GymFragment extends Fragment {
         NavigationGenerator.closeMenu(getActivity());
 
         mClasses = new ArrayList<>();
-        filter = new ArrayList<>();
+        filter = new HashSet<>();
         clickTracker = new HashMap<>();
         currentDate = new DateTime().getDayOfMonth();
 
@@ -120,8 +118,6 @@ public class GymFragment extends Fragment {
         gymRecyclerView.setHasFixedSize(true);
         gymRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
 
-//        createDummyData();
-
         ImageButton refreshButton = (ImageButton) layout.findViewById(R.id.refresh_button);
         mProgressBar = (ProgressBar) layout.findViewById(R.id.progress_bar);
         mRefreshWrapper = (LinearLayout) layout.findViewById(R.id.refresh);
@@ -141,168 +137,41 @@ public class GymFragment extends Fragment {
     }
     private void initButtons() {
         allAround = (Button) layout.findViewById(R.id.all_around);
-        allAround.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View view, MotionEvent motionEvent) {
-                if (motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
-                    mFirebaseAnalytics.logEvent("clicked_excercise_filter", bundle);
-
-                    if (clickTracker.get(allAround)) {
-                        filter.remove((Integer) GymClass.ALL_AROUND);
-                        allAround.setBackgroundResource(R.drawable.opaque_rounded_shape_1);
-                        allAround.setTextColor(getResources().getColor(R.color.card_background));
-                        clickTracker.put(allAround, false);
-                    } else {
-                        filter.add(GymClass.ALL_AROUND);
-                        allAround.setBackgroundResource(R.drawable.transparent_rounded_shape_1);
-                        allAround.setTextColor(getResources().getColor(R.color.excercise_color_1));
-                        clickTracker.put(allAround, true);
-                    }
-                }
-                initClassTable();
-                return false;
-            }
-        });
+        allAround.setOnClickListener(new ExerciseFilterOnClickListener(GymClass.ALL_AROUND, R.drawable.opaque_rounded_shape_1,
+                getResources().getColor(R.color.card_background), R.drawable.transparent_rounded_shape_1,
+                getResources().getColor(R.color.excercise_color_1)));
 
         cardio = (Button) layout.findViewById(R.id.cardio);
-        cardio.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View view, MotionEvent motionEvent) {
-                if (motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
-                    mFirebaseAnalytics.logEvent("clicked_excercise_filter", bundle);
-                    if (clickTracker.get(cardio)) {
-                        filter.remove((Integer) GymClass.CARDIO);
-                        cardio.setBackgroundResource(R.drawable.opaque_rounded_shape_2);
-                        cardio.setTextColor(getResources().getColor(R.color.card_background));
-                        clickTracker.put(cardio, false);
-                    } else {
-                        filter.add(GymClass.CARDIO);
-                        cardio.setBackgroundResource(R.drawable.transparent_rounded_shape_2);
-                        cardio.setTextColor(getResources().getColor(R.color.excercise_color_2));
-                        clickTracker.put(cardio, true);
-                    }
-                }
-                initClassTable();
-                return false;
-            }
-        });
+        cardio.setOnClickListener(new ExerciseFilterOnClickListener(GymClass.CARDIO, R.drawable.opaque_rounded_shape_2,
+                getResources().getColor(R.color.card_background), R.drawable.transparent_rounded_shape_2,
+                getResources().getColor(R.color.excercise_color_2)));
 
         mind = (Button) layout.findViewById(R.id.mind);
-        mind.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View view, MotionEvent motionEvent) {
-                if (motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
-                    mFirebaseAnalytics.logEvent("clicked_excercise_filter", bundle);
-                    if (clickTracker.get(mind)) {
-                        filter.remove((Integer) GymClass.MIND);
-                        mind.setBackgroundResource(R.drawable.opaque_rounded_shape_3);
-                        mind.setTextColor(getResources().getColor(R.color.card_background));
-                        clickTracker.put(mind, false);
-                    } else {
-                        filter.add(GymClass.MIND);
-                        mind.setBackgroundResource(R.drawable.transparent_rounded_shape_3);
-                        mind.setTextColor(getResources().getColor(R.color.excercise_color_3));
-                        clickTracker.put(mind, true);
-                    }
-                }
-                initClassTable();
-                return false;
-            }
-        });
+        mind.setOnClickListener(new ExerciseFilterOnClickListener(GymClass.MIND, R.drawable.opaque_rounded_shape_3,
+                getResources().getColor(R.color.card_background), R.drawable.transparent_rounded_shape_3,
+                getResources().getColor(R.color.excercise_color_3)));
 
         core = (Button) layout.findViewById(R.id.core);
-        core.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View view, MotionEvent motionEvent) {
-                if (motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
-                    mFirebaseAnalytics.logEvent("clicked_excercise_filter", bundle);
-                    if (clickTracker.get(core)) {
-                        filter.remove((Integer) GymClass.CORE);
-                        core.setBackgroundResource(R.drawable.opaque_rounded_shape_4);
-                        core.setTextColor(getResources().getColor(R.color.card_background));
-                        clickTracker.put(core, false);
-                    } else {
-                        filter.add(GymClass.CORE);
-                        core.setBackgroundResource(R.drawable.transparent_rounded_shape_4);
-                        core.setTextColor(getResources().getColor(R.color.excercise_color_4));
-                        clickTracker.put(core, true);
-                    }
-                }
-                initClassTable();
-                return false;
-            }
-        });
+        core.setOnClickListener(new ExerciseFilterOnClickListener(GymClass.CORE, R.drawable.opaque_rounded_shape_4,
+                getResources().getColor(R.color.card_background), R.drawable.transparent_rounded_shape_4,
+                getResources().getColor(R.color.excercise_color_4)));
 
         dance = (Button) layout.findViewById(R.id.dance);
-        dance.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View view, MotionEvent motionEvent) {
-                if (motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
-                    mFirebaseAnalytics.logEvent("clicked_excercise_filter", bundle);
-                    if (clickTracker.get(dance)) {
-                        filter.remove((Integer) GymClass.DANCE);
-                        dance.setBackgroundResource(R.drawable.opaque_rounded_shape_5);
-                        dance.setTextColor(getResources().getColor(R.color.card_background));
-                        clickTracker.put(dance, false);
-                    } else {
-                        filter.add(GymClass.DANCE);
-                        dance.setBackgroundResource(R.drawable.transparent_rounded_shape_5);
-                        dance.setTextColor(getResources().getColor(R.color.excercise_color_5));
-                        clickTracker.put(dance, true);
-                    }
-                }
-                initClassTable();
-                return false;
-            }
-        });
+        dance.setOnClickListener(new ExerciseFilterOnClickListener(GymClass.DANCE, R.drawable.opaque_rounded_shape_5,
+                getResources().getColor(R.color.card_background), R.drawable.transparent_rounded_shape_5,
+                getResources().getColor(R.color.excercise_color_5)));
 
         strength = (Button) layout.findViewById(R.id.strength);
-        strength.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View view, MotionEvent motionEvent) {
-                if (motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
-                    mFirebaseAnalytics.logEvent("clicked_excercise_filter", bundle);
-                    if (clickTracker.get(strength)) {
-                        filter.remove((Integer) GymClass.STRENGTH);
-                        strength.setBackgroundResource(R.drawable.opaque_rounded_shape_6);
-                        strength.setTextColor(getResources().getColor(R.color.card_background));
-                        clickTracker.put(strength, false);
-                    } else {
-                        filter.add(GymClass.STRENGTH);
-                        strength.setBackgroundResource(R.drawable.transparent_rounded_shape_6);
-                        strength.setTextColor(getResources().getColor(R.color.excercise_color_6));
-                        clickTracker.put(strength, true);
-                    }
-                }
-                initClassTable();
-                return false;
-            }
-        });
+        strength.setOnClickListener(new ExerciseFilterOnClickListener(GymClass.STRENGTH, R.drawable.opaque_rounded_shape_6,
+                getResources().getColor(R.color.card_background), R.drawable.transparent_rounded_shape_6,
+                getResources().getColor(R.color.excercise_color_6)));
 
         aqua = (Button) layout.findViewById(R.id.aqua);
-        aqua.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View view, MotionEvent motionEvent) {
-                if (motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
-                    mFirebaseAnalytics.logEvent("clicked_excercise_filter", bundle);
-                    if (clickTracker.get(aqua)) {
-                        filter.remove((Integer) GymClass.AQUA);
-                        aqua.setBackgroundResource(R.drawable.opaque_rounded_shape_7);
-                        aqua.setTextColor(getResources().getColor(R.color.card_background));
-                        clickTracker.put(aqua, false);
-                    } else {
-                        filter.add(GymClass.AQUA);
-                        aqua.setBackgroundResource(R.drawable.transparent_rounded_shape_7);
-                        aqua.setTextColor(getResources().getColor(R.color.excercise_color_7));
-                        clickTracker.put(aqua, true);
-                    }
-                }
-                initClassTable();
-                return false;
-            }
-        });
+        aqua.setOnClickListener(new ExerciseFilterOnClickListener(GymClass.AQUA, R.drawable.opaque_rounded_shape_7,
+                getResources().getColor(R.color.card_background), R.drawable.transparent_rounded_shape_7,
+                getResources().getColor(R.color.excercise_color_7)));
 
-
+        // all buttons unclicked by default
         clickTracker.put(allAround, false);
         clickTracker.put(cardio, false);
         clickTracker.put(mind, false);
@@ -448,6 +317,50 @@ public class GymFragment extends Fragment {
         });
     }
 
-}
 
+    /**
+     * OnClickListener for each of the class type tags
+     */
+    class ExerciseFilterOnClickListener implements View.OnClickListener{
+
+        int cBackground;
+        int cTextColor;
+        int ucBackground;
+        int ucTextColor;
+        int classType;
+
+        public ExerciseFilterOnClickListener(int type, int clickedBackground, int clickedTextColor ,
+                                             int unclickedBackground, int unclickedTextColor) {
+
+            classType = type;
+            cBackground = clickedBackground;
+            cTextColor = clickedTextColor;
+            ucBackground = unclickedBackground;
+            ucTextColor = unclickedTextColor;
+
+        }
+
+        @Override
+        public void onClick(View v) {
+            mFirebaseAnalytics.logEvent("clicked_excercise_filter", bundle);
+            Button b = (Button) v;
+            if (clickTracker.get(b)) {
+                filter.remove(classType);
+                b.setBackgroundResource(cBackground);
+                b.setTextColor(cTextColor);
+                clickTracker.put((Button) v, false);
+            } else {
+                filter.add(classType);
+                b.setBackgroundResource(ucBackground);
+                b.setTextColor(ucTextColor);
+                clickTracker.put((Button) v, true);
+            }
+            initClassTable();
+
+        }
+    }
+
+
+
+}
 

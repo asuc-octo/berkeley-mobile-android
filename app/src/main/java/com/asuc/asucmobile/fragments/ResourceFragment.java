@@ -97,21 +97,22 @@ public class ResourceFragment extends Fragment {
         NavigationGenerator.closeMenu(getActivity());
     }
 
-    // Start off list sorted by favorites.
-    @Override
-    public boolean onOptionsItemSelected(MenuItem menuItem) {
-        switch (menuItem.getItemId()){
-            case R.id.sortAZ:
-                Collections.sort(mAdapter.getResources(), CustomComparators.FacilityComparators.getSortResourcesByAZ());
-                mAdapter.notifyDataSetChanged();
-                break;
-            case R.id.sortFavorites:
-                Collections.sort(mAdapter.getResources(), CustomComparators.FacilityComparators.getSortByFavoriteResource(getContext()));
-                mAdapter.notifyDataSetChanged();
-                break;
-        }
-        return true;
-    }
+
+//    // Start off list sorted by favorites.
+//    @Override
+//    public boolean onOptionsItemSelected(MenuItem menuItem) {
+//        switch (menuItem.getItemId()){
+//            case R.id.sortAZ:
+//                Collections.sort(mAdapter.getResources(), CustomComparators.FacilityComparators.getSortResourcesByAZ());
+//                mAdapter.notifyDataSetChanged();
+//                break;
+//            case R.id.sortFavorites:
+//                Collections.sort(mAdapter.getResources(), CustomComparators.FacilityComparators.getSortByFavoriteResource(getContext()));
+//                mAdapter.notifyDataSetChanged();
+//                break;
+//        }
+//        return true;
+//    }
 
     @Override
     @SuppressWarnings("deprecation")
@@ -144,6 +145,7 @@ public class ResourceFragment extends Fragment {
         }
     }
 
+
     /**
      * refresh() updates the visibility of necessary UI elements and refreshes the resource list
      * from the web.
@@ -159,6 +161,11 @@ public class ResourceFragment extends Fragment {
                 mResourceList.setVisibility(View.VISIBLE);
                 mProgressBar.setVisibility(View.GONE);
                 mAdapter.setList(response.body().getResources());
+
+                // sorted by default
+                Collections.sort(mAdapter.getResources(), CustomComparators.FacilityComparators.getSortResourcesByAZ());
+                Collections.sort(mAdapter.getResources(), CustomComparators.FacilityComparators.getSortByFavoriteResource(getContext()));
+                mAdapter.notifyDataSetChanged();
             }
 
             @Override
