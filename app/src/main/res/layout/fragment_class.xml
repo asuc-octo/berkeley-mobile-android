@@ -90,7 +90,7 @@
                 android:textSize="22sp"
                 android:textColor="@color/OP_navy"
                 android:textStyle="bold"
-                android:text="Schedule"/>
+                android:text="Group Exercises"/>
 
             <com.asuc.asucmobile.models.WeekCalendar
                 android:id="@+id/weekCalendar"
