@@ -65,6 +65,10 @@ public class FoodAdapter extends BaseAdapter {
             convertView = LayoutInflater.from(context).inflate(R.layout.food_row, parent, false);
         }
 
+        if (this.foodType == FoodPlaceAdapter.FoodType.Cafe) {
+            convertView = LayoutInflater.from(context).inflate(R.layout.food_row_cafe, parent, false);
+        }
+
         final TextView foodName = (TextView) convertView.findViewById(R.id.food_name);
         foodName.setText(foodItem.getName());
 
@@ -73,7 +77,7 @@ public class FoodAdapter extends BaseAdapter {
             foodCost.setText(foodItem.getCost());
         }
 
-        if (foodItem.getFoodTypes() != null && foodItem.getFoodTypes().size() > 0) {
+        if (foodItem.getFoodTypes() != null && foodItem.getFoodTypes().size() > 0 && this.foodType != FoodPlaceAdapter.FoodType.Cafe) {
 
             // make imageViews dynamically, switch on types
             final LinearLayout foodTypesLayout = (LinearLayout) convertView.findViewById(R.id.food_types_layout);
