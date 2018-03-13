@@ -129,8 +129,10 @@ public class OpenDiningHallActivity extends BaseActivity {
 
         @Override
         public Fragment getItem(int position) {
-            MenuFragment menuFragment = new MenuFragment(MenuFragment.FoodType.DiningHall);
+            MenuFragment menuFragment = new MenuFragment();
             Bundle bundle = new Bundle(1);
+            bundle.putString("FoodType", "DiningHall");
+            menuFragment.setArguments(bundle);
 
             // If late night exists in this dining hall, add it; otherwise, leave it out.
             if (Arrays.asList(LIMITED_LOCATIONS).contains(diningHall.getName())) {
