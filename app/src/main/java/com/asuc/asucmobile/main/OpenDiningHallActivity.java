@@ -2,33 +2,31 @@ package com.asuc.asucmobile.main;
 
 import android.app.Fragment;
 import android.app.FragmentManager;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v13.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.Menu;
 import android.view.MenuInflater;
-import android.view.View;
 import android.widget.ImageView;
 
 import com.asuc.asucmobile.R;
 import com.asuc.asucmobile.fragments.MenuFragment;
 import com.asuc.asucmobile.models.DiningHall;
+import com.asuc.asucmobile.utilities.CustomComparators;
 import com.asuc.asucmobile.utilities.SerializableUtilities;
 import com.bumptech.glide.Glide;
 import com.google.firebase.analytics.FirebaseAnalytics;
 
-import java.io.InputStream;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Date;
 
 public class OpenDiningHallActivity extends BaseActivity {
 
     private static final String[] LIMITED_LOCATIONS = {"Crossroads","Foothill"};
     private static DiningHall diningHall;
-    public static OpenDiningHallActivity self_reference;
+    public static OpenDiningHallActivity selfReference;
     private FirebaseAnalytics mFirebaseAnalytics;
 
 
@@ -38,7 +36,7 @@ public class OpenDiningHallActivity extends BaseActivity {
         super.onCreate(savedInstanceState, R.layout.activity_open_dining_hall);
         exitIfNoData();
         setupToolbar(diningHall.getName(), true);
-        self_reference = OpenDiningHallActivity.this;
+        selfReference = OpenDiningHallActivity.this;
 
         mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
         Bundle bundle = new Bundle();
@@ -56,6 +54,8 @@ public class OpenDiningHallActivity extends BaseActivity {
             listOfFavorites = new ListOfFavorites();
             SerializableUtilities.saveObject(this, listOfFavorites);
         }
+
+        sortMenus();
 
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
@@ -233,5 +233,37 @@ public class OpenDiningHallActivity extends BaseActivity {
         if (diningHall == null) {
             finish();
         }
+    }
+
+
+    /**
+     * Sort all menus if present
+     */
+    private void sortMenus() {
+        if (diningHall.getBreakfastMenu() != null) {
+            Collections.sort(diningHall.getBreakfastMenu(), CustomComparators.FacilityComparators.getFoodSortByAZ());
+            Collections.sort(diningHall.getBreakfastMenu(), CustomComparators.FacilityComparators.getFoodSortByFavorite(selfReference));
+        }
+
+        if (diningHall.getLunchMenu() != null) {
+            Collections.sort(diningHall.getLunchMenu(), CustomComparators.FacilityComparators.getFoodSortByAZ());
+            Collections.sort(diningHall.getLunchMenu(), CustomComparators.FacilityComparators.getFoodSortByFavorite(selfReference));
+        }
+
+        if (diningHall.getDinnerMenu() != null) {
+            Collections.sort(diningHall.getDinnerMenu(), CustomComparators.FacilityComparators.getFoodSortByAZ());
+            Collections.sort(diningHall.getDinnerMenu(), CustomComparators.FacilityComparators.getFoodSortByFavorite(selfReference));
+        }
+
+        if (diningHall.getLimitedLunchMenu() != null) {
+            Collections.sort(diningHall.getLimitedLunchMenu(), CustomComparators.FacilityComparators.getFoodSortByAZ());
+            Collections.sort(diningHall.getLimitedLunchMenu(), CustomComparators.FacilityComparators.getFoodSortByFavorite(selfReference));
+        }
+
+        if (diningHall.getLimitedDinnerMenu() != null) {
+            Collections.sort(diningHall.getLimitedDinnerMenu(), CustomComparators.FacilityComparators.getFoodSortByAZ());
+            Collections.sort(diningHall.getLimitedDinnerMenu(), CustomComparators.FacilityComparators.getFoodSortByFavorite(selfReference));
+        }
+
     }
 }
