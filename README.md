@@ -1,7 +1,7 @@
 # ASUC-Android
 
 ## Release APK
-The most updated .apk file for the Play Store will be located in the "app" folder as "app-release.apk".
+The most updated .apk file for the Play Store will be located in the `app` folder as `app-release.apk`.
 
 ## Documentation
 Documentation `README.md`'s in package directories. 
@@ -12,4 +12,3 @@ Documentation `README.md`'s in package directories.
 * [Models](app/src/main/java/com/asuc/asucmobile/models)
 * [Responses](app/src/main/java/com/asuc/asucmobile/models/responses)
 * [Utilities](app/src/main/java/com/asuc/asucmobile/utilities)
-
