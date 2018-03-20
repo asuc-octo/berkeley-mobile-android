@@ -41,7 +41,7 @@ import static android.support.design.R.id.add;
 
 
 
-public class MenuFragment extends Fragment {
+public class    MenuFragment extends Fragment {
 
     public enum FoodType {
         DiningHall,
