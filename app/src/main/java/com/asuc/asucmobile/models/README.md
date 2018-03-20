@@ -17,7 +17,7 @@ back end must use proper Retrofit annotation syntax, specifying serialized names
 
 ```
 
-## `FoodPlace`
+## `FoodPlace.java`
 
 Not too creative (Rustie), so both `DiningHall`s and `Cafe`s extend `FoodPlace`. The syntax for using
 the related `adapters/FoodPlaceAdapter` uses enums:
