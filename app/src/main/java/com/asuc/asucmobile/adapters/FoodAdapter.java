@@ -30,7 +30,6 @@ public class FoodAdapter extends BaseAdapter {
     public static final String TAG = "FoodAdapter";
     private FirebaseAnalytics mFirebaseAnalytics;
 
-
     private Context context;
     private ArrayList<FoodItem> foodItems;
     private FoodPlaceAdapter.FoodType foodType;
@@ -77,9 +76,9 @@ public class FoodAdapter extends BaseAdapter {
             foodCost.setText(foodItem.getCost());
         }
 
+        // make imageViews dynamically, switch on food types
         if (foodItem.getFoodTypes() != null && foodItem.getFoodTypes().size() > 0 && this.foodType != FoodPlaceAdapter.FoodType.Cafe) {
 
-            // make imageViews dynamically, switch on types
             final LinearLayout foodTypesLayout = (LinearLayout) convertView.findViewById(R.id.food_types_layout);
             foodTypesLayout.removeAllViews();
 
@@ -112,6 +111,7 @@ public class FoodAdapter extends BaseAdapter {
         } else {
             imageView.setImageResource(R.drawable.pre_favorite);
         }
+
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
