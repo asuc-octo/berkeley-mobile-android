@@ -4,6 +4,7 @@ import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 
+import com.asuc.asucmobile.utilities.ServerUtils;
 import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -27,7 +28,6 @@ public class BMRetrofitController {
 
     public static final String TAG = "RETROFIT CONTROLLER";
 
-    public static final String BASE_URL = "http://asuc-mobile-dev.herokuapp.com/api/";
     public static final String ISO_FORMAT = "yyyy-MM-dd'T'HH:mm:ss.SSSZ";
     public static final int CACHE_SIZE = 20; // size of cache in MiB
     public static final int MAX_AGE = 60;
@@ -50,21 +50,7 @@ public class BMRetrofitController {
         bmapi = (BMAPI) retrofit.create(serviceClass);
     }
 
-    /**
-     * Checks to see if we have internet connection
-     * @return
-     */
-    public static boolean isConnected() {
-        ConnectivityManager cm =
-                (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
 
-        NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
-        boolean isConnected = activeNetwork != null &&
-                activeNetwork.isConnectedOrConnecting();
-
-        return isConnected;
-
-    }
 
     /**
      * All the magical caching, okhttp, gson, and retrofit settings
@@ -90,7 +76,7 @@ public class BMRetrofitController {
 
         // building retrofit
         retrofit = new Retrofit.Builder()
-                .baseUrl(BASE_URL)
+                .baseUrl(ServerUtils.getBaseUrl())
                 .client(httpClient)
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .build();
@@ -127,6 +113,23 @@ public class BMRetrofitController {
             }
             return chain.proceed(request);
         }
+    }
+
+
+    /**
+     * Checks to see if we have internet connection
+     * @return
+     */
+    public static boolean isConnected() {
+        ConnectivityManager cm =
+                (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+
+        NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
+        boolean isConnected = activeNetwork != null &&
+                activeNetwork.isConnectedOrConnecting();
+
+        return isConnected;
+
     }
 
 }
