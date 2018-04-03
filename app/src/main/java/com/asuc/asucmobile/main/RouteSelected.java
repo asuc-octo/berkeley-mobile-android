@@ -120,15 +120,16 @@ public class RouteSelected extends BaseActivity {
                         Trip lastTrip = route.getTrips().get(route.getTrips().size() - 1);
                         Stop lastStop = lastTrip.getStops().get(lastTrip.getStops().size() - 1);
                         LocationManager locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
-                        BitmapDescriptor pin = BitmapDescriptorFactory.fromResource(R.drawable.markernew);
+                        BitmapDescriptor dest = BitmapDescriptorFactory.fromResource(R.drawable.markernew);
+                        BitmapDescriptor origin = BitmapDescriptorFactory.fromResource(R.drawable.markerclicked);
 
                         mMap.addMarker(new MarkerOptions()
                                 .position(new LatLng(lastStop.getLatitude(), lastStop.getLongitude()))
-                                .icon(pin)
+                                .icon(origin)
                         );
                         mMap.addMarker(new MarkerOptions()
                                 .position(new LatLng(firstStop.getLatitude(), firstStop.getLongitude()))
-                                .icon(pin)
+                                .icon(dest)
                         );
 
                         String bestProvider = locationManager.getBestProvider(new Criteria(), false);

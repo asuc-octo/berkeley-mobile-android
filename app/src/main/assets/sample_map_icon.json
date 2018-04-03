@@ -1,0 +1,22 @@
+{
+  "Microwave": [
+    {
+      "category": "microwave",
+      "lat": 37.871074,
+      "lon": -122.26137,
+      "description1": "mlk",
+      "description2": "floor2",
+      "image_link": "https:\/\/upload.wikimedia.org\/wikipedia\/commons\/thumb\/8\/85\/Consumer_Reports_-_Kenmore_microwave_oven.tif\/lossy-page1-1200px-Consumer_Reports_-_Kenmore_microwave_oven.tif.jpg"
+    }
+  ],
+  "Water Fountain": [
+    {
+      "category": "Water Fountain",
+      "lat": 37.871024,
+      "lon": -122.259524,
+      "description1": "Sather Gate",
+      "description2": "Under the Bridge",
+      "image_link": "https:\/\/upload.wikimedia.org\/wikipedia\/commons\/thumb\/8\/85\/Consumer_Reports_-_Kenmore_microwave_oven.tif\/lossy-page1-1200px-Consumer_Reports_-_Kenmore_microwave_oven.tif.jpg"
+    }
+  ]
+}

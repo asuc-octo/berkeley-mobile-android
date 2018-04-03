@@ -3,6 +3,13 @@
 
     <color name="hotline_blue">#005581</color>
     <color name="off_hotline_blue">#004467</color>
+
+    <color name="dark_blue"> #1565C0</color>
+    <color name="orange"> #FF720A</color>
+    <color name="pink"> #FD2BA8</color>
+    <color name="aqua"> #3EB7D2</color>
+    <color name="white">#FFFFFF</color>
+
     <color name="OP_navy">#005581</color>
     <color name="ASUC_blue">#1295D8</color>
     <color name="pavan_light">#72CDF4</color>

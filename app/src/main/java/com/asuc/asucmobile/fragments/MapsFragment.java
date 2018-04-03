@@ -45,12 +45,16 @@ import com.asuc.asucmobile.main.LiveBusActivity;
 import com.asuc.asucmobile.main.PopUpActivity;
 import com.asuc.asucmobile.main.RouteSelectActivity;
 import com.asuc.asucmobile.models.Buses;
+import com.asuc.asucmobile.models.Category;
+import com.asuc.asucmobile.models.CategoryLoc;
 import com.asuc.asucmobile.models.Journey;
 import com.asuc.asucmobile.models.Stop;
 import com.asuc.asucmobile.utilities.Callback;
 import com.asuc.asucmobile.utilities.JSONUtilities;
 import com.asuc.asucmobile.utilities.LocationGrabber;
 import com.asuc.asucmobile.utilities.NavigationGenerator;
+import com.github.clans.fab.FloatingActionButton;
+import com.github.clans.fab.FloatingActionMenu;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationServices;
@@ -106,9 +110,13 @@ public class MapsFragment extends Fragment
     private final static DecimalFormat DECIMAL_FORMAT = new DecimalFormat("#.##");
     private Button busesNearby;
     FabButton navigation_button;
-    final int color = Color.rgb(38, 38, 206); //Default color theme
-    final int gray = Color.rgb(168, 168, 168); //Default unselected color
-    ArrayList<Marker> markers_ACTransit = new ArrayList<>();
+    FloatingActionMenu FABmenu;
+
+    ArrayList<Marker> markers_sleepPods = new ArrayList<>();
+    ArrayList<Marker> markers_waterbottles = new ArrayList<>();
+    ArrayList<Marker> markers_microwave = new ArrayList<>();
+    HashMap<Marker, CategoryLoc> markers_to_desc = new HashMap<>();
+
     HashMap<Marker, String> marker_to_ID = new HashMap<>(); //Given marker, gets ID (we can do this because marker is FINAL
     boolean bearTransitPressed;
     LinearLayout originWrapper;
@@ -124,6 +132,7 @@ public class MapsFragment extends Fragment
     private static MapsFragment instance;
     private static Marker prevMarker;
     private FirebaseAnalytics mFirebaseAnalytics;
+    private FloatingActionButton microwave, sleepPod, waterBottle;
 
 
     public static MapsFragment getInstance() {
@@ -180,53 +189,105 @@ public class MapsFragment extends Fragment
         final OriginFragment originBar = (OriginFragment) getActivity().getFragmentManager().findFragmentById(R.id.origin_bar);
         navigation_button = (FabButton) layout.findViewById(R.id.determinate);
         busesNearby = (Button) layout.findViewById(R.id.busesNearby);
+        FABmenu = (FloatingActionMenu) layout.findViewById(R.id.FABmenu);
 
-        busesNearby.setOnClickListener(new View.OnClickListener() {
-            @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
+        sleepPod = (FloatingActionButton) layout.findViewById(R.id.sleeppod);
+        waterBottle = (FloatingActionButton) layout.findViewById(R.id.waterbottle);
+        microwave = (FloatingActionButton) layout.findViewById(R.id.microwave);
+
+
+        FABmenu.setIconAnimated(false);
+
+        FABmenu.setOnMenuButtonClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                if (ActivityCompat.checkSelfPermission(v.getContext(), android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(v.getContext(), android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                if(FABmenu.isOpened()){
+                    FABmenu.close(true);
+                    FABmenu.setMenuButtonColorNormalResId(R.color.white);
+                    FABmenu.getMenuIconView().setImageResource(R.drawable.itemsicons);
 
-                    ActivityCompat.requestPermissions(getActivity(),
-                            new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
-                            MY_PERMISSIONS_REQUEST_LOCATION);
+
                 }
-                try {
-                    mMap.setMyLocationEnabled(true);
-                    Log.e("Location Enabled", "location");
-                    LocationManager lm = (LocationManager) getActivity().getBaseContext().getSystemService(Context.LOCATION_SERVICE);
-                    Location location = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-                    longitude = location.getLongitude();
-                    latitude = location.getLatitude();
-                    currLocation = new LatLng(latitude, longitude);
-                } catch (Exception e) {
-                    Location currentLocation = LocationServices.FusedLocationApi.getLastLocation(googleApiClient);
-                    currLocation = BERKELEY;
-                }
-
-
-                if (!nearByHighlighted) {
-                    highlightButton(busesNearby, !nearByHighlighted);
-
-                    for (Marker marker : markers_ACTransit) {
-                        double dist = Double.valueOf(getDistance(marker.getPosition().latitude, marker.getPosition().longitude));
-                        if (dist < distThresh) {
-                            marker.setVisible(true);
-                        }
-                    }
-                    nearByHighlighted = !nearByHighlighted;
-
-                } else {
-                    highlightButton(busesNearby, !nearByHighlighted);
-                    for (Marker marker : markers_ACTransit) {
-                        marker.setVisible(false);
-                    }
-                    nearByHighlighted = !nearByHighlighted;
+                else{
+                    FABmenu.open(true);
+                    FABmenu.setMenuButtonColorNormalResId(R.color.dark_blue);
+                    FABmenu.getMenuIconView().setImageResource(R.drawable.items_icon_pressed);
                 }
             }
+        });
+
+        sleepPod.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                updateLocation(v);
+                for (Marker marker : markers_sleepPods) {
+
+                    marker.setVisible(true);
+
+                }
+
+                for (Marker marker : markers_waterbottles) {
+                    marker.setVisible(false);
+
+                }
+
+                for (Marker marker : markers_microwave) {
+                    marker.setVisible(false);
+
+                }
+            }
+        });
+
+        waterBottle.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                updateLocation(v);
+                for (Marker marker : markers_waterbottles) {
+                    marker.setVisible(true);
+
+                }
+
+                for (Marker marker : markers_sleepPods) {
+
+                    marker.setVisible(false);
+
+                }
 
 
+                for (Marker marker : markers_microwave) {
+                    marker.setVisible(false);
+
+                }
+
+
+            }
+        });
+
+        microwave.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                updateLocation(v);
+                for (Marker marker : markers_waterbottles) {
+                    marker.setVisible(false);
+
+                }
+
+                for (Marker marker : markers_sleepPods) {
+
+                    marker.setVisible(false);
+
+                }
+
+
+                for (Marker marker : markers_microwave) {
+                    marker.setVisible(true);
+
+                }
+
+
+            }
         });
 
 
@@ -284,7 +345,7 @@ public class MapsFragment extends Fragment
     @Override
     public void onMapReady(GoogleMap googleMap) {
         this.mMap = googleMap;
-        //Zooms camera to "my location"
+        //Zooms camera to "my locationresizeMapIcons"
         if (ActivityCompat.checkSelfPermission(getActivity(), android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getActivity(), android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
 
             ActivityCompat.requestPermissions(getActivity(),
@@ -331,13 +392,12 @@ public class MapsFragment extends Fragment
         mMap.setOnMarkerClickListener(this);
         // mMap.setOnMapLoadedCallback(this);
 
-        Type listType = new TypeToken<HashMap<String, Stop>>() {
+        Type listType = new TypeToken<HashMap<String, ArrayList<CategoryLoc>>>() {
         }.getType();
 
 
-        HashMap<String, Stop> AC_plots = gson.fromJson(JSONUtilities.readJSONFromAsset(getActivity(), "BerkeleyStops.json"), listType);
-
-        loadMarkers(AC_plots);
+        HashMap<String, ArrayList<CategoryLoc>> items = gson.fromJson(JSONUtilities.readJSONFromAsset(getActivity(), "sample_map_icon.json"), listType);
+        loadMarkers(items);
 
 
         liveTrack();
@@ -356,30 +416,49 @@ public class MapsFragment extends Fragment
 
     }
 
+    private void updateLocation(View v) {
+
+        if (ActivityCompat.checkSelfPermission(v.getContext(), android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(v.getContext(), android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+
+            ActivityCompat.requestPermissions(getActivity(),
+                    new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
+                    MY_PERMISSIONS_REQUEST_LOCATION);
+        }
+        try {
+            mMap.setMyLocationEnabled(true);
+            Log.e("Location Enabled", "location");
+            LocationManager lm = (LocationManager) getActivity().getBaseContext().getSystemService(Context.LOCATION_SERVICE);
+            Location location = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+            longitude = location.getLongitude();
+            latitude = location.getLatitude();
+            currLocation = new LatLng(latitude, longitude);
+        } catch (Exception e) {
+            Location currentLocation = LocationServices.FusedLocationApi.getLastLocation(googleApiClient);
+            currLocation = BERKELEY;
+        }
+    }
+
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
     public boolean onMarkerClick(final Marker marker) {
 
-        BitmapDescriptor icon = BitmapDescriptorFactory.fromResource(R.drawable.markerclicked);
 
-        if (marker == null || (boolean) marker.getTag()) {
-            return true;
+        if (marker.getTag() == null) {
+            return true; //If the live busIcon is selected, dont' do anything.
         }
 
-        if (this.prevMarker != null) {
-            this.prevMarker.setIcon(BitmapDescriptorFactory.fromResource(R.drawable.markernew));
-            this.prevMarker = marker;
-        }
 
         this.prevMarker = marker;
         Intent popUp;
         clearFocus();
-        marker.setIcon(icon);
+        //marker.setIcon(icon);
         popUp = new Intent(getActivity(), PopUpActivity.class);
         popUp.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         popUp.putExtra("title", marker.getTitle());
         popUp.putExtra("distance", getDistance(marker.getPosition().latitude, marker.getPosition().longitude));
         popUp.putExtra("id", marker_to_ID.get(marker));
         popUp.putExtra("location", marker.getPosition());
+        popUp.putExtra("desc1", markers_to_desc.get(marker).getDesc1());
+        popUp.putExtra("desc2", markers_to_desc.get(marker).getDesc2());
 
         startActivity(popUp);
         return true;
@@ -421,31 +500,70 @@ public class MapsFragment extends Fragment
 
     public void clearFocus() {
         View current = getActivity().getCurrentFocus();
+        FABmenu.close(false);
         if (current != null) {
             current.clearFocus();
         }
     }
 
 
-    private void loadMarkers(HashMap<String, Stop> AC_plots) {
-        BitmapDescriptor icon = BitmapDescriptorFactory.fromResource(R.drawable.markernew);
-        if (markers_ACTransit.size() == 0) {
-            for (String id : AC_plots.keySet()) {
-                double lat = AC_plots.get(id).getLatitude();
-                double lon = AC_plots.get(id).getLongitude();
-                String title = AC_plots.get(id).getName();
+    private void loadMarkers(HashMap<String, ArrayList<CategoryLoc>> items) {
+        ArrayList<CategoryLoc> microwaves = items.get("Microwave");
+        ArrayList<CategoryLoc> waterbottles = items.get("Water Fountain");
+        ArrayList<CategoryLoc> sleepPods = items.get("Sleep Pods");
+        BitmapDescriptor microwaveIcon = BitmapDescriptorFactory.fromBitmap(resizeMapIcons("microwave_map_icon",100,100));
+        BitmapDescriptor waterBottleIcon =  BitmapDescriptorFactory.fromBitmap(resizeMapIcons("waterbottle_map_icon",100,100));
+        BitmapDescriptor sleepPodIcon = BitmapDescriptorFactory.fromBitmap(resizeMapIcons("sleeppod_map_icon",100,100));
+
+        if (microwaves != null && microwaves.size() != 0) {
+            for (CategoryLoc loc : microwaves) {
+                double lat = loc.getLat();
+                double lon = loc.getLon();
+                String title = loc.getCategory();
                 MarkerOptions singleMarkerOption = new MarkerOptions()
                         .position(new LatLng(lat, lon))
-                        .icon(icon)
+                        .icon(microwaveIcon)
                         .visible(false)
                         .title(title);
                 Marker singleMarker = mMap.addMarker(singleMarkerOption);
                 singleMarker.setTag(false);
-                marker_to_ID.put(singleMarker, id);
-                markers_ACTransit.add(singleMarker);
+                markers_microwave.add(singleMarker);
+                markers_to_desc.put(singleMarker, loc);
             }
-        } else {
-            return;
+        }
+
+        if (waterbottles != null && waterbottles.size() != 0) {
+            for (CategoryLoc loc : waterbottles) {
+                double lat = loc.getLat();
+                double lon = loc.getLon();
+                String title = loc.getCategory();
+                MarkerOptions singleMarkerOption = new MarkerOptions()
+                        .position(new LatLng(lat, lon))
+                        .icon(waterBottleIcon)
+                        .visible(false)
+                        .title(title);
+                Marker singleMarker = mMap.addMarker(singleMarkerOption);
+                singleMarker.setTag(false);
+                markers_waterbottles.add(singleMarker);
+                markers_to_desc.put(singleMarker, loc);
+            }
+        }
+
+        if (sleepPods != null && sleepPods.size() != 0) {
+            for (CategoryLoc loc : sleepPods) {
+                double lat = loc.getLat();
+                double lon = loc.getLon();
+                String title = loc.getCategory();
+                MarkerOptions singleMarkerOption = new MarkerOptions()
+                        .position(new LatLng(lat, lon))
+                        .icon(sleepPodIcon)
+                        .visible(false)
+                        .title(title);
+                Marker singleMarker = mMap.addMarker(singleMarkerOption);
+                singleMarker.setTag(false);
+                markers_sleepPods.add(singleMarker);
+                markers_to_desc.put(singleMarker, loc);
+            }
         }
 
 
@@ -454,7 +572,7 @@ public class MapsFragment extends Fragment
     public String getDistance(double lat, double lng) {
         float[] results = new float[1];
         Location.distanceBetween(lat, lng, currLocation.latitude, currLocation.longitude, results);
-        return DECIMAL_FORMAT.format(results[0] * 0.000621371192);
+        return DECIMAL_FORMAT.format(results[0] * 0.000621371192) + " mi";
     }
 
     public void hideKeyboard(View view) {
