@@ -1,25 +1,18 @@
 package com.asuc.asucmobile.main;
 
-import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.annotation.RequiresApi;
-import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
 import android.util.DisplayMetrics;
-import android.view.View;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.asuc.asucmobile.R;
 import com.asuc.asucmobile.adapters.MyFragmentPageAdapter;
-import com.asuc.asucmobile.controllers.BusController;
-import com.asuc.asucmobile.fragments.BusFailedFragment;
-import com.asuc.asucmobile.fragments.BusInfoFragment;
-import com.asuc.asucmobile.models.BusInfo;
-import com.asuc.asucmobile.utilities.Callback;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,24 +27,53 @@ public class PopUpActivity extends FragmentActivity {
     ProgressBar progressBar;
     RelativeLayout refreshWrapper;
     ViewPager viewPager;
+    private TextView markerTitle, desc1View, desc2View, dist;
+    private ImageView icon;
+
 
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.fragment_start_stop_select);
-        adjustScreen(0.73, 0.18); // Makes the activity a small window
+        setContentView(R.layout.fragment_bus_info);
+        adjustScreen(0.83, 0.18); // Makes the activity a small window
         //Instantiates all UI elements
         List<Fragment> fragmentList = new ArrayList<>();
-        viewPager = (ViewPager) findViewById(R.id.viewPager);
-        mPageAdapter = new MyFragmentPageAdapter(this, getSupportFragmentManager(), fragmentList);
-        progressBar = (ProgressBar) findViewById(R.id.progress_bar);
-        refreshWrapper = (RelativeLayout) findViewById(R.id.refreshWrapper);
-        viewPager.setAdapter(mPageAdapter);
+        markerTitle = (TextView) findViewById(R.id.mainName);
+        desc1View = (TextView) findViewById(R.id.desc1);
+        desc2View = (TextView) findViewById(R.id.desc2);
+        dist = (TextView) findViewById(R.id.dist);
+
 
         //Attaches the tab dots
-        TabLayout tabLayout = (TabLayout) findViewById(R.id.tabDots);
-        tabLayout.setupWithViewPager(viewPager, true);
+      /*  TabLayout tabLayout = (TabLayout) findViewById(R.id.tabDots);
+        tabLayout.setupWithViewPager(viewPager, true);*/
+        String category = getIntent().getStringExtra("title");
+        String desc1 = getIntent().getStringExtra("desc1");
+        String desc2 = getIntent().getStringExtra("desc2");
+        String distance = getIntent().getStringExtra("distance");
+
+        icon = (ImageView) findViewById(R.id.icon);
+
+        markerTitle.setText(getIntent().getStringExtra("title"));
+        desc1View.setText(desc1);
+        desc2View.setText(desc2);
+        dist.setText(distance);
+
+        switch (category){
+            case "microwave":
+                icon.setImageResource(R.drawable.microwave_map_icon);
+                markerTitle.setTextColor(getResources().getColor(R.color.orange));
+                break;
+            case "Water Fountain":
+                icon.setImageResource(R.drawable.waterbottle_map_icon);
+                markerTitle.setTextColor(getResources().getColor(R.color.aqua));
+                break;
+            case "Sleep Pod":
+                icon.setImageResource(R.drawable.sleeppod_map_icon);
+                markerTitle.setTextColor(getResources().getColor(R.color.pink));
+                break;
+        }
 
 
         refresh();
@@ -59,13 +81,14 @@ public class PopUpActivity extends FragmentActivity {
     }
 
     private void refresh() {
-        progressBar.setVisibility(View.VISIBLE);
-        refreshWrapper.setVisibility(View.GONE);
+        //progressBar.setVisibility(View.VISIBLE);
+        //refreshWrapper.setVisibility(View.GONE);
         final String title = getIntent().getStringExtra("title");
         final String id = getIntent().getStringExtra("id");
+        final String desc1 = getIntent().getStringExtra("desc1");
 
 
-        BusController.getInstance(id, title).refreshInBackground(this, new Callback() {
+     /*   BusController.getInstance(id, title).refreshInBackground(this, new Callback() {
             @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
             @SuppressWarnings("unchecked")
             @Override
@@ -77,7 +100,7 @@ public class PopUpActivity extends FragmentActivity {
                     onRetrievalFailed();
                 } else {
 
-                    String distance = getIntent().getStringExtra("distance") + " miles away";
+
                     ArrayList<String> routeNames = new ArrayList<>();
 
                     for (BusInfo busInfo : busInfos) {
@@ -85,7 +108,6 @@ public class PopUpActivity extends FragmentActivity {
                         args.putString("title", busInfo.getTitle());
                         args.putIntegerArrayList("nearTimes", busInfo.getNearTimes());
                         args.putString("nearestTime", busInfo.getNearestTime());
-                        args.putString("distance", distance);
                         args.putString("routeName", busInfo.getRouteName());
                         args.putString("directionName", busInfo.getRouteBusTitle());
                         addFragment(new BusInfoFragment(), args);
@@ -105,7 +127,7 @@ public class PopUpActivity extends FragmentActivity {
                 addFragment(new BusFailedFragment(), args);
                 //Toast.makeText(getBaseContext(), "Unable to retrieve data, please try again", Toast.LENGTH_SHORT).show();
             }
-        });
+        });*/
 
 
     }
