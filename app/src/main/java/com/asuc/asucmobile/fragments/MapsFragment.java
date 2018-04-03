@@ -197,6 +197,7 @@ public class MapsFragment extends Fragment
 
 
         FABmenu.setIconAnimated(false);
+        FABmenu.setClosedOnTouchOutside(false);
 
         FABmenu.setOnMenuButtonClickListener(new View.OnClickListener() {
             @Override
@@ -412,6 +413,7 @@ public class MapsFragment extends Fragment
         } else {
             highlightButton(this.busesNearby, false);
         }
+
         cameraLoadAnimation(marker.getPosition());
 
     }
@@ -500,10 +502,12 @@ public class MapsFragment extends Fragment
 
     public void clearFocus() {
         View current = getActivity().getCurrentFocus();
-        FABmenu.close(false);
         if (current != null) {
             current.clearFocus();
         }
+        FABmenu.close(true);
+        FABmenu.setMenuButtonColorNormalResId(R.color.white);
+        FABmenu.getMenuIconView().setImageResource(R.drawable.itemsicons);
     }
 
 
