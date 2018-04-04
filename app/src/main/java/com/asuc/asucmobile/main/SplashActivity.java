@@ -7,11 +7,13 @@ import android.util.Log;
 import android.view.Window;
 import android.view.WindowManager;
 import android.provider.Settings;
-import com.google.firebase.crash.FirebaseCrash;
 
 import com.asuc.asucmobile.R;
 import com.asuc.asucmobile.controllers.BMAPI;
 import com.asuc.asucmobile.controllers.BMRetrofitController;
+import com.crashlytics.android.Crashlytics;
+
+import io.fabric.sdk.android.Fabric;
 
 public class SplashActivity extends Activity {
 
@@ -28,10 +30,8 @@ public class SplashActivity extends Activity {
 
         // disable Firebase crash reporting for developers
         int adb = Settings.Secure.getInt(this.getContentResolver(), Settings.Global.DEVELOPMENT_SETTINGS_ENABLED , 0);
-        if (adb == 1) {
-            FirebaseCrash.setCrashCollectionEnabled(false);
-        } else {
-            FirebaseCrash.setCrashCollectionEnabled(true);
+        if (adb != 1) {
+            Fabric.with(this, new Crashlytics());
         }
 
         // launch network stuff
