@@ -61,6 +61,9 @@
         <meta-data
             android:name="PW_PROJECT_ID"
             android:value="A44923358263" />
+        <meta-data
+            android:name="firebase_crashlytics_collection_enabled"
+            android:value="false" />
 
         <activity android:name="com.pushwoosh.richpages.RichPageActivity" />
         <activity android:name="com.pushwoosh.MessageActivity" />
