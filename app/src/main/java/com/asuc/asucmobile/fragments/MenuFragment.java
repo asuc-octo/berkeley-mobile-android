@@ -25,10 +25,12 @@ import com.asuc.asucmobile.models.Cafe;
 import com.asuc.asucmobile.models.DiningHall;
 import com.asuc.asucmobile.models.FoodItem;
 import com.asuc.asucmobile.models.FoodPlace;
+import com.asuc.asucmobile.utilities.CustomComparators;
 
 import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Locale;
 
 import static android.support.design.R.id.add;
@@ -39,7 +41,7 @@ import static android.support.design.R.id.add;
 
 
 
-public class MenuFragment extends Fragment {
+public class    MenuFragment extends Fragment {
 
     public enum FoodType {
         DiningHall,
@@ -150,6 +152,7 @@ public class MenuFragment extends Fragment {
                         closing = HOURS_FORMAT.format(cafe.getLunchDinnerClosing());
                         isOpen = cafe.isLunchDinnerOpen();
                 }
+
                 if (foodItems == null || foodItems.size() == 0) {
                     emptyListView.setText(String.format("No %s Today!", whichMenu));
                     foodMenu.setVisibility(View.GONE);
@@ -287,6 +290,11 @@ public class MenuFragment extends Fragment {
                         );
                     }
                     headerHours.setText(spannableHeader);
+
+//                    Collections.sort(foodItems, CustomComparators.FacilityComparators.getFoodSortByAZ());
+//                    Collections.sort(foodItems CustomComparators.FacilityComparators.getFoodSortByFavorite());
+//
+
                     FoodAdapter adapter = new FoodAdapter(getActivity(), foodItems, FoodPlaceAdapter.FoodType.DiningHall);
                     MenuFragment.adapters.add(adapter);
                     foodMenu.setAdapter(adapter);

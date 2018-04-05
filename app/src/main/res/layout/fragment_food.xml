@@ -22,11 +22,16 @@
 
         <TextView
             android:id="@+id/dining_halls_label"
-            android:padding="10dp"
-            android:text="Dining Halls"
-            android:textSize="18sp"
+            android:paddingBottom="6dp"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:textSize="22sp"
+            android:textColor="@color/OP_navy"
+            android:textStyle="bold"
+            android:text="Dining Halls"/>
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/dining_hall_recycler_view"
@@ -38,11 +43,16 @@
 
         <TextView
             android:id="@+id/cafes_label"
-            android:padding="10dp"
-            android:text="Cafes"
-            android:textSize="18sp"
+            android:paddingBottom="6dp"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:textSize="22sp"
+            android:textColor="@color/OP_navy"
+            android:textStyle="bold"
+            android:text="Cafes"/>
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/cafe_recycler_view"

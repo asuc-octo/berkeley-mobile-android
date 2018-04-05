@@ -158,5 +158,6 @@
 
 
     </LinearLayout>
+        android:orientation="vertical" />
 
 </RelativeLayout>

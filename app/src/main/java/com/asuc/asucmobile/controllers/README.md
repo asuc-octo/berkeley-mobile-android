@@ -9,7 +9,11 @@ out in favor of Retrofit for:
 * caching and data flow
 * built in POJO support
 
+<<<<<<< HEAD
 ## `BMRetrofitController`
+=======
+## `BMRetrofitController.java`
+>>>>>>> 9cd33c8829ef4c3065b3f2c9e220f38ee4035b50
 
 A singleton that initiates and executes all calls to RESTful API at the specified URL. Defines all
 `okhttp`, `okhttp` caching, `gson`, and `retrofit2` settings. Some specifications:
@@ -22,7 +26,11 @@ The `BMRetrofitController` is instantiated in the `SplashActivity` to lengthen t
 service has to start up all network dependencies. We also aren't caching much, so we can store everything
 in the same cache rooted at the first activity the user loads.
 
+<<<<<<< HEAD
 ## `BMAPI`
+=======
+## `BMAPI.java`
+>>>>>>> 9cd33c8829ef4c3065b3f2c9e220f38ee4035b50
 
 The Berkeley Mobile (back end) API. Defines all the endpoints we can call using Retrofit-defined
 annotation syntax. Responses are received in POJO format after automated parsing. They should be populated

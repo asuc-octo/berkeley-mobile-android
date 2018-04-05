@@ -2,7 +2,6 @@ package com.asuc.asucmobile.adapters;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.util.Log;
 import android.util.TypedValue;
 
 import android.view.LayoutInflater;
@@ -16,18 +15,20 @@ import android.widget.TextView;
 import com.asuc.asucmobile.R;
 import com.asuc.asucmobile.fragments.MenuFragment;
 import com.asuc.asucmobile.main.ListOfFavorites;
+import com.asuc.asucmobile.main.OpenCafeActivity;
+import com.asuc.asucmobile.main.OpenDiningHallActivity;
 import com.asuc.asucmobile.models.FoodItem;
+import com.asuc.asucmobile.utilities.CustomComparators;
 import com.asuc.asucmobile.utilities.SerializableUtilities;
 import com.google.firebase.analytics.FirebaseAnalytics;
 
 import java.util.ArrayList;
-import java.util.HashSet;
+import java.util.Collections;
 
 public class FoodAdapter extends BaseAdapter {
 
     public static final String TAG = "FoodAdapter";
     private FirebaseAnalytics mFirebaseAnalytics;
-
 
     private Context context;
     private ArrayList<FoodItem> foodItems;
@@ -63,6 +64,10 @@ public class FoodAdapter extends BaseAdapter {
             convertView = LayoutInflater.from(context).inflate(R.layout.food_row, parent, false);
         }
 
+        if (this.foodType == FoodPlaceAdapter.FoodType.Cafe) {
+            convertView = LayoutInflater.from(context).inflate(R.layout.food_row_cafe, parent, false);
+        }
+
         final TextView foodName = (TextView) convertView.findViewById(R.id.food_name);
         foodName.setText(foodItem.getName());
 
@@ -71,9 +76,9 @@ public class FoodAdapter extends BaseAdapter {
             foodCost.setText(foodItem.getCost());
         }
 
-        if (foodItem.getFoodTypes() != null && foodItem.getFoodTypes().size() > 0) {
+        // make imageViews dynamically, switch on food types
+        if (foodItem.getFoodTypes() != null && foodItem.getFoodTypes().size() > 0 && this.foodType != FoodPlaceAdapter.FoodType.Cafe) {
 
-            // make imageViews dynamically, switch on types
             final LinearLayout foodTypesLayout = (LinearLayout) convertView.findViewById(R.id.food_types_layout);
             foodTypesLayout.removeAllViews();
 
@@ -106,6 +111,7 @@ public class FoodAdapter extends BaseAdapter {
         } else {
             imageView.setImageResource(R.drawable.pre_favorite);
         }
+
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -123,8 +129,12 @@ public class FoodAdapter extends BaseAdapter {
                     Bundle bundle = new Bundle();
                     bundle.putString("food_item", foodItem.getName());
                     mFirebaseAnalytics.logEvent("favorited_food_item", bundle);
+                }
 
-
+                if (foodType == FoodPlaceAdapter.FoodType.Cafe) {
+                    Collections.sort(foodItems, CustomComparators.FacilityComparators.getFoodSortByFavorite(OpenCafeActivity.selfReference));
+                } else if (foodType == FoodPlaceAdapter.FoodType.DiningHall) {
+                    Collections.sort(foodItems, CustomComparators.FacilityComparators.getFoodSortByFavorite(OpenDiningHallActivity.selfReference));
                 }
 
                 MenuFragment.refreshLists();

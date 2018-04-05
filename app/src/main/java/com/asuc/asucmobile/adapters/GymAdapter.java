@@ -1,74 +1,108 @@
 package com.asuc.asucmobile.adapters;
 
 import android.content.Context;
+import android.content.Intent;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.asuc.asucmobile.R;
+import com.asuc.asucmobile.main.OpenGymActivity;
 import com.asuc.asucmobile.models.Gym;
+import com.bumptech.glide.Glide;
 
-import java.util.ArrayList;
+import java.util.List;
 
-public class GymAdapter extends BaseAdapter {
+/**
+ * Created by rustie on 10/4/17.
+ */
 
-    private Context context;
-    private ArrayList<Gym> gyms;
+public class GymAdapter extends RecyclerView.Adapter<GymAdapter.ViewHolder> {
 
-    public GymAdapter(Context context) {
-        this.context = context;
+    class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-        gyms = new ArrayList<>();
-    }
+        TextView nameTextView;
+        ImageView imageView;
+        TextView openStatusTextView;
 
-    @Override
-    public int getCount() {
-        return gyms.size();
-    }
 
-    @Override
-    public Gym getItem(int i) {
-        return gyms.get(i);
-    }
+        public ViewHolder(View itemView) {
+            super(itemView);
+            nameTextView = (TextView) itemView.findViewById(R.id.name);
+            imageView = (ImageView) itemView.findViewById(R.id.image);
+            openStatusTextView = (TextView) itemView.findViewById(R.id.open_status);
 
-    @Override
-    public long getItemId(int i) {
-        return i;
-    }
-
-    @Override
-    public View getView(int i, View convertView, ViewGroup parent) {
-        Gym gym = getItem(i);
-        if (convertView == null) {
-            convertView = LayoutInflater.from(context).inflate(R.layout.facility_row, parent, false);
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent;
+                    Gym gym = mGymList.get(getAdapterPosition());
+                    OpenGymActivity.setGym(gym);
+                    intent = new Intent(mContext, OpenGymActivity.class);
+                    mContext.startActivity(intent);
+                }
+            });
         }
-        TextView gymName = (TextView) convertView.findViewById(R.id.name);
-        TextView gymAvailability = (TextView) convertView.findViewById(R.id.availability);
-        gymName.setText(gym.getName());
-        if (gym.getOpening() == null || gym.getClosing() == null) {
-            gymAvailability.setTextColor(context.getResources().getColor(R.color.pavan_light));
-            gymAvailability.setText("Unknown hours");
-        } else if (gym.isOpen()) {
-            gymAvailability.setTextColor(context.getResources().getColor(R.color.green));
-            gymAvailability.setText("Open");
-        } else {
-            gymAvailability.setTextColor(context.getResources().getColor(android.R.color.holo_red_light));
-            gymAvailability.setText("Closed");
+
+        @Override
+        public void onClick(View view) {
+
         }
-        return convertView;
     }
+
+    private List<Gym> mGymList;
+    private Context mContext;
 
     /**
-     * setList() updates the list of gyms (typically after calling for a refresh).
-     *
-     * @param list The updated list of gyms.
+     * Sets a GymAdapter for the type of food place specified
+     * @param context
+     * @param Gyms
      */
-    public void setList(ArrayList<Gym> list) {
-        gyms = list;
-
-        notifyDataSetChanged();
+    public GymAdapter(Context context, List<Gym> Gyms) {
+        mGymList = Gyms;
+        mContext = context;
     }
 
+
+    @Override
+    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(mContext).inflate(R.layout.gym_card, parent, false);
+        ViewHolder viewHolder = new ViewHolder(view);
+        return viewHolder;
+    }
+
+    @Override
+    public void onBindViewHolder(ViewHolder holder, int position) {
+        TextView nameTextView = holder.nameTextView;
+        ImageView imageView = holder.imageView;
+        TextView openStatusTextView = holder.openStatusTextView;
+
+        if (getItem(position).isOpen()) {
+            openStatusTextView.setTextColor(mContext.getResources().getColor(android.R.color.holo_green_light));
+            openStatusTextView.setText(mContext.getText(R.string.open));
+        } else {
+            openStatusTextView.setTextColor(mContext.getResources().getColor(android.R.color.holo_red_light));
+            openStatusTextView.setText(mContext.getText(R.string.closed));
+        }
+
+        nameTextView.setText(getItem(position).getName());
+        Glide.with(mContext)
+                .load(getItem(position)
+                        .getImageUrl()).into(imageView);
+
+
+    }
+
+    public Gym getItem(int position) {
+        return mGymList.get(position);
+    }
+    
+
+    @Override
+    public int getItemCount() {
+        return mGymList.size();
+    }
 }

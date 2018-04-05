@@ -4,6 +4,7 @@ import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 
+import com.asuc.asucmobile.utilities.ServerUtils;
 import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -27,48 +28,29 @@ public class BMRetrofitController {
 
     public static final String TAG = "RETROFIT CONTROLLER";
 
-    public static final String BASE_URL = "http://asuc-mobile-dev.herokuapp.com/api/";
     public static final String ISO_FORMAT = "yyyy-MM-dd'T'HH:mm:ss.SSSZ";
-    public static final int CACHE_SIZE = 10; // size of cache in MiB
+    public static final int CACHE_SIZE = 20; // size of cache in MiB
     public static final int MAX_AGE = 60;
     public static final int MAX_STALE = 60 * 60 * 24;
 
-    private static Context c;
+    private static Context context;
     public static BMAPI bmapi;
 
     private static Retrofit retrofit;
 
-    private BMRetrofitController(Context c) {
-        this.c = c;
-    }
-
     /**
      * Initiate the BMAPI from a main context
-     * @param context
+     * @param c
      * @param serviceClass
      */
-    public static void create(Context context, Class serviceClass) {
-        new BMRetrofitController(context);
+    public static void create(Context c, Class serviceClass) {
+        context = c;
         configureRetrofit();
 
         bmapi = (BMAPI) retrofit.create(serviceClass);
     }
 
-    /**
-     * Checks to see if we have internet connection
-     * @return
-     */
-    public static boolean isConnected() {
-        ConnectivityManager cm =
-                (ConnectivityManager) c.getSystemService(Context.CONNECTIVITY_SERVICE);
 
-        NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
-        boolean isConnected = activeNetwork != null &&
-                activeNetwork.isConnectedOrConnecting();
-
-        return isConnected;
-
-    }
 
     /**
      * All the magical caching, okhttp, gson, and retrofit settings
@@ -76,7 +58,7 @@ public class BMRetrofitController {
     private static void configureRetrofit() {
 
         // caching config
-        File cacheDir = new File(c.getCacheDir(), "okHttpCache");
+        File cacheDir = new File(context.getCacheDir(), "okHttpCache");
         Cache cache = new Cache(cacheDir, CACHE_SIZE * 1024 * 1024);
 
         // okhttp config for cache
@@ -86,7 +68,6 @@ public class BMRetrofitController {
                 .addInterceptor(new OfflineResponseCacheInterceptor())
                 .build();
 
-
         // gson config
         GsonBuilder gsonBuilder = new GsonBuilder()
                 .setDateFormat(ISO_FORMAT)
@@ -95,24 +76,11 @@ public class BMRetrofitController {
 
         // building retrofit
         retrofit = new Retrofit.Builder()
-                .baseUrl(BASE_URL)
+                .baseUrl(ServerUtils.getBaseUrl())
                 .client(httpClient)
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .build();
     }
-
-
-
-
-    /** Dangerous interceptor that rewrites the server's cache-control header. */
-    private static final Interceptor REWRITE_CACHE_CONTROL_INTERCEPTOR = new Interceptor() {
-        @Override public Response intercept(Chain chain) throws IOException {
-            Response originalResponse = chain.proceed(chain.request());
-            return originalResponse.newBuilder()
-                    .header("Cache-Control", String.format("max-age=%d, only-if-cached, max-stale=%d", MAX_AGE, MAX_STALE))
-                    .build();
-        }
-    };
 
     private static class ResponseCachingInterceptor implements Interceptor {
 
@@ -133,8 +101,6 @@ public class BMRetrofitController {
         @Override
         public Response intercept(Chain chain) throws IOException {
             Request request = chain.request();
-//            NetworkInfo networkInfo =((ConnectivityManager)
-//                    (c.getSystemService(Context.CONNECTIVITY_SERVICE))).getActiveNetworkInfo();
             if (!isConnected()) {
                 request = request.newBuilder()
                         .removeHeader("Pragma")
@@ -147,6 +113,23 @@ public class BMRetrofitController {
             }
             return chain.proceed(request);
         }
+    }
+
+
+    /**
+     * Checks to see if we have internet connection
+     * @return
+     */
+    public static boolean isConnected() {
+        ConnectivityManager cm =
+                (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+
+        NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
+        boolean isConnected = activeNetwork != null &&
+                activeNetwork.isConnectedOrConnecting();
+
+        return isConnected;
+
     }
 
 }
