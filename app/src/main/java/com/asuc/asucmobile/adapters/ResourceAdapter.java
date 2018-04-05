@@ -12,7 +12,6 @@ import android.widget.TextView;
 import com.asuc.asucmobile.R;
 import com.asuc.asucmobile.fragments.ResourceFragment;
 import com.asuc.asucmobile.main.ListOfFavorites;
-import com.asuc.asucmobile.main.OpenLibraryActivity;
 import com.asuc.asucmobile.main.OpenResourceActivity;
 import com.asuc.asucmobile.models.Resource;
 import com.asuc.asucmobile.utilities.CustomComparators;
@@ -28,7 +27,6 @@ public class ResourceAdapter extends BaseAdapter {
 
     public ResourceAdapter(Context context) {
         this.context = context;
-
         allResources = new ArrayList<>();
         resources = new ArrayList<>();
     }
@@ -93,7 +91,7 @@ public class ResourceAdapter extends BaseAdapter {
                     imageView.setImageResource(R.drawable.post_favorite);
                 }
 
-                Collections.sort(getResources(), CustomComparators.FacilityComparators.getSortByFavoriteResource(OpenResourceActivity.self_reference));
+                Collections.sort(getResources(), CustomComparators.FacilityComparators.getSortByFavoriteResource(OpenResourceActivity.selfReference));
                 ResourceFragment.refreshLists();
             }
         });
@@ -131,8 +129,9 @@ public class ResourceAdapter extends BaseAdapter {
                     filteredResources = allResources;
                 } else {
                     for (Resource resource : allResources) {
-                        if (resource.getResource().toLowerCase().contains(query.toString().toLowerCase()) ||
-                                resource.getLocation().toLowerCase().contains(query.toString().toLowerCase())) {
+                        if (resource.getResource().toLowerCase().contains(query.toString().toLowerCase())) {
+//                        if (resource.getResource().toLowerCase().contains(query.toString().toLowerCase()) ||
+//                                resource.getLocation().toLowerCase().contains(query.toString().toLowerCase())) {
                             filteredResources.add(resource);
                         }
                     }
@@ -146,7 +145,8 @@ public class ResourceAdapter extends BaseAdapter {
             @Override
             @SuppressWarnings("unchecked")
             protected void publishResults(CharSequence constraint, FilterResults filterResults) {
-                resources = (ArrayList<Resource>) filterResults.values;
+                ArrayList<Resource> results = (ArrayList<Resource>) filterResults.values;
+                resources = results;
                 notifyDataSetChanged();
             }
 

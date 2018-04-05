@@ -20,9 +20,9 @@
         <item name="android:windowCloseOnTouchOutside">true</item>
     </style>
 
-    <style name="menu_labels_style">
-        <item name="android:background">@drawable/icon_info</item>
-        <item name="android:textColor">@color/holo_white</item>
-    </style>
+
+
+
+
 
 </resources>

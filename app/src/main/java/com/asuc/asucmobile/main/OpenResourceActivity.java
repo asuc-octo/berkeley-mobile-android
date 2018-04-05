@@ -45,7 +45,7 @@ public class OpenResourceActivity extends BaseActivity {
     private GoogleMap map;
     private static Resource resource;
 
-    public static OpenResourceActivity self_reference;
+    public static OpenResourceActivity selfReference;
     private FirebaseAnalytics mFirebaseAnalytics;
 
 
@@ -55,7 +55,7 @@ public class OpenResourceActivity extends BaseActivity {
         super.onCreate(savedInstanceState, R.layout.activity_open_resource);
         exitIfNoData();
         setupToolbar(resource.getResource(), true);
-        self_reference = this;
+        selfReference = this;
 
         mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
         Bundle bundle = new Bundle();
@@ -63,58 +63,16 @@ public class OpenResourceActivity extends BaseActivity {
         mFirebaseAnalytics.logEvent("opened_resource", bundle);
 
         // Populate UI.
-        TextView hours = (TextView) findViewById(R.id.hours);
-        TextView phone = (TextView) findViewById(R.id.phone);
-        TextView email = (TextView) findViewById(R.id.email);
-        TextView location = (TextView) findViewById(R.id.location);
-        TextView notes = (TextView) findViewById(R.id.notes);
-        LinearLayout hoursLayout = (LinearLayout) findViewById(R.id.hours_layout);
-        LinearLayout phoneLayout = (LinearLayout) findViewById(R.id.phone_layout);
-        LinearLayout emailLayout = (LinearLayout) findViewById(R.id.email_layout);
-        LinearLayout locationLayout = (LinearLayout) findViewById(R.id.location_layout);
-        LinearLayout notesLayout = (LinearLayout) findViewById(R.id.notes_layout);
-        View dividerHoursPhone = findViewById(R.id.divider_hours_phone);
-        View dividerPhoneEmail = findViewById(R.id.divider_phone_email);
-        View dividerEmailLocation = findViewById(R.id.divider_email_location);
-        View dividerLocationNotes = findViewById(R.id.divider_location_notes);
         mapFragment = (MapFragment) getFragmentManager().findFragmentById(R.id.map);
 
-        //This escape fixes a bug I had where the Tang center would display \n instead of newlines.
-        setText(new View[] { hoursLayout, dividerHoursPhone }, hours,
-                resource.getHours().replace("\\n", System.getProperty("line.separator")));
-        setText(new View[] { phoneLayout, dividerPhoneEmail }, phone, setUpPhone());
-        setText(new View[] { emailLayout, dividerEmailLocation }, email, resource.getEmail());
 
-        //Escape for Confidential Care Advocates which has a null location.
-        setText(new View[] { locationLayout, dividerLocationNotes },location,
-                resource.getLocation());
-        setText(new View[] { notesLayout, dividerLocationNotes }, notes, setUpNotes());
-
-        phoneLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i = new Intent(Intent.ACTION_DIAL);
-                i.setData(Uri.parse("tel:" + resource.getPhone1()));
-                startActivity(i);
-            }
-        });
-        emailLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent i = new Intent(Intent.ACTION_SEND);
-                i.setType("text/plain");
-                i.putExtra(Intent.EXTRA_EMAIL, new String[] { resource.getEmail() });
-                if (i.resolveActivity(getPackageManager()) != null) {
-                    startActivity(i);
-                }
-            }
-        });
-        locationLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                openMap();
-            }
-        });
+        // set description
+        setUpDescription();
+        setUpNotes();
+        setUpLocation();
+        setUpEmail();
+        setUpHours();
+        setUpPhone();
 
         // Display instructions if this is the first time opening this activity.
         SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
@@ -147,6 +105,76 @@ public class OpenResourceActivity extends BaseActivity {
             }
         } else {
             super.onActivityResult(requestCode, resultCode, data);
+        }
+    }
+
+    private void setUpNotes(){
+        TextView notes = (TextView) findViewById(R.id.notes);
+        LinearLayout notesLayout = (LinearLayout) findViewById(R.id.notes_layout);
+        setText(notesLayout, notes, getNotesString());
+    }
+
+
+    private void setUpLocation(){
+        TextView location = (TextView) findViewById(R.id.location);
+        LinearLayout locationLayout = (LinearLayout) findViewById(R.id.location_layout);
+        if (setText(locationLayout, location, resource.getLocation())) {
+            locationLayout.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    openMap();
+                }
+            });
+        }
+    }
+
+    private void setUpEmail(){
+        TextView email = (TextView) findViewById(R.id.email);
+        LinearLayout emailLayout = (LinearLayout) findViewById(R.id.email_layout);
+        if (setText(emailLayout, email, resource.getEmail())) {
+            emailLayout.setOnClickListener(
+                    new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            Intent i = new Intent(Intent.ACTION_SEND);
+                            i.setType("text/plain");
+                            i.putExtra(Intent.EXTRA_EMAIL, new String[] { resource.getEmail() });
+                            if (i.resolveActivity(getPackageManager()) != null) {
+                                startActivity(i);
+                            }
+                        }
+                    });
+        }
+    }
+
+    private void setUpPhone(){
+        TextView phone = (TextView) findViewById(R.id.phone);
+        LinearLayout phoneLayout = (LinearLayout) findViewById(R.id.phone_layout);
+        if (setText(phoneLayout, phone, getPhoneNumbersString())) {
+            phoneLayout.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent i = new Intent(Intent.ACTION_DIAL);
+                    i.setData(Uri.parse("tel:" + resource.getPhone1()));
+                    startActivity(i);
+                }
+            });
+        }
+    }
+
+    private void setUpHours(){
+        TextView hours = (TextView) findViewById(R.id.hours);
+        LinearLayout hoursLayout = (LinearLayout) findViewById(R.id.hours_layout);
+        setText(hoursLayout, hours, resource.getHours());
+
+    }
+
+    private void setUpDescription() {
+        TextView description = (TextView) findViewById(R.id.description);
+        LinearLayout descriptionLayout = (LinearLayout) findViewById(R.id.description_layout);
+        setText(descriptionLayout, description, resource.getDescription());
+        if (NULL_STRINGS.contains(resource.getNotes())) {
+            findViewById(R.id.divider_description).setVisibility(View.GONE);
         }
     }
 
@@ -212,7 +240,7 @@ public class OpenResourceActivity extends BaseActivity {
     /**
      * This code sets up daily hours, only.
      */
-    private String setUpPhone() {
+    private String getPhoneNumbersString() {
         if (validatePhoneNumber(resource.getPhone2())) {
             return "Phone 1: " + resource.getPhone1() + "\n" + "Phone 2: " + resource.getPhone2();
         } else {
@@ -220,8 +248,10 @@ public class OpenResourceActivity extends BaseActivity {
         }
     }
 
-    private String setUpNotes() {
-        if (resource.getNotes() != null) {
+
+    private String getNotesString() {
+        String s = resource.getNotes();
+        if (s != null && !s.equals("")) {
             String displayedNotes =
                     !resource.getNotes().equals("null") ? "\n" + resource.getNotes() : "";
             return "This is an " + resource.getOnOrOffCampus() + " resource. " + displayedNotes;
@@ -240,6 +270,9 @@ public class OpenResourceActivity extends BaseActivity {
     }
 
     private boolean validatePhoneNumber(String num) {
+        if (num == null) {
+            return false;
+        }
         Pattern pattern = Pattern.compile(PHONE_REGEX);
         Matcher matcher = pattern.matcher(num);
         return matcher.matches();
@@ -247,17 +280,18 @@ public class OpenResourceActivity extends BaseActivity {
 
     /**
      * Sets the text for a view if valid text is present. Also strips unneeded whitespace from text.
-     * @param viewsToBeDeleted Views to delete if text is invalid.
+     * Returns whether text was valid
+     * @param viewToBeDeleted Views to delete if text is invalid.
      * @param view TextView to set the text on.
      * @param text Content string.
      */
-    private void setText(View[] viewsToBeDeleted, TextView view, String text) {
-        if (NULL_STRINGS.contains(text) || text == null) {
-            for (View v : viewsToBeDeleted) {
-                v.setVisibility(View.GONE);
-            }
+    private boolean setText(View viewToBeDeleted, TextView view, String text) {
+        if (text == null || NULL_STRINGS.contains(text)) {
+            viewToBeDeleted.setVisibility(View.GONE);
+            return false;
         } else {
             view.setText(text.trim());
+            return false;
         }
     }
 

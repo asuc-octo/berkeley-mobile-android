@@ -25,7 +25,6 @@ import com.asuc.asucmobile.fragments.ResourceFragment;
 import com.asuc.asucmobile.main.MainActivity;
 import com.asuc.asucmobile.fragments.MapsFragment;
 import com.asuc.asucmobile.models.Category;
-import com.google.android.gms.maps.MapFragment;
 
 public class NavigationGenerator {
 
