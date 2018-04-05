@@ -10,6 +10,7 @@ import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.style.ForegroundColorSpan;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -17,6 +18,7 @@ import com.asuc.asucmobile.R;
 import com.asuc.asucmobile.models.Gym;
 import com.asuc.asucmobile.utilities.Callback;
 import com.asuc.asucmobile.utilities.ImageDownloadThread;
+import com.bumptech.glide.Glide;
 import com.google.firebase.analytics.FirebaseAnalytics;
 
 import java.text.SimpleDateFormat;
@@ -47,7 +49,8 @@ public class OpenGymActivity extends BaseActivity {
         TextView hours = (TextView) findViewById(R.id.hours);
         TextView address = (TextView) findViewById(R.id.location);
         final ProgressBar loadingBar = (ProgressBar) findViewById(R.id.progress_bar);
-        final View image = findViewById(R.id.image);
+        final ImageView image = (ImageView) findViewById(R.id.image);
+
         Spannable hoursString;
         if (gym.getOpening() != null && gym.getClosing() != null) {
             String isOpen;
@@ -71,26 +74,9 @@ public class OpenGymActivity extends BaseActivity {
         address.setText(gym.getAddress());
 
         // Load gym image.
-        loadingBar.bringToFront();
-        new ImageDownloadThread(this, gym.getImageUrl(), new Callback() {
-            @Override
-            public void onDataRetrieved(Object data) {
-                if (data != null) {
-                    Bitmap bitmap = (Bitmap) data;
-                    Drawable bitmapDrawable = new BitmapDrawable(getResources(), bitmap);
-                    image.setBackgroundDrawable(bitmapDrawable);
-                }
-                loadingBar.setVisibility(View.GONE);
-                image.setVisibility(View.VISIBLE);
-            }
-
-            @Override
-            public void onRetrievalFailed() {
-                image.setBackgroundDrawable(getResources().getDrawable(R.drawable.default_gym));
-                loadingBar.setVisibility(View.GONE);
-                image.setVisibility(View.VISIBLE);
-            }
-        }).start();
+        Glide.with(this).load(gym.getImageUrl()).into(image);
+        loadingBar.setVisibility(View.GONE);
+        image.setVisibility(View.VISIBLE);
     }
 
     @Override

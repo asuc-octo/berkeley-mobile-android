@@ -223,7 +223,7 @@ public class RouteSelected extends BaseActivity {
                                         previd = stop.getName();
                                         prevLocation = new LatLng(stop.getLatitude(), stop.getLongitude());
                                     }
-                                     else {
+                                    else {
                                         LatLng currentLocation = new LatLng(stop.getLatitude(), stop.getLongitude());
                                         String url = getMapsApiDirectionsUrl(prevLocation, currentLocation);
                                         RouteSelected.ReadTask downloadTask = new RouteSelected.ReadTask();

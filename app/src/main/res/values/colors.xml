@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <color name="black">#000000</color>
     <color name="hotline_blue">#005581</color>
     <color name="off_hotline_blue">#004467</color>
 
@@ -11,6 +12,7 @@
     <color name="white">#FFFFFF</color>
 
     <color name="OP_navy">#005581</color>
+    <color name="OP_navy_transparent">#7b005581</color>
     <color name="ASUC_blue">#1295D8</color>
     <color name="pavan_light">#72CDF4</color>
     <color name="two_chainz_gold">#FFB511</color>
@@ -32,6 +34,16 @@
 
     <color name="toolbarTransparentForMaps">#46005581</color>
     <color name="toolbarTransparent">#00005581</color>
+
+
+    <color name="excercise_color_1">#10CEB4</color>
+    <color name="excercise_color_2">#FB2BA8</color>
+    <color name="excercise_color_3">#FFB109</color>
+    <color name="excercise_color_4">#3890F7</color>
+    <color name="excercise_color_5">#8E31FF</color>
+    <color name="excercise_color_6">#FF720A</color>
+    <color name="excercise_color_7">#3EB7D2</color>
+    <color name="excercise_boundary">#e4e7e7</color>
 
 
 </resources>

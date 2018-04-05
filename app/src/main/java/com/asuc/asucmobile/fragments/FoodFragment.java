@@ -23,10 +23,12 @@ import com.asuc.asucmobile.models.responses.CafesResponse;
 import com.asuc.asucmobile.models.responses.DiningHallsResponse;
 import com.asuc.asucmobile.models.FoodPlace;
 import com.asuc.asucmobile.controllers.BMRetrofitController;
+import com.asuc.asucmobile.utilities.CustomComparators;
 import com.asuc.asucmobile.utilities.NavigationGenerator;
 import com.google.firebase.analytics.FirebaseAnalytics;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import retrofit2.Call;
@@ -49,13 +51,13 @@ public class FoodFragment extends Fragment {
 
     private List<FoodPlace> mDiningHallList;
     private List<FoodPlace> mCafeList;
-    
+
     private ProgressBar mProgressBar;
     private LinearLayout mRefreshWrapper;
     private FirebaseAnalytics mFirebaseAnalytics;
 
-    Call<DiningHallsResponse> diningHallsCall;
-    Call<CafesResponse> cafesCall;
+    private Call<DiningHallsResponse> mDiningHallsCall;
+    private Call<CafesResponse> mCafesCall;
 
     @Override
     @SuppressWarnings("deprecation")
@@ -66,7 +68,6 @@ public class FoodFragment extends Fragment {
         ((AppCompatActivity) getContext()).setSupportActionBar(toolbar);
         NavigationGenerator.generateToolbarMenuButton(getActivity(), toolbar);
         toolbar.setTitle("Food");
-        ImageButton refreshButton = (ImageButton) layout.findViewById(R.id.refresh_button);
 
         mFirebaseAnalytics = FirebaseAnalytics.getInstance(this.getContext());
         Bundle bundle = new Bundle();
@@ -78,30 +79,30 @@ public class FoodFragment extends Fragment {
         mDiningHallLabel = (TextView) layout.findViewById(R.id.dining_halls_label);
         mCafeLabel = (TextView) layout.findViewById(R.id.cafes_label);
 
-
+        // set up dining hall RecyclerView
         mDiningRecyclerView = (RecyclerView) layout.findViewById(R.id.dining_hall_recycler_view);
         mDiningRecyclerView.setHasFixedSize(true);
-        mDiningHallList = new ArrayList<>();
         mDiningRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
+        mDiningHallList = new ArrayList<>();
         mDiningRecyclerView.setAdapter(new FoodPlaceAdapter(getContext(), mDiningHallList, FoodPlaceAdapter.FoodType.DiningHall));
 
-        // null check on recyclerviews and size check on lists
-
-
+        // set up cafe RecyclerView
         mCafeRecyclerView = (RecyclerView) layout.findViewById(R.id.cafe_recycler_view);
         mCafeRecyclerView.setHasFixedSize(true);
-        mCafeList = new ArrayList<>();
         mCafeRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
+        mCafeList = new ArrayList<>();
         mCafeRecyclerView.setAdapter(new FoodPlaceAdapter(getContext(), mCafeList, FoodPlaceAdapter.FoodType.Cafe));
 
-
+        // set up refresh
+        ImageButton refreshButton = (ImageButton) layout.findViewById(R.id.refresh_button);
         refreshButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 refresh();
             }
         });
-        refresh();
+
+        refresh(); // fetch data
         return layout;
     }
 
@@ -117,8 +118,8 @@ public class FoodFragment extends Fragment {
      */
     private void refresh() {
 
-        diningHallsCall = BMRetrofitController.bmapi.callDiningHallList();
-        cafesCall = BMRetrofitController.bmapi.callCafeList();
+        mDiningHallsCall = BMRetrofitController.bmapi.callDiningHallList();
+        mCafesCall = BMRetrofitController.bmapi.callCafeList();
 
         mCafeLabel.setVisibility(View.GONE);
         mDiningHallLabel.setVisibility(View.GONE);
@@ -136,7 +137,7 @@ public class FoodFragment extends Fragment {
 
     private void getCafes() {
 
-        cafesCall.enqueue(new Callback<CafesResponse>() {
+        mCafesCall.enqueue(new Callback<CafesResponse>() {
             @Override
             public void onResponse(Call<CafesResponse> call, Response<CafesResponse> response) {
 
@@ -151,7 +152,6 @@ public class FoodFragment extends Fragment {
                 mCafeRecyclerView.setVisibility(View.VISIBLE);
                 mProgressBar.setVisibility(View.GONE);
                 mCafeRecyclerView.setAdapter(new FoodPlaceAdapter(getContext(), mCafeList, FoodPlaceAdapter.FoodType.Cafe));
-                Log.d(TAG, dh.toString());
             }
 
             @Override
@@ -166,49 +166,27 @@ public class FoodFragment extends Fragment {
 
     private void getDining() {
 
-        diningHallsCall.enqueue(new retrofit2.Callback<DiningHallsResponse>() {
-             @Override
-             public void onResponse(Call<DiningHallsResponse> call, Response<DiningHallsResponse> response) {
+        mDiningHallsCall.enqueue(new retrofit2.Callback<DiningHallsResponse>() {
+            @Override
+            public void onResponse(Call<DiningHallsResponse> call, Response<DiningHallsResponse> response) {
 
-                 Log.d("Dining Response: ", response.headers().toString());
-                 Log.d("Dining Response: ", response.body().toString());
-
-                 if (response.raw().cacheResponse() != null) {
-                     // true: response was served from cache
-                     Log.d("Dining Response: ", "Served from Cache");
-
-                 }
-
-                 if (response.raw().networkResponse() != null) {
-                     // true: response was served from network/server
-                     Log.d("Dining Response: ", "Served from Network");
-
-                 }
-
-                 if (BMRetrofitController.isConnected()) {
-                     Log.d("Dining Response: ", "Connected");
-                 }
-
-
-
-                 List<FoodPlace> dh = (List<FoodPlace>) response.body().getDiningHalls();
-                mDiningHallList = dh;
+                mDiningHallList = (List<FoodPlace>) response.body().getDiningHalls();
 
                 mDiningHallLabel.setVisibility(View.VISIBLE);
                 mDiningRecyclerView.setVisibility(View.VISIBLE);
                 mProgressBar.setVisibility(View.GONE);
                 mDiningRecyclerView.setAdapter(new FoodPlaceAdapter(getContext(), mDiningHallList, FoodPlaceAdapter.FoodType.DiningHall));
-                 Log.d(TAG, dh.toString());
-             }
 
-             @Override
-             public void onFailure(Call<DiningHallsResponse> call, Throwable t) {
+            }
+
+            @Override
+            public void onFailure(Call<DiningHallsResponse> call, Throwable t) {
                 mProgressBar.setVisibility(View.GONE);
                 mRefreshWrapper.setVisibility(View.VISIBLE);
                 Toast.makeText(getContext(), "Unable to retrieve dining hall data, please try again",
                         Toast.LENGTH_SHORT).show();
-             }
-         });
+            }
+        });
     }
 
 }
