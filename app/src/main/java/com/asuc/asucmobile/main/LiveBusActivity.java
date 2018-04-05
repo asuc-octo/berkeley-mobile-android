@@ -196,15 +196,7 @@ public class LiveBusActivity extends BaseActivity implements OnMapReadyCallback 
             }
         }
 
-       /* public void clear(HashMap<String, Marker> hashmap) {
 
-            for (String x : hashmap.keySet()) {
-                hashmap.get(x).remove();
-            }
-
-            //hashmap.clear();
-
-        }*/
     }
 
 }
