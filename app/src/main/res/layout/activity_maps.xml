@@ -80,12 +80,57 @@
         android:visibility="gone" />
 
 
+    <com.github.clans.fab.FloatingActionMenu
+        android:id="@+id/FABmenu"
+        android:layout_width="@dimen/button_size"
+        android:visibility="gone"
+        android:layout_height="@dimen/button_size"
+        android:layout_alignParentBottom="true"
+        android:layout_below="@+id/topBox"
+        android:layout_alignEnd="@+id/busesNearby"
+        android:translationY="-100dp"
+        app:menu_colorNormal="#FFFFFF"
+        app:menu_colorPressed="#1565C0"
+        app:menu_fab_size="normal"
+        app:menu_icon="@drawable/itemsicons"
+
+        >
+
+        <com.github.clans.fab.FloatingActionButton
+            android:id="@+id/waterbottle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/waterbottles"
+            app:fab_colorNormal="@color/aqua"
+            app:fab_colorPressed="@color/aqua"
+            app:fab_size="mini" />
+
+        <com.github.clans.fab.FloatingActionButton
+            android:id="@+id/sleeppod"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/sleeppods"
+            app:fab_colorNormal="@color/pink"
+            app:fab_colorPressed="@color/pink"
+            app:fab_size="mini" />
+
+        <com.github.clans.fab.FloatingActionButton
+            android:id="@+id/microwave"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/microwaves"
+            app:fab_colorNormal="@color/orange"
+            app:fab_colorPressed="@color/orange"
+            app:fab_size="mini" />
+
+
+    </com.github.clans.fab.FloatingActionMenu>
+
     <view
         android:id="@+id/determinate"
         class="mbanje.kurt.fabbutton.FabButton"
-        android:layout_width="@dimen/button_size"
-        android:layout_height="@dimen/button_size"
-
+        android:layout_width="@dimen/fab_size_normal"
+        android:layout_height="@dimen/fab_size_normal"
         android:layout_alignEnd="@+id/busesNearby"
         android:layout_alignParentBottom="true"
         android:color="#2685F5"
@@ -94,8 +139,9 @@
         android:src="@drawable/go_button"
         android:text="GO"
         android:textColor="@color/holo_white"
-        android:translationY="-20dp"
+        android:translationY="-30dp"
         android:visibility="visible"
+        android:layout_marginRight="5dp"
 
         app:fbb_autoStart="true"
         app:fbb_endBitmap="@drawable/ic_action_refresh"
@@ -108,6 +154,10 @@
         android:layout_height="match_parent"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
+        android:orientation="vertical">
+
+
+    </LinearLayout>
         android:orientation="vertical" />
 
 </RelativeLayout>

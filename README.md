@@ -1,5 +1,12 @@
 # ASUC-Android
 
+<<<<<<< HEAD
+## Release APK
+The most updated .apk file for the Play Store will be located in the "app" folder as "app-release.apk".
+
+## Documentation
+Documentation `README.md`'s in package directories. 
+=======
 Berkeley Mobile Android open source! 
 
 ## APIs
@@ -42,3 +49,4 @@ Not too urgent, but would be nice to have:
 * Some sort of indicator (toast maybe) after favorite/heart-ing an item
 * Customizable splash screen featuring user settings and favorites
 
+>>>>>>> 9cd33c8829ef4c3065b3f2c9e220f38ee4035b50

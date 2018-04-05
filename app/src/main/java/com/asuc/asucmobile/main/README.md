@@ -4,6 +4,7 @@
 
 Contains some main screens and activities that the user sees throughout the application lifecycle.
 
+
 ## `Open*Activity.java`
 
 These activities represent the different screens (from the Navigation Drawer) that the user can choose
@@ -40,12 +41,16 @@ Upon activity start and view inflation from XML, we check if data has loaded usi
     }
 ```
 
+
 ## `SplashActivity.java`
+
 
 The splash screen the user sees upon app start. This activity starts and critical services in the background
 such as initiating the `BMRetrofitController` instance for all network calls to the back end service.
 
+
 ## `MainActivity.java`
+
 
 This is horribly named. This activity is started after 'SplashActivity' sleeps. Its main purpose is to
 set up the `utilities/NavigationGenerator` that populates the navigation drawer on the left side of the

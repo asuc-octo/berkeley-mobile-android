@@ -120,15 +120,16 @@ public class RouteSelected extends BaseActivity {
                         Trip lastTrip = route.getTrips().get(route.getTrips().size() - 1);
                         Stop lastStop = lastTrip.getStops().get(lastTrip.getStops().size() - 1);
                         LocationManager locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
-                        BitmapDescriptor pin = BitmapDescriptorFactory.fromResource(R.drawable.markernew);
+                        BitmapDescriptor dest = BitmapDescriptorFactory.fromResource(R.drawable.markernew);
+                        BitmapDescriptor origin = BitmapDescriptorFactory.fromResource(R.drawable.markerclicked);
 
                         mMap.addMarker(new MarkerOptions()
                                 .position(new LatLng(lastStop.getLatitude(), lastStop.getLongitude()))
-                                .icon(pin)
+                                .icon(origin)
                         );
                         mMap.addMarker(new MarkerOptions()
                                 .position(new LatLng(firstStop.getLatitude(), firstStop.getLongitude()))
-                                .icon(pin)
+                                .icon(dest)
                         );
 
                         String bestProvider = locationManager.getBestProvider(new Criteria(), false);
@@ -141,21 +142,98 @@ public class RouteSelected extends BaseActivity {
                         builder.include(new LatLng(firstStop.getLatitude(), firstStop.getLongitude()));
                         builder.include(new LatLng(lastStop.getLatitude(), lastStop.getLongitude()));
 
-                      /*  LatLng prevLocation = null;
+                        LatLng prevLocation = null;
+                        String previd = "";
                         for (Trip trip : route.getTrips()) {
                             for (Stop stop : trip.getStops()) {
                                 if (prevLocation == null) {
                                     prevLocation = new LatLng(stop.getLatitude(), stop.getLongitude());
+                                    previd = stop.getName();
 
 
                                 } else {
-                                    LatLng currentLocation = new LatLng(stop.getLatitude(), stop.getLongitude());
-                                    String url = getMapsApiDirectionsUrl(prevLocation, currentLocation);
-                                    RouteSelected.ReadTask downloadTask = new RouteSelected.ReadTask();
-                                    downloadTask.execute(url);
+                                    if (previd.equals("Li Ka Shing: West Crescent Side") && stop.getName().equals("Life Science Addition West Circle Side") ) {
+                                        PolylineOptions polyLineOptions = new PolylineOptions();
+                                        polyLineOptions.add(prevLocation);
+                                        polyLineOptions.add(new LatLng(37.871715, -122.264942));
+                                        polyLineOptions.add(new LatLng(37.871819, -122.264640));
+                                        polyLineOptions.add(new LatLng(37.872024, -122.263815));
+
+                                        polyLineOptions.add(new LatLng(37.872039, -122.263737));
+                                        polyLineOptions.add(new LatLng(37.871981, -122.263620));
+                                        polyLineOptions.add(new LatLng(37.871981, -122.263620));
+                                        polyLineOptions.add(new LatLng(stop.getLatitude(), stop.getLongitude()));
+
+                                        polyLineOptions.width(10);
+                                        polyLineOptions.color(Color.BLUE);
+                                        mMap.addPolyline(polyLineOptions);
+                                        previd = stop.getName();
+                                        prevLocation = new LatLng(stop.getLatitude(), stop.getLongitude());
+                                    }
+                                    else if (previd.equals("Life Science Addition West Circle Side") && stop.getName().equals("Evans Hall Hearst Mining Circle Side")) {
+                                        PolylineOptions polyLineOptions = new PolylineOptions();
+                                        polyLineOptions.add(prevLocation);
+
+                                        polyLineOptions.add(new LatLng(stop.getLatitude(), stop.getLongitude()));
+
+                                        polyLineOptions.width(10);
+                                        polyLineOptions.color(Color.BLUE);
+
+                                        mMap.addPolyline(polyLineOptions);
+
+                                        previd = stop.getName();
+                                        prevLocation = new LatLng(stop.getLatitude(), stop.getLongitude());
+                                    }
+                                    else if (previd.equals("Life Science Addition West Circle Side") && stop.getName().equals("Li Ka Shing: West Crescent Side")) {
+                                        PolylineOptions polyLineOptions = new PolylineOptions();
+                                        polyLineOptions.add(prevLocation);
+                                        //Custom points since Google Maps doesn't recognize that you can go through this route.
+                                        polyLineOptions.add(new LatLng(37.872160, -122.263362));
+                                        polyLineOptions.add(new LatLng(37.872271, -122.263487));
+                                        polyLineOptions.add(new LatLng(37.872267, -122.263726));
+                                        polyLineOptions.add(new LatLng(37.872131, -122.263779));
+                                        polyLineOptions.add(new LatLng(37.871968, -122.264609));
+                                        polyLineOptions.add(new LatLng(stop.getLatitude(), stop.getLongitude()));
+                                        polyLineOptions.width(10);
+                                        polyLineOptions.color(Color.BLUE);
+
+                                        mMap.addPolyline(polyLineOptions);
+
+                                        previd = stop.getName();
+                                        prevLocation = new LatLng(stop.getLatitude(), stop.getLongitude());
+                                    }   else if (previd.equals("Moffitt Library; Memorial Glade Side") && stop.getName().equals("Life Science Addition West Circle Side")) {
+                                        PolylineOptions polyLineOptions = new PolylineOptions();
+                                        polyLineOptions.add(prevLocation);
+                                        polyLineOptions.add(new LatLng(37.873268, -122.260197));
+                                        polyLineOptions.add(new LatLng(37.873209, -122.260573));
+                                        polyLineOptions.add(new LatLng(37.873167, -122.260959));
+                                        polyLineOptions.add(new LatLng(37.872688, -122.261614));
+                                        polyLineOptions.add(new LatLng(37.872807, -122.262085));
+                                        polyLineOptions.add(new LatLng(37.872786, -122.262530));
+                                        polyLineOptions.add(new LatLng(37.872689, -122.262895));
+                                        polyLineOptions.add(new LatLng( 37.872333, -122.263426));
+                                        polyLineOptions.add(new LatLng(37.872295, -122.263464));
+                                        polyLineOptions.add(new LatLng(stop.getLatitude(), stop.getLongitude()));
+
+                                        polyLineOptions.width(10);
+                                        polyLineOptions.color(Color.BLUE);
+
+                                        mMap.addPolyline(polyLineOptions);
+
+                                        previd = stop.getName();
+                                        prevLocation = new LatLng(stop.getLatitude(), stop.getLongitude());
+                                    }
+                                    else {
+                                        LatLng currentLocation = new LatLng(stop.getLatitude(), stop.getLongitude());
+                                        String url = getMapsApiDirectionsUrl(prevLocation, currentLocation);
+                                        RouteSelected.ReadTask downloadTask = new RouteSelected.ReadTask();
+                                        downloadTask.execute(url);
+                                        prevLocation = currentLocation;
+                                        previd = stop.getName();
+                                    }
                                 }
                             }
-                        }*/
+                        }
 
 
                         try {
@@ -199,8 +277,11 @@ public class RouteSelected extends BaseActivity {
         // Output format
         String output = "json";
 
+        //Mode
+        String mode = "&driving";
+
         // Building the url to the web service
-        String url = "https://maps.googleapis.com/maps/api/directions/" + output + "?" + parameters + key;
+        String url = "https://maps.googleapis.com/maps/api/directions/" + output + "?" + parameters + key + mode;
 
 
         return url;
@@ -228,7 +309,7 @@ public class RouteSelected extends BaseActivity {
 
         @Override
         protected void onPostExecute(List<List<HashMap<String, String>>> routes) {
-            ArrayList<LatLng> points = null;
+            ArrayList<LatLng> points;
             PolylineOptions polyLineOptions = null;
             // traversing through routes
             if (routes.size() == 0) {
@@ -250,7 +331,7 @@ public class RouteSelected extends BaseActivity {
                 }
 
                 polyLineOptions.addAll(points);
-                polyLineOptions.width(20);
+                polyLineOptions.width(10);
                 polyLineOptions.color(Color.BLUE);
             }
             polyLines.add(mMap.addPolyline(polyLineOptions));

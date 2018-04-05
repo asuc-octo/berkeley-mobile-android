@@ -19,63 +19,74 @@
             android:layout_width="195dp"
             android:layout_height="match_parent">
 
-            <TextView
-                android:id="@+id/routeName"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:clickable="false"
-                android:fontFamily="sans-serif"                android:text="51B"
-                android:layout_marginTop="5dp"
-                android:textColor="#022E81"
-                android:textSize="35dp"
-                android:textStyle="bold" />
+            <LinearLayout
+                android:id="@+id/block"
+                android:layout_width="match_parent"
+                android:layout_height="28dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="7dp">
+
+                <ImageView
+                    android:id="@+id/icon"
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    android:layout_marginLeft="3dp"
+                    android:layout_marginTop="-2dp"
+                    android:background="@drawable/microwave_map_icon" />
+
+                <TextView
+                    android:id="@+id/mainName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_above="@+id/routeNameWrapper"
+                    android:layout_alignStart="@+id/busStopName"
+                    android:clickable="false"
+                    android:fontFamily="sans-serif"
+                    android:text="Microwaves"
+                    android:textColor="#FF720A"
+                    android:textSize="22dp"
+                    android:textStyle="bold" />
+
+
+            </LinearLayout>
+
 
             <LinearLayout
                 android:id="@+id/routeNameWrapper"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/routeName"
-                android:layout_marginLeft="5dp"
-                android:layout_marginTop="-9dp">
+                android:layout_below="@id/block"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="0dp">
 
-                <ImageView
-                    android:layout_width="17dp"
-                    android:layout_height="match_parent"
-                    android:layout_marginLeft="5dp"
-                    android:paddingBottom="5dp"
-                    android:src="@drawable/arrowleft" />
 
                 <TextView
-                    android:textColor="#022E81"
-
-                    android:id="@+id/directionName"
+                    android:id="@+id/desc1"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@id/routeName"
-                    android:layout_marginLeft="3dp"
+                    android:layout_below="@id/mainName"
+                    android:layout_marginTop="7dp"
                     android:fontFamily="sans-serif"
+                    android:layout_marginLeft="15dp"
                     android:paddingBottom="3dp"
-                    android:text="Berkeley Amtrak"
-                    android:textSize="20dp" />
+                    android:text="MLK Study Center"
+                    android:textColor="#022E81"
+                    android:textSize="15dp" />
 
 
             </LinearLayout>
 
             <TextView
-                android:id="@+id/busStopName"
+                android:layout_marginLeft="50dp"
+                android:id="@+id/desc2"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
-                android:textColor="#022E81"
-
-                android:fontFamily="sans-serif"
-                android:layout_alignLeft="@+id/routeName"
-                android:layout_alignParentBottom="true"
-                android:layout_alignStart="@+id/routeName"
                 android:layout_below="@+id/routeNameWrapper"
-                android:text="Bancroft &amp; Telegraph"
-                android:layout_marginTop="-7dp"
-                android:textSize="13dp" />
+                android:layout_centerHorizontal="true"
+                android:fontFamily="roboto"
+                android:text="2nd Floor"
+                android:textColor="#022E81"
+                android:textSize="15dp" />
 
 
         </RelativeLayout>
@@ -88,116 +99,22 @@
             android:layout_alignParentTop="true"
             android:layout_toEndOf="@+id/busStopName"
             android:gravity="center_vertical"
-            android:orientation="vertical"
-            android:paddingBottom="25dp">
+            android:orientation="vertical">
 
 
-            <LinearLayout
-                android:id="@+id/timeWrapper"
+            <TextView
+                android:id="@+id/dist"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
-                android:orientation="horizontal"
-                android:visibility="visible"
-                android:weightSum="1">
-
-                <TextView
-                    android:id="@+id/mainTime"
-                    android:layout_width="35dp"
-                    android:fontFamily="sans-serif"
-                    android:layout_height="wrap_content"
-                    android:layout_above="@+id/time1"
-                    android:layout_alignParentLeft="true"
-                    android:layout_alignParentStart="true"
-                    android:text="3"
-                    android:textAlignment="center"
-                    android:textColor="#022E81"
-                    android:textSize="27dp"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:id="@+id/min"
-                    android:layout_width="49dp"
-                    android:layout_height="wrap_content"
-                    android:layout_above="@+id/time1"
-                    android:text="min"
-                    android:fontFamily="sans-serif"
-                    android:textColor="#022E81"
-                    android:textSize="10dp" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/timeWrapper1"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true"
-                android:layout_below="@id/timeWrapper"
-                android:orientation="horizontal"
-                android:weightSum="1">
-
-                <TextView
-                    android:id="@+id/mainTime1"
-                    android:layout_width="35dp"
-                    android:fontFamily="sans-serif"
-                    android:layout_height="wrap_content"
-                    android:layout_above="@+id/time1"
-                    android:layout_alignParentLeft="true"
-                    android:layout_alignParentStart="true"
-                    android:text="10"
-                    android:textAlignment="center"
-                    android:textColor="#022E81"
-                    android:textSize="10dp" />
-
-                <TextView
-                    android:id="@+id/min1"
-                    android:layout_width="21dp"
-                    android:layout_height="wrap_content"
-                    android:layout_above="@+id/time1"
-                    android:layout_weight="0.21"
-                    android:text="min"
-                    android:fontFamily="sans-serif"
-                    android:textColor="#022E81"
-                    android:textSize="10dp" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true"
-                android:layout_below="@id/timeWrapper1"
-                android:orientation="horizontal"
-                android:weightSum="1">
-
-                <TextView
-                    android:id="@+id/mainTime2"
-                    android:layout_width="35dp"
-                    android:layout_height="wrap_content"
-                    android:layout_above="@+id/time1"
-                    android:layout_alignParentLeft="true"
-                    android:layout_alignParentStart="true"
-                    android:text="30"
-                    android:textAlignment="center"
-                    android:fontFamily="sans-serif"
-                    android:textColor="#022E81"
-                    android:textSize="10dp" />
-
-                <TextView
-                    android:id="@+id/min2"
-                    android:layout_width="21dp"
-                    android:layout_height="wrap_content"
-                    android:layout_above="@+id/time1"
-                    android:layout_weight="0.21"
-                    android:fontFamily="sans-serif"
-                    android:text="min"
-                    android:textColor="#022E81"
-                    android:textSize="10dp" />
-
-            </LinearLayout>
+                android:layout_centerVertical="true"
+                android:fontFamily="sans-serif"
+                android:layout_marginTop="-15dp"
+                android:layout_marginLeft="33dp"
+                android:text="0.1 mi"
+                android:textAlignment="center"
+                android:textColor="#022E81"
+                android:textSize="15dp" />
 
 
         </RelativeLayout>
