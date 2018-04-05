@@ -81,9 +81,9 @@
 
 
     <com.github.clans.fab.FloatingActionMenu
-
         android:id="@+id/FABmenu"
         android:layout_width="@dimen/button_size"
+        android:visibility="gone"
         android:layout_height="@dimen/button_size"
         android:layout_alignParentBottom="true"
         android:layout_below="@+id/topBox"
@@ -129,8 +129,8 @@
     <view
         android:id="@+id/determinate"
         class="mbanje.kurt.fabbutton.FabButton"
-        android:layout_width="56dp"
-        android:layout_height="56dp"
+        android:layout_width="@dimen/fab_size_normal"
+        android:layout_height="@dimen/fab_size_normal"
         android:layout_alignEnd="@+id/busesNearby"
         android:layout_alignParentBottom="true"
         android:color="#2685F5"
