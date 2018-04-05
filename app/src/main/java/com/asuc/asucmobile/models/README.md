@@ -17,7 +17,6 @@ back end must use proper Retrofit annotation syntax, specifying serialized names
 
 ```
 
-
 ## `FoodPlace.java`
 
 
