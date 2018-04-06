@@ -4,6 +4,13 @@
     <color name="black">#000000</color>
     <color name="hotline_blue">#005581</color>
     <color name="off_hotline_blue">#004467</color>
+
+    <color name="dark_blue"> #1565C0</color>
+    <color name="orange"> #FF720A</color>
+    <color name="pink"> #FD2BA8</color>
+    <color name="aqua"> #3EB7D2</color>
+    <color name="white">#FFFFFF</color>
+
     <color name="OP_navy">#005581</color>
     <color name="OP_navy_transparent">#7b005581</color>
     <color name="ASUC_blue">#1295D8</color>
@@ -27,6 +34,7 @@
 
     <color name="toolbarTransparentForMaps">#46005581</color>
     <color name="toolbarTransparent">#00005581</color>
+
 
     <color name="excercise_color_1">#10CEB4</color>
     <color name="excercise_color_2">#FB2BA8</color>

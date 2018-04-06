@@ -51,7 +51,7 @@ public class FoodFragment extends Fragment {
 
     private List<FoodPlace> mDiningHallList;
     private List<FoodPlace> mCafeList;
-    
+
     private ProgressBar mProgressBar;
     private LinearLayout mRefreshWrapper;
     private FirebaseAnalytics mFirebaseAnalytics;
@@ -167,8 +167,8 @@ public class FoodFragment extends Fragment {
     private void getDining() {
 
         mDiningHallsCall.enqueue(new retrofit2.Callback<DiningHallsResponse>() {
-             @Override
-             public void onResponse(Call<DiningHallsResponse> call, Response<DiningHallsResponse> response) {
+            @Override
+            public void onResponse(Call<DiningHallsResponse> call, Response<DiningHallsResponse> response) {
 
                 mDiningHallList = (List<FoodPlace>) response.body().getDiningHalls();
 
@@ -177,16 +177,16 @@ public class FoodFragment extends Fragment {
                 mProgressBar.setVisibility(View.GONE);
                 mDiningRecyclerView.setAdapter(new FoodPlaceAdapter(getContext(), mDiningHallList, FoodPlaceAdapter.FoodType.DiningHall));
 
-             }
+            }
 
-             @Override
-             public void onFailure(Call<DiningHallsResponse> call, Throwable t) {
+            @Override
+            public void onFailure(Call<DiningHallsResponse> call, Throwable t) {
                 mProgressBar.setVisibility(View.GONE);
                 mRefreshWrapper.setVisibility(View.VISIBLE);
                 Toast.makeText(getContext(), "Unable to retrieve dining hall data, please try again",
                         Toast.LENGTH_SHORT).show();
-             }
-         });
+            }
+        });
     }
 
 }
