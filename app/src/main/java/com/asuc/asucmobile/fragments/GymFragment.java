@@ -363,4 +363,3 @@ public class GymFragment extends Fragment {
 
 
 }
-

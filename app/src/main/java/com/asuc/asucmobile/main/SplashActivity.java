@@ -44,23 +44,23 @@ public class SplashActivity extends Activity {
 
     private class IntentLauncher extends Thread {
 
-         /**
+        /**
          * Sleep for some time and than start new activity.
          */
-         @Override
-         public void run() {
+        @Override
+        public void run() {
             try {
                 // Sleeping (in milliseconds)
                 Thread.sleep(DURATION);
-                } catch (Exception e) {
-                    Log.e(TAG, e.getMessage());
-                }
+            } catch (Exception e) {
+                Log.e(TAG, e.getMessage());
+            }
 
             // Start main activity
             Intent intent = new Intent(SplashActivity.this, MainActivity.class);
             startActivity(intent);
             finish();
-         }
+        }
 
     }
 }

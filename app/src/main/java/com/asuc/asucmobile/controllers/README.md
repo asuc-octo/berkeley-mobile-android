@@ -9,6 +9,7 @@ out in favor of Retrofit for:
 * caching and data flow
 * built in POJO support
 
+
 ## `BMRetrofitController.java`
 
 A singleton that initiates and executes all calls to RESTful API at the specified URL. Defines all
@@ -21,6 +22,7 @@ A singleton that initiates and executes all calls to RESTful API at the specifie
 The `BMRetrofitController` is instantiated in the `SplashActivity` to lengthen the amount of time the
 service has to start up all network dependencies. We also aren't caching much, so we can store everything
 in the same cache rooted at the first activity the user loads.
+
 
 ## `BMAPI.java`
 
