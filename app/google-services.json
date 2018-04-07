@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "592064103331",
+    "firebase_url": "https://berkeley-mobile.firebaseio.com",
+    "project_id": "berkeley-mobile",
+    "storage_bucket": "berkeley-mobile.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:592064103331:android:c7f6458a7c00236e",
+        "android_client_info": {
+          "package_name": "com.asuc.asucmobile"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "592064103331-me3pftluvnpdoe1v93lmsm66thblqicg.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "KEY HERE"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
