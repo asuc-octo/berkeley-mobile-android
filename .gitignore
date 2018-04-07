@@ -14,10 +14,10 @@ google-services.json
 app/google-services.json
 
 # secret
-app/src/main/res/values/secret.xml
+# app/src/main/res/values/secret.xml
 
 # ServerUtils
-app/src/main/java/com/asuc/asucmobile/utilities/ServerUtils.java
+# app/src/main/java/com/asuc/asucmobile/utilities/ServerUtils.java
 
 
 # Built application files
