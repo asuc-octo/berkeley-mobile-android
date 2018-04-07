@@ -4,7 +4,8 @@ Berkeley Mobile Android open source!
 
 ## APIs
 
-* Get your own Google Maps API key through Google Console and paste it in [secret.xml](app/src/main/res/values/secret.xml)
+* Get your own Google API key through Google Console and paste it in [secret.xml](app/src/main/res/values/secret.xml)
+    * Enable Google Maps and Google Places
 * Configure Berkeley Mobile backend in [ServerUtils.java](app/src/main/java/com/asuc/asucmobile/utilities/ServerUtils.java)
     * Default configuration is our dummy, which just returns test data
 
@@ -41,4 +42,5 @@ Not too urgent, but would be nice to have:
 * Porting old Bear Transit network controllers to Retrofit 2, see the [BMAPI.java](app/src/main/java/com/asuc/asucmobile/controllers/BMAPI.java)
 * Some sort of indicator (toast maybe) after favorite/heart-ing an item
 * Customizable splash screen featuring user settings and favorites
+* Stop hard coding everything >:\(
 
