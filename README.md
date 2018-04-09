@@ -38,6 +38,7 @@ We will review your code and merge it in if we see that it's solid.
 
 Not too urgent, but would be nice to have:
 * Moving all documentation to a Wiki
+* Write more tests!!!
 * Standardization of horizontally scrolling RecyclerViews with CardViews (e.g. in Food and Gyms screens)
 * Porting old Bear Transit network controllers to Retrofit 2, see the [BMAPI.java](app/src/main/java/com/asuc/asucmobile/controllers/BMAPI.java)
 * Some sort of indicator (toast maybe) after favorite/heart-ing an item
