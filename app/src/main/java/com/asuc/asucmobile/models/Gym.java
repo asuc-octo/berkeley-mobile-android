@@ -1,9 +1,10 @@
 package com.asuc.asucmobile.models;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import com.google.gson.annotations.SerializedName;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 
 public class Gym {
@@ -11,15 +12,15 @@ public class Gym {
     private int id;
     private String name;
     private String address;
-    @SerializedName("opening_time_today")
-    private Date opening;
-    @SerializedName("closing_time_today")
-    private Date closing;
+    @SerializedName("opening_times")
+    private ArrayList<Date> opening;
+    @SerializedName("closing_times")
+    private ArrayList<Date> closing;
 
     @SerializedName("image_link")
     private String imageUrl;
 
-    public Gym(int id, String name, String address, Date opening, Date closing, String imageUrl) {
+    public Gym(int id, String name, String address, ArrayList<Date> opening, ArrayList<Date> closing, String imageUrl) {
         this.id = id;
         this.name = name;
         this.address = address;
@@ -44,11 +45,11 @@ public class Gym {
         return address;
     }
 
-    public Date getOpening() {
+    public ArrayList<Date> getOpening() {
         return opening;
     }
 
-    public Date getClosing() {
+    public ArrayList<Date> getClosing() {
         return closing;
     }
 
@@ -67,7 +68,15 @@ public class Gym {
         }
 
         Date currentTime = new Date();
-        return currentTime.after(opening) && currentTime.before(closing);
+        boolean isOpen = false;
+        if (opening.size() == closing.size()) {
+            for (int i = 0; i < opening.size(); i++) {
+                isOpen = isOpen || (currentTime.after(opening.get(i)) && currentTime.before(closing.get(i)));
+            }
+            return isOpen;
+        } else {
+            return false;
+        }
     }
 
     private String parseTimes(){

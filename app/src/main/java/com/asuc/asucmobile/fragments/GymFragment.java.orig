@@ -66,6 +66,23 @@ public class GymFragment extends Fragment {
 
     private ProgressBar mProgressBar;
     private LinearLayout mRefreshWrapper;
+<<<<<<< HEAD
+
+    private GymAdapter mAdapter;
+    private FirebaseAnalytics mFirebaseAnalytics;
+
+
+    @Override
+    @SuppressWarnings("deprecation")
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+
+        mFirebaseAnalytics = FirebaseAnalytics.getInstance(this.getContext());
+        Bundle bundle = new Bundle();
+        mFirebaseAnalytics.logEvent("opened_gym_screen", bundle);
+
+        View layout = inflater.inflate(R.layout.fragment_gym, container, false);
+        Toolbar toolbar = (Toolbar) layout.findViewById(R.id.toolbar);
+=======
     private FirebaseAnalytics mFirebaseAnalytics;
 
     @Override
@@ -88,6 +105,7 @@ public class GymFragment extends Fragment {
 
 
         android.support.v7.widget.Toolbar toolbar = (android.support.v7.widget.Toolbar) layout.findViewById(R.id.toolbar);
+>>>>>>> 136e30aeaf16c89aa187f4392b8442ea4d455bf4
         ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
         NavigationGenerator.generateToolbarMenuButton(getActivity(), toolbar);
         toolbar.setTitle("Gyms");
@@ -306,6 +324,7 @@ public class GymFragment extends Fragment {
                 mClasses.addAll(response.body().getStrength());
                 Collections.sort(mClasses);
                 initClassTable();
+
             }
 
             @Override
@@ -362,3 +381,4 @@ public class GymFragment extends Fragment {
 
 
 }
+

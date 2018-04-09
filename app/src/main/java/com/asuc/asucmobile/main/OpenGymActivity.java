@@ -1,9 +1,6 @@
 package com.asuc.asucmobile.main;
 
-import android.graphics.Bitmap;
 import android.graphics.Color;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.text.Spannable;
 import android.text.SpannableString;
@@ -16,12 +13,12 @@ import android.widget.TextView;
 
 import com.asuc.asucmobile.R;
 import com.asuc.asucmobile.models.Gym;
-import com.asuc.asucmobile.utilities.Callback;
-import com.asuc.asucmobile.utilities.ImageDownloadThread;
 import com.bumptech.glide.Glide;
 import com.google.firebase.analytics.FirebaseAnalytics;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.Locale;
 
 public class OpenGymActivity extends BaseActivity {
@@ -51,7 +48,8 @@ public class OpenGymActivity extends BaseActivity {
         final ProgressBar loadingBar = (ProgressBar) findViewById(R.id.progress_bar);
         final ImageView image = (ImageView) findViewById(R.id.image);
 
-        Spannable hoursString;
+        Spannable hoursStringSpannable;
+        String hoursString;
         if (gym.getOpening() != null && gym.getClosing() != null) {
             String isOpen;
             int color;
@@ -62,15 +60,26 @@ public class OpenGymActivity extends BaseActivity {
                 isOpen = "CLOSED";
                 color = Color.rgb(255, 68, 68);
             }
-            String opening = HOURS_FORMAT.format(gym.getOpening());
-            String closing = HOURS_FORMAT.format(gym.getClosing());
-            hoursString = new SpannableString("Today  " + isOpen + "\n" + opening + " to " + closing);
-            hoursString.setSpan(new ForegroundColorSpan(color), 7, 7 + isOpen.length(), Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
+            ArrayList<Date> openingTimes = gym.getOpening();
+            ArrayList<Date> closingTimes = gym.getClosing();
+            String currentOpening;
+            String currentClosing;
+            hoursString = "Today  " + isOpen + "\n";
+            for (int i = 0; i < openingTimes.size(); i++) {
+                currentOpening = HOURS_FORMAT.format(openingTimes.get(i));
+                currentClosing = HOURS_FORMAT.format(closingTimes.get(i));
+                if (i != openingTimes.size() - 1) {
+                    currentClosing += "\n";
+                }
+                hoursString += currentOpening + " to " + currentClosing;
+            }
+            hoursStringSpannable = new SpannableString(hoursString);
+            hoursStringSpannable.setSpan(new ForegroundColorSpan(color), 7, 7 + isOpen.length(), Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
         } else {
-            hoursString = new SpannableString("Today  UNKNOWN");
-            hoursString.setSpan(new ForegroundColorSpan(Color.rgb(114, 205, 244)), 7, 14, Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
+            hoursStringSpannable = new SpannableString("Today  UNKNOWN");
+            hoursStringSpannable.setSpan(new ForegroundColorSpan(Color.rgb(114, 205, 244)), 7, 14, Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
         }
-        hours.setText(hoursString);
+        hours.setText(hoursStringSpannable);
         address.setText(gym.getAddress());
 
         // Load gym image.
