@@ -4,7 +4,7 @@ Never made an open source contribution before? Wondering how contributions work 
 
 ## Starting development
 
-1. Choose an issue that you are interested in addressing or a feature that you would like to add. **See [TODOs](#todo) to increase the chance of getting your contribution accepted.**
+1. Choose an issue  you are interested in addressing or a fethatature that you would like to add. **See TODOs in [README.md](README.md) to increase the chance of getting your contribution accepted.**
 2. Fork the repository. This means that you will have a copy of the repository under `github-username/repository-name`.
 3. Clone the repository to your local machine using `git clone https://github.com/github-username/repository-name.git`.
 4. Create a new branch for the change using `git checkout -b branch-name`.
@@ -24,4 +24,4 @@ Never made an open source contribution before? Wondering how contributions work 
 
 Congrats! You’ve helped to make Berkeley Mobile better!
 
-*Keep in mind Berkeley Mobile reserves the right to reject pull requests if they don't meet our standards or are not consistent with Berkeley Mobile's mission, values, and/or long term plans. Before starting to work on new features or large changes not listed in [TODO](README.md#TODO), especially ones that involve UI changes or new APIs, please [contact us](README.md#TODO)!*
+*Keep in mind Berkeley Mobile reserves the right to reject pull requests if they don't meet our standards or are not consistent with Berkeley Mobile's mission, values, and/or long term plans. Before starting to work on new features or large changes not listed in TODOs in [README.md](README.md), especially ones that involve UI changes or new APIs, please contact us!*
