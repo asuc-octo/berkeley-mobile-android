@@ -1,4 +1,4 @@
-# ASUC-Android
+# Berkeley Mobile Android
 
 Berkeley Mobile Android open source! Made with love.
 
