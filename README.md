@@ -15,8 +15,8 @@ For documentation, check out our [wiki](https://github.com/asuc-octo/asuc-androi
 The application consists of six modules:
 * [Controllers](app/src/main/java/com/asuc/asucmobile/controllers): Retrofit configuration and some 
 legacy controllers that fetch JSON for map data.
-* [Fragments](app/src/main/java/com/asuc/asucmobile/fragments)
-* [Open*Activity](app/src/main/java/com/asuc/asucmobile/main): the main screens 
+* [Fragments](app/src/main/java/com/asuc/asucmobile/fragments): fragments populating various UI elements
+* [Activity](app/src/main/java/com/asuc/asucmobile/main): the main screens (e.g. `Open*Activity.java`) 
 * [Models](app/src/main/java/com/asuc/asucmobile/models): data models including POJO for Retrofit
 * [Responses](app/src/main/java/com/asuc/asucmobile/models/responses): POJO for Retrofit responses with deeper
 structure
