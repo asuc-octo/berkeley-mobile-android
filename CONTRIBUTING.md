@@ -24,29 +24,4 @@ Never made an open source contribution before? Wondering how contributions work 
 
 Congrats! You’ve helped to make Berkeley Mobile better!
 
-*Keep in mind Berkeley Mobile reserves the right to reject pull requests if they don't meet our standards or are not consistent with Berkeley Mobile's mission, values, and/or long term plans.*
-
-## <a name="todo"></a> TODO
-
-The following is a summary of open tasks and issues. For new contributors, we recommend focusing on Improvements. **Before starting to work on new features or large changes not listed below, especially ones that involve UI changes or new APIs, please [contact us](#contact)!**
-
-### What the Berkeley Mobile team is working on
-
-* Crowd sourcing water fountain, microwave, and nap pod locations
-
-### Improvements
-
-* Write tests!
-* Stop hard coding everything
-* Standardization of horizontally scrolling RecyclerViews with CardViews (e.g. in Food and Gyms screens)
-* Porting old Bear Transit network controllers to Retrofit 2, see the [BMAPI.java](app/src/main/java/com/asuc/asucmobile/controllers/BMAPI.java)
-
-### Feature Ideas
-
-* Indicator after favorite/heart-ing an item
-* Customizable splash screen featuring user settings and favorites
-* We might be open to partnerships with student orgs
-
-## <a name="contact"></a> Contact
-
-You can contact the Berkeley Mobile team at octo.berkeleymobile@asuc.org.
+*Keep in mind Berkeley Mobile reserves the right to reject pull requests if they don't meet our standards or are not consistent with Berkeley Mobile's mission, values, and/or long term plans. Before starting to work on new features or large changes not listed in [TODO](README.md#TODO), especially ones that involve UI changes or new APIs, please [contact us](README.md#TODO)!*
