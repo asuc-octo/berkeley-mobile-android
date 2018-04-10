@@ -30,7 +30,7 @@ Congrats! You’ve helped to make Berkeley Mobile better!
 
 The following is a summary of open tasks and issues. For new contributors, we recommend focusing on Improvements. **Before starting to work on new features or large changes not listed below, especially ones that involve UI changes or new APIs, please [contact us](#contact)!**
 
-### What we're working on
+### What the Berkeley Mobile team is working on
 
 * Crowd sourcing water fountain, microwave, and nap pod locations
 
@@ -49,4 +49,4 @@ The following is a summary of open tasks and issues. For new contributors, we re
 
 ## <a name="contact"></a> Contact
 
-You can contact the Berkeley Mobile team at octo.berkeleymobile@asuc.org with any questions.
+You can contact the Berkeley Mobile team at octo.berkeleymobile@asuc.org.
