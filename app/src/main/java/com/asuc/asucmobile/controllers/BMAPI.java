@@ -30,7 +30,7 @@ public interface BMAPI {
     Call<LibrariesResponse> callLibrariesList();
 
     @Headers("Cache-Control: max-age=640000")
-    @GET("gyms")
+    @GET("fitness_centers")
     Call<GymsResponse> callGymsList();
 
     @Headers("Cache-Control: max-age=640000")

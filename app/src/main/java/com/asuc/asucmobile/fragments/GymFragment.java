@@ -306,7 +306,6 @@ public class GymFragment extends Fragment {
                 mClasses.addAll(response.body().getStrength());
                 Collections.sort(mClasses);
                 initClassTable();
-
             }
 
             @Override
