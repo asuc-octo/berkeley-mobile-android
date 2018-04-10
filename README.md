@@ -31,6 +31,10 @@ It is recommended you use Android Studio 3.0.0.
 * Get a Google API key through Google Console, enable the Google Maps and Google Places APIs, and paste it in [secret.xml](app/src/main/res/values/secret.xml)
 * We've configured this repository so that the application pulls from our sandbox backend, which just returns test data. If you would like access to our production backend API, please [contact us](#contact). 
 
+## Contributing
+
+See [CONTRIBUTING.md] for more information.
+
 ## <a name="contact"></a> Contact
 
 You can contact the Berkeley Mobile team at octo.berkeleymobile@asuc.org with any questions.
