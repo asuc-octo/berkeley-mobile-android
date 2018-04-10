@@ -4,7 +4,7 @@ This is the official repository for the Berkeley Mobile Android application.
 
 ## What is Berkeley Mobile?
 
-Created in 2012, Berkeley Mobile has acculumated over 20,000 downloads on iOS and Android and currently has about 2,000 Monthly Active Users (MAUs). It has Bear Transit routes, library and gym information, dining hall menus, and campus resources, all in one place for the busy Berkeley student. The mission of Berkeley Mobile is to use cool technology to help students navigate Berkeley.
+Created in 2012, Berkeley Mobile has acculumated over 20,000 downloads on iOS and Android and currently has about 2,000 Monthly Active Users (MAUs). It has Bear Transit routes, library and gym information, dining hall menus, and campus resources, all in one place for the busy Berkeley student. The mission of Berkeley Mobile is to use cool technology to help students navigate Berkeley. You can [download Berkeley Mobile on the Google Play Store](https://play.google.com/store/apps/details?id=com.asuc.asucmobile&hl=en_US).
 
 *Berkeley Mobile is a product of the Associated Students of University of California (ASUC) Office of the Chief Technology Officer (OCTO) and is not affiliated with the University of California, Berkeley or the Regents of the University of California.*
 
@@ -34,6 +34,27 @@ It is recommended you use Android Studio 3.0.0.
 ## Contributing
 
 See [CONTRIBUTING.md](CONTRIBUTING.md) for more information.
+
+## <a name="todo"></a> TODO
+
+The following is a summary of open tasks and issues. For new contributors, we recommend focusing on Improvements. **Before starting to work on new features or large changes not listed below, especially ones that involve UI changes or new APIs, please [contact us](#contact)!**
+
+### What the Berkeley Mobile team is working on
+
+* Crowd sourcing water fountain, microwave, and nap pod locations
+
+### Improvements
+
+* Write tests!
+* Stop hard coding everything
+* Standardization of horizontally scrolling RecyclerViews with CardViews (e.g. in Food and Gyms screens)
+* Porting old Bear Transit network controllers to Retrofit 2, see the [BMAPI.java](app/src/main/java/com/asuc/asucmobile/controllers/BMAPI.java)
+
+### Feature Ideas
+
+* Indicator after favorite/heart-ing an item
+* Customizable splash screen featuring user settings and favorites
+* We might be open to partnerships with student orgs
 
 ## <a name="contact"></a> Contact
 
