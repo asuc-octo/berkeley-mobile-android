@@ -1,10 +1,5 @@
 package com.asuc.asucmobile.tests;
 
-import com.asuc.asucmobile.models.Gym;
-import com.asuc.asucmobile.models.Library;
-import com.asuc.asucmobile.models.Stop;
-import com.google.android.gms.maps.model.LatLng;
-
 import java.util.Date;
 
 public class Test {
@@ -27,8 +22,8 @@ public class Test {
         opening2.setTime(currentTime.getTime() + 1000000);
         Date closing2 = new Date();
         closing2.setTime(currentTime.getTime() - 1000000);
-        Gym testGym1 =
-                new Gym(0, "Library", "Location", opening2, closing2, "");
+//        Gym testGym1 =
+//                new Gym(0, "Library", "Location", opening2, closing2, "");
 
 //        Library testLibrary2 =
 //                new Library(1, "Library", "Location", "000-000-0000", null, null, null, null, 0, 0,
@@ -38,9 +33,9 @@ public class Test {
 //            System.out.println("Open library reported as closed");
 //        }
 
-        if (testGym1.isOpen()) {
-            System.out.println("Closed gym reported as open");
-        }
+//        if (testGym1.isOpen()) {
+//            System.out.println("Closed gym reported as open");
+//        }
 
 //        if (testLibrary2.isOpen()) {
 //            System.out.println("Library with null hours reported as open");
