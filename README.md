@@ -41,4 +41,4 @@ You can contact the Berkeley Mobile team at octo.berkeleymobile@asuc.org with an
 
 ## License
 
-This project uses the Educational Community License (ECL) 2.0. See [LICENSE.md] for more information.
+This project uses the Educational Community License (ECL) 2.0. See [LICENSE.md](LICENSE.md) for more information.
