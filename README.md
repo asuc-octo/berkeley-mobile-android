@@ -33,7 +33,7 @@ It is recommended you use Android Studio 3.0.0.
 
 ## Contributing
 
-See [CONTRIBUTING.md] for more information.
+See [CONTRIBUTING.md](CONTRIBUTING.md) for more information.
 
 ## <a name="contact"></a> Contact
 
