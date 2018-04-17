@@ -478,7 +478,7 @@ public class MapsFragment extends Fragment
     private void loadMarkers(HashMap<String, ArrayList<CategoryLoc>> items) {
         ArrayList<CategoryLoc> microwaves = items.get("Microwave");
         ArrayList<CategoryLoc> waterbottles = items.get("Water Fountain");
-        ArrayList<CategoryLoc> sleepPods = items.get("Nap Pods");
+        ArrayList<CategoryLoc> sleepPods = items.get("Nap Pod");
         BitmapDescriptor microwaveIcon = BitmapDescriptorFactory.fromResource(R.drawable.microwave_map_icon);
         BitmapDescriptor waterBottleIcon = BitmapDescriptorFactory.fromResource(R.drawable.waterbottle_map_icon);
         BitmapDescriptor sleepPodIcon =BitmapDescriptorFactory.fromResource(R.drawable.sleeppod_map_icon);
