@@ -116,7 +116,9 @@
             android:name=".main.RouteSelectActivity"
             android:label="@string/title_activity_open_resource"
             android:screenOrientation="portrait" />
-
+        <activity android:name=".main.CreditsDialog"
+            android:label="Credits"
+            android:screenOrientation="portrait" />
 
         <receiver
             android:name="com.google.android.gms.gcm.GcmReceiver"
