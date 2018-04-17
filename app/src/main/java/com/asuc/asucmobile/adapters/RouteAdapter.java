@@ -96,7 +96,7 @@ public class RouteAdapter extends BaseAdapter {
                 } else {
                     line.setText(stop.getName());
                     busIcon.setVisibility(View.VISIBLE);
-                    startingStop.setText(getItem(1).getName());
+                    startingStop.setText(getItem(i+1).getName());
                 }
             }
         } else {

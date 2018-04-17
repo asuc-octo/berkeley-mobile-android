@@ -69,7 +69,7 @@ public class PopUpActivity extends FragmentActivity {
                 icon.setImageResource(R.drawable.waterbottle_map_icon);
                 markerTitle.setTextColor(getResources().getColor(R.color.aqua));
                 break;
-            case "Sleep Pod":
+            case "Nap Pod":
                 icon.setImageResource(R.drawable.sleeppod_map_icon);
                 markerTitle.setTextColor(getResources().getColor(R.color.pink));
                 break;
