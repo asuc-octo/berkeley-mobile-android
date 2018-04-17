@@ -70,8 +70,11 @@ public class    MenuFragment extends Fragment {
     private TextView headerHours;
     private View v;
 
+    public MenuFragment() {
 
-    public MenuFragment(FoodType type) {
+    }
+
+    public void setFoodType(FoodType type) {
         foodType = type;
     }
 

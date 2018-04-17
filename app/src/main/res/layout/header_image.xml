@@ -21,13 +21,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@android:color/white"
-            android:maxLines="1"
+            android:singleLine="true"
             android:ellipsize="marquee"
             android:scrollHorizontally="true"
             android:focusable="true"
             android:focusableInTouchMode="true"
             android:drawableLeft="@drawable/icon_clock"
-            android:layout_below="@+id/header_name"
             android:drawablePadding="5dp"
             android:gravity="center_vertical" />
 
