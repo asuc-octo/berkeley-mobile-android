@@ -9,6 +9,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.AdapterView;
@@ -25,6 +26,7 @@ import com.asuc.asucmobile.fragments.ResourceFragment;
 import com.asuc.asucmobile.main.MainActivity;
 import com.asuc.asucmobile.fragments.MapsFragment;
 import com.asuc.asucmobile.models.Category;
+import com.asuc.asucmobile.main.CreditsDialog;
 
 public class NavigationGenerator {
 
@@ -153,10 +155,18 @@ public class NavigationGenerator {
     }
 
     @SuppressLint("all")
-    public static void openMenu(@NonNull Activity activity) {
+    public static void openMenu(@NonNull final Activity activity) {
         DrawerLayout drawerLayout = (DrawerLayout) activity.findViewById(R.id.drawer_layout);
         if (drawerLayout != null) {
             drawerLayout.openDrawer(Gravity.LEFT);
+            View v = drawerLayout.findViewById(R.id.drawer_header);
+            v.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent i = new Intent(activity, CreditsDialog.class);
+                    activity.startActivity(i);
+                }
+            });
         }
     }
 
