@@ -9,6 +9,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.location.Location;
 import android.location.LocationManager;
 import android.os.Build;
@@ -36,6 +37,7 @@ import android.widget.Toast;
 
 
 import com.asuc.asucmobile.R;
+import com.asuc.asucmobile.controllers.BMRetrofitController;
 import com.asuc.asucmobile.controllers.BusController;
 import com.asuc.asucmobile.controllers.Controller;
 import com.asuc.asucmobile.controllers.LiveBusController;
@@ -88,6 +90,7 @@ import java.util.TimerTask;
 
 import mbanje.kurt.fabbutton.FabButton;
 import retrofit2.Call;
+import retrofit2.Response;
 
 
 public class MapsFragment extends Fragment
@@ -108,7 +111,6 @@ public class MapsFragment extends Fragment
     LatLng currLocation;
     View mapView;
     private final static DecimalFormat DECIMAL_FORMAT = new DecimalFormat("#.##");
-    private Button busesNearby;
     FabButton navigation_button;
     FloatingActionMenu FABmenu;
 
@@ -118,19 +120,15 @@ public class MapsFragment extends Fragment
     HashMap<Marker, CategoryLoc> markers_to_desc = new HashMap<>();
 
     HashMap<Marker, String> marker_to_ID = new HashMap<>(); //Given marker, gets ID (we can do this because marker is FINAL
-    boolean bearTransitPressed;
     LinearLayout originWrapper;
     RelativeLayout busRouteWrapper;
     private LinearLayout refreshWrapper;
 
-    private final double distThresh = 0.25;
-    private boolean nearByHighlighted = false;
     @SuppressWarnings("all")
     private static View layout;
     private MapFragment mapFragment;
     private LiveBusActivity.BusCallback busCallback;
     private static MapsFragment instance;
-    private static Marker prevMarker;
     private FirebaseAnalytics mFirebaseAnalytics;
     private FloatingActionButton microwave, sleepPod, waterBottle;
 
@@ -188,7 +186,6 @@ public class MapsFragment extends Fragment
         final DestinationFragment searchBar = (DestinationFragment) getActivity().getFragmentManager().findFragmentById(R.id.destination_bar);
         final OriginFragment originBar = (OriginFragment) getActivity().getFragmentManager().findFragmentById(R.id.origin_bar);
         navigation_button = (FabButton) layout.findViewById(R.id.determinate);
-        busesNearby = (Button) layout.findViewById(R.id.busesNearby);
         FABmenu = (FloatingActionMenu) layout.findViewById(R.id.FABmenu);
 
         sleepPod = (FloatingActionButton) layout.findViewById(R.id.sleeppod);
@@ -202,6 +199,9 @@ public class MapsFragment extends Fragment
         FABmenu.setOnMenuButtonClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                mFirebaseAnalytics = FirebaseAnalytics.getInstance(MapsFragment.this.getContext());
+                Bundle bundle = new Bundle();
+                mFirebaseAnalytics.logEvent("view_map_icons_clicked", bundle);
 
                 if(FABmenu.isOpened()){
                     FABmenu.close(true);
@@ -221,6 +221,10 @@ public class MapsFragment extends Fragment
         sleepPod.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                mFirebaseAnalytics = FirebaseAnalytics.getInstance(MapsFragment.this.getContext());
+                Bundle bundle = new Bundle();
+                bundle.putString("Category", "nappod");
+                mFirebaseAnalytics.logEvent("map_icon_clicked", bundle);
                 updateLocation(v);
                 for (Marker marker : markers_sleepPods) {
 
@@ -243,6 +247,11 @@ public class MapsFragment extends Fragment
         waterBottle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                mFirebaseAnalytics = FirebaseAnalytics.getInstance(MapsFragment.this.getContext());
+                Bundle bundle = new Bundle();
+                bundle.putString("Category", "waterbottles");
+                mFirebaseAnalytics.logEvent("map_icon_clicked", bundle);
                 updateLocation(v);
                 for (Marker marker : markers_waterbottles) {
                     marker.setVisible(true);
@@ -268,8 +277,12 @@ public class MapsFragment extends Fragment
         microwave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                mFirebaseAnalytics = FirebaseAnalytics.getInstance(MapsFragment.this.getContext());
+                Bundle bundle = new Bundle();
+                bundle.putString("Category", "microwaves");
+                mFirebaseAnalytics.logEvent("map_icon_clicked", bundle);
 
-                updateLocation(v);
+                //updateLocation(v);
                 for (Marker marker : markers_waterbottles) {
                     marker.setVisible(false);
 
@@ -391,31 +404,9 @@ public class MapsFragment extends Fragment
         //Changes the FAB (my location button) to bottom right
         moveNavigationIcon(mapView);
         mMap.setOnMarkerClickListener(this);
-        // mMap.setOnMapLoadedCallback(this);
-
-        Type listType = new TypeToken<HashMap<String, ArrayList<CategoryLoc>>>() {
-        }.getType();
-
-
-        HashMap<String, ArrayList<CategoryLoc>> items = gson.fromJson(JSONUtilities.readJSONFromAsset(getActivity(), "sample_map_icon.json"), listType);
-        loadMarkers(items);
-
+        mMap.setOnMapLoadedCallback(this);
 
         liveTrack();
-    }
-
-    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
-    public void markerZoom(final Marker marker) {
-        clearFocus();
-        if ((boolean) marker.getTag()) {
-            highlightButton(this.busesNearby, true);
-
-        } else {
-            highlightButton(this.busesNearby, false);
-        }
-
-        cameraLoadAnimation(marker.getPosition());
-
     }
 
     private void updateLocation(View v) {
@@ -448,8 +439,6 @@ public class MapsFragment extends Fragment
             return true; //If the live busIcon is selected, dont' do anything.
         }
 
-
-        this.prevMarker = marker;
         Intent popUp;
         clearFocus();
         //marker.setIcon(icon);
@@ -472,32 +461,7 @@ public class MapsFragment extends Fragment
 
     }
 
-    public Bitmap resizeMapIcons(String iconName, int width, int height) {
-        Bitmap imageBitmap = BitmapFactory.decodeResource(getResources(), getResources().getIdentifier(iconName, "drawable", getActivity().getPackageName()));
-        Bitmap resizedBitmap = Bitmap.createScaledBitmap(imageBitmap, width, height, false);
-        return resizedBitmap;
-    }
 
-
-    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
-    private void highlightButton(Button button, boolean highlight) {
-        if (highlight) {
-            button.setTextColor(Color.WHITE);
-            button.setBackground(ContextCompat.getDrawable(mapView.getContext(), R.drawable.ac_bear_transit_pop_up_window_button_pressed));
-        } else {
-            button.setTextColor(Color.BLUE);
-            button.setBackground(ContextCompat.getDrawable(mapView.getContext(), R.drawable.ac_bear_transit_pop_up_window_button_shape));
-
-        }
-    }
-
-    @Override
-    public void onMapLoaded() {
-
-        // originWrapper = (LinearLayout) layout.findViewById(R.id.origin_bar_wrapper);
-        //bearTransitPressed = false;
-
-    }
 
 
     public void clearFocus() {
@@ -514,10 +478,10 @@ public class MapsFragment extends Fragment
     private void loadMarkers(HashMap<String, ArrayList<CategoryLoc>> items) {
         ArrayList<CategoryLoc> microwaves = items.get("Microwave");
         ArrayList<CategoryLoc> waterbottles = items.get("Water Fountain");
-        ArrayList<CategoryLoc> sleepPods = items.get("Sleep Pods");
-        BitmapDescriptor microwaveIcon = BitmapDescriptorFactory.fromBitmap(resizeMapIcons("microwave_map_icon",100,100));
-        BitmapDescriptor waterBottleIcon =  BitmapDescriptorFactory.fromBitmap(resizeMapIcons("waterbottle_map_icon",100,100));
-        BitmapDescriptor sleepPodIcon = BitmapDescriptorFactory.fromBitmap(resizeMapIcons("sleeppod_map_icon",100,100));
+        ArrayList<CategoryLoc> sleepPods = items.get("Nap Pods");
+        BitmapDescriptor microwaveIcon = BitmapDescriptorFactory.fromResource(R.drawable.microwave_map_icon);
+        BitmapDescriptor waterBottleIcon = BitmapDescriptorFactory.fromResource(R.drawable.waterbottle_map_icon);
+        BitmapDescriptor sleepPodIcon =BitmapDescriptorFactory.fromResource(R.drawable.sleeppod_map_icon);
 
         if (microwaves != null && microwaves.size() != 0) {
             for (CategoryLoc loc : microwaves) {
@@ -533,6 +497,7 @@ public class MapsFragment extends Fragment
                 singleMarker.setTag(false);
                 markers_microwave.add(singleMarker);
                 markers_to_desc.put(singleMarker, loc);
+
             }
         }
 
@@ -741,4 +706,16 @@ public class MapsFragment extends Fragment
     }
 
 
+    @Override
+    public void onMapLoaded() {
+        Type listType = new TypeToken<HashMap<String, ArrayList<CategoryLoc>>>() {
+        }.getType();
+
+        HashMap<String, ArrayList<CategoryLoc>> items = gson.fromJson(JSONUtilities.readJSONFromAsset(getActivity(), "sample_map_icon.json"), listType);
+        loadMarkers(items);
+
+
+
+
+    }
 }
