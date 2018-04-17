@@ -28,10 +28,9 @@
 
                 <ImageView
                     android:id="@+id/icon"
-                    android:layout_width="35dp"
-                    android:layout_height="35dp"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
                     android:layout_marginLeft="3dp"
-                    android:layout_marginTop="-2dp"
                     android:background="@drawable/microwave_map_icon" />
 
                 <TextView
@@ -43,6 +42,7 @@
                     android:clickable="false"
                     android:fontFamily="sans-serif"
                     android:text="Microwaves"
+                    android:layout_marginLeft="3dp"
                     android:textColor="#FF720A"
                     android:textSize="22dp"
                     android:textStyle="bold" />

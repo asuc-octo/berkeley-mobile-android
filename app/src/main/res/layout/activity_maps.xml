@@ -83,7 +83,6 @@
     <com.github.clans.fab.FloatingActionMenu
         android:id="@+id/FABmenu"
         android:layout_width="@dimen/button_size"
-        android:visibility="gone"
         android:layout_height="@dimen/button_size"
         android:layout_alignParentBottom="true"
         android:layout_below="@+id/topBox"
