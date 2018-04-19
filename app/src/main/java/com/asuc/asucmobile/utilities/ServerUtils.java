@@ -6,7 +6,7 @@ package com.asuc.asucmobile.utilities;
 
 public class ServerUtils {
 
-    private static final String BASE_URL = "http://asuc-mobile-dev.herokuapp.com/api/";
+    private static final String BASE_URL = "http://berkeleymobile-sandbox.herokuapp.com/api/";
 
     public static String getBaseUrl() {
         return BASE_URL;
