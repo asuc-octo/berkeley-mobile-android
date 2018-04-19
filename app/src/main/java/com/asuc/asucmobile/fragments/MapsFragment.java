@@ -51,7 +51,10 @@ import com.asuc.asucmobile.models.Category;
 import com.asuc.asucmobile.models.CategoryLoc;
 import com.asuc.asucmobile.models.Journey;
 import com.asuc.asucmobile.models.Stop;
+import com.asuc.asucmobile.models.responses.LibrariesResponse;
+import com.asuc.asucmobile.models.responses.MapIconResponse;
 import com.asuc.asucmobile.utilities.Callback;
+import com.asuc.asucmobile.utilities.CustomComparators;
 import com.asuc.asucmobile.utilities.JSONUtilities;
 import com.asuc.asucmobile.utilities.LocationGrabber;
 import com.asuc.asucmobile.utilities.NavigationGenerator;
@@ -83,6 +86,7 @@ import java.lang.reflect.Type;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Timer;
@@ -131,6 +135,7 @@ public class MapsFragment extends Fragment
     private static MapsFragment instance;
     private FirebaseAnalytics mFirebaseAnalytics;
     private FloatingActionButton microwave, sleepPod, waterBottle;
+    private HashMap mapHash = new HashMap<String, ArrayList<CategoryLoc>>();
 
 
     public static MapsFragment getInstance() {
@@ -405,6 +410,24 @@ public class MapsFragment extends Fragment
         moveNavigationIcon(mapView);
         mMap.setOnMarkerClickListener(this);
         mMap.setOnMapLoadedCallback(this);
+
+        BMRetrofitController.bmapi.callIconList().enqueue(new retrofit2.Callback<MapIconResponse>() {
+            @Override
+            public void onResponse(Call<MapIconResponse> call, Response<MapIconResponse> response) {
+                mapHash.put("Microwave", response.body().getMicrowaves());
+                mapHash.put("Water Fountain", response.body().getWaterFountains());
+                mapHash.put("Nap Pod", response.body().getNapPods());
+                loadMarkers(mapHash);
+
+            }
+
+            @Override
+            public void onFailure(Call<MapIconResponse> call, Throwable t) {
+                Toast.makeText(getContext(), "Unable to retrieve map icons, please try again",
+                        Toast.LENGTH_SHORT).show();
+            }
+        });
+
 
         liveTrack();
     }
@@ -701,6 +724,8 @@ public class MapsFragment extends Fragment
 
     }
 
+
+
     public LatLng getCurrLocation() {
         return currLocation;
     }
@@ -708,14 +733,9 @@ public class MapsFragment extends Fragment
 
     @Override
     public void onMapLoaded() {
-        Type listType = new TypeToken<HashMap<String, ArrayList<CategoryLoc>>>() {
-        }.getType();
-
-        HashMap<String, ArrayList<CategoryLoc>> items = gson.fromJson(JSONUtilities.readJSONFromAsset(getActivity(), "sample_map_icon.json"), listType);
-        loadMarkers(items);
-
-
-
 
     }
+
+
+
 }
