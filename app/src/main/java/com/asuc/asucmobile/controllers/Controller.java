@@ -7,6 +7,8 @@ import android.support.annotation.NonNull;
 import com.asuc.asucmobile.utilities.Callback;
 
 import org.json.JSONArray;
+
+import com.asuc.asucmobile.utilities.ServerUtils;
 import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -31,7 +33,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public interface Controller {
 
 
-    String BASE_URL = "http://asuc-mobile-dev.herokuapp.com/api/";
+    String BASE_URL = ServerUtils.getBaseUrl();
     String ISO_FORMAT = "yyyy-MM-dd'T'HH:mm:ss.SSSZ";
 
     GsonBuilder gsonBuilder = new GsonBuilder()
