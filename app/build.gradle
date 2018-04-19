@@ -9,7 +9,7 @@ android {
         applicationId "com.asuc.asucmobile"
         minSdkVersion 17
         targetSdkVersion 25
-        versionCode 25
+        versionCode 28
         versionName "8.3"
         multiDexEnabled true
         vectorDrawables.useSupportLibrary = true

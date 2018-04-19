@@ -262,7 +262,7 @@ public class RouteSelected extends BaseActivity {
     private String getMapsApiDirectionsUrl(LatLng origin, LatLng dest) {
         // Origin of route
         String str_origin = "origin=" + origin.latitude + "," + origin.longitude;
-        String key = "&key=" + getResources().getString(R.id.google_api_key_android);
+        String key = "&key=" + getResources().getString(R.string.google_api_key_android);
 
         // Destination of route
         String str_dest = "destination=" + dest.latitude + "," + dest.longitude;
