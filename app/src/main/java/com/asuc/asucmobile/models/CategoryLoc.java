@@ -1,14 +1,31 @@
 package com.asuc.asucmobile.models;
 
 import com.google.android.gms.maps.model.LatLng;
+import com.google.gson.annotations.SerializedName;
 
 /**
  * Created by alexthomas on 3/12/18.
  */
 
 public class CategoryLoc {
-    private String category, description1, description2, imagelink;
-    private double lat, lon;
+
+    @SerializedName("category")
+    private String category;
+
+    @SerializedName("description1")
+    private String description1;
+    @SerializedName("description2")
+    private String description2;
+    @SerializedName("image_link")
+    private String imagelink;
+
+    @SerializedName("lat")
+    private double lat;
+
+    @SerializedName("lon")
+    private double lon;
+
+
     private LatLng position;
 
 
