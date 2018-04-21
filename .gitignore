@@ -20,6 +20,10 @@ app/src/main/res/values/secret.xml
 app/src/main/java/com/asuc/asucmobile/utilities/ServerUtils.java
 
 
+# release
+app/release
+
+
 # Built application files
 *.apk
 *.ap_
