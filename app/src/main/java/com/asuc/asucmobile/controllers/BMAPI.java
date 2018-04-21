@@ -5,6 +5,7 @@ import com.asuc.asucmobile.models.responses.DiningHallsResponse;
 import com.asuc.asucmobile.models.responses.GymClassesResponse;
 import com.asuc.asucmobile.models.responses.GymsResponse;
 import com.asuc.asucmobile.models.responses.LibrariesResponse;
+import com.asuc.asucmobile.models.responses.MapIconResponse;
 import com.asuc.asucmobile.models.responses.ResourcesResponse;
 
 import retrofit2.Call;
@@ -40,5 +41,9 @@ public interface BMAPI {
     @Headers("Cache-Control: max-age=640000")
     @GET("resources")
     Call<ResourcesResponse> callResourcesList();
+
+    @Headers("Cache-Control: max-age=640000")
+    @GET("map")
+    Call<MapIconResponse> callIconList();
 
 }
