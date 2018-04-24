@@ -97,8 +97,9 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
     private void sendNotification(String messageBody) {
         NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this)
                 .setSmallIcon(R.drawable.bearlogo)
-                .setContentTitle("Berkeley Mobile Message")
-                .setContentText(messageBody);
+                .setContentTitle("Berkeley Mobile")
+                .setContentText(messageBody)
+                .setAutoCancel(true);
 
         Intent resultIntent = new Intent(this, MainActivity.class);
         TaskStackBuilder stackBuilder = TaskStackBuilder.create(this);
@@ -109,10 +110,9 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                 0, PendingIntent.FLAG_UPDATE_CURRENT );
         mBuilder.setContentIntent(resultPendingIntent);
         NotificationManager mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-
         mNotificationManager.notify(MESSAGE_ID++, mBuilder.build());
     }
 
-    
+
 
 }
