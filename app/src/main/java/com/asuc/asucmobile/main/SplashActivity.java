@@ -28,11 +28,11 @@ public class SplashActivity extends Activity {
                 WindowManager.LayoutParams.FLAG_FULLSCREEN); // Removes notification bar
         setContentView(R.layout.activity_splash);
 
-        // disable Firebase crash reporting for developers
+        /*// disable Firebase crash reporting for developers
         int adb = Settings.Secure.getInt(this.getContentResolver(), Settings.Global.DEVELOPMENT_SETTINGS_ENABLED , 0);
         if (adb != 1) {
             Fabric.with(this, new Crashlytics());
-        }
+        }*/
 
         // launch network stuff
         BMRetrofitController.create(this, BMAPI.class);
