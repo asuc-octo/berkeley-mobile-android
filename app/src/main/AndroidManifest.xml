@@ -64,9 +64,7 @@
         <meta-data
             android:name="firebase_crashlytics_collection_enabled"
             android:value="false" />
-        <meta-data
-            android:name="com.google.firebase.messaging.default_notification_icon"
-            android:resource="@drawable/octologo" />
+
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_color"
             android:resource="@color/colorAccent" />
@@ -124,10 +122,6 @@
         <activity
             android:name=".main.RouteSelectActivity"
             android:label="@string/title_activity_open_resource"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".main.CreditsDialog"
-            android:label="Credits"
             android:screenOrientation="portrait" />
 
 
