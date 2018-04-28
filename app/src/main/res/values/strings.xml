@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Berkeley Mobile</string>
+
+    <string name="title_activity_library">Libraries</string>
+    <string name="title_activity_open_library">Library</string>
+    <string name="title_activity_gym">Gyms</string>
+    <string name="title_activity_open_gym">Gym</string>
+    <string name="title_activity_dining_hall">Dining Halls</string>
+    <string name="title_activity_open_dining_hall">Dining Hall</string>
+    <string name="title_activity_open_cafe">Cafe</string>
+    <string name="title_activity_start_stop_select">BearTransit</string>
+    <string name="title_activity_list_start_stop">ListStartStopActivity</string>
+    <string name="title_activity_open_resource">Resource</string>
+    <string name="title_activity_open_route">Route</string>
+    <string name="title_activity_open_trip_selection">Select Route</string>
+    <string name="title_activity_stop">Select Stop</string>
+
+    <string name="intro">Welcome to Berkeley Mobile!\nPlease choose a menu option on the left.</string>
+
+    <string name="search">Search</string>
+    <string name="library_search_hint">Search libraries</string>
+    <string name="content_desc">image</string>
+    <string name="todays_hours">Today\'s Hours</string>
+    <string name="location">Location</string>
+    <string name="phone_number">Phone Number</string>
+    <string name="address">Address</string>
+    <string name="by_appointment">By appointment</string>
+    <string name="open">Open</string>
+    <string name="closed">Closed</string>
+    <string name="full">Full</string>
+
+    <string name="beartransit_info">Plan your trip with BearTransit:</string>
+    <string name="from">From</string>
+    <string name="to">To</string>
+    <string name="depart_at">Time</string>
+    <string name="my_location">My Location</string>
+    <string name="find_route">Find Route</string>
+    <string name="no_routes">No routes available</string>
+    <string name="now">Now</string>
+    <string name="live_bus_map">Live Bus Map</string>
+    <string name="retrieving_location">Retreiving location</string>
+    <string name="door_dash">Food Delivery</string>
+    <string name="call">Call</string>
+    <string name="favorite">Favorite</string>
+    <string name="open_map">Open Map</string>
+
+    <string name="request_caseworker">Request a Caseworker</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+
+</resources>
