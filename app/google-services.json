@@ -21,7 +21,7 @@
       ],
       "api_key": [
         {
-          "current_key": "KEY HERE"
+          "current_key": "INSERT YOUR GOOGLE API KEY HERE"
         }
       ],
       "services": {
