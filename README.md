@@ -55,7 +55,7 @@ The following is a summary of open tasks and issues. For new contributors, we re
 
 ### Improvements
 
-* Write tests! We just started working with Bitrise to automate testing and deployment & notifications & GitHub status
+* Write tests! We just started working with Bitrise to automate testing and deployment & notifications & GitHub status updates
 * Stop hard coding everything
 * Standardization of horizontally scrolling RecyclerViews with CardViews (e.g. in Food and Gyms screens)
 * Porting old Bear Transit network controllers to Retrofit 2, see the [BMAPI.java](app/src/main/java/com/asuc/asucmobile/controllers/BMAPI.java)
