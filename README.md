@@ -2,6 +2,13 @@
 
 This is the official repository for the Berkeley Mobile Android application.
 
+## Build Status
+These badges are automatically generated based on our [Bitrise](https://www.bitrise.io) continuous integration (CI). Bitrise automatically builds and tests the app every time a new commit is pushed to this repo.
+
+| master        | develop       |
+| ------------- |:-------------:|
+| [![Build Status](https://app.bitrise.io/app/461008cfa3c83274/status.svg?token=pNpvUU1P1ybPUSV31_PMLQ&branch=master)](https://app.bitrise.io/app/461008cfa3c83274) | [![Build Status](https://app.bitrise.io/app/461008cfa3c83274/status.svg?token=pNpvUU1P1ybPUSV31_PMLQ&branch=develop)](https://app.bitrise.io/app/461008cfa3c83274) |
+
 ## What is Berkeley Mobile?
 
 Created in 2012, Berkeley Mobile has acculumated over 20,000 downloads on iOS and Android and currently has about 2,000 Monthly Active Users (MAUs). It has Bear Transit routes, library and gym information, dining hall menus, and campus resources, all in one place for the busy Berkeley student. The mission of Berkeley Mobile is to use cool technology to help students navigate Berkeley. You can download Berkeley Mobile on [the Google Play Store](https://play.google.com/store/apps/details?id=com.asuc.asucmobile&hl=en_US) or [the App Store](https://itunes.apple.com/us/app/berkeley-mobile/id912243518?mt=8).
