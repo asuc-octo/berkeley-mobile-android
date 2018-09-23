@@ -48,7 +48,7 @@ It is recommended you use Android Studio 3.0.0.
   * Paste your API key into [secret.xml](app/src/main/res/values/secret.xml) and [google-services.json](app/google-services.json)
 * We've configured this repository so that the application pulls from our sandbox backend, which just returns test data. If you would like access to our production backend API, please [contact us](#contact). 
 
-## Contributing
+## Contributing [![contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat)](https://github.com/asuc-octo/berkeley-mobile-android/issues)
 
 Check out this repository's [issues](https://github.com/asuc-octo/berkeley-mobile-android/issues) for a list of potential projects. You can also add issues to report bugs or suggest new features. If you plan to work on an issue, please assign yourself to the issue.
 
