@@ -16,7 +16,7 @@ Never made an open source contribution before? Wondering how contributions work 
 ## Submitting changes
 
 1. Push your changes to the remote repository using `git push origin branch-name`.
-2. Send a pull request from your fork's branch to our master branch
+2. Send a pull request from your fork's branch to our develop branch
 3. Title the pull request with a short description of the changes made and the issue number associated with your change.
 * For example, one issue might be called "Added more log outputting to resolve #4352".
 4. In the description of the pull request, explain the changes that you made, any issues you think exist with the pull request you made, and any questions you have for the maintainer.
