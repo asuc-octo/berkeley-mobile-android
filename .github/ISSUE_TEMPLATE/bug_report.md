@@ -23,7 +23,7 @@ If applicable, add screenshots to help explain your problem.
 **Smartphone (please complete the following information):**
  - Device: [e.g. iPhone X]
  - OS: [e.g. iOS8.1]
- - Berkeley Mobile Version [e.g. 8.3]
+ - Version [e.g. 8.3]
 
 **Additional context**
 Add any other context about the problem here.
