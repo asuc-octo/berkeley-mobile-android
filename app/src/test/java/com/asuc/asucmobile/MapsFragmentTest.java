@@ -5,7 +5,7 @@ import com.asuc.asucmobile.fragments.MapsFragment;
 import org.junit.Test;
 import static junit.framework.Assert.assertEquals;
 
-public class MapsTest {
+public class MapsFragmentTest {
 
     @Test
     public void markers_are_false() throws Exception {
