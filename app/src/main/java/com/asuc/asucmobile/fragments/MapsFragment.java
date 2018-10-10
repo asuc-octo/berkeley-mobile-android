@@ -118,7 +118,21 @@ public class MapsFragment extends Fragment
     FabButton navigation_button;
     FloatingActionMenu FABmenu;
 
-    private boolean bottlesShown = false, sleepShown = false, microwavesShown = false;
+    private boolean bottlesShown = false;
+    private boolean sleepShown = false;
+    private boolean microwavesShown = false;
+
+    public boolean isBottlesShown() {
+        return bottlesShown;
+    }
+
+    public boolean isSleepShown() {
+        return sleepShown;
+    }
+
+    public boolean isMicrowavesShown() {
+        return microwavesShown;
+    }
 
     ArrayList<Marker> markers_sleepPods = new ArrayList<>();
     ArrayList<Marker> markers_waterbottles = new ArrayList<>();
