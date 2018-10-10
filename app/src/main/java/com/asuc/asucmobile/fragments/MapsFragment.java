@@ -248,11 +248,6 @@ public class MapsFragment extends Fragment
                 mFirebaseAnalytics.logEvent("map_icon_clicked", bundle);
                 updateLocation(v);
 
-//                boolean visibility = true;
-//                if (markers_sleepPods.size() > 0) {
-//                    visibility = mMap.getProjection().getVisibleRegion().latLngBounds.contains(markers_sleepPods.get(0).getPosition());
-//                }
-
                 for (Marker marker : markers_sleepPods) {
                     marker.setVisible(!sleepShown);
                 }
@@ -279,11 +274,6 @@ public class MapsFragment extends Fragment
                 bundle.putString("Category", "waterbottles");
                 mFirebaseAnalytics.logEvent("map_icon_clicked", bundle);
                 updateLocation(v);
-
-//                boolean visibility = true;
-//                if (markers_waterbottles.size() > 0) {
-//                    visibility = mMap.getProjection().getVisibleRegion().latLngBounds.contains(markers_waterbottles.get(0).getPosition());
-//                }
 
                 for (Marker marker : markers_waterbottles) {
                     marker.setVisible(!bottlesShown);
@@ -323,11 +313,6 @@ public class MapsFragment extends Fragment
                     marker.setVisible(false);
                 }
                 sleepShown = false;
-
-//                boolean visibility = true;
-//                if (markers_microwave.size() > 0) {
-//                    visibility = mMap.getProjection().getVisibleRegion().latLngBounds.contains(markers_microwave.get(0).getPosition());
-//                }
 
                 for (Marker marker : markers_microwave) {
                     marker.setVisible(!microwavesShown);
