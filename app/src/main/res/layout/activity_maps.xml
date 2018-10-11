@@ -30,36 +30,24 @@
         android:layout_below="@id/toolbar"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="20dp"
-        android:background="@color/transparent"
-        android:orientation="horizontal"
-        android:weightSum="1">
+        android:background="@color/white"
+        android:elevation="10dp"
+        android:orientation="horizontal">
 
-
-        <LinearLayout
-            android:id="@+id/origin_bar_wrapper"
+        <fragment
+            android:id="@+id/origin_bar"
+            android:name="com.asuc.asucmobile.fragments.OriginFragment"
             android:layout_width="match_parent"
             android:layout_height="55dp"
-            android:visibility="visible">
-
-            <fragment
-                android:id="@+id/origin_bar"
-                android:name="com.asuc.asucmobile.fragments.OriginFragment"
-                android:layout_width="match_parent"
-                android:layout_height="55dp"
-                android:layout_weight="1"
-                tools:layout="@layout/origin_fragment"></fragment>
-        </LinearLayout>
+            tools:layout="@layout/origin_fragment" />
 
         <fragment
             android:id="@+id/destination_bar"
             android:name="com.asuc.asucmobile.fragments.DestinationFragment"
             android:layout_width="match_parent"
             android:layout_height="55dp"
-            android:layout_below="@id/origin_bar_wrapper"
+            android:layout_below="@id/origin_bar"
             tools:layout="@layout/destination_fragment" />
-
-        />
-
 
     </RelativeLayout>
 
