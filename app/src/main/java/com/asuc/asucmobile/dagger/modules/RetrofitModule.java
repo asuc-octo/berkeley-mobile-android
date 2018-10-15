@@ -6,7 +6,7 @@ import android.net.NetworkInfo;
 import android.util.Log;
 
 import com.asuc.asucmobile.GlobalApplication;
-import com.asuc.asucmobile.controllers.BMAPI;
+import com.asuc.asucmobile.services.BMService;
 import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -45,9 +45,9 @@ public class RetrofitModule {
 
 
     @Provides @Singleton
-    public BMAPI provideBMAPI(final Retrofit retrofit) {
-        Log.d(TAG, "BMAPI getting made");
-        return retrofit.create(BMAPI.class);
+    public BMService provideBMAPI(final Retrofit retrofit) {
+        Log.d(TAG, "BMService getting made");
+        return retrofit.create(BMService.class);
     }
 
     @Provides @Singleton

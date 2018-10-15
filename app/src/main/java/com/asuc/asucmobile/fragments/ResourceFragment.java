@@ -24,11 +24,10 @@ import android.widget.Toast;
 import com.asuc.asucmobile.GlobalApplication;
 import com.asuc.asucmobile.R;
 import com.asuc.asucmobile.adapters.ResourceAdapter;
-import com.asuc.asucmobile.controllers.BMAPI;
+import com.asuc.asucmobile.services.BMService;
 import com.asuc.asucmobile.main.ListOfFavorites;
 import com.asuc.asucmobile.main.OpenResourceActivity;
 import com.asuc.asucmobile.models.responses.ResourcesResponse;
-import com.asuc.asucmobile.controllers.BMRetrofitController;
 import com.asuc.asucmobile.utilities.CustomComparators;
 import com.asuc.asucmobile.utilities.NavigationGenerator;
 import com.asuc.asucmobile.utilities.SerializableUtilities;
@@ -43,7 +42,8 @@ import retrofit2.Response;
 
 public class ResourceFragment extends Fragment {
 
-    @Inject BMAPI bmapi;
+    @Inject
+    BMService bmService;
 
     private ListView mResourceList;
     private ProgressBar mProgressBar;
@@ -163,7 +163,7 @@ public class ResourceFragment extends Fragment {
         mRefreshWrapper.setVisibility(View.GONE);
         mProgressBar.setVisibility(View.VISIBLE);
 
-        bmapi.callResourcesList().enqueue(new retrofit2.Callback<ResourcesResponse>() {
+        bmService.callResourcesList().enqueue(new retrofit2.Callback<ResourcesResponse>() {
             @Override
             public void onResponse(Call<ResourcesResponse> call, Response<ResourcesResponse> response) {
                 mResourceList.setVisibility(View.VISIBLE);

@@ -36,8 +36,8 @@ import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 
+import com.asuc.asucmobile.GlobalApplication;
 import com.asuc.asucmobile.R;
-import com.asuc.asucmobile.controllers.BMRetrofitController;
 import com.asuc.asucmobile.controllers.BusController;
 import com.asuc.asucmobile.controllers.Controller;
 import com.asuc.asucmobile.controllers.LiveBusController;
@@ -53,6 +53,7 @@ import com.asuc.asucmobile.models.Journey;
 import com.asuc.asucmobile.models.Stop;
 import com.asuc.asucmobile.models.responses.LibrariesResponse;
 import com.asuc.asucmobile.models.responses.MapIconResponse;
+import com.asuc.asucmobile.services.BMService;
 import com.asuc.asucmobile.utilities.Callback;
 import com.asuc.asucmobile.utilities.CustomComparators;
 import com.asuc.asucmobile.utilities.JSONUtilities;
@@ -92,6 +93,8 @@ import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import javax.inject.Inject;
+
 import mbanje.kurt.fabbutton.FabButton;
 import retrofit2.Call;
 import retrofit2.Response;
@@ -105,6 +108,9 @@ public class MapsFragment extends Fragment
         GoogleMap.OnMapLoadedCallback {
 
     private static final String TAG = "MapsFragment";
+
+    @Inject BMService bmService;
+
     private GoogleMap mMap;
     Gson gson = new Gson();
     final LatLng BERKELEY = new LatLng(37.8716, -122.2727);
@@ -161,6 +167,9 @@ public class MapsFragment extends Fragment
     @Override
     @SuppressWarnings("all")
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+
+        bmService = GlobalApplication.getRetrofitComponent().bmapi();
+
         if (layout != null) {
             ViewGroup parent = (ViewGroup) layout.getParent();
             if (parent != null)
@@ -425,7 +434,7 @@ public class MapsFragment extends Fragment
         mMap.setOnMarkerClickListener(this);
         mMap.setOnMapLoadedCallback(this);
 
-        BMRetrofitController.bmapi.callIconList().enqueue(new retrofit2.Callback<MapIconResponse>() {
+        bmService.callIconList().enqueue(new retrofit2.Callback<MapIconResponse>() {
             @Override
             public void onResponse(Call<MapIconResponse> call, Response<MapIconResponse> response) {
                 mapHash.put("Microwave", response.body().getMicrowaves());

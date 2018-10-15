@@ -5,6 +5,7 @@ import android.content.Context;
 
 import com.asuc.asucmobile.dagger.components.DaggerRetrofitComponent;
 import com.asuc.asucmobile.dagger.components.RetrofitComponent;
+import com.asuc.asucmobile.dagger.modules.AppModule;
 import com.asuc.asucmobile.dagger.modules.RetrofitModule;
 import com.asuc.asucmobile.utilities.ServerUtils;
 
@@ -22,6 +23,7 @@ public class GlobalApplication extends Application {
         appContext = getApplicationContext();
 
         retrofitComponent = DaggerRetrofitComponent.builder()
+                .appModule(new AppModule(this))
                 .retrofitModule(new RetrofitModule(ServerUtils.getBaseUrl()))
                 .build();
 

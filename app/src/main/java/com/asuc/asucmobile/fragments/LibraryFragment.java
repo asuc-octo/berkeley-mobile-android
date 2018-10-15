@@ -4,17 +4,11 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.EditText;
-import android.widget.Filter;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -24,18 +18,15 @@ import android.widget.Toast;
 import com.asuc.asucmobile.GlobalApplication;
 import com.asuc.asucmobile.R;
 import com.asuc.asucmobile.adapters.LibraryAdapter;
-import com.asuc.asucmobile.controllers.BMAPI;
+import com.asuc.asucmobile.services.BMService;
 import com.asuc.asucmobile.main.ListOfFavorites;
 import com.asuc.asucmobile.main.OpenLibraryActivity;
-import com.asuc.asucmobile.models.Library;
 import com.asuc.asucmobile.models.responses.LibrariesResponse;
-import com.asuc.asucmobile.controllers.BMRetrofitController;
 import com.asuc.asucmobile.utilities.CustomComparators;
 import com.asuc.asucmobile.utilities.NavigationGenerator;
 import com.asuc.asucmobile.utilities.SerializableUtilities;
 import com.google.firebase.analytics.FirebaseAnalytics;
 
-import java.util.ArrayList;
 import java.util.Collections;
 
 import javax.inject.Inject;
@@ -45,7 +36,8 @@ import retrofit2.Response;
 
 public class LibraryFragment extends Fragment {
 
-    @Inject BMAPI bmapi;
+    @Inject
+    BMService bmService;
 
     private ListView mLibraryList;
     private ProgressBar mProgressBar;
@@ -117,7 +109,7 @@ public class LibraryFragment extends Fragment {
         mRefreshWrapper.setVisibility(View.GONE);
         mProgressBar.setVisibility(View.VISIBLE);
 
-        bmapi.callLibrariesList().enqueue(new retrofit2.Callback<LibrariesResponse>() {
+        bmService.callLibrariesList().enqueue(new retrofit2.Callback<LibrariesResponse>() {
             @Override
             public void onResponse(Call<LibrariesResponse> call, Response<LibrariesResponse> response) {
                 mLibraryList.setVisibility(View.VISIBLE);
