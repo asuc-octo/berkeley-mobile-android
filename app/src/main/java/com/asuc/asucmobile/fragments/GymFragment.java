@@ -19,8 +19,10 @@ import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.asuc.asucmobile.GlobalApplication;
 import com.asuc.asucmobile.R;
 import com.asuc.asucmobile.adapters.GymAdapter;
+import com.asuc.asucmobile.controllers.BMAPI;
 import com.asuc.asucmobile.controllers.BMRetrofitController;
 import com.asuc.asucmobile.models.GymClass;
 import com.asuc.asucmobile.models.WeekCalendar;
@@ -40,12 +42,17 @@ import java.util.HashSet;
 import java.util.Locale;
 import java.util.TimeZone;
 
+import javax.inject.Inject;
+
 import noman.weekcalendar.listener.OnDateClickListener;
 import retrofit2.Call;
 import retrofit2.Response;
 
 public class GymFragment extends Fragment {
+
     public static final String TAG = "GymFragment";
+
+    @Inject BMAPI bmapi;
 
     private HashSet<Integer> filter;
     private ArrayList<GymClass> mClasses;
@@ -71,6 +78,8 @@ public class GymFragment extends Fragment {
     @Override
     public View onCreateView(final LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
+        GlobalApplication.getRetrofitComponent().inject(this);
 
         NavigationGenerator.closeMenu(getActivity());
 
@@ -262,8 +271,8 @@ public class GymFragment extends Fragment {
      */
     private void refresh() {
 
-        gymsCall = BMRetrofitController.bmapi.callGymsList();
-        gymClassesCall = BMRetrofitController.bmapi.callGymClasses();
+        gymsCall = bmapi.callGymsList();
+        gymClassesCall = bmapi.callGymClasses();
 
         gymClassView.setVisibility(View.GONE);
         mRefreshWrapper.setVisibility(View.GONE);

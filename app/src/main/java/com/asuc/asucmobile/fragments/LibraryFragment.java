@@ -21,8 +21,10 @@ import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.asuc.asucmobile.GlobalApplication;
 import com.asuc.asucmobile.R;
 import com.asuc.asucmobile.adapters.LibraryAdapter;
+import com.asuc.asucmobile.controllers.BMAPI;
 import com.asuc.asucmobile.main.ListOfFavorites;
 import com.asuc.asucmobile.main.OpenLibraryActivity;
 import com.asuc.asucmobile.models.Library;
@@ -36,10 +38,14 @@ import com.google.firebase.analytics.FirebaseAnalytics;
 import java.util.ArrayList;
 import java.util.Collections;
 
+import javax.inject.Inject;
+
 import retrofit2.Call;
 import retrofit2.Response;
 
 public class LibraryFragment extends Fragment {
+
+    @Inject BMAPI bmapi;
 
     private ListView mLibraryList;
     private ProgressBar mProgressBar;
@@ -52,6 +58,8 @@ public class LibraryFragment extends Fragment {
     @Override
     @SuppressWarnings("deprecation")
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+
+        GlobalApplication.getRetrofitComponent().inject(this);
 
         mFirebaseAnalytics = FirebaseAnalytics.getInstance(this.getContext());
         Bundle bundle = new Bundle();
@@ -109,7 +117,7 @@ public class LibraryFragment extends Fragment {
         mRefreshWrapper.setVisibility(View.GONE);
         mProgressBar.setVisibility(View.VISIBLE);
 
-        BMRetrofitController.bmapi.callLibrariesList().enqueue(new retrofit2.Callback<LibrariesResponse>() {
+        bmapi.callLibrariesList().enqueue(new retrofit2.Callback<LibrariesResponse>() {
             @Override
             public void onResponse(Call<LibrariesResponse> call, Response<LibrariesResponse> response) {
                 mLibraryList.setVisibility(View.VISIBLE);

@@ -12,6 +12,7 @@ import com.asuc.asucmobile.R;
 import com.asuc.asucmobile.controllers.BMAPI;
 import com.asuc.asucmobile.controllers.BMRetrofitController;
 import com.crashlytics.android.Crashlytics;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import io.fabric.sdk.android.Fabric;
 
@@ -33,6 +34,8 @@ public class SplashActivity extends Activity {
         if (adb != 1) {
             Fabric.with(this, new Crashlytics());
         }*/
+
+        FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();
 
         // launch network stuff
         BMRetrofitController.create(this, BMAPI.class);
