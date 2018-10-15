@@ -1,4 +1,4 @@
-package com.asuc.asucmobile;
+package com.asuc.asucmobile.fragments;
 
 import com.asuc.asucmobile.fragments.MapsFragment;
 
