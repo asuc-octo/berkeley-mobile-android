@@ -216,7 +216,7 @@ public class OpenLibraryActivity extends BaseActivity {
         // weekly library hours should already be set up when you open the page
         hours.setText(setUpWeeklyHoursLeft());
         hoursParams = hoursLayout.getLayoutParams();
-        hoursLayout.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, 0.2f));
+        hoursLayout.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT, 0.2f));
         hours_expand.setText(setUpWeeklyHoursRight());
 
     }
