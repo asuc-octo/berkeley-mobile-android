@@ -21,12 +21,13 @@ import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.asuc.asucmobile.GlobalApplication;
 import com.asuc.asucmobile.R;
 import com.asuc.asucmobile.adapters.ResourceAdapter;
+import com.asuc.asucmobile.services.BMService;
 import com.asuc.asucmobile.main.ListOfFavorites;
 import com.asuc.asucmobile.main.OpenResourceActivity;
 import com.asuc.asucmobile.models.responses.ResourcesResponse;
-import com.asuc.asucmobile.controllers.BMRetrofitController;
 import com.asuc.asucmobile.utilities.CustomComparators;
 import com.asuc.asucmobile.utilities.NavigationGenerator;
 import com.asuc.asucmobile.utilities.SerializableUtilities;
@@ -34,10 +35,15 @@ import com.google.firebase.analytics.FirebaseAnalytics;
 
 import java.util.Collections;
 
+import javax.inject.Inject;
+
 import retrofit2.Call;
 import retrofit2.Response;
 
 public class ResourceFragment extends Fragment {
+
+    @Inject
+    BMService bmService;
 
     private ListView mResourceList;
     private ProgressBar mProgressBar;
@@ -50,6 +56,8 @@ public class ResourceFragment extends Fragment {
     @Override
     @SuppressWarnings("deprecation")
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+
+        GlobalApplication.getRetrofitComponent().inject(this);
 
         mFirebaseAnalytics = FirebaseAnalytics.getInstance(this.getContext());
         Bundle bundle = new Bundle();
@@ -155,7 +163,7 @@ public class ResourceFragment extends Fragment {
         mRefreshWrapper.setVisibility(View.GONE);
         mProgressBar.setVisibility(View.VISIBLE);
 
-        BMRetrofitController.bmapi.callResourcesList().enqueue(new retrofit2.Callback<ResourcesResponse>() {
+        bmService.callResourcesList().enqueue(new retrofit2.Callback<ResourcesResponse>() {
             @Override
             public void onResponse(Call<ResourcesResponse> call, Response<ResourcesResponse> response) {
                 mResourceList.setVisibility(View.VISIBLE);

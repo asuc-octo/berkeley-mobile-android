@@ -6,7 +6,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,20 +15,21 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.asuc.asucmobile.GlobalApplication;
 import com.asuc.asucmobile.R;
 import com.asuc.asucmobile.adapters.FoodPlaceAdapter;
+import com.asuc.asucmobile.services.BMService;
 import com.asuc.asucmobile.models.Cafe;
 import com.asuc.asucmobile.models.responses.CafesResponse;
 import com.asuc.asucmobile.models.responses.DiningHallsResponse;
 import com.asuc.asucmobile.models.FoodPlace;
-import com.asuc.asucmobile.controllers.BMRetrofitController;
-import com.asuc.asucmobile.utilities.CustomComparators;
 import com.asuc.asucmobile.utilities.NavigationGenerator;
 import com.google.firebase.analytics.FirebaseAnalytics;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
+
+import javax.inject.Inject;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -42,6 +42,9 @@ import retrofit2.Response;
 public class FoodFragment extends Fragment {
 
     public static final String TAG = "FoodFragment";
+
+    @Inject
+    BMService bmService;
 
     private TextView mDiningHallLabel;
     private TextView mCafeLabel;
@@ -62,6 +65,8 @@ public class FoodFragment extends Fragment {
     @Override
     @SuppressWarnings("deprecation")
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+
+        GlobalApplication.getRetrofitComponent().inject(this);
 
         View layout = inflater.inflate(R.layout.fragment_food, container, false);
         Toolbar toolbar = (Toolbar) layout.findViewById(R.id.toolbar);
@@ -118,8 +123,8 @@ public class FoodFragment extends Fragment {
      */
     private void refresh() {
 
-        mDiningHallsCall = BMRetrofitController.bmapi.callDiningHallList();
-        mCafesCall = BMRetrofitController.bmapi.callCafeList();
+        mDiningHallsCall = bmService.callDiningHallList();
+        mCafesCall = bmService.callCafeList();
 
         mCafeLabel.setVisibility(View.GONE);
         mDiningHallLabel.setVisibility(View.GONE);
