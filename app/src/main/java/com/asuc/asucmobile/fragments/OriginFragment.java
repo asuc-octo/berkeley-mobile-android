@@ -75,8 +75,8 @@ public class OriginFragment extends PlaceAutocompleteFragment implements
 
     private static GoogleApiClient mGoogleApiClient;
     private PlaceArrayAdapter mPlaceArrayAdapter;
-    private static final LatLngBounds BOUNDS_MOUNTAIN_VIEW = new LatLngBounds(
-            new LatLng(37.851532, -122.232216), new LatLng(37.902479, -122.313240));
+    private static final LatLngBounds BOUNDS_BERKELEY = new LatLngBounds(
+            new LatLng(37.854866, -122.269154), new LatLng(37.883038, -122.245781));
     private LatLng origin;
 
 
@@ -195,7 +195,7 @@ public class OriginFragment extends PlaceAutocompleteFragment implements
                 new AutocompleteFilter.Builder().setCountry("US").build();
 
         mPlaceArrayAdapter = new PlaceArrayAdapter(getContext(), R.layout.maps_autocomplete_list_item, R.id.text1,
-                BOUNDS_MOUNTAIN_VIEW, filter);
+                BOUNDS_BERKELEY, filter);
         mAutocompleteTextView.setAdapter(mPlaceArrayAdapter);
        //mAutocompleteTextView.setText("Current Location");
         //origin = MapsFragment.getInstance().getCurrLocation();
