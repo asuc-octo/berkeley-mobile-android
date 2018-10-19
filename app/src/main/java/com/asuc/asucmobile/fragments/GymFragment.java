@@ -19,9 +19,10 @@ import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.asuc.asucmobile.GlobalApplication;
 import com.asuc.asucmobile.R;
 import com.asuc.asucmobile.adapters.GymAdapter;
-import com.asuc.asucmobile.controllers.BMRetrofitController;
+import com.asuc.asucmobile.services.BMService;
 import com.asuc.asucmobile.models.GymClass;
 import com.asuc.asucmobile.models.WeekCalendar;
 import com.asuc.asucmobile.models.responses.GymClassesResponse;
@@ -37,15 +38,22 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Locale;
 import java.util.TimeZone;
+
+import javax.inject.Inject;
 
 import noman.weekcalendar.listener.OnDateClickListener;
 import retrofit2.Call;
 import retrofit2.Response;
 
 public class GymFragment extends Fragment {
+
     public static final String TAG = "GymFragment";
+
+    @Inject
+    BMService bmService;
 
     private HashSet<Integer> filter;
     private ArrayList<GymClass> mClasses;
@@ -71,6 +79,8 @@ public class GymFragment extends Fragment {
     @Override
     public View onCreateView(final LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
+        GlobalApplication.getRetrofitComponent().inject(this);
 
         NavigationGenerator.closeMenu(getActivity());
 
@@ -262,8 +272,8 @@ public class GymFragment extends Fragment {
      */
     private void refresh() {
 
-        gymsCall = BMRetrofitController.bmapi.callGymsList();
-        gymClassesCall = BMRetrofitController.bmapi.callGymClasses();
+        gymsCall = bmService.callGymsList();
+        gymClassesCall = bmService.callGymClasses();
 
         gymClassView.setVisibility(View.GONE);
         mRefreshWrapper.setVisibility(View.GONE);
@@ -293,17 +303,27 @@ public class GymFragment extends Fragment {
         });
     }
 
+    /**
+     * Prevent adding null gym classes to list
+     * @param gymClasses
+     */
+    private void addGymClasses(List<GymClass> gymClasses) {
+        if (gymClasses != null) {
+            mClasses.addAll(gymClasses);
+        }
+    }
+
     private void getGymClasses(){
         gymClassesCall.enqueue(new retrofit2.Callback<GymClassesResponse>() {
             @Override
             public void onResponse(Call<GymClassesResponse> call, Response<GymClassesResponse> response) {
-                mClasses.addAll(response.body().getAllAround());
-                mClasses.addAll(response.body().getAqua());
-                mClasses.addAll(response.body().getCardio());
-                mClasses.addAll(response.body().getCore());
-                mClasses.addAll(response.body().getDance());
-                mClasses.addAll(response.body().getMindBody());
-                mClasses.addAll(response.body().getStrength());
+                addGymClasses(response.body().getAllAround());
+                addGymClasses(response.body().getAqua());
+                addGymClasses(response.body().getCardio());
+                addGymClasses(response.body().getCore());
+                addGymClasses(response.body().getDance());
+                addGymClasses(response.body().getMindBody());
+                addGymClasses(response.body().getStrength());
                 Collections.sort(mClasses);
                 initClassTable();
             }

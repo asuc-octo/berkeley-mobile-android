@@ -6,14 +6,10 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Window;
 import android.view.WindowManager;
-import android.provider.Settings;
 
 import com.asuc.asucmobile.R;
-import com.asuc.asucmobile.controllers.BMAPI;
-import com.asuc.asucmobile.controllers.BMRetrofitController;
-import com.crashlytics.android.Crashlytics;
-
-import io.fabric.sdk.android.Fabric;
+import com.asuc.asucmobile.services.BMService;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 public class SplashActivity extends Activity {
 
@@ -34,8 +30,6 @@ public class SplashActivity extends Activity {
             Fabric.with(this, new Crashlytics());
         }*/
 
-        // launch network stuff
-        BMRetrofitController.create(this, BMAPI.class);
 
         // Start timer and launch main activity
         IntentLauncher launcher = new IntentLauncher();
