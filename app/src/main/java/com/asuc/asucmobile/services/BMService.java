@@ -1,4 +1,4 @@
-package com.asuc.asucmobile.controllers;
+package com.asuc.asucmobile.services;
 
 import com.asuc.asucmobile.models.responses.CafesResponse;
 import com.asuc.asucmobile.models.responses.DiningHallsResponse;
@@ -16,7 +16,7 @@ import retrofit2.http.Headers;
  * Created by rustie on 2/10/18.
  */
 
-public interface BMAPI {
+public interface BMService {
 
     @Headers("Cache-Control: max-age=640000")
     @GET("dining_halls")

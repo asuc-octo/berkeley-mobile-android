@@ -36,8 +36,8 @@ import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 
+import com.asuc.asucmobile.GlobalApplication;
 import com.asuc.asucmobile.R;
-import com.asuc.asucmobile.controllers.BMRetrofitController;
 import com.asuc.asucmobile.controllers.BusController;
 import com.asuc.asucmobile.controllers.Controller;
 import com.asuc.asucmobile.controllers.LiveBusController;
@@ -53,6 +53,7 @@ import com.asuc.asucmobile.models.Journey;
 import com.asuc.asucmobile.models.Stop;
 import com.asuc.asucmobile.models.responses.LibrariesResponse;
 import com.asuc.asucmobile.models.responses.MapIconResponse;
+import com.asuc.asucmobile.services.BMService;
 import com.asuc.asucmobile.utilities.Callback;
 import com.asuc.asucmobile.utilities.CustomComparators;
 import com.asuc.asucmobile.utilities.JSONUtilities;
@@ -92,6 +93,8 @@ import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import javax.inject.Inject;
+
 import mbanje.kurt.fabbutton.FabButton;
 import retrofit2.Call;
 import retrofit2.Response;
@@ -105,6 +108,9 @@ public class MapsFragment extends Fragment
         GoogleMap.OnMapLoadedCallback {
 
     private static final String TAG = "MapsFragment";
+
+    @Inject BMService bmService;
+
     private GoogleMap mMap;
     Gson gson = new Gson();
     final LatLng BERKELEY = new LatLng(37.8716, -122.2727);
@@ -117,6 +123,22 @@ public class MapsFragment extends Fragment
     private final static DecimalFormat DECIMAL_FORMAT = new DecimalFormat("#.##");
     FabButton navigation_button;
     FloatingActionMenu FABmenu;
+
+    private boolean bottlesShown = false;
+    private boolean sleepShown = false;
+    private boolean microwavesShown = false;
+
+    public boolean isBottlesShown() {
+        return bottlesShown;
+    }
+
+    public boolean isSleepShown() {
+        return sleepShown;
+    }
+
+    public boolean isMicrowavesShown() {
+        return microwavesShown;
+    }
 
     ArrayList<Marker> markers_sleepPods = new ArrayList<>();
     ArrayList<Marker> markers_waterbottles = new ArrayList<>();
@@ -145,6 +167,9 @@ public class MapsFragment extends Fragment
     @Override
     @SuppressWarnings("all")
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+
+        bmService = GlobalApplication.getRetrofitComponent().bmapi();
+
         if (layout != null) {
             ViewGroup parent = (ViewGroup) layout.getParent();
             if (parent != null)
@@ -231,21 +256,21 @@ public class MapsFragment extends Fragment
                 bundle.putString("Category", "nappod");
                 mFirebaseAnalytics.logEvent("map_icon_clicked", bundle);
                 updateLocation(v);
+
                 for (Marker marker : markers_sleepPods) {
-
-                    marker.setVisible(true);
-
+                    marker.setVisible(!sleepShown);
                 }
+                sleepShown = !sleepShown;
 
                 for (Marker marker : markers_waterbottles) {
                     marker.setVisible(false);
-
                 }
+                bottlesShown = false;
 
                 for (Marker marker : markers_microwave) {
                     marker.setVisible(false);
-
                 }
+                microwavesShown = false;
             }
         });
 
@@ -258,22 +283,22 @@ public class MapsFragment extends Fragment
                 bundle.putString("Category", "waterbottles");
                 mFirebaseAnalytics.logEvent("map_icon_clicked", bundle);
                 updateLocation(v);
-                for (Marker marker : markers_waterbottles) {
-                    marker.setVisible(true);
 
+                for (Marker marker : markers_waterbottles) {
+                    marker.setVisible(!bottlesShown);
                 }
+                bottlesShown = !bottlesShown;
 
                 for (Marker marker : markers_sleepPods) {
-
                     marker.setVisible(false);
-
                 }
+                sleepShown = false;
 
 
                 for (Marker marker : markers_microwave) {
                     marker.setVisible(false);
-
                 }
+                microwavesShown = false;
 
 
             }
@@ -290,20 +315,18 @@ public class MapsFragment extends Fragment
                 //updateLocation(v);
                 for (Marker marker : markers_waterbottles) {
                     marker.setVisible(false);
-
                 }
+                bottlesShown = false;
 
                 for (Marker marker : markers_sleepPods) {
-
                     marker.setVisible(false);
-
                 }
-
+                sleepShown = false;
 
                 for (Marker marker : markers_microwave) {
-                    marker.setVisible(true);
-
+                    marker.setVisible(!microwavesShown);
                 }
+                microwavesShown = !microwavesShown;
 
 
             }
@@ -396,7 +419,7 @@ public class MapsFragment extends Fragment
             @Override
             public void onMapClick(LatLng latLng) {
                 if (originWrapper == null || busRouteWrapper == null || navigation_button == null) {
-                    originWrapper = (LinearLayout) layout.findViewById(R.id.origin_bar_wrapper);
+                    originWrapper = (LinearLayout) layout.findViewById(R.id.origin_bar);
                     navigation_button = (FabButton) layout.findViewById(R.id.determinate);
 
                 }
@@ -411,7 +434,7 @@ public class MapsFragment extends Fragment
         mMap.setOnMarkerClickListener(this);
         mMap.setOnMapLoadedCallback(this);
 
-        BMRetrofitController.bmapi.callIconList().enqueue(new retrofit2.Callback<MapIconResponse>() {
+        bmService.callIconList().enqueue(new retrofit2.Callback<MapIconResponse>() {
             @Override
             public void onResponse(Call<MapIconResponse> call, Response<MapIconResponse> response) {
                 mapHash.put("Microwave", response.body().getMicrowaves());
