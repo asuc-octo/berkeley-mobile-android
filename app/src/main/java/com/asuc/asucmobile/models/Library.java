@@ -123,6 +123,8 @@ public class Library implements Comparable<Library>{
 
     @Override
     public int compareTo(@NonNull Library other) {
+        if (this.isOpen() && !other.isOpen()) return -1;
+        if (other.isOpen() && !this.isOpen()) return 1;
         return this.getName().compareTo(other.getName());
     }
 
