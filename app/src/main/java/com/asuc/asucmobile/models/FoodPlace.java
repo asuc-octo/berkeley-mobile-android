@@ -6,13 +6,17 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
+
 /**
  * Created by rustie on 10/4/17.
  */
 
+@NoArgsConstructor
+@AllArgsConstructor
 public abstract class FoodPlace implements Serializable{
-
-
 
     protected String id;
     protected String name;

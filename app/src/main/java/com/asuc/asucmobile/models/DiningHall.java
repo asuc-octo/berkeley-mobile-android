@@ -6,8 +6,19 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.experimental.SuperBuilder;
 
 
+@NoArgsConstructor
+@AllArgsConstructor
+@Getter
+@Setter
+@Builder
 public class DiningHall extends FoodPlace{
 
 
@@ -56,102 +67,14 @@ public class DiningHall extends FoodPlace{
     @SerializedName("limited_dinner_close")
     private Date limitedDinnerClose;
 
-
-    public DiningHall(String id, String name, ArrayList<FoodItem> breakfastMenu,
-                      ArrayList<FoodItem> lunchMenu, ArrayList<FoodItem> dinnerMenu,
-                      ArrayList<FoodItem> limitedLunchMenu, ArrayList<FoodItem> limitedDinnerMenu, Date breakfastOpen, Date breakfastClose,
-                      Date lunchOpen, Date lunchClose, Date dinnerOpen, Date dinnerClose,
-                      Date limitedLunchOpen, Date limitedLunchClose, Date limitedDinnerOpen, Date limitedDinnerClose, String imageUrl) {
-        this.id = id;
-        this.name = name;
-        this.breakfastMenu = breakfastMenu;
-        this.lunchMenu = lunchMenu;
-        this.dinnerMenu = dinnerMenu;
-        this.limitedLunchMenu = limitedLunchMenu;
-        this.limitedDinnerMenu = limitedDinnerMenu;
-        this.breakfastOpen = breakfastOpen;
-        this.breakfastClose = breakfastClose;
-        this.lunchOpen = lunchOpen;
-        this.lunchClose = lunchClose;
-        this.dinnerOpen = dinnerOpen;
-        this.dinnerClose = dinnerClose;
-        this.limitedLunchOpen = limitedLunchOpen;
-        this.limitedLunchClose = limitedLunchClose;
-        this.limitedDinnerOpen = limitedDinnerOpen;
-        this.limitedDinnerClose = limitedDinnerClose;
-        this.imageUrl = imageUrl;
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public ArrayList<FoodItem> getBreakfastMenu() {
-        return breakfastMenu;
-    }
-
-    public ArrayList<FoodItem> getLunchMenu() {
-        return lunchMenu;
-    }
-
-    public ArrayList<FoodItem> getDinnerMenu() {
-        return dinnerMenu;
-    }
-
-    public ArrayList<FoodItem> getLimitedLunchMenu() {
-        return limitedLunchMenu;
-    }
-
-    public ArrayList<FoodItem> getLimitedDinnerMenu() {
-        return limitedDinnerMenu;
-    }
-
-    public String getImageUrl() {
-        return imageUrl;
-    }
-
-    public Date getBreakfastOpening() {
-        return breakfastOpen;
-    }
-
-    public Date getBreakfastClosing() {
-        return breakfastClose;
-    }
-
-    public Date getLunchOpening() {
-        return lunchOpen;
-    }
-
-    public Date getLunchClosing() {
-        return lunchClose;
-    }
-
-    public Date getDinnerOpening() {
-        return dinnerOpen;
-    }
-
-    public Date getDinnerClosing() {
-        return dinnerClose;
-    }
-
-    public Date getLimitedLunchOpen() {
-        return limitedLunchOpen;
-    }
-
-    public Date getLimitedLunchClosing() {
-        return limitedLunchClose;
-    }
-
-    public Date getLimitedDinnerOpen() {
-        return limitedDinnerOpen;
-    }
-
-    public Date getLimitedDinnerClosing() {
-        return limitedDinnerClose;
+    /**
+     * Would be better to have @SuperBuilder, but no intellij support :(
+     * @param id
+     * @param name
+     * @param url
+     */
+    public DiningHall(String id, String name, String url) {
+        super(id, name, url, false);
     }
 
     /**
@@ -215,110 +138,6 @@ public class DiningHall extends FoodPlace{
 
     public boolean isOpen() {
         return isBreakfastOpen() | isLunchOpen() | isDinnerOpen() | isLimitedLunchOpen() | isLimitedDinnerOpen();
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public void setBreakfastMenu(ArrayList<FoodItem> breakfastMenu) {
-        this.breakfastMenu = breakfastMenu;
-    }
-
-    public void setLunchMenu(ArrayList<FoodItem> lunchMenu) {
-        this.lunchMenu = lunchMenu;
-    }
-
-    public void setDinnerMenu(ArrayList<FoodItem> dinnerMenu) {
-        this.dinnerMenu = dinnerMenu;
-    }
-
-    public void setLimitedLunchMenu(ArrayList<FoodItem> limitedLunchMenu) {
-        this.limitedLunchMenu = limitedLunchMenu;
-    }
-
-    public void setLimitedDinnerMenu(ArrayList<FoodItem> limitedDinnerMenu) {
-        this.limitedDinnerMenu = limitedDinnerMenu;
-    }
-
-    public Date getBreakfastOpen() {
-        return breakfastOpen;
-    }
-
-    public void setBreakfastOpen(Date breakfastOpen) {
-        this.breakfastOpen = breakfastOpen;
-    }
-
-    public Date getBreakfastClose() {
-        return breakfastClose;
-    }
-
-    public void setBreakfastClose(Date breakfastClose) {
-        this.breakfastClose = breakfastClose;
-    }
-
-    public Date getLunchOpen() {
-        return lunchOpen;
-    }
-
-    public void setLunchOpen(Date lunchOpen) {
-        this.lunchOpen = lunchOpen;
-    }
-
-    public Date getLunchClose() {
-        return lunchClose;
-    }
-
-    public void setLunchClose(Date lunchClose) {
-        this.lunchClose = lunchClose;
-    }
-
-    public Date getDinnerOpen() {
-        return dinnerOpen;
-    }
-
-    public void setDinnerOpen(Date dinnerOpen) {
-        this.dinnerOpen = dinnerOpen;
-    }
-
-    public Date getDinnerClose() {
-        return dinnerClose;
-    }
-
-    public void setDinnerClose(Date dinnerClose) {
-        this.dinnerClose = dinnerClose;
-    }
-
-    public void setLimitedLunchOpen(Date limitedLunchOpen) {
-        this.limitedLunchOpen = limitedLunchOpen;
-    }
-
-    public Date getLimitedLunchClose() {
-        return limitedLunchClose;
-    }
-
-    public void setLimitedLunchClose(Date limitedLunchClose) {
-        this.limitedLunchClose = limitedLunchClose;
-    }
-
-    public void setLimitedDinnerOpen(Date limitedDinnerOpen) {
-        this.limitedDinnerOpen = limitedDinnerOpen;
-    }
-
-    public Date getLimitedDinnerClose() {
-        return limitedDinnerClose;
-    }
-
-    public void setLimitedDinnerClose(Date limitedDinnerClose) {
-        this.limitedDinnerClose = limitedDinnerClose;
-    }
-
-    public void setImageUrl(String imageUrl) {
-        this.imageUrl = imageUrl;
     }
 
     @Override

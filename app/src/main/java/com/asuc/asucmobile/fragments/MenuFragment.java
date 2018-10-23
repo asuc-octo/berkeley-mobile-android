@@ -1,8 +1,6 @@
 package com.asuc.asucmobile.fragments;
 
 import android.app.Fragment;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v13.view.ViewCompat;
@@ -12,7 +10,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -25,15 +22,10 @@ import com.asuc.asucmobile.models.Cafe;
 import com.asuc.asucmobile.models.DiningHall;
 import com.asuc.asucmobile.models.FoodItem;
 import com.asuc.asucmobile.models.FoodPlace;
-import com.asuc.asucmobile.utilities.CustomComparators;
 
-import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Locale;
-
-import static android.support.design.R.id.add;
 
 /**
  * Created by rustie on 10/11/17.
@@ -213,14 +205,14 @@ public class    MenuFragment extends Fragment {
                     case "Breakfast":
                         foodItems = diningHall.getBreakfastMenu();
 
-                        opening = HOURS_FORMAT.format(diningHall.getBreakfastOpening());
-                        closing = HOURS_FORMAT.format(diningHall.getBreakfastClosing());
+                        opening = HOURS_FORMAT.format(diningHall.getBreakfastOpen());
+                        closing = HOURS_FORMAT.format(diningHall.getBreakfastClose());
                         isOpen = diningHall.isBreakfastOpen();
                         break;
                     case "Lunch":
                         foodItems = diningHall.getLunchMenu();
-                        opening = HOURS_FORMAT.format(diningHall.getLunchOpening());
-                        closing = HOURS_FORMAT.format(diningHall.getLunchClosing());
+                        opening = HOURS_FORMAT.format(diningHall.getLunchOpen());
+                        closing = HOURS_FORMAT.format(diningHall.getLunchClose());
                         isOpen = diningHall.isLunchOpen();
                         break;
                     case "LimitedL":
@@ -234,8 +226,8 @@ public class    MenuFragment extends Fragment {
                         } else {
                             opening = LATE_NIGHT_OPEN;
                         }
-                        if (diningHall.getLimitedLunchClosing() != null) {
-                            closing = HOURS_FORMAT.format(diningHall.getLimitedLunchClosing());
+                        if (diningHall.getLimitedLunchClose() != null) {
+                            closing = HOURS_FORMAT.format(diningHall.getLimitedLunchClose());
                         } else {
                             closing = LATE_NIGHT_CLOSE;
                         }
@@ -252,8 +244,8 @@ public class    MenuFragment extends Fragment {
                         } else {
                             opening = LATE_NIGHT_OPEN;
                         }
-                        if (diningHall.getLimitedDinnerClosing() != null) {
-                            closing = HOURS_FORMAT.format(diningHall.getLimitedDinnerClosing());
+                        if (diningHall.getLimitedDinnerClose() != null) {
+                            closing = HOURS_FORMAT.format(diningHall.getLimitedDinnerClose());
                         } else {
                             closing = LATE_NIGHT_CLOSE;
                         }
@@ -261,8 +253,8 @@ public class    MenuFragment extends Fragment {
                         break;
                     default:
                         foodItems = diningHall.getDinnerMenu();
-                        opening = HOURS_FORMAT.format(diningHall.getDinnerOpening());
-                        closing = HOURS_FORMAT.format(diningHall.getDinnerClosing());
+                        opening = HOURS_FORMAT.format(diningHall.getDinnerOpen());
+                        closing = HOURS_FORMAT.format(diningHall.getDinnerClose());
                         isOpen = diningHall.isDinnerOpen();
                 }
                 if (foodItems == null || foodItems.size() == 0) {

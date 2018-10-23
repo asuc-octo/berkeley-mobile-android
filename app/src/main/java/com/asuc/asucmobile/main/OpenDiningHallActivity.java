@@ -81,17 +81,17 @@ public class OpenDiningHallActivity extends BaseActivity {
             // Finds the current tab
             Date currentTime = new Date();
             if (diningHall.isLimitedDinnerOpen() ||
-                    (diningHall.getDinnerClosing() != null && currentTime.after(diningHall.getDinnerClosing()))) {
+                    (diningHall.getDinnerClose() != null && currentTime.after(diningHall.getDinnerClose()))) {
                 viewPager.setCurrentItem(4);
             } else if (diningHall.isDinnerOpen() ||
-                    (diningHall.getLunchClosing() != null && currentTime.after(diningHall.getLunchClosing())) ||
-                    (diningHall.getDinnerClosing() != null && currentTime.after(diningHall.getDinnerClosing()))) {
+                    (diningHall.getLunchClose() != null && currentTime.after(diningHall.getLunchClose())) ||
+                    (diningHall.getDinnerClose() != null && currentTime.after(diningHall.getDinnerClose()))) {
                 viewPager.setCurrentItem(3);
             } else if (diningHall.isLimitedLunchOpen() ||
-                    (diningHall.getLunchClosing() != null && currentTime.after(diningHall.getLunchClosing()))) {
+                    (diningHall.getLunchClose() != null && currentTime.after(diningHall.getLunchClose()))) {
                 viewPager.setCurrentItem(2);
             } else if (diningHall.isLunchOpen() ||
-                    (diningHall.getBreakfastClosing() != null && currentTime.after(diningHall.getBreakfastClosing()))) {
+                    (diningHall.getBreakfastClose() != null && currentTime.after(diningHall.getBreakfastClose()))) {
                 viewPager.setCurrentItem(1);
             } else {
                 viewPager.setCurrentItem(0);
