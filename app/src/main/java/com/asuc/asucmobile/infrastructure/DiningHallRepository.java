@@ -36,11 +36,16 @@ public class DiningHallRepository {
         mRef = firestore.collection(FirebaseCollectionNames.DINING_HALL);
     }
 
-    public List<DiningHall> scanAllDiningHalls() {
-        QuerySnapshot snapshot = mRef.get().getResult();
-        if (snapshot == null) {
-            return new ArrayList<>();
-        }
-        return transformer.dingingHallQSDomainTransformer(snapshot);
+    public List<DiningHall> scanAllDiningHalls(final List<DiningHall> diningHalls) {
+        mRef.get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+            @Override
+            public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                if (queryDocumentSnapshots != null) {
+                    diningHalls.clear();
+                    diningHalls.addAll(transformer.dingingHallQSDomainTransformer(queryDocumentSnapshots));
+                }
+            }
+        });
+        return diningHalls;
     }
 }

@@ -16,15 +16,16 @@ import dagger.Component;
 @Component(modules = {RetrofitModule.class, AppModule.class})
 public interface RetrofitComponent {
 
-    // TODO: try a more generalized injection function
+    // TODO: try a more generalized injection function.
+    // Update! Check out DataComponent.java
 
-    void inject(FoodFragment fragment);
-
-    void inject(LibraryFragment fragment);
-
-    void inject(GymFragment fragment);
-
-    void inject(ResourceFragment fragment);
+//    void inject(FoodFragment fragment);
+//
+//    void inject(LibraryFragment fragment);
+//
+//    void inject(GymFragment fragment);
+//
+//    void inject(ResourceFragment fragment);
 
     // testing?
 

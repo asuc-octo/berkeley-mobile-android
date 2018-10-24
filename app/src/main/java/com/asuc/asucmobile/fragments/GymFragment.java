@@ -80,7 +80,7 @@ public class GymFragment extends Fragment {
     public View onCreateView(final LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        GlobalApplication.getRetrofitComponent().inject(this);
+        GlobalApplication.getDataComponent().inject(this);
 
         NavigationGenerator.closeMenu(getActivity());
 

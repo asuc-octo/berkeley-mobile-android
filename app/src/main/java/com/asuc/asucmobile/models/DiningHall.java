@@ -22,10 +22,11 @@ import lombok.experimental.SuperBuilder;
 public class DiningHall extends FoodPlace{
 
     // for builder
-    private String id;
-    private String name;
-    private String url;
-    private boolean isOpen;
+
+    private transient String id;
+    private transient String name;
+    private transient String url;
+    private transient boolean isOpen;
 
 
     @SerializedName("breakfast_menu")

@@ -12,10 +12,6 @@ import dagger.Component;
 @Component(modules = {RepositoryModule.class})
 public interface FirebaseComponent {
 
-    void inject(FoodFragment fragment);
-
-    // utils below
-
     void inject(DiningHallRepository repository);
 
 }

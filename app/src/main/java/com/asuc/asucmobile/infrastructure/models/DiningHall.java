@@ -6,14 +6,18 @@ import com.google.gson.annotations.SerializedName;
 import java.util.ArrayList;
 import java.util.Date;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 /**
  * Infrastructure model for DiningHalls
  */
 @Getter
 @Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class DiningHall {
 
     protected String id;

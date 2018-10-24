@@ -19,6 +19,7 @@ import com.asuc.asucmobile.GlobalApplication;
 import com.asuc.asucmobile.R;
 import com.asuc.asucmobile.adapters.FoodPlaceAdapter;
 import com.asuc.asucmobile.infrastructure.DiningHallRepository;
+import com.asuc.asucmobile.models.DiningHall;
 import com.asuc.asucmobile.services.BMService;
 import com.asuc.asucmobile.models.Cafe;
 import com.asuc.asucmobile.models.responses.CafesResponse;
@@ -47,8 +48,8 @@ public class FoodFragment extends Fragment {
     @Inject
     BMService bmService;
 
-//    @Inject
-//    DiningHallRepository diningHallRepository;
+    @Inject
+    List<DiningHall> diningHalls;
 
     private TextView mDiningHallLabel;
     private TextView mCafeLabel;
@@ -70,8 +71,8 @@ public class FoodFragment extends Fragment {
     @SuppressWarnings("deprecation")
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        GlobalApplication.getRetrofitComponent().inject(this);
-//        GlobalApplication.getFirebaseComponent().inject(this);
+        GlobalApplication.getDataComponent().inject(this);
+
 
         View layout = inflater.inflate(R.layout.fragment_food, container, false);
         Toolbar toolbar = (Toolbar) layout.findViewById(R.id.toolbar);

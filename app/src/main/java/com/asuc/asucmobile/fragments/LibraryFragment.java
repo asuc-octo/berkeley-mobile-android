@@ -51,7 +51,7 @@ public class LibraryFragment extends Fragment {
     @SuppressWarnings("deprecation")
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        GlobalApplication.getRetrofitComponent().inject(this);
+        GlobalApplication.getDataComponent().inject(this);
 
         mFirebaseAnalytics = FirebaseAnalytics.getInstance(this.getContext());
         Bundle bundle = new Bundle();
