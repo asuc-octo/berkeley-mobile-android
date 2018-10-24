@@ -21,6 +21,12 @@ import lombok.experimental.SuperBuilder;
 @Builder
 public class DiningHall extends FoodPlace{
 
+    // for builder
+    private String id;
+    private String name;
+    private String url;
+    private boolean isOpen;
+
 
     @SerializedName("breakfast_menu")
     private ArrayList<FoodItem> breakfastMenu;
@@ -66,16 +72,6 @@ public class DiningHall extends FoodPlace{
 
     @SerializedName("limited_dinner_close")
     private Date limitedDinnerClose;
-
-    /**
-     * Would be better to have @SuperBuilder, but no intellij support :(
-     * @param id
-     * @param name
-     * @param url
-     */
-    public DiningHall(String id, String name, String url) {
-        super(id, name, url, false);
-    }
 
     /**
      * isBreakfastOpen() returns whether or not breakfast is open. The same goes for the other
