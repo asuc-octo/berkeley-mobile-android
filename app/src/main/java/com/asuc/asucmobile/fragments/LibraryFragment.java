@@ -117,7 +117,7 @@ public class LibraryFragment extends Fragment {
                 mAdapter.setList(response.body().getLibraries());
 
                 // sorted by default
-                Collections.sort(mAdapter.getLibraries(), CustomComparators.FacilityComparators.getSortByFavoriteLibrary(getContext()));
+                Collections.sort(mAdapter.getLibraries(), CustomComparators.FacilityComparators.getSortByFavoriteLibraryThenOpenness(getContext()));
 
                 mAdapter.notifyDataSetChanged();
             }
