@@ -236,7 +236,9 @@
                 android:layout_height="wrap_content"
                 android:animateLayoutChanges="true"
                 android:orientation="vertical"
+                android:background="@drawable/white_selector"
                 tools:ignore="all">
+
 
                 <LinearLayout
                     android:minHeight="72dp"
@@ -262,7 +264,8 @@
                         android:layout_marginStart="24dp"
                         android:layout_marginLeft="24dp"
                         android:layout_gravity="center_vertical"
-                        android:textColor="@android:color/black" />
+                        android:textColor="@android:color/black"
+                        />
 
                 </LinearLayout>
 
