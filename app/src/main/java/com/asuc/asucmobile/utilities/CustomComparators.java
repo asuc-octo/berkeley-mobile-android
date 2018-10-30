@@ -39,6 +39,26 @@ public class CustomComparators {
             };
         }
 
+        public static Comparator<Library> getSortByFavoriteLibraryThenOpenness(final Context context) {
+            return new Comparator<Library>() {
+                @Override
+                public int compare(Library lhs, Library rhs) {
+                    ListOfFavorites listOfFavorites = (ListOfFavorites) SerializableUtilities.loadSerializedObject(context);
+                    if (listOfFavorites == null || lhs == null || rhs == null) {
+                        return 0;
+                    }
+
+                    if (listOfFavorites.contains(lhs.getName()) && !listOfFavorites.contains(rhs.getName())) return -1;
+                    if (listOfFavorites.contains(rhs.getName()) && !listOfFavorites.contains(lhs.getName())) return 1;
+
+                    if (lhs.isOpen() && !rhs.isOpen()) return -1;
+                    if (rhs.isOpen() && !lhs.isOpen()) return 1;
+
+                    return lhs.compareTo(rhs);
+                }
+            };
+        }
+
         public static Comparator<FoodItem> getFoodSortByVegetarian() {
             return foodSortByVegetarian;
         }
@@ -84,6 +104,7 @@ public class CustomComparators {
                 return arg0.compareTo(arg1);
             }
         };
+
         private static Comparator<FoodItem> foodSortByAZ = new Comparator<FoodItem>() {
             public int compare(FoodItem arg0, FoodItem arg1) {
                 return arg0.compareTo(arg1);
