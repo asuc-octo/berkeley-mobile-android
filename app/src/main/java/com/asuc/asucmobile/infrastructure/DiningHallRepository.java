@@ -22,19 +22,14 @@ import javax.inject.Singleton;
  */
 public class DiningHallRepository {
 
-    @Inject
-    FirebaseFirestore firestore;
-
     private DiningHallTransformer mTransformer;
 
     private CollectionReference mRef;
 
     @Inject
-    @Singleton
     public DiningHallRepository() {
-        GlobalApplication.getFirebaseComponent().inject(this);
         mTransformer = new DiningHallTransformer();
-        mRef = firestore.collection(FirebaseCollectionNames.DINING_HALL);
+        mRef = FirebaseFirestore.getInstance().collection(FirebaseCollectionNames.DINING_HALL);
     }
 
     /**

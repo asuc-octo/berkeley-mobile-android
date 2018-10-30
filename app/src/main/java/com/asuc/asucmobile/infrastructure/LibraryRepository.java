@@ -16,20 +16,15 @@ import javax.inject.Singleton;
 
 public class LibraryRepository {
 
-    @Inject
-    FirebaseFirestore firestore;
-
     private LibraryTransformer mTransformer;
 
 
     private CollectionReference mRef;
 
     @Inject
-    @Singleton
     public LibraryRepository() {
-        GlobalApplication.getFirebaseComponent().inject(this);
         mTransformer = new LibraryTransformer();
-        mRef = firestore.collection(FirebaseCollectionNames.LIBRARY);
+        mRef = FirebaseFirestore.getInstance().collection(FirebaseCollectionNames.LIBRARY);
     }
 
     public List<Library> scanAllLibraries(final List<Library> libraries) {

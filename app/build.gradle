@@ -19,6 +19,9 @@ android {
         javaMaxHeapSize "4g"
     }
 
+    compileOptions.incremental = false
+
+
     packagingOptions {
         exclude 'META-INF/DEPENDENCIES'
         exclude 'META-INF/LICENSE'

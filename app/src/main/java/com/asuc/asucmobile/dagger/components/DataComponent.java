@@ -7,6 +7,7 @@ import com.asuc.asucmobile.dagger.modules.RetrofitModule;
 import com.asuc.asucmobile.fragments.FoodFragment;
 import com.asuc.asucmobile.fragments.GymFragment;
 import com.asuc.asucmobile.fragments.LibraryFragment;
+import com.asuc.asucmobile.fragments.MapsFragment;
 import com.asuc.asucmobile.fragments.ResourceFragment;
 
 import javax.inject.Singleton;
@@ -24,5 +25,7 @@ public interface DataComponent {
     void inject(GymFragment fragment);
 
     void inject(ResourceFragment fragment);
+
+    void inject(MapsFragment fragment);
 
 }
