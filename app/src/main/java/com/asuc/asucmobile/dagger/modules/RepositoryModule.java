@@ -1,6 +1,7 @@
 package com.asuc.asucmobile.dagger.modules;
 
 import com.asuc.asucmobile.infrastructure.DiningHallRepository;
+import com.asuc.asucmobile.infrastructure.LibraryRepository;
 import com.asuc.asucmobile.infrastructure.transformers.DiningHallTransformer;
 import com.google.firebase.firestore.FirebaseFirestore;
 
@@ -27,7 +28,7 @@ public class RepositoryModule {
 
     @Provides
     @Singleton
-    public DiningHallTransformer getDiningHallTransformer() {
-        return new DiningHallTransformer();
+    public LibraryRepository getLibraryRepository() {
+        return new LibraryRepository();
     }
 }

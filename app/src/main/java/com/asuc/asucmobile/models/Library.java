@@ -11,6 +11,9 @@ import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 
+import lombok.Builder;
+
+@Builder
 public class Library implements Comparable<Library>{
 
     public static final String TAG = "Library";
