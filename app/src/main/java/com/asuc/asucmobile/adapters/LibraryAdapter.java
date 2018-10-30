@@ -101,7 +101,7 @@ public class LibraryAdapter extends BaseAdapter {
                     imageView.setImageResource(R.drawable.post_favorite);
                 }
 
-                Collections.sort(getLibraries(), CustomComparators.FacilityComparators.getSortByFavoriteLibrary(OpenLibraryActivity.self_reference));
+                Collections.sort(getLibraries(), CustomComparators.FacilityComparators.getSortByFavoriteLibraryThenOpenness(OpenLibraryActivity.self_reference));
                 LibraryFragment.refreshLists();
 
             }
