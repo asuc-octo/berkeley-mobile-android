@@ -116,6 +116,10 @@ public class Library implements Comparable<Library>{
             return false;
         }
 
+        /* Open 24/7 */
+        if (opening.equals(closing)) {
+            return true;
+        }
         Date currentTime = new Date();
         boolean isOpen = currentTime.after(opening) && currentTime.before(closing);
         return isOpen;
