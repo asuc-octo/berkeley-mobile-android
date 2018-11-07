@@ -1,0 +1,3915 @@
+{
+  "dining_halls":[
+    {
+      "id":31676,
+      "name":"Crossroads",
+      "breakfast_menu":[
+        {
+          "id":2003488,
+          "name":"Rolled Oatmeal",
+          "created_at":"2018-11-07T04:50:31.615Z",
+          "updated_at":"2018-11-07T04:50:31.615Z",
+          "calories":null,
+          "calories_from_fat":null,
+          "cost":null,
+          "favorite_count":null,
+          "meal":" Breakfast",
+          "location":" Crossroads",
+          "menu_id":null,
+          "food_type":[
+            "Vegan Option"
+          ]
+        },
+        {
+          "id":2003489,
+          "name":"Steamed Rice",
+          "created_at":"2018-11-07T04:50:31.621Z",
+          "updated_at":"2018-11-07T04:50:31.621Z",
+          "calories":null,
+          "calories_from_fat":null,
+          "cost":null,
+          "favorite_count":null,
+          "meal":" Breakfast",
+          "location":" Crossroads",
+          "menu_id":null,
+          "food_type":[
+            "Vegan Option"
+          ]
+        },
+        {
+          "id":2003490,
+          "name":"Brown Rice",
+          "created_at":"2018-11-07T04:50:31.626Z",
+          "updated_at":"2018-11-07T04:50:31.626Z",
+          "calories":null,
+          "calories_from_fat":null,
+          "cost":null,
+          "favorite_count":null,
+          "meal":" Breakfast",
+          "location":" Crossroads",
+          "menu_id":null,
+          "food_type":[
+            "Vegan Option"
+          ]
+        },
+        {
+          "id":2003492,
+          "name":"Omelet Bar",
+          "created_at":"2018-11-07T04:50:31.637Z",
+          "updated_at":"2018-11-07T04:50:31.637Z",
+          "calories":null,
+          "calories_from_fat":null,
+          "cost":null,
+          "favorite_count":null,
+          "meal":" Breakfast",
+          "location":" Crossroads",
+          "menu_id":null,
+          "food_type":[
+            "Milk",
+            "Egg"
+          ]
+        },
+        {
+          "id":2003494,
+          "name":"Banana Muffin",
+          "created_at":"2018-11-07T04:50:31.680Z",
+          "updated_at":"2018-11-07T04:50:31.680Z",
+          "calories":null,
+          "calories_from_fat":null,
+          "cost":null,
+          "favorite_count":null,
+          "meal":" Breakfast",
+          "location":" Crossroads",
+          "menu_id":null,
+          "food_type":[
+            "Milk",
+            "Egg",
+            "Wheat",
+            "Soybeans"
+          ]
+        },
+        {
+          "id":2003496,
+          "name":"Cranberry Orange Scone",
+          "created_at":"2018-11-07T04:50:31.692Z",
+          "updated_at":"2018-11-07T04:50:31.692Z",
+          "calories":null,
+          "calories_from_fat":null,
+          "cost":null,
+          "favorite_count":null,
+          "meal":" Breakfast",
+          "location":" Crossroads",
+          "menu_id":null,
+          "food_type":[
+
+          ]
+        },
+        {
+          "id":2003498,
+          "name":"Assorted Danish",
+          "created_at":"2018-11-07T04:50:31.703Z",
+          "updated_at":"2018-11-07T04:50:31.703Z",
+          "calories":null,
+          "calories_from_fat":null,
+          "cost":null,
+          "favorite_count":null,
+          "meal":" Breakfast",
+          "location":" Crossroads",
+          "menu_id":null,
+          "food_type":[
+            "Milk",
+            "Egg",
+            "Tree Nuts",
+            "Wheat",
+            "Vegetarian Option",
+            "Contains Gluten"
+          ]
+        },
+        {
+          "id":2003500,
+          "name":"Scrambled Eggs",
+          "created_at":"2018-11-07T04:50:31.714Z",
+          "updated_at":"2018-11-07T04:50:31.714Z",
+          "calories":null,
+          "calories_from_fat":null,
+          "cost":null,
+          "favorite_count":null,
+          "meal":" Breakfast",
+          "location":" Crossroads",
+          "menu_id":null,
+          "food_type":[
+            "Egg",
+            "Vegetarian Option"
+          ]
+        },
+        {
+          "id":2003501,
+          "name":"Chicken Apple Sausage",
+          "created_at":"2018-11-07T04:50:31.719Z",
+          "updated_at":"2018-11-07T04:50:31.719Z",
+          "calories":null,
+          "calories_from_fat":null,
+          "cost":null,
+          "favorite_count":null,
+          "meal":" Breakfast",
+          "location":" Crossroads",
+          "menu_id":null,
+          "food_type":[
+
+          ]
+        },
+        {
+          "id":2003502,
+          "name":"Savory Tofu, Spinach, Tomato Scramble",
+          "created_at":"2018-11-07T04:50:31.725Z",
+          "updated_at":"2018-11-07T04:50:31.725Z",
+          "calories":null,
+          "calories_from_fat":null,
+          "cost":null,
+          "favorite_count":null,
+          "meal":" Breakfast",
+          "location":" Crossroads",
+          "menu_id":null,
+          "food_type":[
+            "Soybeans",
+            "Vegan Option"
+          ]
+        },
+        {
+          "id":2003503,
+          "name":"Hashbrown Patty",
+          "created_at":"2018-11-07T04:50:31.730Z",
+          "updated_at":"2018-11-07T04:50:31.730Z",
+          "calories":null,
+          "calories_from_fat":null,
+          "cost":null,
+          "favorite_count":null,
+          "meal":" Breakfast",
+          "location":" Crossroads",
+          "menu_id":null,
+          "food_type":[
+            "Vegan Option"
+          ]
+        },
+        {
+          "id":2003504,
+          "name":"Spiced French Toast",
+          "created_at":"2018-11-07T04:50:31.736Z",
+          "updated_at":"2018-11-07T04:50:31.736Z",
+          "calories":null,
+          "calories_from_fat":null,
+          "cost":null,
+          "favorite_count":null,
+          "meal":" Breakfast",
+          "location":" Crossroads",
+          "menu_id":null,
+          "food_type":[
+            "Milk",
+            "Egg",
+            "Wheat",
+            "Vegetarian Option",
+            "Contains Gluten"
+          ]
+        },
+        {
+          "id":2003505,
+          "name":"Ham \u0026 Cheese Croissant",
+          "created_at":"2018-11-07T04:50:31.773Z",
+          "updated_at":"2018-11-07T04:50:31.773Z",
+          "calories":null,
+          "calories_from_fat":null,
+          "cost":null,
+          "favorite_count":null,
+          "meal":" Breakfast",
+          "location":" Crossroads",
+          "menu_id":null,
+          "food_type":[
+            "Milk",
+            "Egg",
+            "Wheat"
+          ]
+        },
+        {
+          "id":2003506,
+          "name":"Waffles",
+          "created_at":"2018-11-07T04:50:31.780Z",
+          "updated_at":"2018-11-07T04:50:31.780Z",
+          "calories":null,
+          "calories_from_fat":null,
+          "cost":null,
+          "favorite_count":null,
+          "meal":" Breakfast",
+          "location":" Crossroads",
+          "menu_id":null,
+          "food_type":[
+            "Milk",
+            "Egg",
+            "Wheat",
+            "Soybeans",
+            "Vegetarian Option",
+            "Contains Gluten"
+          ]
+        }
+      ],
+      "lunch_menu":[
+        {
+          "id":2003508,
+          "name":"Broccoli Cheddar Soup",
+          "created_at":"2018-11-07T04:50:31.795Z",
+          "updated_at":"2018-11-07T04:50:31.795Z",
+          "calories":null,
+          "calories_from_fat":null,
+          "cost":null,
+          "favorite_count":null,
+          "meal":" Lunch",
+          "location":" Crossroads",
+          "menu_id":null,
+          "food_type":[
+            "Milk",
+            "Vegetarian Option"
+          ]
+        },
+        {
+          "id":2003509,
+          "name":"Three Bean Chili",
+          "created_at":"2018-11-07T04:50:31.801Z",
+          "updated_at":"2018-11-07T04:50:31.801Z",
+          "calories":null,
+          "calories_from_fat":null,
+          "cost":null,
+          "favorite_count":null,
+          "meal":" Lunch",
+          "location":" Crossroads",
+          "menu_id":null,
+          "food_type":[
+            "Vegan Option"
+          ]
+        },
+        {
+          "id":2003511,
+          "name":"Orzo Salad with Carrots",
+          "created_at":"2018-11-07T04:50:31.811Z",
+          "updated_at":"2018-11-07T04:50:31.811Z",
+          "calories":null,
+          "calories_from_fat":null,
+          "cost":null,
+          "favorite_count":null,
+          "meal":" Lunch",
+          "location":" Crossroads",
+          "menu_id":null,
+          "food_type":[
+            "Egg",
+            "Wheat",
+            "Vegetarian Option",
+            "Contains Gluten"
+          ]
+        },
+        {
+          "id":2003513,
+          "name":"Salad Bar",
+          "created_at":"2018-11-07T04:50:31.854Z",
+          "updated_at":"2018-11-07T04:50:31.854Z",
+          "calories":null,
+          "calories_from_fat":null,
+          "cost":null,
+          "favorite_count":null,
+          "meal":" Lunch",
+          "location":" Crossroads",
+          "menu_id":null,
+          "food_type":[
+
+          ]
+        },
+        {
+          "id":2003514,
+          "name":"Deli Bar",
+          "created_at":"2018-11-07T04:50:31.861Z",
+          "updated_at":"2018-11-07T04:50:31.861Z",
+          "calories":null,
+          "calories_from_fat":null,
+          "cost":null,
+          "favorite_count":null,
+          "meal":" Lunch",
+          "location":" Crossroads",
+          "menu_id":null,
+          "food_type":[
+
+          ]
+        },
+        {
+          "id":2003516,
+          "name":"Quinoa and Butternut Squash",
+          "created_at":"2018-11-07T04:50:31.872Z",
+          "updated_at":"2018-11-07T04:50:31.872Z",
+          "calories":null,
+          "calories_from_fat":null,
+          "cost":null,
+          "favorite_count":null,
+          "meal":" Lunch",
+          "location":" Crossroads",
+          "menu_id":null,
+          "food_type":[
+
+          ]
+        },
+        {
+          "id":2003517,
+          "name":"Vegetable Medley",
+          "created_at":"2018-11-07T04:50:31.877Z",
+          "updated_at":"2018-11-07T04:50:31.877Z",
+          "calories":null,
+          "calories_from_fat":null,
+          "cost":null,
+          "favorite_count":null,
+          "meal":" Lunch",
+          "location":" Crossroads",
+          "menu_id":null,
+          "food_type":[
+            "Vegan Option"
+          ]
+        },
+        {
+          "id":2003518,
+          "name":"Brown Rice",
+          "created_at":"2018-11-07T04:50:31.882Z",
+          "updated_at":"2018-11-07T04:50:31.882Z",
+          "calories":null,
+          "calories_from_fat":null,
+          "cost":null,
+          "favorite_count":null,
+          "meal":" Lunch",
+          "location":" Crossroads",
+          "menu_id":null,
+          "food_type":[
+            "Vegan Option"
+          ]
+        },
+        {
+          "id":2003520,
+          "name":"Mojo Chicken",
+          "created_at":"2018-11-07T04:50:31.893Z",
+          "updated_at":"2018-11-07T04:50:31.893Z",
+          "calories":null,
+          "calories_from_fat":null,
+          "cost":null,
+          "favorite_count":null,
+          "meal":" Lunch",
+          "location":" Crossroads",
+          "menu_id":null,
+          "food_type":[
+
+          ]
+        },
+        {
+          "id":2003521,
+          "name":"Chickenless Fajitas",
+          "created_at":"2018-11-07T04:50:31.898Z",
+          "updated_at":"2018-11-07T04:50:31.898Z",
+          "calories":null,
+          "calories_from_fat":null,
+          "cost":null,
+          "favorite_count":null,
+          "meal":" Lunch",
+          "location":" Crossroads",
+          "menu_id":null,
+          "food_type":[
+            "Wheat",
+            "Soybeans",
+            "Vegan Option"
+          ]
+        },
+        {
+          "id":2003522,
+          "name":"Black Beans",
+          "created_at":"2018-11-07T04:50:31.903Z",
+          "updated_at":"2018-11-07T04:50:31.903Z",
+          "calories":null,
+          "calories_from_fat":null,
+          "cost":null,
+          "favorite_count":null,
+          "meal":" Lunch",
+          "location":" Crossroads",
+          "menu_id":null,
+          "food_type":[
+            "Vegan Option"
+          ]
+        },
+        {
+          "id":2003523,
+          "name":"Vegetable Medley",
+          "created_at":"2018-11-07T04:50:31.909Z",
+          "updated_at":"2018-11-07T04:50:31.909Z",
+          "calories":null,
+          "calories_from_fat":null,
+          "cost":null,
+          "favorite_count":null,
+          "meal":" Lunch",
+          "location":" Crossroads",
+          "menu_id":null,
+          "food_type":[
+            "Vegan Option"
+          ]
+        },
+        {
+          "id":2003525,
+          "name":"Vegetarian Fried Rice",
+          "created_at":"2018-11-07T04:50:31.952Z",
+          "updated_at":"2018-11-07T04:50:31.952Z",
+          "calories":null,
+          "calories_from_fat":null,
+          "cost":null,
+          "favorite_count":null,
+          "meal":" Lunch",
+          "location":" Crossroads",
+          "menu_id":null,
+          "food_type":[
+            "Egg",
+            "Vegetarian Option",
+            "Contains Alcohol"
+          ]
+        },
+        {
+          "id":2003526,
+          "name":"Asian Stir Fry Mix",
+          "created_at":"2018-11-07T04:50:31.957Z",
+          "updated_at":"2018-11-07T04:50:31.957Z",
+          "calories":null,
+          "calories_from_fat":null,
+          "cost":null,
+          "favorite_count":null,
+          "meal":" Lunch",
+          "location":" Crossroads",
+          "menu_id":null,
+          "food_type":[
+            "Soybeans",
+            "Vegan Option"
+          ]
+        },
+        {
+          "id":2003527,
+          "name":"Vegetable Potsticker",
+          "created_at":"2018-11-07T04:50:31.963Z",
+          "updated_at":"2018-11-07T04:50:31.963Z",
+          "calories":null,
+          "calories_from_fat":null,
+          "cost":null,
+          "favorite_count":null,
+          "meal":" Lunch",
+          "location":" Crossroads",
+          "menu_id":null,
+          "food_type":[
+            "Wheat",
+            "Soybeans",
+            "Vegan Option",
+            "Contains Gluten"
+          ]
+        },
+        {
+          "id":2003528,
+          "name":"Steamed Rice",
+          "created_at":"2018-11-07T04:50:31.968Z",
+          "updated_at":"2018-11-07T04:50:31.968Z",
+          "calories":null,
+          "calories_from_fat":null,
+          "cost":null,
+          "favorite_count":null,
+          "meal":" Lunch",
+          "location":" Crossroads",
+          "menu_id":null,
+          "food_type":[
+            "Vegan Option"
+          ]
+        },
+        {
+          "id":2003529,
+          "name":"Brown Rice",
+          "created_at":"2018-11-07T04:50:31.974Z",
+          "updated_at":"2018-11-07T04:50:31.974Z",
+          "calories":null,
+          "calories_from_fat":null,
+          "cost":null,
+          "favorite_count":null,
+          "meal":" Lunch",
+          "location":" Crossroads",
+          "menu_id":null,
+          "food_type":[
+            "Vegan Option"
+          ]
+        },
+        {
+          "id":2003531,
+          "name":"Pasta",
+          "created_at":"2018-11-07T04:50:31.985Z",
+          "updated_at":"2018-11-07T04:50:31.985Z",
+          "calories":null,
+          "calories_from_fat":null,
+          "cost":null,
+          "favorite_count":null,
+          "meal":" Lunch",
+          "location":" Crossroads",
+          "menu_id":null,
+          "food_type":[
+            "Wheat",
+            "Vegan Option",
+            "Contains Gluten"
+          ]
+        },
+        {
+          "id":2003532,
+          "name":"Whole Wheat Pasta",
+          "created_at":"2018-11-07T04:50:31.991Z",
+          "updated_at":"2018-11-07T04:50:31.991Z",
+          "calories":null,
+          "calories_from_fat":null,
+          "cost":null,
+          "favorite_count":null,
+          "meal":" Lunch",
+          "location":" Crossroads",
+          "menu_id":null,
+          "food_type":[
+            "Wheat",
+            "Vegan Option",
+            "Contains Gluten"
+          ]
+        },
+        {
+          "id":2003533,
+          "name":"Breadsticks",
+          "created_at":"2018-11-07T04:50:31.998Z",
+          "updated_at":"2018-11-07T04:50:31.998Z",
+          "calories":null,
+          "calories_from_fat":null,
+          "cost":null,
+          "favorite_count":null,
+          "meal":" Lunch",
+          "location":" Crossroads",
+          "menu_id":null,
+          "food_type":[
+            "Wheat",
+            "Contains Gluten"
+          ]
+        },
+        {
+          "id":2003534,
+          "name":"Lentil Bolognese Sauce",
+          "created_at":"2018-11-07T04:50:32.005Z",
+          "updated_at":"2018-11-07T04:50:32.005Z",
+          "calories":null,
+          "calories_from_fat":null,
+          "cost":null,
+          "favorite_count":null,
+          "meal":" Lunch",
+          "location":" Crossroads",
+          "menu_id":null,
+          "food_type":[
+            "Vegan Option"
+          ]
+        },
+        {
+          "id":2003535,
+          "name":"Meat Sauce",
+          "created_at":"2018-11-07T04:50:32.045Z",
+          "updated_at":"2018-11-07T04:50:32.045Z",
+          "calories":null,
+          "calories_from_fat":null,
+          "cost":null,
+          "favorite_count":null,
+          "meal":" Lunch",
+          "location":" Crossroads",
+          "menu_id":null,
+          "food_type":[
+
+          ]
+        },
+        {
+          "id":2003537,
+          "name":"Reuben Sandwich",
+          "created_at":"2018-11-07T04:50:32.059Z",
+          "updated_at":"2018-11-07T04:50:32.059Z",
+          "calories":null,
+          "calories_from_fat":null,
+          "cost":null,
+          "favorite_count":null,
+          "meal":" Lunch",
+          "location":" Crossroads",
+          "menu_id":null,
+          "food_type":[
+            "Milk",
+            "Egg",
+            "Wheat",
+            "Soybeans"
+          ]
+        },
+        {
+          "id":2003538,
+          "name":"Black Bean Burger",
+          "created_at":"2018-11-07T04:50:32.066Z",
+          "updated_at":"2018-11-07T04:50:32.066Z",
+          "calories":null,
+          "calories_from_fat":null,
+          "cost":null,
+          "favorite_count":null,
+          "meal":" Lunch",
+          "location":" Crossroads",
+          "menu_id":null,
+          "food_type":[
+            "Wheat",
+            "Soybeans",
+            "Vegan Option",
+            "Contains Gluten"
+          ]
+        },
+        {
+          "id":2003539,
+          "name":"Spicy Waffle Fries",
+          "created_at":"2018-11-07T04:50:32.072Z",
+          "updated_at":"2018-11-07T04:50:32.072Z",
+          "calories":null,
+          "calories_from_fat":null,
+          "cost":null,
+          "favorite_count":null,
+          "meal":" Lunch",
+          "location":" Crossroads",
+          "menu_id":null,
+          "food_type":[
+            "Wheat",
+            "Vegan Option",
+            "Contains Gluten"
+          ]
+        },
+        {
+          "id":2003541,
+          "name":"BBQ Chicken Pizza",
+          "created_at":"2018-11-07T04:50:32.083Z",
+          "updated_at":"2018-11-07T04:50:32.083Z",
+          "calories":null,
+          "calories_from_fat":null,
+          "cost":null,
+          "favorite_count":null,
+          "meal":" Lunch",
+          "location":" Crossroads",
+          "menu_id":null,
+          "food_type":[
+            "Milk",
+            "Wheat",
+            "Soybeans",
+            "Contains Gluten"
+          ]
+        },
+        {
+          "id":2003542,
+          "name":"Mushroom Pizza",
+          "created_at":"2018-11-07T04:50:32.091Z",
+          "updated_at":"2018-11-07T04:50:32.091Z",
+          "calories":null,
+          "calories_from_fat":null,
+          "cost":null,
+          "favorite_count":null,
+          "meal":" Lunch",
+          "location":" Crossroads",
+          "menu_id":null,
+          "food_type":[
+            "Milk",
+            "Wheat",
+            "Soybeans",
+            "Vegetarian Option",
+            "Contains Gluten"
+          ]
+        },
+        {
+          "id":2003543,
+          "name":"Flatbread or Gluten Free Pizza Per Request",
+          "created_at":"2018-11-07T04:50:32.098Z",
+          "updated_at":"2018-11-07T04:50:32.098Z",
+          "calories":null,
+          "calories_from_fat":null,
+          "cost":null,
+          "favorite_count":null,
+          "meal":" Lunch",
+          "location":" Crossroads",
+          "menu_id":null,
+          "food_type":[
+
+          ]
+        },
+        {
+          "id":2003545,
+          "name":"Raspberry Sammie",
+          "created_at":"2018-11-07T04:50:32.110Z",
+          "updated_at":"2018-11-07T04:50:32.110Z",
+          "calories":null,
+          "calories_from_fat":null,
+          "cost":null,
+          "favorite_count":null,
+          "meal":" Lunch",
+          "location":" Crossroads",
+          "menu_id":null,
+          "food_type":[
+            "Milk",
+            "Wheat",
+            "Vegetarian Option",
+            "Contains Gluten"
+          ]
+        },
+        {
+          "id":2003546,
+          "name":"Apple Pie",
+          "created_at":"2018-11-07T04:50:32.147Z",
+          "updated_at":"2018-11-07T04:50:32.147Z",
+          "calories":null,
+          "calories_from_fat":null,
+          "cost":null,
+          "favorite_count":null,
+          "meal":" Lunch",
+          "location":" Crossroads",
+          "menu_id":null,
+          "food_type":[
+            "Milk",
+            "Wheat",
+            "Vegetarian Option"
+          ]
+        },
+        {
+          "id":2003547,
+          "name":"German Chocolate Cake",
+          "created_at":"2018-11-07T04:50:32.153Z",
+          "updated_at":"2018-11-07T04:50:32.153Z",
+          "calories":null,
+          "calories_from_fat":null,
+          "cost":null,
+          "favorite_count":null,
+          "meal":" Lunch",
+          "location":" Crossroads",
+          "menu_id":null,
+          "food_type":[
+
+          ]
+        }
+      ],
+      "dinner_menu":[
+        {
+          "id":2003549,
+          "name":"Broccoli Cheddar Soup",
+          "created_at":"2018-11-07T04:50:32.169Z",
+          "updated_at":"2018-11-07T04:50:32.169Z",
+          "calories":null,
+          "calories_from_fat":null,
+          "cost":null,
+          "favorite_count":null,
+          "meal":" Dinner",
+          "location":" Crossroads",
+          "menu_id":null,
+          "food_type":[
+            "Milk",
+            "Vegetarian Option"
+          ]
+        },
+        {
+          "id":2003550,
+          "name":"Three Bean Chili",
+          "created_at":"2018-11-07T04:50:32.174Z",
+          "updated_at":"2018-11-07T04:50:32.174Z",
+          "calories":null,
+          "calories_from_fat":null,
+          "cost":null,
+          "favorite_count":null,
+          "meal":" Dinner",
+          "location":" Crossroads",
+          "menu_id":null,
+          "food_type":[
+            "Vegan Option"
+          ]
+        },
+        {
+          "id":2003552,
+          "name":"Orzo Salad with Carrots",
+          "created_at":"2018-11-07T04:50:32.186Z",
+          "updated_at":"2018-11-07T04:50:32.186Z",
+          "calories":null,
+          "calories_from_fat":null,
+          "cost":null,
+          "favorite_count":null,
+          "meal":" Dinner",
+          "location":" Crossroads",
+          "menu_id":null,
+          "food_type":[
+            "Egg",
+            "Wheat",
+            "Vegetarian Option",
+            "Contains Gluten"
+          ]
+        },
+        {
+          "id":2003554,
+          "name":"Salad Bar",
+          "created_at":"2018-11-07T04:50:32.196Z",
+          "updated_at":"2018-11-07T04:50:32.196Z",
+          "calories":null,
+          "calories_from_fat":null,
+          "cost":null,
+          "favorite_count":null,
+          "meal":" Dinner",
+          "location":" Crossroads",
+          "menu_id":null,
+          "food_type":[
+
+          ]
+        },
+        {
+          "id":2003555,
+          "name":"Deli Bar",
+          "created_at":"2018-11-07T04:50:32.235Z",
+          "updated_at":"2018-11-07T04:50:32.235Z",
+          "calories":null,
+          "calories_from_fat":null,
+          "cost":null,
+          "favorite_count":null,
+          "meal":" Dinner",
+          "location":" Crossroads",
+          "menu_id":null,
+          "food_type":[
+
+          ]
+        },
+        {
+          "id":2003557,
+          "name":"Quinoa and Butternut Squash",
+          "created_at":"2018-11-07T04:50:32.247Z",
+          "updated_at":"2018-11-07T04:50:32.247Z",
+          "calories":null,
+          "calories_from_fat":null,
+          "cost":null,
+          "favorite_count":null,
+          "meal":" Dinner",
+          "location":" Crossroads",
+          "menu_id":null,
+          "food_type":[
+
+          ]
+        },
+        {
+          "id":2003558,
+          "name":"Vegetable Medley",
+          "created_at":"2018-11-07T04:50:32.253Z",
+          "updated_at":"2018-11-07T04:50:32.253Z",
+          "calories":null,
+          "calories_from_fat":null,
+          "cost":null,
+          "favorite_count":null,
+          "meal":" Dinner",
+          "location":" Crossroads",
+          "menu_id":null,
+          "food_type":[
+            "Vegan Option"
+          ]
+        },
+        {
+          "id":2003559,
+          "name":"Brown Rice",
+          "created_at":"2018-11-07T04:50:32.258Z",
+          "updated_at":"2018-11-07T04:50:32.258Z",
+          "calories":null,
+          "calories_from_fat":null,
+          "cost":null,
+          "favorite_count":null,
+          "meal":" Dinner",
+          "location":" Crossroads",
+          "menu_id":null,
+          "food_type":[
+            "Vegan Option"
+          ]
+        },
+        {
+          "id":2003561,
+          "name":"Curry Roasted Cod",
+          "created_at":"2018-11-07T04:50:32.269Z",
+          "updated_at":"2018-11-07T04:50:32.269Z",
+          "calories":null,
+          "calories_from_fat":null,
+          "cost":null,
+          "favorite_count":null,
+          "meal":" Dinner",
+          "location":" Crossroads",
+          "menu_id":null,
+          "food_type":[
+
+          ]
+        },
+        {
+          "id":2003562,
+          "name":"Chana Masala",
+          "created_at":"2018-11-07T04:50:32.274Z",
+          "updated_at":"2018-11-07T04:50:32.274Z",
+          "calories":null,
+          "calories_from_fat":null,
+          "cost":null,
+          "favorite_count":null,
+          "meal":" Dinner",
+          "location":" Crossroads",
+          "menu_id":null,
+          "food_type":[
+            "Vegan Option"
+          ]
+        },
+        {
+          "id":2003563,
+          "name":"Saffron Scented Basmati Rice",
+          "created_at":"2018-11-07T04:50:32.279Z",
+          "updated_at":"2018-11-07T04:50:32.279Z",
+          "calories":null,
+          "calories_from_fat":null,
+          "cost":null,
+          "favorite_count":null,
+          "meal":" Dinner",
+          "location":" Crossroads",
+          "menu_id":null,
+          "food_type":[
+
+          ]
+        },
+        {
+          "id":2003564,
+          "name":"Vegetable Medley",
+          "created_at":"2018-11-07T04:50:32.285Z",
+          "updated_at":"2018-11-07T04:50:32.285Z",
+          "calories":null,
+          "calories_from_fat":null,
+          "cost":null,
+          "favorite_count":null,
+          "meal":" Dinner",
+          "location":" Crossroads",
+          "menu_id":null,
+          "food_type":[
+            "Vegan Option"
+          ]
+        },
+        {
+          "id":2003566,
+          "name":"Vegetarian Fried Rice",
+          "created_at":"2018-11-07T04:50:32.328Z",
+          "updated_at":"2018-11-07T04:50:32.328Z",
+          "calories":null,
+          "calories_from_fat":null,
+          "cost":null,
+          "favorite_count":null,
+          "meal":" Dinner",
+          "location":" Crossroads",
+          "menu_id":null,
+          "food_type":[
+            "Egg",
+            "Vegetarian Option",
+            "Contains Alcohol"
+          ]
+        },
+        {
+          "id":2003567,
+          "name":"Asian Stir Fry Mix",
+          "created_at":"2018-11-07T04:50:32.335Z",
+          "updated_at":"2018-11-07T04:50:32.335Z",
+          "calories":null,
+          "calories_from_fat":null,
+          "cost":null,
+          "favorite_count":null,
+          "meal":" Dinner",
+          "location":" Crossroads",
+          "menu_id":null,
+          "food_type":[
+            "Soybeans",
+            "Vegan Option"
+          ]
+        },
+        {
+          "id":2003568,
+          "name":"Vegetable Potsticker",
+          "created_at":"2018-11-07T04:50:32.340Z",
+          "updated_at":"2018-11-07T04:50:32.340Z",
+          "calories":null,
+          "calories_from_fat":null,
+          "cost":null,
+          "favorite_count":null,
+          "meal":" Dinner",
+          "location":" Crossroads",
+          "menu_id":null,
+          "food_type":[
+            "Wheat",
+            "Soybeans",
+            "Vegan Option",
+            "Contains Gluten"
+          ]
+        },
+        {
+          "id":2003569,
+          "name":"Steamed Rice",
+          "created_at":"2018-11-07T04:50:32.345Z",
+          "updated_at":"2018-11-07T04:50:32.345Z",
+          "calories":null,
+          "calories_from_fat":null,
+          "cost":null,
+          "favorite_count":null,
+          "meal":" Dinner",
+          "location":" Crossroads",
+          "menu_id":null,
+          "food_type":[
+            "Vegan Option"
+          ]
+        },
+        {
+          "id":2003570,
+          "name":"Brown Rice",
+          "created_at":"2018-11-07T04:50:32.351Z",
+          "updated_at":"2018-11-07T04:50:32.351Z",
+          "calories":null,
+          "calories_from_fat":null,
+          "cost":null,
+          "favorite_count":null,
+          "meal":" Dinner",
+          "location":" Crossroads",
+          "menu_id":null,
+          "food_type":[
+            "Vegan Option"
+          ]
+        },
+        {
+          "id":2003572,
+          "name":"Pasta",
+          "created_at":"2018-11-07T04:50:32.361Z",
+          "updated_at":"2018-11-07T04:50:32.361Z",
+          "calories":null,
+          "calories_from_fat":null,
+          "cost":null,
+          "favorite_count":null,
+          "meal":" Dinner",
+          "location":" Crossroads",
+          "menu_id":null,
+          "food_type":[
+            "Wheat",
+            "Vegan Option",
+            "Contains Gluten"
+          ]
+        },
+        {
+          "id":2003573,
+          "name":"Whole Wheat Pasta",
+          "created_at":"2018-11-07T04:50:32.367Z",
+          "updated_at":"2018-11-07T04:50:32.367Z",
+          "calories":null,
+          "calories_from_fat":null,
+          "cost":null,
+          "favorite_count":null,
+          "meal":" Dinner",
+          "location":" Crossroads",
+          "menu_id":null,
+          "food_type":[
+            "Wheat",
+            "Vegan Option",
+            "Contains Gluten"
+          ]
+        },
+        {
+          "id":2003574,
+          "name":"Breadsticks",
+          "created_at":"2018-11-07T04:50:32.372Z",
+          "updated_at":"2018-11-07T04:50:32.372Z",
+          "calories":null,
+          "calories_from_fat":null,
+          "cost":null,
+          "favorite_count":null,
+          "meal":" Dinner",
+          "location":" Crossroads",
+          "menu_id":null,
+          "food_type":[
+            "Wheat",
+            "Contains Gluten"
+          ]
+        },
+        {
+          "id":2003575,
+          "name":"Lentil Bolognese Sauce",
+          "created_at":"2018-11-07T04:50:32.378Z",
+          "updated_at":"2018-11-07T04:50:32.378Z",
+          "calories":null,
+          "calories_from_fat":null,
+          "cost":null,
+          "favorite_count":null,
+          "meal":" Dinner",
+          "location":" Crossroads",
+          "menu_id":null,
+          "food_type":[
+            "Vegan Option"
+          ]
+        },
+        {
+          "id":2003576,
+          "name":"Meat Sauce",
+          "created_at":"2018-11-07T04:50:32.383Z",
+          "updated_at":"2018-11-07T04:50:32.383Z",
+          "calories":null,
+          "calories_from_fat":null,
+          "cost":null,
+          "favorite_count":null,
+          "meal":" Dinner",
+          "location":" Crossroads",
+          "menu_id":null,
+          "food_type":[
+
+          ]
+        },
+        {
+          "id":2003578,
+          "name":"Carnitas Torta",
+          "created_at":"2018-11-07T04:50:32.428Z",
+          "updated_at":"2018-11-07T04:50:32.428Z",
+          "calories":null,
+          "calories_from_fat":null,
+          "cost":null,
+          "favorite_count":null,
+          "meal":" Dinner",
+          "location":" Crossroads",
+          "menu_id":null,
+          "food_type":[
+            "Milk",
+            "Wheat",
+            "Contains Gluten",
+            "Contains Pork"
+          ]
+        },
+        {
+          "id":2003579,
+          "name":"Black Bean Burger",
+          "created_at":"2018-11-07T04:50:32.433Z",
+          "updated_at":"2018-11-07T04:50:32.433Z",
+          "calories":null,
+          "calories_from_fat":null,
+          "cost":null,
+          "favorite_count":null,
+          "meal":" Dinner",
+          "location":" Crossroads",
+          "menu_id":null,
+          "food_type":[
+            "Wheat",
+            "Soybeans",
+            "Vegan Option",
+            "Contains Gluten"
+          ]
+        },
+        {
+          "id":2003580,
+          "name":"Spicy Waffle Fries",
+          "created_at":"2018-11-07T04:50:32.439Z",
+          "updated_at":"2018-11-07T04:50:32.439Z",
+          "calories":null,
+          "calories_from_fat":null,
+          "cost":null,
+          "favorite_count":null,
+          "meal":" Dinner",
+          "location":" Crossroads",
+          "menu_id":null,
+          "food_type":[
+            "Wheat",
+            "Vegan Option",
+            "Contains Gluten"
+          ]
+        },
+        {
+          "id":2003582,
+          "name":"BBQ Chicken Pizza",
+          "created_at":"2018-11-07T04:50:32.450Z",
+          "updated_at":"2018-11-07T04:50:32.450Z",
+          "calories":null,
+          "calories_from_fat":null,
+          "cost":null,
+          "favorite_count":null,
+          "meal":" Dinner",
+          "location":" Crossroads",
+          "menu_id":null,
+          "food_type":[
+            "Milk",
+            "Wheat",
+            "Soybeans",
+            "Contains Gluten"
+          ]
+        },
+        {
+          "id":2003583,
+          "name":"Mushroom Pizza",
+          "created_at":"2018-11-07T04:50:32.456Z",
+          "updated_at":"2018-11-07T04:50:32.456Z",
+          "calories":null,
+          "calories_from_fat":null,
+          "cost":null,
+          "favorite_count":null,
+          "meal":" Dinner",
+          "location":" Crossroads",
+          "menu_id":null,
+          "food_type":[
+            "Milk",
+            "Wheat",
+            "Soybeans",
+            "Vegetarian Option",
+            "Contains Gluten"
+          ]
+        },
+        {
+          "id":2003584,
+          "name":"Flatbread or Gluten Free Pizza Per Request",
+          "created_at":"2018-11-07T04:50:32.462Z",
+          "updated_at":"2018-11-07T04:50:32.462Z",
+          "calories":null,
+          "calories_from_fat":null,
+          "cost":null,
+          "favorite_count":null,
+          "meal":" Dinner",
+          "location":" Crossroads",
+          "menu_id":null,
+          "food_type":[
+
+          ]
+        },
+        {
+          "id":2003586,
+          "name":"Sugar Cookies",
+          "created_at":"2018-11-07T04:50:32.472Z",
+          "updated_at":"2018-11-07T04:50:32.472Z",
+          "calories":null,
+          "calories_from_fat":null,
+          "cost":null,
+          "favorite_count":null,
+          "meal":" Dinner",
+          "location":" Crossroads",
+          "menu_id":null,
+          "food_type":[
+            "Wheat"
+          ]
+        },
+        {
+          "id":2003587,
+          "name":"Apple Pie",
+          "created_at":"2018-11-07T04:50:32.478Z",
+          "updated_at":"2018-11-07T04:50:32.478Z",
+          "calories":null,
+          "calories_from_fat":null,
+          "cost":null,
+          "favorite_count":null,
+          "meal":" Dinner",
+          "location":" Crossroads",
+          "menu_id":null,
+          "food_type":[
+            "Milk",
+            "Wheat",
+            "Vegetarian Option"
+          ]
+        },
+        {
+          "id":2003588,
+          "name":"German Chocolate Cake",
+          "created_at":"2018-11-07T04:50:32.516Z",
+          "updated_at":"2018-11-07T04:50:32.516Z",
+          "calories":null,
+          "calories_from_fat":null,
+          "cost":null,
+          "favorite_count":null,
+          "meal":" Dinner",
+          "location":" Crossroads",
+          "menu_id":null,
+          "food_type":[
+
+          ]
+        }
+      ],
+      "created_at":"2018-11-07T04:50:33.569Z",
+      "updated_at":"2018-11-07T04:50:33.569Z",
+      "breakfast_open":"2018-11-06T15:00:00.000Z",
+      "breakfast_close":"2018-11-06T18:00:00.000Z",
+      "lunch_open":"2018-11-06T19:00:00.000Z",
+      "lunch_close":"2018-11-06T22:00:00.000Z",
+      "dinner_open":"2018-11-07T01:00:00.000Z",
+      "dinner_close":"2018-11-07T05:00:00.000Z",
+      "image_link":"http://www.dworskyarchitecture.com/portfolio/commercial/berkley/images/ucbdine7.jpg",
+      "limited_lunch_open":"2018-11-06T22:00:00.000Z",
+      "limited_lunch_close":"2018-11-07T01:00:00.000Z",
+      "limited_dinner_open":"2018-11-07T04:00:00.000Z",
+      "limited_dinner_close":"2018-11-07T07:00:00.000Z",
+      "limited_lunch_menu":[
+        {
+          "id":2003508,
+          "name":"Broccoli Cheddar Soup",
+          "created_at":"2018-11-07T04:50:31.795Z",
+          "updated_at":"2018-11-07T04:50:31.795Z",
+          "calories":null,
+          "calories_from_fat":null,
+          "cost":null,
+          "favorite_count":null,
+          "meal":" Lunch",
+          "location":" Crossroads",
+          "menu_id":null,
+          "food_type":[
+            "Milk",
+            "Vegetarian Option"
+          ]
+        },
+        {
+          "id":2003509,
+          "name":"Three Bean Chili",
+          "created_at":"2018-11-07T04:50:31.801Z",
+          "updated_at":"2018-11-07T04:50:31.801Z",
+          "calories":null,
+          "calories_from_fat":null,
+          "cost":null,
+          "favorite_count":null,
+          "meal":" Lunch",
+          "location":" Crossroads",
+          "menu_id":null,
+          "food_type":[
+            "Vegan Option"
+          ]
+        },
+        {
+          "id":2003511,
+          "name":"Orzo Salad with Carrots",
+          "created_at":"2018-11-07T04:50:31.811Z",
+          "updated_at":"2018-11-07T04:50:31.811Z",
+          "calories":null,
+          "calories_from_fat":null,
+          "cost":null,
+          "favorite_count":null,
+          "meal":" Lunch",
+          "location":" Crossroads",
+          "menu_id":null,
+          "food_type":[
+            "Egg",
+            "Wheat",
+            "Vegetarian Option",
+            "Contains Gluten"
+          ]
+        },
+        {
+          "id":2003537,
+          "name":"Reuben Sandwich",
+          "created_at":"2018-11-07T04:50:32.059Z",
+          "updated_at":"2018-11-07T04:50:32.059Z",
+          "calories":null,
+          "calories_from_fat":null,
+          "cost":null,
+          "favorite_count":null,
+          "meal":" Lunch",
+          "location":" Crossroads",
+          "menu_id":null,
+          "food_type":[
+            "Milk",
+            "Egg",
+            "Wheat",
+            "Soybeans"
+          ]
+        },
+        {
+          "id":2003538,
+          "name":"Black Bean Burger",
+          "created_at":"2018-11-07T04:50:32.066Z",
+          "updated_at":"2018-11-07T04:50:32.066Z",
+          "calories":null,
+          "calories_from_fat":null,
+          "cost":null,
+          "favorite_count":null,
+          "meal":" Lunch",
+          "location":" Crossroads",
+          "menu_id":null,
+          "food_type":[
+            "Wheat",
+            "Soybeans",
+            "Vegan Option",
+            "Contains Gluten"
+          ]
+        },
+        {
+          "id":2003539,
+          "name":"Spicy Waffle Fries",
+          "created_at":"2018-11-07T04:50:32.072Z",
+          "updated_at":"2018-11-07T04:50:32.072Z",
+          "calories":null,
+          "calories_from_fat":null,
+          "cost":null,
+          "favorite_count":null,
+          "meal":" Lunch",
+          "location":" Crossroads",
+          "menu_id":null,
+          "food_type":[
+            "Wheat",
+            "Vegan Option",
+            "Contains Gluten"
+          ]
+        }
+      ],
+      "limited_dinner_menu":[
+        {
+          "id":2003549,
+          "name":"Broccoli Cheddar Soup",
+          "created_at":"2018-11-07T04:50:32.169Z",
+          "updated_at":"2018-11-07T04:50:32.169Z",
+          "calories":null,
+          "calories_from_fat":null,
+          "cost":null,
+          "favorite_count":null,
+          "meal":" Dinner",
+          "location":" Crossroads",
+          "menu_id":null,
+          "food_type":[
+            "Milk",
+            "Vegetarian Option"
+          ]
+        },
+        {
+          "id":2003550,
+          "name":"Three Bean Chili",
+          "created_at":"2018-11-07T04:50:32.174Z",
+          "updated_at":"2018-11-07T04:50:32.174Z",
+          "calories":null,
+          "calories_from_fat":null,
+          "cost":null,
+          "favorite_count":null,
+          "meal":" Dinner",
+          "location":" Crossroads",
+          "menu_id":null,
+          "food_type":[
+            "Vegan Option"
+          ]
+        },
+        {
+          "id":2003552,
+          "name":"Orzo Salad with Carrots",
+          "created_at":"2018-11-07T04:50:32.186Z",
+          "updated_at":"2018-11-07T04:50:32.186Z",
+          "calories":null,
+          "calories_from_fat":null,
+          "cost":null,
+          "favorite_count":null,
+          "meal":" Dinner",
+          "location":" Crossroads",
+          "menu_id":null,
+          "food_type":[
+            "Egg",
+            "Wheat",
+            "Vegetarian Option",
+            "Contains Gluten"
+          ]
+        },
+        {
+          "id":2003578,
+          "name":"Carnitas Torta",
+          "created_at":"2018-11-07T04:50:32.428Z",
+          "updated_at":"2018-11-07T04:50:32.428Z",
+          "calories":null,
+          "calories_from_fat":null,
+          "cost":null,
+          "favorite_count":null,
+          "meal":" Dinner",
+          "location":" Crossroads",
+          "menu_id":null,
+          "food_type":[
+            "Milk",
+            "Wheat",
+            "Contains Gluten",
+            "Contains Pork"
+          ]
+        },
+        {
+          "id":2003579,
+          "name":"Black Bean Burger",
+          "created_at":"2018-11-07T04:50:32.433Z",
+          "updated_at":"2018-11-07T04:50:32.433Z",
+          "calories":null,
+          "calories_from_fat":null,
+          "cost":null,
+          "favorite_count":null,
+          "meal":" Dinner",
+          "location":" Crossroads",
+          "menu_id":null,
+          "food_type":[
+            "Wheat",
+            "Soybeans",
+            "Vegan Option",
+            "Contains Gluten"
+          ]
+        },
+        {
+          "id":2003580,
+          "name":"Spicy Waffle Fries",
+          "created_at":"2018-11-07T04:50:32.439Z",
+          "updated_at":"2018-11-07T04:50:32.439Z",
+          "calories":null,
+          "calories_from_fat":null,
+          "cost":null,
+          "favorite_count":null,
+          "meal":" Dinner",
+          "location":" Crossroads",
+          "menu_id":null,
+          "food_type":[
+            "Wheat",
+            "Vegan Option",
+            "Contains Gluten"
+          ]
+        }
+      ],
+      "late_night_menu":[
+
+      ],
+      "late_night_open":null,
+      "late_night_close":null
+    },
+    {
+      "id":31677,
+      "name":"Foothill",
+      "breakfast_menu":[
+        {
+          "id":2003590,
+          "name":"Rolled Oatmeal",
+          "created_at":"2018-11-07T04:50:32.535Z",
+          "updated_at":"2018-11-07T04:50:32.535Z",
+          "calories":null,
+          "calories_from_fat":null,
+          "cost":null,
+          "favorite_count":null,
+          "meal":" Breakfast",
+          "location":" Foothill",
+          "menu_id":null,
+          "food_type":[
+            "Vegan Option"
+          ]
+        },
+        {
+          "id":2003591,
+          "name":"Steamed Rice",
+          "created_at":"2018-11-07T04:50:32.541Z",
+          "updated_at":"2018-11-07T04:50:32.541Z",
+          "calories":null,
+          "calories_from_fat":null,
+          "cost":null,
+          "favorite_count":null,
+          "meal":" Breakfast",
+          "location":" Foothill",
+          "menu_id":null,
+          "food_type":[
+            "Vegan Option"
+          ]
+        },
+        {
+          "id":2003592,
+          "name":"Brown Rice",
+          "created_at":"2018-11-07T04:50:32.546Z",
+          "updated_at":"2018-11-07T04:50:32.546Z",
+          "calories":null,
+          "calories_from_fat":null,
+          "cost":null,
+          "favorite_count":null,
+          "meal":" Breakfast",
+          "location":" Foothill",
+          "menu_id":null,
+          "food_type":[
+            "Vegan Option"
+          ]
+        },
+        {
+          "id":2003594,
+          "name":"Banana Muffin",
+          "created_at":"2018-11-07T04:50:32.588Z",
+          "updated_at":"2018-11-07T04:50:32.588Z",
+          "calories":null,
+          "calories_from_fat":null,
+          "cost":null,
+          "favorite_count":null,
+          "meal":" Breakfast",
+          "location":" Foothill",
+          "menu_id":null,
+          "food_type":[
+            "Milk",
+            "Egg",
+            "Wheat",
+            "Soybeans"
+          ]
+        },
+        {
+          "id":2003596,
+          "name":"Cranberry Orange Scone",
+          "created_at":"2018-11-07T04:50:32.600Z",
+          "updated_at":"2018-11-07T04:50:32.600Z",
+          "calories":null,
+          "calories_from_fat":null,
+          "cost":null,
+          "favorite_count":null,
+          "meal":" Breakfast",
+          "location":" Foothill",
+          "menu_id":null,
+          "food_type":[
+
+          ]
+        },
+        {
+          "id":2003598,
+          "name":"Assorted Danish",
+          "created_at":"2018-11-07T04:50:32.610Z",
+          "updated_at":"2018-11-07T04:50:32.610Z",
+          "calories":null,
+          "calories_from_fat":null,
+          "cost":null,
+          "favorite_count":null,
+          "meal":" Breakfast",
+          "location":" Foothill",
+          "menu_id":null,
+          "food_type":[
+            "Milk",
+            "Egg",
+            "Tree Nuts",
+            "Wheat",
+            "Vegetarian Option",
+            "Contains Gluten"
+          ]
+        },
+        {
+          "id":2003600,
+          "name":"Scrambled Eggs",
+          "created_at":"2018-11-07T04:50:32.621Z",
+          "updated_at":"2018-11-07T04:50:32.621Z",
+          "calories":null,
+          "calories_from_fat":null,
+          "cost":null,
+          "favorite_count":null,
+          "meal":" Breakfast",
+          "location":" Foothill",
+          "menu_id":null,
+          "food_type":[
+            "Egg",
+            "Vegetarian Option"
+          ]
+        },
+        {
+          "id":2003601,
+          "name":"Bacon",
+          "created_at":"2018-11-07T04:50:32.627Z",
+          "updated_at":"2018-11-07T04:50:32.627Z",
+          "calories":null,
+          "calories_from_fat":null,
+          "cost":null,
+          "favorite_count":null,
+          "meal":" Breakfast",
+          "location":" Foothill",
+          "menu_id":null,
+          "food_type":[
+            "Contains Pork"
+          ]
+        },
+        {
+          "id":2003602,
+          "name":"Tofu Sausage Rumble",
+          "created_at":"2018-11-07T04:50:32.633Z",
+          "updated_at":"2018-11-07T04:50:32.633Z",
+          "calories":null,
+          "calories_from_fat":null,
+          "cost":null,
+          "favorite_count":null,
+          "meal":" Breakfast",
+          "location":" Foothill",
+          "menu_id":null,
+          "food_type":[
+            "Soybeans",
+            "Vegan Option",
+            "Contains Alcohol"
+          ]
+        },
+        {
+          "id":2003603,
+          "name":"Hashbrown Patty",
+          "created_at":"2018-11-07T04:50:32.638Z",
+          "updated_at":"2018-11-07T04:50:32.638Z",
+          "calories":null,
+          "calories_from_fat":null,
+          "cost":null,
+          "favorite_count":null,
+          "meal":" Breakfast",
+          "location":" Foothill",
+          "menu_id":null,
+          "food_type":[
+            "Vegan Option"
+          ]
+        },
+        {
+          "id":2003604,
+          "name":"Pancakes",
+          "created_at":"2018-11-07T04:50:32.645Z",
+          "updated_at":"2018-11-07T04:50:32.645Z",
+          "calories":null,
+          "calories_from_fat":null,
+          "cost":null,
+          "favorite_count":null,
+          "meal":" Breakfast",
+          "location":" Foothill",
+          "menu_id":null,
+          "food_type":[
+            "Milk",
+            "Egg",
+            "Wheat",
+            "Soybeans",
+            "Vegetarian Option",
+            "Contains Gluten"
+          ]
+        },
+        {
+          "id":2003605,
+          "name":"Mushroom and Spinach Eggs Benedict",
+          "created_at":"2018-11-07T04:50:32.691Z",
+          "updated_at":"2018-11-07T04:50:32.691Z",
+          "calories":null,
+          "calories_from_fat":null,
+          "cost":null,
+          "favorite_count":null,
+          "meal":" Breakfast",
+          "location":" Foothill",
+          "menu_id":null,
+          "food_type":[
+
+          ]
+        },
+        {
+          "id":2003606,
+          "name":"Waffles",
+          "created_at":"2018-11-07T04:50:32.698Z",
+          "updated_at":"2018-11-07T04:50:32.698Z",
+          "calories":null,
+          "calories_from_fat":null,
+          "cost":null,
+          "favorite_count":null,
+          "meal":" Breakfast",
+          "location":" Foothill",
+          "menu_id":null,
+          "food_type":[
+            "Milk",
+            "Egg",
+            "Wheat",
+            "Soybeans",
+            "Vegetarian Option",
+            "Contains Gluten"
+          ]
+        }
+      ],
+      "lunch_menu":[
+        {
+          "id":2003608,
+          "name":"Broccoli Cheddar Soup",
+          "created_at":"2018-11-07T04:50:32.716Z",
+          "updated_at":"2018-11-07T04:50:32.716Z",
+          "calories":null,
+          "calories_from_fat":null,
+          "cost":null,
+          "favorite_count":null,
+          "meal":" Lunch",
+          "location":" Foothill",
+          "menu_id":null,
+          "food_type":[
+            "Milk",
+            "Vegetarian Option"
+          ]
+        },
+        {
+          "id":2003609,
+          "name":"Three Bean Chili",
+          "created_at":"2018-11-07T04:50:32.723Z",
+          "updated_at":"2018-11-07T04:50:32.723Z",
+          "calories":null,
+          "calories_from_fat":null,
+          "cost":null,
+          "favorite_count":null,
+          "meal":" Lunch",
+          "location":" Foothill",
+          "menu_id":null,
+          "food_type":[
+            "Vegan Option"
+          ]
+        },
+        {
+          "id":2003611,
+          "name":"Tomato Cous Cous Salad",
+          "created_at":"2018-11-07T04:50:32.736Z",
+          "updated_at":"2018-11-07T04:50:32.736Z",
+          "calories":null,
+          "calories_from_fat":null,
+          "cost":null,
+          "favorite_count":null,
+          "meal":" Lunch",
+          "location":" Foothill",
+          "menu_id":null,
+          "food_type":[
+            "Wheat",
+            "Vegan Option",
+            "Contains Gluten"
+          ]
+        },
+        {
+          "id":2003613,
+          "name":"Salad Bar",
+          "created_at":"2018-11-07T04:50:32.753Z",
+          "updated_at":"2018-11-07T04:50:32.753Z",
+          "calories":null,
+          "calories_from_fat":null,
+          "cost":null,
+          "favorite_count":null,
+          "meal":" Lunch",
+          "location":" Foothill",
+          "menu_id":null,
+          "food_type":[
+
+          ]
+        },
+        {
+          "id":2003614,
+          "name":"Deli Bar",
+          "created_at":"2018-11-07T04:50:32.809Z",
+          "updated_at":"2018-11-07T04:50:32.809Z",
+          "calories":null,
+          "calories_from_fat":null,
+          "cost":null,
+          "favorite_count":null,
+          "meal":" Lunch",
+          "location":" Foothill",
+          "menu_id":null,
+          "food_type":[
+
+          ]
+        },
+        {
+          "id":2003616,
+          "name":"Grilled Tri Tip w/ Chimichurri Sauce",
+          "created_at":"2018-11-07T04:50:32.825Z",
+          "updated_at":"2018-11-07T04:50:32.825Z",
+          "calories":null,
+          "calories_from_fat":null,
+          "cost":null,
+          "favorite_count":null,
+          "meal":" Lunch",
+          "location":" Foothill",
+          "menu_id":null,
+          "food_type":[
+            "Contains Alcohol"
+          ]
+        },
+        {
+          "id":2003617,
+          "name":"Canellini Beans  and Polenta",
+          "created_at":"2018-11-07T04:50:32.833Z",
+          "updated_at":"2018-11-07T04:50:32.833Z",
+          "calories":null,
+          "calories_from_fat":null,
+          "cost":null,
+          "favorite_count":null,
+          "meal":" Lunch",
+          "location":" Foothill",
+          "menu_id":null,
+          "food_type":[
+            "Soybeans",
+            "Vegan Option"
+          ]
+        },
+        {
+          "id":2003618,
+          "name":"Orzo Pilaf",
+          "created_at":"2018-11-07T04:50:32.841Z",
+          "updated_at":"2018-11-07T04:50:32.841Z",
+          "calories":null,
+          "calories_from_fat":null,
+          "cost":null,
+          "favorite_count":null,
+          "meal":" Lunch",
+          "location":" Foothill",
+          "menu_id":null,
+          "food_type":[
+            "Wheat",
+            "Contains Gluten"
+          ]
+        },
+        {
+          "id":2003619,
+          "name":"Vegetable Medley",
+          "created_at":"2018-11-07T04:50:32.855Z",
+          "updated_at":"2018-11-07T04:50:32.855Z",
+          "calories":null,
+          "calories_from_fat":null,
+          "cost":null,
+          "favorite_count":null,
+          "meal":" Lunch",
+          "location":" Foothill",
+          "menu_id":null,
+          "food_type":[
+            "Vegan Option"
+          ]
+        },
+        {
+          "id":2003621,
+          "name":"Steamed Rice",
+          "created_at":"2018-11-07T04:50:32.871Z",
+          "updated_at":"2018-11-07T04:50:32.871Z",
+          "calories":null,
+          "calories_from_fat":null,
+          "cost":null,
+          "favorite_count":null,
+          "meal":" Lunch",
+          "location":" Foothill",
+          "menu_id":null,
+          "food_type":[
+            "Vegan Option"
+          ]
+        },
+        {
+          "id":2003622,
+          "name":"Brown Rice",
+          "created_at":"2018-11-07T04:50:32.879Z",
+          "updated_at":"2018-11-07T04:50:32.879Z",
+          "calories":null,
+          "calories_from_fat":null,
+          "cost":null,
+          "favorite_count":null,
+          "meal":" Lunch",
+          "location":" Foothill",
+          "menu_id":null,
+          "food_type":[
+            "Vegan Option"
+          ]
+        },
+        {
+          "id":2003624,
+          "name":"Pasta",
+          "created_at":"2018-11-07T04:50:32.894Z",
+          "updated_at":"2018-11-07T04:50:32.894Z",
+          "calories":null,
+          "calories_from_fat":null,
+          "cost":null,
+          "favorite_count":null,
+          "meal":" Lunch",
+          "location":" Foothill",
+          "menu_id":null,
+          "food_type":[
+            "Wheat",
+            "Vegan Option",
+            "Contains Gluten"
+          ]
+        },
+        {
+          "id":2003625,
+          "name":"Whole Wheat Pasta",
+          "created_at":"2018-11-07T04:50:32.951Z",
+          "updated_at":"2018-11-07T04:50:32.951Z",
+          "calories":null,
+          "calories_from_fat":null,
+          "cost":null,
+          "favorite_count":null,
+          "meal":" Lunch",
+          "location":" Foothill",
+          "menu_id":null,
+          "food_type":[
+            "Wheat",
+            "Vegan Option",
+            "Contains Gluten"
+          ]
+        },
+        {
+          "id":2003626,
+          "name":"Breadsticks",
+          "created_at":"2018-11-07T04:50:32.964Z",
+          "updated_at":"2018-11-07T04:50:32.964Z",
+          "calories":null,
+          "calories_from_fat":null,
+          "cost":null,
+          "favorite_count":null,
+          "meal":" Lunch",
+          "location":" Foothill",
+          "menu_id":null,
+          "food_type":[
+            "Wheat",
+            "Contains Gluten"
+          ]
+        },
+        {
+          "id":2003627,
+          "name":"Lentil Bolognese Sauce",
+          "created_at":"2018-11-07T04:50:32.973Z",
+          "updated_at":"2018-11-07T04:50:32.973Z",
+          "calories":null,
+          "calories_from_fat":null,
+          "cost":null,
+          "favorite_count":null,
+          "meal":" Lunch",
+          "location":" Foothill",
+          "menu_id":null,
+          "food_type":[
+            "Vegan Option"
+          ]
+        },
+        {
+          "id":2003628,
+          "name":"Meat Sauce",
+          "created_at":"2018-11-07T04:50:32.982Z",
+          "updated_at":"2018-11-07T04:50:32.982Z",
+          "calories":null,
+          "calories_from_fat":null,
+          "cost":null,
+          "favorite_count":null,
+          "meal":" Lunch",
+          "location":" Foothill",
+          "menu_id":null,
+          "food_type":[
+
+          ]
+        },
+        {
+          "id":2003630,
+          "name":"Fish Wedges",
+          "created_at":"2018-11-07T04:50:32.997Z",
+          "updated_at":"2018-11-07T04:50:32.997Z",
+          "calories":null,
+          "calories_from_fat":null,
+          "cost":null,
+          "favorite_count":null,
+          "meal":" Lunch",
+          "location":" Foothill",
+          "menu_id":null,
+          "food_type":[
+            "Milk",
+            "Egg",
+            "Fish",
+            "Wheat",
+            "Soybeans"
+          ]
+        },
+        {
+          "id":2003631,
+          "name":"VEGAN Hot Dog",
+          "created_at":"2018-11-07T04:50:33.005Z",
+          "updated_at":"2018-11-07T04:50:33.005Z",
+          "calories":null,
+          "calories_from_fat":null,
+          "cost":null,
+          "favorite_count":null,
+          "meal":" Lunch",
+          "location":" Foothill",
+          "menu_id":null,
+          "food_type":[
+            "Wheat",
+            "Soybeans",
+            "Vegan Option",
+            "Contains Gluten"
+          ]
+        },
+        {
+          "id":2003632,
+          "name":"Waffle Fries",
+          "created_at":"2018-11-07T04:50:33.013Z",
+          "updated_at":"2018-11-07T04:50:33.013Z",
+          "calories":null,
+          "calories_from_fat":null,
+          "cost":null,
+          "favorite_count":null,
+          "meal":" Lunch",
+          "location":" Foothill",
+          "menu_id":null,
+          "food_type":[
+            "Vegan Option",
+            "Contains Gluten"
+          ]
+        },
+        {
+          "id":2003634,
+          "name":"BBQ Chicken Pizza",
+          "created_at":"2018-11-07T04:50:33.029Z",
+          "updated_at":"2018-11-07T04:50:33.029Z",
+          "calories":null,
+          "calories_from_fat":null,
+          "cost":null,
+          "favorite_count":null,
+          "meal":" Lunch",
+          "location":" Foothill",
+          "menu_id":null,
+          "food_type":[
+            "Milk",
+            "Wheat",
+            "Soybeans",
+            "Contains Gluten"
+          ]
+        },
+        {
+          "id":2003635,
+          "name":"Mushroom Pizza",
+          "created_at":"2018-11-07T04:50:33.037Z",
+          "updated_at":"2018-11-07T04:50:33.037Z",
+          "calories":null,
+          "calories_from_fat":null,
+          "cost":null,
+          "favorite_count":null,
+          "meal":" Lunch",
+          "location":" Foothill",
+          "menu_id":null,
+          "food_type":[
+            "Milk",
+            "Wheat",
+            "Soybeans",
+            "Vegetarian Option",
+            "Contains Gluten"
+          ]
+        },
+        {
+          "id":2003637,
+          "name":"Raspberry Sammie",
+          "created_at":"2018-11-07T04:50:33.102Z",
+          "updated_at":"2018-11-07T04:50:33.102Z",
+          "calories":null,
+          "calories_from_fat":null,
+          "cost":null,
+          "favorite_count":null,
+          "meal":" Lunch",
+          "location":" Foothill",
+          "menu_id":null,
+          "food_type":[
+            "Milk",
+            "Wheat",
+            "Vegetarian Option",
+            "Contains Gluten"
+          ]
+        },
+        {
+          "id":2003638,
+          "name":"Apple Pie",
+          "created_at":"2018-11-07T04:50:33.112Z",
+          "updated_at":"2018-11-07T04:50:33.112Z",
+          "calories":null,
+          "calories_from_fat":null,
+          "cost":null,
+          "favorite_count":null,
+          "meal":" Lunch",
+          "location":" Foothill",
+          "menu_id":null,
+          "food_type":[
+            "Milk",
+            "Wheat",
+            "Vegetarian Option"
+          ]
+        },
+        {
+          "id":2003639,
+          "name":"German Chocolate Cake",
+          "created_at":"2018-11-07T04:50:33.120Z",
+          "updated_at":"2018-11-07T04:50:33.120Z",
+          "calories":null,
+          "calories_from_fat":null,
+          "cost":null,
+          "favorite_count":null,
+          "meal":" Lunch",
+          "location":" Foothill",
+          "menu_id":null,
+          "food_type":[
+
+          ]
+        }
+      ],
+      "dinner_menu":[
+        {
+          "id":2003641,
+          "name":"Broccoli Cheddar Soup",
+          "created_at":"2018-11-07T04:50:33.141Z",
+          "updated_at":"2018-11-07T04:50:33.141Z",
+          "calories":null,
+          "calories_from_fat":null,
+          "cost":null,
+          "favorite_count":null,
+          "meal":" Dinner",
+          "location":" Foothill",
+          "menu_id":null,
+          "food_type":[
+            "Milk",
+            "Vegetarian Option"
+          ]
+        },
+        {
+          "id":2003642,
+          "name":"Three Bean Chili",
+          "created_at":"2018-11-07T04:50:33.147Z",
+          "updated_at":"2018-11-07T04:50:33.147Z",
+          "calories":null,
+          "calories_from_fat":null,
+          "cost":null,
+          "favorite_count":null,
+          "meal":" Dinner",
+          "location":" Foothill",
+          "menu_id":null,
+          "food_type":[
+            "Vegan Option"
+          ]
+        },
+        {
+          "id":2003644,
+          "name":"Couscous Salad",
+          "created_at":"2018-11-07T04:50:33.201Z",
+          "updated_at":"2018-11-07T04:50:33.201Z",
+          "calories":null,
+          "calories_from_fat":null,
+          "cost":null,
+          "favorite_count":null,
+          "meal":" Dinner",
+          "location":" Foothill",
+          "menu_id":null,
+          "food_type":[
+            "Wheat",
+            "Vegan Option",
+            "Contains Gluten"
+          ]
+        },
+        {
+          "id":2003646,
+          "name":"Salad Bar",
+          "created_at":"2018-11-07T04:50:33.217Z",
+          "updated_at":"2018-11-07T04:50:33.217Z",
+          "calories":null,
+          "calories_from_fat":null,
+          "cost":null,
+          "favorite_count":null,
+          "meal":" Dinner",
+          "location":" Foothill",
+          "menu_id":null,
+          "food_type":[
+
+          ]
+        },
+        {
+          "id":2003647,
+          "name":"Deli Bar",
+          "created_at":"2018-11-07T04:50:33.224Z",
+          "updated_at":"2018-11-07T04:50:33.224Z",
+          "calories":null,
+          "calories_from_fat":null,
+          "cost":null,
+          "favorite_count":null,
+          "meal":" Dinner",
+          "location":" Foothill",
+          "menu_id":null,
+          "food_type":[
+
+          ]
+        },
+        {
+          "id":2003649,
+          "name":"Moroccan Cod w/ Roasted Pepper Coulis",
+          "created_at":"2018-11-07T04:50:33.238Z",
+          "updated_at":"2018-11-07T04:50:33.238Z",
+          "calories":null,
+          "calories_from_fat":null,
+          "cost":null,
+          "favorite_count":null,
+          "meal":" Dinner",
+          "location":" Foothill",
+          "menu_id":null,
+          "food_type":[
+            "Fish",
+            "Soybeans"
+          ]
+        },
+        {
+          "id":2003650,
+          "name":"Spicy Eggplant",
+          "created_at":"2018-11-07T04:50:33.247Z",
+          "updated_at":"2018-11-07T04:50:33.247Z",
+          "calories":null,
+          "calories_from_fat":null,
+          "cost":null,
+          "favorite_count":null,
+          "meal":" Dinner",
+          "location":" Foothill",
+          "menu_id":null,
+          "food_type":[
+            "Sesame",
+            "Vegan Option"
+          ]
+        },
+        {
+          "id":2003651,
+          "name":"Jeweled Rice",
+          "created_at":"2018-11-07T04:50:33.255Z",
+          "updated_at":"2018-11-07T04:50:33.255Z",
+          "calories":null,
+          "calories_from_fat":null,
+          "cost":null,
+          "favorite_count":null,
+          "meal":" Dinner",
+          "location":" Foothill",
+          "menu_id":null,
+          "food_type":[
+            "Soybeans",
+            "Vegan Option"
+          ]
+        },
+        {
+          "id":2003652,
+          "name":"Vegetable Medley",
+          "created_at":"2018-11-07T04:50:33.263Z",
+          "updated_at":"2018-11-07T04:50:33.263Z",
+          "calories":null,
+          "calories_from_fat":null,
+          "cost":null,
+          "favorite_count":null,
+          "meal":" Dinner",
+          "location":" Foothill",
+          "menu_id":null,
+          "food_type":[
+            "Vegan Option"
+          ]
+        },
+        {
+          "id":2003654,
+          "name":"Steamed Rice",
+          "created_at":"2018-11-07T04:50:33.276Z",
+          "updated_at":"2018-11-07T04:50:33.276Z",
+          "calories":null,
+          "calories_from_fat":null,
+          "cost":null,
+          "favorite_count":null,
+          "meal":" Dinner",
+          "location":" Foothill",
+          "menu_id":null,
+          "food_type":[
+            "Vegan Option"
+          ]
+        },
+        {
+          "id":2003655,
+          "name":"Brown Rice",
+          "created_at":"2018-11-07T04:50:33.332Z",
+          "updated_at":"2018-11-07T04:50:33.332Z",
+          "calories":null,
+          "calories_from_fat":null,
+          "cost":null,
+          "favorite_count":null,
+          "meal":" Dinner",
+          "location":" Foothill",
+          "menu_id":null,
+          "food_type":[
+            "Vegan Option"
+          ]
+        },
+        {
+          "id":2003657,
+          "name":"Pasta",
+          "created_at":"2018-11-07T04:50:33.348Z",
+          "updated_at":"2018-11-07T04:50:33.348Z",
+          "calories":null,
+          "calories_from_fat":null,
+          "cost":null,
+          "favorite_count":null,
+          "meal":" Dinner",
+          "location":" Foothill",
+          "menu_id":null,
+          "food_type":[
+            "Wheat",
+            "Vegan Option",
+            "Contains Gluten"
+          ]
+        },
+        {
+          "id":2003658,
+          "name":"Whole Wheat Pasta",
+          "created_at":"2018-11-07T04:50:33.356Z",
+          "updated_at":"2018-11-07T04:50:33.356Z",
+          "calories":null,
+          "calories_from_fat":null,
+          "cost":null,
+          "favorite_count":null,
+          "meal":" Dinner",
+          "location":" Foothill",
+          "menu_id":null,
+          "food_type":[
+            "Wheat",
+            "Vegan Option",
+            "Contains Gluten"
+          ]
+        },
+        {
+          "id":2003659,
+          "name":"Breadsticks",
+          "created_at":"2018-11-07T04:50:33.366Z",
+          "updated_at":"2018-11-07T04:50:33.366Z",
+          "calories":null,
+          "calories_from_fat":null,
+          "cost":null,
+          "favorite_count":null,
+          "meal":" Dinner",
+          "location":" Foothill",
+          "menu_id":null,
+          "food_type":[
+            "Wheat",
+            "Contains Gluten"
+          ]
+        },
+        {
+          "id":2003660,
+          "name":"Lentil Bolognese Sauce",
+          "created_at":"2018-11-07T04:50:33.373Z",
+          "updated_at":"2018-11-07T04:50:33.373Z",
+          "calories":null,
+          "calories_from_fat":null,
+          "cost":null,
+          "favorite_count":null,
+          "meal":" Dinner",
+          "location":" Foothill",
+          "menu_id":null,
+          "food_type":[
+            "Vegan Option"
+          ]
+        },
+        {
+          "id":2003661,
+          "name":"Meat Sauce",
+          "created_at":"2018-11-07T04:50:33.379Z",
+          "updated_at":"2018-11-07T04:50:33.379Z",
+          "calories":null,
+          "calories_from_fat":null,
+          "cost":null,
+          "favorite_count":null,
+          "meal":" Dinner",
+          "location":" Foothill",
+          "menu_id":null,
+          "food_type":[
+
+          ]
+        },
+        {
+          "id":2003663,
+          "name":"Grilled Cheese Sandwich",
+          "created_at":"2018-11-07T04:50:33.394Z",
+          "updated_at":"2018-11-07T04:50:33.394Z",
+          "calories":null,
+          "calories_from_fat":null,
+          "cost":null,
+          "favorite_count":null,
+          "meal":" Dinner",
+          "location":" Foothill",
+          "menu_id":null,
+          "food_type":[
+            "Milk",
+            "Wheat",
+            "Soybeans",
+            "Vegetarian Option",
+            "Contains Gluten"
+          ]
+        },
+        {
+          "id":2003664,
+          "name":"California Veggie Burger",
+          "created_at":"2018-11-07T04:50:33.402Z",
+          "updated_at":"2018-11-07T04:50:33.402Z",
+          "calories":null,
+          "calories_from_fat":null,
+          "cost":null,
+          "favorite_count":null,
+          "meal":" Dinner",
+          "location":" Foothill",
+          "menu_id":null,
+          "food_type":[
+            "Wheat",
+            "Soybeans",
+            "Vegan Option",
+            "Contains Gluten"
+          ]
+        },
+        {
+          "id":2003665,
+          "name":"Waffle Fries",
+          "created_at":"2018-11-07T04:50:33.409Z",
+          "updated_at":"2018-11-07T04:50:33.409Z",
+          "calories":null,
+          "calories_from_fat":null,
+          "cost":null,
+          "favorite_count":null,
+          "meal":" Dinner",
+          "location":" Foothill",
+          "menu_id":null,
+          "food_type":[
+            "Vegan Option",
+            "Contains Gluten"
+          ]
+        },
+        {
+          "id":2003667,
+          "name":"BBQ Chicken Pizza",
+          "created_at":"2018-11-07T04:50:33.473Z",
+          "updated_at":"2018-11-07T04:50:33.473Z",
+          "calories":null,
+          "calories_from_fat":null,
+          "cost":null,
+          "favorite_count":null,
+          "meal":" Dinner",
+          "location":" Foothill",
+          "menu_id":null,
+          "food_type":[
+            "Milk",
+            "Wheat",
+            "Soybeans",
+            "Contains Gluten"
+          ]
+        },
+        {
+          "id":2003668,
+          "name":"Mushroom Pizza",
+          "created_at":"2018-11-07T04:50:33.481Z",
+          "updated_at":"2018-11-07T04:50:33.481Z",
+          "calories":null,
+          "calories_from_fat":null,
+          "cost":null,
+          "favorite_count":null,
+          "meal":" Dinner",
+          "location":" Foothill",
+          "menu_id":null,
+          "food_type":[
+            "Milk",
+            "Wheat",
+            "Soybeans",
+            "Vegetarian Option",
+            "Contains Gluten"
+          ]
+        },
+        {
+          "id":2003670,
+          "name":"Raspberry Sammie",
+          "created_at":"2018-11-07T04:50:33.495Z",
+          "updated_at":"2018-11-07T04:50:33.495Z",
+          "calories":null,
+          "calories_from_fat":null,
+          "cost":null,
+          "favorite_count":null,
+          "meal":" Dinner",
+          "location":" Foothill",
+          "menu_id":null,
+          "food_type":[
+            "Milk",
+            "Wheat",
+            "Vegetarian Option",
+            "Contains Gluten"
+          ]
+        },
+        {
+          "id":2003671,
+          "name":"Apple Pie",
+          "created_at":"2018-11-07T04:50:33.504Z",
+          "updated_at":"2018-11-07T04:50:33.504Z",
+          "calories":null,
+          "calories_from_fat":null,
+          "cost":null,
+          "favorite_count":null,
+          "meal":" Dinner",
+          "location":" Foothill",
+          "menu_id":null,
+          "food_type":[
+            "Milk",
+            "Wheat",
+            "Vegetarian Option"
+          ]
+        },
+        {
+          "id":2003672,
+          "name":"German Chocolate Cake",
+          "created_at":"2018-11-07T04:50:33.512Z",
+          "updated_at":"2018-11-07T04:50:33.512Z",
+          "calories":null,
+          "calories_from_fat":null,
+          "cost":null,
+          "favorite_count":null,
+          "meal":" Dinner",
+          "location":" Foothill",
+          "menu_id":null,
+          "food_type":[
+
+          ]
+        }
+      ],
+      "created_at":"2018-11-07T04:50:33.745Z",
+      "updated_at":"2018-11-07T04:50:33.745Z",
+      "breakfast_open":"2018-11-06T15:00:00.000Z",
+      "breakfast_close":"2018-11-06T17:00:00.000Z",
+      "lunch_open":"2018-11-06T18:30:00.000Z",
+      "lunch_close":"2018-11-06T22:00:00.000Z",
+      "dinner_open":"2018-11-07T01:00:00.000Z",
+      "dinner_close":"2018-11-07T04:00:00.000Z",
+      "image_link":"http://conferenceservices.berkeley.edu/sites/default/files/foothill_2.jpg",
+      "limited_lunch_open":null,
+      "limited_lunch_close":null,
+      "limited_dinner_open":"2018-11-07T04:00:00.000Z",
+      "limited_dinner_close":"2018-11-07T07:00:00.000Z",
+      "limited_lunch_menu":null,
+      "limited_dinner_menu":[
+        {
+          "id":2003641,
+          "name":"Broccoli Cheddar Soup",
+          "created_at":"2018-11-07T04:50:33.141Z",
+          "updated_at":"2018-11-07T04:50:33.141Z",
+          "calories":null,
+          "calories_from_fat":null,
+          "cost":null,
+          "favorite_count":null,
+          "meal":" Dinner",
+          "location":" Foothill",
+          "menu_id":null,
+          "food_type":[
+            "Milk",
+            "Vegetarian Option"
+          ]
+        },
+        {
+          "id":2003642,
+          "name":"Three Bean Chili",
+          "created_at":"2018-11-07T04:50:33.147Z",
+          "updated_at":"2018-11-07T04:50:33.147Z",
+          "calories":null,
+          "calories_from_fat":null,
+          "cost":null,
+          "favorite_count":null,
+          "meal":" Dinner",
+          "location":" Foothill",
+          "menu_id":null,
+          "food_type":[
+            "Vegan Option"
+          ]
+        },
+        {
+          "id":2003644,
+          "name":"Couscous Salad",
+          "created_at":"2018-11-07T04:50:33.201Z",
+          "updated_at":"2018-11-07T04:50:33.201Z",
+          "calories":null,
+          "calories_from_fat":null,
+          "cost":null,
+          "favorite_count":null,
+          "meal":" Dinner",
+          "location":" Foothill",
+          "menu_id":null,
+          "food_type":[
+            "Wheat",
+            "Vegan Option",
+            "Contains Gluten"
+          ]
+        },
+        {
+          "id":2003663,
+          "name":"Grilled Cheese Sandwich",
+          "created_at":"2018-11-07T04:50:33.394Z",
+          "updated_at":"2018-11-07T04:50:33.394Z",
+          "calories":null,
+          "calories_from_fat":null,
+          "cost":null,
+          "favorite_count":null,
+          "meal":" Dinner",
+          "location":" Foothill",
+          "menu_id":null,
+          "food_type":[
+            "Milk",
+            "Wheat",
+            "Soybeans",
+            "Vegetarian Option",
+            "Contains Gluten"
+          ]
+        },
+        {
+          "id":2003664,
+          "name":"California Veggie Burger",
+          "created_at":"2018-11-07T04:50:33.402Z",
+          "updated_at":"2018-11-07T04:50:33.402Z",
+          "calories":null,
+          "calories_from_fat":null,
+          "cost":null,
+          "favorite_count":null,
+          "meal":" Dinner",
+          "location":" Foothill",
+          "menu_id":null,
+          "food_type":[
+            "Wheat",
+            "Soybeans",
+            "Vegan Option",
+            "Contains Gluten"
+          ]
+        },
+        {
+          "id":2003665,
+          "name":"Waffle Fries",
+          "created_at":"2018-11-07T04:50:33.409Z",
+          "updated_at":"2018-11-07T04:50:33.409Z",
+          "calories":null,
+          "calories_from_fat":null,
+          "cost":null,
+          "favorite_count":null,
+          "meal":" Dinner",
+          "location":" Foothill",
+          "menu_id":null,
+          "food_type":[
+            "Vegan Option",
+            "Contains Gluten"
+          ]
+        }
+      ],
+      "late_night_menu":[
+
+      ],
+      "late_night_open":null,
+      "late_night_close":null
+    },
+    {
+      "id":31678,
+      "name":"Cafe 3",
+      "breakfast_menu":[
+
+      ],
+      "lunch_menu":[
+
+      ],
+      "dinner_menu":[
+        {
+          "id":2003400,
+          "name":"Broccoli Cheddar Soup",
+          "created_at":"2018-11-07T04:50:30.700Z",
+          "updated_at":"2018-11-07T04:50:30.700Z",
+          "calories":null,
+          "calories_from_fat":null,
+          "cost":null,
+          "favorite_count":null,
+          "meal":" Dinner",
+          "location":" Cafe_3",
+          "menu_id":null,
+          "food_type":[
+            "Milk",
+            "Vegetarian Option"
+          ]
+        },
+        {
+          "id":2003401,
+          "name":"Three Bean Chili",
+          "created_at":"2018-11-07T04:50:30.708Z",
+          "updated_at":"2018-11-07T04:50:30.708Z",
+          "calories":null,
+          "calories_from_fat":null,
+          "cost":null,
+          "favorite_count":null,
+          "meal":" Dinner",
+          "location":" Cafe_3",
+          "menu_id":null,
+          "food_type":[
+            "Vegan Option"
+          ]
+        },
+        {
+          "id":2003403,
+          "name":"Orzo Salad with Carrots",
+          "created_at":"2018-11-07T04:50:30.724Z",
+          "updated_at":"2018-11-07T04:50:30.724Z",
+          "calories":null,
+          "calories_from_fat":null,
+          "cost":null,
+          "favorite_count":null,
+          "meal":" Dinner",
+          "location":" Cafe_3",
+          "menu_id":null,
+          "food_type":[
+            "Egg",
+            "Wheat",
+            "Vegetarian Option",
+            "Contains Gluten"
+          ]
+        },
+        {
+          "id":2003405,
+          "name":"Salad Bar",
+          "created_at":"2018-11-07T04:50:30.736Z",
+          "updated_at":"2018-11-07T04:50:30.736Z",
+          "calories":null,
+          "calories_from_fat":null,
+          "cost":null,
+          "favorite_count":null,
+          "meal":" Dinner",
+          "location":" Cafe_3",
+          "menu_id":null,
+          "food_type":[
+
+          ]
+        },
+        {
+          "id":2003406,
+          "name":"Deli Bar",
+          "created_at":"2018-11-07T04:50:30.775Z",
+          "updated_at":"2018-11-07T04:50:30.775Z",
+          "calories":null,
+          "calories_from_fat":null,
+          "cost":null,
+          "favorite_count":null,
+          "meal":" Dinner",
+          "location":" Cafe_3",
+          "menu_id":null,
+          "food_type":[
+
+          ]
+        },
+        {
+          "id":2003408,
+          "name":"Oven Baked Cod Cacciatore",
+          "created_at":"2018-11-07T04:50:30.789Z",
+          "updated_at":"2018-11-07T04:50:30.789Z",
+          "calories":null,
+          "calories_from_fat":null,
+          "cost":null,
+          "favorite_count":null,
+          "meal":" Dinner",
+          "location":" Cafe_3",
+          "menu_id":null,
+          "food_type":[
+            "Fish",
+            "Contains Alcohol"
+          ]
+        },
+        {
+          "id":2003409,
+          "name":"Quinoa Stew",
+          "created_at":"2018-11-07T04:50:30.796Z",
+          "updated_at":"2018-11-07T04:50:30.796Z",
+          "calories":null,
+          "calories_from_fat":null,
+          "cost":null,
+          "favorite_count":null,
+          "meal":" Dinner",
+          "location":" Cafe_3",
+          "menu_id":null,
+          "food_type":[
+            "Vegan Option"
+          ]
+        },
+        {
+          "id":2003410,
+          "name":"Wild Rice Pilaf",
+          "created_at":"2018-11-07T04:50:30.804Z",
+          "updated_at":"2018-11-07T04:50:30.804Z",
+          "calories":null,
+          "calories_from_fat":null,
+          "cost":null,
+          "favorite_count":null,
+          "meal":" Dinner",
+          "location":" Cafe_3",
+          "menu_id":null,
+          "food_type":[
+
+          ]
+        },
+        {
+          "id":2003411,
+          "name":"Vegetable Medley",
+          "created_at":"2018-11-07T04:50:30.812Z",
+          "updated_at":"2018-11-07T04:50:30.812Z",
+          "calories":null,
+          "calories_from_fat":null,
+          "cost":null,
+          "favorite_count":null,
+          "meal":" Dinner",
+          "location":" Cafe_3",
+          "menu_id":null,
+          "food_type":[
+            "Vegan Option"
+          ]
+        },
+        {
+          "id":2003413,
+          "name":"Steamed Rice",
+          "created_at":"2018-11-07T04:50:30.826Z",
+          "updated_at":"2018-11-07T04:50:30.826Z",
+          "calories":null,
+          "calories_from_fat":null,
+          "cost":null,
+          "favorite_count":null,
+          "meal":" Dinner",
+          "location":" Cafe_3",
+          "menu_id":null,
+          "food_type":[
+            "Vegan Option"
+          ]
+        },
+        {
+          "id":2003414,
+          "name":"Brown Rice",
+          "created_at":"2018-11-07T04:50:30.833Z",
+          "updated_at":"2018-11-07T04:50:30.833Z",
+          "calories":null,
+          "calories_from_fat":null,
+          "cost":null,
+          "favorite_count":null,
+          "meal":" Dinner",
+          "location":" Cafe_3",
+          "menu_id":null,
+          "food_type":[
+            "Vegan Option"
+          ]
+        },
+        {
+          "id":2003416,
+          "name":"Pasta",
+          "created_at":"2018-11-07T04:50:30.848Z",
+          "updated_at":"2018-11-07T04:50:30.848Z",
+          "calories":null,
+          "calories_from_fat":null,
+          "cost":null,
+          "favorite_count":null,
+          "meal":" Dinner",
+          "location":" Cafe_3",
+          "menu_id":null,
+          "food_type":[
+            "Wheat",
+            "Vegan Option",
+            "Contains Gluten"
+          ]
+        },
+        {
+          "id":2003417,
+          "name":"Whole Wheat Pasta",
+          "created_at":"2018-11-07T04:50:30.899Z",
+          "updated_at":"2018-11-07T04:50:30.899Z",
+          "calories":null,
+          "calories_from_fat":null,
+          "cost":null,
+          "favorite_count":null,
+          "meal":" Dinner",
+          "location":" Cafe_3",
+          "menu_id":null,
+          "food_type":[
+            "Wheat",
+            "Vegan Option",
+            "Contains Gluten"
+          ]
+        },
+        {
+          "id":2003418,
+          "name":"Breadsticks",
+          "created_at":"2018-11-07T04:50:30.907Z",
+          "updated_at":"2018-11-07T04:50:30.907Z",
+          "calories":null,
+          "calories_from_fat":null,
+          "cost":null,
+          "favorite_count":null,
+          "meal":" Dinner",
+          "location":" Cafe_3",
+          "menu_id":null,
+          "food_type":[
+            "Wheat",
+            "Contains Gluten"
+          ]
+        },
+        {
+          "id":2003419,
+          "name":"Lentil Bolognese Sauce",
+          "created_at":"2018-11-07T04:50:30.914Z",
+          "updated_at":"2018-11-07T04:50:30.914Z",
+          "calories":null,
+          "calories_from_fat":null,
+          "cost":null,
+          "favorite_count":null,
+          "meal":" Dinner",
+          "location":" Cafe_3",
+          "menu_id":null,
+          "food_type":[
+            "Vegan Option"
+          ]
+        },
+        {
+          "id":2003420,
+          "name":"Meat Sauce",
+          "created_at":"2018-11-07T04:50:30.922Z",
+          "updated_at":"2018-11-07T04:50:30.922Z",
+          "calories":null,
+          "calories_from_fat":null,
+          "cost":null,
+          "favorite_count":null,
+          "meal":" Dinner",
+          "location":" Cafe_3",
+          "menu_id":null,
+          "food_type":[
+
+          ]
+        },
+        {
+          "id":2003422,
+          "name":"Crispy Chicken Tenders",
+          "created_at":"2018-11-07T04:50:30.937Z",
+          "updated_at":"2018-11-07T04:50:30.937Z",
+          "calories":null,
+          "calories_from_fat":null,
+          "cost":null,
+          "favorite_count":null,
+          "meal":" Dinner",
+          "location":" Cafe_3",
+          "menu_id":null,
+          "food_type":[
+            "Wheat",
+            "Soybeans",
+            "Contains Gluten"
+          ]
+        },
+        {
+          "id":2003423,
+          "name":"Chickenless Tenders",
+          "created_at":"2018-11-07T04:50:30.943Z",
+          "updated_at":"2018-11-07T04:50:30.943Z",
+          "calories":null,
+          "calories_from_fat":null,
+          "cost":null,
+          "favorite_count":null,
+          "meal":" Dinner",
+          "location":" Cafe_3",
+          "menu_id":null,
+          "food_type":[
+            "Wheat",
+            "Soybeans",
+            "Vegan Option",
+            "Contains Gluten"
+          ]
+        },
+        {
+          "id":2003424,
+          "name":"Waffle Fries",
+          "created_at":"2018-11-07T04:50:30.949Z",
+          "updated_at":"2018-11-07T04:50:30.949Z",
+          "calories":null,
+          "calories_from_fat":null,
+          "cost":null,
+          "favorite_count":null,
+          "meal":" Dinner",
+          "location":" Cafe_3",
+          "menu_id":null,
+          "food_type":[
+            "Vegan Option",
+            "Contains Gluten"
+          ]
+        },
+        {
+          "id":2003426,
+          "name":"Buffalo Chicken Pizza",
+          "created_at":"2018-11-07T04:50:30.961Z",
+          "updated_at":"2018-11-07T04:50:30.961Z",
+          "calories":null,
+          "calories_from_fat":null,
+          "cost":null,
+          "favorite_count":null,
+          "meal":" Dinner",
+          "location":" Cafe_3",
+          "menu_id":null,
+          "food_type":[
+            "Milk",
+            "Wheat",
+            "Soybeans",
+            "Contains Gluten"
+          ]
+        },
+        {
+          "id":2003427,
+          "name":"Cheese Pizza",
+          "created_at":"2018-11-07T04:50:30.968Z",
+          "updated_at":"2018-11-07T04:50:30.968Z",
+          "calories":null,
+          "calories_from_fat":null,
+          "cost":null,
+          "favorite_count":null,
+          "meal":" Dinner",
+          "location":" Cafe_3",
+          "menu_id":null,
+          "food_type":[
+            "Milk",
+            "Wheat",
+            "Soybeans",
+            "Vegetarian Option",
+            "Contains Gluten"
+          ]
+        },
+        {
+          "id":2003428,
+          "name":"Flatbread or Gluten Free Pizza Per Request",
+          "created_at":"2018-11-07T04:50:31.017Z",
+          "updated_at":"2018-11-07T04:50:31.017Z",
+          "calories":null,
+          "calories_from_fat":null,
+          "cost":null,
+          "favorite_count":null,
+          "meal":" Dinner",
+          "location":" Cafe_3",
+          "menu_id":null,
+          "food_type":[
+
+          ]
+        },
+        {
+          "id":2003430,
+          "name":"Raspberry Sammie",
+          "created_at":"2018-11-07T04:50:31.031Z",
+          "updated_at":"2018-11-07T04:50:31.031Z",
+          "calories":null,
+          "calories_from_fat":null,
+          "cost":null,
+          "favorite_count":null,
+          "meal":" Dinner",
+          "location":" Cafe_3",
+          "menu_id":null,
+          "food_type":[
+            "Milk",
+            "Wheat",
+            "Vegetarian Option",
+            "Contains Gluten"
+          ]
+        },
+        {
+          "id":2003431,
+          "name":"Apple Pie",
+          "created_at":"2018-11-07T04:50:31.038Z",
+          "updated_at":"2018-11-07T04:50:31.038Z",
+          "calories":null,
+          "calories_from_fat":null,
+          "cost":null,
+          "favorite_count":null,
+          "meal":" Dinner",
+          "location":" Cafe_3",
+          "menu_id":null,
+          "food_type":[
+            "Milk",
+            "Wheat",
+            "Vegetarian Option"
+          ]
+        },
+        {
+          "id":2003432,
+          "name":"German Chocolate Cake",
+          "created_at":"2018-11-07T04:50:31.047Z",
+          "updated_at":"2018-11-07T04:50:31.047Z",
+          "calories":null,
+          "calories_from_fat":null,
+          "cost":null,
+          "favorite_count":null,
+          "meal":" Dinner",
+          "location":" Cafe_3",
+          "menu_id":null,
+          "food_type":[
+
+          ]
+        }
+      ],
+      "created_at":"2018-11-07T04:50:33.808Z",
+      "updated_at":"2018-11-07T04:50:33.808Z",
+      "breakfast_open":null,
+      "breakfast_close":null,
+      "lunch_open":"2018-11-06T18:00:00.000Z",
+      "lunch_close":"2018-11-06T22:00:00.000Z",
+      "dinner_open":"2018-11-07T01:00:00.000Z",
+      "dinner_close":"2018-11-07T05:00:00.000Z",
+      "image_link":"http://caldining.berkeley.edu/sites/default/files/dc3_3.jpg",
+      "limited_lunch_open":null,
+      "limited_lunch_close":null,
+      "limited_dinner_open":null,
+      "limited_dinner_close":null,
+      "limited_lunch_menu":null,
+      "limited_dinner_menu":null,
+      "late_night_menu":null,
+      "late_night_open":null,
+      "late_night_close":null
+    },
+    {
+      "id":31679,
+      "name":"Clark Kerr",
+      "breakfast_menu":[
+        {
+          "id":2003434,
+          "name":"Rolled Oatmeal",
+          "created_at":"2018-11-07T04:50:31.069Z",
+          "updated_at":"2018-11-07T04:50:31.069Z",
+          "calories":null,
+          "calories_from_fat":null,
+          "cost":null,
+          "favorite_count":null,
+          "meal":" Breakfast",
+          "location":" Clark_Kerr_Campus",
+          "menu_id":null,
+          "food_type":[
+            "Vegan Option"
+          ]
+        },
+        {
+          "id":2003435,
+          "name":"Steamed Rice",
+          "created_at":"2018-11-07T04:50:31.111Z",
+          "updated_at":"2018-11-07T04:50:31.111Z",
+          "calories":null,
+          "calories_from_fat":null,
+          "cost":null,
+          "favorite_count":null,
+          "meal":" Breakfast",
+          "location":" Clark_Kerr_Campus",
+          "menu_id":null,
+          "food_type":[
+            "Vegan Option"
+          ]
+        },
+        {
+          "id":2003436,
+          "name":"Brown Rice",
+          "created_at":"2018-11-07T04:50:31.118Z",
+          "updated_at":"2018-11-07T04:50:31.118Z",
+          "calories":null,
+          "calories_from_fat":null,
+          "cost":null,
+          "favorite_count":null,
+          "meal":" Breakfast",
+          "location":" Clark_Kerr_Campus",
+          "menu_id":null,
+          "food_type":[
+            "Vegan Option"
+          ]
+        },
+        {
+          "id":2003438,
+          "name":"Omelet Bar",
+          "created_at":"2018-11-07T04:50:31.130Z",
+          "updated_at":"2018-11-07T04:50:31.130Z",
+          "calories":null,
+          "calories_from_fat":null,
+          "cost":null,
+          "favorite_count":null,
+          "meal":" Breakfast",
+          "location":" Clark_Kerr_Campus",
+          "menu_id":null,
+          "food_type":[
+            "Milk",
+            "Egg"
+          ]
+        },
+        {
+          "id":2003440,
+          "name":"Banana Muffin",
+          "created_at":"2018-11-07T04:50:31.141Z",
+          "updated_at":"2018-11-07T04:50:31.141Z",
+          "calories":null,
+          "calories_from_fat":null,
+          "cost":null,
+          "favorite_count":null,
+          "meal":" Breakfast",
+          "location":" Clark_Kerr_Campus",
+          "menu_id":null,
+          "food_type":[
+            "Milk",
+            "Egg",
+            "Wheat",
+            "Soybeans"
+          ]
+        },
+        {
+          "id":2003442,
+          "name":"Cranberry Orange Scone",
+          "created_at":"2018-11-07T04:50:31.151Z",
+          "updated_at":"2018-11-07T04:50:31.151Z",
+          "calories":null,
+          "calories_from_fat":null,
+          "cost":null,
+          "favorite_count":null,
+          "meal":" Breakfast",
+          "location":" Clark_Kerr_Campus",
+          "menu_id":null,
+          "food_type":[
+
+          ]
+        },
+        {
+          "id":2003444,
+          "name":"Assorted Danish",
+          "created_at":"2018-11-07T04:50:31.163Z",
+          "updated_at":"2018-11-07T04:50:31.163Z",
+          "calories":null,
+          "calories_from_fat":null,
+          "cost":null,
+          "favorite_count":null,
+          "meal":" Breakfast",
+          "location":" Clark_Kerr_Campus",
+          "menu_id":null,
+          "food_type":[
+            "Milk",
+            "Egg",
+            "Tree Nuts",
+            "Wheat",
+            "Vegetarian Option",
+            "Contains Gluten"
+          ]
+        },
+        {
+          "id":2003446,
+          "name":"Scrambled Eggs",
+          "created_at":"2018-11-07T04:50:31.207Z",
+          "updated_at":"2018-11-07T04:50:31.207Z",
+          "calories":null,
+          "calories_from_fat":null,
+          "cost":null,
+          "favorite_count":null,
+          "meal":" Breakfast",
+          "location":" Clark_Kerr_Campus",
+          "menu_id":null,
+          "food_type":[
+            "Egg",
+            "Vegetarian Option"
+          ]
+        },
+        {
+          "id":2003447,
+          "name":"Bacon",
+          "created_at":"2018-11-07T04:50:31.213Z",
+          "updated_at":"2018-11-07T04:50:31.213Z",
+          "calories":null,
+          "calories_from_fat":null,
+          "cost":null,
+          "favorite_count":null,
+          "meal":" Breakfast",
+          "location":" Clark_Kerr_Campus",
+          "menu_id":null,
+          "food_type":[
+            "Contains Pork"
+          ]
+        },
+        {
+          "id":2003448,
+          "name":"Tofu Sausage Rumble",
+          "created_at":"2018-11-07T04:50:31.219Z",
+          "updated_at":"2018-11-07T04:50:31.219Z",
+          "calories":null,
+          "calories_from_fat":null,
+          "cost":null,
+          "favorite_count":null,
+          "meal":" Breakfast",
+          "location":" Clark_Kerr_Campus",
+          "menu_id":null,
+          "food_type":[
+            "Soybeans",
+            "Vegan Option",
+            "Contains Alcohol"
+          ]
+        },
+        {
+          "id":2003449,
+          "name":"Hashbrown Patty",
+          "created_at":"2018-11-07T04:50:31.224Z",
+          "updated_at":"2018-11-07T04:50:31.224Z",
+          "calories":null,
+          "calories_from_fat":null,
+          "cost":null,
+          "favorite_count":null,
+          "meal":" Breakfast",
+          "location":" Clark_Kerr_Campus",
+          "menu_id":null,
+          "food_type":[
+            "Vegan Option"
+          ]
+        },
+        {
+          "id":2003450,
+          "name":"Pancakes",
+          "created_at":"2018-11-07T04:50:31.229Z",
+          "updated_at":"2018-11-07T04:50:31.229Z",
+          "calories":null,
+          "calories_from_fat":null,
+          "cost":null,
+          "favorite_count":null,
+          "meal":" Breakfast",
+          "location":" Clark_Kerr_Campus",
+          "menu_id":null,
+          "food_type":[
+            "Milk",
+            "Egg",
+            "Wheat",
+            "Soybeans",
+            "Vegetarian Option",
+            "Contains Gluten"
+          ]
+        },
+        {
+          "id":2003451,
+          "name":"Mushroom and Spinach Eggs Benedict",
+          "created_at":"2018-11-07T04:50:31.235Z",
+          "updated_at":"2018-11-07T04:50:31.235Z",
+          "calories":null,
+          "calories_from_fat":null,
+          "cost":null,
+          "favorite_count":null,
+          "meal":" Breakfast",
+          "location":" Clark_Kerr_Campus",
+          "menu_id":null,
+          "food_type":[
+
+          ]
+        },
+        {
+          "id":2003452,
+          "name":"Waffles",
+          "created_at":"2018-11-07T04:50:31.240Z",
+          "updated_at":"2018-11-07T04:50:31.240Z",
+          "calories":null,
+          "calories_from_fat":null,
+          "cost":null,
+          "favorite_count":null,
+          "meal":" Breakfast",
+          "location":" Clark_Kerr_Campus",
+          "menu_id":null,
+          "food_type":[
+            "Milk",
+            "Egg",
+            "Wheat",
+            "Soybeans",
+            "Vegetarian Option",
+            "Contains Gluten"
+          ]
+        }
+      ],
+      "lunch_menu":[
+
+      ],
+      "dinner_menu":[
+        {
+          "id":2003454,
+          "name":"Broccoli Cheddar Soup",
+          "created_at":"2018-11-07T04:50:31.289Z",
+          "updated_at":"2018-11-07T04:50:31.289Z",
+          "calories":null,
+          "calories_from_fat":null,
+          "cost":null,
+          "favorite_count":null,
+          "meal":" Dinner",
+          "location":" Clark_Kerr_Campus",
+          "menu_id":null,
+          "food_type":[
+            "Milk",
+            "Vegetarian Option"
+          ]
+        },
+        {
+          "id":2003455,
+          "name":"Three Bean Chili",
+          "created_at":"2018-11-07T04:50:31.295Z",
+          "updated_at":"2018-11-07T04:50:31.295Z",
+          "calories":null,
+          "calories_from_fat":null,
+          "cost":null,
+          "favorite_count":null,
+          "meal":" Dinner",
+          "location":" Clark_Kerr_Campus",
+          "menu_id":null,
+          "food_type":[
+            "Vegan Option"
+          ]
+        },
+        {
+          "id":2003457,
+          "name":"Cobb Salad",
+          "created_at":"2018-11-07T04:50:31.305Z",
+          "updated_at":"2018-11-07T04:50:31.305Z",
+          "calories":null,
+          "calories_from_fat":null,
+          "cost":null,
+          "favorite_count":null,
+          "meal":" Dinner",
+          "location":" Clark_Kerr_Campus",
+          "menu_id":null,
+          "food_type":[
+            "Milk",
+            "Egg"
+          ]
+        },
+        {
+          "id":2003459,
+          "name":"Salad Bar",
+          "created_at":"2018-11-07T04:50:31.316Z",
+          "updated_at":"2018-11-07T04:50:31.316Z",
+          "calories":null,
+          "calories_from_fat":null,
+          "cost":null,
+          "favorite_count":null,
+          "meal":" Dinner",
+          "location":" Clark_Kerr_Campus",
+          "menu_id":null,
+          "food_type":[
+
+          ]
+        },
+        {
+          "id":2003460,
+          "name":"Deli Bar",
+          "created_at":"2018-11-07T04:50:31.321Z",
+          "updated_at":"2018-11-07T04:50:31.321Z",
+          "calories":null,
+          "calories_from_fat":null,
+          "cost":null,
+          "favorite_count":null,
+          "meal":" Dinner",
+          "location":" Clark_Kerr_Campus",
+          "menu_id":null,
+          "food_type":[
+
+          ]
+        },
+        {
+          "id":2003462,
+          "name":"Chicken Tikka Masala",
+          "created_at":"2018-11-07T04:50:31.332Z",
+          "updated_at":"2018-11-07T04:50:31.332Z",
+          "calories":null,
+          "calories_from_fat":null,
+          "cost":null,
+          "favorite_count":null,
+          "meal":" Dinner",
+          "location":" Clark_Kerr_Campus",
+          "menu_id":null,
+          "food_type":[
+            "Milk"
+          ]
+        },
+        {
+          "id":2003463,
+          "name":"Chana Masala",
+          "created_at":"2018-11-07T04:50:31.338Z",
+          "updated_at":"2018-11-07T04:50:31.338Z",
+          "calories":null,
+          "calories_from_fat":null,
+          "cost":null,
+          "favorite_count":null,
+          "meal":" Dinner",
+          "location":" Clark_Kerr_Campus",
+          "menu_id":null,
+          "food_type":[
+            "Vegan Option"
+          ]
+        },
+        {
+          "id":2003464,
+          "name":"Fragrant Basmati Rice",
+          "created_at":"2018-11-07T04:50:31.344Z",
+          "updated_at":"2018-11-07T04:50:31.344Z",
+          "calories":null,
+          "calories_from_fat":null,
+          "cost":null,
+          "favorite_count":null,
+          "meal":" Dinner",
+          "location":" Clark_Kerr_Campus",
+          "menu_id":null,
+          "food_type":[
+
+          ]
+        },
+        {
+          "id":2003465,
+          "name":"Vegetable Medley",
+          "created_at":"2018-11-07T04:50:31.393Z",
+          "updated_at":"2018-11-07T04:50:31.393Z",
+          "calories":null,
+          "calories_from_fat":null,
+          "cost":null,
+          "favorite_count":null,
+          "meal":" Dinner",
+          "location":" Clark_Kerr_Campus",
+          "menu_id":null,
+          "food_type":[
+            "Vegan Option"
+          ]
+        },
+        {
+          "id":2003467,
+          "name":"Steamed Rice",
+          "created_at":"2018-11-07T04:50:31.407Z",
+          "updated_at":"2018-11-07T04:50:31.407Z",
+          "calories":null,
+          "calories_from_fat":null,
+          "cost":null,
+          "favorite_count":null,
+          "meal":" Dinner",
+          "location":" Clark_Kerr_Campus",
+          "menu_id":null,
+          "food_type":[
+            "Vegan Option"
+          ]
+        },
+        {
+          "id":2003468,
+          "name":"Brown Rice",
+          "created_at":"2018-11-07T04:50:31.413Z",
+          "updated_at":"2018-11-07T04:50:31.413Z",
+          "calories":null,
+          "calories_from_fat":null,
+          "cost":null,
+          "favorite_count":null,
+          "meal":" Dinner",
+          "location":" Clark_Kerr_Campus",
+          "menu_id":null,
+          "food_type":[
+            "Vegan Option"
+          ]
+        },
+        {
+          "id":2003470,
+          "name":"Pasta",
+          "created_at":"2018-11-07T04:50:31.426Z",
+          "updated_at":"2018-11-07T04:50:31.426Z",
+          "calories":null,
+          "calories_from_fat":null,
+          "cost":null,
+          "favorite_count":null,
+          "meal":" Dinner",
+          "location":" Clark_Kerr_Campus",
+          "menu_id":null,
+          "food_type":[
+            "Wheat",
+            "Vegan Option",
+            "Contains Gluten"
+          ]
+        },
+        {
+          "id":2003471,
+          "name":"Whole Wheat Pasta",
+          "created_at":"2018-11-07T04:50:31.433Z",
+          "updated_at":"2018-11-07T04:50:31.433Z",
+          "calories":null,
+          "calories_from_fat":null,
+          "cost":null,
+          "favorite_count":null,
+          "meal":" Dinner",
+          "location":" Clark_Kerr_Campus",
+          "menu_id":null,
+          "food_type":[
+            "Wheat",
+            "Vegan Option",
+            "Contains Gluten"
+          ]
+        },
+        {
+          "id":2003472,
+          "name":"Breadsticks",
+          "created_at":"2018-11-07T04:50:31.439Z",
+          "updated_at":"2018-11-07T04:50:31.439Z",
+          "calories":null,
+          "calories_from_fat":null,
+          "cost":null,
+          "favorite_count":null,
+          "meal":" Dinner",
+          "location":" Clark_Kerr_Campus",
+          "menu_id":null,
+          "food_type":[
+            "Wheat",
+            "Contains Gluten"
+          ]
+        },
+        {
+          "id":2003473,
+          "name":"Lentil Bolognese Sauce",
+          "created_at":"2018-11-07T04:50:31.446Z",
+          "updated_at":"2018-11-07T04:50:31.446Z",
+          "calories":null,
+          "calories_from_fat":null,
+          "cost":null,
+          "favorite_count":null,
+          "meal":" Dinner",
+          "location":" Clark_Kerr_Campus",
+          "menu_id":null,
+          "food_type":[
+            "Vegan Option"
+          ]
+        },
+        {
+          "id":2003474,
+          "name":"Meat Sauce",
+          "created_at":"2018-11-07T04:50:31.453Z",
+          "updated_at":"2018-11-07T04:50:31.453Z",
+          "calories":null,
+          "calories_from_fat":null,
+          "cost":null,
+          "favorite_count":null,
+          "meal":" Dinner",
+          "location":" Clark_Kerr_Campus",
+          "menu_id":null,
+          "food_type":[
+
+          ]
+        },
+        {
+          "id":2003476,
+          "name":"Grilled Ham \u0026 Cheese Sandwich",
+          "created_at":"2018-11-07T04:50:31.509Z",
+          "updated_at":"2018-11-07T04:50:31.509Z",
+          "calories":null,
+          "calories_from_fat":null,
+          "cost":null,
+          "favorite_count":null,
+          "meal":" Dinner",
+          "location":" Clark_Kerr_Campus",
+          "menu_id":null,
+          "food_type":[
+            "Milk",
+            "Wheat",
+            "Soybeans",
+            "Contains Gluten",
+            "Contains Pork"
+          ]
+        },
+        {
+          "id":2003477,
+          "name":"Grilled Cheese Sandwich",
+          "created_at":"2018-11-07T04:50:31.516Z",
+          "updated_at":"2018-11-07T04:50:31.516Z",
+          "calories":null,
+          "calories_from_fat":null,
+          "cost":null,
+          "favorite_count":null,
+          "meal":" Dinner",
+          "location":" Clark_Kerr_Campus",
+          "menu_id":null,
+          "food_type":[
+            "Milk",
+            "Wheat",
+            "Soybeans",
+            "Vegetarian Option",
+            "Contains Gluten"
+          ]
+        },
+        {
+          "id":2003478,
+          "name":"Housemade Lemon Pepper Potato Chips",
+          "created_at":"2018-11-07T04:50:31.521Z",
+          "updated_at":"2018-11-07T04:50:31.521Z",
+          "calories":null,
+          "calories_from_fat":null,
+          "cost":null,
+          "favorite_count":null,
+          "meal":" Dinner",
+          "location":" Clark_Kerr_Campus",
+          "menu_id":null,
+          "food_type":[
+            "Vegan Option"
+          ]
+        },
+        {
+          "id":2003480,
+          "name":"BBQ Chicken Pizza",
+          "created_at":"2018-11-07T04:50:31.532Z",
+          "updated_at":"2018-11-07T04:50:31.532Z",
+          "calories":null,
+          "calories_from_fat":null,
+          "cost":null,
+          "favorite_count":null,
+          "meal":" Dinner",
+          "location":" Clark_Kerr_Campus",
+          "menu_id":null,
+          "food_type":[
+            "Milk",
+            "Wheat",
+            "Soybeans",
+            "Contains Gluten"
+          ]
+        },
+        {
+          "id":2003481,
+          "name":"Mushroom Pizza",
+          "created_at":"2018-11-07T04:50:31.538Z",
+          "updated_at":"2018-11-07T04:50:31.538Z",
+          "calories":null,
+          "calories_from_fat":null,
+          "cost":null,
+          "favorite_count":null,
+          "meal":" Dinner",
+          "location":" Clark_Kerr_Campus",
+          "menu_id":null,
+          "food_type":[
+            "Milk",
+            "Wheat",
+            "Soybeans",
+            "Vegetarian Option",
+            "Contains Gluten"
+          ]
+        },
+        {
+          "id":2003482,
+          "name":"Flatbread or Gluten Free Pizza Per Request",
+          "created_at":"2018-11-07T04:50:31.544Z",
+          "updated_at":"2018-11-07T04:50:31.544Z",
+          "calories":null,
+          "calories_from_fat":null,
+          "cost":null,
+          "favorite_count":null,
+          "meal":" Dinner",
+          "location":" Clark_Kerr_Campus",
+          "menu_id":null,
+          "food_type":[
+
+          ]
+        },
+        {
+          "id":2003484,
+          "name":"Raspberry Sammie",
+          "created_at":"2018-11-07T04:50:31.554Z",
+          "updated_at":"2018-11-07T04:50:31.554Z",
+          "calories":null,
+          "calories_from_fat":null,
+          "cost":null,
+          "favorite_count":null,
+          "meal":" Dinner",
+          "location":" Clark_Kerr_Campus",
+          "menu_id":null,
+          "food_type":[
+            "Milk",
+            "Wheat",
+            "Vegetarian Option",
+            "Contains Gluten"
+          ]
+        },
+        {
+          "id":2003485,
+          "name":"Apple Pie",
+          "created_at":"2018-11-07T04:50:31.560Z",
+          "updated_at":"2018-11-07T04:50:31.560Z",
+          "calories":null,
+          "calories_from_fat":null,
+          "cost":null,
+          "favorite_count":null,
+          "meal":" Dinner",
+          "location":" Clark_Kerr_Campus",
+          "menu_id":null,
+          "food_type":[
+            "Milk",
+            "Wheat",
+            "Vegetarian Option"
+          ]
+        },
+        {
+          "id":2003486,
+          "name":"German Chocolate Cake",
+          "created_at":"2018-11-07T04:50:31.566Z",
+          "updated_at":"2018-11-07T04:50:31.566Z",
+          "calories":null,
+          "calories_from_fat":null,
+          "cost":null,
+          "favorite_count":null,
+          "meal":" Dinner",
+          "location":" Clark_Kerr_Campus",
+          "menu_id":null,
+          "food_type":[
+
+          ]
+        }
+      ],
+      "created_at":"2018-11-07T04:50:33.841Z",
+      "updated_at":"2018-11-07T04:50:33.841Z",
+      "breakfast_open":"2018-11-06T15:00:00.000Z",
+      "breakfast_close":"2018-11-06T17:30:00.000Z",
+      "lunch_open":null,
+      "lunch_close":null,
+      "dinner_open":"2018-11-07T01:30:00.000Z",
+      "dinner_close":"2018-11-07T04:00:00.000Z",
+      "image_link":"http://www.webcor.com/wp-content/uploads/2013/10/UCB_Clark_Kerr_food_service_2.png",
+      "limited_lunch_open":null,
+      "limited_lunch_close":null,
+      "limited_dinner_open":null,
+      "limited_dinner_close":null,
+      "limited_lunch_menu":null,
+      "limited_dinner_menu":null,
+      "late_night_menu":null,
+      "late_night_open":null,
+      "late_night_close":null
+    }
+  ]
+}

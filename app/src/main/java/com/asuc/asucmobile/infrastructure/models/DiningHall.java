@@ -1,6 +1,6 @@
 package com.asuc.asucmobile.infrastructure.models;
 
-import com.asuc.asucmobile.models.FoodItem;
+import com.asuc.asucmobile.domain.models.FoodItem;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.ArrayList;

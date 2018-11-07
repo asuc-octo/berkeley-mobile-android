@@ -9,10 +9,10 @@ import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
 
 
-import com.asuc.asucmobile.models.GSONContainer;
-import com.asuc.asucmobile.models.Journey;
-import com.asuc.asucmobile.models.Stop;
-import com.asuc.asucmobile.models.Trip;
+import com.asuc.asucmobile.domain.models.GSONContainer;
+import com.asuc.asucmobile.domain.models.Journey;
+import com.asuc.asucmobile.domain.models.Stop;
+import com.asuc.asucmobile.domain.models.Trip;
 import com.asuc.asucmobile.utilities.Callback;
 import com.asuc.asucmobile.utilities.JSONUtilities;
 import com.google.android.gms.maps.model.LatLng;

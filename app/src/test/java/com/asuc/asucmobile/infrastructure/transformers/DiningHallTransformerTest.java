@@ -9,7 +9,7 @@ public class DiningHallTransformerTest {
 
     DiningHallTransformer transformer;
     DiningHall infraDiningHall;
-    com.asuc.asucmobile.models.DiningHall domainDiningHall;
+    com.asuc.asucmobile.domain.models.DiningHall domainDiningHall;
 
     @Before
     public void setUp() {
@@ -24,7 +24,7 @@ public class DiningHallTransformerTest {
                 .name(name)
                 .build();
 
-        domainDiningHall = com.asuc.asucmobile.models.DiningHall.builder()
+        domainDiningHall = com.asuc.asucmobile.domain.models.DiningHall.builder()
                 .id(id)
                 .name(name)
                 .build();
@@ -32,7 +32,7 @@ public class DiningHallTransformerTest {
 
     @Test
     public void transformSingleSanityTest() {
-        com.asuc.asucmobile.models.DiningHall sanity = transformer.diningHallInfraDomainTransformer(infraDiningHall);
+        com.asuc.asucmobile.domain.models.DiningHall sanity = transformer.diningHallInfraDomainTransformer(infraDiningHall);
         assert sanity.isOpen() == domainDiningHall.isOpen();
         assert sanity.getName().equals(domainDiningHall.getName());
         assert sanity.getId().equals(domainDiningHall.getId());

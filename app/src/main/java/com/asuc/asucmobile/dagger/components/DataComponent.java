@@ -4,11 +4,11 @@ import com.asuc.asucmobile.dagger.modules.AppModule;
 import com.asuc.asucmobile.dagger.modules.DataModule;
 import com.asuc.asucmobile.dagger.modules.RepositoryModule;
 import com.asuc.asucmobile.dagger.modules.RetrofitModule;
-import com.asuc.asucmobile.fragments.FoodFragment;
-import com.asuc.asucmobile.fragments.GymFragment;
-import com.asuc.asucmobile.fragments.LibraryFragment;
-import com.asuc.asucmobile.fragments.MapsFragment;
-import com.asuc.asucmobile.fragments.ResourceFragment;
+import com.asuc.asucmobile.domain.fragments.FoodFragment;
+import com.asuc.asucmobile.domain.fragments.GymFragment;
+import com.asuc.asucmobile.domain.fragments.LibraryFragment;
+import com.asuc.asucmobile.domain.fragments.MapsFragment;
+import com.asuc.asucmobile.domain.fragments.ResourceFragment;
 
 import javax.inject.Singleton;
 

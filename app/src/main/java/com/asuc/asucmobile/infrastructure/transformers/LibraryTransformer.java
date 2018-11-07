@@ -14,8 +14,8 @@ public class LibraryTransformer {
      * @param qs
      * @return
      */
-    public List<com.asuc.asucmobile.models.Library> libraryQSDomainTransformer(QuerySnapshot qs) {
-        List<com.asuc.asucmobile.models.Library> libraries = new ArrayList<>();
+    public List<com.asuc.asucmobile.domain.models.Library> libraryQSDomainTransformer(QuerySnapshot qs) {
+        List<com.asuc.asucmobile.domain.models.Library> libraries = new ArrayList<>();
         Library infraLibrary = null;
         for (DocumentSnapshot documentSnapshot : qs.getDocuments()) {
             infraLibrary = documentSnapshot.toObject(Library.class);
@@ -32,8 +32,8 @@ public class LibraryTransformer {
      * @param library
      * @return
      */
-    public com.asuc.asucmobile.models.Library libraryInfraDomainTransformer(Library library) {
-        return com.asuc.asucmobile.models.Library.builder()
+    public com.asuc.asucmobile.domain.models.Library libraryInfraDomainTransformer(Library library) {
+        return com.asuc.asucmobile.domain.models.Library.builder()
                 .id(library.getId())
                 .name(library.getName())
                 .build();

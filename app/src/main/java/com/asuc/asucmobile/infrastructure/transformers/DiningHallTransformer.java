@@ -25,8 +25,8 @@ public class DiningHallTransformer {
      * @param qs
      * @return
      */
-    public List<com.asuc.asucmobile.models.DiningHall> dingingHallQSDomainTransformer(QuerySnapshot qs) {
-        List<com.asuc.asucmobile.models.DiningHall> diningHalls = new ArrayList<>();
+    public List<com.asuc.asucmobile.domain.models.DiningHall> dingingHallQSDomainTransformer(QuerySnapshot qs) {
+        List<com.asuc.asucmobile.domain.models.DiningHall> diningHalls = new ArrayList<>();
         DiningHall infraDiningHall = null;
         for (DocumentSnapshot documentSnapshot : qs.getDocuments()) {
             infraDiningHall = documentSnapshot.toObject(DiningHall.class);
@@ -42,8 +42,8 @@ public class DiningHallTransformer {
      * @param diningHallList
      * @return
      */
-    public List<com.asuc.asucmobile.models.DiningHall> diningHallListInfraDomainTransformer(List<DiningHall> diningHallList) {
-        List<com.asuc.asucmobile.models.DiningHall> retList = new ArrayList<>();
+    public List<com.asuc.asucmobile.domain.models.DiningHall> diningHallListInfraDomainTransformer(List<DiningHall> diningHallList) {
+        List<com.asuc.asucmobile.domain.models.DiningHall> retList = new ArrayList<>();
         for (DiningHall diningHall : diningHallList) {
             retList.add(diningHallInfraDomainTransformer(diningHall));
         }
@@ -55,8 +55,8 @@ public class DiningHallTransformer {
      * @param diningHall
      * @return
      */
-    public com.asuc.asucmobile.models.DiningHall diningHallInfraDomainTransformer(DiningHall diningHall) {
-        return com.asuc.asucmobile.models.DiningHall.builder()
+    public com.asuc.asucmobile.domain.models.DiningHall diningHallInfraDomainTransformer(DiningHall diningHall) {
+        return com.asuc.asucmobile.domain.models.DiningHall.builder()
                 .id(diningHall.getId())
                 .name(diningHall.getName())
                 .url(diningHall.getImageUrl())

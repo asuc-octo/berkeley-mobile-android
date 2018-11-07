@@ -6,8 +6,8 @@ import android.support.annotation.NonNull;
 import android.util.SparseArray;
 
 
-import com.asuc.asucmobile.models.Line;
-import com.asuc.asucmobile.models.Stop;
+import com.asuc.asucmobile.domain.models.Line;
+import com.asuc.asucmobile.domain.models.Stop;
 import com.asuc.asucmobile.utilities.Callback;
 import com.asuc.asucmobile.utilities.JSONUtilities;
 import com.google.android.gms.maps.model.LatLng;

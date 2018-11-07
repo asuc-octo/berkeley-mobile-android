@@ -1,7 +1,7 @@
 package com.asuc.asucmobile.dagger.modules;
 
-import com.asuc.asucmobile.infrastructure.DiningHallRepository;
-import com.asuc.asucmobile.models.DiningHall;
+import com.asuc.asucmobile.infrastructure.DiningHallFirestoreRepository;
+import com.asuc.asucmobile.domain.models.DiningHall;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,9 +16,9 @@ public class DataModule {
 
     @Provides
     @Singleton
-    public List<DiningHall> getDiningHalls(final DiningHallRepository repository) {
+    public List<DiningHall> getDiningHalls(final DiningHallFirestoreRepository repository) {
         List<DiningHall> diningHalls = new ArrayList<>();
-        repository.scanAllDiningHalls(diningHalls);
+        repository.scanAll(diningHalls);
         return diningHalls;
     }
 }
