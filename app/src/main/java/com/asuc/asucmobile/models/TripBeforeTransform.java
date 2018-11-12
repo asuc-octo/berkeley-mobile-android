@@ -45,7 +45,7 @@ public class TripBeforeTransform {
         return lineId;
     }
 
-    private class StartingStop {
+    public class StartingStop {
         @SerializedName("id")
         private int startId;
 
@@ -61,7 +61,7 @@ public class TripBeforeTransform {
         }
     }
 
-    private class DestinationStop {
+    public class DestinationStop {
         @SerializedName("id")
         private int endId;
 

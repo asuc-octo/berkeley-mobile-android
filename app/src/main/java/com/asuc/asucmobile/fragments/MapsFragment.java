@@ -9,7 +9,10 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 
 import android.graphics.Color;
+import android.graphics.Path;
 import android.graphics.drawable.Drawable;
+import android.icu.text.SimpleDateFormat;
+import android.icu.util.TimeZone;
 import android.location.Location;
 import android.location.LocationManager;
 import android.os.Build;
@@ -50,9 +53,16 @@ import com.asuc.asucmobile.models.Buses;
 import com.asuc.asucmobile.models.Category;
 import com.asuc.asucmobile.models.CategoryLoc;
 import com.asuc.asucmobile.models.Journey;
+import com.asuc.asucmobile.models.Line;
 import com.asuc.asucmobile.models.Stop;
+import com.asuc.asucmobile.models.StopBeforeTransform;
+import com.asuc.asucmobile.models.TripBeforeTransform;
 import com.asuc.asucmobile.models.responses.LibrariesResponse;
+import com.asuc.asucmobile.models.responses.LineResponse;
 import com.asuc.asucmobile.models.responses.MapIconResponse;
+import com.asuc.asucmobile.models.responses.TripResponse;
+import com.asuc.asucmobile.models.transformers.StopListToLineTransformer;
+import com.asuc.asucmobile.models.transformers.TripListToJourneyTransformer;
 import com.asuc.asucmobile.services.BMService;
 import com.asuc.asucmobile.utilities.Callback;
 import com.asuc.asucmobile.utilities.CustomComparators;
@@ -85,9 +95,11 @@ import com.wang.avi.AVLoadingIndicatorView;
 import java.lang.reflect.Type;
 
 import java.text.DecimalFormat;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Timer;
@@ -704,47 +716,101 @@ public class MapsFragment extends Fragment
     private void refresh(final LatLng origin, final LatLng destination, final Long millis) {
         navigation_button.showProgress(true);
 
-        RouteController.createInstance(origin, destination, millis);
-
-        LineController.getInstance().refreshInBackground(getActivity(), new Callback() {
+        Call<ArrayList<LineResponse>> lineCall = bmService.callLineList();
+        lineCall.enqueue(new retrofit2.Callback<ArrayList<LineResponse>>() {
             @Override
-            public void onDataRetrieved(Object data) {
-
-                RouteController.getInstance().refreshInBackground(getActivity(), new Callback() {
-                    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
-                    @SuppressWarnings("unchecked")
+            public void onResponse(Call<ArrayList<LineResponse>> call, final Response<ArrayList<LineResponse>> response1) {
+                final StopListToLineTransformer sllTransformer = new StopListToLineTransformer();
+                for (LineResponse lineResponse : response1.body()) {
+                    ArrayList<StopBeforeTransform> stopsInitial = lineResponse.getLineStops();
+                    Line line;
+                    if (!stopsInitial.isEmpty()) {
+                        line = sllTransformer.stopListToLine(lineResponse);
+                    }
+                }
+                Call<ArrayList<TripResponse>> tripResponseCall = bmService.callTripList(origin.latitude, origin.longitude, destination.latitude, destination.longitude, convertMillisToUTC(millis));
+                tripResponseCall.enqueue(new retrofit2.Callback<ArrayList<TripResponse>>() {
                     @Override
-                    public void onDataRetrieved(Object data) {
+                    public void onResponse(Call<ArrayList<TripResponse>> call, Response<ArrayList<TripResponse>> response2) {
                         navigation_button.showProgress(false);
+                        ArrayList<Journey> routeList = new ArrayList<>();
+                        for (TripResponse tripResponse : response2.body()) {
+                            ArrayList<TripBeforeTransform> tripsInitial = tripResponse.getTripList();
+                            Journey journey;
+                            if (!tripsInitial.isEmpty()) {
+                                TripListToJourneyTransformer tljtransformer = new TripListToJourneyTransformer();
+                                try {
+                                    journey = tljtransformer.tripListToJourney(tripResponse, sllTransformer);
+                                    routeList.add(journey);
+                                } catch (ParseException e) {
 
-                        if (((ArrayList) data).size() == 0) {
-                            onRetrievalFailed();
-
-                        } else {
-                            Intent routeSelect = new Intent(getContext(), RouteSelectActivity.class);
-                            ArrayList<Journey> routes = (ArrayList<Journey>) data;
-                            routeSelect.putExtra("routes", routes);
-                            startActivity(routeSelect);
+                                }
+                            }
                         }
-
+                        Intent routeSelect = new Intent(getContext(), RouteSelectActivity.class);
+                        routeSelect.putExtra("routes", routeList);
+                        startActivity(routeSelect);
                     }
 
                     @Override
-                    public void onRetrievalFailed() {
-                        navigation_button.showProgress(false);
-                        Toast.makeText(getActivity().getBaseContext(), "Unable to retrieve data, please try again", Toast.LENGTH_SHORT).show();
+                    public void onFailure(Call<ArrayList<TripResponse>> call, Throwable t) {
+
                     }
                 });
             }
 
             @Override
-            public void onRetrievalFailed() {
+            public void onFailure(Call<ArrayList<LineResponse>> call, Throwable t) {
 
             }
         });
-        {
-        }
 
+//        RouteController.createInstance(origin, destination, millis);
+
+//        LineController.getInstance().refreshInBackground(getActivity(), new Callback() {
+//            @Override
+//            public void onDataRetrieved(Object data) {
+//
+//                RouteController.getInstance().refreshInBackground(getActivity(), new Callback() {
+//                    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
+//                    @SuppressWarnings("unchecked")
+//                    @Override
+//                    public void onDataRetrieved(Object data) {
+//                        navigation_button.showProgress(false);
+//
+//                        if (((ArrayList) data).size() == 0) {
+//                            onRetrievalFailed();
+//
+//                        } else {
+//                            Intent routeSelect = new Intent(getContext(), RouteSelectActivity.class);
+//                            ArrayList<Journey> routes = (ArrayList<Journey>) data;
+//                            routeSelect.putExtra("routes", routes);
+//                            startActivity(routeSelect);
+//                        }
+//
+//                    }
+//
+//                    @Override
+//                    public void onRetrievalFailed() {
+//                        navigation_button.showProgress(false);
+//                        Toast.makeText(getActivity().getBaseContext(), "Unable to retrieve data, please try again", Toast.LENGTH_SHORT).show();
+//                    }
+//                });
+//            }
+//
+//            @Override
+//            public void onRetrievalFailed() {
+//
+//            }
+//        });
+
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.N)
+    public String convertMillisToUTC(Long millis) {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z");
+        sdf.setTimeZone(TimeZone.getTimeZone("UTC"));
+        return sdf.format(new Date(millis));
     }
 
 

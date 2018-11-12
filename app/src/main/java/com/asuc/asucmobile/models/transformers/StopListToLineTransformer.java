@@ -12,6 +12,7 @@ import java.util.ArrayList;
 public class StopListToLineTransformer {
 
     private SparseArray<Stop> stops = new SparseArray<>();
+    private SparseArray<Line> lines = new SparseArray<>();
 
     public Line stopListToLine(LineResponse lineResponse) {
         ArrayList<Stop> lineStops = new ArrayList<>();
@@ -24,20 +25,22 @@ public class StopListToLineTransformer {
                 lineStops.add(stops.get(s.getStopId()));
             }
         }
-        return new Line(lineResponse.getId(), lineResponse.getName(), lineStops);
+        Line currLine = new Line(lineResponse.getId(), lineResponse.getName(), lineStops);
+        lines.put(lineResponse.getId(), currLine);
+        return currLine;
     }
 
-//    Line getLine(int id, String name) {
-//        Line line = lines.get(id);
-//        if (line == null) {
-//            for (int i = 0; i < lines.size(); i++) {
-//                if (lines.get(i).getName().equals(name)) {
-//                    return lines.get(i);
-//                }
-//            }
-//        }
-//        return line;
-//    }
+    Line getLine(int id, String name) {
+        Line line = lines.get(id);
+        if (line == null) {
+            for (int i = 0; i < lines.size(); i++) {
+                if (lines.get(i).getName().equals(name)) {
+                    return lines.get(i);
+                }
+            }
+        }
+        return line;
+    }
 
     public Stop getStop(int id, String name) {
         Stop stop = stops.get(id);
