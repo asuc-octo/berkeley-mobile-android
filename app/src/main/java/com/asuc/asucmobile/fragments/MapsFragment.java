@@ -4,6 +4,7 @@ import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -13,6 +14,7 @@ import android.graphics.drawable.Drawable;
 import android.location.Location;
 import android.location.LocationManager;
 import android.os.Build;
+import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
@@ -78,6 +80,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.analytics.FirebaseAnalytics;
+import com.google.firebase.remoteconfig.FirebaseRemoteConfig;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.wang.avi.AVLoadingIndicatorView;
@@ -98,6 +101,9 @@ import javax.inject.Inject;
 import mbanje.kurt.fabbutton.FabButton;
 import retrofit2.Call;
 import retrofit2.Response;
+import uk.co.deanwild.materialshowcaseview.IShowcaseListener;
+import uk.co.deanwild.materialshowcaseview.MaterialShowcaseView;
+import uk.co.deanwild.materialshowcaseview.shape.CircleShape;
 
 
 public class MapsFragment extends Fragment
@@ -158,6 +164,15 @@ public class MapsFragment extends Fragment
     private FirebaseAnalytics mFirebaseAnalytics;
     private FloatingActionButton microwave, sleepPod, waterBottle;
     private HashMap mapHash = new HashMap<String, ArrayList<CategoryLoc>>();
+
+    private FirebaseRemoteConfig mFirebaseRemoteConfig;
+    private boolean showSpotlight = false;
+
+    // Remote Config keys
+    private static final String SHOW_SPOTLIGHT = "show_spotlight";
+
+    // Shared Preferences key to track user's first time
+    private static final String VIEWED_SPOTLIGHT = "viewed_spotlight";
 
 
     public static MapsFragment getInstance() {
@@ -222,6 +237,13 @@ public class MapsFragment extends Fragment
         waterBottle = (FloatingActionButton) layout.findViewById(R.id.waterbottle);
         microwave = (FloatingActionButton) layout.findViewById(R.id.microwave);
 
+        // get Remote Config values for spotlight
+        mFirebaseRemoteConfig = FirebaseRemoteConfig.getInstance();
+        showSpotlight = mFirebaseRemoteConfig.getBoolean(SHOW_SPOTLIGHT);
+
+        if (showSpotlight && !viewedSpotlight()) {
+            setSpotlight(FABmenu.getMenuIconView());
+        }
 
         FABmenu.setIconAnimated(false);
         FABmenu.setClosedOnTouchOutside(false);
@@ -233,12 +255,15 @@ public class MapsFragment extends Fragment
                 Bundle bundle = new Bundle();
                 mFirebaseAnalytics.logEvent("view_map_icons_clicked", bundle);
 
+                // Firebase AB test tracking, log clicks after showing spotlight once
+                if (showSpotlight && viewedSpotlight()) {
+                    mFirebaseAnalytics.logEvent("view_map_icons_clicked_after_spotlight", bundle);
+                }
+
                 if(FABmenu.isOpened()){
                     FABmenu.close(true);
                     FABmenu.setMenuButtonColorNormalResId(R.color.white);
                     FABmenu.getMenuIconView().setImageResource(R.drawable.itemsicons);
-
-
                 }
                 else{
                     FABmenu.open(true);
@@ -256,6 +281,10 @@ public class MapsFragment extends Fragment
                 bundle.putString("Category", "nappod");
                 mFirebaseAnalytics.logEvent("map_icon_clicked", bundle);
                 updateLocation(v);
+
+                if (showSpotlight && viewedSpotlight()) {
+                    mFirebaseAnalytics.logEvent("map_icon_clicked_after_spotlight", bundle);
+                }
 
                 for (Marker marker : markers_sleepPods) {
                     marker.setVisible(!sleepShown);
@@ -284,6 +313,10 @@ public class MapsFragment extends Fragment
                 mFirebaseAnalytics.logEvent("map_icon_clicked", bundle);
                 updateLocation(v);
 
+                if (showSpotlight && viewedSpotlight()) {
+                    mFirebaseAnalytics.logEvent("map_icon_clicked_after_spotlight", bundle);
+                }
+
                 for (Marker marker : markers_waterbottles) {
                     marker.setVisible(!bottlesShown);
                 }
@@ -311,6 +344,10 @@ public class MapsFragment extends Fragment
                 Bundle bundle = new Bundle();
                 bundle.putString("Category", "microwaves");
                 mFirebaseAnalytics.logEvent("map_icon_clicked", bundle);
+
+                if (showSpotlight && viewedSpotlight()) {
+                    mFirebaseAnalytics.logEvent("map_icon_clicked_after_spotlight", bundle);
+                }
 
                 //updateLocation(v);
                 for (Marker marker : markers_waterbottles) {
@@ -366,6 +403,48 @@ public class MapsFragment extends Fragment
          * installed Google Play services and returned to the app.
          */
         return layout;
+    }
+
+    private boolean viewedSpotlight() {
+        SharedPreferences sharedPreferences =
+                PreferenceManager.getDefaultSharedPreferences(getActivity());
+        return sharedPreferences.getBoolean(MapsFragment.VIEWED_SPOTLIGHT, false);
+    }
+
+    private void setSpotlight(View target) {
+        String title = "Click the eye to find:";
+        String contentText = "• Water filling stations\n• Nap pods\n• Microwaves";
+
+        MaterialShowcaseView.Builder spotlight = new MaterialShowcaseView.Builder(getActivity())
+                .setTarget(target)
+                .setDismissText("GOT IT")
+                .setTitleText(title)
+                .setContentText(contentText)
+                .setShapePadding(100)
+                .setDelay(500);
+
+        spotlight.setListener(new IShowcaseListener() {
+            @Override
+            public void onShowcaseDisplayed(MaterialShowcaseView materialShowcaseView) {
+                // can do some logging here
+                finishSpotlight();
+            }
+
+            @Override
+            public void onShowcaseDismissed(MaterialShowcaseView materialShowcaseView) {
+                finishSpotlight();
+            }
+        });
+
+        spotlight.show();
+    }
+
+    public void finishSpotlight() {
+        // Save viewed spotlight value
+        SharedPreferences.Editor sharedPreferencesEditor =
+                PreferenceManager.getDefaultSharedPreferences(getContext()).edit();
+        sharedPreferencesEditor.putBoolean(VIEWED_SPOTLIGHT, true);
+        sharedPreferencesEditor.apply();
     }
 
     private void liveTrack() {
