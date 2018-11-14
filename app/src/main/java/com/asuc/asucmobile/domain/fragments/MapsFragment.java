@@ -144,7 +144,7 @@ public class MapsFragment extends Fragment
     @SuppressWarnings("all")
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        GlobalApplication.getDataComponent().inject(this);
+        GlobalApplication.getRepositoryComponent().inject(this);
 
         if (layout != null) {
             ViewGroup parent = (ViewGroup) layout.getParent();

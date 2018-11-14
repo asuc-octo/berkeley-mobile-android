@@ -57,7 +57,7 @@ public class ResourceFragment extends Fragment {
     @SuppressWarnings("deprecation")
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        GlobalApplication.getDataComponent().inject(this);
+        GlobalApplication.getRepositoryComponent().inject(this);
 
         mFirebaseAnalytics = FirebaseAnalytics.getInstance(this.getContext());
         Bundle bundle = new Bundle();

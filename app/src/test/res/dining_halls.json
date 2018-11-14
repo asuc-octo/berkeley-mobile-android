@@ -1,5 +1,4 @@
-{
-  "dining_halls":[
+[
     {
       "id":31676,
       "name":"Crossroads",
@@ -3912,4 +3911,3 @@
       "late_night_close":null
     }
   ]
-}

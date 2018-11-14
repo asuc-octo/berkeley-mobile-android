@@ -7,7 +7,9 @@ import com.google.gson.reflect.TypeToken;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.InputStream;
 import java.lang.reflect.Type;
+import java.net.URL;
 import java.util.List;
 
 public class DiningHallTestRepository implements Repository<DiningHall> {
@@ -23,7 +25,9 @@ public class DiningHallTestRepository implements Repository<DiningHall> {
         DiningHallTransformer transformer = new DiningHallTransformer();
         try {
             Type listInfra = new TypeToken<List<com.asuc.asucmobile.infrastructure.models.DiningHall>>() {}.getType();
-            List<com.asuc.asucmobile.infrastructure.models.DiningHall> infraDiningHalls = gson.fromJson(new FileReader("data/dining_halls.json"), listInfra);
+            URL url = this.getClass().getClassLoader().getResource("dining_halls.json");
+
+            List<com.asuc.asucmobile.infrastructure.models.DiningHall> infraDiningHalls = gson.fromJson(new FileReader(url.getFile()), listInfra);
             diningHalls = transformer.diningHallListInfraDomainTransformer(infraDiningHalls);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
@@ -33,6 +37,8 @@ public class DiningHallTestRepository implements Repository<DiningHall> {
 
     @Override
     public List<DiningHall> scanAll(List<DiningHall> list) {
-        return diningHalls;
+        list.clear();
+        list.addAll(diningHalls);
+        return list;
     }
 }

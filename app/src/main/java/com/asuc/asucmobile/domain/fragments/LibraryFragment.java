@@ -22,6 +22,7 @@ import com.asuc.asucmobile.domain.services.BMService;
 import com.asuc.asucmobile.domain.main.ListOfFavorites;
 import com.asuc.asucmobile.domain.main.OpenLibraryActivity;
 import com.asuc.asucmobile.domain.models.responses.LibrariesResponse;
+import com.asuc.asucmobile.infrastructure.LibraryFirestoreRepository;
 import com.asuc.asucmobile.utilities.CustomComparators;
 import com.asuc.asucmobile.utilities.NavigationGenerator;
 import com.asuc.asucmobile.utilities.SerializableUtilities;
@@ -37,7 +38,7 @@ import retrofit2.Response;
 public class LibraryFragment extends Fragment {
 
     @Inject
-    BMService bmService;
+    LibraryFirestoreRepository repository;
 
     private ListView mLibraryList;
     private ProgressBar mProgressBar;
@@ -51,7 +52,7 @@ public class LibraryFragment extends Fragment {
     @SuppressWarnings("deprecation")
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        GlobalApplication.getDataComponent().inject(this);
+        GlobalApplication.getRepositoryComponent().inject(this);
 
         mFirebaseAnalytics = FirebaseAnalytics.getInstance(this.getContext());
         Bundle bundle = new Bundle();
@@ -109,27 +110,29 @@ public class LibraryFragment extends Fragment {
         mRefreshWrapper.setVisibility(View.GONE);
         mProgressBar.setVisibility(View.VISIBLE);
 
-        bmService.callLibrariesList().enqueue(new retrofit2.Callback<LibrariesResponse>() {
-            @Override
-            public void onResponse(Call<LibrariesResponse> call, Response<LibrariesResponse> response) {
-                mLibraryList.setVisibility(View.VISIBLE);
-                mProgressBar.setVisibility(View.GONE);
-                mAdapter.setList(response.body().getLibraries());
-
-                // sorted by default
-                Collections.sort(mAdapter.getLibraries(), CustomComparators.FacilityComparators.getSortByFavoriteLibraryThenOpenness(getContext()));
-
-                mAdapter.notifyDataSetChanged();
-            }
-
-            @Override
-            public void onFailure(Call<LibrariesResponse> call, Throwable t) {
-                mProgressBar.setVisibility(View.GONE);
-                mRefreshWrapper.setVisibility(View.VISIBLE);
-                Toast.makeText(getContext(), "Unable to retrieve data, please try again",
-                        Toast.LENGTH_SHORT).show();
-            }
-        });
+        repository.scanAll(mAdapter.getLibraries());
+//
+//        bmService.callLibrariesList().enqueue(new retrofit2.Callback<LibrariesResponse>() {
+//            @Override
+//            public void onResponse(Call<LibrariesResponse> call, Response<LibrariesResponse> response) {
+//                mLibraryList.setVisibility(View.VISIBLE);
+//                mProgressBar.setVisibility(View.GONE);
+//                mAdapter.setList(response.body().getLibraries());
+//
+//                // sorted by default
+//                Collections.sort(mAdapter.getLibraries(), CustomComparators.FacilityComparators.getSortByFavoriteLibraryThenOpenness(getContext()));
+//
+//                mAdapter.notifyDataSetChanged();
+//            }
+//
+//            @Override
+//            public void onFailure(Call<LibrariesResponse> call, Throwable t) {
+//                mProgressBar.setVisibility(View.GONE);
+//                mRefreshWrapper.setVisibility(View.VISIBLE);
+//                Toast.makeText(getContext(), "Unable to retrieve data, please try again",
+//                        Toast.LENGTH_SHORT).show();
+//            }
+//        });
     }
 
     public static void refreshLists() {

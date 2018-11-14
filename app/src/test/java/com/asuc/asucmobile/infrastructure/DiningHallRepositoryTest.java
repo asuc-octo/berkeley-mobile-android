@@ -4,7 +4,6 @@ import com.asuc.asucmobile.domain.models.DiningHall;
 
 import org.junit.Before;
 import org.junit.Test;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,7 +17,7 @@ public class DiningHallRepositoryTest {
     }
 
     /**
-     * Try serializing JSON for 10
+     * Try serializing JSON for 10s
      */
     @Test(timeout=10000)
     public void testScanAll() {

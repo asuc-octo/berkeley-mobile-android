@@ -52,6 +52,7 @@ public class DiningHallTransformer {
 
     /**
      * Transform single diningHall from infrastructure to domain model
+     * TODO: process open/close hours obj
      * @param diningHall
      * @return
      */

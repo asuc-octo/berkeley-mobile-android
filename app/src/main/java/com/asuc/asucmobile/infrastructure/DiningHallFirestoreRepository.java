@@ -1,19 +1,22 @@
 package com.asuc.asucmobile.infrastructure;
 
-import com.asuc.asucmobile.GlobalApplication;
-import com.asuc.asucmobile.infrastructure.transformers.DiningHallTransformer;
+import android.support.annotation.NonNull;
+import android.util.Log;
+
 import com.asuc.asucmobile.domain.models.DiningHall;
+import com.asuc.asucmobile.infrastructure.transformers.DiningHallTransformer;
 import com.asuc.asucmobile.values.FirebaseCollectionNames;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
-import javax.inject.Singleton;
+
+import dagger.Provides;
 
 
 /**
@@ -22,14 +25,15 @@ import javax.inject.Singleton;
  */
 public class DiningHallFirestoreRepository implements Repository<DiningHall> {
 
-    private DiningHallTransformer mTransformer;
+    public static final String TAG = "DiningHallFirestore";
 
+    private DiningHallTransformer mTransformer;
     private CollectionReference mRef;
 
     @Inject
-    public DiningHallFirestoreRepository() {
-        mTransformer = new DiningHallTransformer();
-        mRef = FirebaseFirestore.getInstance().collection(FirebaseCollectionNames.DINING_HALL);
+    public DiningHallFirestoreRepository(FirebaseFirestore firestore, DiningHallTransformer transformer) {
+        mTransformer = transformer;
+        mRef = firestore.collection(FirebaseCollectionNames.DINING_HALL);
     }
 
     /**
@@ -37,14 +41,25 @@ public class DiningHallFirestoreRepository implements Repository<DiningHall> {
      * @param diningHalls
      * @return
      */
-    public List<DiningHall> scanAll(final List<DiningHall> diningHalls) {
+    @Override
+    public List<DiningHall> scanAll(final List<DiningHall> diningHalls, final RepositoryCallback<DiningHall> callback) {
         mRef.get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
             @Override
             public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
                 if (queryDocumentSnapshots != null) {
                     diningHalls.clear();
                     diningHalls.addAll(mTransformer.dingingHallQSDomainTransformer(queryDocumentSnapshots));
+                    callback.onSuccess();
+                } else {
+                    callback.onFailure();
                 }
+            }
+        });
+        mRef.get().addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Log.d(TAG, "Unable to retrieve dining hall data");
+                callback.onFailure();
             }
         });
         return diningHalls;

@@ -8,5 +8,5 @@ import java.util.List;
  */
 public interface Repository<T> {
 
-    public List<T> scanAll(final List<T> list);
+    public List<T> scanAll(final List<T> list, RepositoryCallback<T> callback);
 }

@@ -24,6 +24,7 @@ import com.asuc.asucmobile.domain.models.Cafe;
 import com.asuc.asucmobile.domain.models.responses.CafesResponse;
 import com.asuc.asucmobile.domain.models.responses.DiningHallsResponse;
 import com.asuc.asucmobile.domain.models.FoodPlace;
+import com.asuc.asucmobile.infrastructure.Repository;
 import com.asuc.asucmobile.utilities.NavigationGenerator;
 import com.google.firebase.analytics.FirebaseAnalytics;
 
@@ -45,10 +46,10 @@ public class FoodFragment extends Fragment {
     public static final String TAG = "FoodFragment";
 
     @Inject
-    BMService bmService;
+    Repository<DiningHall> diningHallRepository;
 
     @Inject
-    List<DiningHall> diningHalls;
+    Repository<Cafe> cafeRepository;
 
     private TextView mDiningHallLabel;
     private TextView mCafeLabel;
@@ -70,8 +71,7 @@ public class FoodFragment extends Fragment {
     @SuppressWarnings("deprecation")
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        GlobalApplication.getDataComponent().inject(this);
-
+        GlobalApplication.getRepositoryComponent().inject(this);
 
         View layout = inflater.inflate(R.layout.fragment_food, container, false);
         Toolbar toolbar = (Toolbar) layout.findViewById(R.id.toolbar);
@@ -128,8 +128,8 @@ public class FoodFragment extends Fragment {
      */
     private void refresh() {
 
-        mDiningHallsCall = bmService.callDiningHallList();
-        mCafesCall = bmService.callCafeList();
+        diningHallRepository.scanAll((List<DiningHall>)(List<?>) mDiningHallList);
+        cafeRepository.scanAll((List<Cafe>) (List<?>) mCafeList);
 
         mCafeLabel.setVisibility(View.GONE);
         mDiningHallLabel.setVisibility(View.GONE);

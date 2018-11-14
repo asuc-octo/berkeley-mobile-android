@@ -21,7 +21,6 @@ android {
 
     compileOptions.incremental = false
 
-
     packagingOptions {
         exclude 'META-INF/DEPENDENCIES'
         exclude 'META-INF/LICENSE'
@@ -34,6 +33,9 @@ android {
         exclude 'META-INF/notice.txt'
         exclude 'META-INF/ASL2.0'
     }
+
+    sourceSets.test.resources.srcDirs += ["src/test/res"]
+
 }
 
 repositories {

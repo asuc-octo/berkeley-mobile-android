@@ -1,31 +1,30 @@
 package com.asuc.asucmobile.dagger.components;
 
 import com.asuc.asucmobile.dagger.modules.AppModule;
-import com.asuc.asucmobile.dagger.modules.DataModule;
 import com.asuc.asucmobile.dagger.modules.RepositoryModule;
-import com.asuc.asucmobile.dagger.modules.RetrofitModule;
 import com.asuc.asucmobile.domain.fragments.FoodFragment;
 import com.asuc.asucmobile.domain.fragments.GymFragment;
 import com.asuc.asucmobile.domain.fragments.LibraryFragment;
 import com.asuc.asucmobile.domain.fragments.MapsFragment;
 import com.asuc.asucmobile.domain.fragments.ResourceFragment;
+import com.asuc.asucmobile.domain.models.Resource;
 
 import javax.inject.Singleton;
 
 import dagger.Component;
 
 @Singleton
-@Component(modules = {RetrofitModule.class, RepositoryModule.class, DataModule.class, AppModule.class})
-public interface DataComponent {
+@Component(modules = {RepositoryModule.class, AppModule.class})
+public interface RepositoryComponent {
 
-    void inject(FoodFragment fragment);
+    void inject(FoodFragment foodFragment);
 
-    void inject(LibraryFragment fragment);
+    void inject(LibraryFragment libraryFragment);
 
-    void inject(GymFragment fragment);
+    void inject(GymFragment gymFragment);
 
-    void inject(ResourceFragment fragment);
+    void inject(ResourceFragment resourceFragment);
 
-    void inject(MapsFragment fragment);
+    void inject(MapsFragment mapsFragment);
 
 }
