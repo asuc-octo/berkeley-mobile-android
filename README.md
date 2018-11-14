@@ -3,11 +3,11 @@
 This is the official repository for the Berkeley Mobile Android application.
 
 ## Build Status
-These badges are automatically generated based on our [Bitrise](https://www.bitrise.io) continuous integration (CI). Bitrise automatically builds and tests the app every time a new commit is pushed to this repo. Our Bitrise build logs are also public [here](https://app.bitrise.io/app/7e8a9de61b96fb28#/builds).
+These badges are automatically generated based on our [Bitrise](https://www.bitrise.io) continuous integration (CI). Bitrise automatically builds and tests the app every time a new commit is pushed to this repo.
 
 | master        | develop       |
 | ------------- |:-------------:|
-| [![Build Status](https://app.bitrise.io/app/7e8a9de61b96fb28/status.svg?token=iUlmVf7VoO92ggwIkt4Htg&branch=master)](https://app.bitrise.io/app/461008cfa3c83274) | [![Build Status](https://app.bitrise.io/app/7e8a9de61b96fb28/status.svg?token=iUlmVf7VoO92ggwIkt4Htg&branch=develop)](https://app.bitrise.io/app/461008cfa3c83274) |
+| [![Build Status](https://app.bitrise.io/app/461008cfa3c83274/status.svg?token=pNpvUU1P1ybPUSV31_PMLQ&branch=master)](https://app.bitrise.io/app/461008cfa3c83274) | [![Build Status](https://app.bitrise.io/app/461008cfa3c83274/status.svg?token=pNpvUU1P1ybPUSV31_PMLQ&branch=develop)](https://app.bitrise.io/app/461008cfa3c83274) |
 
 ## What is Berkeley Mobile?
 
