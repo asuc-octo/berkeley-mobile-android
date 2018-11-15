@@ -22,11 +22,13 @@ import android.widget.Toast;
 import com.asuc.asucmobile.GlobalApplication;
 import com.asuc.asucmobile.R;
 import com.asuc.asucmobile.domain.adapters.GymAdapter;
+import com.asuc.asucmobile.domain.models.Gym;
 import com.asuc.asucmobile.domain.services.BMService;
 import com.asuc.asucmobile.domain.models.GymClass;
 import com.asuc.asucmobile.domain.models.WeekCalendar;
 import com.asuc.asucmobile.domain.models.responses.GymClassesResponse;
 import com.asuc.asucmobile.domain.models.responses.GymsResponse;
+import com.asuc.asucmobile.infrastructure.Repository;
 import com.asuc.asucmobile.utilities.NavigationGenerator;
 import com.google.firebase.analytics.FirebaseAnalytics;
 
@@ -54,6 +56,9 @@ public class GymFragment extends Fragment {
 
     @Inject
     BMService bmService;
+
+    @Inject
+    Repository<Gym> gymRepository;
 
     private HashSet<Integer> filter;
     private ArrayList<GymClass> mClasses;
