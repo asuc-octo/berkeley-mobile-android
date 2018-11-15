@@ -2,13 +2,13 @@ apply plugin: 'com.android.application'
 apply plugin: 'io.fabric'
 
 android {
-    compileSdkVersion 25
+    compileSdkVersion 26
     buildToolsVersion '28.0.3'
 
     defaultConfig {
         applicationId "com.asuc.asucmobile"
         minSdkVersion 17
-        targetSdkVersion 25
+        targetSdkVersion 26
         versionCode 29
         versionName "8.3.1"
         multiDexEnabled true

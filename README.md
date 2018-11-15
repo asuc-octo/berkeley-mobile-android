@@ -3,11 +3,11 @@
 This is the official repository for the Berkeley Mobile Android application.
 
 ## Build Status
-These badges are automatically generated based on our [Bitrise](https://www.bitrise.io) continuous integration (CI). Bitrise automatically builds and tests the app every time a new commit is pushed to this repo.
+These badges are automatically generated based on our [Bitrise](https://www.bitrise.io) continuous integration (CI). Bitrise automatically builds and tests the app every time a new commit is pushed to this repo. Our Bitrise build logs are also public [here](https://app.bitrise.io/app/7e8a9de61b96fb28#/builds).
 
 | master        | develop       |
 | ------------- |:-------------:|
-| [![Build Status](https://app.bitrise.io/app/461008cfa3c83274/status.svg?token=pNpvUU1P1ybPUSV31_PMLQ&branch=master)](https://app.bitrise.io/app/461008cfa3c83274) | [![Build Status](https://app.bitrise.io/app/461008cfa3c83274/status.svg?token=pNpvUU1P1ybPUSV31_PMLQ&branch=develop)](https://app.bitrise.io/app/461008cfa3c83274) |
+| [![Build Status](https://app.bitrise.io/app/7e8a9de61b96fb28/status.svg?token=iUlmVf7VoO92ggwIkt4Htg&branch=master)](https://app.bitrise.io/app/461008cfa3c83274) | [![Build Status](https://app.bitrise.io/app/7e8a9de61b96fb28/status.svg?token=iUlmVf7VoO92ggwIkt4Htg&branch=develop)](https://app.bitrise.io/app/461008cfa3c83274) |
 
 ## What is Berkeley Mobile?
 
@@ -45,7 +45,7 @@ It is recommended you use Android Studio 3.0.0.
 * Create a new project in the [Google Cloud Console](https://console.cloud.google.com)
   * Under the APIs and Services tab, enable the Google Places API for Android, Google Maps Directions API, Google Maps Android API, and Google Maps Geocoding API
   * Under the Credentials tab, create an API key
-  * Paste your API key into [secret.xml](app/src/main/res/values/secret.xml) and [google-services.json](app/google-services.json)
+  * Paste your API key into [secret.xml](app/src/main/res/values/secret.xml)
 * We've configured this repository so that the application pulls from our sandbox backend, which just returns test data. If you would like access to our production backend API, please [contact us](#contact). 
 
 ## Contributing [![contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat)](https://github.com/asuc-octo/berkeley-mobile-android/issues)

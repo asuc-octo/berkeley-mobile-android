@@ -236,6 +236,7 @@
                 android:layout_height="wrap_content"
                 android:animateLayoutChanges="true"
                 android:orientation="vertical"
+                android:background="@drawable/white_selector"
                 tools:ignore="all">
 
                 <LinearLayout

@@ -1,5 +1,8 @@
 package com.asuc.asucmobile.domain.main;
 
+import android.content.ClipData;
+import android.content.ClipboardManager;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
@@ -150,6 +153,7 @@ public class OpenResourceActivity extends BaseActivity {
     private void setUpPhone(){
         TextView phone = (TextView) findViewById(R.id.phone);
         LinearLayout phoneLayout = (LinearLayout) findViewById(R.id.phone_layout);
+
         if (setText(phoneLayout, phone, getPhoneNumbersString())) {
             phoneLayout.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -172,7 +176,16 @@ public class OpenResourceActivity extends BaseActivity {
     private void setUpDescription() {
         TextView description = (TextView) findViewById(R.id.description);
         LinearLayout descriptionLayout = (LinearLayout) findViewById(R.id.description_layout);
-        setText(descriptionLayout, description, resource.getDescription());
+        if (setText(descriptionLayout, description, resource.getDescription())) {
+            descriptionLayout.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    ClipboardManager clipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
+                    ClipData clip = ClipData.newPlainText("BM description", resource.getDescription());
+                    clipboard.setPrimaryClip(clip);
+                }
+            });
+        }
         if (NULL_STRINGS.contains(resource.getNotes())) {
             findViewById(R.id.divider_description).setVisibility(View.GONE);
         }
