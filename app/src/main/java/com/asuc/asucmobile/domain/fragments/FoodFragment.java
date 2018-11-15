@@ -25,6 +25,7 @@ import com.asuc.asucmobile.domain.models.responses.CafesResponse;
 import com.asuc.asucmobile.domain.models.responses.DiningHallsResponse;
 import com.asuc.asucmobile.domain.models.FoodPlace;
 import com.asuc.asucmobile.infrastructure.Repository;
+import com.asuc.asucmobile.infrastructure.RepositoryCallback;
 import com.asuc.asucmobile.utilities.NavigationGenerator;
 import com.google.firebase.analytics.FirebaseAnalytics;
 
@@ -128,9 +129,6 @@ public class FoodFragment extends Fragment {
      */
     private void refresh() {
 
-        diningHallRepository.scanAll((List<DiningHall>)(List<?>) mDiningHallList);
-        cafeRepository.scanAll((List<Cafe>) (List<?>) mCafeList);
-
         mCafeLabel.setVisibility(View.GONE);
         mDiningHallLabel.setVisibility(View.GONE);
 
@@ -147,25 +145,19 @@ public class FoodFragment extends Fragment {
 
     private void getCafes() {
 
-        mCafesCall.enqueue(new Callback<CafesResponse>() {
+        cafeRepository.scanAll((List<Cafe>) (List<?>) mCafeList, new RepositoryCallback<Cafe>() {
             @Override
-            public void onResponse(Call<CafesResponse> call, Response<CafesResponse> response) {
-
-
-                List<FoodPlace> dh = (List<FoodPlace>) response.body().getCafes();
-                for (FoodPlace cafe : dh) {
-                    ((Cafe) cafe).setMeals();
-                }
-                mCafeList = dh;
+            public void onSuccess() {
 
                 mCafeLabel.setVisibility(View.VISIBLE);
                 mCafeRecyclerView.setVisibility(View.VISIBLE);
                 mProgressBar.setVisibility(View.GONE);
                 mCafeRecyclerView.setAdapter(new FoodPlaceAdapter(getContext(), mCafeList, FoodPlaceAdapter.FoodType.Cafe));
+
             }
 
             @Override
-            public void onFailure(Call<CafesResponse> call, Throwable t) {
+            public void onFailure() {
                 mProgressBar.setVisibility(View.GONE);
                 mRefreshWrapper.setVisibility(View.VISIBLE);
                 Toast.makeText(getContext(), "Unable to retrieve cafe data, please try again",
@@ -176,25 +168,22 @@ public class FoodFragment extends Fragment {
 
     private void getDining() {
 
-        mDiningHallsCall.enqueue(new retrofit2.Callback<DiningHallsResponse>() {
+        diningHallRepository.scanAll((List<DiningHall>) (List<?>) mDiningHallList, new RepositoryCallback<DiningHall>() {
             @Override
-            public void onResponse(Call<DiningHallsResponse> call, Response<DiningHallsResponse> response) {
-
-                mDiningHallList = (List<FoodPlace>) response.body().getDiningHalls();
-
+            public void onSuccess() {
                 mDiningHallLabel.setVisibility(View.VISIBLE);
                 mDiningRecyclerView.setVisibility(View.VISIBLE);
                 mProgressBar.setVisibility(View.GONE);
                 mDiningRecyclerView.setAdapter(new FoodPlaceAdapter(getContext(), mDiningHallList, FoodPlaceAdapter.FoodType.DiningHall));
-
             }
 
             @Override
-            public void onFailure(Call<DiningHallsResponse> call, Throwable t) {
+            public void onFailure() {
                 mProgressBar.setVisibility(View.GONE);
                 mRefreshWrapper.setVisibility(View.VISIBLE);
                 Toast.makeText(getContext(), "Unable to retrieve dining hall data, please try again",
                         Toast.LENGTH_SHORT).show();
+
             }
         });
     }

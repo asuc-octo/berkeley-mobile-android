@@ -21,17 +21,17 @@ public class DiningHallRetrofitRepository implements Repository<DiningHall> {
 
     public static final String TAG = "DiningHallRetrofit";
 
-    private Call<DiningHallsResponse> mDiningHallsCall;
+    private BMService mService;
 
 
     public DiningHallRetrofitRepository(BMService service) {
-        mDiningHallsCall = service.callDiningHallList();
+        mService = service;
     }
 
     @Override
     public List<DiningHall> scanAll(final List<DiningHall> list, final RepositoryCallback<DiningHall> callback) {
 
-        mDiningHallsCall.enqueue(new retrofit2.Callback<DiningHallsResponse>() {
+        mService.callDiningHallList().enqueue(new retrofit2.Callback<DiningHallsResponse>() {
             @Override
             public void onResponse(Call<DiningHallsResponse> call, Response<DiningHallsResponse> response) {
                 if (response != null) {

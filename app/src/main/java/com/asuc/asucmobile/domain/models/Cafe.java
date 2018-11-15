@@ -6,21 +6,21 @@ import com.google.gson.annotations.SerializedName;
 import java.util.ArrayList;
 import java.util.Date;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 /**
  * Created by rustie on 9/28/17.
  */
 
-@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+@Getter
+@Setter
 public class Cafe extends FoodPlace {
-
-    // fot builder
-
-    private transient String id;
-    private transient String name;
-    private transient String url;
-    private transient boolean isOpen;
 
     // because JSON response for Cafes has a deeper structure...
     @SerializedName("menus")
@@ -34,6 +34,13 @@ public class Cafe extends FoodPlace {
     private Date lunchDinnerOpen;
     private Date breakfastClose;
     private Date lunchDinnerClose;
+
+    @Builder
+    public Cafe(String id, String name, String imageUrl, boolean isOpen, CafeMenuResponse breakfast, CafeMenuResponse lunchDinner) {
+        super(id, name, imageUrl, isOpen);
+        this.breakfast = breakfast;
+        this.lunchDinner = lunchDinner;
+    }
 
     public void setMeals() {
         setBreakfast();

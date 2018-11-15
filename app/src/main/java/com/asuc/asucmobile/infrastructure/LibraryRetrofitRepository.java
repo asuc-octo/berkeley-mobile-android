@@ -16,16 +16,16 @@ public class LibraryRetrofitRepository implements Repository<Library>{
 
     public static final String TAG = "LibraryRetrofit";
 
-    private Call<LibrariesResponse> mLibrariesCall;
+    private BMService mService;
 
     public LibraryRetrofitRepository(BMService service) {
-        mLibrariesCall = service.callLibrariesList();
+        mService = service;
     }
 
     @Override
     public List<Library> scanAll(final List<Library> list, final RepositoryCallback<Library> callback) {
 
-        mLibrariesCall.enqueue(new retrofit2.Callback<LibrariesResponse>() {
+        mService.callLibrariesList().enqueue(new retrofit2.Callback<LibrariesResponse>() {
             @Override
             public void onResponse(Call<LibrariesResponse> call, Response<LibrariesResponse> response) {
                 if (response != null) {

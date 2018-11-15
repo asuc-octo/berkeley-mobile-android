@@ -22,16 +22,15 @@ public class CafeRetrofitRepository implements Repository<Cafe> {
 
     public static final String TAG = "CafeRetrofit";
 
-    private Call<CafesResponse> mCafesCall;
+    private BMService mService;
 
-    @Inject
     public CafeRetrofitRepository(BMService service) {
-        mCafesCall = service.callCafeList();
+        mService = service;
     }
 
     @Override
     public List<Cafe> scanAll(final List<Cafe> list, final RepositoryCallback<Cafe> callback) {
-        mCafesCall.enqueue(new Callback<CafesResponse>() {
+        mService.callCafeList().enqueue(new Callback<CafesResponse>() {
             @Override
             public void onResponse(Call<CafesResponse> call, Response<CafesResponse> response) {
                 if (response != null) {

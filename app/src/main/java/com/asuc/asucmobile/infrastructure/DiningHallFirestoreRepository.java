@@ -30,7 +30,6 @@ public class DiningHallFirestoreRepository implements Repository<DiningHall> {
     private DiningHallTransformer mTransformer;
     private CollectionReference mRef;
 
-    @Inject
     public DiningHallFirestoreRepository(FirebaseFirestore firestore, DiningHallTransformer transformer) {
         mTransformer = transformer;
         mRef = firestore.collection(FirebaseCollectionNames.DINING_HALL);

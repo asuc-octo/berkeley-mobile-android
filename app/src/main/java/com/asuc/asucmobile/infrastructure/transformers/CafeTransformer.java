@@ -54,10 +54,12 @@ public class CafeTransformer {
      * @return
      */
     public com.asuc.asucmobile.domain.models.Cafe cafeInfraDomainTransformer(Cafe cafe) {
-        return com.asuc.asucmobile.domain.models.Cafe.builder()
+        com.asuc.asucmobile.domain.models.Cafe ret = com.asuc.asucmobile.domain.models.Cafe.builder()
                 .id(cafe.getId())
                 .name(cafe.getName())
-                .url(cafe.getImageUrl())
+                .imageUrl(cafe.getImageUrl())
                 .build();
+        ret.setMeals(); // processing
+        return ret;
     }
 }

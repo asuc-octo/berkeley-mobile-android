@@ -1,8 +1,10 @@
 package com.asuc.asucmobile.dagger.modules;
 
+import com.asuc.asucmobile.domain.models.Cafe;
 import com.asuc.asucmobile.domain.models.DiningHall;
 import com.asuc.asucmobile.domain.models.Library;
 import com.asuc.asucmobile.domain.services.BMService;
+import com.asuc.asucmobile.infrastructure.CafeRetrofitRepository;
 import com.asuc.asucmobile.infrastructure.DiningHallFirestoreRepository;
 import com.asuc.asucmobile.infrastructure.DiningHallRetrofitRepository;
 import com.asuc.asucmobile.infrastructure.LibraryFirestoreRepository;
@@ -45,9 +47,13 @@ public class RepositoryModule {
 
     @Provides
     @Singleton
+    public Repository<Cafe> getCafeRepository(BMService service) {
+        return new CafeRetrofitRepository(service);
+    }
+
+    @Provides
+    @Singleton
     public Repository<Library> getLibraryRepository(BMService service) {
         return new LibraryRetrofitRepository(service);
     }
-
-
 }

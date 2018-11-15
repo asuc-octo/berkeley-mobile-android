@@ -25,7 +25,6 @@ public class LibraryFirestoreRepository implements Repository<Library> {
     private LibraryTransformer mTransformer;
     private CollectionReference mRef;
 
-    @Inject
     public LibraryFirestoreRepository(FirebaseFirestore firestore) {
         mTransformer = new LibraryTransformer();
         mRef = firestore.collection(FirebaseCollectionNames.LIBRARY);

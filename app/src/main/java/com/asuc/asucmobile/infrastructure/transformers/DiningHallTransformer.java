@@ -60,7 +60,22 @@ public class DiningHallTransformer {
         return com.asuc.asucmobile.domain.models.DiningHall.builder()
                 .id(diningHall.getId())
                 .name(diningHall.getName())
-                .url(diningHall.getImageUrl())
+                .imageUrl(diningHall.getImageUrl())
+                .breakfastMenu(diningHall.getBreakfastMenu())
+                .lunchMenu(diningHall.getLunchMenu())
+                .dinnerMenu(diningHall.getDinnerMenu())
+                .limitedLunchMenu(diningHall.getLimitedLunchMenu())
+                .limitedDinnerMenu(diningHall.getLimitedDinnerMenu())
+                .breakfastOpen(diningHall.getBreakfastOpen())
+                .breakfastClose(diningHall.getBreakfastClose())
+                .lunchOpen(diningHall.getLunchOpen())
+                .lunchClose(diningHall.getLunchClose())
+                .dinnerOpen(diningHall.getDinnerOpen())
+                .dinnerClose(diningHall.getDinnerClose())
+                .limitedLunchOpen(diningHall.getLimitedLunchOpen())
+                .limitedLunchClose(diningHall.getLimitedLunchClose())
+                .limitedDinnerOpen(diningHall.getLimitedDinnerOpen())
+                .limitedDinnerClose(diningHall.getLimitedDinnerClose())
                 .build();
     }
 

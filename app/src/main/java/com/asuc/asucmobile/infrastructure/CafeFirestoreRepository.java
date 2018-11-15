@@ -26,7 +26,6 @@ public class CafeFirestoreRepository implements Repository<Cafe>{
     private CafeTransformer mTransformer;
     private CollectionReference mRef;
 
-    @Inject
     public CafeFirestoreRepository(FirebaseFirestore firestore, CafeTransformer transformer) {
         mTransformer = transformer;
         mRef = firestore.collection(FirebaseCollectionNames.CAFE);

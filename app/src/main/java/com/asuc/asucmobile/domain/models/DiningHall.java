@@ -18,15 +18,7 @@ import lombok.experimental.SuperBuilder;
 @AllArgsConstructor
 @Getter
 @Setter
-@Builder
 public class DiningHall extends FoodPlace{
-
-    // for builder
-
-    private transient String id;
-    private transient String name;
-    private transient String url;
-    private transient boolean isOpen;
 
 
     @SerializedName("breakfast_menu")
@@ -73,6 +65,26 @@ public class DiningHall extends FoodPlace{
 
     @SerializedName("limited_dinner_close")
     private Date limitedDinnerClose;
+
+    @Builder
+    public DiningHall(String id, String name, String imageUrl, boolean isOpen, ArrayList<FoodItem> breakfastMenu, ArrayList<FoodItem> lunchMenu, ArrayList<FoodItem> dinnerMenu, ArrayList<FoodItem> limitedLunchMenu, ArrayList<FoodItem> limitedDinnerMenu, Date breakfastOpen, Date breakfastClose, Date lunchOpen, Date lunchClose, Date dinnerOpen, Date dinnerClose, Date limitedLunchOpen, Date limitedLunchClose, Date limitedDinnerOpen, Date limitedDinnerClose) {
+        super(id, name, imageUrl, isOpen);
+        this.breakfastMenu = breakfastMenu;
+        this.lunchMenu = lunchMenu;
+        this.dinnerMenu = dinnerMenu;
+        this.limitedLunchMenu = limitedLunchMenu;
+        this.limitedDinnerMenu = limitedDinnerMenu;
+        this.breakfastOpen = breakfastOpen;
+        this.breakfastClose = breakfastClose;
+        this.lunchOpen = lunchOpen;
+        this.lunchClose = lunchClose;
+        this.dinnerOpen = dinnerOpen;
+        this.dinnerClose = dinnerClose;
+        this.limitedLunchOpen = limitedLunchOpen;
+        this.limitedLunchClose = limitedLunchClose;
+        this.limitedDinnerOpen = limitedDinnerOpen;
+        this.limitedDinnerClose = limitedDinnerClose;
+    }
 
     /**
      * isBreakfastOpen() returns whether or not breakfast is open. The same goes for the other
