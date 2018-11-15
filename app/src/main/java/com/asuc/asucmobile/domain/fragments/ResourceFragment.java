@@ -24,10 +24,13 @@ import android.widget.Toast;
 import com.asuc.asucmobile.GlobalApplication;
 import com.asuc.asucmobile.R;
 import com.asuc.asucmobile.domain.adapters.ResourceAdapter;
+import com.asuc.asucmobile.domain.models.Resource;
 import com.asuc.asucmobile.domain.services.BMService;
 import com.asuc.asucmobile.domain.main.ListOfFavorites;
 import com.asuc.asucmobile.domain.main.OpenResourceActivity;
 import com.asuc.asucmobile.domain.models.responses.ResourcesResponse;
+import com.asuc.asucmobile.infrastructure.Repository;
+import com.asuc.asucmobile.infrastructure.RepositoryCallback;
 import com.asuc.asucmobile.utilities.CustomComparators;
 import com.asuc.asucmobile.utilities.NavigationGenerator;
 import com.asuc.asucmobile.utilities.SerializableUtilities;
@@ -43,7 +46,7 @@ import retrofit2.Response;
 public class ResourceFragment extends Fragment {
 
     @Inject
-    BMService bmService;
+    Repository<Resource> repository;
 
     private ListView mResourceList;
     private ProgressBar mProgressBar;
@@ -163,12 +166,11 @@ public class ResourceFragment extends Fragment {
         mRefreshWrapper.setVisibility(View.GONE);
         mProgressBar.setVisibility(View.VISIBLE);
 
-        bmService.callResourcesList().enqueue(new retrofit2.Callback<ResourcesResponse>() {
+        repository.scanAll(mAdapter.getResources(), new RepositoryCallback<Resource>() {
             @Override
-            public void onResponse(Call<ResourcesResponse> call, Response<ResourcesResponse> response) {
+            public void onSuccess() {
                 mResourceList.setVisibility(View.VISIBLE);
                 mProgressBar.setVisibility(View.GONE);
-                mAdapter.setList(response.body().getResources());
 
                 // sorted by default
                 Collections.sort(mAdapter.getResources(), CustomComparators.FacilityComparators.getSortResourcesByAZ());
@@ -177,14 +179,13 @@ public class ResourceFragment extends Fragment {
             }
 
             @Override
-            public void onFailure(Call<ResourcesResponse> call, Throwable t) {
+            public void onFailure() {
                 mProgressBar.setVisibility(View.GONE);
                 mRefreshWrapper.setVisibility(View.VISIBLE);
                 Toast.makeText(getContext(), "Unable to retrieve data, please try again",
                         Toast.LENGTH_SHORT).show();
             }
         });
-
     }
 
     public static void refreshLists() {

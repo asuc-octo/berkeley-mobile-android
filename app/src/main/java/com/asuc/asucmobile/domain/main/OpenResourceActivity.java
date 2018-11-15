@@ -291,7 +291,7 @@ public class OpenResourceActivity extends BaseActivity {
             return false;
         } else {
             view.setText(text.trim());
-            return false;
+            return true;
         }
     }
 

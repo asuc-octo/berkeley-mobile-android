@@ -3,6 +3,7 @@ package com.asuc.asucmobile.dagger.modules;
 import com.asuc.asucmobile.domain.models.Cafe;
 import com.asuc.asucmobile.domain.models.DiningHall;
 import com.asuc.asucmobile.domain.models.Library;
+import com.asuc.asucmobile.domain.models.Resource;
 import com.asuc.asucmobile.domain.services.BMService;
 import com.asuc.asucmobile.infrastructure.CafeRetrofitRepository;
 import com.asuc.asucmobile.infrastructure.DiningHallFirestoreRepository;
@@ -10,6 +11,7 @@ import com.asuc.asucmobile.infrastructure.DiningHallRetrofitRepository;
 import com.asuc.asucmobile.infrastructure.LibraryFirestoreRepository;
 import com.asuc.asucmobile.infrastructure.LibraryRetrofitRepository;
 import com.asuc.asucmobile.infrastructure.Repository;
+import com.asuc.asucmobile.infrastructure.ResourceRetrofitRepository;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import javax.inject.Singleton;
@@ -55,5 +57,11 @@ public class RepositoryModule {
     @Singleton
     public Repository<Library> getLibraryRepository(BMService service) {
         return new LibraryRetrofitRepository(service);
+    }
+
+    @Provides
+    @Singleton
+    public Repository<Resource> getResourceRepository(BMService service) {
+        return new ResourceRetrofitRepository(service);
     }
 }
