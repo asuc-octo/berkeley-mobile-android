@@ -36,7 +36,7 @@ public class DiningHallTestRepository implements Repository<DiningHall> {
     }
 
     @Override
-    public List<DiningHall> scanAll(List<DiningHall> list) {
+    public List<DiningHall> scanAll(List<DiningHall> list, RepositoryCallback<DiningHall> callback) {
         list.clear();
         list.addAll(diningHalls);
         return list;

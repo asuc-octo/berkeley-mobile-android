@@ -22,7 +22,17 @@ public class DiningHallRepositoryTest {
     @Test(timeout=10000)
     public void testScanAll() {
         List<DiningHall> diningHallList = new ArrayList<>();
-        repository.scanAll(diningHallList);
+        repository.scanAll(diningHallList, new RepositoryCallback<DiningHall>() {
+            @Override
+            public void onSuccess() {
+
+            }
+
+            @Override
+            public void onFailure() {
+
+            }
+        });
         while (diningHallList.isEmpty());
     }
 }
