@@ -3,9 +3,9 @@ package com.asuc.asucmobile.models.transformers;
 import android.util.SparseArray;
 
 import com.asuc.asucmobile.models.Line;
+import com.asuc.asucmobile.models.LineRespModel;
 import com.asuc.asucmobile.models.Stop;
 import com.asuc.asucmobile.models.StopBeforeTransform;
-import com.asuc.asucmobile.models.responses.LineResponse;
 
 import java.util.ArrayList;
 
@@ -14,7 +14,7 @@ public class StopListToLineTransformer {
     private SparseArray<Stop> stops = new SparseArray<>();
     private SparseArray<Line> lines = new SparseArray<>();
 
-    public Line stopListToLine(LineResponse lineResponse) {
+    public Line stopListToLine(LineRespModel lineResponse) {
         ArrayList<Stop> lineStops = new ArrayList<>();
         for (StopBeforeTransform s : lineResponse.getLineStops()) {
             if(stops.get(s.getStopId()) == null) {
@@ -42,7 +42,7 @@ public class StopListToLineTransformer {
         return line;
     }
 
-    public Stop getStop(int id, String name) {
+    Stop getStop(int id, String name) {
         Stop stop = stops.get(id);
         if (stop == null) {
             for (int i = 0; i < stops.size(); i++) {

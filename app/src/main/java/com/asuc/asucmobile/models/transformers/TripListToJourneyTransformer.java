@@ -1,11 +1,10 @@
 package com.asuc.asucmobile.models.transformers;
 
 import com.asuc.asucmobile.models.Journey;
-import com.asuc.asucmobile.models.Line;
 import com.asuc.asucmobile.models.Stop;
 import com.asuc.asucmobile.models.Trip;
 import com.asuc.asucmobile.models.TripBeforeTransform;
-import com.asuc.asucmobile.models.responses.TripResponse;
+import com.asuc.asucmobile.models.TripRespModel;
 
 import java.text.ParseException;
 import java.util.ArrayList;
@@ -18,8 +17,7 @@ public class TripListToJourneyTransformer {
             new java.text.SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.ENGLISH);
     private static final java.util.TimeZone PST = java.util.TimeZone.getTimeZone("America/Los_Angeles");
 
-    public Journey tripListToJourney(TripResponse tripResponse, StopListToLineTransformer sllTransformer) throws ParseException {
-//        StopListToLineTransformer transformer = new StopListToLineTransformer();
+    public Journey tripListToJourney(TripRespModel tripResponse, StopListToLineTransformer sllTransformer) throws ParseException {
         ArrayList<Trip> newTripList = new ArrayList<>();
         for (TripBeforeTransform tripElem : tripResponse.getTripList()) {
             Long tmpTime = DATE_FORMAT.parse(tripElem.getTmpStartTime()).getTime();

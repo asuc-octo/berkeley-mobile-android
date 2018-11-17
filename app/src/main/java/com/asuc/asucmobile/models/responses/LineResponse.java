@@ -1,29 +1,15 @@
 package com.asuc.asucmobile.models.responses;
 
-import com.asuc.asucmobile.models.StopBeforeTransform;
+import com.asuc.asucmobile.models.LineRespModel;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.ArrayList;
 
 public class LineResponse {
-    @SerializedName("id")
-    private int id;
+    @SerializedName("lines")
+    private ArrayList<LineRespModel> lineRespModels;
 
-    @SerializedName("name")
-    private String name;
-
-    @SerializedName("stop_list")
-    private ArrayList<StopBeforeTransform> lineStops;
-
-    public int getId() {
-        return id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public ArrayList<StopBeforeTransform> getLineStops() {
-        return lineStops;
+    public ArrayList<LineRespModel> getLineRespModels() {
+        return lineRespModels;
     }
 }

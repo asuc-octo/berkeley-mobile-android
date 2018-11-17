@@ -9,9 +9,6 @@ import com.asuc.asucmobile.models.responses.LineResponse;
 import com.asuc.asucmobile.models.responses.MapIconResponse;
 import com.asuc.asucmobile.models.responses.ResourcesResponse;
 import com.asuc.asucmobile.models.responses.TripResponse;
-import com.google.type.LatLng;
-
-import java.util.ArrayList;
 
 import retrofit2.Call;
 import retrofit2.http.GET;
@@ -54,11 +51,11 @@ public interface BMService {
 
     @Headers("Cache-Control: max-age=640000")
     @GET("bt_lines")
-    Call<ArrayList<LineResponse>> callLineList();
+    Call<LineResponse> callLineList();
 
     @Headers("Cache-Control: max-age=640000")
     @GET("bt_trips/new")
-    Call<ArrayList<TripResponse>> callTripList(@Query("startlat") double startlat,
+    Call<TripResponse> callTripList(@Query("startlat") double startlat,
                                                @Query("startlon") double startlon,
                                                @Query("destlat") double destlat,
                                                @Query("destlon") double destlon,
