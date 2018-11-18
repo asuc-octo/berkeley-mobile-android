@@ -42,10 +42,10 @@ public class SplashActivityTest {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        
+
 
         ViewInteraction textView = onView(
-                allOf(withId(R.id.menu_name), withText("BearTransit"),
+                allOf(withId(R.id.menu_name), withText("BearTransi"),
                         childAtPosition(
                                 childAtPosition(
                                         withId(R.id.drawer_list),
