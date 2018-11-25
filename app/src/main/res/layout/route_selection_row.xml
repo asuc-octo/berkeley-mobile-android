@@ -12,10 +12,11 @@
         android:id="@+id/busIcon"
         android:layout_width="20dp"
         android:layout_height="match_parent"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
         android:layout_alignTop="@+id/lineName"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"
         android:layout_marginStart="25dp"
+        android:layout_marginTop="5dp"
         android:paddingBottom="55dp"
         android:src="@drawable/busicon" />
 
@@ -51,20 +52,29 @@
     </RelativeLayout>
 
 
-    <TextView
-        android:id="@+id/duration"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:paddingTop="10dp"
-        android:text="30 min"
-        android:textColor="@android:color/black"
-        android:textSize="15dp" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="end"
+        android:paddingEnd="25dp">
 
-    <ImageView
-        android:layout_width="28dp"
-        android:layout_height="25dp"
-        android:background="@drawable/rightarrow"
-        android:layout_marginTop="8dp" />
+        <TextView
+            android:id="@+id/duration"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:paddingTop="10dp"
+            android:text="30 min"
+            android:textColor="@android:color/black"
+            android:textSize="15dp" />
+
+        <ImageView
+            android:layout_width="28dp"
+            android:layout_height="25dp"
+            android:background="@drawable/rightarrow"
+            android:layout_marginTop="8dp" />
+
+    </LinearLayout>
 
 
 </LinearLayout>
