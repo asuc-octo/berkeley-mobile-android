@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 
+import android.graphics.Color;
 import android.icu.text.SimpleDateFormat;
 import android.icu.util.TimeZone;
 import android.location.Location;
@@ -22,6 +23,9 @@ import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.SpannableString;
+import android.text.SpannableStringBuilder;
+import android.text.Spanned;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -55,6 +59,7 @@ import com.asuc.asucmobile.models.transformers.StopListToLineTransformer;
 import com.asuc.asucmobile.models.transformers.TripListToJourneyTransformer;
 import com.asuc.asucmobile.services.BMService;
 import com.asuc.asucmobile.utilities.NavigationGenerator;
+import com.asuc.asucmobile.utilities.RoundedBackgroundSpan;
 import com.github.clans.fab.FloatingActionButton;
 import com.github.clans.fab.FloatingActionMenu;
 import com.google.android.gms.common.ConnectionResult;
@@ -89,7 +94,6 @@ import retrofit2.Call;
 import retrofit2.Response;
 import uk.co.deanwild.materialshowcaseview.IShowcaseListener;
 import uk.co.deanwild.materialshowcaseview.MaterialShowcaseView;
-import uk.co.deanwild.materialshowcaseview.shape.CircleShape;
 
 
 public class MapsFragment extends Fragment
@@ -401,11 +405,23 @@ public class MapsFragment extends Fragment
         String title = "Click the eye to find:";
         String contentText = "• Water filling stations\n• Nap pods\n• Microwaves";
 
+        // do not delete this placeholder span, it does nothing but everything breaks without it
+        SpannableString placeholder = new SpannableString(" ");
+        SpannableString span = new SpannableString(" GOT IT ");
+
+        span.setSpan(new RoundedBackgroundSpan(Color.argb(255, 220, 220, 220), Color.BLACK, 10,
+                20, 50), 0, span.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+        SpannableStringBuilder builder = new SpannableStringBuilder();
+        builder.append(placeholder);
+        builder.append(span);
+
         MaterialShowcaseView.Builder spotlight = new MaterialShowcaseView.Builder(getActivity())
                 .setTarget(target)
-                .setDismissText("GOT IT")
+                .setDismissText(builder)
                 .setTitleText(title)
                 .setContentText(contentText)
+                .setDismissOnTouch(true)
                 .setShapePadding(100)
                 .setDelay(500);
 
