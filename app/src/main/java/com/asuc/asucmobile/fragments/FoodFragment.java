@@ -169,17 +169,16 @@ public class FoodFragment extends Fragment {
                     @Override
                     public void onClick(View v) {
                         if (cafeHidden) {
-                            cafeHidden = !cafeHidden;
                             mCafeRecyclerView.setVisibility(View.VISIBLE);
                             mCafeLabel.setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, R.drawable.ic_up_arrow, 0);
-                        } else if (!diningHidden){
-                            cafeHidden = !cafeHidden;
+                        } else {
                             mCafeRecyclerView.setVisibility(View.GONE);
                             mCafeLabel.setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, R.drawable.ic_down_arrow, 0);
                         }
+                        cafeHidden = !cafeHidden;
                     }
                 });
-                mProgressBar.setVisibility(View.GONE);
+                //mProgressBar.setVisibility(View.GONE);
                 mCafeRecyclerView.setAdapter(new FoodPlaceAdapter(getContext(), mCafeList, FoodPlaceAdapter.FoodType.Cafe));
             }
 
@@ -210,15 +209,15 @@ public class FoodFragment extends Fragment {
                         if (diningHidden) {
                             mDiningRecyclerView.setVisibility(View.VISIBLE);
                             mDiningHallLabel.setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, R.drawable.ic_up_arrow, 0);
-                            diningHidden = !diningHidden;
-                        } else if (!cafeHidden) {
+
+                        } else {
                             mDiningRecyclerView.setVisibility(View.GONE);
                             mDiningHallLabel.setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, R.drawable.ic_down_arrow, 0);
-                            diningHidden = !diningHidden;
                         }
+                        diningHidden = !diningHidden;
                     }
                 });
-                mProgressBar.setVisibility(View.GONE);
+                //mProgressBar.setVisibility(View.GONE);
                 mDiningRecyclerView.setAdapter(new FoodPlaceAdapter(getContext(), mDiningHallList, FoodPlaceAdapter.FoodType.DiningHall));
             }
 

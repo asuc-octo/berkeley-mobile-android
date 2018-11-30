@@ -50,7 +50,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/name"
-            android:layout_marginTop="2dp"
+            android:layout_marginTop="5dp"
             android:layout_toRightOf="@+id/open_status"
             android:gravity="right"
             android:paddingLeft="10dp"
