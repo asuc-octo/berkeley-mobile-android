@@ -178,7 +178,7 @@ public class FoodFragment extends Fragment {
                         cafeHidden = !cafeHidden;
                     }
                 });
-                //mProgressBar.setVisibility(View.GONE);
+                mProgressBar.setVisibility(View.GONE);
                 mCafeRecyclerView.setAdapter(new FoodPlaceAdapter(getContext(), mCafeList, FoodPlaceAdapter.FoodType.Cafe));
             }
 
@@ -217,7 +217,7 @@ public class FoodFragment extends Fragment {
                         diningHidden = !diningHidden;
                     }
                 });
-                //mProgressBar.setVisibility(View.GONE);
+                mProgressBar.setVisibility(View.GONE);
                 mDiningRecyclerView.setAdapter(new FoodPlaceAdapter(getContext(), mDiningHallList, FoodPlaceAdapter.FoodType.DiningHall));
             }
 
