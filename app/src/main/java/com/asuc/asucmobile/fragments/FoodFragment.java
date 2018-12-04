@@ -85,6 +85,7 @@ public class FoodFragment extends Fragment {
 
         mProgressBar = (ProgressBar) layout.findViewById(R.id.progress_bar);
         mRefreshWrapper = (LinearLayout) layout.findViewById(R.id.refresh);
+        mProgressBar.setVisibility(View.VISIBLE);
 
         diningHidden = cafeHidden = false;
 
@@ -142,10 +143,10 @@ public class FoodFragment extends Fragment {
         mDiningHallLabel.setVisibility(View.GONE);
 
         mRefreshWrapper.setVisibility(View.GONE);
-        mProgressBar.setVisibility(View.VISIBLE);
 
         mCafeRecyclerView.setVisibility(View.GONE);
         mDiningRecyclerView.setVisibility(View.GONE);
+        mProgressBar.setVisibility(View.VISIBLE);
 
         getDining();
         getCafes();
@@ -173,6 +174,7 @@ public class FoodFragment extends Fragment {
                             mCafeLabel.setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, R.drawable.ic_up_arrow, 0);
                         } else {
                             mCafeRecyclerView.setVisibility(View.GONE);
+                            mProgressBar.setVisibility(View.GONE);
                             mCafeLabel.setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, R.drawable.ic_down_arrow, 0);
                         }
                         cafeHidden = !cafeHidden;
