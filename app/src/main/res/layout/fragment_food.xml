@@ -20,6 +20,12 @@
             android:elevation="8dp"
             style="@style/ToolbarTheme" />
 
+        <ProgressBar
+            android:id="@+id/progress_bar"
+            style="?android:attr/progressBarStyleLarge"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="center" />
 
         <android.support.v4.widget.NestedScrollView
             android:layout_width="match_parent"
@@ -80,13 +86,6 @@
             </LinearLayout>
 
         </android.support.v4.widget.NestedScrollView>
-
-        <ProgressBar
-            android:id="@+id/progress_bar"
-            style="?android:attr/progressBarStyleLarge"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_gravity="center" />
 
         <LinearLayout
             android:id="@+id/refresh"
