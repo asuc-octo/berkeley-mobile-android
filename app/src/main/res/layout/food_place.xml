@@ -47,12 +47,11 @@
 
         <TextView
             android:id="@+id/hours"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/name"
+            android:layout_below="@+id/open_status"
             android:layout_marginTop="5dp"
-            android:layout_toRightOf="@+id/open_status"
-            android:gravity="right"
+            android:layout_toRightOf="@+id/image"
             android:paddingLeft="10dp"
             android:paddingRight="10dp"
             android:singleLine="true"
