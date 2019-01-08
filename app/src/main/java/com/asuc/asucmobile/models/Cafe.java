@@ -3,6 +3,7 @@ package com.asuc.asucmobile.models;
 import com.asuc.asucmobile.models.responses.CafeMenuResponse;
 import com.google.gson.annotations.SerializedName;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -60,24 +61,20 @@ public class Cafe extends FoodPlace {
         return breakfastOpen;
     }
 
-
     public Date getLunchDinnerOpening() {
         setLunchDinner();
         return lunchDinnerOpen;
     }
-
 
     public Date getBreakfastClosing() {
         setBreakfast();
         return breakfastClose;
     }
 
-
     public Date getLunchDinnerClosing() {
         setLunchDinner();
         return lunchDinnerClose;
     }
-
 
     public String getId() {
         return id;
@@ -104,9 +101,6 @@ public class Cafe extends FoodPlace {
         setLunchDinner();
         return lunchDinnerMenu;
     }
-
-
-
 
     public String getImageUrl() {
         return imageUrl;
@@ -152,6 +146,23 @@ public class Cafe extends FoodPlace {
 
         Date currentTime = new Date();
         return currentTime.after(lunchDinnerOpen) && currentTime.before(lunchDinnerClose);
+    }
+
+    public String getHours() {
+        if (isLunchDinnerOpen()) {
+            return dateToTime(lunchDinnerOpen, lunchDinnerClose);
+        } else if (isBreakfastOpen()) {
+            return dateToTime(breakfastOpen, breakfastClose);
+        } else {
+            return "";
+        }
+    }
+
+    private String dateToTime(Date start, Date end) {
+        SimpleDateFormat sdf = new SimpleDateFormat("h:mm a");
+        String startTime = sdf.format(start);
+        String endTime = sdf.format(end);
+        return startTime + "-" + endTime;
     }
 
 }
