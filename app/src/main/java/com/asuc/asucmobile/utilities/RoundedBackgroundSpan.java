@@ -2,36 +2,43 @@ package com.asuc.asucmobile.utilities;
 
 import android.graphics.Canvas;
 import android.graphics.Paint;
-import android.graphics.Rect;
 import android.graphics.RectF;
-import android.text.style.LineBackgroundSpan;
+import android.graphics.Typeface;
+import android.support.annotation.NonNull;
 import android.text.style.ReplacementSpan;
 
-public class RoundedBackgroundSpan implements LineBackgroundSpan
-{
-    private int mBackgroundColor;
-    private int mPadding;
-    private Rect mBgRect;
+public class RoundedBackgroundSpan extends ReplacementSpan {
 
-    public RoundedBackgroundSpan(int backgroundColor, int padding) {
+    private final int mBackgroundColor;
+    private final int mTextColor;
+    private final float mCornerRadius;
+    private final float mPadding;
+    private final float mTextSize;
+
+    public RoundedBackgroundSpan(int backgroundColor, int textColor, float cornerRadius, float padding, float textSize) {
         super();
         mBackgroundColor = backgroundColor;
+        mTextColor = textColor;
+        mCornerRadius = cornerRadius;
         mPadding = padding;
-        // Precreate rect for performance
-        mBgRect = new Rect();
+        mTextSize = textSize;
     }
 
     @Override
-    public void drawBackground(Canvas c, Paint p, int left, int right, int top, int baseline, int bottom, CharSequence text, int start, int end, int lnum) {
-        final int textWidth = Math.round(p.measureText(text, start, end));
-        final int paintColor = p.getColor();
-        // Draw the background
-        mBgRect.set(left - mPadding,
-                top - (lnum == 0 ? mPadding / 2 : - (mPadding / 2)),
-                left + textWidth + mPadding,
-                bottom + mPadding / 2);
-        p.setColor(mBackgroundColor);
-        c.drawRect(mBgRect, p);
-        p.setColor(paintColor);
+    public int getSize(@NonNull Paint paint, CharSequence text, int start, int end, Paint.FontMetricsInt fm) {
+        return (int) (mPadding + paint.measureText(text.subSequence(start, end).toString()) + mPadding);
+    }
+
+    @Override
+    public void draw(@NonNull Canvas canvas, CharSequence text, int start, int end, float x, int top, int y, int bottom, @NonNull Paint paint) {
+        float width = paint.measureText(text.subSequence(start, end).toString());
+        RectF rect = new RectF(x - mPadding + 5, top - mPadding + 10,
+                x + width + mPadding, bottom + mPadding);
+        paint.setColor(mBackgroundColor);
+        canvas.drawRoundRect(rect, mCornerRadius, mCornerRadius, paint);
+        paint.setColor(mTextColor);
+        paint.setTextSize(mTextSize);
+        paint.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.BOLD));
+        canvas.drawText(text, start, end, x + mPadding + 5, y, paint);
     }
 }
