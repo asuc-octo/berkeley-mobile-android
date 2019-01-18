@@ -424,10 +424,15 @@ public class MapsFragment extends Fragment
      *  Show the spotlight on a target View
      * @param target the View that the Spotlight will highlight
      */
+    private boolean viewedSpotlight() {
+        SharedPreferences sharedPreferences =
+                PreferenceManager.getDefaultSharedPreferences(getActivity());
+        return sharedPreferences.getBoolean(MapsFragment.VIEWED_SPOTLIGHT, false);
+    }
+
     private void setSpotlight(View target) {
         String title = "Click the eye to find:";
         String contentText = "• Water filling stations\n• Nap pods\n• Microwaves";
-
 
         // do not delete this placeholder span, it does nothing but everything breaks without it
         SpannableString placeholder = new SpannableString(" ");

@@ -2,14 +2,14 @@ package com.asuc.asucmobile.models;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 
 
-public class DiningHall extends FoodPlace{
-
+public class DiningHall extends FoodPlace {
 
     @SerializedName("breakfast_menu")
     private ArrayList<FoodItem> breakfastMenu;
@@ -245,48 +245,24 @@ public class DiningHall extends FoodPlace{
         this.limitedDinnerMenu = limitedDinnerMenu;
     }
 
-    public Date getBreakfastOpen() {
-        return breakfastOpen;
-    }
-
     public void setBreakfastOpen(Date breakfastOpen) {
         this.breakfastOpen = breakfastOpen;
-    }
-
-    public Date getBreakfastClose() {
-        return breakfastClose;
     }
 
     public void setBreakfastClose(Date breakfastClose) {
         this.breakfastClose = breakfastClose;
     }
 
-    public Date getLunchOpen() {
-        return lunchOpen;
-    }
-
     public void setLunchOpen(Date lunchOpen) {
         this.lunchOpen = lunchOpen;
-    }
-
-    public Date getLunchClose() {
-        return lunchClose;
     }
 
     public void setLunchClose(Date lunchClose) {
         this.lunchClose = lunchClose;
     }
 
-    public Date getDinnerOpen() {
-        return dinnerOpen;
-    }
-
     public void setDinnerOpen(Date dinnerOpen) {
         this.dinnerOpen = dinnerOpen;
-    }
-
-    public Date getDinnerClose() {
-        return dinnerClose;
     }
 
     public void setDinnerClose(Date dinnerClose) {
@@ -297,10 +273,6 @@ public class DiningHall extends FoodPlace{
         this.limitedLunchOpen = limitedLunchOpen;
     }
 
-    public Date getLimitedLunchClose() {
-        return limitedLunchClose;
-    }
-
     public void setLimitedLunchClose(Date limitedLunchClose) {
         this.limitedLunchClose = limitedLunchClose;
     }
@@ -309,16 +281,35 @@ public class DiningHall extends FoodPlace{
         this.limitedDinnerOpen = limitedDinnerOpen;
     }
 
-    public Date getLimitedDinnerClose() {
-        return limitedDinnerClose;
-    }
-
     public void setLimitedDinnerClose(Date limitedDinnerClose) {
         this.limitedDinnerClose = limitedDinnerClose;
     }
 
     public void setImageUrl(String imageUrl) {
         this.imageUrl = imageUrl;
+    }
+
+    public String getHours() {
+        if (isLimitedDinnerOpen()) {
+            return dateToTime(getLimitedDinnerOpen(), getLimitedDinnerClosing());
+        } else if (isDinnerOpen()) {
+            return dateToTime(getDinnerOpening(), getDinnerClosing());
+        } else if (isLimitedLunchOpen()) {
+            return dateToTime(getLimitedLunchOpen(), getLimitedLunchClosing());
+        } else if (isLunchOpen()) {
+            return dateToTime(getLunchOpening(), getLunchClosing());
+        } else if (isBreakfastOpen()){
+            return dateToTime(getBreakfastOpening(), getBreakfastClosing());
+        } else {
+            return "";
+        }
+    }
+
+    private String dateToTime(Date start, Date end) {
+        SimpleDateFormat sdf = new SimpleDateFormat("h:mm a");
+        String startTime = sdf.format(start);
+        String endTime = sdf.format(end);
+        return startTime + "-" + endTime;
     }
 
     @Override
