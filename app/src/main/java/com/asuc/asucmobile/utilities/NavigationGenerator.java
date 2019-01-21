@@ -159,14 +159,6 @@ public class NavigationGenerator {
         DrawerLayout drawerLayout = (DrawerLayout) activity.findViewById(R.id.drawer_layout);
         if (drawerLayout != null) {
             drawerLayout.openDrawer(Gravity.LEFT);
-            View v = drawerLayout.findViewById(R.id.drawer_header);
-            v.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent i = new Intent(activity, CreditsDialog.class);
-                    activity.startActivity(i);
-                }
-            });
         }
     }
 
