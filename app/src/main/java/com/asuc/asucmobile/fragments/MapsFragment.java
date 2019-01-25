@@ -24,6 +24,7 @@ import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+
 import android.text.SpannableString;
 import android.text.SpannableStringBuilder;
 import android.text.Spanned;
@@ -166,7 +167,7 @@ public class MapsFragment extends Fragment
     private static final String SHOW_SPOTLIGHT = "show_spotlight";
 
     // Shared Preferences key to track user's first time
-    private static final String VIEWED_SPOTLIGHT = "viewed_spotlight";
+    private static final String VIEWED_FIRST_SESSION = "first_session";
 
 
     public static MapsFragment getInstance() {
@@ -235,9 +236,12 @@ public class MapsFragment extends Fragment
         mFirebaseRemoteConfig = FirebaseRemoteConfig.getInstance();
         showSpotlight = mFirebaseRemoteConfig.getBoolean(SHOW_SPOTLIGHT);
 
-        if (showSpotlight && !viewedSpotlight()) {
+        if (showSpotlight && !viewedFirstSession()) {
             setSpotlight(FABmenu.getMenuIconView());
         }
+        // register first session regardless of if the user viewed spotlight or not
+
+        registerSession();
 
         FABmenu.setIconAnimated(false);
         FABmenu.setClosedOnTouchOutside(false);
@@ -250,8 +254,8 @@ public class MapsFragment extends Fragment
                 mFirebaseAnalytics.logEvent("view_map_icons_clicked", bundle);
 
                 // Firebase AB test tracking, log clicks after showing spotlight once
-                if (showSpotlight && viewedSpotlight()) {
-                    mFirebaseAnalytics.logEvent("view_map_icons_clicked_after_spotlight", bundle);
+                if (viewedFirstSession()) {
+                    mFirebaseAnalytics.logEvent("view_map_icons_clicked_after_first_session", bundle);
                 }
 
                 if(FABmenu.isOpened()){
@@ -276,8 +280,8 @@ public class MapsFragment extends Fragment
                 mFirebaseAnalytics.logEvent("map_icon_clicked", bundle);
                 updateLocation(v);
 
-                if (showSpotlight && viewedSpotlight()) {
-                    mFirebaseAnalytics.logEvent("map_icon_clicked_after_spotlight", bundle);
+                if (viewedFirstSession()) {
+                    mFirebaseAnalytics.logEvent("map_icon_clicked_after_first_session", bundle);
                 }
 
                 for (Marker marker : markers_sleepPods) {
@@ -307,8 +311,8 @@ public class MapsFragment extends Fragment
                 mFirebaseAnalytics.logEvent("map_icon_clicked", bundle);
                 updateLocation(v);
 
-                if (showSpotlight && viewedSpotlight()) {
-                    mFirebaseAnalytics.logEvent("map_icon_clicked_after_spotlight", bundle);
+                if (viewedFirstSession()) {
+                    mFirebaseAnalytics.logEvent("map_icon_clicked_after_first_session", bundle);
                 }
 
                 for (Marker marker : markers_waterbottles) {
@@ -339,8 +343,8 @@ public class MapsFragment extends Fragment
                 bundle.putString("Category", "microwaves");
                 mFirebaseAnalytics.logEvent("map_icon_clicked", bundle);
 
-                if (showSpotlight && viewedSpotlight()) {
-                    mFirebaseAnalytics.logEvent("map_icon_clicked_after_spotlight", bundle);
+                if (viewedFirstSession()) {
+                    mFirebaseAnalytics.logEvent("map_icon_clicked_after_first_session", bundle);
                 }
 
                 //updateLocation(v);
@@ -398,12 +402,31 @@ public class MapsFragment extends Fragment
         return layout;
     }
 
-    private boolean viewedSpotlight() {
+    /**
+     * Check the SharedPreferences manager for the VIEWED_FIRST_SESSION key
+     * @return whether or not the user viewed the first session or not
+     */
+    private boolean viewedFirstSession() {
         SharedPreferences sharedPreferences =
                 PreferenceManager.getDefaultSharedPreferences(getActivity());
-        return sharedPreferences.getBoolean(MapsFragment.VIEWED_SPOTLIGHT, false);
+        return sharedPreferences.getBoolean(MapsFragment.VIEWED_FIRST_SESSION, false);
     }
 
+    /**
+     *  Register that the user has completed the first session in the VIEWED_FIRST_SESSION key
+     */
+    public void registerSession() {
+        // Save viewed spotlight value
+        SharedPreferences.Editor sharedPreferencesEditor =
+                PreferenceManager.getDefaultSharedPreferences(getContext()).edit();
+        sharedPreferencesEditor.putBoolean(VIEWED_FIRST_SESSION, true);
+        sharedPreferencesEditor.apply();
+    }
+
+    /**
+     *  Show the spotlight on a target View
+     * @param target the View that the Spotlight will highlight
+     */
     private void setSpotlight(View target) {
         String title = "Click the eye to find:";
         String contentText = "• Water filling stations\n• Nap pods\n• Microwaves";
@@ -428,28 +451,7 @@ public class MapsFragment extends Fragment
                 .setShapePadding(100)
                 .setDelay(500);
 
-        spotlight.setListener(new IShowcaseListener() {
-            @Override
-            public void onShowcaseDisplayed(MaterialShowcaseView materialShowcaseView) {
-                // can do some logging here
-                finishSpotlight();
-            }
-
-            @Override
-            public void onShowcaseDismissed(MaterialShowcaseView materialShowcaseView) {
-                finishSpotlight();
-            }
-        });
-
         spotlight.show();
-    }
-
-    public void finishSpotlight() {
-        // Save viewed spotlight value
-        SharedPreferences.Editor sharedPreferencesEditor =
-                PreferenceManager.getDefaultSharedPreferences(getContext()).edit();
-        sharedPreferencesEditor.putBoolean(VIEWED_SPOTLIGHT, true);
-        sharedPreferencesEditor.apply();
     }
 
     private void liveTrack() {
