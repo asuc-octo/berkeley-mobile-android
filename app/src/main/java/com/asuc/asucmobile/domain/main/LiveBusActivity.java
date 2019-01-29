@@ -154,6 +154,9 @@ public class LiveBusActivity extends BaseActivity implements OnMapReadyCallback 
                 failCount = 0;
             }
 
+            if (response.body() == null)
+                return;
+
             List<Bus> buses = LiveBusController.parse(response.body());
             HashSet<String> lines = new HashSet<>();
 

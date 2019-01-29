@@ -20,7 +20,6 @@ import lombok.experimental.SuperBuilder;
 @Setter
 public class DiningHall extends FoodPlace{
 
-
     @SerializedName("breakfast_menu")
     private ArrayList<FoodItem> breakfastMenu;
 
@@ -68,7 +67,7 @@ public class DiningHall extends FoodPlace{
 
     @Builder
     public DiningHall(String id, String name, String imageUrl, boolean isOpen, ArrayList<FoodItem> breakfastMenu, ArrayList<FoodItem> lunchMenu, ArrayList<FoodItem> dinnerMenu, ArrayList<FoodItem> limitedLunchMenu, ArrayList<FoodItem> limitedDinnerMenu, Date breakfastOpen, Date breakfastClose, Date lunchOpen, Date lunchClose, Date dinnerOpen, Date dinnerClose, Date limitedLunchOpen, Date limitedLunchClose, Date limitedDinnerOpen, Date limitedDinnerClose) {
-        super(id, name, imageUrl, isOpen);
+        super(id, name, imageUrl, isOpen, ""); // TODO: hours hack
         this.breakfastMenu = breakfastMenu;
         this.lunchMenu = lunchMenu;
         this.dinnerMenu = dinnerMenu;

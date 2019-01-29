@@ -1,5 +1,7 @@
 package com.asuc.asucmobile.domain.models;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.util.Collection;
 import java.util.List;
 
@@ -8,11 +10,25 @@ import java.util.List;
  */
 
 public class PTBusResponse {
-    private int minutes, seconds;
+    @SerializedName("minutes")
+    private int minutes;
+
+    @SerializedName("seconds")
+    private int seconds;
+
+    @SerializedName("direction")
     private Direction direction;
+
+    @SerializedName("route")
     private Route route;
+
+    @SerializedName("agency")
     private Agency agency;
+
+    @SerializedName("values")
     private Collection<BusDeparture> values;
+
+    @SerializedName("routeBusTitle")
     private String routeBusTitle;
 
 

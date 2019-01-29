@@ -35,6 +35,7 @@ public class FoodPlaceAdapter extends RecyclerView.Adapter<FoodPlaceAdapter.View
         TextView nameTextView;
         ImageView imageView;
         TextView openStatusTextView;
+        TextView hoursTextView;
 
 
         public ViewHolder(View itemView) {
@@ -42,6 +43,7 @@ public class FoodPlaceAdapter extends RecyclerView.Adapter<FoodPlaceAdapter.View
             nameTextView = (TextView) itemView.findViewById(R.id.name);
             imageView = (ImageView) itemView.findViewById(R.id.image);
             openStatusTextView = (TextView) itemView.findViewById(R.id.open_status);
+            hoursTextView = (TextView) itemView.findViewById(R.id.hours);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -100,8 +102,7 @@ public class FoodPlaceAdapter extends RecyclerView.Adapter<FoodPlaceAdapter.View
         TextView nameTextView = holder.nameTextView;
         ImageView imageView = holder.imageView;
         TextView openStatusTextView = holder.openStatusTextView;
-
-
+        TextView hoursTextView = holder.hoursTextView;
 
         if (getItem(position).isOpen()) {
             openStatusTextView.setTextColor(mContext.getResources().getColor(android.R.color.holo_green_light));
@@ -111,18 +112,17 @@ public class FoodPlaceAdapter extends RecyclerView.Adapter<FoodPlaceAdapter.View
             openStatusTextView.setText(mContext.getText(R.string.closed));
         }
 
+        hoursTextView.setText(getItem(position).getHours());
+
         nameTextView.setText(getItem(position).getName());
         Glide.with(mContext)
                 .load(getItem(position)
                         .getImageUrl()).into(imageView);
-
-
     }
 
     public FoodPlace getItem(int position) {
         return mFoodPlaceList.get(position);
     }
-    
 
     @Override
     public int getItemCount() {

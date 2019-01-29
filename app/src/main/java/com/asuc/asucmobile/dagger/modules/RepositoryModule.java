@@ -29,6 +29,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class RepositoryModule {
 
+    //--------------------- Firestore Repositories -------------------------
+
 //    @Provides
 //    @Singleton
 //    public Repository<DiningHall> getDiningHallRepository(FirebaseFirestore firestore) {

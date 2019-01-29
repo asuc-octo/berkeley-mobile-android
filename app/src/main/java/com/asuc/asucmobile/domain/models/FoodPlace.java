@@ -30,19 +30,5 @@ public abstract class FoodPlace implements Serializable{
     // TODO: do something with this
     private boolean isOpen;
 
-    public String getId() {
-        return id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public String getImageUrl() {
-        return imageUrl;
-    }
-
-    public boolean isOpen() {
-        return isOpen;
-    }
+    private String hours;
 }
