@@ -28,7 +28,7 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Michael Eliot"
+        android:text="Rustie Lin"
         android:textAlignment="center"
         android:textSize="20sp"
         android:textStyle="normal" />
@@ -36,7 +36,7 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Alex Thomas"
+        android:text="Sid Karia"
         android:textAlignment="center"
         android:textSize="20sp"
         android:textStyle="normal"/>
@@ -44,7 +44,7 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Rustie Lin"
+        android:text="Yiling Kao"
         android:textAlignment="center"
         android:textSize="20sp"
         android:textStyle="normal"/>
@@ -52,18 +52,11 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Siddharth Karia"
+        android:text="Derrick Li"
         android:textAlignment="center"
         android:textSize="20sp"
         android:textStyle="normal"/>
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Sudarshan Gopalakrishnan"
-        android:textAlignment="center"
-        android:textSize="20sp"
-        android:textStyle="normal"/>
 
     <ImageView
         android:id="@+id/imageView2"

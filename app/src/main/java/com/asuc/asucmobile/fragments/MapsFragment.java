@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.icu.text.SimpleDateFormat;
 import android.icu.util.TimeZone;
@@ -42,6 +43,7 @@ import com.asuc.asucmobile.GlobalApplication;
 import com.asuc.asucmobile.R;
 import com.asuc.asucmobile.controllers.Controller;
 import com.asuc.asucmobile.controllers.LiveBusController;
+import com.asuc.asucmobile.main.CreditsDialog;
 import com.asuc.asucmobile.main.LiveBusActivity;
 import com.asuc.asucmobile.main.PopUpActivity;
 import com.asuc.asucmobile.main.RouteSelectActivity;
@@ -111,6 +113,8 @@ public class MapsFragment extends Fragment
     private GoogleMap mMap;
     Gson gson = new Gson();
     final LatLng BERKELEY = new LatLng(37.8716, -122.2727);
+    final LatLng EGG = new LatLng(37.8266,-122.3236);
+    final String GO_BEARS = "go bears!";
     private GoogleApiClient googleApiClient;
     double longitude;
     double latitude;
@@ -387,7 +391,6 @@ public class MapsFragment extends Fragment
             }
         });
 
-
         /**
          * Manipulates the map once available.
          * This callback is triggered when the map is ready to be used.
@@ -428,7 +431,6 @@ public class MapsFragment extends Fragment
     private void setSpotlight(View target) {
         String title = "Click the eye to find:";
         String contentText = "• Water filling stations\n• Nap pods\n• Microwaves";
-
 
         // do not delete this placeholder span, it does nothing but everything breaks without it
         SpannableString placeholder = new SpannableString(" ");
@@ -522,6 +524,10 @@ public class MapsFragment extends Fragment
         bmService.callIconList().enqueue(new retrofit2.Callback<MapIconResponse>() {
             @Override
             public void onResponse(Call<MapIconResponse> call, Response<MapIconResponse> response) {
+
+                if (response.body() == null)
+                    return;
+
                 mapHash.put("Microwave", response.body().getMicrowaves());
                 mapHash.put("Water Fountain", response.body().getWaterFountains());
                 mapHash.put("Nap Pod", response.body().getNapPods());
@@ -538,6 +544,8 @@ public class MapsFragment extends Fragment
 
 
         liveTrack();
+        shh();
+
     }
 
     private void updateLocation(View v) {
@@ -565,9 +573,17 @@ public class MapsFragment extends Fragment
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
     public boolean onMarkerClick(final Marker marker) {
 
+        Log.d("HELLOOO", "MARKER CLICKED");
 
         if (marker.getTag() == null) {
             return true; //If the live busIcon is selected, dont' do anything.
+        }
+
+        // shhh
+        if (marker.getTitle().equals(GO_BEARS)) {
+            Intent i = new Intent(getActivity(), CreditsDialog.class);
+            startActivity(i);
+            return true;
         }
 
         Intent popUp;
@@ -612,7 +628,7 @@ public class MapsFragment extends Fragment
         ArrayList<CategoryLoc> sleepPods = items.get("Nap Pod");
         BitmapDescriptor microwaveIcon = BitmapDescriptorFactory.fromResource(R.drawable.microwave_map_icon);
         BitmapDescriptor waterBottleIcon = BitmapDescriptorFactory.fromResource(R.drawable.waterbottle_map_icon);
-        BitmapDescriptor sleepPodIcon =BitmapDescriptorFactory.fromResource(R.drawable.sleeppod_map_icon);
+        BitmapDescriptor sleepPodIcon = BitmapDescriptorFactory.fromResource(R.drawable.sleeppod_map_icon);
 
         if (microwaves != null && microwaves.size() != 0) {
             for (CategoryLoc loc : microwaves) {
@@ -666,7 +682,17 @@ public class MapsFragment extends Fragment
             }
         }
 
+    }
 
+    private void shh() {
+        BitmapDescriptor bearIcon = BitmapDescriptorFactory.fromResource(R.drawable.bearmarker);
+        MarkerOptions singleMarkerOption = new MarkerOptions()
+                .position(EGG)
+                .icon(bearIcon)
+                .visible(true)
+                .title(GO_BEARS);
+        Marker singleMarker = mMap.addMarker(singleMarkerOption);
+        singleMarker.setTag(false);
     }
 
     public String getDistance(double lat, double lng) {
