@@ -7,7 +7,7 @@ These badges are automatically generated based on our [Bitrise](https://www.bitr
 
 | master        | develop       |
 | ------------- |:-------------:|
-| [![Build Status](https://app.bitrise.io/app/7e8a9de61b96fb28/status.svg?token=iUlmVf7VoO92ggwIkt4Htg&branch=master)](https://app.bitrise.io/app/461008cfa3c83274) | [![Build Status](https://app.bitrise.io/app/7e8a9de61b96fb28/status.svg?token=iUlmVf7VoO92ggwIkt4Htg&branch=develop)](https://app.bitrise.io/app/461008cfa3c83274) |
+| [![Build Status](https://app.bitrise.io/app/7e8a9de61b96fb28/status.svg?token=iUlmVf7VoO92ggwIkt4Htg&branch=master)](https://app.bitrise.io/app/7e8a9de61b96fb28) | [![Build Status](https://app.bitrise.io/app/7e8a9de61b96fb28/status.svg?token=iUlmVf7VoO92ggwIkt4Htg&branch=develop)](https://app.bitrise.io/app/7e8a9de61b96fb28) |
 
 ## What is Berkeley Mobile?
 
