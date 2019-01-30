@@ -315,6 +315,7 @@ public class MapsFragment extends Fragment
                 if (viewedFirstSession()) {
                     mFirebaseAnalytics.logEvent("map_icon_clicked_after_first_session", bundle);
                 }
+                bottlesShown = !bottlesShown;
 
                 for (Marker marker : markers_waterbottles) {
                     marker.setVisible(!bottlesShown);
