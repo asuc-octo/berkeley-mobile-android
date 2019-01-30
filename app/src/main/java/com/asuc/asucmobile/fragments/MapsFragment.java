@@ -251,7 +251,8 @@ public class MapsFragment extends Fragment
 
                 // Firebase AB test tracking, log clicks after showing spotlight once
                 if (viewedFirstSession()) {
-                    mFirebaseAnalytics.logEvent("view_map_icons_clicked_after_first_session", bundle);
+                    // Note: Firebase events must be under 40 characters in length
+                    mFirebaseAnalytics.logEvent("view_map_icons_after_first_session", bundle);
                 }
 
                 if(FABmenu.isOpened()){
