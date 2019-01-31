@@ -61,6 +61,4 @@ public interface BMService {
                                                @Query("destlon") double destlon,
                                                @Query("departuretime") String departuretime);
 
-
-
 }
