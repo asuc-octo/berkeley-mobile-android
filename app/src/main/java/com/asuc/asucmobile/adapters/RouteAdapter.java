@@ -89,6 +89,8 @@ public class RouteAdapter extends BaseAdapter {
 
             if (stop.getStartTime() != null) {
                 if (i == 0 & stop.getId() == 0) {
+                    //sets the line title's height to match_parent to eliminate cropping in this jank but kind of genius adapter
+                    convertView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
                     line.setText(stop.getName());
                     busIcon.setVisibility(View.VISIBLE);
                     startingStop.setText(getItem(1).getName());
