@@ -26,15 +26,18 @@ public class LibraryFirestoreRepository implements Repository<Library> {
     private CollectionReference mRef;
 
     public LibraryFirestoreRepository(FirebaseFirestore firestore) {
+        Log.d(TAG, "Initialized");
         mTransformer = new LibraryTransformer();
         mRef = firestore.collection(FirebaseCollectionNames.LIBRARY);
     }
 
     @Override
     public List<Library> scanAll(final List<Library> libraries, final RepositoryCallback<Library> callback) {
+        Log.d(TAG, "Called scanAll");
         mRef.get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
             @Override
             public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                Log.d(TAG, queryDocumentSnapshots.toString());
                 if (queryDocumentSnapshots != null) {
                     libraries.clear();
                     libraries.addAll(mTransformer.libraryQSDomainTransformer(queryDocumentSnapshots));

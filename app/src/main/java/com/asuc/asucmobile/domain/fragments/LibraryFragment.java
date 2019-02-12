@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,6 +32,7 @@ import com.asuc.asucmobile.utilities.NavigationGenerator;
 import com.asuc.asucmobile.utilities.SerializableUtilities;
 import com.google.firebase.analytics.FirebaseAnalytics;
 
+import java.util.ArrayList;
 import java.util.Collections;
 
 import javax.inject.Inject;
@@ -40,6 +42,8 @@ import retrofit2.Response;
 
 public class LibraryFragment extends Fragment {
 
+    public static final String TAG = "LibraryFragment";
+
     @Inject
     Repository<Library> repository;
 
@@ -48,8 +52,6 @@ public class LibraryFragment extends Fragment {
     private LinearLayout mRefreshWrapper;
     private static LibraryAdapter mAdapter;
     private FirebaseAnalytics mFirebaseAnalytics;
-
-
 
     @Override
     @SuppressWarnings("deprecation")
@@ -113,9 +115,14 @@ public class LibraryFragment extends Fragment {
         mRefreshWrapper.setVisibility(View.GONE);
         mProgressBar.setVisibility(View.VISIBLE);
 
-        repository.scanAll(mAdapter.getLibraries(), new RepositoryCallback<Library>() {
+        final ArrayList<Library> libraries = mAdapter.getLibraries();
+
+        repository.scanAll(libraries, new RepositoryCallback<Library>() {
             @Override
             public void onSuccess() {
+
+                Log.d(TAG, libraries.toString());
+
                 mLibraryList.setVisibility(View.VISIBLE);
                 mProgressBar.setVisibility(View.GONE);
 
@@ -127,6 +134,9 @@ public class LibraryFragment extends Fragment {
 
             @Override
             public void onFailure() {
+
+                Log.d(TAG, libraries.toString());
+
                 mProgressBar.setVisibility(View.GONE);
                 mRefreshWrapper.setVisibility(View.VISIBLE);
                 Toast.makeText(getContext(), "Unable to retrieve data, please try again",

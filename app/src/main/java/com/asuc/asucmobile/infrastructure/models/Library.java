@@ -1,39 +1,46 @@
 package com.asuc.asucmobile.infrastructure.models;
 
 import com.google.android.gms.maps.model.LatLng;
-import com.google.gson.annotations.SerializedName;
+import com.google.firebase.firestore.PropertyName;
 
 import java.util.ArrayList;
 import java.util.Date;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Builder
 @Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 public class Library {
 
-    private int id;
-    private String name;
-    @SerializedName("campus_location")
-    private String location;
-    @SerializedName("phone_number")
-    private String phone;
-    @SerializedName("opening_time_today")
-    private Date opening;
-    @SerializedName("closing_time_today")
-    private Date closing;
-    @SerializedName("weekly_opening_times")
-    private ArrayList<Date> weeklyOpen;
-    @SerializedName("weekly_closing_times")
-    private ArrayList<Date> weeklyClose;
-    private LatLng latLng;
-    private double latitude;
-    private double longitude;
-    private boolean byAppointment;
-    private boolean hasCoordinates;
+    public int id;
+    @PropertyName("name")
+    public String name;
 
-    @SerializedName("weekly_by_appointment")
-    private ArrayList<Boolean> weeklyAppointments;
-    private int weekday;
+    @PropertyName("address")
+    public String location;
+
+    @PropertyName("phone_number")
+    public String phone;
+    @PropertyName("open_close")
+    public ArrayList<OpenClose> openCloses;
+
+    @PropertyName("latitude")
+    public double latitude;
+
+    @PropertyName("longtitude")
+    public double longtitude;
+
+    @PropertyName("picture")
+    public String picture;
+
+    @PropertyName("description")
+    public String description;
+
 }
