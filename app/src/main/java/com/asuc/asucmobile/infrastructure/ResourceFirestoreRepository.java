@@ -3,9 +3,8 @@ package com.asuc.asucmobile.infrastructure;
 import android.support.annotation.NonNull;
 import android.util.Log;
 
-import com.asuc.asucmobile.GlobalApplication;
-import com.asuc.asucmobile.infrastructure.transformers.LibraryTransformer;
-import com.asuc.asucmobile.domain.models.Library;
+import com.asuc.asucmobile.domain.models.Resource;
+import com.asuc.asucmobile.infrastructure.transformers.ResourceTransformer;
 import com.asuc.asucmobile.values.FirebaseCollectionNames;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -15,42 +14,40 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.List;
 
-import javax.inject.Inject;
-import javax.inject.Singleton;
+public class ResourceFirestoreRepository implements Repository<Resource> {
 
-public class LibraryFirestoreRepository implements Repository<Library> {
 
-    public static final String TAG = "LibraryFirestore";
+    public static final String TAG = " ResourceFirestore";
 
-    private LibraryTransformer mTransformer;
+    private ResourceTransformer mTransformer;
     private CollectionReference mRef;
 
-    public LibraryFirestoreRepository(FirebaseFirestore firestore) {
+    public ResourceFirestoreRepository(FirebaseFirestore firestore) {
         Log.d(TAG, "Initialized");
-        mTransformer = new LibraryTransformer();
-        mRef = firestore.collection(FirebaseCollectionNames.LIBRARY);
+        mTransformer = new ResourceTransformer();
+        mRef = firestore.collection(FirebaseCollectionNames.RESOURCE);
     }
 
     @Override
-    public List<Library> scanAll(final List<Library> list, final RepositoryCallback<Library> callback) {
+    public List<Resource> scanAll(final List<Resource> list, final RepositoryCallback<Resource> callback) {
         Log.d(TAG, "Called scanAll");
         mRef.get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
             @Override
             public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
-                Log.d(TAG, queryDocumentSnapshots.toString());
                 if (queryDocumentSnapshots != null) {
                     list.clear();
-                    list.addAll(mTransformer.libraryQSDomainTransformer(queryDocumentSnapshots));
+                    list.addAll(mTransformer.resourceQSDomainTransformer(queryDocumentSnapshots));
                     callback.onSuccess();
                 } else {
                     callback.onFailure();
                 }
+
             }
         });
         mRef.get().addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
-                Log.d(TAG, "Unable to retrieve library data");
+                Log.d(TAG, "Unable to retrieve data");
                 callback.onFailure();
             }
         });

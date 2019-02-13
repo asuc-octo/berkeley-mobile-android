@@ -8,5 +8,6 @@ public class FirebaseCollectionNames {
     public final String DINING_HALL = "dining_hall";
     public final String CAFE = "cafe";
     public final String LIBRARY = "Libraries";
+    public final String RESOURCE = "Resources";
 
 }

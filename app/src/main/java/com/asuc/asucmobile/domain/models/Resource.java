@@ -5,6 +5,12 @@ import android.support.annotation.NonNull;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.gson.annotations.SerializedName;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.NoArgsConstructor;
+
+@Builder
+@NoArgsConstructor @AllArgsConstructor
 public class Resource implements Comparable<Resource>{
 
     public static final double INVALID_COORD = -181;
