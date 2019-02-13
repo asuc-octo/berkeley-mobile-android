@@ -31,6 +31,7 @@ public class DiningHallFirestoreRepository implements Repository<DiningHall> {
     private CollectionReference mRef;
 
     public DiningHallFirestoreRepository(FirebaseFirestore firestore, DiningHallTransformer transformer) {
+        Log.d(TAG, "Initialized");
         mTransformer = transformer;
         mRef = firestore.collection(FirebaseCollectionNames.DINING_HALL);
     }
@@ -42,6 +43,7 @@ public class DiningHallFirestoreRepository implements Repository<DiningHall> {
      */
     @Override
     public List<DiningHall> scanAll(final List<DiningHall> diningHalls, final RepositoryCallback<DiningHall> callback) {
+        Log.d(TAG, "Called scanAll");
         mRef.get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
             @Override
             public void onSuccess(QuerySnapshot queryDocumentSnapshots) {

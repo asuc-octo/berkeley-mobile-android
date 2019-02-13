@@ -27,6 +27,7 @@ public class CafeFirestoreRepository implements Repository<Cafe>{
     private CollectionReference mRef;
 
     public CafeFirestoreRepository(FirebaseFirestore firestore, CafeTransformer transformer) {
+        Log.d(TAG, "Initialized");
         mTransformer = transformer;
         mRef = firestore.collection(FirebaseCollectionNames.CAFE);
     }
@@ -39,6 +40,7 @@ public class CafeFirestoreRepository implements Repository<Cafe>{
      */
     @Override
     public List<Cafe> scanAll(final List<Cafe> cafes, final RepositoryCallback<Cafe> callback) {
+        Log.d(TAG, "Called scanAll");
         mRef.get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
             @Override
             public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
