@@ -73,7 +73,7 @@ public class OpenLibraryActivity extends BaseActivity {
         setUpPhone();
         setUpHours();
         setUpMap();
-
+        setUpBooking();
 
         // Display instructions if this is the first time opening this activity.
         SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
@@ -126,13 +126,10 @@ public class OpenLibraryActivity extends BaseActivity {
                 startActivity(i);
             }
         });
-
-
     }
 
     @SuppressWarnings("deprecation")
     private void setUpMap() {
-
         TextView address = (TextView) findViewById(R.id.location);
         LinearLayout locationLayout = (LinearLayout) findViewById(R.id.location_layout);
         mapFragment = (MapFragment) getFragmentManager().findFragmentById(R.id.map);
@@ -143,7 +140,6 @@ public class OpenLibraryActivity extends BaseActivity {
                 openMap();
             }
         });
-
 
         // Checking if Google Play Services are available to set up the map.
         int status = GooglePlayServicesUtil.isGooglePlayServicesAvailable(this);
@@ -158,7 +154,6 @@ public class OpenLibraryActivity extends BaseActivity {
                         Toast.LENGTH_LONG
                 ).show();
             }
-
             return;
         }
         if (map == null) {
@@ -203,22 +198,48 @@ public class OpenLibraryActivity extends BaseActivity {
         startActivity(i);
     }
 
+    private void setUpBooking() {
+        TextView booking = (TextView) findViewById(R.id.booking);
+        LinearLayout bookingLayout = (LinearLayout) findViewById(R.id.booking_layout);
+
+        //Should be updated to pull from the backend once that is set up
+        ArrayList<String> bookableLibraries = new ArrayList<>();
+        bookableLibraries.add("East Asian Library");
+        bookableLibraries.add("Engineering Library");
+        bookableLibraries.add("Environmental Design Library");
+        bookableLibraries.add("Earth Sciences & Map Library");
+        bookableLibraries.add("Main (Gardner) Stacks");
+        bookableLibraries.add("Moffitt Library");
+        bookableLibraries.add("Institute of Governmental Studies Library");
+        if (!bookableLibraries.contains(library.getName())) {
+            booking.setText("Cannot reserve study rooms at this library");
+            return;
+        }
+        booking.setText("Reserve a Study Room");
+
+        bookingLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String uri = "https://berkeley.libcal.com/";
+                Intent i = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
+                startActivity(i);
+            }
+        });
+    }
+
     /**
      * This code sets up daily hours, only.
      */
     private void setUpHours() {
-
         final TextView hours = (TextView) findViewById(R.id.hours);
         final TextView hours_expand = (TextView) findViewById(R.id.hours_expand);
         final LinearLayout hoursLayout = (LinearLayout) findViewById(R.id.hours_layout);
-
 
         // weekly library hours should already be set up when you open the page
         hours.setText(setUpWeeklyHoursLeft());
         hoursParams = hoursLayout.getLayoutParams();
         hoursLayout.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT, 0.2f));
         hours_expand.setText(setUpWeeklyHoursRight());
-
     }
 
     /**
