@@ -4,15 +4,17 @@ import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 
+import android.graphics.Bitmap;
 import android.graphics.Color;
-import android.graphics.drawable.Drawable;
+import android.icu.text.SimpleDateFormat;
+import android.icu.util.TimeZone;
 import android.location.Location;
 import android.location.LocationManager;
 import android.os.Build;
+import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
@@ -22,43 +24,45 @@ import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+
+import android.text.SpannableString;
+import android.text.SpannableStringBuilder;
+import android.text.Spanned;
 import android.util.Log;
-import android.view.InflateException;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.Button;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 
 import com.asuc.asucmobile.GlobalApplication;
 import com.asuc.asucmobile.R;
-import com.asuc.asucmobile.controllers.BusController;
 import com.asuc.asucmobile.controllers.Controller;
 import com.asuc.asucmobile.controllers.LiveBusController;
-import com.asuc.asucmobile.controllers.RouteController;
-import com.asuc.asucmobile.controllers.LineController;
+import com.asuc.asucmobile.main.CreditsDialog;
 import com.asuc.asucmobile.main.LiveBusActivity;
 import com.asuc.asucmobile.main.PopUpActivity;
 import com.asuc.asucmobile.main.RouteSelectActivity;
 import com.asuc.asucmobile.models.Buses;
-import com.asuc.asucmobile.models.Category;
 import com.asuc.asucmobile.models.CategoryLoc;
 import com.asuc.asucmobile.models.Journey;
-import com.asuc.asucmobile.models.Stop;
-import com.asuc.asucmobile.models.responses.LibrariesResponse;
+import com.asuc.asucmobile.models.Line;
+import com.asuc.asucmobile.models.LineRespModel;
+import com.asuc.asucmobile.models.StopBeforeTransform;
+import com.asuc.asucmobile.models.TripBeforeTransform;
+import com.asuc.asucmobile.models.TripRespModel;
+import com.asuc.asucmobile.models.responses.LineResponse;
 import com.asuc.asucmobile.models.responses.MapIconResponse;
+import com.asuc.asucmobile.models.responses.TripResponse;
+import com.asuc.asucmobile.models.transformers.StopListToLineTransformer;
+import com.asuc.asucmobile.models.transformers.TripListToJourneyTransformer;
 import com.asuc.asucmobile.services.BMService;
-import com.asuc.asucmobile.utilities.Callback;
-import com.asuc.asucmobile.utilities.CustomComparators;
-import com.asuc.asucmobile.utilities.JSONUtilities;
-import com.asuc.asucmobile.utilities.LocationGrabber;
 import com.asuc.asucmobile.utilities.NavigationGenerator;
+import com.asuc.asucmobile.utilities.RoundedBackgroundSpan;
 import com.github.clans.fab.FloatingActionButton;
 import com.github.clans.fab.FloatingActionMenu;
 import com.google.android.gms.common.ConnectionResult;
@@ -69,27 +73,20 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.OnMapReadyCallback;
-import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptor;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.google.android.gms.maps.model.Polyline;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.analytics.FirebaseAnalytics;
+import com.google.firebase.remoteconfig.FirebaseRemoteConfig;
 import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
-import com.wang.avi.AVLoadingIndicatorView;
-
-import java.lang.reflect.Type;
 
 import java.text.DecimalFormat;
+import java.text.ParseException;
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
+import java.util.Date;
 import java.util.HashMap;
-import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -98,6 +95,8 @@ import javax.inject.Inject;
 import mbanje.kurt.fabbutton.FabButton;
 import retrofit2.Call;
 import retrofit2.Response;
+import uk.co.deanwild.materialshowcaseview.IShowcaseListener;
+import uk.co.deanwild.materialshowcaseview.MaterialShowcaseView;
 
 
 public class MapsFragment extends Fragment
@@ -114,6 +113,8 @@ public class MapsFragment extends Fragment
     private GoogleMap mMap;
     Gson gson = new Gson();
     final LatLng BERKELEY = new LatLng(37.8716, -122.2727);
+    final LatLng EGG = new LatLng(37.8266,-122.3236);
+    final String GO_BEARS = "go bears!";
     private GoogleApiClient googleApiClient;
     double longitude;
     double latitude;
@@ -158,6 +159,15 @@ public class MapsFragment extends Fragment
     private FirebaseAnalytics mFirebaseAnalytics;
     private FloatingActionButton microwave, sleepPod, waterBottle;
     private HashMap mapHash = new HashMap<String, ArrayList<CategoryLoc>>();
+
+    private FirebaseRemoteConfig mFirebaseRemoteConfig;
+    private boolean showSpotlight = false;
+
+    // Remote Config keys
+    private static final String SHOW_SPOTLIGHT = "show_spotlight";
+
+    // Shared Preferences key to track user's first time
+    private static final String VIEWED_FIRST_SESSION = "first_session";
 
 
     public static MapsFragment getInstance() {
@@ -222,6 +232,16 @@ public class MapsFragment extends Fragment
         waterBottle = (FloatingActionButton) layout.findViewById(R.id.waterbottle);
         microwave = (FloatingActionButton) layout.findViewById(R.id.microwave);
 
+        // get Remote Config values for spotlight
+        mFirebaseRemoteConfig = FirebaseRemoteConfig.getInstance();
+        showSpotlight = mFirebaseRemoteConfig.getBoolean(SHOW_SPOTLIGHT);
+
+        if (showSpotlight && !viewedFirstSession()) {
+            setSpotlight(FABmenu.getMenuIconView());
+        }
+        // register first session regardless of if the user viewed spotlight or not
+
+        registerSession();
 
         FABmenu.setIconAnimated(false);
         FABmenu.setClosedOnTouchOutside(false);
@@ -233,12 +253,16 @@ public class MapsFragment extends Fragment
                 Bundle bundle = new Bundle();
                 mFirebaseAnalytics.logEvent("view_map_icons_clicked", bundle);
 
+                // Firebase AB test tracking, log clicks after showing spotlight once
+                if (viewedFirstSession()) {
+                    // Note: Firebase events must be under 40 characters in length
+                    mFirebaseAnalytics.logEvent("view_map_icons_after_first_session", bundle);
+                }
+
                 if(FABmenu.isOpened()){
                     FABmenu.close(true);
                     FABmenu.setMenuButtonColorNormalResId(R.color.white);
                     FABmenu.getMenuIconView().setImageResource(R.drawable.itemsicons);
-
-
                 }
                 else{
                     FABmenu.open(true);
@@ -256,6 +280,10 @@ public class MapsFragment extends Fragment
                 bundle.putString("Category", "nappod");
                 mFirebaseAnalytics.logEvent("map_icon_clicked", bundle);
                 updateLocation(v);
+
+                if (viewedFirstSession()) {
+                    mFirebaseAnalytics.logEvent("map_icon_clicked_after_first_session", bundle);
+                }
 
                 for (Marker marker : markers_sleepPods) {
                     marker.setVisible(!sleepShown);
@@ -284,6 +312,11 @@ public class MapsFragment extends Fragment
                 mFirebaseAnalytics.logEvent("map_icon_clicked", bundle);
                 updateLocation(v);
 
+                if (viewedFirstSession()) {
+                    mFirebaseAnalytics.logEvent("map_icon_clicked_after_first_session", bundle);
+                }
+                bottlesShown = !bottlesShown;
+
                 for (Marker marker : markers_waterbottles) {
                     marker.setVisible(!bottlesShown);
                 }
@@ -311,6 +344,10 @@ public class MapsFragment extends Fragment
                 Bundle bundle = new Bundle();
                 bundle.putString("Category", "microwaves");
                 mFirebaseAnalytics.logEvent("map_icon_clicked", bundle);
+
+                if (viewedFirstSession()) {
+                    mFirebaseAnalytics.logEvent("map_icon_clicked_after_first_session", bundle);
+                }
 
                 //updateLocation(v);
                 for (Marker marker : markers_waterbottles) {
@@ -355,7 +392,6 @@ public class MapsFragment extends Fragment
             }
         });
 
-
         /**
          * Manipulates the map once available.
          * This callback is triggered when the map is ready to be used.
@@ -366,6 +402,58 @@ public class MapsFragment extends Fragment
          * installed Google Play services and returned to the app.
          */
         return layout;
+    }
+
+    /**
+     * Check the SharedPreferences manager for the VIEWED_FIRST_SESSION key
+     * @return whether or not the user viewed the first session or not
+     */
+    private boolean viewedFirstSession() {
+        SharedPreferences sharedPreferences =
+                PreferenceManager.getDefaultSharedPreferences(getActivity());
+        return sharedPreferences.getBoolean(MapsFragment.VIEWED_FIRST_SESSION, false);
+    }
+
+    /**
+     *  Register that the user has completed the first session in the VIEWED_FIRST_SESSION key
+     */
+    public void registerSession() {
+        // Save viewed spotlight value
+        SharedPreferences.Editor sharedPreferencesEditor =
+                PreferenceManager.getDefaultSharedPreferences(getContext()).edit();
+        sharedPreferencesEditor.putBoolean(VIEWED_FIRST_SESSION, true);
+        sharedPreferencesEditor.apply();
+    }
+
+    /**
+     *  Show the spotlight on a target View
+     * @param target the View that the Spotlight will highlight
+     */
+    private void setSpotlight(View target) {
+        String title = "Click the eye to find:";
+        String contentText = "• Water filling stations\n• Nap pods\n• Microwaves";
+
+        // do not delete this placeholder span, it does nothing but everything breaks without it
+        SpannableString placeholder = new SpannableString(" ");
+        SpannableString span = new SpannableString(" GOT IT ");
+
+        span.setSpan(new RoundedBackgroundSpan(Color.argb(255, 220, 220, 220), Color.BLACK, 10,
+                20, 50), 0, span.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+        SpannableStringBuilder builder = new SpannableStringBuilder();
+        builder.append(placeholder);
+        builder.append(span);
+
+        MaterialShowcaseView.Builder spotlight = new MaterialShowcaseView.Builder(getActivity())
+                .setTarget(target)
+                .setDismissText(builder)
+                .setTitleText(title)
+                .setContentText(contentText)
+                .setDismissOnTouch(true)
+                .setShapePadding(100)
+                .setDelay(500);
+
+        spotlight.show();
     }
 
     private void liveTrack() {
@@ -437,6 +525,10 @@ public class MapsFragment extends Fragment
         bmService.callIconList().enqueue(new retrofit2.Callback<MapIconResponse>() {
             @Override
             public void onResponse(Call<MapIconResponse> call, Response<MapIconResponse> response) {
+
+                if (response.body() == null)
+                    return;
+
                 mapHash.put("Microwave", response.body().getMicrowaves());
                 mapHash.put("Water Fountain", response.body().getWaterFountains());
                 mapHash.put("Nap Pod", response.body().getNapPods());
@@ -453,6 +545,8 @@ public class MapsFragment extends Fragment
 
 
         liveTrack();
+        shh();
+
     }
 
     private void updateLocation(View v) {
@@ -480,9 +574,17 @@ public class MapsFragment extends Fragment
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
     public boolean onMarkerClick(final Marker marker) {
 
+        Log.d("HELLOOO", "MARKER CLICKED");
 
         if (marker.getTag() == null) {
             return true; //If the live busIcon is selected, dont' do anything.
+        }
+
+        // shhh
+        if (marker.getTitle().equals(GO_BEARS)) {
+            Intent i = new Intent(getActivity(), CreditsDialog.class);
+            startActivity(i);
+            return true;
         }
 
         Intent popUp;
@@ -527,7 +629,7 @@ public class MapsFragment extends Fragment
         ArrayList<CategoryLoc> sleepPods = items.get("Nap Pod");
         BitmapDescriptor microwaveIcon = BitmapDescriptorFactory.fromResource(R.drawable.microwave_map_icon);
         BitmapDescriptor waterBottleIcon = BitmapDescriptorFactory.fromResource(R.drawable.waterbottle_map_icon);
-        BitmapDescriptor sleepPodIcon =BitmapDescriptorFactory.fromResource(R.drawable.sleeppod_map_icon);
+        BitmapDescriptor sleepPodIcon = BitmapDescriptorFactory.fromResource(R.drawable.sleeppod_map_icon);
 
         if (microwaves != null && microwaves.size() != 0) {
             for (CategoryLoc loc : microwaves) {
@@ -581,7 +683,17 @@ public class MapsFragment extends Fragment
             }
         }
 
+    }
 
+    private void shh() {
+        BitmapDescriptor bearIcon = BitmapDescriptorFactory.fromResource(R.drawable.bearmarker);
+        MarkerOptions singleMarkerOption = new MarkerOptions()
+                .position(EGG)
+                .icon(bearIcon)
+                .visible(true)
+                .title(GO_BEARS);
+        Marker singleMarker = mMap.addMarker(singleMarkerOption);
+        singleMarker.setTag(false);
     }
 
     public String getDistance(double lat, double lng) {
@@ -704,47 +816,79 @@ public class MapsFragment extends Fragment
     private void refresh(final LatLng origin, final LatLng destination, final Long millis) {
         navigation_button.showProgress(true);
 
-        RouteController.createInstance(origin, destination, millis);
-
-        LineController.getInstance().refreshInBackground(getActivity(), new Callback() {
+        //starts call to grab list of bus lines - static
+        Call<LineResponse> lineCall = bmService.callLineList();
+        lineCall.enqueue(new retrofit2.Callback<LineResponse>() {
             @Override
-            public void onDataRetrieved(Object data) {
-
-                RouteController.getInstance().refreshInBackground(getActivity(), new Callback() {
-                    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
-                    @SuppressWarnings("unchecked")
-                    @Override
-                    public void onDataRetrieved(Object data) {
-                        navigation_button.showProgress(false);
-
-                        if (((ArrayList) data).size() == 0) {
-                            onRetrievalFailed();
-
-                        } else {
-                            Intent routeSelect = new Intent(getContext(), RouteSelectActivity.class);
-                            ArrayList<Journey> routes = (ArrayList<Journey>) data;
-                            routeSelect.putExtra("routes", routes);
-                            startActivity(routeSelect);
+            public void onResponse(Call<LineResponse> call, final Response<LineResponse> response1) {
+                if (response1.body() != null && response1.body().getLineRespModels() != null && !response1.body().getLineRespModels().isEmpty()) {
+                    //on response, initialize a transformer instance that we will pass in to the next transformer (needed for list of lines / stops)
+                    final StopListToLineTransformer sllTransformer = new StopListToLineTransformer();
+                    for (LineRespModel lineResponse : response1.body().getLineRespModels()) {
+                        ArrayList<StopBeforeTransform> stopsInitial = lineResponse.getLineStops();
+                        Line line;
+                        if (!stopsInitial.isEmpty()) {
+                            //this only exists to call the method stopListToLine which modifies the transformer's instance variables
+                            line = sllTransformer.stopListToLine(lineResponse);
+                        }
+                    }
+                    //start new nested call on response to grab a dynamic journey / triplist list
+                    Call<TripResponse> tripResponseCall = bmService.callTripList(origin.latitude, origin.longitude, destination.latitude, destination.longitude, convertMillisToUTC(millis));
+                    tripResponseCall.enqueue(new retrofit2.Callback<TripResponse>() {
+                        @Override
+                        public void onResponse(Call<TripResponse> call, Response<TripResponse> response2) {
+                            navigation_button.showProgress(false);
+                            if (response2.body() != null && response2.body().getTripRespModels() != null && !response2.body().getTripRespModels().isEmpty()) {
+                                //add all journeys to this final routeList
+                                ArrayList<Journey> routeList = new ArrayList<>();
+                                //for all the trip lists in the response, we create a journey
+                                for (TripRespModel tripResponse : response2.body().getTripRespModels()) {
+                                    ArrayList<TripBeforeTransform> tripsInitial = tripResponse.getTripList();
+                                    Journey journey;
+                                    if (!tripsInitial.isEmpty()) {
+                                        TripListToJourneyTransformer tljtransformer = new TripListToJourneyTransformer();
+                                        try {
+                                            //create the journey by passing in the trip list and first transformer instance to new transformer
+                                            journey = tljtransformer.tripListToJourney(tripResponse, sllTransformer);
+                                            //add it to routeList
+                                            routeList.add(journey);
+                                        } catch (ParseException e) {
+                                            Toast.makeText(getActivity(), "Unexpected error encountered.", Toast.LENGTH_SHORT).show();
+                                        }
+                                    }
+                                }
+                                //start new activity with populated routeList
+                                Intent routeSelect = new Intent(getContext(), RouteSelectActivity.class);
+                                routeSelect.putExtra("routes", routeList);
+                                startActivity(routeSelect);
+                            } else {
+                                Toast.makeText(getActivity(), "Problem retrieving routes.", Toast.LENGTH_SHORT).show();
+                            }
                         }
 
-                    }
+                        @Override
+                        public void onFailure(Call<TripResponse> call, Throwable t) {
 
-                    @Override
-                    public void onRetrievalFailed() {
-                        navigation_button.showProgress(false);
-                        Toast.makeText(getActivity().getBaseContext(), "Unable to retrieve data, please try again", Toast.LENGTH_SHORT).show();
-                    }
-                });
+                        }
+                    });
+                } else {
+                    Toast.makeText(getActivity(), "Error retrieving lines.", Toast.LENGTH_SHORT).show();
+                }
             }
 
             @Override
-            public void onRetrievalFailed() {
-
+            public void onFailure(Call<LineResponse> call, Throwable t) {
+                Toast.makeText(getActivity(), "Error retrieving lines.", Toast.LENGTH_SHORT).show();
             }
         });
-        {
-        }
 
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.N)
+    public String convertMillisToUTC(Long millis) {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z");
+        sdf.setTimeZone(TimeZone.getTimeZone("UTC"));
+        return sdf.format(new Date(millis));
     }
 
 

@@ -1,5 +1,7 @@
 package com.asuc.asucmobile.fragments;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
@@ -62,6 +64,9 @@ public class FoodFragment extends Fragment {
     private Call<DiningHallsResponse> mDiningHallsCall;
     private Call<CafesResponse> mCafesCall;
 
+    private boolean diningHidden;
+    private boolean cafeHidden;
+
     @Override
     @SuppressWarnings("deprecation")
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -80,21 +85,29 @@ public class FoodFragment extends Fragment {
 
         mProgressBar = (ProgressBar) layout.findViewById(R.id.progress_bar);
         mRefreshWrapper = (LinearLayout) layout.findViewById(R.id.refresh);
+        mProgressBar.setVisibility(View.VISIBLE);
+
+        diningHidden = cafeHidden = false;
 
         mDiningHallLabel = (TextView) layout.findViewById(R.id.dining_halls_label);
         mCafeLabel = (TextView) layout.findViewById(R.id.cafes_label);
 
+        mDiningHallLabel.setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, R.drawable.ic_up_arrow, 0);
+        mCafeLabel.setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, R.drawable.ic_up_arrow, 0);
+
         // set up dining hall RecyclerView
         mDiningRecyclerView = (RecyclerView) layout.findViewById(R.id.dining_hall_recycler_view);
+        mDiningRecyclerView.setNestedScrollingEnabled(false);
         mDiningRecyclerView.setHasFixedSize(true);
-        mDiningRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
+        mDiningRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
         mDiningHallList = new ArrayList<>();
         mDiningRecyclerView.setAdapter(new FoodPlaceAdapter(getContext(), mDiningHallList, FoodPlaceAdapter.FoodType.DiningHall));
 
         // set up cafe RecyclerView
         mCafeRecyclerView = (RecyclerView) layout.findViewById(R.id.cafe_recycler_view);
+        mCafeRecyclerView.setNestedScrollingEnabled(false);
         mCafeRecyclerView.setHasFixedSize(true);
-        mCafeRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
+        mCafeRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
         mCafeList = new ArrayList<>();
         mCafeRecyclerView.setAdapter(new FoodPlaceAdapter(getContext(), mCafeList, FoodPlaceAdapter.FoodType.Cafe));
 
@@ -130,10 +143,10 @@ public class FoodFragment extends Fragment {
         mDiningHallLabel.setVisibility(View.GONE);
 
         mRefreshWrapper.setVisibility(View.GONE);
-        mProgressBar.setVisibility(View.VISIBLE);
 
         mCafeRecyclerView.setVisibility(View.GONE);
         mDiningRecyclerView.setVisibility(View.GONE);
+        mProgressBar.setVisibility(View.VISIBLE);
 
         getDining();
         getCafes();
@@ -145,8 +158,6 @@ public class FoodFragment extends Fragment {
         mCafesCall.enqueue(new Callback<CafesResponse>() {
             @Override
             public void onResponse(Call<CafesResponse> call, Response<CafesResponse> response) {
-
-
                 List<FoodPlace> dh = (List<FoodPlace>) response.body().getCafes();
                 for (FoodPlace cafe : dh) {
                     ((Cafe) cafe).setMeals();
@@ -155,6 +166,20 @@ public class FoodFragment extends Fragment {
 
                 mCafeLabel.setVisibility(View.VISIBLE);
                 mCafeRecyclerView.setVisibility(View.VISIBLE);
+                mCafeLabel.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if (cafeHidden) {
+                            mCafeRecyclerView.setVisibility(View.VISIBLE);
+                            mCafeLabel.setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, R.drawable.ic_up_arrow, 0);
+                        } else {
+                            mCafeRecyclerView.setVisibility(View.GONE);
+                            mProgressBar.setVisibility(View.GONE);
+                            mCafeLabel.setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, R.drawable.ic_down_arrow, 0);
+                        }
+                        cafeHidden = !cafeHidden;
+                    }
+                });
                 mProgressBar.setVisibility(View.GONE);
                 mCafeRecyclerView.setAdapter(new FoodPlaceAdapter(getContext(), mCafeList, FoodPlaceAdapter.FoodType.Cafe));
             }
@@ -178,10 +203,24 @@ public class FoodFragment extends Fragment {
                 mDiningHallList = (List<FoodPlace>) response.body().getDiningHalls();
 
                 mDiningHallLabel.setVisibility(View.VISIBLE);
+                //hide until clicked
                 mDiningRecyclerView.setVisibility(View.VISIBLE);
+                mDiningHallLabel.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if (diningHidden) {
+                            mDiningRecyclerView.setVisibility(View.VISIBLE);
+                            mDiningHallLabel.setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, R.drawable.ic_up_arrow, 0);
+
+                        } else {
+                            mDiningRecyclerView.setVisibility(View.GONE);
+                            mDiningHallLabel.setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, R.drawable.ic_down_arrow, 0);
+                        }
+                        diningHidden = !diningHidden;
+                    }
+                });
                 mProgressBar.setVisibility(View.GONE);
                 mDiningRecyclerView.setAdapter(new FoodPlaceAdapter(getContext(), mDiningHallList, FoodPlaceAdapter.FoodType.DiningHall));
-
             }
 
             @Override

@@ -2,8 +2,8 @@
 
 buildscript {
     repositories {
+	google()
         jcenter()
-        google()
 
         maven {
             url 'https://maven.fabric.io/public'
@@ -22,11 +22,16 @@ buildscript {
 
 allprojects {
     repositories {
+	google()
         jcenter()
-        google()
 
         maven {
             url 'https://maven.google.com/'
+        }
+
+        // For the MaterialShowCaseView we are using: https://github.com/deano2390/MaterialShowcaseView#why-jitpack
+        maven {
+            url "https://jitpack.io"
         }
     }
 }

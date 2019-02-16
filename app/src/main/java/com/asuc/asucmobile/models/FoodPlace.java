@@ -11,9 +11,6 @@ import java.util.Date;
  */
 
 public abstract class FoodPlace implements Serializable{
-
-
-
     protected String id;
     protected String name;
 
@@ -22,6 +19,8 @@ public abstract class FoodPlace implements Serializable{
 
     // TODO: do something with this
     private boolean isOpen;
+
+    private String hours;
 
     public String getId() {
         return id;
@@ -37,5 +36,9 @@ public abstract class FoodPlace implements Serializable{
 
     public boolean isOpen() {
         return isOpen;
+    }
+
+    public String getHours() {
+        return hours;
     }
 }
