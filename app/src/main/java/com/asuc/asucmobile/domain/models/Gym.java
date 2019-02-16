@@ -7,6 +7,9 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
+import lombok.Builder;
+
+@Builder
 public class Gym {
 
     private int id;

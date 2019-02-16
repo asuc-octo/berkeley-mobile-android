@@ -18,7 +18,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @Getter
 @Setter
-public class MapIcon {
+public class CategoryLoc {
 
     @PropertyName("category")
     public String category;

@@ -2,6 +2,11 @@ package com.asuc.asucmobile.infrastructure.models;
 
 import com.google.gson.annotations.SerializedName;
 
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
+
+@AllArgsConstructor
+@NoArgsConstructor
 public class TripBeforeTransform {
     @SerializedName("departure_time")
     private String tmpStartTime;

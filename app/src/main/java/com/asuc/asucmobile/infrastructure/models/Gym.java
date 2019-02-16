@@ -37,4 +37,10 @@ public class Gym {
 
     @PropertyName("open_close")
     public ArrayList<OpenClose> openCloses;
+
+    @PropertyName("phone_number")
+    public String phoneNumber;
+
+    @PropertyName("picture")
+    public String picture;
 }

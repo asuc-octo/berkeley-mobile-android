@@ -10,7 +10,9 @@ import com.asuc.asucmobile.infrastructure.CafeRetrofitRepository;
 import com.asuc.asucmobile.infrastructure.DiningHallRetrofitRepository;
 import com.asuc.asucmobile.infrastructure.GymRetrofitRepository;
 import com.asuc.asucmobile.infrastructure.LibraryFirestoreRepository;
+import com.asuc.asucmobile.infrastructure.LibraryRetrofitRepository;
 import com.asuc.asucmobile.infrastructure.Repository;
+import com.asuc.asucmobile.infrastructure.ResourceFirestoreRepository;
 import com.asuc.asucmobile.infrastructure.ResourceRetrofitRepository;
 import com.google.firebase.firestore.FirebaseFirestore;
 
@@ -35,11 +37,17 @@ public class RepositoryModule {
 //        return new DiningHallFirestoreRepository(firestore);
 //    }
 //
-    @Provides
-    @Singleton
-    public Repository<Library> getLibraryRepository(FirebaseFirestore firestore) {
-        return new LibraryFirestoreRepository(firestore);
-    }
+//    @Provides
+//    @Singleton
+//    public Repository<Resource> getResourceRepository(FirebaseFirestore firestore) {
+//        return new ResourceFirestoreRepository(firestore);
+//    }
+//
+//    @Provides
+//    @Singleton
+//    public Repository<Library> getLibraryRepository(FirebaseFirestore firestore) {
+//        return new LibraryFirestoreRepository(firestore);
+//    }
 
     //------------------------ Service Repositories ------------------------
 
@@ -55,11 +63,11 @@ public class RepositoryModule {
         return new CafeRetrofitRepository(service);
     }
 
-//    @Provides
-//    @Singleton
-//    public Repository<Library> getLibraryRepository(BMService service) {
-//        return new LibraryRetrofitRepository(service);
-//    }
+    @Provides
+    @Singleton
+    public Repository<Library> getLibraryRepository(BMService service) {
+        return new LibraryRetrofitRepository(service);
+    }
 
     @Provides
     @Singleton

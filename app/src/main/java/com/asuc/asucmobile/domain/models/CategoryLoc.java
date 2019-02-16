@@ -3,10 +3,19 @@ package com.asuc.asucmobile.domain.models;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.gson.annotations.SerializedName;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 /**
  * Created by alexthomas on 3/12/18.
  */
 
+@Builder
+@NoArgsConstructor @AllArgsConstructor
+@Getter @Setter
 public class CategoryLoc {
 
     @SerializedName("category")

@@ -4,11 +4,14 @@ import com.google.firebase.firestore.PropertyName;
 
 import java.util.ArrayList;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Builder
 @Getter
+@NoArgsConstructor @AllArgsConstructor
 public class Resource {
 
     @PropertyName("address")
