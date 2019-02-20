@@ -1,6 +1,7 @@
 package com.asuc.asucmobile.fragments;
 
 import android.app.Fragment;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
@@ -10,17 +11,21 @@ import android.text.SpannableString;
 import android.text.style.ForegroundColorSpan;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import com.asuc.asucmobile.R;
 import com.asuc.asucmobile.adapters.FoodAdapter;
 import com.asuc.asucmobile.adapters.FoodPlaceAdapter;
+import com.asuc.asucmobile.main.LegendPopUpActivity;
 import com.asuc.asucmobile.main.OpenCafeActivity;
 import com.asuc.asucmobile.main.OpenDiningHallActivity;
+import com.asuc.asucmobile.main.PopUpActivity;
 import com.asuc.asucmobile.models.Cafe;
 import com.asuc.asucmobile.models.DiningHall;
 import com.asuc.asucmobile.models.FoodItem;
@@ -92,6 +97,30 @@ public class    MenuFragment extends Fragment {
         emptyListView = (TextView) v.findViewById(R.id.empty_list);
         header = getActivity().getLayoutInflater().inflate(R.layout.header_image, foodMenu, false);
         headerHours = (TextView) header.findViewById(R.id.header_text);
+
+        headerHours.setOnTouchListener(new View.OnTouchListener() {
+
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                final int DRAWABLE_LEFT = 0;
+                final int DRAWABLE_TOP = 1;
+                final int DRAWABLE_RIGHT = 2;
+                final int DRAWABLE_BOTTOM = 3;
+                Log.d("touched:", "true");
+
+                if(event.getAction() == MotionEvent.ACTION_DOWN) {
+                    if(event.getRawX() >= (headerHours.getRight() - headerHours.getCompoundDrawables()[DRAWABLE_RIGHT].getBounds().width())) {
+                        Intent popUp;
+                        //marker.setIcon(icon);
+                        popUp = new Intent(getActivity(), LegendPopUpActivity.class);
+                        popUp.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        startActivity(popUp);
+                        return true;
+                    }
+                }
+                return false;
+            }
+        });
 
         if (emptyListView == null) {
             Log.d(TAG, "EMPTY EMPTY");
