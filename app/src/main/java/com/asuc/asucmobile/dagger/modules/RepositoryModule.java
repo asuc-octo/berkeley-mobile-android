@@ -7,6 +7,7 @@ import com.asuc.asucmobile.domain.models.Library;
 import com.asuc.asucmobile.domain.models.Resource;
 import com.asuc.asucmobile.domain.services.BMService;
 import com.asuc.asucmobile.infrastructure.CafeRetrofitRepository;
+import com.asuc.asucmobile.infrastructure.DiningHallFirestoreRepository;
 import com.asuc.asucmobile.infrastructure.DiningHallRetrofitRepository;
 import com.asuc.asucmobile.infrastructure.GymRetrofitRepository;
 import com.asuc.asucmobile.infrastructure.LibraryFirestoreRepository;
@@ -31,11 +32,11 @@ public class RepositoryModule {
 
     //--------------------- Firestore Repositories -------------------------
 
-//    @Provides
-//    @Singleton
-//    public Repository<DiningHall> getDiningHallRepository(FirebaseFirestore firestore) {
-//        return new DiningHallFirestoreRepository(firestore);
-//    }
+    @Provides
+    @Singleton
+    public Repository<DiningHall> getDiningHallRepository(FirebaseFirestore firestore) {
+        return new DiningHallFirestoreRepository(firestore);
+    }
 //
 //    @Provides
 //    @Singleton
@@ -51,11 +52,11 @@ public class RepositoryModule {
 
     //------------------------ Service Repositories ------------------------
 
-    @Provides
-    @Singleton
-    public Repository<DiningHall> getDiningHallRepository(BMService service) {
-        return new DiningHallRetrofitRepository(service);
-    }
+//    @Provides
+//    @Singleton
+//    public Repository<DiningHall> getDiningHallRepository(BMService service) {
+//        return new DiningHallRetrofitRepository(service);
+//    }
 
     @Provides
     @Singleton

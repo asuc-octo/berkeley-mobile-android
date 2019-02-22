@@ -4,19 +4,23 @@ import android.support.annotation.NonNull;
 import android.util.Log;
 
 import com.asuc.asucmobile.domain.models.DiningHall;
+import com.asuc.asucmobile.infrastructure.models.DiningHallWeek;
 import com.asuc.asucmobile.infrastructure.transformers.DiningHallTransformer;
 import com.asuc.asucmobile.values.FirebaseCollectionNames;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QuerySnapshot;
 
+import java.util.ArrayList;
 import java.util.List;
 
-import javax.inject.Inject;
-
-import dagger.Provides;
+import javax.annotation.Nullable;
 
 
 /**
@@ -29,11 +33,21 @@ public class DiningHallFirestoreRepository implements Repository<DiningHall> {
 
     private DiningHallTransformer mTransformer;
     private CollectionReference mRef;
+    private DocumentReference mDocRef;
+    private ArrayList<CollectionReference> mDateCollectionRefs;
 
-    public DiningHallFirestoreRepository(FirebaseFirestore firestore, DiningHallTransformer transformer) {
+    public DiningHallFirestoreRepository(FirebaseFirestore firestore) {
         Log.d(TAG, "Initialized");
-        mTransformer = transformer;
+        mTransformer = new DiningHallTransformer();
         mRef = firestore.collection(FirebaseCollectionNames.DINING_HALL);
+        mDocRef = firestore.collection(FirebaseCollectionNames.DINING_HALL).document(FirebaseCollectionNames.DINING_HALL_DOCUMENT);
+        mDocRef.addSnapshotListener(new EventListener<DocumentSnapshot>() {
+            @Override
+            public void onEvent(@Nullable DocumentSnapshot documentSnapshot, @Nullable FirebaseFirestoreException e) {
+                Log.d(TAG, documentSnapshot.toString());
+                DiningHallWeek week = documentSnapshot.toObject(DiningHallWeek.class);
+            }
+        });
     }
 
     /**
