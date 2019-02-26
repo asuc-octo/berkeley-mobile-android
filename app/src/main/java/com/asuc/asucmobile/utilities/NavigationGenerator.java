@@ -18,6 +18,7 @@ import android.widget.ListView;
 import com.asuc.asucmobile.R;
 import com.asuc.asucmobile.adapters.MainMenuAdapter;
 import com.asuc.asucmobile.fragments.BlankFragment;
+import com.asuc.asucmobile.fragments.CalendarFragment;
 import com.asuc.asucmobile.fragments.FoodFragment;
 import com.asuc.asucmobile.fragments.GymFragment;
 import com.asuc.asucmobile.fragments.LibraryFragment;
@@ -71,6 +72,15 @@ public class NavigationGenerator {
                             .commit();
                 }
             },
+            new Category(R.drawable.calendar, "Calendar") {
+                @Override
+                public void loadFragment(FragmentManager fragmentManager) {
+                    fragmentManager.beginTransaction()
+                            .replace(R.id.content_frame, new CalendarFragment())
+                            .commit();
+                }
+            }
+            ,
             new Category(R.drawable.resources, "Resources") {
                 @Override
                 public void loadFragment(FragmentManager fragmentManager) {
