@@ -211,16 +211,30 @@ public class OpenLibraryActivity extends BaseActivity {
         bookableLibraries.add("Main (Gardner) Stacks");
         bookableLibraries.add("Moffitt Library");
         bookableLibraries.add("Institute of Governmental Studies Library");
-        if (!bookableLibraries.contains(library.getName())) {
+        String name = library.getName();
+        if (!bookableLibraries.contains(name)) {
             booking.setText("Cannot reserve study rooms at this library");
             return;
         }
-        booking.setText("Reserve a Study Room");
+        booking.setText("Reserve a study room");
 
         bookingLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //default for libraries with multiple links
                 String uri = "https://berkeley.libcal.com/";
+
+                if (name.equals("Engineering Library")) {
+                    uri = "https://berkeley.libcal.com/booking/engi";
+                } else if (name.equals("East Asian Library")) {
+                    uri = "https://berkeley.libcal.com/booking/eal";
+                } else if (name.equals("Earth Sciences & Map Library")) {
+                    uri = "https://berkeley.libcal.com/booking/EART";
+                } else if (name.equals("Main (Gardner) Stacks")) {
+                    uri = "https://berkeley.libcal.com/booking/gardner";
+                } else if (name.equals("Institute of Governmental Studies Library")) {
+                    uri = "https://berkeley.libcal.com/booking/igs";
+                }
                 Intent i = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
                 startActivity(i);
             }
