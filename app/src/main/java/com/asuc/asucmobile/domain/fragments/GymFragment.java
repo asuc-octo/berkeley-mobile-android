@@ -23,6 +23,7 @@ import com.asuc.asucmobile.GlobalApplication;
 import com.asuc.asucmobile.R;
 import com.asuc.asucmobile.domain.adapters.GymAdapter;
 import com.asuc.asucmobile.domain.models.Gym;
+import com.asuc.asucmobile.domain.repository.RepositoryCallback;
 import com.asuc.asucmobile.domain.services.BMService;
 import com.asuc.asucmobile.domain.models.GymClass;
 import com.asuc.asucmobile.domain.models.WeekCalendar;
@@ -81,11 +82,17 @@ public class GymFragment extends Fragment {
     private LinearLayout mRefreshWrapper;
     private FirebaseAnalytics mFirebaseAnalytics;
 
+    private GymAdapter mAdapter;
+    private List<Gym> mGymsList;
+
     @Override
     public View onCreateView(final LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
         GlobalApplication.getRepositoryComponent().inject(this);
+
+        mGymsList = new ArrayList<>();
+        mAdapter = new GymAdapter(getContext(), mGymsList);
 
         NavigationGenerator.closeMenu(getActivity());
 
@@ -132,6 +139,7 @@ public class GymFragment extends Fragment {
         gymRecyclerView = (RecyclerView) layout.findViewById(R.id.listGyms);
         gymRecyclerView.setHasFixedSize(true);
         gymRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
+        gymRecyclerView.setAdapter(mAdapter);
 
         ImageButton refreshButton = (ImageButton) layout.findViewById(R.id.refresh_button);
         mProgressBar = (ProgressBar) layout.findViewById(R.id.progress_bar);
@@ -290,22 +298,38 @@ public class GymFragment extends Fragment {
 
     private void getGyms() {
 
-        gymsCall.enqueue(new retrofit2.Callback<GymsResponse>() {
+        gymRepository.scanAll(mGymsList, new RepositoryCallback<Gym>() {
             @Override
-            public void onResponse(Call<GymsResponse> call, Response<GymsResponse> response) {
+            public void onSuccess() {
                 gymClassView.setVisibility(View.VISIBLE);
                 mProgressBar.setVisibility(View.GONE);
-                gymRecyclerView.setAdapter(new GymAdapter(getContext(), response.body().getGyms()));
             }
 
             @Override
-            public void onFailure(Call<GymsResponse> call, Throwable t) {
+            public void onFailure() {
                 mProgressBar.setVisibility(View.GONE);
                 mRefreshWrapper.setVisibility(View.VISIBLE);
                 Toast.makeText(getContext(), "Unable to retrieve data, please try again",
                         Toast.LENGTH_SHORT).show();
             }
         });
+
+//        gymsCall.enqueue(new retrofit2.Callback<GymsResponse>() {
+//            @Override
+//            public void onResponse(Call<GymsResponse> call, Response<GymsResponse> response) {
+//                gymClassView.setVisibility(View.VISIBLE);
+//                mProgressBar.setVisibility(View.GONE);
+//                gymRecyclerView.setAdapter(new GymAdapter(getContext(), response.body().getGyms()));
+//            }
+//
+//            @Override
+//            public void onFailure(Call<GymsResponse> call, Throwable t) {
+//                mProgressBar.setVisibility(View.GONE);
+//                mRefreshWrapper.setVisibility(View.VISIBLE);
+//                Toast.makeText(getContext(), "Unable to retrieve data, please try again",
+//                        Toast.LENGTH_SHORT).show();
+//            }
+//        });
     }
 
     /**

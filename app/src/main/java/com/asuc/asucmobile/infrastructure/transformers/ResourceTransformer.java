@@ -56,13 +56,9 @@ public class ResourceTransformer {
         SimpleDateFormat closeDateFormat = new SimpleDateFormat("- h:mm a\n");
 
         if (resource.getOpenCloses() != null) {
-            for (MultiOpenClose openClose : resource.getOpenCloses()) {
-                if (openClose.getOpenTimes() != null) {
-                    hoursString.append(openDateFormat.format(new Date(openClose.getOpenTimes().get(0) * 1000)));
-                }
-                if (openClose.getCloseTimes() != null) {
-                    hoursString.append(closeDateFormat.format(new Date(openClose.getCloseTimes().get(0) * 1000)));
-                }
+            for (OpenClose openClose : resource.getOpenCloses()) {
+                hoursString.append(openDateFormat.format(new Date(openClose.getOpenTime() * 1000)));
+                hoursString.append(closeDateFormat.format(new Date(openClose.getCloseTime() * 1000)));
             }
         }
 

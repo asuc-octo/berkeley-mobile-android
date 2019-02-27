@@ -43,17 +43,9 @@ public class CategoryLocTransformer {
         ArrayList<Date> weeklyClose = new ArrayList<>();
 
         if (categoryLoc.getOpenCloses() != null) {
-            for (MultiOpenClose openClose : categoryLoc.getOpenCloses()) {
-                if (openClose.getOpenTimes() != null) {
-                    for (Long l : openClose.getOpenTimes()) {
-                        weeklyOpen.add(new Date(l));
-                    }
-                }
-                if (openClose.getCloseTimes() != null) {
-                    for (Long l : openClose.getCloseTimes()) {
-                        weeklyClose.add(new Date(l));
-                    }
-                }
+            for (OpenClose openClose : categoryLoc.getOpenCloses()) {
+                weeklyOpen.add(new Date(openClose.getOpenTime()));
+                weeklyClose.add(new Date(openClose.getCloseTime()));
             }
         }
 

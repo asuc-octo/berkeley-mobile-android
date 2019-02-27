@@ -79,9 +79,28 @@
         app:menu_colorNormal="#FFFFFF"
         app:menu_colorPressed="#1565C0"
         app:menu_fab_size="normal"
-        app:menu_icon="@drawable/itemsicons"
+        app:menu_icon="@drawable/itemsicons">
 
-        >
+        <com.github.clans.fab.FloatingActionButton
+            android:id="@+id/mental_health"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/mental_health"
+            app:fab_size="mini" />
+
+        <com.github.clans.fab.FloatingActionButton
+            android:id="@+id/bike"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/bike"
+            app:fab_size="mini" />
+
+        <com.github.clans.fab.FloatingActionButton
+            android:id="@+id/printer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/printer"
+            app:fab_size="mini" />
 
         <com.github.clans.fab.FloatingActionButton
             android:id="@+id/waterbottle"

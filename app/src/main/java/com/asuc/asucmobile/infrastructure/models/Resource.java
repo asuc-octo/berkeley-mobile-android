@@ -39,7 +39,7 @@ public class Resource {
     public boolean onCampus;
 
     @PropertyName("open_close_array")
-    public ArrayList<MultiOpenClose> openCloses;
+    public ArrayList<OpenClose> openCloses;
 
     @PropertyName("phone")
     public String phone;

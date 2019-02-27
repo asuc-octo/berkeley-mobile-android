@@ -1,7 +1,10 @@
 package com.asuc.asucmobile.infrastructure.transformers;
 
+import android.util.Log;
+
 import com.asuc.asucmobile.infrastructure.models.Library;
 import com.asuc.asucmobile.infrastructure.models.MultiOpenClose;
+import com.asuc.asucmobile.infrastructure.models.OpenClose;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
@@ -13,6 +16,8 @@ import lombok.NonNull;
 
 public class LibraryTransformer {
 
+    public static final String TAG = "LibraryTransformer";
+
     /**
      * Transform Firebase QuerySnapshot to domain model
      * @param qs
@@ -22,9 +27,13 @@ public class LibraryTransformer {
         List<com.asuc.asucmobile.domain.models.Library> libraries = new ArrayList<>();
         Library infraLibrary = null;
         for (DocumentSnapshot documentSnapshot : qs.getDocuments()) {
-            infraLibrary = documentSnapshot.toObject(Library.class);
-            if (infraLibrary != null) {
-                libraries.add(libraryInfraDomainTransformer(infraLibrary));
+            try {
+                infraLibrary = documentSnapshot.toObject(Library.class);
+                if (infraLibrary != null) {
+                    libraries.add(libraryInfraDomainTransformer(infraLibrary));
+                }
+            } catch (Exception e) {
+                Log.d(TAG, e.toString());
             }
 
         }
@@ -40,19 +49,14 @@ public class LibraryTransformer {
 
         ArrayList<Date> weeklyOpen = new ArrayList<>();
         ArrayList<Date> weeklyClose = new ArrayList<>();
+        ArrayList<Boolean> byAppt = new ArrayList<>();
+
 
         if (library.getOpenCloses() != null) {
-            for (MultiOpenClose openClose : library.getOpenCloses()) {
-                if (openClose.getOpenTimes() != null) {
-                    for (Long l : openClose.getOpenTimes()) {
-                        weeklyOpen.add(new Date(l));
-                    }
-                }
-                if (openClose.getCloseTimes() != null) {
-                    for (Long l : openClose.getCloseTimes()) {
-                        weeklyClose.add(new Date(l));
-                    }
-                }
+            for (OpenClose openClose : library.getOpenCloses()) {
+                weeklyOpen.add(new Date(openClose.getOpenTime() * 1000));
+                weeklyClose.add(new Date(openClose.getCloseTime() * 1000));
+                byAppt.add(false);
             }
         }
 
@@ -65,6 +69,7 @@ public class LibraryTransformer {
                 .weeklyClose(weeklyClose)
                 .latitude(library.getLatitude())
                 .longitude(library.getLongitude())
+                .weeklyAppointments(byAppt)
                 .build();
     }
 

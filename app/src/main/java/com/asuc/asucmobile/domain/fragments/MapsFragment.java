@@ -45,14 +45,12 @@ import com.asuc.asucmobile.domain.main.LiveBusActivity;
 import com.asuc.asucmobile.domain.main.PopUpActivity;
 import com.asuc.asucmobile.domain.main.RouteSelectActivity;
 import com.asuc.asucmobile.domain.models.Buses;
-import com.asuc.asucmobile.domain.models.Category;
 import com.asuc.asucmobile.domain.models.CategoryLoc;
 import com.asuc.asucmobile.domain.models.Journey;
 import com.asuc.asucmobile.domain.models.Line;
 import com.asuc.asucmobile.domain.models.LineRespModel;
 import com.asuc.asucmobile.domain.models.TripRespModel;
 import com.asuc.asucmobile.domain.models.responses.LineResponse;
-import com.asuc.asucmobile.domain.models.responses.MapIconResponse;
 import com.asuc.asucmobile.domain.models.responses.TripResponse;
 import com.asuc.asucmobile.domain.repository.MultiRepository;
 import com.asuc.asucmobile.domain.repository.RepositoryCallback;
@@ -91,13 +89,13 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import javax.inject.Inject;
 
 import mbanje.kurt.fabbutton.FabButton;
 import retrofit2.Call;
 import retrofit2.Response;
-import uk.co.deanwild.materialshowcaseview.IShowcaseListener;
 import uk.co.deanwild.materialshowcaseview.MaterialShowcaseView;
 
 
@@ -110,13 +108,15 @@ public class MapsFragment extends Fragment
 
     private static final String TAG = "MapsFragment";
 
-    @Inject BMService bmService;
-    @Inject MultiRepository<String, CategoryLoc> repository;
+    @Inject
+    BMService bmService;
+    @Inject
+    MultiRepository<String, CategoryLoc> repository;
 
     private GoogleMap mMap;
     Gson gson = new Gson();
     final LatLng BERKELEY = new LatLng(37.8716, -122.2727);
-    final LatLng EGG = new LatLng(37.8266,-122.3236);
+    final LatLng EGG = new LatLng(37.8266, -122.3236);
     final String GO_BEARS = "go bears!";
     private GoogleApiClient googleApiClient;
     double longitude;
@@ -131,6 +131,11 @@ public class MapsFragment extends Fragment
     private boolean bottlesShown = false;
     private boolean sleepShown = false;
     private boolean microwavesShown = false;
+    private boolean mentalHealthsShown = false;
+    private boolean printersShown = false;
+    private boolean bikesShown = false;
+
+    private Map<String, Boolean> iconsShown;
 
     public boolean isBottlesShown() {
         return bottlesShown;
@@ -146,7 +151,14 @@ public class MapsFragment extends Fragment
 
     ArrayList<Marker> markers_sleepPods = new ArrayList<>();
     ArrayList<Marker> markers_waterbottles = new ArrayList<>();
-    ArrayList<Marker> markers_microwave = new ArrayList<>();
+    ArrayList<Marker> markers_microwaves = new ArrayList<>();
+    ArrayList<Marker> markers_printers = new ArrayList<>();
+    ArrayList<Marker> markers_mentals = new ArrayList<>();
+    ArrayList<Marker> markers_bikes = new ArrayList<>();
+    ArrayList<Marker> all_markers = new ArrayList<>();
+
+    private Map<String, ArrayList<Marker>> markersMap;
+
     HashMap<Marker, CategoryLoc> markers_to_desc = new HashMap<>();
 
     HashMap<Marker, String> marker_to_ID = new HashMap<>(); //Given marker, gets ID (we can do this because marker is FINAL
@@ -160,7 +172,7 @@ public class MapsFragment extends Fragment
     private LiveBusActivity.BusCallback busCallback;
     private static MapsFragment instance;
     private FirebaseAnalytics mFirebaseAnalytics;
-    private FloatingActionButton microwave, sleepPod, waterBottle;
+    private FloatingActionButton microwave, sleepPod, waterBottle, printers, mentalHealths, bikes;
     private HashMap mapHash = new HashMap<String, ArrayList<CategoryLoc>>();
 
     private FirebaseRemoteConfig mFirebaseRemoteConfig;
@@ -181,6 +193,8 @@ public class MapsFragment extends Fragment
     @SuppressWarnings("all")
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
+        initHashMaps(); // lel
+
         GlobalApplication.getRepositoryComponent().inject(this);
 
         if (layout != null) {
@@ -195,8 +209,6 @@ public class MapsFragment extends Fragment
 
 
         }
-//            Log.e("hi", e.getStackTrace().toString());
-        // Don't worry about it!
 
         instance = this;
 
@@ -234,6 +246,9 @@ public class MapsFragment extends Fragment
         sleepPod = (FloatingActionButton) layout.findViewById(R.id.sleeppod);
         waterBottle = (FloatingActionButton) layout.findViewById(R.id.waterbottle);
         microwave = (FloatingActionButton) layout.findViewById(R.id.microwave);
+        bikes = (FloatingActionButton) layout.findViewById(R.id.bike);
+        mentalHealths = (FloatingActionButton) layout.findViewById(R.id.mental_health);
+        printers = (FloatingActionButton) layout.findViewById(R.id.printer);
 
         // get Remote Config values for spotlight
         mFirebaseRemoteConfig = FirebaseRemoteConfig.getInstance();
@@ -252,9 +267,6 @@ public class MapsFragment extends Fragment
         FABmenu.setOnMenuButtonClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Map map = mapHash;
-
-                Log.d(TAG, mapHash.toString());
 
                 mFirebaseAnalytics = FirebaseAnalytics.getInstance(MapsFragment.this.getContext());
                 Bundle bundle = new Bundle();
@@ -266,12 +278,11 @@ public class MapsFragment extends Fragment
                     mFirebaseAnalytics.logEvent("view_map_icons_after_first_session", bundle);
                 }
 
-                if(FABmenu.isOpened()){
+                if (FABmenu.isOpened()) {
                     FABmenu.close(true);
                     FABmenu.setMenuButtonColorNormalResId(R.color.white);
                     FABmenu.getMenuIconView().setImageResource(R.drawable.itemsicons);
-                }
-                else{
+                } else {
                     FABmenu.open(true);
                     FABmenu.setMenuButtonColorNormalResId(R.color.dark_blue);
                     FABmenu.getMenuIconView().setImageResource(R.drawable.items_icon_pressed);
@@ -279,107 +290,14 @@ public class MapsFragment extends Fragment
             }
         });
 
-        sleepPod.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mFirebaseAnalytics = FirebaseAnalytics.getInstance(MapsFragment.this.getContext());
-                Bundle bundle = new Bundle();
-                bundle.putString("Category", "nappod");
-                mFirebaseAnalytics.logEvent("map_icon_clicked", bundle);
-                updateLocation(v);
+        setFABListener(sleepPod, "nappod", MapIconCategories.NAP_POD);
+        setFABListener(waterBottle, "waterbottles", MapIconCategories.WATER_FOUNTAIN);
+        setFABListener(microwave, "microwaves", MapIconCategories.MICROWAVE);
+        setFABListener(printers, "printers", MapIconCategories.PRINTER);
+        setFABListener(bikes, "bikes", MapIconCategories.FORD_GO_BIKE);
+        setFABListener(mentalHealths, "mentalhealths", MapIconCategories.MENTAL_HEALTH);
 
-                if (viewedFirstSession()) {
-                    mFirebaseAnalytics.logEvent("map_icon_clicked_after_first_session", bundle);
-                }
-
-                for (Marker marker : markers_sleepPods) {
-                    marker.setVisible(!sleepShown);
-                }
-                sleepShown = !sleepShown;
-
-                for (Marker marker : markers_waterbottles) {
-                    marker.setVisible(false);
-                }
-                bottlesShown = false;
-
-                for (Marker marker : markers_microwave) {
-                    marker.setVisible(false);
-                }
-                microwavesShown = false;
-            }
-        });
-
-        waterBottle.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                mFirebaseAnalytics = FirebaseAnalytics.getInstance(MapsFragment.this.getContext());
-                Bundle bundle = new Bundle();
-                bundle.putString("Category", "waterbottles");
-                mFirebaseAnalytics.logEvent("map_icon_clicked", bundle);
-                updateLocation(v);
-
-                if (viewedFirstSession()) {
-                    mFirebaseAnalytics.logEvent("map_icon_clicked_after_first_session", bundle);
-                }
-                bottlesShown = !bottlesShown;
-
-                for (Marker marker : markers_waterbottles) {
-                    marker.setVisible(!bottlesShown);
-                }
-                bottlesShown = !bottlesShown;
-
-                for (Marker marker : markers_sleepPods) {
-                    marker.setVisible(false);
-                }
-                sleepShown = false;
-
-
-                for (Marker marker : markers_microwave) {
-                    marker.setVisible(false);
-                }
-                microwavesShown = false;
-
-
-            }
-        });
-
-        microwave.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mFirebaseAnalytics = FirebaseAnalytics.getInstance(MapsFragment.this.getContext());
-                Bundle bundle = new Bundle();
-                bundle.putString("Category", "microwaves");
-                mFirebaseAnalytics.logEvent("map_icon_clicked", bundle);
-
-                if (viewedFirstSession()) {
-                    mFirebaseAnalytics.logEvent("map_icon_clicked_after_first_session", bundle);
-                }
-
-                //updateLocation(v);
-                for (Marker marker : markers_waterbottles) {
-                    marker.setVisible(false);
-                }
-                bottlesShown = false;
-
-                for (Marker marker : markers_sleepPods) {
-                    marker.setVisible(false);
-                }
-                sleepShown = false;
-
-                for (Marker marker : markers_microwave) {
-                    marker.setVisible(!microwavesShown);
-                }
-                microwavesShown = !microwavesShown;
-
-
-            }
-        });
-
-
-        navigation_button.setOnClickListener(new View.OnClickListener()
-
-        {
+        navigation_button.setOnClickListener(new View.OnClickListener() {
             @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
             public void onClick(View v) {
@@ -412,7 +330,64 @@ public class MapsFragment extends Fragment
     }
 
     /**
+     * Set map icon FAB on click listeners
+     * @param fab
+     * @param bund
+     * @param category
+     */
+    private void setFABListener(FloatingActionButton fab, final String bund, final String category) {
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mFirebaseAnalytics = FirebaseAnalytics.getInstance(MapsFragment.this.getContext());
+                Bundle bundle = new Bundle();
+                bundle.putString("Category", bund);
+                mFirebaseAnalytics.logEvent("map_icon_clicked", bundle);
+                updateLocation(v);
+
+                if (viewedFirstSession()) {
+                    mFirebaseAnalytics.logEvent("map_icon_clicked_after_first_session", bundle);
+                }
+
+                for (String key : markersMap.keySet()) {
+                    boolean shown = false;
+                    if (key.equals(category)) { // invert if this, otherwise invis
+                        shown = !iconsShown.get(category);
+                    }
+                    iconsShown.put(key, shown);
+
+                    for (Marker marker : markersMap.get(key)) {
+                        marker.setVisible(shown);
+                    }
+                }
+            }
+        });
+    }
+
+    /**
+     * Store all CategoryLoc metadata in hashmaps keyed on their category name
+     */
+    private void initHashMaps() {
+        markersMap = new HashMap<>();
+        markersMap.put(MapIconCategories.FORD_GO_BIKE, new ArrayList<Marker>());
+        markersMap.put(MapIconCategories.MENTAL_HEALTH, new ArrayList<Marker>());
+        markersMap.put(MapIconCategories.MICROWAVE, new ArrayList<Marker>());
+        markersMap.put(MapIconCategories.NAP_POD, new ArrayList<Marker>());
+        markersMap.put(MapIconCategories.PRINTER, new ArrayList<Marker>());
+        markersMap.put(MapIconCategories.WATER_FOUNTAIN, new ArrayList<Marker>());
+
+        iconsShown = new HashMap<>();
+        iconsShown.put(MapIconCategories.FORD_GO_BIKE, false);
+        iconsShown.put(MapIconCategories.MENTAL_HEALTH, false);
+        iconsShown.put(MapIconCategories.MICROWAVE, false);
+        iconsShown.put(MapIconCategories.NAP_POD, false);
+        iconsShown.put(MapIconCategories.PRINTER, false);
+        iconsShown.put(MapIconCategories.WATER_FOUNTAIN, false);
+    }
+
+    /**
      * Check the SharedPreferences manager for the VIEWED_FIRST_SESSION key
+     *
      * @return whether or not the user viewed the first session or not
      */
     private boolean viewedFirstSession() {
@@ -422,7 +397,7 @@ public class MapsFragment extends Fragment
     }
 
     /**
-     *  Register that the user has completed the first session in the VIEWED_FIRST_SESSION key
+     * Register that the user has completed the first session in the VIEWED_FIRST_SESSION key
      */
     public void registerSession() {
         // Save viewed spotlight value
@@ -433,7 +408,8 @@ public class MapsFragment extends Fragment
     }
 
     /**
-     *  Show the spotlight on a target View
+     * Show the spotlight on a target View
+     *
      * @param target the View that the Spotlight will highlight
      */
     private void setSpotlight(View target) {
@@ -482,6 +458,9 @@ public class MapsFragment extends Fragment
     @Override
     public void onMapReady(GoogleMap googleMap) {
         this.mMap = googleMap;
+
+        refreshMapIcons();
+
         //Zooms camera to "my locationresizeMapIcons"
         if (ActivityCompat.checkSelfPermission(getActivity(), android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getActivity(), android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
 
@@ -528,49 +507,6 @@ public class MapsFragment extends Fragment
         moveNavigationIcon(mapView);
         mMap.setOnMarkerClickListener(this);
         mMap.setOnMapLoadedCallback(this);
-
-//        bmService.callIconList().enqueue(new retrofit2.Callback<MapIconResponse>() {
-//            @Override
-//            public void onResponse(Call<MapIconResponse> call, Response<MapIconResponse> response) {
-//
-//                if (response.body() == null)
-//                    return;
-//
-//                mapHash.put("Microwave", response.body().getMicrowaves());
-//                mapHash.put("Water Fountain", response.body().getWaterFountains());
-//                mapHash.put("Nap Pod", response.body().getNapPods());
-//                loadMarkers(mapHash);
-//
-//            }
-//
-//            @Override
-//            public void onFailure(Call<MapIconResponse> call, Throwable t) {
-//                Toast.makeText(getContext(), "Unable to retrieve map icons, please try again",
-//                        Toast.LENGTH_SHORT).show();
-//            }
-//        });
-
-        // initialize the hashmap
-        mapHash.put(MapIconCategories.MENTAL_HEALTH, new ArrayList<>());
-        mapHash.put(MapIconCategories.MICROWAVE, new ArrayList<>());
-        mapHash.put(MapIconCategories.NAP_POD, new ArrayList<>());
-        mapHash.put(MapIconCategories.PRINTER, new ArrayList<>());
-        mapHash.put(MapIconCategories.WATER_FOUNTAIN, new ArrayList<>());
-        mapHash.put(MapIconCategories.FORD_GO_BIKE, new ArrayList<>());
-
-        repository.scanAll(mapHash, new RepositoryCallback<CategoryLoc>() {
-            @Override
-            public void onSuccess() {
-                loadMarkers(mapHash); // TODO: want to load markers after all repositories scanned, but issue since async. This loads markers multiple times...
-            }
-
-            @Override
-            public void onFailure() {
-                Toast.makeText(getContext(), "Unable to retrieve map icons, please try again",
-                        Toast.LENGTH_SHORT).show();
-            }
-        });
-
 
         liveTrack();
         shh();
@@ -638,8 +574,6 @@ public class MapsFragment extends Fragment
     }
 
 
-
-
     public void clearFocus() {
         View current = getActivity().getCurrentFocus();
         if (current != null) {
@@ -650,66 +584,53 @@ public class MapsFragment extends Fragment
         FABmenu.getMenuIconView().setImageResource(R.drawable.itemsicons);
     }
 
+    private void putMarkers(ArrayList<CategoryLoc> categoryLocs, BitmapDescriptor bitmapDescriptor, ArrayList<Marker> markers) {
+        if (categoryLocs != null && categoryLocs.size() != 0) {
+            for (CategoryLoc loc : categoryLocs) {
+                double lat = loc.getLat();
+                double lon = loc.getLon();
+                String title = loc.getCategory();
+                MarkerOptions singleMarkerOption = new MarkerOptions()
+                        .position(new LatLng(lat, lon))
+                        .icon(bitmapDescriptor)
+                        .visible(false)
+                        .title(title);
+                Marker singleMarker = mMap.addMarker(singleMarkerOption);
+                singleMarker.setTag(false);
+                markers.add(singleMarker);
+                markers_to_desc.put(singleMarker, loc);
+            }
+        }
+    }
 
     private void loadMarkers(HashMap<String, ArrayList<CategoryLoc>> items) {
-        ArrayList<CategoryLoc> microwaves = items.get("Microwave");
-        ArrayList<CategoryLoc> waterbottles = items.get("Water Fountain");
-        ArrayList<CategoryLoc> sleepPods = items.get("Nap Pod");
+        ArrayList<CategoryLoc> microwaves = items.get(MapIconCategories.MICROWAVE);
+        ArrayList<CategoryLoc> waterbottles = items.get(MapIconCategories.WATER_FOUNTAIN);
+        ArrayList<CategoryLoc> sleepPods = items.get(MapIconCategories.NAP_POD);
+        ArrayList<CategoryLoc> mentalHealths = items.get(MapIconCategories.MENTAL_HEALTH);
+        ArrayList<CategoryLoc> bikes = items.get(MapIconCategories.FORD_GO_BIKE);
+        ArrayList<CategoryLoc> printers = items.get(MapIconCategories.PRINTER);
         BitmapDescriptor microwaveIcon = BitmapDescriptorFactory.fromResource(R.drawable.microwave_map_icon);
         BitmapDescriptor waterBottleIcon = BitmapDescriptorFactory.fromResource(R.drawable.waterbottle_map_icon);
         BitmapDescriptor sleepPodIcon = BitmapDescriptorFactory.fromResource(R.drawable.sleeppod_map_icon);
+        BitmapDescriptor mentalHealthIcon = BitmapDescriptorFactory.fromResource(R.drawable.mental_health);
+        BitmapDescriptor bikeIcon = BitmapDescriptorFactory.fromResource(R.drawable.bike);
+        BitmapDescriptor printerIcon = BitmapDescriptorFactory.fromResource(R.drawable.printer);
 
-        if (microwaves != null && microwaves.size() != 0) {
-            for (CategoryLoc loc : microwaves) {
-                double lat = loc.getLat();
-                double lon = loc.getLon();
-                String title = loc.getCategory();
-                MarkerOptions singleMarkerOption = new MarkerOptions()
-                        .position(new LatLng(lat, lon))
-                        .icon(microwaveIcon)
-                        .visible(false)
-                        .title(title);
-                Marker singleMarker = mMap.addMarker(singleMarkerOption);
-                singleMarker.setTag(false);
-                markers_microwave.add(singleMarker);
-                markers_to_desc.put(singleMarker, loc);
+        putMarkers(microwaves, microwaveIcon, markersMap.get(MapIconCategories.MICROWAVE));
+        putMarkers(waterbottles, waterBottleIcon, markersMap.get(MapIconCategories.WATER_FOUNTAIN));
+        putMarkers(sleepPods, sleepPodIcon, markersMap.get(MapIconCategories.NAP_POD));
+        putMarkers(mentalHealths, mentalHealthIcon, markersMap.get(MapIconCategories.MENTAL_HEALTH));
+        putMarkers(bikes, bikeIcon, markersMap.get(MapIconCategories.FORD_GO_BIKE));
+        putMarkers(printers, printerIcon, markersMap.get(MapIconCategories.PRINTER));
 
-            }
-        }
-
-        if (waterbottles != null && waterbottles.size() != 0) {
-            for (CategoryLoc loc : waterbottles) {
-                double lat = loc.getLat();
-                double lon = loc.getLon();
-                String title = loc.getCategory();
-                MarkerOptions singleMarkerOption = new MarkerOptions()
-                        .position(new LatLng(lat, lon))
-                        .icon(waterBottleIcon)
-                        .visible(false)
-                        .title(title);
-                Marker singleMarker = mMap.addMarker(singleMarkerOption);
-                singleMarker.setTag(false);
-                markers_waterbottles.add(singleMarker);
-                markers_to_desc.put(singleMarker, loc);
-            }
-        }
-
-        if (sleepPods != null && sleepPods.size() != 0) {
-            for (CategoryLoc loc : sleepPods) {
-                double lat = loc.getLat();
-                double lon = loc.getLon();
-                String title = loc.getCategory();
-                MarkerOptions singleMarkerOption = new MarkerOptions()
-                        .position(new LatLng(lat, lon))
-                        .icon(sleepPodIcon)
-                        .visible(false)
-                        .title(title);
-                Marker singleMarker = mMap.addMarker(singleMarkerOption);
-                singleMarker.setTag(false);
-                markers_sleepPods.add(singleMarker);
-                markers_to_desc.put(singleMarker, loc);
-            }
-        }
+        all_markers = new ArrayList<>();
+        all_markers.addAll(markers_microwaves);
+        all_markers.addAll(markers_waterbottles);
+        all_markers.addAll(markers_sleepPods);
+        all_markers.addAll(markers_mentals);
+        all_markers.addAll(markers_bikes);
+        all_markers.addAll(markers_printers);
 
     }
 
@@ -912,13 +833,42 @@ public class MapsFragment extends Fragment
 
     }
 
+    private void refreshMapIcons() {
+        // initialize the hashmap
+        mapHash.put(MapIconCategories.MENTAL_HEALTH, new ArrayList<>());
+        mapHash.put(MapIconCategories.MICROWAVE, new ArrayList<>());
+        mapHash.put(MapIconCategories.NAP_POD, new ArrayList<>());
+        mapHash.put(MapIconCategories.PRINTER, new ArrayList<>());
+        mapHash.put(MapIconCategories.WATER_FOUNTAIN, new ArrayList<>());
+        mapHash.put(MapIconCategories.FORD_GO_BIKE, new ArrayList<>());
+
+        final AtomicInteger count = new AtomicInteger();
+
+        repository.scanAll(mapHash, new RepositoryCallback<CategoryLoc>() {
+            @Override
+            public void onSuccess() {
+                if (count.addAndGet(1) == mapHash.keySet().size()) {
+                    loadMarkers(mapHash); // TODO: want to load markers after all repositories scanned, but issue since async. This loads markers multiple times...
+                }
+            }
+
+            @Override
+            public void onFailure() {
+                Toast.makeText(getContext(), "Unable to retrieve map icons, please try again",
+                        Toast.LENGTH_SHORT).show();
+                if (count.addAndGet(1) == mapHash.keySet().size()) {
+                    loadMarkers(mapHash); // TODO: want to load markers after all repositories scanned, but issue since async. This loads markers multiple times...
+                }
+            }
+        });
+    }
+
     @RequiresApi(api = Build.VERSION_CODES.N)
     public String convertMillisToUTC(Long millis) {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z");
         sdf.setTimeZone(TimeZone.getTimeZone("UTC"));
         return sdf.format(new Date(millis));
     }
-
 
 
     public LatLng getCurrLocation() {
@@ -930,7 +880,6 @@ public class MapsFragment extends Fragment
     public void onMapLoaded() {
 
     }
-
 
 
 }

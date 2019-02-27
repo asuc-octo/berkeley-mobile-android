@@ -49,5 +49,5 @@ public class CategoryLoc {
 
     // only some map icons have this e.g. printers
     @PropertyName("open_close_array")
-    public ArrayList<MultiOpenClose> openCloses;
+    public ArrayList<OpenClose> openCloses;
 }

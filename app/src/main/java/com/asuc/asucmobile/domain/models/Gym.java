@@ -8,8 +8,12 @@ import java.util.ArrayList;
 import java.util.Date;
 
 import lombok.Builder;
+import lombok.Getter;
+import lombok.Setter;
 
 @Builder
+@Getter
+@Setter
 public class Gym {
 
     private int id;
@@ -30,34 +34,6 @@ public class Gym {
         this.opening = opening;
         this.closing = closing;
         this.imageUrl = imageUrl;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public String getTimes() {
-        return parseTimes();
-    }
-
-    public String getAddress() {
-        return address;
-    }
-
-    public ArrayList<Date> getOpening() {
-        return opening;
-    }
-
-    public ArrayList<Date> getClosing() {
-        return closing;
-    }
-
-    public String getImageUrl() {
-        return imageUrl;
     }
 
     /**

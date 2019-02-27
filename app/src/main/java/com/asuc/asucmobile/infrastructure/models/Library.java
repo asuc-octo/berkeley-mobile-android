@@ -29,7 +29,7 @@ public class Library {
     public String phone;
 
     @PropertyName("open_close_array")
-    public ArrayList<MultiOpenClose> openCloses;
+    public ArrayList<OpenClose> openCloses;
 
     @PropertyName("latitude")
     public double latitude;

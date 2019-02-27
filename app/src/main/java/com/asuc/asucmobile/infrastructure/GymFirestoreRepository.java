@@ -26,7 +26,7 @@ public class GymFirestoreRepository implements Repository<Gym> {
     public GymFirestoreRepository(FirebaseFirestore firestore) {
         Log.d(TAG, "Initialized");
         mTransformer = new GymTransformer();
-        mRef = firestore.collection(FirebaseCollectionNames.LIBRARY);
+        mRef = firestore.collection(FirebaseCollectionNames.GYM);
     }
 
     @Override

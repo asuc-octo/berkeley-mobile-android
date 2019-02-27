@@ -24,7 +24,7 @@ import java.util.Locale;
 public class OpenGymActivity extends BaseActivity {
 
     private static final SimpleDateFormat HOURS_FORMAT =
-            new SimpleDateFormat("h:mm a", Locale.ENGLISH);
+            new SimpleDateFormat("EEE h:mm a", Locale.ENGLISH);
 
     private static Gym gym;
     private FirebaseAnalytics mFirebaseAnalytics;
