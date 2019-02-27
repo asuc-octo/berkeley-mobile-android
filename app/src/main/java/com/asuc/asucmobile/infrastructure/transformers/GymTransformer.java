@@ -22,10 +22,10 @@ public class GymTransformer {
      */
     public List<com.asuc.asucmobile.domain.models.Gym> gymQSDomainTransformer(QuerySnapshot qs) {
         List<com.asuc.asucmobile.domain.models.Gym> gyms = new ArrayList<>();
-        com.asuc.asucmobile.infrastructure.models.Gym infraGym = null;
+        Gym infraGym = null;
         for (DocumentSnapshot documentSnapshot : qs.getDocuments()) {
             try {
-                infraGym = documentSnapshot.toObject(com.asuc.asucmobile.infrastructure.models.Gym.class);
+                infraGym = documentSnapshot.toObject(Gym.class);
                 if (infraGym != null) {
                     gyms.add(gymInfraDomainTransformer(infraGym));
                 }

@@ -12,6 +12,7 @@ public class FirebaseCollectionNames {
     public final String RESOURCE = "Resources";
     public final String MENTAL_HEALTH = "Mental Health Resources";
     public final String GYM = "Gyms";
+    public final String GYM_CLASS = "Gym Classes";
     public final String MICROWAVE = "Microwaves";
     public final String NAP_POD = "Nap Pods";
     public final String PRINTER = "Printers";
