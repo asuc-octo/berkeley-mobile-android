@@ -4,22 +4,19 @@ import android.support.annotation.NonNull;
 import android.util.Log;
 
 import com.asuc.asucmobile.domain.models.Cafe;
-import com.asuc.asucmobile.domain.models.DiningHall;
+import com.asuc.asucmobile.domain.repository.Repository;
+import com.asuc.asucmobile.domain.repository.RepositoryCallback;
 import com.asuc.asucmobile.infrastructure.transformers.CafeTransformer;
 import com.asuc.asucmobile.values.FirebaseCollectionNames;
-import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.List;
 
-import javax.inject.Inject;
-
-public class CafeFirestoreRepository implements Repository<Cafe>{
+public class CafeFirestoreRepository implements Repository<Cafe> {
 
     public static final String TAG = "CafeFirebase";
 

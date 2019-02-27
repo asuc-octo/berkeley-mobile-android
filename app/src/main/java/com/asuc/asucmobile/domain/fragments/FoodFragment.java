@@ -1,7 +1,5 @@
 package com.asuc.asucmobile.domain.fragments;
 
-import android.animation.Animator;
-import android.animation.AnimatorListenerAdapter;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
@@ -21,13 +19,12 @@ import com.asuc.asucmobile.GlobalApplication;
 import com.asuc.asucmobile.R;
 import com.asuc.asucmobile.domain.adapters.FoodPlaceAdapter;
 import com.asuc.asucmobile.domain.models.DiningHall;
-import com.asuc.asucmobile.domain.services.BMService;
 import com.asuc.asucmobile.domain.models.Cafe;
 import com.asuc.asucmobile.domain.models.responses.CafesResponse;
 import com.asuc.asucmobile.domain.models.responses.DiningHallsResponse;
 import com.asuc.asucmobile.domain.models.FoodPlace;
-import com.asuc.asucmobile.infrastructure.Repository;
-import com.asuc.asucmobile.infrastructure.RepositoryCallback;
+import com.asuc.asucmobile.domain.repository.Repository;
+import com.asuc.asucmobile.domain.repository.RepositoryCallback;
 import com.asuc.asucmobile.utilities.NavigationGenerator;
 import com.google.firebase.analytics.FirebaseAnalytics;
 
@@ -37,8 +34,6 @@ import java.util.List;
 import javax.inject.Inject;
 
 import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 /**
  * Created by rustie on 10/4/17.

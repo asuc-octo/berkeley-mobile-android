@@ -1,18 +1,14 @@
 package com.asuc.asucmobile.infrastructure;
 
 import android.util.Log;
-import android.view.View;
-import android.widget.Toast;
 
-import com.asuc.asucmobile.domain.adapters.FoodPlaceAdapter;
 import com.asuc.asucmobile.domain.models.DiningHall;
-import com.asuc.asucmobile.domain.models.FoodPlace;
 import com.asuc.asucmobile.domain.models.responses.DiningHallsResponse;
+import com.asuc.asucmobile.domain.repository.Repository;
+import com.asuc.asucmobile.domain.repository.RepositoryCallback;
 import com.asuc.asucmobile.domain.services.BMService;
 
 import java.util.List;
-
-import javax.inject.Inject;
 
 import retrofit2.Call;
 import retrofit2.Response;

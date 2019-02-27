@@ -20,13 +20,10 @@ import com.asuc.asucmobile.GlobalApplication;
 import com.asuc.asucmobile.R;
 import com.asuc.asucmobile.domain.adapters.LibraryAdapter;
 import com.asuc.asucmobile.domain.models.Library;
-import com.asuc.asucmobile.domain.services.BMService;
 import com.asuc.asucmobile.domain.main.ListOfFavorites;
 import com.asuc.asucmobile.domain.main.OpenLibraryActivity;
-import com.asuc.asucmobile.domain.models.responses.LibrariesResponse;
-import com.asuc.asucmobile.infrastructure.LibraryFirestoreRepository;
-import com.asuc.asucmobile.infrastructure.Repository;
-import com.asuc.asucmobile.infrastructure.RepositoryCallback;
+import com.asuc.asucmobile.domain.repository.Repository;
+import com.asuc.asucmobile.domain.repository.RepositoryCallback;
 import com.asuc.asucmobile.utilities.CustomComparators;
 import com.asuc.asucmobile.utilities.NavigationGenerator;
 import com.asuc.asucmobile.utilities.SerializableUtilities;
@@ -36,9 +33,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 import javax.inject.Inject;
-
-import retrofit2.Call;
-import retrofit2.Response;
 
 public class LibraryFragment extends Fragment {
 

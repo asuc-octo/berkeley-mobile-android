@@ -1,4 +1,4 @@
-package com.asuc.asucmobile.infrastructure;
+package com.asuc.asucmobile.domain.repository;
 
 import java.util.List;
 

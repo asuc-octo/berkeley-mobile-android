@@ -1,6 +1,8 @@
 package com.asuc.asucmobile.infrastructure;
 
 import com.asuc.asucmobile.domain.models.DiningHall;
+import com.asuc.asucmobile.domain.repository.Repository;
+import com.asuc.asucmobile.domain.repository.RepositoryCallback;
 
 import org.junit.Before;
 import org.junit.Test;

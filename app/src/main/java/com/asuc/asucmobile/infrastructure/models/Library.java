@@ -1,10 +1,8 @@
 package com.asuc.asucmobile.infrastructure.models;
 
-import com.google.android.gms.maps.model.LatLng;
 import com.google.firebase.firestore.PropertyName;
 
 import java.util.ArrayList;
-import java.util.Date;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -20,6 +18,7 @@ import lombok.Setter;
 public class Library {
 
     public int id;
+
     @PropertyName("name")
     public String name;
 
@@ -28,14 +27,15 @@ public class Library {
 
     @PropertyName("phone_number")
     public String phone;
-    @PropertyName("open_close")
-    public ArrayList<OpenClose> openCloses;
+
+    @PropertyName("open_close_array")
+    public ArrayList<MultiOpenClose> openCloses;
 
     @PropertyName("latitude")
     public double latitude;
 
-    @PropertyName("longtitude")
-    public double longtitude;
+    @PropertyName("longitude")
+    public double longitude;
 
     @PropertyName("picture")
     public String picture;

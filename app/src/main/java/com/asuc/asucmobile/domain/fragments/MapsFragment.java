@@ -45,6 +45,7 @@ import com.asuc.asucmobile.domain.main.LiveBusActivity;
 import com.asuc.asucmobile.domain.main.PopUpActivity;
 import com.asuc.asucmobile.domain.main.RouteSelectActivity;
 import com.asuc.asucmobile.domain.models.Buses;
+import com.asuc.asucmobile.domain.models.Category;
 import com.asuc.asucmobile.domain.models.CategoryLoc;
 import com.asuc.asucmobile.domain.models.Journey;
 import com.asuc.asucmobile.domain.models.Line;
@@ -53,6 +54,8 @@ import com.asuc.asucmobile.domain.models.TripRespModel;
 import com.asuc.asucmobile.domain.models.responses.LineResponse;
 import com.asuc.asucmobile.domain.models.responses.MapIconResponse;
 import com.asuc.asucmobile.domain.models.responses.TripResponse;
+import com.asuc.asucmobile.domain.repository.MultiRepository;
+import com.asuc.asucmobile.domain.repository.RepositoryCallback;
 import com.asuc.asucmobile.domain.services.BMService;
 import com.asuc.asucmobile.infrastructure.models.StopBeforeTransform;
 import com.asuc.asucmobile.infrastructure.models.TripBeforeTransform;
@@ -60,6 +63,7 @@ import com.asuc.asucmobile.infrastructure.transformers.StopListToLineTransformer
 import com.asuc.asucmobile.infrastructure.transformers.TripListToJourneyTransformer;
 import com.asuc.asucmobile.utilities.NavigationGenerator;
 import com.asuc.asucmobile.utilities.RoundedBackgroundSpan;
+import com.asuc.asucmobile.values.MapIconCategories;
 import com.github.clans.fab.FloatingActionButton;
 import com.github.clans.fab.FloatingActionMenu;
 import com.google.android.gms.common.ConnectionResult;
@@ -84,6 +88,7 @@ import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -106,6 +111,7 @@ public class MapsFragment extends Fragment
     private static final String TAG = "MapsFragment";
 
     @Inject BMService bmService;
+    @Inject MultiRepository<String, CategoryLoc> repository;
 
     private GoogleMap mMap;
     Gson gson = new Gson();
@@ -215,7 +221,7 @@ public class MapsFragment extends Fragment
                 .addApi(LocationServices.API)
                 .build();
         mapView = mapFragment.getView();
-        mapFragment.getMapAsync(this);
+//        mapFragment.getMapAsync(this);
 
         refreshWrapper = (LinearLayout) layout.findViewById(R.id.refresh);
 
@@ -246,6 +252,10 @@ public class MapsFragment extends Fragment
         FABmenu.setOnMenuButtonClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Map map = mapHash;
+
+                Log.d(TAG, mapHash.toString());
+
                 mFirebaseAnalytics = FirebaseAnalytics.getInstance(MapsFragment.this.getContext());
                 Bundle bundle = new Bundle();
                 mFirebaseAnalytics.logEvent("view_map_icons_clicked", bundle);
@@ -519,22 +529,43 @@ public class MapsFragment extends Fragment
         mMap.setOnMarkerClickListener(this);
         mMap.setOnMapLoadedCallback(this);
 
-        bmService.callIconList().enqueue(new retrofit2.Callback<MapIconResponse>() {
+//        bmService.callIconList().enqueue(new retrofit2.Callback<MapIconResponse>() {
+//            @Override
+//            public void onResponse(Call<MapIconResponse> call, Response<MapIconResponse> response) {
+//
+//                if (response.body() == null)
+//                    return;
+//
+//                mapHash.put("Microwave", response.body().getMicrowaves());
+//                mapHash.put("Water Fountain", response.body().getWaterFountains());
+//                mapHash.put("Nap Pod", response.body().getNapPods());
+//                loadMarkers(mapHash);
+//
+//            }
+//
+//            @Override
+//            public void onFailure(Call<MapIconResponse> call, Throwable t) {
+//                Toast.makeText(getContext(), "Unable to retrieve map icons, please try again",
+//                        Toast.LENGTH_SHORT).show();
+//            }
+//        });
+
+        // initialize the hashmap
+        mapHash.put(MapIconCategories.MENTAL_HEALTH, new ArrayList<>());
+        mapHash.put(MapIconCategories.MICROWAVE, new ArrayList<>());
+        mapHash.put(MapIconCategories.NAP_POD, new ArrayList<>());
+        mapHash.put(MapIconCategories.PRINTER, new ArrayList<>());
+        mapHash.put(MapIconCategories.WATER_FOUNTAIN, new ArrayList<>());
+        mapHash.put(MapIconCategories.FORD_GO_BIKE, new ArrayList<>());
+
+        repository.scanAll(mapHash, new RepositoryCallback<CategoryLoc>() {
             @Override
-            public void onResponse(Call<MapIconResponse> call, Response<MapIconResponse> response) {
-
-                if (response.body() == null)
-                    return;
-
-                mapHash.put("Microwave", response.body().getMicrowaves());
-                mapHash.put("Water Fountain", response.body().getWaterFountains());
-                mapHash.put("Nap Pod", response.body().getNapPods());
-                loadMarkers(mapHash);
-
+            public void onSuccess() {
+                loadMarkers(mapHash); // TODO: want to load markers after all repositories scanned, but issue since async. This loads markers multiple times...
             }
 
             @Override
-            public void onFailure(Call<MapIconResponse> call, Throwable t) {
+            public void onFailure() {
                 Toast.makeText(getContext(), "Unable to retrieve map icons, please try again",
                         Toast.LENGTH_SHORT).show();
             }

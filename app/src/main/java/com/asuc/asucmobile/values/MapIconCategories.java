@@ -10,4 +10,5 @@ public class MapIconCategories {
     public final String NAP_POD = "Nap Pod";
     public final String PRINTER = "Printer";
     public final String WATER_FOUNTAIN = "Water Fountain";
+    public final String FORD_GO_BIKE = "Ford Go Bike";
 }

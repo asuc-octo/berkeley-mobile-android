@@ -4,6 +4,8 @@ import android.support.annotation.NonNull;
 import android.util.Log;
 
 import com.asuc.asucmobile.domain.models.DiningHall;
+import com.asuc.asucmobile.domain.repository.Repository;
+import com.asuc.asucmobile.domain.repository.RepositoryCallback;
 import com.asuc.asucmobile.infrastructure.models.DiningHallWeek;
 import com.asuc.asucmobile.infrastructure.transformers.DiningHallTransformer;
 import com.asuc.asucmobile.values.FirebaseCollectionNames;

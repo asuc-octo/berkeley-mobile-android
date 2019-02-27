@@ -34,7 +34,7 @@ public class GymTransformer {
         ArrayList<Date> weeklyClose = new ArrayList<>();
 
         for (OpenClose openClose : gym.getOpenCloses()) {
-            weeklyOpen.add(new Date(openClose.getOpenTIme()));
+            weeklyOpen.add(new Date(openClose.getOpenTime()));
             weeklyClose.add(new Date(openClose.getCloseTime()));
         }
 

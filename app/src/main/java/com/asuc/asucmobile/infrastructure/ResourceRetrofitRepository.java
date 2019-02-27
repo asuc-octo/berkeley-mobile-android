@@ -4,6 +4,8 @@ import android.util.Log;
 
 import com.asuc.asucmobile.domain.models.Resource;
 import com.asuc.asucmobile.domain.models.responses.ResourcesResponse;
+import com.asuc.asucmobile.domain.repository.Repository;
+import com.asuc.asucmobile.domain.repository.RepositoryCallback;
 import com.asuc.asucmobile.domain.services.BMService;
 
 import java.util.List;

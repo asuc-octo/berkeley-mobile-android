@@ -1,11 +1,8 @@
 package com.asuc.asucmobile.infrastructure.models;
 
-import com.google.firebase.auth.ActionCodeResult;
 import com.google.firebase.firestore.PropertyName;
 
 import java.util.ArrayList;
-
-import javax.annotation.PropertyKey;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -51,6 +48,6 @@ public class CategoryLoc {
     public boolean onCampus;
 
     // only some map icons have this e.g. printers
-    @PropertyName("open_close")
-    public ArrayList<OpenClose> openCloses;
+    @PropertyName("open_close_array")
+    public ArrayList<MultiOpenClose> openCloses;
 }

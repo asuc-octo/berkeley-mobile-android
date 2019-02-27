@@ -3,8 +3,9 @@ package com.asuc.asucmobile.infrastructure;
 import android.util.Log;
 
 import com.asuc.asucmobile.domain.models.Library;
-import com.asuc.asucmobile.domain.models.responses.DiningHallsResponse;
 import com.asuc.asucmobile.domain.models.responses.LibrariesResponse;
+import com.asuc.asucmobile.domain.repository.Repository;
+import com.asuc.asucmobile.domain.repository.RepositoryCallback;
 import com.asuc.asucmobile.domain.services.BMService;
 
 import java.util.List;
@@ -12,7 +13,7 @@ import java.util.List;
 import retrofit2.Call;
 import retrofit2.Response;
 
-public class LibraryRetrofitRepository implements Repository<Library>{
+public class LibraryRetrofitRepository implements Repository<Library> {
 
     public static final String TAG = "LibraryRetrofit";
 

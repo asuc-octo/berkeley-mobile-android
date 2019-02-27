@@ -1,13 +1,14 @@
 package com.asuc.asucmobile.infrastructure;
 
 import com.asuc.asucmobile.domain.models.DiningHall;
+import com.asuc.asucmobile.domain.repository.Repository;
+import com.asuc.asucmobile.domain.repository.RepositoryCallback;
 import com.asuc.asucmobile.infrastructure.transformers.DiningHallTransformer;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
-import java.io.InputStream;
 import java.lang.reflect.Type;
 import java.net.URL;
 import java.util.List;

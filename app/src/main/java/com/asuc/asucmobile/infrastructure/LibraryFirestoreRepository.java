@@ -3,7 +3,8 @@ package com.asuc.asucmobile.infrastructure;
 import android.support.annotation.NonNull;
 import android.util.Log;
 
-import com.asuc.asucmobile.GlobalApplication;
+import com.asuc.asucmobile.domain.repository.Repository;
+import com.asuc.asucmobile.domain.repository.RepositoryCallback;
 import com.asuc.asucmobile.infrastructure.transformers.LibraryTransformer;
 import com.asuc.asucmobile.domain.models.Library;
 import com.asuc.asucmobile.values.FirebaseCollectionNames;
@@ -14,9 +15,6 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.List;
-
-import javax.inject.Inject;
-import javax.inject.Singleton;
 
 public class LibraryFirestoreRepository implements Repository<Library> {
 

@@ -1,7 +1,10 @@
 package com.asuc.asucmobile.infrastructure.transformers;
 
+import android.util.Log;
+
 import com.asuc.asucmobile.infrastructure.models.CategoryLoc;
 import com.asuc.asucmobile.infrastructure.models.OpenClose;
+import com.asuc.asucmobile.infrastructure.models.MultiOpenClose;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
@@ -10,6 +13,8 @@ import java.util.Date;
 import java.util.List;
 
 public class CategoryLocTransformer {
+
+    public static final String TAG = "CategoryLocTransformer";
 
     /**
      * Transform Firebase QuerySnapshot to domain model
@@ -20,9 +25,13 @@ public class CategoryLocTransformer {
         List<com.asuc.asucmobile.domain.models.CategoryLoc> categoryLocs = new ArrayList<>();
         com.asuc.asucmobile.infrastructure.models.CategoryLoc infraCategoryLoc = null;
         for (DocumentSnapshot documentSnapshot : qs.getDocuments()) {
-            infraCategoryLoc = documentSnapshot.toObject(com.asuc.asucmobile.infrastructure.models.CategoryLoc.class);
-            if (infraCategoryLoc != null) {
-                categoryLocs.add(categoryLocInfraDomainTransformer(infraCategoryLoc));
+            try {
+                infraCategoryLoc = documentSnapshot.toObject(com.asuc.asucmobile.infrastructure.models.CategoryLoc.class);
+                if (infraCategoryLoc != null) {
+                    categoryLocs.add(categoryLocInfraDomainTransformer(infraCategoryLoc));
+                }
+            } catch (Exception e) {
+                Log.d(TAG, e.toString());
             }
 
         }
@@ -33,9 +42,19 @@ public class CategoryLocTransformer {
         ArrayList<Date> weeklyOpen = new ArrayList<>();
         ArrayList<Date> weeklyClose = new ArrayList<>();
 
-        for (OpenClose openClose : categoryLoc.getOpenCloses()) {
-            weeklyOpen.add(new Date(openClose.getOpenTIme()));
-            weeklyClose.add(new Date(openClose.getCloseTime()));
+        if (categoryLoc.getOpenCloses() != null) {
+            for (MultiOpenClose openClose : categoryLoc.getOpenCloses()) {
+                if (openClose.getOpenTimes() != null) {
+                    for (Long l : openClose.getOpenTimes()) {
+                        weeklyOpen.add(new Date(l));
+                    }
+                }
+                if (openClose.getCloseTimes() != null) {
+                    for (Long l : openClose.getCloseTimes()) {
+                        weeklyClose.add(new Date(l));
+                    }
+                }
+            }
         }
 
         return com.asuc.asucmobile.domain.models.CategoryLoc.builder()

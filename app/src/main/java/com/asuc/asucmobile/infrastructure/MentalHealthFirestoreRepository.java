@@ -4,9 +4,9 @@ import android.support.annotation.NonNull;
 import android.util.Log;
 
 import com.asuc.asucmobile.domain.models.CategoryLoc;
-import com.asuc.asucmobile.domain.models.Gym;
+import com.asuc.asucmobile.domain.repository.Repository;
+import com.asuc.asucmobile.domain.repository.RepositoryCallback;
 import com.asuc.asucmobile.infrastructure.transformers.CategoryLocTransformer;
-import com.asuc.asucmobile.infrastructure.transformers.GymTransformer;
 import com.asuc.asucmobile.values.FirebaseCollectionNames;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;

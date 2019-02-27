@@ -1,5 +1,8 @@
 package com.asuc.asucmobile.infrastructure.transformers;
 
+import android.util.Log;
+
+import com.asuc.asucmobile.infrastructure.models.MultiOpenClose;
 import com.asuc.asucmobile.infrastructure.models.OpenClose;
 import com.asuc.asucmobile.infrastructure.models.Resource;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -13,6 +16,8 @@ import java.util.List;
 
 public class ResourceTransformer {
 
+    public static final String TAG = "ResourceTransformer";
+
     /**
      * Transform Firebase QuerySnapshot to resource model
      * @param qs
@@ -22,9 +27,13 @@ public class ResourceTransformer {
         List<com.asuc.asucmobile.domain.models.Resource> resources = new ArrayList<>();
         Resource infraResource = null;
         for (DocumentSnapshot documentSnapshot : qs.getDocuments()) {
-            infraResource = documentSnapshot.toObject(Resource.class);
-            if (infraResource != null) {
-                resources.add(resourceInfraDomainTransformer(infraResource));
+            try {
+                infraResource = documentSnapshot.toObject(Resource.class);
+                if (infraResource != null) {
+                    resources.add(resourceInfraDomainTransformer(infraResource));
+                }
+            } catch (Exception e) {
+                Log.d(TAG, e.toString());
             }
         }
         return resources;
@@ -43,14 +52,18 @@ public class ResourceTransformer {
 
         Calendar c = Calendar.getInstance();
         StringBuilder hoursString = new StringBuilder();
-        SimpleDateFormat openDateformat = new SimpleDateFormat("EEEE hh:mm a"); // the day of the week spelled out completely
-        SimpleDateFormat closeDateFormat = new SimpleDateFormat("- hh:mm a\n");
+        SimpleDateFormat openDateFormat = new SimpleDateFormat("EEEE \t\t\t\t\t h:mm a"); // TODO: make this look better.... aka not store everything as String
+        SimpleDateFormat closeDateFormat = new SimpleDateFormat("- h:mm a\n");
 
-        for (OpenClose openClose : resource.getOpenCloses()) {
-            Date openDate = new Date(openClose.getOpenTIme());
-            Date closeDate = new Date(openClose.getCloseTime());
-            hoursString.append(openDateformat.format(openDate));
-            hoursString.append(closeDateFormat.format(closeDate));
+        if (resource.getOpenCloses() != null) {
+            for (MultiOpenClose openClose : resource.getOpenCloses()) {
+                if (openClose.getOpenTimes() != null) {
+                    hoursString.append(openDateFormat.format(new Date(openClose.getOpenTimes().get(0) * 1000)));
+                }
+                if (openClose.getCloseTimes() != null) {
+                    hoursString.append(closeDateFormat.format(new Date(openClose.getCloseTimes().get(0) * 1000)));
+                }
+            }
         }
 
         return com.asuc.asucmobile.domain.models.Resource.builder()

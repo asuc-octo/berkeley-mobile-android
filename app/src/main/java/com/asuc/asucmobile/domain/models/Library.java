@@ -146,9 +146,6 @@ public class Library implements Comparable<Library>{
                 ", weeklyOpen=" + weeklyOpen.toString() +
                 ", weeklyClose=" + weeklyClose.toString() +
                 ", latLng=" + latLng +
-                ", byAppointment=" + byAppointment +
-                ", hasCoordinates=" + hasCoordinates +
-                ", weeklyAppointments=" + weeklyAppointments.toString() +
                 ", weekday=" + weekday +
                 '}';
     }

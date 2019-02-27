@@ -1,13 +1,15 @@
 package com.asuc.asucmobile.infrastructure.transformers;
 
 import com.asuc.asucmobile.infrastructure.models.Library;
-import com.asuc.asucmobile.infrastructure.models.OpenClose;
+import com.asuc.asucmobile.infrastructure.models.MultiOpenClose;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
+import lombok.NonNull;
 
 public class LibraryTransformer {
 
@@ -34,14 +36,24 @@ public class LibraryTransformer {
      * @param library
      * @return
      */
-    public com.asuc.asucmobile.domain.models.Library libraryInfraDomainTransformer(Library library) {
+    public com.asuc.asucmobile.domain.models.Library libraryInfraDomainTransformer(@NonNull Library library) {
 
         ArrayList<Date> weeklyOpen = new ArrayList<>();
         ArrayList<Date> weeklyClose = new ArrayList<>();
 
-        for (OpenClose openClose : library.getOpenCloses()) {
-            weeklyOpen.add(new Date(openClose.getOpenTIme()));
-            weeklyClose.add(new Date(openClose.getCloseTime()));
+        if (library.getOpenCloses() != null) {
+            for (MultiOpenClose openClose : library.getOpenCloses()) {
+                if (openClose.getOpenTimes() != null) {
+                    for (Long l : openClose.getOpenTimes()) {
+                        weeklyOpen.add(new Date(l));
+                    }
+                }
+                if (openClose.getCloseTimes() != null) {
+                    for (Long l : openClose.getCloseTimes()) {
+                        weeklyClose.add(new Date(l));
+                    }
+                }
+            }
         }
 
         return com.asuc.asucmobile.domain.models.Library.builder()
@@ -52,7 +64,7 @@ public class LibraryTransformer {
                 .weeklyOpen(weeklyOpen)
                 .weeklyClose(weeklyClose)
                 .latitude(library.getLatitude())
-                .longitude(library.getLongtitude())
+                .longitude(library.getLongitude())
                 .build();
     }
 

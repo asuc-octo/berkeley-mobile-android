@@ -28,7 +28,7 @@ import com.asuc.asucmobile.domain.models.GymClass;
 import com.asuc.asucmobile.domain.models.WeekCalendar;
 import com.asuc.asucmobile.domain.models.responses.GymClassesResponse;
 import com.asuc.asucmobile.domain.models.responses.GymsResponse;
-import com.asuc.asucmobile.infrastructure.Repository;
+import com.asuc.asucmobile.domain.repository.Repository;
 import com.asuc.asucmobile.utilities.NavigationGenerator;
 import com.google.firebase.analytics.FirebaseAnalytics;
 
