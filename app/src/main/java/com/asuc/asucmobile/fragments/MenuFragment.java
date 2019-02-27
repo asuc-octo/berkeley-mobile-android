@@ -110,11 +110,8 @@ public class    MenuFragment extends Fragment {
 
                 if(event.getAction() == MotionEvent.ACTION_DOWN) {
                     if(event.getRawX() >= (headerHours.getRight() - headerHours.getCompoundDrawables()[DRAWABLE_RIGHT].getBounds().width())) {
-                        Intent popUp;
-                        //marker.setIcon(icon);
-                        popUp = new Intent(getActivity(), LegendPopUpActivity.class);
-                        popUp.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                        startActivity(popUp);
+                        LegendPopUpActivity newDialog = new LegendPopUpActivity();
+                        newDialog.show(getFragmentManager(), "dialog");
                         return true;
                     }
                 }
