@@ -211,7 +211,7 @@ public class OpenLibraryActivity extends BaseActivity {
         bookableLibraries.add("Main (Gardner) Stacks");
         bookableLibraries.add("Moffitt Library");
         bookableLibraries.add("Institute of Governmental Studies Library");
-        String name = library.getName();
+        final String name = library.getName();
         if (!bookableLibraries.contains(name)) {
             booking.setText("Cannot reserve study rooms at this library");
             return;
