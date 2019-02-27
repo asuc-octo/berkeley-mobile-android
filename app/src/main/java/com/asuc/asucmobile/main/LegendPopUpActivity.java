@@ -54,12 +54,22 @@ public class LegendPopUpActivity extends DialogFragment {
 
         ListView legendList = (ListView) v.findViewById(R.id.legend_list);
         ArrayList<Pair<Drawable, String>> items = new ArrayList<>();
-        items.add(new Pair(ContextCompat.getDrawable(this.getActivity(), R.drawable.gluten), "Gluten"));
-        items.add(new Pair(ContextCompat.getDrawable(this.getActivity(), R.drawable.vegan), "Vegan"));
-        items.add(new Pair(ContextCompat.getDrawable(this.getActivity(), R.drawable.wheat), "Gluten Free"));
-        items.add(new Pair(ContextCompat.getDrawable(this.getActivity(), R.drawable.tree_nuts), "Contains Nuts"));
-        items.add(new Pair(ContextCompat.getDrawable(this.getActivity(), R.drawable.egg), "Contains Eggs"));
-        items.add(new Pair(ContextCompat.getDrawable(this.getActivity(), R.drawable.milk), "Contains Milk"));
+        items.add(new Pair(ContextCompat.getDrawable(this.getActivity(), R.drawable.milk), "Milk"));
+        items.add(new Pair(ContextCompat.getDrawable(this.getActivity(), R.drawable.egg), "Eggs"));
+        items.add(new Pair(ContextCompat.getDrawable(this.getActivity(), R.drawable.shellfish), "Shellfish"));
+        items.add(new Pair(ContextCompat.getDrawable(this.getActivity(), R.drawable.fish), "Fish"));
+        items.add(new Pair(ContextCompat.getDrawable(this.getActivity(), R.drawable.tree_nuts), "Tree Nuts"));
+        items.add(new Pair(ContextCompat.getDrawable(this.getActivity(), R.drawable.wheat), "Wheat"));
+        items.add(new Pair(ContextCompat.getDrawable(this.getActivity(), R.drawable.peanuts), "Peanuts"));
+        items.add(new Pair(ContextCompat.getDrawable(this.getActivity(), R.drawable.sesame), "Sesame"));
+        items.add(new Pair(ContextCompat.getDrawable(this.getActivity(), R.drawable.soybeans), "Soybeans"));
+        items.add(new Pair(ContextCompat.getDrawable(this.getActivity(), R.drawable.vegan), "Vegan Option"));
+        items.add(new Pair(ContextCompat.getDrawable(this.getActivity(), R.drawable.vegetarian), "Vegetarian Option"));
+        items.add(new Pair(ContextCompat.getDrawable(this.getActivity(), R.drawable.gluten), "Contains Gluten"));
+        items.add(new Pair(ContextCompat.getDrawable(this.getActivity(), R.drawable.pork), "Contains Pork"));
+        items.add(new Pair(ContextCompat.getDrawable(this.getActivity(), R.drawable.alcohol), "Contains Alcohol"));
+        items.add(new Pair(ContextCompat.getDrawable(this.getActivity(), R.drawable.halal), "Halal"));
+        items.add(new Pair(ContextCompat.getDrawable(this.getActivity(), R.drawable.kosher), "Kosher"));
 
         legendList.setAdapter(new LegendAdapter(this.getActivity(), items));
 
@@ -73,5 +83,11 @@ public class LegendPopUpActivity extends DialogFragment {
         Dialog dialog = super.onCreateDialog(savedInstanceState);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         return dialog;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        getDialog().getWindow().setLayout(ViewGroup.LayoutParams.WRAP_CONTENT, 1000);
     }
 }

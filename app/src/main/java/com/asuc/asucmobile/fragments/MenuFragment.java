@@ -98,26 +98,35 @@ public class    MenuFragment extends Fragment {
         header = getActivity().getLayoutInflater().inflate(R.layout.header_image, foodMenu, false);
         headerHours = (TextView) header.findViewById(R.id.header_text);
 
-        headerHours.setOnTouchListener(new View.OnTouchListener() {
-
+        ImageView legendIcon = (ImageView)header.findViewById(R.id.legend_info);
+        legendIcon.setOnClickListener(new View.OnClickListener() {
             @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                final int DRAWABLE_LEFT = 0;
-                final int DRAWABLE_TOP = 1;
-                final int DRAWABLE_RIGHT = 2;
-                final int DRAWABLE_BOTTOM = 3;
-                Log.d("touched:", "true");
-
-                if(event.getAction() == MotionEvent.ACTION_DOWN) {
-                    if(event.getRawX() >= (headerHours.getRight() - headerHours.getCompoundDrawables()[DRAWABLE_RIGHT].getBounds().width())) {
-                        LegendPopUpActivity newDialog = new LegendPopUpActivity();
-                        newDialog.show(getFragmentManager(), "dialog");
-                        return true;
-                    }
-                }
-                return false;
+            public void onClick(View v) {
+                LegendPopUpActivity newDialog = new LegendPopUpActivity();
+                newDialog.show(getFragmentManager(), "dialog");
             }
         });
+        //for clicking on a drawable in the TextView
+//        headerHours.setOnTouchListener(new View.OnTouchListener() {
+//
+//            @Override
+//            public boolean onTouch(View v, MotionEvent event) {
+//                final int DRAWABLE_LEFT = 0;
+//                final int DRAWABLE_TOP = 1;
+//                final int DRAWABLE_RIGHT = 2;
+//                final int DRAWABLE_BOTTOM = 3;
+//                Log.d("touched:", "true");
+//
+//                if(event.getAction() == MotionEvent.ACTION_DOWN) {
+//                    if(event.getRawX() >= (headerHours.getRight() - headerHours.getCompoundDrawables()[DRAWABLE_RIGHT].getBounds().width())) {
+//                        LegendPopUpActivity newDialog = new LegendPopUpActivity();
+//                        newDialog.show(getFragmentManager(), "dialog");
+//                        return true;
+//                    }
+//                }
+//                return false;
+//            }
+//        });
 
         if (emptyListView == null) {
             Log.d(TAG, "EMPTY EMPTY");

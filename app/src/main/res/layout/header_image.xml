@@ -16,20 +16,33 @@
         android:textColor="@android:color/white"
         android:layout_alignParentBottom="true" >
 
-        <TextView
-            android:id="@+id/header_text"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textColor="@android:color/white"
-            android:singleLine="true"
-            android:ellipsize="marquee"
-            android:scrollHorizontally="true"
-            android:focusable="true"
-            android:focusableInTouchMode="true"
-            android:drawableLeft="@drawable/icon_clock"
-            android:drawableRight="@drawable/icon_info"
-            android:drawablePadding="5dp"
-            android:gravity="center_vertical" />
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/header_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@android:color/white"
+                android:singleLine="true"
+                android:ellipsize="marquee"
+                android:scrollHorizontally="true"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:drawableStart="@drawable/icon_clock"
+                android:drawablePadding="5dp"
+                android:gravity="center_vertical" />
+
+            <ImageView
+                android:layout_marginStart="10dp"
+                android:id="@+id/legend_info"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:src="@drawable/icon_info"/>
+
+        </LinearLayout>
 
     </RelativeLayout>
 
