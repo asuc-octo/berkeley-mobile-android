@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.asuc.asucmobile.fragments.GymFragment">
+    tools:context="com.asuc.asucmobile.domain.fragments.GymFragment">
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar"
@@ -92,7 +92,7 @@
                 android:textStyle="bold"
                 android:text="Group Exercises"/>
 
-            <com.asuc.asucmobile.models.WeekCalendar
+            <com.asuc.asucmobile.domain.models.WeekCalendar
                 android:id="@+id/weekCalendar"
                 android:layout_width="match_parent"
                 android:layout_height="65dp" />

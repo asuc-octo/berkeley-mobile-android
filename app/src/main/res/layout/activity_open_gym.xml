@@ -37,7 +37,6 @@
                 android:scaleType="centerCrop"
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
-                android:background="@drawable/default_gym"
                 android:visibility="invisible" />
 
 

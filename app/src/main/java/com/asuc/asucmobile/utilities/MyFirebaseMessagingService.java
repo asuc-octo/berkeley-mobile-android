@@ -5,15 +5,11 @@ import android.app.PendingIntent;
 import android.app.TaskStackBuilder;
 import android.content.Context;
 import android.content.Intent;
-import android.media.RingtoneManager;
-import android.net.Uri;
-import android.os.Build;
-import android.support.annotation.WorkerThread;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
 import com.asuc.asucmobile.R;
-import com.asuc.asucmobile.main.MainActivity;
+import com.asuc.asucmobile.domain.main.MainActivity;
 import com.firebase.jobdispatcher.FirebaseJobDispatcher;
 import com.firebase.jobdispatcher.GooglePlayDriver;
 import com.firebase.jobdispatcher.Job;
