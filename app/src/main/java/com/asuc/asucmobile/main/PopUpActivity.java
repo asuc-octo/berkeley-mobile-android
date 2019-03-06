@@ -1,11 +1,15 @@
 package com.asuc.asucmobile.main;
 
+import android.app.DialogFragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
 import android.util.DisplayMetrics;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
@@ -21,7 +25,7 @@ import java.util.List;
  * Created by alexthomas on 4/9/17.
  */
 
-public class PopUpActivity extends FragmentActivity {
+public class PopUpActivity extends DialogFragment {
     MyFragmentPageAdapter mPageAdapter;
     private ArrayList<String> busRoutes = new ArrayList<>();
     ProgressBar progressBar;
@@ -30,32 +34,31 @@ public class PopUpActivity extends FragmentActivity {
     private TextView markerTitle, desc1View, desc2View, dist;
     private ImageView icon;
 
-
-
+    @Nullable
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.fragment_bus_info);
-        adjustScreen(0.83, 0.18); // Makes the activity a small window
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
+        super.onCreateView(inflater, container, savedInstanceState);
+        View v = inflater.inflate(R.layout.fragment_bus_info, container, false);
+//        adjustScreen(0.83, 0.18); // Makes the activity a small window
         //Instantiates all UI elements
         List<Fragment> fragmentList = new ArrayList<>();
-        markerTitle = (TextView) findViewById(R.id.mainName);
-        desc1View = (TextView) findViewById(R.id.desc1);
-        desc2View = (TextView) findViewById(R.id.desc2);
-        dist = (TextView) findViewById(R.id.dist);
+        markerTitle = (TextView) v.findViewById(R.id.mainName);
+        desc1View = (TextView) v.findViewById(R.id.desc1);
+        desc2View = (TextView) v.findViewById(R.id.desc2);
+        dist = (TextView) v.findViewById(R.id.dist);
 
 
         //Attaches the tab dots
       /*  TabLayout tabLayout = (TabLayout) findViewById(R.id.tabDots);
         tabLayout.setupWithViewPager(viewPager, true);*/
-        String category = getIntent().getStringExtra("title");
-        String desc1 = getIntent().getStringExtra("desc1");
-        String desc2 = getIntent().getStringExtra("desc2");
-        String distance = getIntent().getStringExtra("distance");
+        String category = getArguments().getString("title");
+        String desc1 = getArguments().getString("desc1");
+        String desc2 = getArguments().getString("desc2");
+        String distance = getArguments().getString("distance");
 
-        icon = (ImageView) findViewById(R.id.icon);
+        icon = (ImageView) v.findViewById(R.id.icon);
 
-        markerTitle.setText(getIntent().getStringExtra("title"));
+        markerTitle.setText(category);
         desc1View.setText(desc1);
         desc2View.setText(desc2);
         dist.setText(distance);
@@ -75,17 +78,16 @@ public class PopUpActivity extends FragmentActivity {
                 break;
         }
 
-
-        refresh();
+        return v;
 
     }
 
     private void refresh() {
         //progressBar.setVisibility(View.VISIBLE);
         //refreshWrapper.setVisibility(View.GONE);
-        final String title = getIntent().getStringExtra("title");
-        final String id = getIntent().getStringExtra("id");
-        final String desc1 = getIntent().getStringExtra("desc1");
+//        final String title = getIntent().getStringExtra("title");
+//        final String id = getIntent().getStringExtra("id");
+//        final String desc1 = getIntent().getStringExtra("desc1");
 
 
      /*   BusController.getInstance(id, title).refreshInBackground(this, new Callback() {
@@ -132,14 +134,14 @@ public class PopUpActivity extends FragmentActivity {
 
     }
 
-
-    private void adjustScreen(double fractWidth, double fractHeight) {
-        DisplayMetrics dm = new DisplayMetrics();
-        getWindowManager().getDefaultDisplay().getMetrics(dm);
-        int width = dm.widthPixels;
-        int height = dm.heightPixels;
-        getWindow().setLayout((int) (width * fractWidth), (int) (height * fractHeight));
-    }
+//
+//    private void adjustScreen(double fractWidth, double fractHeight) {
+//        DisplayMetrics dm = new DisplayMetrics();
+//        getWindowManager().getDefaultDisplay().getMetrics(dm);
+//        int width = dm.widthPixels;
+//        int height = dm.heightPixels;
+//        getWindow().setLayout((int) (width * fractWidth), (int) (height * fractHeight));
+//    }
 
 
     public void addFragment(Fragment fragment, Bundle args) {
