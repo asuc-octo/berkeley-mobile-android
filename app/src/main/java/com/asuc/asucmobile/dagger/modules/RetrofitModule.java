@@ -6,7 +6,7 @@ import android.net.NetworkInfo;
 import android.util.Log;
 
 import com.asuc.asucmobile.GlobalApplication;
-import com.asuc.asucmobile.services.BMService;
+import com.asuc.asucmobile.domain.services.BMService;
 import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;

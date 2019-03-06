@@ -2,10 +2,10 @@ package com.asuc.asucmobile.utilities;
 
 import android.content.Context;
 
-import com.asuc.asucmobile.main.ListOfFavorites;
-import com.asuc.asucmobile.models.FoodItem;
-import com.asuc.asucmobile.models.Library;
-import com.asuc.asucmobile.models.Resource;
+import com.asuc.asucmobile.domain.main.ListOfFavorites;
+import com.asuc.asucmobile.domain.models.FoodItem;
+import com.asuc.asucmobile.domain.models.Library;
+import com.asuc.asucmobile.domain.models.Resource;
 
 import java.util.Comparator;
 
