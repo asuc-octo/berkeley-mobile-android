@@ -32,7 +32,7 @@
                 android:id="@+id/favorite"
                 android:layout_width="wrap_content"
                 android:layout_height="30dp"
-                android:layout_gravity="start"
+                android:layout_gravity="start|center_vertical"
                 android:contentDescription="@string/content_desc" />
 
             <LinearLayout
@@ -48,12 +48,12 @@
                     android:textColor="@android:color/black"
                     android:textSize="16sp" />
 
-                <TextView
-                    android:id="@+id/food_cost"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textColor="@android:color/darker_gray"
-                    android:textSize="16sp" />
+                <!--<TextView-->
+                    <!--android:id="@+id/food_cost"-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:textColor="@android:color/darker_gray"-->
+                    <!--android:textSize="16sp" />-->
 
             </LinearLayout>
 
