@@ -49,16 +49,13 @@ public class ResourceTransformer {
 
         ArrayList<Date> weeklyOpen = new ArrayList<>();
         ArrayList<Date> weeklyClose = new ArrayList<>(); // TODO: generalize this
-
-        Calendar c = Calendar.getInstance();
-        StringBuilder hoursString = new StringBuilder();
-        SimpleDateFormat openDateFormat = new SimpleDateFormat("EEEE \t\t\t\t\t h:mm a"); // TODO: make this look better.... aka not store everything as String
-        SimpleDateFormat closeDateFormat = new SimpleDateFormat("- h:mm a\n");
+        ArrayList<Boolean> byAppt = new ArrayList<>();
 
         if (resource.getOpenCloses() != null) {
             for (OpenClose openClose : resource.getOpenCloses()) {
-                hoursString.append(openDateFormat.format(new Date(openClose.getOpenTime() * 1000)));
-                hoursString.append(closeDateFormat.format(new Date(openClose.getCloseTime() * 1000)));
+                weeklyOpen.add(new Date(openClose.getOpenTime() * 1000));
+                weeklyClose.add(new Date(openClose.getCloseTime() * 1000));
+                byAppt.add(false);
             }
         }
 
@@ -70,7 +67,9 @@ public class ResourceTransformer {
                 .longitude(resource.getLongitude())
                 .resource(resource.getName())
                 .onOrOffCampus(resource.isOnCampus() ? "On campus" : "Off campus") // TODO: generalize this
-                .hours(hoursString.toString())
+                .weeklyOpen(weeklyOpen)
+                .weeklyClose(weeklyClose)
+                .weeklyAppointments(byAppt)
                 .phone1(resource.getPhone()) // TODO: load in the picture
                 .build();
     }

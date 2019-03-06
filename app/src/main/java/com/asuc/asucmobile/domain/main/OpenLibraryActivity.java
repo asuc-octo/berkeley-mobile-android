@@ -285,18 +285,15 @@ public class OpenLibraryActivity extends BaseActivity {
         ArrayList<Boolean> byAppointments = library.getWeeklyAppointments();
         Spannable hoursString;
         if (library.isByAppointment()) {
-//            hoursString = new SpannableString("BY APPOINTMENT  ▲\n");
             hoursString = new SpannableString("BY APPOINTMENT\n");
             hoursString.setSpan(new ForegroundColorSpan(ContextCompat.getColor(getApplicationContext(),R.color.pavan_light )), 0, hoursString.length(), Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
-        } else if (library.getOpening() != null && library.getClosing() != null) {
+        } else if (openings != null && closings != null) {
             String isOpen;
             int color;
             if (library.isOpen()) {
-//                isOpen = "OPEN  ▲";
                 isOpen = "OPEN";
                 color = ContextCompat.getColor(getApplicationContext(),R.color.green);
             } else {
-//                isOpen = "CLOSED  ▲";
                 isOpen = "CLOSED";
                 color = ContextCompat.getColor(getApplicationContext(),R.color.red);
             }
@@ -304,7 +301,6 @@ public class OpenLibraryActivity extends BaseActivity {
             hoursString = new SpannableString(isOpen + "\n");
             hoursString.setSpan(new ForegroundColorSpan(color), 0, hoursString.length(), Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
         } else {
-//            hoursString = new SpannableString("CLOSED ALL DAY  ▲\n");
             hoursString = new SpannableString("CLOSED ALL DAY\n");
             hoursString.setSpan(new ForegroundColorSpan(ContextCompat.getColor(getApplicationContext(),R.color.maroon) ), 0, hoursString.length(), Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
         }
