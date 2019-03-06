@@ -33,19 +33,16 @@ public class CalendarFragment extends Fragment {
     private static CalendarAdapter adapter;
     private ListView listView;
 
-    /*
-    private static final String[] dates = new String[] {"February 1st", "February 13th", "April 5th", "May 3rd",
-            "May 3rd", "May 6th-10th", "May 10th"};
 
-    private static final String[] info = new String[] {"Deadline to drop Early Drop Deadline (EDD)",
-            "Deadline to drop non EDD courses\nDeadline to add all classes",
+    private static final String[] dates = new String[] {"February 1st", "February 13th", "April 5th", "May 3rd",
+            "May 6th-10th", "May 10th"};
+
+    private static final String[] info = new String[] {"Early Drop Deadline (EDD)",
+            "Deadline to drop non EDD courses, Deadline to add all classes",
             "Deadline to change course grading option",
             "Deadline to submit late change of schedule petition",
             "RRR period",
             "Deadline to withdraw"};
-
-    private ListView datesView;
-    private ListView infoView;*/
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -57,11 +54,16 @@ public class CalendarFragment extends Fragment {
         toolbar.setTitle("L&S Academic Calendar");
 
         calendarItems = new ArrayList<>();
-        calendarItems.add(new CalendarItem("February 1", "Early Drop Deadline (EDD)"));
-        calendarItems.add(new CalendarItem("February 2", "Earlyy Drop Deadline (EDD)"));
-        calendarItems.add(new CalendarItem("February 3", "Earlyyy Drop Deadline (EDD)"));
-        calendarItems.add(new CalendarItem("February 4", "Earlyyyy Drop Deadline (EDD)"));
-        calendarItems.add(new CalendarItem("February 5", "Earlyyyyy Drop Deadline (EDD)"));
+
+        for (int i = 0; i < dates.length; i++) {
+            calendarItems.add(new CalendarItem(dates[i], info[i]));
+        }
+
+//        calendarItems.add(new CalendarItem("February 1", "Early Drop Deadline (EDD)"));
+//        calendarItems.add(new CalendarItem("February 2", "Earlyy Drop Deadline (EDD)"));
+//        calendarItems.add(new CalendarItem("February 3", "Earlyyy Drop Deadline (EDD)"));
+//        calendarItems.add(new CalendarItem("February 4", "Earlyyyy Drop Deadline (EDD)"));
+//        calendarItems.add(new CalendarItem("February 5", "Earlyyyyy Drop Deadline (EDD)"));
 
         adapter = new CalendarAdapter(calendarItems, getContext());
         listView = (ListView) layout.findViewById(R.id.list);
