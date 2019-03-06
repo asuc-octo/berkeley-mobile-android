@@ -613,9 +613,9 @@ public class MapsFragment extends Fragment
         BitmapDescriptor microwaveIcon = BitmapDescriptorFactory.fromResource(R.drawable.microwave_map_icon);
         BitmapDescriptor waterBottleIcon = BitmapDescriptorFactory.fromResource(R.drawable.waterbottle_map_icon);
         BitmapDescriptor sleepPodIcon = BitmapDescriptorFactory.fromResource(R.drawable.sleeppod_map_icon);
-        BitmapDescriptor mentalHealthIcon = BitmapDescriptorFactory.fromResource(R.drawable.mental_health);
-        BitmapDescriptor bikeIcon = BitmapDescriptorFactory.fromResource(R.drawable.bike);
-        BitmapDescriptor printerIcon = BitmapDescriptorFactory.fromResource(R.drawable.printer);
+        BitmapDescriptor mentalHealthIcon = BitmapDescriptorFactory.fromResource(R.drawable.mental_health_icon);
+        BitmapDescriptor bikeIcon = BitmapDescriptorFactory.fromResource(R.drawable.bike_icon);
+        BitmapDescriptor printerIcon = BitmapDescriptorFactory.fromResource(R.drawable.printer_icon);
 
         putMarkers(microwaves, microwaveIcon, markersMap.get(MapIconCategories.MICROWAVE));
         putMarkers(waterbottles, waterBottleIcon, markersMap.get(MapIconCategories.WATER_FOUNTAIN));

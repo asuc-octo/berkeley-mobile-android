@@ -16,16 +16,16 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.List;
 
-public class CafeFirestoreRepository implements Repository<Cafe> {
+public class   CafeFirestoreRepository implements Repository<Cafe> {
 
     public static final String TAG = "CafeFirebase";
 
     private CafeTransformer mTransformer;
     private CollectionReference mRef;
 
-    public CafeFirestoreRepository(FirebaseFirestore firestore, CafeTransformer transformer) {
+    public CafeFirestoreRepository(FirebaseFirestore firestore) {
         Log.d(TAG, "Initialized");
-        mTransformer = transformer;
+        mTransformer = new CafeTransformer();
         mRef = firestore.collection(FirebaseCollectionNames.CAFE);
     }
 

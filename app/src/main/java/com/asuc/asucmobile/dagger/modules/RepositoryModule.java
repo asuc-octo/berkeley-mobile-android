@@ -9,6 +9,7 @@ import com.asuc.asucmobile.domain.models.Resource;
 import com.asuc.asucmobile.domain.repository.CategoryLocDomainRepository;
 import com.asuc.asucmobile.domain.repository.MultiRepository;
 import com.asuc.asucmobile.domain.services.BMService;
+import com.asuc.asucmobile.infrastructure.CafeFirestoreRepository;
 import com.asuc.asucmobile.infrastructure.CafeRetrofitRepository;
 import com.asuc.asucmobile.infrastructure.DiningHallFirestoreRepository;
 import com.asuc.asucmobile.infrastructure.DiningHallRetrofitRepository;
@@ -45,6 +46,12 @@ public class RepositoryModule {
 //    @Singleton
 //    public Repository<DiningHall> getDiningHallRepository(FirebaseFirestore firestore) {
 //        return new DiningHallFirestoreRepository(firestore);
+//    }
+//
+//    @Provides
+//    @Singleton
+//    public Repository<Cafe> getCafeRepository(FirebaseFirestore firestore) {
+//        return new CafeFirestoreRepository(firestore);
 //    }
 
     @Provides

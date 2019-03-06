@@ -7,7 +7,7 @@ public class FirebaseCollectionNames {
 
     public final String DINING_HALL = "Dining Halls and Cafes";
     public final String DINING_HALL_DOCUMENT = "Dining Halls"; // this is a hack...
-    public final String CAFE = "Cafes";
+    public final String CAFE = "Dining Halls and Cafes";
     public final String LIBRARY = "Libraries";
     public final String RESOURCE = "Resources";
     public final String MENTAL_HEALTH = "Mental Health Resources";

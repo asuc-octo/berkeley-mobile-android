@@ -17,10 +17,19 @@ import lombok.Setter;
 @Setter
 public class CategoryLoc {
 
+    @PropertyName("address")
+    public String address;
+
+    @PropertyName("phone")
+    public String phone;
+
+    @PropertyName("picture")
+    public String picture;
+
     @PropertyName("category")
     public String category;
 
-    @PropertyName("details")
+    @PropertyName("description")
     public String details;
 
     @PropertyName("image_link")
