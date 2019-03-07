@@ -22,6 +22,7 @@ import com.asuc.asucmobile.fragments.CalendarFragment;
 import com.asuc.asucmobile.fragments.FoodFragment;
 import com.asuc.asucmobile.fragments.GymFragment;
 import com.asuc.asucmobile.fragments.LibraryFragment;
+import com.asuc.asucmobile.fragments.PlaceholderFragment;
 import com.asuc.asucmobile.fragments.ResourceFragment;
 //import com.asuc.asucmobile.fragments.StartStopSelectFragment;
 import com.asuc.asucmobile.main.MainActivity;
@@ -76,7 +77,7 @@ public class NavigationGenerator {
                 @Override
                 public void loadFragment(FragmentManager fragmentManager) {
                     fragmentManager.beginTransaction()
-                            .replace(R.id.content_frame, new CalendarFragment())
+                            .replace(R.id.content_frame, new PlaceholderFragment())
                             .commit();
                 }
             }

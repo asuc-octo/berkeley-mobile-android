@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
@@ -33,6 +34,24 @@ public class CalendarFragment extends Fragment {
     private static CalendarAdapter adapter;
     private ListView listView;
 
+    private static final String ARG_SECTION_NUMBER = "calendar_number";
+
+    public CalendarFragment() {
+    }
+
+    /**
+     * Returns a new instance of this fragment for the given section
+     * number.
+     */
+    public static CalendarFragment newInstance(int sectionNumber) {
+        CalendarFragment fragment = new CalendarFragment();
+        Bundle args = new Bundle();
+        Log.d("Calendar Section Number", String.valueOf(sectionNumber));
+        args.putInt(ARG_SECTION_NUMBER, sectionNumber);
+        fragment.setArguments(args);
+        return fragment;
+    }
+
 
     private static final String[] dates = new String[] {"February 1st", "February 13th", "April 5th", "May 3rd",
             "May 6th-10th", "May 10th"};
@@ -48,36 +67,37 @@ public class CalendarFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View layout = inflater.inflate(R.layout.fragment_calendar, container, false);
-        Toolbar toolbar = (Toolbar) layout.findViewById(R.id.toolbar);
-        ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
-        NavigationGenerator.generateToolbarMenuButton(getActivity(), toolbar);
-        toolbar.setTitle("L&S Academic Calendar");
+//        Toolbar toolbar = (Toolbar) layout.findViewById(R.id.toolbar);
+//        ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
+//        NavigationGenerator.generateToolbarMenuButton(getActivity(), toolbar);
 
         calendarItems = new ArrayList<>();
 
-        for (int i = 0; i < dates.length; i++) {
-            calendarItems.add(new CalendarItem(dates[i], info[i]));
-        }
+        int calendar_number = getArguments().getInt("calendar_number");
 
-//        calendarItems.add(new CalendarItem("February 1", "Early Drop Deadline (EDD)"));
-//        calendarItems.add(new CalendarItem("February 2", "Earlyy Drop Deadline (EDD)"));
-//        calendarItems.add(new CalendarItem("February 3", "Earlyyy Drop Deadline (EDD)"));
-//        calendarItems.add(new CalendarItem("February 4", "Earlyyyy Drop Deadline (EDD)"));
-//        calendarItems.add(new CalendarItem("February 5", "Earlyyyyy Drop Deadline (EDD)"));
+        switch (calendar_number) {
+            case 0: // all
+//                toolbar.setTitle("All");
+                for (int i = 0; i < dates.length; i++) {
+                    calendarItems.add(new CalendarItem("all", "all"));
+                }
+            case 1: // ls
+//                toolbar.setTitle("L&S Academic Calendar");
+
+                for (int i = 0; i < dates.length; i++) {
+                    calendarItems.add(new CalendarItem(dates[i], info[i]));
+                }
+            case 2: // w/e
+//                toolbar.setTitle("we");
+                for (int i = 0; i < dates.length; i++) {
+                    calendarItems.add(new CalendarItem("we", "we"));
+                }
+
+        }
 
         adapter = new CalendarAdapter(calendarItems, getContext());
         listView = (ListView) layout.findViewById(R.id.list);
         listView.setAdapter(adapter);
-
-        /*
-        datesView = (ListView) layout.findViewById(R.id.dates);
-        infoView = (ListView) layout.findViewById(R.id.info);
-
-        datesView.setAdapter(new ArrayAdapter<String>(getActivity(),
-                android.R.layout.simple_list_item_1, Arrays.asList((dates))));
-
-        infoView.setAdapter(new ArrayAdapter<String>(getActivity(),
-                android.R.layout.simple_list_item_1, Arrays.asList((info))));*/
 
         return layout;
     }

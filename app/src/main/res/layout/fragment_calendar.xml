@@ -6,13 +6,6 @@
     android:layout_height="match_parent"
     android:background="@color/holo_white">
 
-    <android.support.v7.widget.Toolbar
-        android:id="@+id/toolbar"
-        style="@style/ToolbarTheme"
-        android:layout_height="wrap_content"
-        android:layout_width="match_parent"
-        android:elevation="8dp" />
-
     <ListView
         android:id="@+id/list"
         android:layout_width="wrap_content"
