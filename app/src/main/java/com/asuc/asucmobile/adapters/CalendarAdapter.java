@@ -26,7 +26,7 @@ public class CalendarAdapter extends ArrayAdapter<CalendarItem> implements View.
     public CalendarAdapter(ArrayList<CalendarItem> data, Context context) {
         super(context, R.layout.calendar_row, data);
         this.calendarItems = data;
-        this.mContext=context;
+        this.mContext  =context;
 
     }
 
