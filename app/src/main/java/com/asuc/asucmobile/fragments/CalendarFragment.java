@@ -75,19 +75,21 @@ public class CalendarFragment extends Fragment {
         switch (calendar_number) {
             case 0: // all
 //                toolbar.setTitle("All");
+                calendarItems.add(new CalendarItem("DATE", "TITLE", true));
                 for (int i = 0; i < dates.length; i++) {
                     calendarItems.add(new CalendarItem("all", "all"));
                 }
                 break;
             case 1: // ls
 //                toolbar.setTitle("L&S Academic Calendar");
-
+                calendarItems.add(new CalendarItem("DATE", "TITLE", true));
                 for (int i = 0; i < dates.length; i++) {
                     calendarItems.add(new CalendarItem(dates[i], info[i]));
                 }
                 break;
             case 2: // w/e
 //                toolbar.setTitle("we");
+                calendarItems.add(new CalendarItem("DATE", "TITLE", true));
                 for (int i = 0; i < dates.length; i++) {
                     calendarItems.add(new CalendarItem("we", "we"));
                 }

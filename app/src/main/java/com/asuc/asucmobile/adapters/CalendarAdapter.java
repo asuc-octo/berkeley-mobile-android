@@ -30,7 +30,7 @@ public class CalendarAdapter extends ArrayAdapter<CalendarItem> implements View.
 
     }
 
-    private int lastPosition = -1;
+    //private int lastPosition = -1;
 
     @Override
     public void onClick(View v) {
@@ -50,19 +50,22 @@ public class CalendarAdapter extends ArrayAdapter<CalendarItem> implements View.
 
             viewHolder = new ViewHolder();
             LayoutInflater inflater = LayoutInflater.from(getContext());
-            convertView = inflater.inflate(R.layout.calendar_row, parent, false);
-            viewHolder.txtDate = (TextView) convertView.findViewById(R.id.date);
-            viewHolder.txtInfo = (TextView) convertView.findViewById(R.id.info);
-
-            result=convertView;
+            if (dataModel.getIsHeader()) {
+                convertView = inflater.inflate(R.layout.calendar_header, parent, false);
+                viewHolder.txtDate = (TextView) convertView.findViewById(R.id.date_header);
+                viewHolder.txtInfo = (TextView) convertView.findViewById(R.id.info_header);
+            } else {
+                convertView = inflater.inflate(R.layout.calendar_row, parent, false);
+                viewHolder.txtDate = (TextView) convertView.findViewById(R.id.date);
+                viewHolder.txtInfo = (TextView) convertView.findViewById(R.id.info);
+            }
 
             convertView.setTag(viewHolder);
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
-            result=convertView;
         }
 
-        lastPosition = position;
+        //lastPosition = position;
 
         viewHolder.txtDate.setText(dataModel.getDate());
         viewHolder.txtInfo.setText(dataModel.getInfo());
