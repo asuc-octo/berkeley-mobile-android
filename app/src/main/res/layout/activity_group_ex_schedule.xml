@@ -7,7 +7,7 @@
     android:fitsSystemWindows="true"
     android:background="#EEEEEE"
     android:orientation="vertical"
-    tools:context="com.asuc.asucmobile.main.GroupExScheduleActivity">
+    tools:context=".domain.main.GroupExScheduleActivity">
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"

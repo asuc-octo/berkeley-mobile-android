@@ -71,7 +71,7 @@
         <activity android:name="com.pushwoosh.MessageActivity" />
         <activity android:name="com.pushwoosh.PushHandlerActivity" />
         <activity
-            android:name=".main.SplashActivity"
+            android:name=".domain.main.SplashActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Holo.Light.NoActionBar.Fullscreen">
@@ -82,48 +82,48 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".main.MainActivity"
+            android:name=".domain.main.MainActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".main.OpenLibraryActivity"
+            android:name=".domain.main.OpenLibraryActivity"
             android:label="@string/title_activity_open_library"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".main.OpenGymActivity"
+            android:name=".domain.main.OpenGymActivity"
             android:label="@string/title_activity_open_gym"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".main.OpenDiningHallActivity"
+            android:name=".domain.main.OpenDiningHallActivity"
             android:label="@string/title_activity_open_dining_hall"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".main.OpenCafeActivity"
+            android:name=".domain.main.OpenCafeActivity"
             android:label="@string/title_activity_open_cafe"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".main.OpenResourceActivity"
+            android:name=".domain.main.OpenResourceActivity"
             android:label="@string/title_activity_open_resource"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".main.PopUpActivity"
+            android:name=".domain.main.PopUpActivity"
             android:label="@string/title_activity_open_resource"
             android:theme="@style/AppTheme.CustomTheme"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".main.LegendPopUpActivity"
+            android:name=".domain.main.LegendPopUpActivity"
             android:label="@string/title_activity_open_resource"
             android:theme="@style/AppTheme.CustomTheme"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".main.RouteSelected"
+            android:name=".domain.main.RouteSelected"
             android:label="@string/title_activity_open_resource"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".main.RouteSelectActivity"
+            android:name=".domain.main.RouteSelectActivity"
             android:label="@string/title_activity_open_resource"
             android:screenOrientation="portrait" />
-        <activity android:name=".main.CreditsDialog"
+        <activity android:name=".domain.main.CreditsDialog"
             android:label="Credits"
             android:screenOrientation="portrait" />
 
@@ -138,7 +138,7 @@
             </intent-filter>
         </receiver>
         <receiver
-            android:name=".main.PushReceiver"
+            android:name=".domain.main.PushReceiver"
             android:enabled="true"
             android:exported="true">
             <intent-filter>

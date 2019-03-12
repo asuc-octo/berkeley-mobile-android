@@ -3,7 +3,7 @@ package com.asuc.asucmobile.utilities;
 
 import android.content.Context;
 
-import com.asuc.asucmobile.main.ListOfFavorites;
+import com.asuc.asucmobile.domain.main.ListOfFavorites;
 
 import java.io.BufferedInputStream;
 import java.io.FileInputStream;
