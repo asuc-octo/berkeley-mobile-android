@@ -22,6 +22,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.asuc.asucmobile.R;
+import com.asuc.asucmobile.values.FoodTypes;
 
 import java.util.ArrayList;
 
@@ -54,22 +55,22 @@ public class LegendPopUpActivity extends DialogFragment {
 
         ListView legendList = (ListView) v.findViewById(R.id.legend_list);
         ArrayList<Pair<Drawable, String>> items = new ArrayList<>();
-        items.add(new Pair(ContextCompat.getDrawable(this.getActivity(), R.drawable.milk), "Milk"));
-        items.add(new Pair(ContextCompat.getDrawable(this.getActivity(), R.drawable.egg), "Eggs"));
-        items.add(new Pair(ContextCompat.getDrawable(this.getActivity(), R.drawable.shellfish), "Shellfish"));
-        items.add(new Pair(ContextCompat.getDrawable(this.getActivity(), R.drawable.fish), "Fish"));
-        items.add(new Pair(ContextCompat.getDrawable(this.getActivity(), R.drawable.tree_nuts), "Tree Nuts"));
-        items.add(new Pair(ContextCompat.getDrawable(this.getActivity(), R.drawable.wheat), "Wheat"));
-        items.add(new Pair(ContextCompat.getDrawable(this.getActivity(), R.drawable.peanuts), "Peanuts"));
-        items.add(new Pair(ContextCompat.getDrawable(this.getActivity(), R.drawable.sesame), "Sesame"));
-        items.add(new Pair(ContextCompat.getDrawable(this.getActivity(), R.drawable.soybeans), "Soybeans"));
-        items.add(new Pair(ContextCompat.getDrawable(this.getActivity(), R.drawable.vegan), "Vegan Option"));
-        items.add(new Pair(ContextCompat.getDrawable(this.getActivity(), R.drawable.vegetarian), "Vegetarian Option"));
-        items.add(new Pair(ContextCompat.getDrawable(this.getActivity(), R.drawable.gluten), "Contains Gluten"));
-        items.add(new Pair(ContextCompat.getDrawable(this.getActivity(), R.drawable.pork), "Contains Pork"));
-        items.add(new Pair(ContextCompat.getDrawable(this.getActivity(), R.drawable.alcohol), "Contains Alcohol"));
-        items.add(new Pair(ContextCompat.getDrawable(this.getActivity(), R.drawable.halal), "Halal"));
-        items.add(new Pair(ContextCompat.getDrawable(this.getActivity(), R.drawable.kosher), "Kosher"));
+        items.add(new Pair<>(ContextCompat.getDrawable(this.getActivity(), R.drawable.milk), FoodTypes.MILK));
+        items.add(new Pair<>(ContextCompat.getDrawable(this.getActivity(), R.drawable.egg), FoodTypes.EGGS));
+        items.add(new Pair<>(ContextCompat.getDrawable(this.getActivity(), R.drawable.shellfish), FoodTypes.SHELLFISH));
+        items.add(new Pair<>(ContextCompat.getDrawable(this.getActivity(), R.drawable.fish), FoodTypes.FISH));
+        items.add(new Pair<>(ContextCompat.getDrawable(this.getActivity(), R.drawable.tree_nuts), FoodTypes.TREE_NUTS));
+        items.add(new Pair<>(ContextCompat.getDrawable(this.getActivity(), R.drawable.wheat), FoodTypes.WHEAT));
+        items.add(new Pair<>(ContextCompat.getDrawable(this.getActivity(), R.drawable.peanuts), FoodTypes.PEANUTS));
+        items.add(new Pair<>(ContextCompat.getDrawable(this.getActivity(), R.drawable.sesame), FoodTypes.SESAME));
+        items.add(new Pair<>(ContextCompat.getDrawable(this.getActivity(), R.drawable.soybeans), FoodTypes.SOYBEANS));
+        items.add(new Pair<>(ContextCompat.getDrawable(this.getActivity(), R.drawable.vegan), FoodTypes.VEGAN));
+        items.add(new Pair<>(ContextCompat.getDrawable(this.getActivity(), R.drawable.vegetarian), FoodTypes.VEGETARIAN));
+        items.add(new Pair<>(ContextCompat.getDrawable(this.getActivity(), R.drawable.gluten), FoodTypes.GLUTEN));
+        items.add(new Pair<>(ContextCompat.getDrawable(this.getActivity(), R.drawable.pork), FoodTypes.PORK));
+        items.add(new Pair<>(ContextCompat.getDrawable(this.getActivity(), R.drawable.alcohol), FoodTypes.ALCOHOL));
+        items.add(new Pair<>(ContextCompat.getDrawable(this.getActivity(), R.drawable.halal), FoodTypes.HALAL));
+        items.add(new Pair<>(ContextCompat.getDrawable(this.getActivity(), R.drawable.kosher), FoodTypes.KOSHER));
 
         legendList.setAdapter(new LegendAdapter(this.getActivity(), items));
 

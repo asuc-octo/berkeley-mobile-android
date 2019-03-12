@@ -18,6 +18,7 @@ import android.widget.TextView;
 
 import com.asuc.asucmobile.R;
 import com.asuc.asucmobile.domain.adapters.MyFragmentPageAdapter;
+import com.asuc.asucmobile.values.MapIconCategories;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -65,33 +66,33 @@ public class PopUpActivity extends DialogFragment {
         desc2View.setText(desc2);
         dist.setText(distance);
 
-        Log.d("Marker Title: ", category);
-
-        switch (category){
-            case "microwave":
-                icon.setImageResource(R.drawable.microwave_map_icon);
-                markerTitle.setTextColor(getResources().getColor(R.color.orange));
-                break;
-            case "Water Fountain":
-                icon.setImageResource(R.drawable.waterbottle_map_icon);
-                markerTitle.setTextColor(getResources().getColor(R.color.aqua));
-                break;
-            case "Nap Pod":
-                icon.setImageResource(R.drawable.sleeppod_map_icon);
-                markerTitle.setTextColor(getResources().getColor(R.color.pink));
-                break;
-            case "Ford Go Bike":
-                icon.setImageResource(R.drawable.bike_icon);
-                markerTitle.setTextColor(getResources().getColor(R.color.bike_blue));
-                break;
-            case "Printer":
-                icon.setImageResource(R.drawable.printer_icon);
-                markerTitle.setTextColor(getResources().getColor(R.color.printer_green));
-                break;
-            case "Mental Health":
-                icon.setImageResource(R.drawable.mental_health_icon);
-                markerTitle.setTextColor(getResources().getColor(R.color.mental_health_yellow));
-                break;
+        if (category != null) {
+            switch (category) {
+                case MapIconCategories.MICROWAVE:
+                    icon.setImageResource(R.drawable.microwave_map_icon);
+                    markerTitle.setTextColor(getResources().getColor(R.color.orange));
+                    break;
+                case MapIconCategories.WATER_FOUNTAIN:
+                    icon.setImageResource(R.drawable.waterbottle_map_icon);
+                    markerTitle.setTextColor(getResources().getColor(R.color.aqua));
+                    break;
+                case MapIconCategories.NAP_POD:
+                    icon.setImageResource(R.drawable.sleeppod_map_icon);
+                    markerTitle.setTextColor(getResources().getColor(R.color.pink));
+                    break;
+                case MapIconCategories.FORD_GO_BIKE:
+                    icon.setImageResource(R.drawable.bike_icon);
+                    markerTitle.setTextColor(getResources().getColor(R.color.bike_blue));
+                    break;
+                case MapIconCategories.PRINTER:
+                    icon.setImageResource(R.drawable.printer_icon);
+                    markerTitle.setTextColor(getResources().getColor(R.color.printer_green));
+                    break;
+                case MapIconCategories.MENTAL_HEALTH:
+                    icon.setImageResource(R.drawable.mental_health_icon);
+                    markerTitle.setTextColor(getResources().getColor(R.color.mental_health_yellow));
+                    break;
+            }
         }
 
         return v;
@@ -160,11 +161,11 @@ public class PopUpActivity extends DialogFragment {
 //    }
 
 
-    public void addFragment(Fragment fragment, Bundle args) {
-        fragment.setArguments(args);
-        mPageAdapter.add(fragment);
-        mPageAdapter.notifyDataSetChanged();
-    }
+//    public void addFragment(Fragment fragment, Bundle args) {
+//        fragment.setArguments(args);
+//        mPageAdapter.add(fragment);
+//        mPageAdapter.notifyDataSetChanged();
+//    }
 
 
 }
