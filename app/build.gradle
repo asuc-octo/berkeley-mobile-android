@@ -20,6 +20,8 @@ android {
         javaMaxHeapSize "4g"
     }
 
+    compileOptions.incremental = false
+
     packagingOptions {
         exclude 'META-INF/DEPENDENCIES'
         exclude 'META-INF/LICENSE'
@@ -32,6 +34,9 @@ android {
         exclude 'META-INF/notice.txt'
         exclude 'META-INF/ASL2.0'
     }
+
+    sourceSets.test.resources.srcDirs += ["src/test/res"]
+
 }
 
 repositories {
@@ -93,6 +98,10 @@ dependencies {
     // dagger 2
     implementation 'com.google.dagger:dagger:2.17'
     annotationProcessor 'com.google.dagger:dagger-compiler:2.17'
+
+    // lombok
+    compileOnly 'org.projectlombok:lombok:1.18.2'
+    annotationProcessor 'org.projectlombok:lombok:1.18.2'
 
     // MaterialShowcaseView for spotlight
     implementation 'com.github.deano2390:MaterialShowcaseView:1.2.0'

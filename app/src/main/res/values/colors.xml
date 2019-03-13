@@ -45,5 +45,9 @@
     <color name="excercise_color_7">#3EB7D2</color>
     <color name="excercise_boundary">#e4e7e7</color>
 
+    <color name="printer_green">#5CBB44</color>
+    <color name="bike_blue">#2D35FF</color>
+    <color name="mental_health_yellow">#FBD200</color>
+
 
 </resources>

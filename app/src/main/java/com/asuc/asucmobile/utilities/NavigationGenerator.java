@@ -9,26 +9,25 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.asuc.asucmobile.R;
-import com.asuc.asucmobile.adapters.MainMenuAdapter;
-import com.asuc.asucmobile.fragments.BlankFragment;
-import com.asuc.asucmobile.fragments.CalendarFragment;
-import com.asuc.asucmobile.fragments.FoodFragment;
-import com.asuc.asucmobile.fragments.GymFragment;
-import com.asuc.asucmobile.fragments.LibraryFragment;
-import com.asuc.asucmobile.fragments.PlaceholderFragment;
-import com.asuc.asucmobile.fragments.ResourceFragment;
-//import com.asuc.asucmobile.fragments.StartStopSelectFragment;
-import com.asuc.asucmobile.main.MainActivity;
-import com.asuc.asucmobile.fragments.MapsFragment;
-import com.asuc.asucmobile.models.Category;
-import com.asuc.asucmobile.main.CreditsDialog;
+import com.asuc.asucmobile.domain.adapters.MainMenuAdapter;
+import com.asuc.asucmobile.domain.fragments.BlankFragment;
+import com.asuc.asucmobile.domain.fragments.CalendarFragment;
+import com.asuc.asucmobile.domain.fragments.FoodFragment;
+import com.asuc.asucmobile.domain.fragments.GymFragment;
+import com.asuc.asucmobile.domain.fragments.LibraryFragment;
+import com.asuc.asucmobile.domain.fragments.PlaceholderFragment;
+import com.asuc.asucmobile.domain.fragments.ResourceFragment;
+//import com.asuc.asucmobile.domain.fragments.StartStopSelectFragment;
+import com.asuc.asucmobile.domain.main.MainActivity;
+import com.asuc.asucmobile.domain.fragments.MapsFragment;
+import com.asuc.asucmobile.domain.models.Category;
+import com.asuc.asucmobile.domain.main.CreditsDialog;
 
 public class NavigationGenerator {
 
