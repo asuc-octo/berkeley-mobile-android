@@ -5,7 +5,7 @@ import lombok.experimental.UtilityClass;
 @UtilityClass
 public class MapIconCategories {
 
-    public final String MENTAL_HEALTH = "Mental Health";
+    public final String MENTAL_HEALTH = "Mental Health Resource";
     public final String MICROWAVE = "Microwave";
     public final String NAP_POD = "Nap Pod";
     public final String PRINTER = "Printer";
