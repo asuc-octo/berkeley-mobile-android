@@ -10,12 +10,15 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import com.asuc.asucmobile.R;
+
 import com.asuc.asucmobile.domain.adapters.FoodAdapter;
 import com.asuc.asucmobile.domain.adapters.FoodPlaceAdapter;
+import com.asuc.asucmobile.domain.main.LegendPopUpActivity;
 import com.asuc.asucmobile.domain.main.OpenCafeActivity;
 import com.asuc.asucmobile.domain.main.OpenDiningHallActivity;
 import com.asuc.asucmobile.domain.models.Cafe;
@@ -33,7 +36,7 @@ import java.util.Locale;
 
 
 
-public class    MenuFragment extends Fragment {
+public class MenuFragment extends Fragment {
 
     public enum FoodType {
         DiningHall,
@@ -84,6 +87,36 @@ public class    MenuFragment extends Fragment {
         emptyListView = (TextView) v.findViewById(R.id.empty_list);
         header = getActivity().getLayoutInflater().inflate(R.layout.header_image, foodMenu, false);
         headerHours = (TextView) header.findViewById(R.id.header_text);
+
+        ImageView legendIcon = (ImageView)header.findViewById(R.id.legend_info);
+        legendIcon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                LegendPopUpActivity newDialog = new LegendPopUpActivity();
+                newDialog.show(getFragmentManager(), "dialog");
+            }
+        });
+        //for clicking on a drawable in the TextView
+//        headerHours.setOnTouchListener(new View.OnTouchListener() {
+//
+//            @Override
+//            public boolean onTouch(View v, MotionEvent event) {
+//                final int DRAWABLE_LEFT = 0;
+//                final int DRAWABLE_TOP = 1;
+//                final int DRAWABLE_RIGHT = 2;
+//                final int DRAWABLE_BOTTOM = 3;
+//                Log.d("touched:", "true");
+//
+//                if(event.getAction() == MotionEvent.ACTION_DOWN) {
+//                    if(event.getRawX() >= (headerHours.getRight() - headerHours.getCompoundDrawables()[DRAWABLE_RIGHT].getBounds().width())) {
+//                        LegendPopUpActivity newDialog = new LegendPopUpActivity();
+//                        newDialog.show(getFragmentManager(), "dialog");
+//                        return true;
+//                    }
+//                }
+//                return false;
+//            }
+//        });
 
         if (emptyListView == null) {
             Log.d(TAG, "EMPTY EMPTY");

@@ -551,19 +551,22 @@ public class MapsFragment extends Fragment
             return true;
         }
 
-        Intent popUp;
+//        Intent popUp;
         clearFocus();
-        //marker.setIcon(icon);
-        popUp = new Intent(getActivity(), PopUpActivity.class);
-        popUp.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        popUp.putExtra("title", marker.getTitle());
-        popUp.putExtra("distance", getDistance(marker.getPosition().latitude, marker.getPosition().longitude));
-        popUp.putExtra("id", marker_to_ID.get(marker));
-        popUp.putExtra("location", marker.getPosition());
-        popUp.putExtra("desc1", markers_to_desc.get(marker).getDesc1());
-        popUp.putExtra("desc2", markers_to_desc.get(marker).getDesc2());
 
-        startActivity(popUp);
+        Bundle bundle = new Bundle();
+        bundle.putString("title", marker.getTitle());
+        bundle.putString("distance", getDistance(marker.getPosition().latitude, marker.getPosition().longitude));
+        bundle.putString("id", marker_to_ID.get(marker));
+        bundle.putParcelable("location", marker.getPosition());
+        bundle.putString("desc1", markers_to_desc.get(marker).getDesc1());
+        bundle.putString("desc2", markers_to_desc.get(marker).getDesc2());
+
+        PopUpActivity newDialog = new PopUpActivity();
+
+        newDialog.setArguments(bundle);
+        newDialog.show(getActivity().getFragmentManager(), "dialog");
+
         return true;
     }
 
