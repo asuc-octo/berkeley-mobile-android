@@ -5,16 +5,10 @@ public class CalendarItem {
     private String info;
     private boolean isHeader;
 
-    public CalendarItem(String deadline, String information) {
-        date = deadline;
-        info = information;
-        isHeader = false;
-    }
-
     public CalendarItem(String deadline, String information, boolean header) {
         date = deadline;
         info = information;
-        isHeader = true;
+        isHeader = header;
     }
 
     public String getDate() {

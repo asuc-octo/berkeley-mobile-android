@@ -32,9 +32,24 @@ public class CalendarAdapter extends ArrayAdapter<CalendarItem> implements View.
 
     //private int lastPosition = -1;
 
+    // there's potential to add on click functionality here for certain view types
     @Override
     public void onClick(View v) {
         return;
+    }
+
+    @Override
+    public int getViewTypeCount() {
+        return 2; // The number of distinct view types the getView() will return.
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+        if (getItem(position).getIsHeader()){
+            return 0;
+        }else{
+            return 1;
+        }
     }
 
     @Override

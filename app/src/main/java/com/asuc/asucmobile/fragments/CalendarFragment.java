@@ -28,8 +28,6 @@ import java.util.Arrays;
 
 public class CalendarFragment extends Fragment {
 
-    private FirebaseAnalytics mFirebaseAnalytics;
-
     ArrayList<CalendarItem> calendarItems;
     private static CalendarAdapter adapter;
     private ListView listView;
@@ -56,6 +54,24 @@ public class CalendarFragment extends Fragment {
     private static final String[] dates_ls = new String[] {"February 1, 2019", "February 13, 2019", "April 5, 2019", "May 3, 2019",
             "May 6-10, 2019", "May 10, 2019"};
 
+    private static final String[] dates_academic = new String[] {"January 15, 2019", "January 21, 2019",
+            "January 22, 2019", "February 18, 2019", "March 25–March 29, 2019",
+            "March 29, 2019", "April 13, 2019", "May 3, 2019", "May 6–May 10, 2019",
+            "May 10, 2019", "May 13–May 17, 2019", "May 17, 2019", "May 18, 2019",
+            "May 27, 2019"
+    };
+
+    private static final String[] dates_finalExam = new String[] {"May 13, 2019, 8–11 am", "May 13, 2019, 11:30-2:30 pm", "May 13, 2019, 3-6 pm","May 13, 2019, 7-10 pm",
+            "May 14, 2019 8-11 am", "May 14, 2019, 11:30-2:30 pm",
+            "May 14, 2019, 3-6 pm", "May 14, 2019, 7-10 pm",
+            "May 15, 2019 8-11 am", "May 15, 2019, 11:30-2:30 pm",
+            "May 15, 3-6 pm", "May 15, 2019, 7-10 pm",
+            "May 16, 2019 8-11 am", "May 16, 2019, 11:30-2:30 pm",
+            "May 16, 3-6 pm", "May 16, 2019, 7-10 pm",
+            "May 17, 2019 8-11 am", "May 17, 2019, 11:30-2:30 pm",
+            "May 17, 2019, 3-6 pm", "May 17, 2019, 7-10 pm"
+    };
+
     private static final String[] info_ls = new String[] {"Early Drop Deadline (EDD)",
             "Deadline to drop non EDD courses, Deadline to add all classes",
             "Deadline to change course grading option",
@@ -63,17 +79,14 @@ public class CalendarFragment extends Fragment {
             "RRR period",
             "Deadline to withdraw"};
 
-    private static final String[] dates_academic = new String[] {"Tuesday, January 15, 2019", "Monday, January 21, 2019",
-            "Tuesday, January 22, 2019", "Monday, February 18, 2019", "Monday, March 25–Friday, March 29, 2019",
-            "Friday, March 29, 2019", "Saturday, April 13, 2019", "Friday, May 3, 2019", "Monday, May 6–Friday, May 10, 2019",
-            "Friday, May 10, 2019", "Monday, May 13–Friday, May 17, 2019", "Friday, May 17, 2019", "Saturday, May 18, 2019",
-            "Monday, May 27, 2019"
-            };
 
     private static final String[] info_academic = new String[] {"Spring Semester Begins","Academic and Administrative Holiday",
             "Instruction Begins","Academic and Administrative Holiday","Spring Recess","Academic and Administrative Holiday",
             "Cal Day","Formal Classes End","Reading/Review/Recitation Week","Last Day of Instruction","Final Examinations",
             "Spring Semester Ends", "Commencement", "Academic and Administrative Holiday"};
+
+    private static final String[] info_finalExam = new String[] {"MWF & MTWTF, 8 am", "TuTh, 2 pm", "Econ 1 & 100B", "MWF & MTWTF, 9 & 9:30 am", "MWF & MTWTF, 1 pm", "MWF & MTWTF, 2 pm", "MWF & MTWTF, 10 am", "MWF & MTWTF, 11 am", "Chem 1A, 1B, 3A, 3B, 4A, & 4B", "TuTh, 9 & 9:30 am", "MWF & MTWTF, 12 & 12:30 pm", "MWF & MTWTF, 3 & 3:30 pm", "TuTh, 11 am", "Online courses* & Elementary Foreign Languages**",
+            "TuTh, 12, 12:30, & 1 pm", "TuTh, 8 am and all Saturday & Sunday", "MWF & MTWTF, 4 & 4:30 pm", "TuTh, at or after 5 pm", "TuTh, 10 am; English 1A, 1B, R1A, R1B; MWF, at or after 5 pm", "TuTh, 3, 3:30, & 4 pm"};
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -83,28 +96,23 @@ public class CalendarFragment extends Fragment {
 
         int calendar_number = getArguments().getInt("calendar_number");
 
-        Log.d("SECTION NUMBER", String.valueOf(calendar_number));
-
         switch (calendar_number) {
-            case 0: // all
-//                toolbar.setTitle("All");
-                calendarItems.add(new CalendarItem("DATE", "TITLE", true));
-                for (int i = 0; i < info_calendar.length; i++) {
-                    calendarItems.add(new CalendarItem("Spring 2019", info_calendar[i]));
-                }
-                break;
-            case 1: // ls
-//                toolbar.setTitle("L&S Academic Calendar");
-                calendarItems.add(new CalendarItem("DATE", "TITLE", true));
-                for (int i = 0; i < dates_ls.length; i++) {
-                    calendarItems.add(new CalendarItem(dates_ls[i], info_ls[i]));
-                }
-                break;
-            case 2: // w/e
-//                toolbar.setTitle("we");
-                calendarItems.add(new CalendarItem("DATE", "TITLE", true));
+            case 0:
+                calendarItems.add(new CalendarItem("DATE", "EVENT", true));
                 for (int i = 0; i < dates_academic.length; i++) {
-                    calendarItems.add(new CalendarItem(dates_academic[i], info_academic[i]));
+                    calendarItems.add(new CalendarItem(dates_academic[i], info_academic[i], false));
+                }
+                break;
+            case 1:
+                calendarItems.add(new CalendarItem("EXAM TIME", "FOR CLASS START TIMES", true));
+                for (int i = 0; i < dates_finalExam.length; i++) {
+                    calendarItems.add(new CalendarItem(dates_finalExam[i], info_finalExam[i], false));
+                }
+                break;
+            case 2:
+                calendarItems.add(new CalendarItem("DATE", "EVENT", true));
+                for (int i = 0; i < dates_ls.length; i++) {
+                    calendarItems.add(new CalendarItem(dates_ls[i], info_ls[i], false));
                 }
                 break;
         }
