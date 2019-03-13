@@ -17,17 +17,19 @@ import android.widget.ListView;
 import com.asuc.asucmobile.R;
 import com.asuc.asucmobile.domain.adapters.MainMenuAdapter;
 import com.asuc.asucmobile.domain.fragments.BlankFragment;
-import com.asuc.asucmobile.domain.fragments.CalendarFragment;
 import com.asuc.asucmobile.domain.fragments.FoodFragment;
 import com.asuc.asucmobile.domain.fragments.GymFragment;
 import com.asuc.asucmobile.domain.fragments.LibraryFragment;
-import com.asuc.asucmobile.domain.fragments.PlaceholderFragment;
 import com.asuc.asucmobile.domain.fragments.ResourceFragment;
 //import com.asuc.asucmobile.domain.fragments.StartStopSelectFragment;
 import com.asuc.asucmobile.domain.main.MainActivity;
 import com.asuc.asucmobile.domain.fragments.MapsFragment;
 import com.asuc.asucmobile.domain.models.Category;
 import com.asuc.asucmobile.domain.main.CreditsDialog;
+
+// non-firebase stuff
+import com.asuc.asucmobile.fragments.CalendarFragment;
+import com.asuc.asucmobile.fragments.PlaceholderFragment;
 
 public class NavigationGenerator {
 
