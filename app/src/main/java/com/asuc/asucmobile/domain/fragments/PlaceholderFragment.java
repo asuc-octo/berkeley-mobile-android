@@ -1,16 +1,10 @@
-package com.asuc.asucmobile.fragments;
+package com.asuc.asucmobile.domain.fragments;
 
-import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 
-import com.asuc.asucmobile.R;
-import com.asuc.asucmobile.main.CalendarActivity;
+import com.asuc.asucmobile.domain.main.CalendarActivity;
 
 /**
  * This fragment is used to create a new intent to open the tabbed Calendar Activity because

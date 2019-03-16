@@ -25,11 +25,9 @@ import com.asuc.asucmobile.domain.fragments.ResourceFragment;
 import com.asuc.asucmobile.domain.main.MainActivity;
 import com.asuc.asucmobile.domain.fragments.MapsFragment;
 import com.asuc.asucmobile.domain.models.Category;
-import com.asuc.asucmobile.domain.main.CreditsDialog;
 
 // non-firebase stuff
-import com.asuc.asucmobile.fragments.CalendarFragment;
-import com.asuc.asucmobile.fragments.PlaceholderFragment;
+import com.asuc.asucmobile.domain.fragments.PlaceholderFragment;
 
 public class NavigationGenerator {
 

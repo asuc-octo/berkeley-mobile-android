@@ -177,7 +177,7 @@
         </service>
 
         <activity
-            android:name=".main.CalendarActivity"
+            android:name=".domain.main.CalendarActivity"
             android:label="@string/title_activity_calendar"
             android:theme="@style/AppTheme"></activity>
     </application>
