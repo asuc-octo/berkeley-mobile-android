@@ -45,7 +45,7 @@ public class CalendarAdapter extends ArrayAdapter<CalendarItem> implements View.
 
     @Override
     public int getItemViewType(int position) {
-        if (getItem(position).getIsHeader()){
+        if (getItem(position).isHeader()){
             return 0;
         }else{
             return 1;
@@ -65,7 +65,7 @@ public class CalendarAdapter extends ArrayAdapter<CalendarItem> implements View.
 
             viewHolder = new ViewHolder();
             LayoutInflater inflater = LayoutInflater.from(getContext());
-            if (dataModel.getIsHeader()) {
+            if (dataModel.isHeader()) {
                 convertView = inflater.inflate(R.layout.calendar_header, parent, false);
                 viewHolder.txtDate = (TextView) convertView.findViewById(R.id.date_header);
                 viewHolder.txtInfo = (TextView) convertView.findViewById(R.id.info_header);

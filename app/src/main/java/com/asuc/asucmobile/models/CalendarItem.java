@@ -4,8 +4,9 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 @AllArgsConstructor
+@Getter
 public class CalendarItem {
-    @Getter private String date;
-    @Getter private String info;
-    @Getter private boolean isHeader;
+    private String date;
+    private String info;
+    private boolean isHeader;
 }

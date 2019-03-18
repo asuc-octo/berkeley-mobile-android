@@ -10,6 +10,7 @@ import android.os.Bundle;
 
 import com.asuc.asucmobile.R;
 import com.asuc.asucmobile.domain.fragments.CalendarFragment;
+import com.asuc.asucmobile.values.CalendarTypes;
 
 public class CalendarActivity extends BaseActivity {
 
@@ -75,13 +76,13 @@ public class CalendarActivity extends BaseActivity {
         public CharSequence getPageTitle(int position) {
             switch (position) {
                 case 0:
-                    return "ALL";
+                    return CalendarTypes.ALL;
                 case 1:
-                    return "FINAL EXAM";
+                    return CalendarTypes.FINAL_EXAM;
                 case 2:
-                    return "L&S";
+                    return CalendarTypes.LS;
                 default:
-                    return "ALL";
+                    return CalendarTypes.ALL;
             }
         }
     }
