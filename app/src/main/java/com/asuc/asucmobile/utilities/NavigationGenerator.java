@@ -25,7 +25,9 @@ import com.asuc.asucmobile.domain.fragments.ResourceFragment;
 import com.asuc.asucmobile.domain.main.MainActivity;
 import com.asuc.asucmobile.domain.fragments.MapsFragment;
 import com.asuc.asucmobile.domain.models.Category;
-import com.asuc.asucmobile.domain.main.CreditsDialog;
+
+// non-firebase stuff
+import com.asuc.asucmobile.domain.fragments.PlaceholderFragment;
 
 public class NavigationGenerator {
 
@@ -70,6 +72,15 @@ public class NavigationGenerator {
                             .commit();
                 }
             },
+            new Category(R.drawable.calendar, "Calendar") {
+                @Override
+                public void loadFragment(FragmentManager fragmentManager) {
+                    fragmentManager.beginTransaction()
+                            .replace(R.id.content_frame, new PlaceholderFragment())
+                            .commit();
+                }
+            }
+            ,
             new Category(R.drawable.resources, "Resources") {
                 @Override
                 public void loadFragment(FragmentManager fragmentManager) {
