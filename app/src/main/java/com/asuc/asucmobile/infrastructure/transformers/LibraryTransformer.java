@@ -5,10 +5,13 @@ import android.util.Log;
 import com.asuc.asucmobile.infrastructure.models.Library;
 import com.asuc.asucmobile.infrastructure.models.MultiOpenClose;
 import com.asuc.asucmobile.infrastructure.models.OpenClose;
+import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 
