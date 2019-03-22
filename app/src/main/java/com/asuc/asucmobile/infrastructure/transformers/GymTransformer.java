@@ -40,17 +40,22 @@ public class GymTransformer {
 
         ArrayList<Date> weeklyOpen = new ArrayList<>();
         ArrayList<Date> weeklyClose = new ArrayList<>();
+        ArrayList<Boolean> byAppt = new ArrayList<>();
 
-        for (OpenClose openClose : gym.getOpenCloses()) {
-            weeklyOpen.add(new Date(openClose.getOpenTime() * 1000));
-            weeklyClose.add(new Date(openClose.getCloseTime() * 1000));
+        if (gym.getOpenCloses() != null) {
+            for (OpenClose openClose : gym.getOpenCloses()) {
+                weeklyOpen.add(new Date(openClose.getOpenTime() * 1000));
+                weeklyClose.add(new Date(openClose.getCloseTime() * 1000));
+                byAppt.add(false);
+            }
         }
 
         return com.asuc.asucmobile.domain.models.Gym.builder()
                 .address(gym.getAddress())
                 .name(gym.getName())
-                .opening(weeklyOpen)
-                .closing(weeklyClose)
+                .weeklyAppointments(byAppt)
+                .weeklyOpen(weeklyOpen)
+                .weeklyClose(weeklyClose)
                 .imageUrl(gym.getPicture())
                 .build();
     }

@@ -161,7 +161,6 @@ public class OriginFragment extends PlaceAutocompleteFragment implements
         clear.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mAutocompleteTextView.setHint("");
                 mAutocompleteTextView.setText("");
                 clear.setVisibility(View.GONE);
                 searchButton.setVisibility(View.VISIBLE);

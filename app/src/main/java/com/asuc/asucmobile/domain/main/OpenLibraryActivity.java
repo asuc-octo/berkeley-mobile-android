@@ -288,7 +288,7 @@ public class OpenLibraryActivity extends BaseActivity {
 //            hoursString = new SpannableString("BY APPOINTMENT  ▲\n");
             hoursString = new SpannableString("BY APPOINTMENT\n");
             hoursString.setSpan(new ForegroundColorSpan(ContextCompat.getColor(getApplicationContext(),R.color.pavan_light )), 0, hoursString.length(), Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
-        } else if (library.getOpening() != null && library.getClosing() != null) {
+        } else if (openings != null && closings != null) {
             String isOpen;
             int color;
             if (library.isOpen()) {

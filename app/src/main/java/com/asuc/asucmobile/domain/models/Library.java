@@ -11,9 +11,15 @@ import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Builder
+@Getter @Setter
+@AllArgsConstructor @NoArgsConstructor
 public class Library implements Comparable<Library>{
 
     public static final String TAG = "Library";
@@ -47,35 +53,6 @@ public class Library implements Comparable<Library>{
     @SerializedName("weekly_by_appointment")
     private ArrayList<Boolean> weeklyAppointments;
     private int weekday;
-
-
-    public int getId() {
-        return id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public String getLocation() {
-        return location;
-    }
-
-    public String getPhone() {
-        return phone;
-    }
-
-    public Date getOpening() {
-        return weeklyOpen.get(0);
-    }
-
-    public Date getClosing() {
-        return weeklyClose.get(0);
-    }
-
-    public ArrayList<Date> getWeeklyOpen() { return weeklyOpen; }
-
-    public ArrayList<Date> getWeeklyClose() { return weeklyClose; }
 
     public LatLng getCoordinates() {
         if (latLng == null) {
@@ -112,12 +89,12 @@ public class Library implements Comparable<Library>{
      */
     public boolean isOpen() {
 
-        Date opening = weeklyOpen.get(0);
-        Date closing = weeklyClose.get(0);
-
-        if (opening == null || closing == null) {
+        if (weeklyOpen.isEmpty() || weeklyClose.isEmpty()) {
             return false;
         }
+
+        Date opening = weeklyOpen.get(0);
+        Date closing = weeklyClose.get(0);
 
         /* Open 24/7 */
         if (opening.equals(closing)) {
