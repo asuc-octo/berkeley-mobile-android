@@ -47,6 +47,7 @@ import com.asuc.asucmobile.controllers.Controller;
 import com.asuc.asucmobile.controllers.LiveBusController;
 import com.asuc.asucmobile.domain.main.CreditsDialog;
 import com.asuc.asucmobile.domain.main.LiveBusActivity;
+import com.asuc.asucmobile.domain.main.MainActivity;
 import com.asuc.asucmobile.domain.main.PopUpActivity;
 import com.asuc.asucmobile.domain.main.RouteSelectActivity;
 import com.asuc.asucmobile.domain.models.Buses;
@@ -334,9 +335,12 @@ public class MapsFragment extends Fragment
                 if (heightDiff <= 0) heightDiff = 0;
                 else heightDiff += 70;
 
-                int suggestionsBarHeight = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,30,getActivity().getResources().getDisplayMetrics());
+                Activity activity = getActivity();
+                if(activity != null && isAdded()) {
+                    int suggestionsBarHeight = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 30, getResources().getDisplayMetrics());
 
-                navigation_button.setTranslationY(-(heightDiff + suggestionsBarHeight));
+                    navigation_button.setTranslationY(-(heightDiff + suggestionsBarHeight));
+                }
 
             }
         });
