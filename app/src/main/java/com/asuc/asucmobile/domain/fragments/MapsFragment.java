@@ -8,6 +8,7 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
+import android.graphics.Rect;
 import android.icu.text.SimpleDateFormat;
 import android.icu.util.TimeZone;
 import android.location.Location;
@@ -28,10 +29,12 @@ import android.text.SpannableString;
 import android.text.SpannableStringBuilder;
 import android.text.Spanned;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.LinearLayout;
@@ -315,6 +318,25 @@ public class MapsFragment extends Fragment
 
                 }
 
+
+            }
+        });
+
+        layout.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+            @Override
+            public void onGlobalLayout() {
+                Rect r = new Rect();
+
+                layout.getWindowVisibleDisplayFrame(r);
+
+                int heightDiff = layout.getBottom() - r.bottom;
+
+                if (heightDiff <= 0) heightDiff = 0;
+                else heightDiff += 70;
+
+                int suggestionsBarHeight = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,30,getActivity().getResources().getDisplayMetrics());
+
+                navigation_button.setTranslationY(-(heightDiff + suggestionsBarHeight));
 
             }
         });
