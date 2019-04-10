@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <color name="black">#000000</color>
     <color name="hotline_blue">#005581</color>
     <color name="off_hotline_blue">#004467</color>
 
@@ -12,7 +11,6 @@
     <color name="white">#FFFFFF</color>
 
     <color name="OP_navy">#005581</color>
-    <color name="OP_navy_transparent">#7b005581</color>
     <color name="ASUC_blue">#1295D8</color>
     <color name="pavan_light">#72CDF4</color>
     <color name="two_chainz_gold">#FFB511</color>
@@ -23,16 +21,11 @@
     <color name="selector_pressed">#FFDEDEDE</color>
     <color name="maroon">#BA3434</color>
     <color name="red">#FF4444</color>
-    <color name="dark_grey">#707070</color>
     <color name="transparent_black">#90000000</color>
 
     <color name="transparent">#00000000</color>
     <color name="card_background">#ffffff</color>
-    <color name="card_shadow_1">#d4d4d4</color>
-    <color name="card_shadow_2">#dddddd</color>
-    <color name="card_detailing">#eee</color>
 
-    <color name="toolbarTransparentForMaps">#46005581</color>
     <color name="toolbarTransparent">#00005581</color>
 
 
@@ -43,7 +36,6 @@
     <color name="excercise_color_5">#8E31FF</color>
     <color name="excercise_color_6">#FF720A</color>
     <color name="excercise_color_7">#3EB7D2</color>
-    <color name="excercise_boundary">#e4e7e7</color>
 
     <color name="printer_green">#5CBB44</color>
     <color name="bike_blue">#2D35FF</color>

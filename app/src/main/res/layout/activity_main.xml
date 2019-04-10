@@ -10,7 +10,6 @@
         android:layout_height="match_parent" />
 
     <LinearLayout
-        android:id="@+id/left_drawer"
         android:layout_width="293dp"
         android:layout_height="match_parent"
         android:layout_gravity="start"
@@ -29,7 +28,6 @@
                 android:contentDescription="@string/content_desc" />
 
             <TextView
-                android:id='@+id/drawer_header'
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="bottom"
