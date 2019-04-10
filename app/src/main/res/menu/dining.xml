@@ -2,21 +2,19 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <item android:id="@+id/sort"
+    <item
         android:title="Sort"
         android:icon="@drawable/ic_action_sort"
         app:showAsAction="collapseActionView|ifRoom">
         <menu>
-            <item android:id="@+id/sortAZ"
-                android:title="Alphabetical" />
+            <item android:title="Alphabetical" />
             <!--<item android:id="@+id/sortZA"-->
                 <!--android:title="Z-A" />-->
             <!--<item android:id="@+id/sortVegetarian"-->
                 <!--android:title="Vegetarian" />-->
             <!--<item android:id="@+id/sortVegan"-->
                 <!--android:title="Vegan" />-->
-            <item android:id="@+id/sortFavorites"
-                android:title="Favorites" />
+            <item android:title="Favorites" />
         </menu>
     </item>
 
