@@ -250,7 +250,7 @@
                         android:layout_height="28dp"
                         android:layout_marginTop="2dp"
                         android:contentDescription="@string/content_desc"
-                        android:src="@drawable/icon_info" />
+                        android:src="@drawable/icon_info_blue" />
 
                     <TextView
                         android:id="@+id/description"
