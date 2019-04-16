@@ -6,10 +6,12 @@ import android.util.Log;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.gson.annotations.SerializedName;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Locale;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -28,6 +30,9 @@ public class Library implements Comparable<Library>{
     private static final int MAX_DAY_LENGTH = 9;
     private static final String[] WEEKDAYS =
             { "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday" };
+
+    private static final SimpleDateFormat HOURS_FORMAT =
+            new SimpleDateFormat("h:mm a", Locale.ENGLISH);
 
 
     private int id;
@@ -101,8 +106,21 @@ public class Library implements Comparable<Library>{
             return true;
         }
         Date currentTime = new Date();
-        boolean isOpen = currentTime.after(opening) && currentTime.before(closing);
+        boolean isOpen = (compareTimes(currentTime, opening) >= 0) && ((compareTimes(currentTime, closing) <= 0));
+//        Log.d("isopen", currentTime.toString() + ", " + opening.toString() + ", " + closing.toString());
+//        Log.d("compareTimes", Long.toString(compareTimes(currentTime, opening)) + ", " + Long.toString(compareTimes(currentTime, opening)));
         return isOpen;
+    }
+
+    public long compareTimes(Date d1, Date d2) {
+        long     t1;
+        long     t2;
+        t1 = d1.getHours()*60*60+d1.getMinutes()*60+d1.getSeconds();
+        t2 = d2.getHours()*60*60+d2.getMinutes()*60+d2.getSeconds();
+        long diff = t1-t2;
+        System.out.println("t1 - "+t1+", t2 - "+t2+",  diff - "+diff);
+
+        return diff;
     }
 
     @Override

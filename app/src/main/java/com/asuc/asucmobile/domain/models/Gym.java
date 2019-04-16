@@ -9,6 +9,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Locale;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -26,6 +27,8 @@ public class Gym {
     private static final String[] WEEKDAYS =
             { "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday" };
 
+    private static final SimpleDateFormat DAY_FORMAT =
+            new SimpleDateFormat("EEEE", Locale.ENGLISH);
 
     private int id;
     private String name;
@@ -71,15 +74,26 @@ public class Gym {
         Date opening = weeklyOpen.get(0);
         Date closing = weeklyClose.get(0);
 
-
         /* Open 24/7 */
         if (opening.equals(closing)) {
             return true;
         }
         Date currentTime = new Date();
-        boolean isOpen = currentTime.after(opening) && currentTime.before(closing);
-        Log.d("isopen", currentTime.toString() + ", " + opening.toString() + ", " + closing.toString());
+//        boolean isOpen = currentTime.after(opening) && currentTime.before(closing);
+        boolean isOpen = (compareTimes(currentTime, opening) >= 0) && ((compareTimes(currentTime, closing) <= 0));
+//        Log.d("isopen", currentTime.toString() + ", " + opening.toString() + ", " + closing.toString());
         return isOpen;
+    }
+
+    public long compareTimes(Date d1, Date d2) {
+        long     t1;
+        long     t2;
+        t1 = d1.getHours()*60*60+d1.getMinutes()*60+d1.getSeconds();
+        t2 = d2.getHours()*60*60+d2.getMinutes()*60+d2.getSeconds();
+        long diff = t1-t2;
+        System.out.println("t1 - "+t1+", t2 - "+t2+",  diff - "+diff);
+
+        return diff;
     }
 
     private String parseTimes(){
