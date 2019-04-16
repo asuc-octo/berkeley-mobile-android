@@ -1,5 +1,7 @@
 package com.asuc.asucmobile.domain.models;
 
+import android.util.Log;
+
 import com.google.gson.annotations.SerializedName;
 
 import java.text.DateFormat;
@@ -76,6 +78,7 @@ public class Gym {
         }
         Date currentTime = new Date();
         boolean isOpen = currentTime.after(opening) && currentTime.before(closing);
+        Log.d("isopen", currentTime.toString() + ", " + opening.toString() + ", " + closing.toString());
         return isOpen;
     }
 

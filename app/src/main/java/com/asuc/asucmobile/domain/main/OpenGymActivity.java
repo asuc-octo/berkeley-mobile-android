@@ -8,6 +8,7 @@ import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.TextUtils;
 import android.text.style.ForegroundColorSpan;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -29,6 +30,8 @@ public class OpenGymActivity extends BaseActivity {
 
     private static final SimpleDateFormat HOURS_FORMAT =
             new SimpleDateFormat("h:mm a", Locale.ENGLISH);
+    private static final SimpleDateFormat DAY_FORMAT =
+            new SimpleDateFormat("EEEE", Locale.ENGLISH);
 
     private static Gym gym;
     private FirebaseAnalytics mFirebaseAnalytics;
@@ -89,10 +92,24 @@ public class OpenGymActivity extends BaseActivity {
     private Spanned setUpWeeklyHoursLeft() {
         ArrayList<Date> openings = gym.getWeeklyOpen();
         Spanned weeklyHoursString = new SpannableString("Today\n");
+
+        String today = DAY_FORMAT.format(new Date());
+        String prevDay = DAY_FORMAT.format(openings.get(0));
         for (int i=0; i < openings.size(); i++) {
             Spannable hoursString;
-            hoursString = new SpannableString("\n" + gym.getDayOfWeek(i));
-            if (i == 0) {
+//            hoursString = new SpannableString("\n" + gym.getDayOfWeek(i)); //this is utterly wrong
+
+            //essentially grouping by days, string is empty if it's the same day as the one before
+            String day = DAY_FORMAT.format(openings.get(i));
+            if (i == 0 || !day.equals(prevDay)) {
+                hoursString = new SpannableString("\n" + day);
+                prevDay = day;
+            } else {
+                hoursString = new SpannableString("\n");
+            }
+
+            //set today bold
+            if (day.equals(today)) {
                 hoursString.setSpan(new android.text.style.StyleSpan(android.graphics.Typeface.BOLD), 0, hoursString.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
             }
 
@@ -108,6 +125,7 @@ public class OpenGymActivity extends BaseActivity {
      */
     private Spanned setUpWeeklyHoursRight() {
         ArrayList<Date> openings = gym.getWeeklyOpen();
+        Log.d("openings", openings.toString());
         ArrayList<Date> closings = gym.getWeeklyClose();
         ArrayList<Boolean> byAppointments = gym.getWeeklyAppointments();
         Spannable hoursString;
@@ -131,7 +149,9 @@ public class OpenGymActivity extends BaseActivity {
             hoursString.setSpan(new ForegroundColorSpan(ContextCompat.getColor(getApplicationContext(),R.color.maroon) ), 0, hoursString.length(), Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
         }
         Spanned weeklyHoursString = hoursString;
+        String today = DAY_FORMAT.format(new Date());
         for (int i=0; i < openings.size(); i++) {
+            String day = DAY_FORMAT.format(openings.get(i));
             if (byAppointments.get(i)) {
                 hoursString = new SpannableString("\n  BY APPOINTMENT");
                 hoursString.setSpan(new ForegroundColorSpan(ContextCompat.getColor(getApplicationContext(),R.color.pavan_light) ), 0, hoursString.length(), Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
@@ -143,7 +163,7 @@ public class OpenGymActivity extends BaseActivity {
                 hoursString = new SpannableString("\n  CLOSED ALL DAY");
                 hoursString.setSpan(new ForegroundColorSpan(ContextCompat.getColor(getApplicationContext(),R.color.maroon) ), 0, hoursString.length(), Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
             }
-            if (i == 0) {
+            if (day.equals(today)) {
                 hoursString.setSpan(new android.text.style.StyleSpan(android.graphics.Typeface.BOLD), 0, hoursString.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
             }
             weeklyHoursString = (Spanned) TextUtils.concat(weeklyHoursString, hoursString);
