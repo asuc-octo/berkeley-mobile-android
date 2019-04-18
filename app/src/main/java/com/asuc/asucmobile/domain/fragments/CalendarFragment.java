@@ -9,7 +9,7 @@ import android.widget.ListView;
 
 import com.asuc.asucmobile.R;
 import com.asuc.asucmobile.domain.adapters.CalendarAdapter;
-import com.asuc.asucmobile.models.CalendarItem;
+import com.asuc.asucmobile.domain.models.CalendarItem;
 import com.asuc.asucmobile.utilities.NavigationGenerator;
 import com.asuc.asucmobile.values.CalendarItems;
 

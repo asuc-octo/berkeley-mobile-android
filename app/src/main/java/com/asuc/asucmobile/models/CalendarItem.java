@@ -1,4 +1,4 @@
-package com.asuc.asucmobile.domain.models;
+package com.asuc.asucmobile.models;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

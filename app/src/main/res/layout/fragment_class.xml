@@ -99,7 +99,6 @@
 
 
             <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                android:id="@+id/filter-buttons1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center_horizontal"
@@ -152,7 +151,6 @@
             </LinearLayout>
 
             <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                android:id="@+id/filter-buttons2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fadeScrollbars="false"
