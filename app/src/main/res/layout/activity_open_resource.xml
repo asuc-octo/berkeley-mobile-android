@@ -6,7 +6,6 @@
 
     <ScrollView
         xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/scroll"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -130,7 +129,6 @@
                 </LinearLayout>
 
                 <View
-                    android:id="@+id/divider_phone"
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
                     android:background="@android:color/darker_gray" />
@@ -175,7 +173,6 @@
                 </LinearLayout>
 
                 <View
-                    android:id="@+id/divider_email"
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
                     android:background="@android:color/darker_gray" />
@@ -222,7 +219,6 @@
 
 
                 <View
-                    android:id="@+id/divider_location"
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
                     android:background="@android:color/darker_gray" />
@@ -254,7 +250,7 @@
                         android:layout_height="28dp"
                         android:layout_marginTop="2dp"
                         android:contentDescription="@string/content_desc"
-                        android:src="@drawable/icon_info" />
+                        android:src="@drawable/icon_info_blue" />
 
                     <TextView
                         android:id="@+id/description"
@@ -317,7 +313,6 @@
 
     </ScrollView>
     <LinearLayout
-        android:id="@+id/left_drawer"
         android:layout_width="293dp"
         android:layout_height="match_parent"
         android:layout_gravity="start"
