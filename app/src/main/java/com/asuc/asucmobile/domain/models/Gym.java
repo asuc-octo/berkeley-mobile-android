@@ -23,6 +23,8 @@ import lombok.Setter;
 @AllArgsConstructor @NoArgsConstructor
 public class Gym {
 
+    public static final String TAG = "Gym";
+
     private static final int MAX_DAY_LENGTH = 9;
     private static final String[] WEEKDAYS =
             { "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday" };
@@ -60,6 +62,20 @@ public class Gym {
         return String.format("%1$-" + MAX_DAY_LENGTH + "s", WEEKDAYS[(i + day - 1) % 7]);
     }
 
+    private int getIdx() {
+        Calendar c = Calendar.getInstance();
+        int dayNum = c.get(Calendar.DAY_OF_WEEK);
+        int i = 0;
+        for (i = 0; i < weeklyOpen.size(); i++) {
+            c.setTime(weeklyOpen.get(i));
+            if (c.get(Calendar.DAY_OF_WEEK) == dayNum) {
+                return i;
+            }
+
+        }
+        return -1;
+    }
+
     /**
      * isOpen() returns whether or not the facility is open.
      *
@@ -67,38 +83,39 @@ public class Gym {
      */
     public boolean isOpen() {
 
-        if (weeklyOpen.isEmpty() || weeklyClose.isEmpty()) {
+        Date currentTime = new Date();
+
+        int i = getIdx();
+        if (i < 0) {
             return false;
         }
 
-        Date opening = weeklyOpen.get(0);
-        Date closing = weeklyClose.get(0);
+        Date opening = weeklyOpen.get(i);
+        Date closing = weeklyClose.get(i);
+
+        if (opening == null || closing == null) {
+            return false;
+        }
 
         /* Open 24/7 */
         if (opening.equals(closing)) {
             return true;
         }
-        Date currentTime = new Date();
-//        boolean isOpen = currentTime.after(opening) && currentTime.before(closing);
-        boolean isOpen = (compareTimes(currentTime, opening) >= 0) && ((compareTimes(currentTime, closing) <= 0));
-//        Log.d("isopen", currentTime.toString() + ", " + opening.toString() + ", " + closing.toString());
+        boolean isOpen = currentTime.after(opening) && currentTime.before(closing);
         return isOpen;
     }
 
-    public long compareTimes(Date d1, Date d2) {
-        long     t1;
-        long     t2;
-        t1 = d1.getHours()*60*60+d1.getMinutes()*60+d1.getSeconds();
-        t2 = d2.getHours()*60*60+d2.getMinutes()*60+d2.getSeconds();
-        long diff = t1-t2;
-        System.out.println("t1 - "+t1+", t2 - "+t2+",  diff - "+diff);
-
-        return diff;
-    }
-
-    private String parseTimes(){
-        DateFormat df = new SimpleDateFormat("HH:mm");
-        return df.format(opening) + " - " + df.format(closing);
+    @Override
+    public String toString() {
+        return "Gym{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", location='" + address + '\'' +
+                ", opening=" + opening +
+                ", closing=" + closing +
+                ", weeklyOpen=" + weeklyOpen.toString() +
+                ", weeklyClose=" + weeklyClose.toString() +
+                '}';
     }
 
 }

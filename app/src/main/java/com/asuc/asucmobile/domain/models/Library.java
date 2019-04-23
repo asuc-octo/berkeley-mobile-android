@@ -13,15 +13,9 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
-import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 @Builder
-@Getter @Setter
-@AllArgsConstructor @NoArgsConstructor
 public class Library implements Comparable<Library>{
 
     public static final String TAG = "Library";
@@ -30,9 +24,6 @@ public class Library implements Comparable<Library>{
     private static final int MAX_DAY_LENGTH = 9;
     private static final String[] WEEKDAYS =
             { "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday" };
-
-    private static final SimpleDateFormat HOURS_FORMAT =
-            new SimpleDateFormat("h:mm a", Locale.ENGLISH);
 
 
     private int id;
@@ -52,12 +43,48 @@ public class Library implements Comparable<Library>{
     private LatLng latLng;
     private double latitude;
     private double longitude;
-    private boolean byAppointment;
     private boolean hasCoordinates;
 
     @SerializedName("weekly_by_appointment")
     private ArrayList<Boolean> weeklyAppointments;
     private int weekday;
+
+
+    public int getId() {
+        return id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getLocation() {
+        return location;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public Date getOpening() {
+        int i = getIdx();
+        if (i < 0) {
+            i = 0;
+        }
+        return weeklyOpen.get(i);
+    }
+
+    public Date getClosing() {
+        int i = getIdx();
+        if (i < 0) {
+            i = 0;
+        }
+        return weeklyClose.get(i);
+    }
+
+    public ArrayList<Date> getWeeklyOpen() { return weeklyOpen; }
+
+    public ArrayList<Date> getWeeklyClose() { return weeklyClose; }
 
     public LatLng getCoordinates() {
         if (latLng == null) {
@@ -72,7 +99,11 @@ public class Library implements Comparable<Library>{
     }
 
     public boolean isByAppointment() {
-        return byAppointment;
+        int i = getIdx();
+        if (i < 0) {
+            i = 0;
+        }
+        return weeklyAppointments.get(i);
     }
 
     public ArrayList<Boolean> getWeeklyAppointments() { return weeklyAppointments; }
@@ -82,9 +113,26 @@ public class Library implements Comparable<Library>{
      * days.
      */
     public String getDayOfWeek(int i) {
-        int day = Calendar.getInstance().get(Calendar.DAY_OF_WEEK);
+        Calendar c = Calendar.getInstance();
+        c.setTime(weeklyOpen.get(i));
+        int day = c.get(Calendar.DAY_OF_WEEK);
+        String dayName = new SimpleDateFormat("EEEE", Locale.ENGLISH).format(weeklyOpen.get(i));
         // Aligns weekday with i. i was range [0,6] and weekday was range [1,7].
-        return String.format("%1$-" + MAX_DAY_LENGTH + "s", WEEKDAYS[(i + day - 1) % 7]);
+        return String.format("%1$-" + MAX_DAY_LENGTH + "s", dayName);
+    }
+
+    private int getIdx() {
+        Calendar c = Calendar.getInstance();
+        int dayNum = c.get(Calendar.DAY_OF_WEEK);
+        int i = 0;
+        for (i = 0; i < weeklyOpen.size(); i++) {
+            c.setTime(weeklyOpen.get(i));
+            if (c.get(Calendar.DAY_OF_WEEK) == dayNum) {
+                return i;
+            }
+
+        }
+        return -1;
     }
 
     /**
@@ -94,33 +142,26 @@ public class Library implements Comparable<Library>{
      */
     public boolean isOpen() {
 
-        if (weeklyOpen.isEmpty() || weeklyClose.isEmpty()) {
+        Date currentTime = new Date();
+
+        int i = getIdx();
+        if (i < 0) {
             return false;
         }
 
-        Date opening = weeklyOpen.get(0);
-        Date closing = weeklyClose.get(0);
+        Date opening = weeklyOpen.get(i);
+        Date closing = weeklyClose.get(i);
+
+        if (opening == null || closing == null) {
+            return false;
+        }
 
         /* Open 24/7 */
         if (opening.equals(closing)) {
             return true;
         }
-        Date currentTime = new Date();
-        boolean isOpen = (compareTimes(currentTime, opening) >= 0) && ((compareTimes(currentTime, closing) <= 0));
-//        Log.d("isopen", currentTime.toString() + ", " + opening.toString() + ", " + closing.toString());
-//        Log.d("compareTimes", Long.toString(compareTimes(currentTime, opening)) + ", " + Long.toString(compareTimes(currentTime, opening)));
+        boolean isOpen = currentTime.after(opening) && currentTime.before(closing);
         return isOpen;
-    }
-
-    public long compareTimes(Date d1, Date d2) {
-        long     t1;
-        long     t2;
-        t1 = d1.getHours()*60*60+d1.getMinutes()*60+d1.getSeconds();
-        t2 = d2.getHours()*60*60+d2.getMinutes()*60+d2.getSeconds();
-        long diff = t1-t2;
-        System.out.println("t1 - "+t1+", t2 - "+t2+",  diff - "+diff);
-
-        return diff;
     }
 
     @Override

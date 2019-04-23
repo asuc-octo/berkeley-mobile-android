@@ -18,6 +18,7 @@ import android.widget.TextView;
 
 import com.asuc.asucmobile.R;
 import com.asuc.asucmobile.domain.models.Gym;
+import com.asuc.asucmobile.utilities.HoursStringGenerator;
 import com.bumptech.glide.Glide;
 import com.google.firebase.analytics.FirebaseAnalytics;
 
@@ -75,100 +76,10 @@ public class OpenGymActivity extends BaseActivity {
         final LinearLayout hoursLayout = (LinearLayout) findViewById(R.id.hours_layout);
 
         // weekly gym hours should already be set up when you open the page
-        hours.setText(setUpWeeklyHoursLeft());
+        hours.setText(HoursStringGenerator.setUpWeeklyHoursLeft(gym));
         hoursParams = hoursLayout.getLayoutParams();
         hoursLayout.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT, 0.2f));
-        hours_expand.setText(setUpWeeklyHoursRight());
-    }
-
-//        Spannable hoursStringSpannable;
-//        String hoursString;
-//        if (gym.getOpening() != null && gym.getClosing() != null) {
-    /**
-     * This function is called with setUpWeeklyHoursRight() to set up the weekly hours
-     * page, which essentially appears as left and right justified text. The left side
-     * holds days of the week and some description.
-     */
-    private Spanned setUpWeeklyHoursLeft() {
-        ArrayList<Date> openings = gym.getWeeklyOpen();
-        Spanned weeklyHoursString = new SpannableString("Today\n");
-
-        String today = DAY_FORMAT.format(new Date());
-        String prevDay = DAY_FORMAT.format(openings.get(0));
-        for (int i=0; i < openings.size(); i++) {
-            Spannable hoursString;
-//            hoursString = new SpannableString("\n" + gym.getDayOfWeek(i)); //this is utterly wrong
-
-            //essentially grouping by days, string is empty if it's the same day as the one before
-            String day = DAY_FORMAT.format(openings.get(i));
-            if (i == 0 || !day.equals(prevDay)) {
-                hoursString = new SpannableString("\n" + day);
-                prevDay = day;
-            } else {
-                hoursString = new SpannableString("\n");
-            }
-
-            //set today bold
-            if (day.equals(today)) {
-                hoursString.setSpan(new android.text.style.StyleSpan(android.graphics.Typeface.BOLD), 0, hoursString.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-            }
-
-            weeklyHoursString = (Spanned) TextUtils.concat(weeklyHoursString, hoursString);
-        }
-        return weeklyHoursString;
-    }
-
-    /**
-     * This function is called with setUpWeeklyHoursLeft() to set up the weekly hours
-     * page, which essentially appears as left and right justified text. The right side
-     * holds hours for each day of the week and some description.
-     */
-    private Spanned setUpWeeklyHoursRight() {
-        ArrayList<Date> openings = gym.getWeeklyOpen();
-        Log.d("openings", openings.toString());
-        ArrayList<Date> closings = gym.getWeeklyClose();
-        ArrayList<Boolean> byAppointments = gym.getWeeklyAppointments();
-        Spannable hoursString;
-        if (gym.isByAppointment()) {
-            hoursString = new SpannableString("BY APPOINTMENT\n");
-            hoursString.setSpan(new ForegroundColorSpan(ContextCompat.getColor(getApplicationContext(),R.color.pavan_light )), 0, hoursString.length(), Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
-        } else if (openings != null && closings != null) {
-            String isOpen;
-            int color;
-            if (gym.isOpen()) {
-                isOpen = "OPEN";
-                color = ContextCompat.getColor(getApplicationContext(),R.color.green);
-            } else {
-                isOpen = "CLOSED";
-                color = ContextCompat.getColor(getApplicationContext(),R.color.red);
-            }
-            hoursString = new SpannableString(isOpen + "\n");
-            hoursString.setSpan(new ForegroundColorSpan(color), 0, hoursString.length(), Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
-        } else {
-            hoursString = new SpannableString("CLOSED ALL DAY\n");
-            hoursString.setSpan(new ForegroundColorSpan(ContextCompat.getColor(getApplicationContext(),R.color.maroon) ), 0, hoursString.length(), Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
-        }
-        Spanned weeklyHoursString = hoursString;
-        String today = DAY_FORMAT.format(new Date());
-        for (int i=0; i < openings.size(); i++) {
-            String day = DAY_FORMAT.format(openings.get(i));
-            if (byAppointments.get(i)) {
-                hoursString = new SpannableString("\n  BY APPOINTMENT");
-                hoursString.setSpan(new ForegroundColorSpan(ContextCompat.getColor(getApplicationContext(),R.color.pavan_light) ), 0, hoursString.length(), Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
-            } else if (openings.get(i) != null && closings.get(i) != null) {
-                String opening = HOURS_FORMAT.format(openings.get(i));
-                String closing = HOURS_FORMAT.format(closings.get(i));
-                hoursString = new SpannableString("\n" + opening + " - " + closing);
-            } else {
-                hoursString = new SpannableString("\n  CLOSED ALL DAY");
-                hoursString.setSpan(new ForegroundColorSpan(ContextCompat.getColor(getApplicationContext(),R.color.maroon) ), 0, hoursString.length(), Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
-            }
-            if (day.equals(today)) {
-                hoursString.setSpan(new android.text.style.StyleSpan(android.graphics.Typeface.BOLD), 0, hoursString.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-            }
-            weeklyHoursString = (Spanned) TextUtils.concat(weeklyHoursString, hoursString);
-        }
-        return weeklyHoursString;
+        hours_expand.setText(HoursStringGenerator.setUpWeeklyHoursRight(gym, getApplicationContext()));
     }
 
     @Override
