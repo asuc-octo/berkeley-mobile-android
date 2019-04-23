@@ -22,6 +22,7 @@ public class CalendarFragment extends Fragment {
     private ListView listView;
 
     private static final String ARG_SECTION_NUMBER = "calendar_number";
+    private static int calendar_number;
 
     public CalendarFragment() {
     }
@@ -44,7 +45,7 @@ public class CalendarFragment extends Fragment {
         View layout = inflater.inflate(R.layout.fragment_calendar, container, false);
         calendarItems = new ArrayList<>();
 
-        int calendar_number = getArguments().getInt("calendar_number");
+        int calendar_number = getArguments().getInt(ARG_SECTION_NUMBER);
 
         switch (calendar_number) {
             case 0:

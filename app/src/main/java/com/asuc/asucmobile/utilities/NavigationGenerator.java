@@ -77,7 +77,7 @@ public class NavigationGenerator {
                 @Override
                 public void loadFragment(FragmentManager fragmentManager) {
                     fragmentManager.beginTransaction()
-                            .replace(R.id.content_frame, new CalendarFragment())
+                            .replace(R.id.content_frame, new PlaceholderFragment())
                             .commit();
                 }
             }
