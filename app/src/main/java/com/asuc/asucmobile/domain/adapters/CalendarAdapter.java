@@ -8,7 +8,7 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import com.asuc.asucmobile.R;
-import com.asuc.asucmobile.models.CalendarItem;
+import com.asuc.asucmobile.domain.models.CalendarItem;
 
 import java.util.ArrayList;
 
