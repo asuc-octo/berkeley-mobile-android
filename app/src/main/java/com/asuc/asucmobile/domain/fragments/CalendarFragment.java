@@ -9,7 +9,7 @@ import android.widget.ListView;
 
 import com.asuc.asucmobile.R;
 import com.asuc.asucmobile.domain.adapters.CalendarAdapter;
-import com.asuc.asucmobile.models.CalendarItem;
+import com.asuc.asucmobile.domain.models.CalendarItem;
 import com.asuc.asucmobile.utilities.NavigationGenerator;
 import com.asuc.asucmobile.values.CalendarItems;
 
@@ -22,6 +22,7 @@ public class CalendarFragment extends Fragment {
     private ListView listView;
 
     private static final String ARG_SECTION_NUMBER = "calendar_number";
+    private static int calendar_number;
 
     public CalendarFragment() {
     }
@@ -44,7 +45,7 @@ public class CalendarFragment extends Fragment {
         View layout = inflater.inflate(R.layout.fragment_calendar, container, false);
         calendarItems = new ArrayList<>();
 
-        int calendar_number = getArguments().getInt("calendar_number");
+        int calendar_number = getArguments().getInt(ARG_SECTION_NUMBER);
 
         switch (calendar_number) {
             case 0:
