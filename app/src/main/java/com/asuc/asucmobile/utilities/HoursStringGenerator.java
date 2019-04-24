@@ -48,7 +48,7 @@ public class HoursStringGenerator {
      * holds days of the week and some description.
      */
     private static Spanned setUpWeeklyHoursLeft(ArrayList<Date> openings) {
-        Spanned weeklyHoursString = new SpannableString("Today\n");
+        Spanned weeklyHoursString = new SpannableString("Now\n");
         Calendar c = Calendar.getInstance();
         c.setTime(new Date());
 //        int today = c.get(Calendar.DAY_OF_WEEK);
