@@ -6,10 +6,12 @@ import android.util.Log;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.gson.annotations.SerializedName;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Locale;
 
 import lombok.Builder;
 
@@ -41,7 +43,6 @@ public class Library implements Comparable<Library>{
     private LatLng latLng;
     private double latitude;
     private double longitude;
-    private boolean byAppointment;
     private boolean hasCoordinates;
 
     @SerializedName("weekly_by_appointment")
@@ -66,11 +67,19 @@ public class Library implements Comparable<Library>{
     }
 
     public Date getOpening() {
-        return weeklyOpen.get(0);
+        int i = getIdx();
+        if (i < 0) {
+            i = 0;
+        }
+        return weeklyOpen.get(i);
     }
 
     public Date getClosing() {
-        return weeklyClose.get(0);
+        int i = getIdx();
+        if (i < 0) {
+            i = 0;
+        }
+        return weeklyClose.get(i);
     }
 
     public ArrayList<Date> getWeeklyOpen() { return weeklyOpen; }
@@ -90,7 +99,11 @@ public class Library implements Comparable<Library>{
     }
 
     public boolean isByAppointment() {
-        return byAppointment;
+        int i = getIdx();
+        if (i < 0) {
+            i = 0;
+        }
+        return weeklyAppointments.get(i);
     }
 
     public ArrayList<Boolean> getWeeklyAppointments() { return weeklyAppointments; }
@@ -100,9 +113,26 @@ public class Library implements Comparable<Library>{
      * days.
      */
     public String getDayOfWeek(int i) {
-        int day = Calendar.getInstance().get(Calendar.DAY_OF_WEEK);
+        Calendar c = Calendar.getInstance();
+        c.setTime(weeklyOpen.get(i));
+        int day = c.get(Calendar.DAY_OF_WEEK);
+        String dayName = new SimpleDateFormat("EEEE", Locale.ENGLISH).format(weeklyOpen.get(i));
         // Aligns weekday with i. i was range [0,6] and weekday was range [1,7].
-        return String.format("%1$-" + MAX_DAY_LENGTH + "s", WEEKDAYS[(i + day - 1) % 7]);
+        return String.format("%1$-" + MAX_DAY_LENGTH + "s", dayName);
+    }
+
+    private int getIdx() {
+        Calendar c = Calendar.getInstance();
+        int dayNum = c.get(Calendar.DAY_OF_WEEK);
+        int i = 0;
+        for (i = 0; i < weeklyOpen.size(); i++) {
+            c.setTime(weeklyOpen.get(i));
+            if (c.get(Calendar.DAY_OF_WEEK) == dayNum) {
+                return i;
+            }
+
+        }
+        return -1;
     }
 
     /**
@@ -112,8 +142,15 @@ public class Library implements Comparable<Library>{
      */
     public boolean isOpen() {
 
-        Date opening = weeklyOpen.get(0);
-        Date closing = weeklyClose.get(0);
+        Date currentTime = new Date();
+
+        int i = getIdx();
+        if (i < 0) {
+            return false;
+        }
+
+        Date opening = weeklyOpen.get(i);
+        Date closing = weeklyClose.get(i);
 
         if (opening == null || closing == null) {
             return false;
@@ -123,7 +160,6 @@ public class Library implements Comparable<Library>{
         if (opening.equals(closing)) {
             return true;
         }
-        Date currentTime = new Date();
         boolean isOpen = currentTime.after(opening) && currentTime.before(closing);
         return isOpen;
     }

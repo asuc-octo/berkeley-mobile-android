@@ -6,7 +6,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.content.res.ColorStateList;
 import android.graphics.Color;
+import android.graphics.Rect;
 import android.icu.text.SimpleDateFormat;
 import android.icu.util.TimeZone;
 import android.location.Location;
@@ -27,10 +29,13 @@ import android.text.SpannableString;
 import android.text.SpannableStringBuilder;
 import android.text.Spanned;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
+import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -42,6 +47,7 @@ import com.asuc.asucmobile.controllers.Controller;
 import com.asuc.asucmobile.controllers.LiveBusController;
 import com.asuc.asucmobile.domain.main.CreditsDialog;
 import com.asuc.asucmobile.domain.main.LiveBusActivity;
+import com.asuc.asucmobile.domain.main.MainActivity;
 import com.asuc.asucmobile.domain.main.PopUpActivity;
 import com.asuc.asucmobile.domain.main.RouteSelectActivity;
 import com.asuc.asucmobile.domain.models.Buses;
@@ -125,7 +131,7 @@ public class MapsFragment extends Fragment
     LatLng currLocation;
     View mapView;
     private final static DecimalFormat DECIMAL_FORMAT = new DecimalFormat("#.##");
-    FabButton navigation_button;
+    android.support.design.widget.FloatingActionButton navigation_button;
     FloatingActionMenu FABmenu;
 
     private boolean bottlesShown = false;
@@ -240,7 +246,7 @@ public class MapsFragment extends Fragment
 
         final DestinationFragment searchBar = (DestinationFragment) getActivity().getFragmentManager().findFragmentById(R.id.destination_bar);
         final OriginFragment originBar = (OriginFragment) getActivity().getFragmentManager().findFragmentById(R.id.origin_bar);
-        navigation_button = (FabButton) layout.findViewById(R.id.determinate);
+        navigation_button = (android.support.design.widget.FloatingActionButton) layout.findViewById(R.id.determinate);
         FABmenu = (FloatingActionMenu) layout.findViewById(R.id.FABmenu);
 
         sleepPod = (FloatingActionButton) layout.findViewById(R.id.sleeppod);
@@ -313,6 +319,28 @@ public class MapsFragment extends Fragment
 
                 }
 
+
+            }
+        });
+
+        layout.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+            @Override
+            public void onGlobalLayout() {
+                Rect r = new Rect();
+
+                layout.getWindowVisibleDisplayFrame(r);
+
+                int heightDiff = layout.getBottom() - r.bottom;
+
+                if (heightDiff <= 0) heightDiff = 0;
+                else heightDiff += 70;
+
+                Activity activity = getActivity();
+                if(activity != null && isAdded()) {
+                    int suggestionsBarHeight = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 30, getResources().getDisplayMetrics());
+
+                    navigation_button.setTranslationY(-(heightDiff + suggestionsBarHeight));
+                }
 
             }
         });
@@ -494,7 +522,7 @@ public class MapsFragment extends Fragment
             public void onMapClick(LatLng latLng) {
                 if (originWrapper == null || busRouteWrapper == null || navigation_button == null) {
                     originWrapper = (LinearLayout) layout.findViewById(R.id.origin_bar);
-                    navigation_button = (FabButton) layout.findViewById(R.id.determinate);
+                    navigation_button = (android.support.design.widget.FloatingActionButton) layout.findViewById(R.id.determinate);
 
                 }
                 navigation_button.setVisibility(View.VISIBLE);
@@ -766,7 +794,9 @@ public class MapsFragment extends Fragment
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     private void refresh(final LatLng origin, final LatLng destination, final Long millis) {
-        navigation_button.showProgress(true);
+        navigation_button.setEnabled(false);
+        navigation_button.setBackgroundTintList(ColorStateList.valueOf(Color.GRAY));
+//        navigation_button.showProgress(true);
 
         //starts call to grab list of bus lines - static
         Call<LineResponse> lineCall = bmService.callLineList();
@@ -789,7 +819,9 @@ public class MapsFragment extends Fragment
                     tripResponseCall.enqueue(new retrofit2.Callback<TripResponse>() {
                         @Override
                         public void onResponse(Call<TripResponse> call, Response<TripResponse> response2) {
-                            navigation_button.showProgress(false);
+//                            navigation_button.showProgress(false);
+                            navigation_button.setEnabled(true);
+                            navigation_button.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#2685F5")));
                             if (response2.body() != null && response2.body().getTripRespModels() != null && !response2.body().getTripRespModels().isEmpty()) {
                                 //add all journeys to this final routeList
                                 ArrayList<Journey> routeList = new ArrayList<>();

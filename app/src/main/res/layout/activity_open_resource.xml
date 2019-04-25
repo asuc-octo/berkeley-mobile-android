@@ -49,47 +49,47 @@
                 android:id="@+id/hours_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:minHeight="72dp"
+                android:paddingLeft="24dp"
+                android:paddingRight="24dp"
+                android:paddingTop="20dp"
+                android:paddingBottom="20dp"
                 android:animateLayoutChanges="true"
-                android:orientation="vertical"
-                tools:ignore="all">
+                android:orientation="horizontal">
 
-                <LinearLayout
-                    android:minHeight="72dp"
-                    android:paddingLeft="24dp"
-                    android:paddingRight="24dp"
-                    android:paddingTop="20dp"
-                    android:paddingBottom="20dp"
-                    android:orientation="horizontal"
+                <ImageView
+                    android:layout_width="28dp"
+                    android:layout_height="28dp"
+                    android:contentDescription="@string/content_desc"
+                    android:layout_marginTop="2dp"
+                    android:src="@drawable/icon_hours" />
+
+                <TextView
+                    android:id="@+id/hours"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="24dp"
+                    android:layout_marginLeft="24dp"
+                    android:layout_gravity="center_vertical"
+                    android:textColor="@android:color/black" />
+
+                <TextView
+                    android:id="@+id/hours_expand"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent">
-
-
-                    <ImageView
-                        android:layout_width="28dp"
-                        android:layout_height="28dp"
-                        android:layout_marginTop="2dp"
-                        android:contentDescription="@string/content_desc"
-                        android:src="@drawable/icon_hours" />
-
-                    <TextView
-                        android:id="@+id/hours"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="24dp"
-                        android:layout_marginLeft="24dp"
-                        android:layout_gravity="center_vertical"
-                        android:textColor="@android:color/black" />
-
-                </LinearLayout>
-
-                <View
-                    android:id="@+id/divider_hours"
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:background="@android:color/darker_gray" />
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="24dp"
+                    android:layout_marginRight="24dp"
+                    android:layout_marginLeft="24dp"
+                    android:gravity="right"
+                    android:textColor="@android:color/black" />
 
             </LinearLayout>
 
+            <View
+                android:id="@+id/divider_hours"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@android:color/darker_gray" />
 
 
             <LinearLayout

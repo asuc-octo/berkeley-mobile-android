@@ -138,27 +138,38 @@
 
     </com.github.clans.fab.FloatingActionMenu>
 
-    <view
-        android:id="@+id/determinate"
-        class="mbanje.kurt.fabbutton.FabButton"
-        android:layout_width="@dimen/fab_size_normal"
-        android:layout_height="@dimen/fab_size_normal"
-        android:layout_alignEnd="@+id/busesNearby"
-        android:layout_alignParentBottom="true"
-        android:color="#2685F5"
-        android:indeterminate="true"
-        android:max="100"
-        android:src="@drawable/go_button"
-        android:text="GO"
-        android:textColor="@color/holo_white"
-        android:translationY="-30dp"
-        android:visibility="visible"
-        android:layout_marginRight="5dp"
+    <!--<view-->
+        <!--android:id="@+id/determinate"-->
+        <!--class="mbanje.kurt.fabbutton.FabButton"-->
+        <!--android:layout_width="60dp"-->
+        <!--android:layout_height="60dp"-->
+        <!--android:layout_alignEnd="@+id/busesNearby"-->
+        <!--android:layout_alignParentBottom="true"-->
+        <!--android:color="#2685F5"-->
+        <!--android:indeterminate="true"-->
+        <!--android:max="100"-->
+        <!--android:text="GO"-->
+        <!--android:textColor="@color/holo_white"-->
+        <!--android:translationY="-30dp"-->
+        <!--android:visibility="visible"-->
+        <!--android:layout_marginRight="5dp"-->
+        <!--app:fbb_autoStart="true"-->
+        <!--app:fbb_endBitmap="@drawable/ic_action_refresh"-->
+        <!--app:fbb_progressColor="@color/holo_white"-->
+        <!--app:fbb_progressWidthRatio="0.1" />-->
 
-        app:fbb_autoStart="true"
-        app:fbb_endBitmap="@drawable/ic_action_refresh"
-        app:fbb_progressColor="@color/holo_white"
-        app:fbb_progressWidthRatio="0.1" />
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/determinate"
+        android:layout_width="@dimen/button_size"
+        android:layout_height="@dimen/button_size"
+        android:layout_alignEnd="@id/busesNearby"
+        android:layout_alignParentBottom="true"
+        android:translationY="-30dp"
+        app:backgroundTint="#2685F5"
+        android:visibility="visible"
+        android:src="@mipmap/go_button"
+        android:layout_marginRight="5dp" />
+
 
     <LinearLayout
         android:id="@+id/refresh"
