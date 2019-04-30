@@ -2,6 +2,8 @@ package com.asuc.asucmobile.domain.models;
 
 import com.google.gson.annotations.SerializedName;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.util.Collection;
 import java.util.List;
 

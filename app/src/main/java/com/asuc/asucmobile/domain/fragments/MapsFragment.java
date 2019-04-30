@@ -35,7 +35,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
-import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -47,7 +46,6 @@ import com.asuc.asucmobile.controllers.Controller;
 import com.asuc.asucmobile.controllers.LiveBusController;
 import com.asuc.asucmobile.domain.main.CreditsDialog;
 import com.asuc.asucmobile.domain.main.LiveBusActivity;
-import com.asuc.asucmobile.domain.main.MainActivity;
 import com.asuc.asucmobile.domain.main.PopUpActivity;
 import com.asuc.asucmobile.domain.main.RouteSelectActivity;
 import com.asuc.asucmobile.domain.models.Buses;
@@ -99,7 +97,6 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 import javax.inject.Inject;
 
-import mbanje.kurt.fabbutton.FabButton;
 import retrofit2.Call;
 import retrofit2.Response;
 import uk.co.deanwild.materialshowcaseview.MaterialShowcaseView;
@@ -260,6 +257,10 @@ public class MapsFragment extends Fragment
         mFirebaseRemoteConfig = FirebaseRemoteConfig.getInstance();
         showSpotlight = mFirebaseRemoteConfig.getBoolean(SHOW_SPOTLIGHT);
 
+        // get Remote Config values for spotlight
+        mFirebaseRemoteConfig = FirebaseRemoteConfig.getInstance();
+        showSpotlight = mFirebaseRemoteConfig.getBoolean(SHOW_SPOTLIGHT);
+
         if (showSpotlight && !viewedFirstSession()) {
             setSpotlight(FABmenu.getMenuIconView());
         }
@@ -317,8 +318,14 @@ public class MapsFragment extends Fragment
                     Bundle bundle = new Bundle();
                     mFirebaseAnalytics.logEvent("clicked_go_button", bundle);
 
-                }
+                    if (viewedFirstSession()) {
+                        mFirebaseAnalytics.logEvent("map_icon_clicked_after_first_session", bundle);
+                    }
 
+                    for (Marker marker : markers_sleepPods) {
+                        marker.setVisible(!sleepShown);
+                    }
+                }
 
             }
         });
@@ -375,6 +382,11 @@ public class MapsFragment extends Fragment
 
                 if (viewedFirstSession()) {
                     mFirebaseAnalytics.logEvent("map_icon_clicked_after_first_session", bundle);
+                }
+
+                //updateLocation(v);
+                for (Marker marker : markers_waterbottles) {
+                    marker.setVisible(false);
                 }
 
                 for (String key : markersMap.keySet()) {
@@ -904,7 +916,6 @@ public class MapsFragment extends Fragment
         sdf.setTimeZone(TimeZone.getTimeZone("UTC"));
         return sdf.format(new Date(millis));
     }
-
 
     public LatLng getCurrLocation() {
         return currLocation;
