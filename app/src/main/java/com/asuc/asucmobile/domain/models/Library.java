@@ -2,6 +2,7 @@ package com.asuc.asucmobile.domain.models;
 
 import android.support.annotation.NonNull;
 import android.util.Log;
+import android.util.Pair;
 
 import com.google.android.gms.maps.model.LatLng;
 import com.google.gson.annotations.SerializedName;
@@ -24,6 +25,9 @@ public class Library implements Comparable<Library>{
     private static final int MAX_DAY_LENGTH = 9;
     private static final String[] WEEKDAYS =
             { "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday" };
+
+    private static final SimpleDateFormat DAY_FORMAT =
+            new SimpleDateFormat("EEEE", Locale.ENGLISH);
 
 
     private int id;
@@ -66,22 +70,6 @@ public class Library implements Comparable<Library>{
         return phone;
     }
 
-    public Date getOpening() {
-        int i = getIdx();
-        if (i < 0) {
-            i = 0;
-        }
-        return weeklyOpen.get(i);
-    }
-
-    public Date getClosing() {
-        int i = getIdx();
-        if (i < 0) {
-            i = 0;
-        }
-        return weeklyClose.get(i);
-    }
-
     public ArrayList<Date> getWeeklyOpen() { return weeklyOpen; }
 
     public ArrayList<Date> getWeeklyClose() { return weeklyClose; }
@@ -99,11 +87,12 @@ public class Library implements Comparable<Library>{
     }
 
     public boolean isByAppointment() {
-        int i = getIdx();
-        if (i < 0) {
-            i = 0;
+        Pair<Integer, Integer> i = getIdxList();
+        int x = i.first;
+        if (i.first < 0) {
+            x = 0;
         }
-        return weeklyAppointments.get(i);
+        return weeklyAppointments.get(x);
     }
 
     public ArrayList<Boolean> getWeeklyAppointments() { return weeklyAppointments; }
@@ -121,18 +110,23 @@ public class Library implements Comparable<Library>{
         return String.format("%1$-" + MAX_DAY_LENGTH + "s", dayName);
     }
 
-    private int getIdx() {
-        Calendar c = Calendar.getInstance();
-        int dayNum = c.get(Calendar.DAY_OF_WEEK);
-        int i = 0;
-        for (i = 0; i < weeklyOpen.size(); i++) {
-            c.setTime(weeklyOpen.get(i));
-            if (c.get(Calendar.DAY_OF_WEEK) == dayNum) {
-                return i;
+    private Pair<Integer, Integer> getIdxList() {
+        String today = DAY_FORMAT.format(new Date());
+        int one = -1, two = -1;
+        boolean startAssigned = false;
+        for (int i = 0; i < weeklyOpen.size(); i++) {
+            String currDay = DAY_FORMAT.format(weeklyOpen.get(i));
+            if (today.equals(currDay)) {
+                if (!startAssigned) {
+                    startAssigned = true;
+                    one = i;
+                    two = i;
+                } else {
+                    two = i;
+                }
             }
-
         }
-        return -1;
+        return new Pair<>(one, two);
     }
 
     /**
@@ -144,23 +138,28 @@ public class Library implements Comparable<Library>{
 
         Date currentTime = new Date();
 
-        int i = getIdx();
-        if (i < 0) {
+        Pair<Integer, Integer> i = getIdxList();
+
+        if (i.first < 0) {
             return false;
         }
 
-        Date opening = weeklyOpen.get(i);
-        Date closing = weeklyClose.get(i);
+        boolean isOpen = false;
 
-        if (opening == null || closing == null) {
-            return false;
-        }
+        for (int x = i.first; x <= i.second; x++) {
+            Date opening = weeklyOpen.get(x);
+            Date closing = weeklyClose.get(x);
 
-        /* Open 24/7 */
-        if (opening.equals(closing)) {
-            return true;
+            if (opening == null || closing == null) {
+                return false;
+            }
+
+            /* Open 24/7 */
+            if (opening.equals(closing)) {
+                return true;
+            }
+            isOpen = isOpen || currentTime.after(opening) && currentTime.before(closing);
         }
-        boolean isOpen = currentTime.after(opening) && currentTime.before(closing);
         return isOpen;
     }
 
