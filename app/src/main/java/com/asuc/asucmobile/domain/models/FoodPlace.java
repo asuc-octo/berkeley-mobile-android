@@ -31,4 +31,5 @@ public abstract class FoodPlace implements Serializable{
     private boolean isOpen;
 
     private String hours;
+
 }

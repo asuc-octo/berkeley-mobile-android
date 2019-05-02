@@ -160,6 +160,7 @@ public class Library implements Comparable<Library>{
             }
             isOpen = isOpen || currentTime.after(opening) && currentTime.before(closing);
         }
+
         return isOpen;
     }
 

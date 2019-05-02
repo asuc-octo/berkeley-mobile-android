@@ -19,7 +19,7 @@ import lombok.experimental.SuperBuilder;
 @AllArgsConstructor
 @Getter
 @Setter
-public class DiningHall extends FoodPlace{
+public class DiningHall extends FoodPlace {
 
     @SerializedName("breakfast_menu")
     private ArrayList<FoodItem> breakfastMenu;
