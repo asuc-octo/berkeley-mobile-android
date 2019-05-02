@@ -864,17 +864,22 @@ public class MapsFragment extends Fragment
 
                         @Override
                         public void onFailure(Call<TripResponse> call, Throwable t) {
-
+                            navigation_button.setEnabled(true);
+                            navigation_button.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#2685F5")));
                         }
                     });
                 } else {
                     Toast.makeText(getActivity(), "Error retrieving lines.", Toast.LENGTH_SHORT).show();
+                    navigation_button.setEnabled(true);
+                    navigation_button.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#2685F5")));
                 }
             }
 
             @Override
             public void onFailure(Call<LineResponse> call, Throwable t) {
                 Toast.makeText(getActivity(), "Error retrieving lines.", Toast.LENGTH_SHORT).show();
+                navigation_button.setEnabled(true);
+                navigation_button.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#2685F5")));
             }
         });
 
