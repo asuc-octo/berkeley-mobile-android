@@ -1,6 +1,6 @@
 package com.asuc.asucmobile.controllers;
 
-import com.asuc.asucmobile.models.Buses;
+import com.asuc.asucmobile.domain.models.Buses;
 
 import java.util.HashSet;
 import java.util.List;

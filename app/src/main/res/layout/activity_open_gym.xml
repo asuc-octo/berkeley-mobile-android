@@ -1,118 +1,129 @@
-<android.support.v4.widget.DrawerLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v4.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <ScrollView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/scroll"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_height="match_parent">
 
-
-        <android.support.v7.widget.Toolbar
-            android:id="@+id/toolbar"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_width="match_parent"
-            android:elevation="8dp"
-            style="@style/ToolbarTheme" />
+            android:orientation="vertical">
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="240dp">
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="240dp">
 
-            <ProgressBar
-                android:id="@+id/progress_bar"
-                style="?android:attr/progressBarStyleSmall"
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
-                android:padding="96dp"
-                android:layout_gravity="center"
-                android:layout_alignParentTop="true"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true" />
+                <ProgressBar
+                    android:id="@+id/progress_bar"
+                    style="?android:attr/progressBarStyleSmall"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:padding="96dp"
+                    android:layout_gravity="center" />
 
-            <ImageView
-                android:id="@+id/image"
-                android:scaleType="centerCrop"
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
-                android:background="@drawable/default_gym"
-                android:visibility="invisible" />
+                <ImageView
+                    android:id="@+id/image"
+                    android:scaleType="centerCrop"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:visibility="invisible" />
 
 
-            <android.support.v7.widget.Toolbar
-                style="@style/ToolbarTheme"
+                <android.support.v7.widget.Toolbar
+                    android:id="@+id/toolbar"
+                    style="@style/ToolbarTheme"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/hotline_blue"
+                    android:elevation="8dp" />
+
+            </FrameLayout>
+
+            <LinearLayout
+                android:id="@+id/hours_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/toolbarTransparent"
-                android:elevation="8dp" />
+                android:minHeight="72dp"
+                android:paddingLeft="24dp"
+                android:paddingRight="24dp"
+                android:paddingTop="20dp"
+                android:paddingBottom="20dp"
+                android:animateLayoutChanges="true"
+                android:orientation="horizontal">
 
-        </RelativeLayout>
+                <ImageView
+                    android:layout_width="28dp"
+                    android:layout_height="28dp"
+                    android:contentDescription="@string/content_desc"
+                    android:layout_marginTop="2dp"
+                    android:src="@drawable/icon_hours" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:minHeight="72dp"
-            android:paddingLeft="24dp"
-            android:paddingRight="24dp"
-            android:gravity="center_vertical"
-            android:orientation="horizontal">
+                <TextView
+                    android:id="@+id/hours"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="24dp"
+                    android:layout_marginLeft="24dp"
+                    android:layout_gravity="center_vertical"
+                    android:textColor="@android:color/black" />
 
-            <ImageView
-                android:layout_width="32dp"
-                android:layout_height="32dp"
-                android:contentDescription="@string/content_desc"
-                android:src="@drawable/icon_hours" />
+                <TextView
+                    android:id="@+id/hours_expand"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="24dp"
+                    android:layout_marginRight="24dp"
+                    android:layout_marginLeft="24dp"
+                    android:gravity="right"
+                    android:textColor="@android:color/black" />
+            </LinearLayout>
 
-            <TextView
-                android:id="@+id/hours"
-                android:layout_width="wrap_content"
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@android:color/darker_gray" />
+
+            <LinearLayout
+                android:id="@+id/location_layout"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="24dp"
-                android:layout_marginLeft="24dp"
-                android:textSize="14sp"
-                android:textColor="@android:color/black" />
+                android:minHeight="72dp"
+                android:paddingLeft="24dp"
+                android:paddingRight="24dp"
+                android:paddingTop="20dp"
+                android:paddingBottom="20dp"
+                android:orientation="horizontal"
+                android:background="@drawable/white_selector">
+
+                <ImageView
+                    android:layout_width="28dp"
+                    android:layout_height="28dp"
+                    android:contentDescription="@string/content_desc"
+                    android:layout_marginTop="2dp"
+                    android:src="@drawable/icon_location" />
+
+                <TextView
+                    android:id="@+id/location"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="24dp"
+                    android:layout_marginLeft="24dp"
+                    android:layout_gravity="center_vertical"
+                    android:textColor="@android:color/black" />
+
+            </LinearLayout>
+
 
         </LinearLayout>
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@android:color/darker_gray" />
-
-        <LinearLayout
-            android:id="@+id/location_layout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:minHeight="72dp"
-            android:paddingLeft="24dp"
-            android:paddingRight="24dp"
-            android:gravity="center_vertical"
-            android:orientation="horizontal"
-            android:background="@drawable/white_selector">
-
-            <ImageView
-                android:layout_width="32dp"
-                android:layout_height="32dp"
-                android:contentDescription="@string/content_desc"
-                android:src="@drawable/icon_location" />
-
-            <TextView
-                android:id="@+id/location"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="24dp"
-                android:layout_marginLeft="24dp"
-                android:textSize="14sp"
-                android:textColor="@android:color/black" />
-
-        </LinearLayout>
-
-    </LinearLayout>
-
+    </ScrollView>
     <LinearLayout
-        android:id="@+id/left_drawer"
         android:layout_width="293dp"
         android:layout_height="match_parent"
         android:layout_gravity="start"
@@ -151,7 +162,6 @@
             android:divider="@android:color/transparent"
             android:dividerHeight="0dp"
             android:background="@android:color/white" />
-
     </LinearLayout>
 
 </android.support.v4.widget.DrawerLayout>

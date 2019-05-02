@@ -8,7 +8,7 @@
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context="com.asuc.asucmobile.main.LiveBusActivity"
+        tools:context=".domain.main.LiveBusActivity"
         android:padding="0dp">
 
         <android.support.v7.widget.Toolbar
@@ -45,7 +45,6 @@
     </RelativeLayout>
 
     <LinearLayout
-        android:id="@+id/left_drawer"
         android:layout_width="293dp"
         android:layout_height="match_parent"
         android:layout_gravity="start"

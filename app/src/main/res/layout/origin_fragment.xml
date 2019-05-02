@@ -1,32 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/main_linear_layout"
     android:layout_width="300dp"
     android:layout_height="70dp"
     android:layout_marginTop="5dp"
     android:background="@color/white"
+    android:paddingEnd="15dp"
+    android:paddingStart="15dp"
+    android:paddingTop="10dp"
+    android:paddingBottom="10dp"
     android:orientation="vertical">
 
 
     <LinearLayout
-        android:id="@+id/linear_auto_complete_textview"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="10dp"
         android:focusable="true"
         android:focusableInTouchMode="true"
         android:orientation="horizontal"
-        android:weightSum="1">
+        android:weightSum="5">
 
         <ImageView
-            android:layout_width="15dp"
+            android:layout_width="0dp"
             android:layout_height="match_parent"
+            android:layout_weight="0.25"
             android:src="@drawable/bluedot" />
 
         <AutoCompleteTextView
-
             android:id="@+id/origin"
-            android:layout_width="223dp"
+            android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_marginLeft="10dp"
             android:background="@color/transparent"
@@ -36,12 +37,13 @@
             android:dropDownWidth="300dp"
             android:hint="Current Location"
             android:textColor="#A8A8A8"
-            android:textSize="15dp"
-            android:layout_weight="0.57" />
+            android:textSize="13sp"
+            android:layout_weight="4.25" />
 
         <LinearLayout
             android:id="@+id/search_button_linear_layout"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
+            android:layout_weight="0.5"
             android:layout_height="match_parent">
 
             <ImageView

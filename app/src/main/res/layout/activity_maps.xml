@@ -36,14 +36,14 @@
 
         <fragment
             android:id="@+id/origin_bar"
-            android:name="com.asuc.asucmobile.fragments.OriginFragment"
+            android:name="com.asuc.asucmobile.domain.fragments.OriginFragment"
             android:layout_width="match_parent"
             android:layout_height="55dp"
             tools:layout="@layout/origin_fragment" />
 
         <fragment
             android:id="@+id/destination_bar"
-            android:name="com.asuc.asucmobile.fragments.DestinationFragment"
+            android:name="com.asuc.asucmobile.domain.fragments.DestinationFragment"
             android:layout_width="match_parent"
             android:layout_height="55dp"
             android:layout_below="@id/origin_bar"
@@ -73,15 +73,40 @@
         android:layout_width="@dimen/button_size"
         android:layout_height="@dimen/button_size"
         android:layout_alignParentBottom="true"
+        android:layout_alignStart="@+id/topBox"
+        android:translationY="-25dp"
         android:layout_below="@+id/topBox"
-        android:layout_alignEnd="@+id/busesNearby"
-        android:translationY="-100dp"
         app:menu_colorNormal="#FFFFFF"
         app:menu_colorPressed="#1565C0"
         app:menu_fab_size="normal"
-        app:menu_icon="@drawable/itemsicons"
+        app:menu_icon="@drawable/itemsicons">
 
-        >
+        <com.github.clans.fab.FloatingActionButton
+            android:id="@+id/mental_health"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/mentalhealth"
+            app:fab_colorNormal="@color/mental_health_yellow"
+            app:fab_colorPressed="@color/mental_health_yellow"
+            app:fab_size="mini" />
+
+        <com.github.clans.fab.FloatingActionButton
+            android:id="@+id/bike"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/bike"
+            app:fab_colorNormal="@color/bike_blue"
+            app:fab_colorPressed="@color/bike_blue"
+            app:fab_size="mini" />
+
+        <com.github.clans.fab.FloatingActionButton
+            android:id="@+id/printer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/printer"
+            app:fab_colorNormal="@color/printer_green"
+            app:fab_colorPressed="@color/printer_green"
+            app:fab_size="mini" />
 
         <com.github.clans.fab.FloatingActionButton
             android:id="@+id/waterbottle"
@@ -113,27 +138,38 @@
 
     </com.github.clans.fab.FloatingActionMenu>
 
-    <view
-        android:id="@+id/determinate"
-        class="mbanje.kurt.fabbutton.FabButton"
-        android:layout_width="@dimen/fab_size_normal"
-        android:layout_height="@dimen/fab_size_normal"
-        android:layout_alignEnd="@+id/busesNearby"
-        android:layout_alignParentBottom="true"
-        android:color="#2685F5"
-        android:indeterminate="true"
-        android:max="100"
-        android:src="@drawable/go_button"
-        android:text="GO"
-        android:textColor="@color/holo_white"
-        android:translationY="-30dp"
-        android:visibility="visible"
-        android:layout_marginRight="5dp"
+    <!--<view-->
+        <!--android:id="@+id/determinate"-->
+        <!--class="mbanje.kurt.fabbutton.FabButton"-->
+        <!--android:layout_width="60dp"-->
+        <!--android:layout_height="60dp"-->
+        <!--android:layout_alignEnd="@+id/busesNearby"-->
+        <!--android:layout_alignParentBottom="true"-->
+        <!--android:color="#2685F5"-->
+        <!--android:indeterminate="true"-->
+        <!--android:max="100"-->
+        <!--android:text="GO"-->
+        <!--android:textColor="@color/holo_white"-->
+        <!--android:translationY="-30dp"-->
+        <!--android:visibility="visible"-->
+        <!--android:layout_marginRight="5dp"-->
+        <!--app:fbb_autoStart="true"-->
+        <!--app:fbb_endBitmap="@drawable/ic_action_refresh"-->
+        <!--app:fbb_progressColor="@color/holo_white"-->
+        <!--app:fbb_progressWidthRatio="0.1" />-->
 
-        app:fbb_autoStart="true"
-        app:fbb_endBitmap="@drawable/ic_action_refresh"
-        app:fbb_progressColor="@color/holo_white"
-        app:fbb_progressWidthRatio="0.1" />
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/determinate"
+        android:layout_width="@dimen/button_size"
+        android:layout_height="@dimen/button_size"
+        android:layout_alignEnd="@id/busesNearby"
+        android:layout_alignParentBottom="true"
+        android:translationY="-30dp"
+        app:backgroundTint="#2685F5"
+        android:visibility="visible"
+        android:src="@mipmap/go_button"
+        android:layout_marginRight="5dp" />
+
 
     <LinearLayout
         android:id="@+id/refresh"
@@ -145,6 +181,5 @@
 
 
     </LinearLayout>
-        android:orientation="vertical" />
 
 </RelativeLayout>

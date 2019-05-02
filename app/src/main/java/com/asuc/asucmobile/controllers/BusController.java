@@ -5,9 +5,9 @@ import android.content.Context;
 import android.support.annotation.NonNull;
 
 
-import com.asuc.asucmobile.models.BusDeparture;
-import com.asuc.asucmobile.models.BusInfo;
-import com.asuc.asucmobile.models.PTBusResponse;
+import com.asuc.asucmobile.domain.models.BusDeparture;
+import com.asuc.asucmobile.domain.models.BusInfo;
+import com.asuc.asucmobile.domain.models.PTBusResponse;
 import com.asuc.asucmobile.utilities.Callback;
 import com.asuc.asucmobile.utilities.JSONUtilities;
 import com.google.gson.Gson;

@@ -16,6 +16,7 @@
     <string name="title_activity_open_route">Route</string>
     <string name="title_activity_open_trip_selection">Select Route</string>
     <string name="title_activity_stop">Select Stop</string>
+    <string name="title_activity_calendar">Academic Calendar</string>
 
     <string name="intro">Welcome to Berkeley Mobile!\nPlease choose a menu option on the left.</string>
 
@@ -45,11 +46,8 @@
     <string name="call">Call</string>
     <string name="favorite">Favorite</string>
     <string name="open_map">Open Map</string>
+    <string name="book_room">Book Room</string>
 
     <string name="request_caseworker">Request a Caseworker</string>
-
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-
 
 </resources>

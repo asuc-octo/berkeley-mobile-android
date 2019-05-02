@@ -41,7 +41,6 @@
     </RelativeLayout>
 
     <ImageView
-        android:id="@+id/imageView"
         android:layout_width="30dp"
         android:layout_height="match_parent"
         android:src="@drawable/error"
