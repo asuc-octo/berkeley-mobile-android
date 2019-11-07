@@ -1,8 +1,8 @@
 package com.asuc.asucmobile.controllers;
 
 import android.content.Context;
-import android.net.http.HttpResponseCache;
-import android.support.annotation.NonNull;
+
+import androidx.annotation.NonNull;
 
 import com.asuc.asucmobile.utilities.Callback;
 
@@ -13,15 +13,6 @@ import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
-import org.json.JSONArray;
-
-import java.io.File;
-import java.io.IOException;
-import java.util.UUID;
-
-import butterknife.internal.Utils;
-import okhttp3.Interceptor;
-import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 

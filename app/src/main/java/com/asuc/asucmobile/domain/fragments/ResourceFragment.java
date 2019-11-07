@@ -2,10 +2,10 @@ package com.asuc.asucmobile.domain.fragments;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.SearchView;
-import android.support.v7.widget.Toolbar;
+import androidx.fragment.app.Fragment;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SearchView;
+import androidx.appcompat.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -129,7 +129,7 @@ public class ResourceFragment extends Fragment {
             final SearchView searchView = (SearchView) searchMenuItem.getActionView();
             if (searchView != null) {
                 // Setting up aesthetics.
-                EditText searchEditText = (EditText) searchView.findViewById(android.support.v7.appcompat.R.id.search_src_text);
+                EditText searchEditText = (EditText) searchView.findViewById(androidx.appcompat.R.id.search_src_text);
                 searchEditText.setTextColor(getResources().getColor(android.R.color.white));
                 searchEditText.setHintTextColor(getResources().getColor(android.R.color.white));
                 searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {

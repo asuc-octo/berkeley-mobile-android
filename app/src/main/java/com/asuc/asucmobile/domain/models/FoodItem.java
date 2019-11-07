@@ -1,14 +1,11 @@
 package com.asuc.asucmobile.domain.models;
 
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 
 import com.google.gson.annotations.SerializedName;
 
 import java.util.ArrayList;
 import java.text.DecimalFormat;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Set;
 
 public class FoodItem implements Comparable<FoodItem> {
 
