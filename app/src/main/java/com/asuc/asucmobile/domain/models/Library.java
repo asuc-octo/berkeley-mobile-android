@@ -1,7 +1,7 @@
 package com.asuc.asucmobile.domain.models;
 
-import android.support.annotation.NonNull;
-import android.util.Log;
+import androidx.annotation.NonNull;
+
 import android.util.Pair;
 
 import com.google.android.gms.maps.model.LatLng;
@@ -9,7 +9,6 @@ import com.google.gson.annotations.SerializedName;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;

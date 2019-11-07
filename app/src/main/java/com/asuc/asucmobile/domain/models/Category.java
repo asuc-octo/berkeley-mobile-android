@@ -2,7 +2,7 @@ package com.asuc.asucmobile.domain.models;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
-import android.support.v4.app.FragmentManager;
+import androidx.fragment.app.FragmentManager;
 
 public abstract class Category {
 

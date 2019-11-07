@@ -1,6 +1,6 @@
 package com.asuc.asucmobile.infrastructure;
 
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 import android.util.Log;
 
 import com.asuc.asucmobile.domain.models.DiningHall;

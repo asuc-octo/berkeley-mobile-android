@@ -16,14 +16,14 @@ import android.location.LocationManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.annotation.RequiresApi;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.Fragment;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
+import androidx.core.app.ActivityCompat;
+import androidx.fragment.app.Fragment;
+import androidx.core.content.ContextCompat;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import android.text.SpannableString;
 import android.text.SpannableStringBuilder;
@@ -128,7 +128,7 @@ public class MapsFragment extends Fragment
     LatLng currLocation;
     View mapView;
     private final static DecimalFormat DECIMAL_FORMAT = new DecimalFormat("#.##");
-    android.support.design.widget.FloatingActionButton navigation_button;
+    com.google.android.material.floatingactionbutton.FloatingActionButton navigation_button;
     FloatingActionMenu FABmenu;
 
     private boolean bottlesShown = false;
@@ -243,7 +243,7 @@ public class MapsFragment extends Fragment
 
         final DestinationFragment searchBar = (DestinationFragment) getActivity().getFragmentManager().findFragmentById(R.id.destination_bar);
         final OriginFragment originBar = (OriginFragment) getActivity().getFragmentManager().findFragmentById(R.id.origin_bar);
-        navigation_button = (android.support.design.widget.FloatingActionButton) layout.findViewById(R.id.determinate);
+        navigation_button = (com.google.android.material.floatingactionbutton.FloatingActionButton) layout.findViewById(R.id.determinate);
         FABmenu = (FloatingActionMenu) layout.findViewById(R.id.FABmenu);
 
         sleepPod = (FloatingActionButton) layout.findViewById(R.id.sleeppod);
@@ -534,7 +534,7 @@ public class MapsFragment extends Fragment
             public void onMapClick(LatLng latLng) {
                 if (originWrapper == null || busRouteWrapper == null || navigation_button == null) {
                     originWrapper = (LinearLayout) layout.findViewById(R.id.origin_bar);
-                    navigation_button = (android.support.design.widget.FloatingActionButton) layout.findViewById(R.id.determinate);
+                    navigation_button = (com.google.android.material.floatingactionbutton.FloatingActionButton) layout.findViewById(R.id.determinate);
 
                 }
                 navigation_button.setVisibility(View.VISIBLE);
