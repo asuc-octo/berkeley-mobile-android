@@ -1,8 +1,6 @@
 package com.asuc.asucmobile.infrastructure.models;
 
-import android.support.v4.content.PermissionChecker;
-
-import com.google.firebase.firestore.PropertyName;
+import androidx.core.content.PermissionChecker;
 
 import java.util.ArrayList;
 

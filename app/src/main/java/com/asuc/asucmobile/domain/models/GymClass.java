@@ -1,10 +1,9 @@
 package com.asuc.asucmobile.domain.models;
 
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 
 import com.google.gson.annotations.SerializedName;
 
-import java.sql.Time;
 import java.util.Date;
 
 import lombok.AllArgsConstructor;

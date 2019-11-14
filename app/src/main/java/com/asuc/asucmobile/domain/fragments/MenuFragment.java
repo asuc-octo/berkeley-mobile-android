@@ -3,7 +3,7 @@ package com.asuc.asucmobile.domain.fragments;
 import android.app.Fragment;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.support.v13.view.ViewCompat;
+import androidx.legacy.view.ViewCompat;
 import android.text.SpannableString;
 import android.text.style.ForegroundColorSpan;
 import android.util.Log;

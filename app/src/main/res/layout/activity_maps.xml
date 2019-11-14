@@ -7,7 +7,7 @@
     android:focusableInTouchMode="true"
     android:orientation="vertical">
 
-    <android.support.v7.widget.Toolbar
+    <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
         style="@style/ToolbarTheme"
         android:layout_width="match_parent"
@@ -158,7 +158,7 @@
         <!--app:fbb_progressColor="@color/holo_white"-->
         <!--app:fbb_progressWidthRatio="0.1" />-->
 
-    <android.support.design.widget.FloatingActionButton
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/determinate"
         android:layout_width="@dimen/button_size"
         android:layout_height="@dimen/button_size"

@@ -1,13 +1,12 @@
 package com.asuc.asucmobile.utilities;
 
 import android.content.Context;
-import android.support.v4.content.ContextCompat;
+import androidx.core.content.ContextCompat;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.TextUtils;
 import android.text.style.ForegroundColorSpan;
-import android.util.Log;
 
 import com.asuc.asucmobile.R;
 import com.asuc.asucmobile.domain.models.Gym;

@@ -5,7 +5,7 @@
     android:orientation="vertical"
     tools:context="com.asuc.asucmobile.domain.fragments.GymFragment">
 
-    <android.support.v7.widget.Toolbar
+    <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_height="wrap_content"
         android:layout_width="match_parent"
@@ -67,7 +67,7 @@
                         android:layout_marginRight="10dp"
                         android:background="@color/card_background" />
 
-                    <android.support.v7.widget.RecyclerView
+                    <androidx.recyclerview.widget.RecyclerView
                         android:layout_width="match_parent"
                         android:layout_height="180dp"
                         android:layout_marginRight="10dp"
