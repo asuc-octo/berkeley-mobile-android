@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="300dp"
+    android:layout_height="110dp"
+    android:orientation="vertical">
+
+
+    <RelativeLayout
+        android:id="@+id/mainInfo"
+        android:layout_width="220dp"
+        android:layout_height="match_parent">
+
+
+        <TextView
+            android:id="@+id/routeName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="15dp"
+            android:clickable="false"
+            android:fontFamily="serif"
+            android:text="No bus coming soon"
+            android:textColor="#2626ce"
+            android:textSize="15dp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/busStopName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Bancroft &amp; Telegraph"
+            android:layout_below="@+id/routeName"
+            android:textColor="#2626ce"
+
+            android:layout_marginLeft="10dp"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true" />
+    </RelativeLayout>
+
+    <ImageView
+        android:layout_width="30dp"
+        android:layout_height="match_parent"
+        android:src="@drawable/error"
+        android:layout_alignParentTop="true"
+        android:paddingBottom="60dp"
+        android:layout_toRightOf="@+id/mainInfo"
+        android:layout_toEndOf="@+id/mainInfo" />
+
+
+</RelativeLayout>

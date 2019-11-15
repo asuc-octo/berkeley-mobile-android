@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <color name="hotline_blue">#005581</color>
+    <color name="off_hotline_blue">#004467</color>
+
+    <color name="dark_blue"> #1565C0</color>
+    <color name="orange"> #FF720A</color>
+    <color name="pink"> #FD2BA8</color>
+    <color name="aqua"> #3EB7D2</color>
+    <color name="white">#FFFFFF</color>
+
+    <color name="OP_navy">#005581</color>
+    <color name="ASUC_blue">#1295D8</color>
+    <color name="pavan_light">#72CDF4</color>
+    <color name="two_chainz_gold">#FFB511</color>
+    <color name="grizzly_gray">#6D6E70</color>
+    <color name="green">#99CC00</color>
+    <color name="off_white">#F0F0F0</color>
+    <color name="holo_white">#FFF3F3F3</color>
+    <color name="selector_pressed">#FFDEDEDE</color>
+    <color name="maroon">#BA3434</color>
+    <color name="red">#FF4444</color>
+    <color name="transparent_black">#90000000</color>
+
+    <color name="transparent">#00000000</color>
+    <color name="card_background">#ffffff</color>
+
+    <color name="toolbarTransparent">#00005581</color>
+
+
+    <color name="excercise_color_1">#10CEB4</color>
+    <color name="excercise_color_2">#FB2BA8</color>
+    <color name="excercise_color_3">#FFB109</color>
+    <color name="excercise_color_4">#3890F7</color>
+    <color name="excercise_color_5">#8E31FF</color>
+    <color name="excercise_color_6">#FF720A</color>
+    <color name="excercise_color_7">#3EB7D2</color>
+
+    <color name="printer_green">#5CBB44</color>
+    <color name="bike_blue">#2D35FF</color>
+    <color name="mental_health_yellow">#FBD200</color>
+
+
+</resources>

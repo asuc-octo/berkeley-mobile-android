@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TableRow xmlns:android="http://schemas.android.com/apk/res/android"
+    android:background="@drawable/bordered_rectangle"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <Button
+        android:id="@+id/filterColor"
+        android:background="@color/colorPrimary"
+        android:layout_width="5dp"
+        android:layout_height="match_parent"
+        android:color="@color/green"
+        android:text=""/>
+
+    <TextView
+        android:id="@+id/excerciseTime"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_column="1"
+        android:layout_marginLeft="10dp"
+
+        android:text="07:15 - 08:15"
+        android:textSize="12sp"/>
+
+    <LinearLayout
+        android:id="@+id/instructorDetails"
+        android:layout_width="120dp"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_column="2">
+        <TextView
+            android:id="@+id/excerciseName"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="10dp"
+
+            android:text="Cycle Fusion"
+            android:textSize="12sp"
+            android:textStyle="bold"/>
+
+        <TextView
+            android:id="@+id/excerciseTrainer"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="10dp"
+
+            android:text="Cycle Fusion"
+            android:textSize="12sp"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="10dp"
+            android:text=""
+            android:textSize="12sp"/>
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/excerciseLocation"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_column="3"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:ellipsize="none"
+        android:singleLine="false"
+    android:text="Court #5, RSF"
+        android:textSize="12sp"/>
+</TableRow>

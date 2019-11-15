@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="300dp"
+    android:layout_height="110dp"
+    android:orientation="vertical"
+    android:weightSum="1">
+
+
+    <LinearLayout
+        android:id="@+id/mainInfo"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_weight="0.09">
+
+        <RelativeLayout
+            android:layout_width="195dp"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:id="@+id/block"
+                android:layout_width="match_parent"
+                android:layout_height="28dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="7dp">
+
+                <ImageView
+                    android:id="@+id/icon"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:layout_marginLeft="3dp"
+                    android:background="@drawable/microwave_map_icon" />
+
+                <TextView
+                    android:id="@+id/mainName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_above="@+id/routeNameWrapper"
+                    android:layout_alignStart="@+id/busStopName"
+                    android:clickable="false"
+                    android:fontFamily="sans-serif"
+                    android:text="Microwaves"
+                    android:layout_marginLeft="3dp"
+                    android:textColor="#FF720A"
+                    android:textSize="22dp"
+                    android:textStyle="bold" />
+
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:id="@+id/routeNameWrapper"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/block"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="0dp">
+
+
+                <TextView
+                    android:id="@+id/desc1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/mainName"
+                    android:layout_marginTop="7dp"
+                    android:fontFamily="sans-serif"
+                    android:layout_marginLeft="15dp"
+                    android:paddingBottom="3dp"
+                    android:text="MLK Study Center"
+                    android:textColor="#022E81"
+                    android:textSize="15dp" />
+
+
+            </LinearLayout>
+
+            <TextView
+                android:layout_marginLeft="50dp"
+                android:id="@+id/desc2"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_below="@+id/routeNameWrapper"
+                android:layout_centerHorizontal="true"
+                android:fontFamily="roboto"
+                android:text="2nd Floor"
+                android:textColor="#022E81"
+                android:textSize="15dp" />
+
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="200dp"
+            android:layout_height="match_parent"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            android:layout_toEndOf="@+id/busStopName"
+            android:gravity="center_vertical"
+            android:orientation="vertical">
+
+
+            <TextView
+                android:id="@+id/dist"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"
+                android:fontFamily="sans-serif"
+                android:layout_marginTop="-15dp"
+                android:layout_marginLeft="33dp"
+                android:text="0.1 mi"
+                android:textAlignment="center"
+                android:textColor="#022E81"
+                android:textSize="15dp" />
+
+
+        </RelativeLayout>
+
+
+    </LinearLayout>
+
+
+</LinearLayout>
