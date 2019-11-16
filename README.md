@@ -45,7 +45,7 @@ It is recommended you use Android Studio 3.0.0.
 * Create a new project in the [Google Cloud Console](https://console.cloud.google.com)
   * Under the APIs and Services tab, enable the Google Places API for Android, Google Maps Directions API, Google Maps Android API, and Google Maps Geocoding API
   * Under the Credentials tab, create an API key
-  * Paste your API key into [secret.xml](app/src/main/res/values/secret.xml)
+  * Create a local copy of [secret_template.xml](app/src/main/res/values/secret_template.xml) and name it `secret.xml`. Paste your API key in the new file, which should not be tracked by git. Do not modify the template file.
 * We've configured this repository so that the application pulls from our sandbox backend, which just returns test data. If you would like access to our production backend API, please [contact us](#contact). 
 
 ## Contributing [![contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat)](https://github.com/asuc-octo/berkeley-mobile-android/issues)
