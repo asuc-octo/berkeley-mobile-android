@@ -24,6 +24,7 @@ import com.asuc.asucmobile.domain.models.Stop;
 import com.asuc.asucmobile.domain.models.Trip;
 import com.asuc.asucmobile.utilities.MapHttpConnection;
 import com.asuc.asucmobile.utilities.PathJSONParser;
+import com.asuc.asucmobile.utilities.GoogleApiUtil;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -259,7 +260,8 @@ public class RouteSelected extends BaseActivity {
     private String getMapsApiDirectionsUrl(LatLng origin, LatLng dest) {
         // Origin of route
         String str_origin = "origin=" + origin.latitude + "," + origin.longitude;
-        String key = "&key=" + getResources().getString(R.string.google_api_key_android);
+        String key = "&key=" + GoogleApiUtil.getGoogleApiKey(getApplicationContext());
+
 
         // Destination of route
         String str_dest = "destination=" + dest.latitude + "," + dest.longitude;
