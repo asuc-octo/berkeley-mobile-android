@@ -14,7 +14,7 @@ google-services.json
 app/google-services.json
 
 # secret
-app/src/main/res/values/secret.xml
+app/src/main/res/values/secret_dev.xml
 
 # ServerUtils
 app/src/main/java/com/asuc/asucmobile/utilities/ServerUtils.java
