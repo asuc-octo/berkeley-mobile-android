@@ -117,7 +117,7 @@ dependencies {
 
     def nav_version = "2.1.0"
 
-    // Java language implementation
+    // Navigation
     implementation "androidx.navigation:navigation-fragment:$nav_version"
     implementation "androidx.navigation:navigation-ui:$nav_version"
 
