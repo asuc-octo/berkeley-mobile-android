@@ -22,16 +22,12 @@ buildscript {
 
 allprojects {
     repositories {
-	google()
+        google()
         jcenter()
-
+        maven { url 'https://maven.google.com/' }
         maven {
-            url 'https://maven.google.com/'
+            url '// For the MaterialShowCaseView we are using: https://github.com/deano2390/MaterialShowcaseView#why-jitpack'
         }
-
-        // For the MaterialShowCaseView we are using: https://github.com/deano2390/MaterialShowcaseView#why-jitpack
-        maven {
-            url "https://jitpack.io"
-        }
+        maven { url 'https://jitpack.io' }
     }
 }
