@@ -23,11 +23,13 @@
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true" />
 
+
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context="com.androidsample.BottomSheetActivity">
         <include layout="@layout/bottom_sheet" />
+
     </androidx.coordinatorlayout.widget.CoordinatorLayout
         >
 
