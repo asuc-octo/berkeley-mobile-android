@@ -534,10 +534,10 @@ public class MapsFragment extends Fragment
             public void onMapClick(LatLng latLng) {
                 if (originWrapper == null || busRouteWrapper == null || navigation_button == null) {
                     originWrapper = (LinearLayout) layout.findViewById(R.id.origin_bar);
-                    navigation_button = (com.google.android.material.floatingactionbutton.FloatingActionButton) layout.findViewById(R.id.determinate);
+                    navigation_button = layout.findViewById(R.id.determinate);
 
                 }
-                navigation_button.setVisibility(View.VISIBLE);
+                navigation_button.show();
                 hideKeyboard(mapView);
                 clearFocus();
             }

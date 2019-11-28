@@ -5,37 +5,30 @@ import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
 
-import com.pushwoosh.PushManager;
+import com.pushwoosh.Pushwoosh;
 
 public class PushReceiver extends BroadcastReceiver {
 
     private static final String TAG = "PushReceiver";
-
-    private static PushManager manager;
 
     /*
      * This method is called when the phone boots
      */
     @Override
     public void onReceive(Context context, Intent intent) {
-        // Register for push notifications
-        registerPushes(context);
-    }
-
-    public static void registerPushes(Context context) {
-        // If we already registered, deregister then re-register
-        if (manager != null) {
-            return;
-        }
-
-        // Start PushWhoosh
-        manager = PushManager.getInstance(context);
-        try {
-            manager.onStartup(context);
-            manager.registerForPushNotifications();
-        } catch (Exception e) {
-            Log.e(TAG, e.toString());
+        if (Intent.ACTION_BOOT_COMPLETED.equals(intent.getAction())) {
+            // Register for push notifications
+            Pushwoosh.getInstance().registerForPushNotifications(result -> {
+                if (result.isSuccess()) {
+                    Log.d(TAG, "Successfully registered for push notifications with token: "
+                            + result.getData());
+                } else {
+                    if (result.getException() != null) {
+                        Log.d(TAG, "Failed to register for push notifications:u "
+                                + result.getException().getMessage());
+                    }
+                }
+            });
         }
     }
-
 }
