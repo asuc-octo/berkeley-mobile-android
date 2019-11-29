@@ -23,14 +23,15 @@
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true" />
 
-    <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
+
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context="com.androidsample.BottomSheetActivity">
         <include layout="@layout/bottom_sheet" />
-    </android.support.design.widget.CoordinatorLayout>
+
+    </androidx.coordinatorlayout.widget.CoordinatorLayout
+        >
 
     <RelativeLayout
         android:id="@+id/topBox"
@@ -147,25 +148,6 @@
 
     </com.github.clans.fab.FloatingActionMenu>
 
-    <!--<view-->
-        <!--android:id="@+id/determinate"-->
-        <!--class="mbanje.kurt.fabbutton.FabButton"-->
-        <!--android:layout_width="60dp"-->
-        <!--android:layout_height="60dp"-->
-        <!--android:layout_alignEnd="@+id/busesNearby"-->
-        <!--android:layout_alignParentBottom="true"-->
-        <!--android:color="#2685F5"-->
-        <!--android:indeterminate="true"-->
-        <!--android:max="100"-->
-        <!--android:text="GO"-->
-        <!--android:textColor="@color/holo_white"-->
-        <!--android:translationY="-30dp"-->
-        <!--android:visibility="visible"-->
-        <!--android:layout_marginRight="5dp"-->
-        <!--app:fbb_autoStart="true"-->
-        <!--app:fbb_endBitmap="@drawable/ic_action_refresh"-->
-        <!--app:fbb_progressColor="@color/holo_white"-->
-        <!--app:fbb_progressWidthRatio="0.1" />-->
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/determinate"
