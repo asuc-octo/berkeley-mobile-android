@@ -9,7 +9,6 @@ import com.asuc.asucmobile.dagger.modules.FirebaseModule;
 import com.asuc.asucmobile.dagger.modules.RepositoryModule;
 import com.asuc.asucmobile.dagger.modules.RetrofitModule;
 import com.asuc.asucmobile.utilities.ServerUtils;
-import com.pushwoosh.Pushwoosh;
 
 /**
  * Configuration for the global application
