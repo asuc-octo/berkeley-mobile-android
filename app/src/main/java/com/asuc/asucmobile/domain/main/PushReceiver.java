@@ -24,7 +24,7 @@ public class PushReceiver extends BroadcastReceiver {
                             + result.getData());
                 } else {
                     if (result.getException() != null) {
-                        Log.d(TAG, "Failed to register for push notifications: "
+                        Log.d(TAG, "Failed to register for push notifications:u "
                                 + result.getException().getMessage());
                     }
                 }
