@@ -30,8 +30,7 @@
         tools:context="com.androidsample.BottomSheetActivity">
         <include layout="@layout/bottom_sheet" />
 
-    </androidx.coordinatorlayout.widget.CoordinatorLayout
-        >
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
     <RelativeLayout
         android:id="@+id/topBox"
