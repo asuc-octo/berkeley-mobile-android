@@ -26,11 +26,11 @@ import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.PendingResult;
 import com.google.android.gms.common.api.ResultCallback;
-import com.google.android.gms.location.places.AutocompleteFilter;
-import com.google.android.gms.location.places.Place;
-import com.google.android.gms.location.places.PlaceBuffer;
-import com.google.android.gms.location.places.Places;
-import com.google.android.gms.location.places.ui.PlaceAutocompleteFragment;
+import com.google.android.libraries.places.compat.AutocompleteFilter;
+import com.google.android.libraries.places.compat.Place;
+import com.google.android.libraries.places.compat.PlaceBuffer;
+import com.google.android.libraries.places.compat.Places;
+import com.google.android.libraries.places.compat.ui.PlaceAutocompleteFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
 
